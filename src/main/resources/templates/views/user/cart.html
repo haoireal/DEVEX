@@ -1,0 +1,464 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nike. Just Do It. Nike VN</title>
+    <link class="jordan" rel="icon" href="img/nikeicon.png" />
+    <!-- JQWERY -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- ICON -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <!-- My CSS -->
+    <link class="jordan" rel="stylesheet" href="cssGH/index.css" />
+</head>
+<style>
+    .bag-product img {
+        width: 9.4rem;
+    }
+
+    .product {
+        border-bottom: 1px groove rgba(240, 240, 240, 0.205);
+    }
+
+    #total {
+        border-bottom: 1px groove;
+        border-top: 1px groove;
+    }
+
+    .form-group {
+        color: rgb(117, 117, 117);
+        border: none;
+        background-color: inherit;
+        font-size: 0.94rem;
+
+    }
+
+    select,
+    .form-control {
+        background-color: inherit;
+        font-size: 0.94rem;
+        border: none;
+        color: rgb(117, 117, 117);
+        height: 23px;
+        z-index: 1000;
+    }
+
+    .width-size {
+        width: 90px !important;
+
+    }
+
+    .width-size2 {
+        width: 50px !important;
+        margin-left: 2rem;
+    }
+
+    .btn-remove {
+        background: inherit;
+        border: none;
+        font-size: 1.5rem;
+        margin-left: 7rem !important;
+    }
+
+    #add-to-bag:hover {
+        background-color: #000000ce;
+    }
+
+    button.ncss-btn-primary-dark.btn-lg {
+        width: 100%;
+        min-height: 60px;
+        padding: 18px 24px;
+    }
+
+    button.ncss-btn-secondary-dark {
+        padding: 6px 20px;
+        border-radius: 30px;
+        border: 1.5px solid transparent;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        background: 0 0;
+        color: #111;
+        border-color: #ccc;
+    }
+
+    button.ncss-btn-secondary-dark.btn-lg {
+        width: 100%;
+        min-height: 60px;
+        padding: 18px 24px;
+    }
+
+    button.ncss-btn-primary-dark {
+        padding: 6px 20px;
+        border-radius: 30px;
+        border: 1.5px solid transparent;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        background: #111;
+        color: #fff;
+    }
+
+    .carousel ol {
+        background-color: #f3f3f371 !important;
+        bottom: -2.5rem !important;
+
+    }
+
+    .carousel ol li {
+        background-color: #000000 !important;
+
+    }
+
+    .carousel a:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
+
+<body ng-app="myapp">
+
+    <div class="container-fluid">
+        <div class="content-layout row container-fluid">
+            <!-- BAG -->
+            <div id="bag" class="col-xl-8 col-12">
+                <h4 class="col-xl-10 col-md-8 col-sm-5 col-6 p-0 m-0">BAG</h4>
+                <div class="bag-product row" ng-repeat="product in cart track by product.id">
+                    <div class="product col-12 pt-3 pb-3" >
+                        <div class="row">
+                            <!-- <img src="img/shoes/{{product.image}}" class="img-fluid" alt=""> -->
+                            <a href="#!productdetail/:{{product.id}}" class="col-3">
+                                <img src="img/{{product.image}}" class="img-fluid" alt="">
+                            </a>
+                            <div class=" row pb-0 pl-0 justify-content-center col-9">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1.2rem;">{{product.name}}</h5>
+                                    <p class="" style="font-size: 0.94rem;">{{product.des}}</p>
+                                    <div class="mt-5 row ml-1">
+                                        <!-- Size dropdown menu -->
+                                        <div class="form-group row col-6">
+                                            <label for="sizeSelect" class="col-3 m-0 p-0">Size:</label>
+                                            <div class="width-size" >
+                                                <select class="form-control col-9 m-0 p-0" id="sizeSelect" >
+                                                    <option ng-repeat="size in sizes" value="{{size}}">{{size}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- Quantity dropdown menu -->
+                                        <div class="form-group row col-6">
+                                            <label for="quantitySelect" class="col-3 m-0 p-0">Quantity:</label>
+                                            <div class="width-size2">
+                                                <select class="form-control col-9 m-0 p-0" id="quantitySelect" >
+                                                    <option ng-repeat="quantity in quantities" ng-selected="quantity == {{product.quantity}}" value="{{quantity}}">{{quantity}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-4  col-xl-4 col">
+                                    <p class="text-right p-0" style="font-size: 1rem;">
+                                        {{product.price | currency : "₫" : 0}}₫
+
+                                    </p>
+                                    <p class="text-right p-0" style="font-size: 1rem;">
+                                       SỐ LƯỢNG {{product.quantity}}
+
+                                    </p>
+                                    <button class="btn-remove mt-5 p-1 ml-5" type="button" aria-label="Remove"
+                                        ng-click="delProduct(cart.index)" name="remove-item-button"><i class="far fa-trash-alt"></i></button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END BAG -->
+
+            <!-- SUMMARY -->
+            <div id="summary" class="col-xl-4 col-12">
+                <h4 class="col-xl-10 col-md-8 col-sm-5 col-6 p-0 m-0">SUMMARY</h4>
+                <div class="row mb-3 mt-3 " id="subtotal">
+                    <p class="col-8">Subtotal</p>
+                    <span data-automation="summary-total" class="col-4 text-right">
+                        <span class="text-right">{{sumMoney | currency : "₫" : 0}}</span>
+                    </span>
+                </div>
+                <div class="row mb-3">
+                    <p class="col-8">Estimated Delivery & Handling</p>
+                    <span data-automation="summary-total" class="col-4 text-right">
+                        <span class="text-right">Free</span>
+                    </span>
+                </div>
+                <div class="row mb-3 pt-3 pb-3" id="total">
+                    <p class="col-8">Total</p>
+                    <span data-automation="summary-total" class="col-4 text-right">
+                        <span class="text-right">{{sumMoney | currency : "₫" : 0}}</span>
+                    </span>
+                </div>
+                <div class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
+                    <button aria-label="Add to Bag" id="add-to-bag"
+                        class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Guest Checkout</button>
+                </div>
+                <div class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
+                    <button aria-label="Add to Bag" id="add-to-bag"
+                        class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Member Checkout</button>
+                </div>
+            </div>
+            <!--END SUMMARY -->
+        </div>
+
+        <h4 class="container-fluid mt-5">You Might Also Like</h4>
+        <!-- SOMETHING RIGHT HERE! -->
+        <div id="my-pics" class="carousel slide mb-5 position-relative" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators m-0 position-absolute fixed-bottom" id="active-carousel">
+                <li data-target="#my-pics" onclick="" data-slide-to="0" class="active"></li>
+                <li data-target="#my-pics" data-slide-to="1"></li>
+                <li data-target="#my-pics" data-slide-to="2"></li>
+                <li data-target="#my-pics" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner " id="active-carousel-product">
+                <div class="carousel-item active">
+                    <div class="lider row container-fluid ml-0 p-0">
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/naf1a.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Air Force 1 '07</h5>
+                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,519,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/naf1b.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Air Force 1 '07 LV8</h5>
+                                    <p class="" style="font-size: 0.7rem;">Women's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,829,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6 ">
+                            <img src="img/naf1c.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Air Force 1 '07 LV7</h5>
+                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,519,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/naf1d.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Air Force 1 '05</h5>
+                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,599,000₫
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="lider row container-fluid ml-0 p-0">
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/nam90.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Air Force Mid 90</h5>
+                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    2,919,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/namSC.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Air Force Mid SC</h5>
+                                    <p class="" style="font-size: 0.7rem;">Kid's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    4,519,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6 ">
+                            <img src="img/nbmv.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Boot Mid LV7</h5>
+                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    5,519,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/jordand3l.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Jordan 3 Low</h5>
+                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,499,000₫
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="lider row container-fluid ml-0 p-0">
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/nomc.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike One Mid C</h5>
+                                    <p class="" style="font-size: 0.7rem;">Women's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    2,519,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/naj1mSEK.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Air Jordan 1 Mid SE</h5>
+                                    <p class="" style="font-size: 0.7rem;">Older Kids' Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    2,929,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6 ">
+                            <img src="img/naj1mSEM.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Air Jordan 1 Mid SE</h5>
+                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,829,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/naj1mSEW.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Air Jordan 1 Mid SE</h5>
+                                    <p class="" style="font-size: 0.7rem;">Women's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,829,000₫
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="lider row container-fluid ml-0 p-0">
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/naj1mNau.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Air Jordan 1 Mid</h5>
+                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,669,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/ndunkhight.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Dunk High</h5>
+                                    <p class="" style="font-size: 0.7rem;">Older Kids' Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    2,549,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6 ">
+                            <img src="img/ndunkhightSE.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Dunk High SE</h5>
+                                    <p class="" style="font-size: 0.7rem;">Women's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,669,000₫
+                                </p>
+                            </div>
+                        </a>
+                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
+                            <img src="img/ndunkhightretro.jpg" class="img-fluid" alt="">
+                            <div class=" row pb-0 justify-content-center">
+                                <div class=" p-0  col-xl-7 col-6 font">
+                                    <h5 class="" style="font-size: 1rem;">Nike Dunk High Retro</h5>
+                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
+                                </div>
+                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
+                                    3,118,649₫
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

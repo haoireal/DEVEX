@@ -1,0 +1,274 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+<div th:replace="~{flagment/head :: headFragment}"></div>
+<link rel="stylesheet" href="cssGH/productsdetail.css">
+</head>
+<style>
+/* Center the carousel */
+#product-carousel {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 600px;
+}
+
+/* Add some margin to the carousel indicators */
+.product-detail .carousel-indicators {
+	margin-bottom: 20px;
+}
+
+/* Center the carousel indicators */
+.product-detail .carousel-indicators li {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin: 0 5px;
+	text-indent: -999px;
+	cursor: pointer;
+	background-color: #fff;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 50%;
+}
+
+.product-detail .carousel-indicators .active {
+	background-color: #fff;
+	background-color: rgba(255, 255, 255, 0.75);
+}
+
+/* Style the form-check elements */
+.product-detail .form-check {
+	margin-bottom: 1rem;
+}
+
+/* Style the radio buttons */
+.product-detail .form-check-input {
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.product-detail .form-check-label {
+	background: rgb(255, 255, 255);
+	color: rgb(17, 17, 17);
+	box-shadow: rgb(229, 229, 229) 0px 0px 0px 1px;
+	height: 48px;
+	border-radius: 4px;
+	-webkit-box-flex: 1;
+	flex-grow: 1;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+}
+
+.product-detail .form-check-label:hover {
+	box-shadow: rgb(17, 17, 17) 0px 0px 0px 1px inset;
+}
+
+.product-detail .form-check input[type="radio"]:checked+label {
+	box-shadow: rgb(17, 17, 17) 0px 0px 0px 1px inset;
+}
+
+.product-detail button.ncss-btn-primary-dark.btn-lg {
+	width: 100%;
+	min-height: 60px;
+	padding: 18px 24px;
+}
+
+.product-detail button.ncss-btn-secondary-dark {
+	padding: 6px 20px;
+	border-radius: 30px;
+	border: 1.5px solid transparent;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	background: 0 0;
+	color: #111;
+	border-color: #ccc;
+}
+
+.product-detail button.ncss-btn-secondary-dark.btn-lg {
+	width: 100%;
+	min-height: 60px;
+	padding: 18px 24px;
+}
+
+.product-detail button.ncss-btn-primary-dark {
+	padding: 6px 20px;
+	border-radius: 30px;
+	border: 1.5px solid transparent;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	background: #111;
+	color: #fff;
+}
+
+.product-detail .body-2 {
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.product-detail .pb6-sm {
+	padding-bottom: 24px;
+}
+
+.product-detail .pt8-sm {
+	padding-top: 32px;
+}
+
+.product-detail ol, .product-detail ul {
+	list-style: none;
+	list-style-type: none;
+}
+
+.product-detail li {
+	display: list-item;
+	text-align: -webkit-match-parent;
+}
+
+.product-detail .ncss-list-ul .ncss-li {
+	list-style-type: disc;
+	margin-left: 16px;
+}
+
+#add-to-bag:hover {
+	background-color: #000000ce;
+}
+
+.product-detail #image {
+	text-align: center;
+}
+
+.product-detail img {
+	width: 40rem;
+}
+</style>
+
+<body ng-app="myapp">
+	<div class="container-fluid">
+		<div th:replace="~{flagment/header :: headerFragment}"></div>
+		<!-- PRODUCT DETAIL -->
+		<div class="product-detail">
+			<div
+				class="first-pdd row container-fluid d-flex justify-content-center m-0">
+				<div id="image" class="col-12 col-sm-12 col-md-8 col-xl-8">
+					<img class="img-fluid"
+						th:src="@{/img/coffee/__${beverage.image}__}" alt="First slide" />
+				</div>
+
+
+				<div class="detail-pd col-12 col-sm-12 col-md-4 col-xl-4 container">
+					<h2 th:text="${beverage.name}"></h2>
+					<p class="mt-2" th:text="${beverage.descriptiton}"></p>
+
+					<p class="mb-5" th:text="${beverage.price}"></p>
+					<p class="mt-5">Select Size</p>
+					<div ng-controller="SizeController" class="row">
+						<div class="form-check col-4" ng-repeat="size in sizes">
+							<input class="form-check-input" type="radio" name="size"
+								id="size_{{size}}" ng-value="size" ng-model="selectedSize">
+							<label class="form-check-label" id="label-{{size}}"
+								for="size_{{size}}"> {{size}} </label>
+						</div>
+					</div>
+
+					<div
+						class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
+						<button aria-label="Add to Bag" id="add-to-bag"
+							ng-click="addToCart(product)"
+							class="ncss-btn-primary-dark btn-lg add-to-cart-btn">
+							Add to Bag</button>
+					</div>
+					<div class="pt-5 prl6-sm prl0-lg">
+						<div class="description-preview body-2 css-1pbvugb">
+							<p>Intertwining functionality with fashion, the Air Max Bliss
+								lets you bring chic style outdoors. From rustic colours to
+								desert-inspired textures (including faux snakeskin), it delivers
+								the perfect amount of wild. 2-tone laces nod to traditional
+								hiking boots, while the plush design pairs soft cushioning with
+								pillowy padding around the ankle. Where will your adventure take
+								you?</p>
+							<ul
+								class="description-preview__features pt8-sm pb6-sm ncss-list-ul">
+								<li class="description-preview__color-description ncss-li mb-3">Colour
+									Shown: Pale Ivory/Summit White/Oatmeal/Picante Red</li>
+								<li class="description-preview__style-color ncss-li">Style:
+									FB9752-100</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="~{flagment/footer :: footerFragment}"></div>
+
+
+
+	<script>
+		const header = document.querySelector("#secondnav");
+		let lastScrollTop = 0;
+
+		window.addEventListener("scroll", function() {
+			let st = window.pageYOffset || document.documentElement.scrollTop;
+
+			if (st > lastScrollTop) {
+				header.classList.remove("visible");
+				header.classList.add("notvisible");
+
+				console.log("Scrolling down");
+
+			} else {
+				header.classList.add("visible");
+				header.classList.remove("notvisible");
+				if (st == 0) {
+					header.classList.remove("visible");
+
+				}
+				console.log("Scrolling up");
+
+			}
+
+			lastScrollTop = st <= 0 ? 0 : st;
+		});
+		// var app = angular.module("myapp", []).controller("myCtrl", function ($scope, $http) {
+		//     $scope.product = {
+
+		//     };
+		//     $http.get('Data/men-products.json').then(function (reponse) {
+		//         $scope.product = reponse.data[0];
+		//         console.log($scope.product)
+
+		//     });
+		// });
+		// Initialize the carousel
+		$(document).ready(function() {
+			$("#product-carousel").carousel();
+		});
+
+		// Update the carousel on window resize
+		$(window).on("resize", function() {
+			$("#product-carousel").carousel("dispose");
+			$("#product-carousel").carousel();
+		});
+	</script>
+	<div th:replace="~{flagment/footLink :: footLinkFragment}"></div>
+
+</body>
+
+</html>
