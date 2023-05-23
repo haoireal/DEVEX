@@ -33,4 +33,10 @@ public class HnBController {
         model.addAttribute("beverage", beverage);
         return "user/beveragedetail";
     }
+	
+	@GetMapping("/cart")
+    public String cartDetail() {
+		
+        return "user/cart";
+    }
 }

@@ -1,27 +1,11 @@
 <!-- @format -->
 
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nike. Just Do It. Nike VN</title>
-    <link class="jordan" rel="icon" href="img/nikeicon.png" />
-    <!-- JQWERY -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-    <!-- Angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <!-- ICON -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <!-- My CSS -->
-    <link class="jordan" rel="stylesheet" href="cssGH/index.css" />
+   <div th:replace="~{flagment/head :: headFragment}"></div>
 </head>
 <style>
     .bag-product img {
@@ -135,7 +119,7 @@
 </style>
 
 <body ng-app="myapp">
-
+<div th:replace="~{flagment/header :: headerFragment}"></div>
     <div class="container-fluid">
         <div class="content-layout row container-fluid">
             <!-- BAG -->
@@ -226,239 +210,11 @@
             </div>
             <!--END SUMMARY -->
         </div>
-
-        <h4 class="container-fluid mt-5">You Might Also Like</h4>
-        <!-- SOMETHING RIGHT HERE! -->
-        <div id="my-pics" class="carousel slide mb-5 position-relative" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators m-0 position-absolute fixed-bottom" id="active-carousel">
-                <li data-target="#my-pics" onclick="" data-slide-to="0" class="active"></li>
-                <li data-target="#my-pics" data-slide-to="1"></li>
-                <li data-target="#my-pics" data-slide-to="2"></li>
-                <li data-target="#my-pics" data-slide-to="3"></li>
-            </ol>
-            <div class="carousel-inner " id="active-carousel-product">
-                <div class="carousel-item active">
-                    <div class="lider row container-fluid ml-0 p-0">
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/naf1a.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Air Force 1 '07</h5>
-                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,519,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/naf1b.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Air Force 1 '07 LV8</h5>
-                                    <p class="" style="font-size: 0.7rem;">Women's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,829,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6 ">
-                            <img src="img/naf1c.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Air Force 1 '07 LV7</h5>
-                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,519,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/naf1d.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Air Force 1 '05</h5>
-                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,599,000₫
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="lider row container-fluid ml-0 p-0">
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/nam90.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Air Force Mid 90</h5>
-                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    2,919,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/namSC.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Air Force Mid SC</h5>
-                                    <p class="" style="font-size: 0.7rem;">Kid's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    4,519,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6 ">
-                            <img src="img/nbmv.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Boot Mid LV7</h5>
-                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    5,519,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/jordand3l.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Jordan 3 Low</h5>
-                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,499,000₫
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="lider row container-fluid ml-0 p-0">
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/nomc.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike One Mid C</h5>
-                                    <p class="" style="font-size: 0.7rem;">Women's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    2,519,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/naj1mSEK.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Air Jordan 1 Mid SE</h5>
-                                    <p class="" style="font-size: 0.7rem;">Older Kids' Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    2,929,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6 ">
-                            <img src="img/naj1mSEM.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Air Jordan 1 Mid SE</h5>
-                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,829,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/naj1mSEW.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Air Jordan 1 Mid SE</h5>
-                                    <p class="" style="font-size: 0.7rem;">Women's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,829,000₫
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="lider row container-fluid ml-0 p-0">
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/naj1mNau.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Air Jordan 1 Mid</h5>
-                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,669,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/ndunkhight.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Dunk High</h5>
-                                    <p class="" style="font-size: 0.7rem;">Older Kids' Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    2,549,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6 ">
-                            <img src="img/ndunkhightSE.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Dunk High SE</h5>
-                                    <p class="" style="font-size: 0.7rem;">Women's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,669,000₫
-                                </p>
-                            </div>
-                        </a>
-                        <a href="" class="media-container justify-content-center col-xl-3  col-md-3 col-6  ">
-                            <img src="img/ndunkhightretro.jpg" class="img-fluid" alt="">
-                            <div class=" row pb-0 justify-content-center">
-                                <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1rem;">Nike Dunk High Retro</h5>
-                                    <p class="" style="font-size: 0.7rem;">Men's Shoes</p>
-                                </div>
-                                <p class=" col-4  col-xl-4  text-right p-0" style="font-size: 0.9rem;">
-                                    3,118,649₫
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+<div th:replace="~{flagment/footer :: footerFragment}"></div>
+  
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-        crossorigin="anonymous"></script>
-    <script src="js/app.js"></script>
+    <div th:replace="~{flagment/footLink :: footLinkFragment}"></div>
 </body>
 
 </html>
