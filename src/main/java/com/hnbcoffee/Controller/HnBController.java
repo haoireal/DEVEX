@@ -20,7 +20,7 @@ public class HnBController {
 	
 	@GetMapping("/home")
 	public String homePageController() {
-		session.set("cart", cart);
+		session.set("cartCount", cart.getCount());
 		return "user/index";
 	}
 

@@ -125,7 +125,7 @@
             <!-- BAG -->
             <div id="bag" class="col-xl-8 col-12">
                 <h4 class="col-xl-10 col-md-8 col-sm-5 col-6 p-0 m-0">BAG</h4>
-                <th:block th:each="item : ${#session.getAttribute('cart').items}">
+                <th:block th:each="item : ${cart.items}">
                 <div class="bag-product row">
                     <div class="product col-12 pt-3 pb-3" >
                         <div class="row">

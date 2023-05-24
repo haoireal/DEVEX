@@ -32,7 +32,8 @@ public class ShoppingCartController {
 	
 	@RequestMapping("/cart")
 	public String view(Model model) {
-		session.set("cart", cart);
+		model.addAttribute("cart", cart);
+		session.set("cartCount", cart.getCount());
 		return "user/cart";
 	}
 
