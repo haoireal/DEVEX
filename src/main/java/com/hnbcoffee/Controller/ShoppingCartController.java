@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hnbcoffee.Sevice.ShoppingCartService;
 import com.hnbcoffee.Utils.ParamService;
+import com.hnbcoffee.Utils.SessionService;
+
+import jakarta.websocket.Session;
 
 
 @Controller
@@ -24,9 +27,12 @@ public class ShoppingCartController {
 	@Autowired
 	ParamService param;
 	
+	@Autowired
+	SessionService session;
+	
 	@RequestMapping("/cart")
 	public String view(Model model) {
-		model.addAttribute("cart", cart);
+		session.set("cart", cart);
 		return "user/cart";
 	}
 
