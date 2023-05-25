@@ -157,40 +157,40 @@
 }
 </style>
 
-<body ng-app="myapp">
+<body>
 	<div class="container-fluid">
 		<div th:replace="~{flagment/header :: headerFragment}"></div>
 		<!-- PRODUCT DETAIL -->
 		<div class="product-detail">
 			<div
 				class="first-pdd row container-fluid d-flex justify-content-center m-0">
-				<div id="image" class="col-12 col-sm-12 col-md-8 col-xl-8">
+				<div id="image" class="col-12 col-sm-12 col-md-7 col-xl-7">
 					<img class="img-fluid"
 						th:src="@{/img/coffee/__${beverage.image}__}" alt="First slide" />
 				</div>
 
 
-				<div class="detail-pd col-12 col-sm-12 col-md-4 col-xl-4 container">
+				<div class="detail-pd col-12 col-sm-12 col-md-5 col-xl-5 container">
 					<h2 th:text="${beverage.name}"></h2>
-					<p class="mt-2" th:text="${beverage.descriptiton}"></p>
+					<p class="mt-2" >Đồ uống H&B Coffee luôn tuyệt nhất</p>
 
-					<p class="mb-5" th:text="${beverage.price}"></p>
+					<p class="mb-5" th:text="${beverage.price}"> </p> 
 					<p class="mt-5">Select Size</p>
-					<div ng-controller="SizeController" class="row">
-						<div class="form-check col-4" ng-repeat="size in sizes">
-							<input class="form-check-input" type="radio" name="size"
-								id="size_{{size}}" ng-value="size" ng-model="selectedSize">
-							<label class="form-check-label" id="label-{{size}}"
-								for="size_{{size}}"> {{size}} </label>
+					<div  class="row">
+						<div  class="form-check col-4" th:each="entry : ${sizes}">
+							<label class="form-check-label" th:text="${entry.key}" id="label-${entry.key}"
+								for="size_${entry.key}"></label>
+							<input class="form-check-input" type="radio" th:name="size" th:value="${entry.value}" />
+							
 						</div>
 					</div>
 
 					<div
 						class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
-						<button aria-label="Add to Bag" id="add-to-bag"
-							ng-click="addToCart(product)"
+						<a th:href="@{/hnbcoffee/cart/add/__${beverage.id}__}">
+							<button aria-label="Add to Bag" id="add-to-bag"
 							class="ncss-btn-primary-dark btn-lg add-to-cart-btn">
-							Add to Bag</button>
+							Add to Bag</button></a>
 					</div>
 					<div class="pt-5 prl6-sm prl0-lg">
 						<div class="description-preview body-2 css-1pbvugb">

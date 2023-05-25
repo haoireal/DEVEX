@@ -149,13 +149,13 @@ app.controller(
   }
 );
 //!SIZE-PRODUCT DETAIL CONTROL
-app.controller("SizeController", function ($scope) {
+/*app.controller("SizeController", function ($scope) {
   $scope.sizes = [
     "S",
     "M",
     "L",
   ];
-});
+});*/
 
 //!CART
 app.controller("CartlCtrl", function ($scope, $rootScope, $routeParams, $http) {

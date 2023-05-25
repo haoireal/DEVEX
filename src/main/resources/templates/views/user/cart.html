@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+
 
 <head>
    <div th:replace="~{flagment/head :: headFragment}"></div>
@@ -118,31 +118,32 @@
     }
 </style>
 
-<body ng-app="myapp">
+<body>
 <div th:replace="~{flagment/header :: headerFragment}"></div>
     <div class="container-fluid">
         <div class="content-layout row container-fluid">
             <!-- BAG -->
             <div id="bag" class="col-xl-8 col-12">
                 <h4 class="col-xl-10 col-md-8 col-sm-5 col-6 p-0 m-0">BAG</h4>
-                <div class="bag-product row" ng-repeat="product in cart track by product.id">
+                <th:block th:each="item : ${cart.items}">
+                <div class="bag-product row">
                     <div class="product col-12 pt-3 pb-3" >
                         <div class="row">
                             <!-- <img src="img/shoes/{{product.image}}" class="img-fluid" alt=""> -->
-                            <a href="#!productdetail/:{{product.id}}" class="col-3">
-                                <img src="img/{{product.image}}" class="img-fluid" alt="">
+                            <a th:href="@{/hnbcoffee/coffee/detail/__${item.id}__}"  class="col-3">
+                                <img th:src="@{/img/coffee/__${item.image}__}" class="img-fluid" alt="">
                             </a>
                             <div class=" row pb-0 pl-0 justify-content-center col-9">
                                 <div class=" p-0  col-xl-7 col-6 font">
-                                    <h5 class="" style="font-size: 1.2rem;">{{product.name}}</h5>
-                                    <p class="" style="font-size: 0.94rem;">{{product.des}}</p>
+                                    <h5 class="" style="font-size: 1.2rem;" th:text="${item.name}"></h5>
+                                    <p class="" style="font-size: 0.94rem;">Đồ uống H&B Coffee luôn tuyệt nhất</p>
                                     <div class="mt-5 row ml-1">
                                         <!-- Size dropdown menu -->
                                         <div class="form-group row col-6">
                                             <label for="sizeSelect" class="col-3 m-0 p-0">Size:</label>
                                             <div class="width-size" >
-                                                <select class="form-control col-9 m-0 p-0" id="sizeSelect" >
-                                                    <option ng-repeat="size in sizes" value="{{size}}">{{size}}</option>
+                                                <select class="form-control col-9 m-0 p-0" id="sizeSelect"  >
+                                                    <option th:each="size : ${sizes}" th:value="${size.value}" th:text="${size.key}"></option>
                                                 </select>
                                             </div>
                                         </div>
@@ -151,7 +152,7 @@
                                             <label for="quantitySelect" class="col-3 m-0 p-0">Quantity:</label>
                                             <div class="width-size2">
                                                 <select class="form-control col-9 m-0 p-0" id="quantitySelect" >
-                                                    <option ng-repeat="quantity in quantities" ng-selected="quantity == {{product.quantity}}" value="{{quantity}}">{{quantity}}</option>
+                                                    <option  value=""></option>
                                                 </select>
                                             </div>
                                         </div>
@@ -159,22 +160,28 @@
                                     </div>
                                 </div>
                                 <div class="col-4  col-xl-4 col">
-                                    <p class="text-right p-0" style="font-size: 1rem;">
-                                        {{product.price | currency : "₫" : 0}}₫
+                                    <p class="text-right p-0" style="font-size: 1rem;" th:text="${item.price}">
+                                        
 
                                     </p>
                                     <p class="text-right p-0" style="font-size: 1rem;">
-                                       SỐ LƯỢNG {{product.quantity}}
+                                      x SỐ LƯỢNG <span th:text="${item.qty}"></span>
 
                                     </p>
-                                    <button class="btn-remove mt-5 p-1 ml-5" type="button" aria-label="Remove"
-                                        ng-click="delProduct(cart.index)" name="remove-item-button"><i class="far fa-trash-alt"></i></button>
+                                    
+                                    <hr>
+                                    <p class="text-right"><span class="font-weight-bold" style="float: left;">Tổng: </span><span class="font-weight-bold" style="font-size: 1rem;" th:text="${item.price * item.qty}">
+                                    </span> VNĐ</p>
+				
+                                    <a th:href="@{/hnbcoffee/cart/remove/__${item.id}__}"><button class="btn-remove mt-2 ml-2" type="button" aria-label="Remove"
+                                         name="remove-item-button"><i class="far fa-trash-alt"></i></button></a>
                                 </div>
 
                             </div>
                         </div>
                     </div>
                 </div>
+                </th:block>
             </div>
             <!-- END BAG -->
 
@@ -184,7 +191,7 @@
                 <div class="row mb-3 mt-3 " id="subtotal">
                     <p class="col-8">Subtotal</p>
                     <span data-automation="summary-total" class="col-4 text-right">
-                        <span class="text-right">{{sumMoney | currency : "₫" : 0}}</span>
+                        <span class="text-right"></span>
                     </span>
                 </div>
                 <div class="row mb-3">
@@ -196,7 +203,7 @@
                 <div class="row mb-3 pt-3 pb-3" id="total">
                     <p class="col-8">Total</p>
                     <span data-automation="summary-total" class="col-4 text-right">
-                        <span class="text-right">{{sumMoney | currency : "₫" : 0}}</span>
+                        <span class="text-right" th:text="${cart.amount}"></span> VNĐ
                     </span>
                 </div>
                 <div class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
