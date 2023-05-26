@@ -1,6 +1,8 @@
 package com.hnbcoffee.Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,13 +66,30 @@ public class ShoppingCartController {
 	}
 	
 	@ModelAttribute("sizes")
-	public Map<String, String> geSize() {
+	public Map<String, String> getSize() {
 		Map<String, String> map = new HashMap<>();
 		map.put("S", "0");
 		map.put("M", "5000");
 		map.put("L", "10000");
 
 		return map;
+	}
+	
+	@ModelAttribute("quantities")
+	public List<Integer> getQuantity() {
+		List<Integer> quantities = new ArrayList<>();
+		quantities.add(1);
+		quantities.add(2);
+		quantities.add(3);
+		quantities.add(4);
+		quantities.add(5);
+		quantities.add(6);
+		quantities.add(7);
+		quantities.add(8);
+		quantities.add(9);
+		quantities.add(10);
+
+		return quantities;
 	}
 	
 	
