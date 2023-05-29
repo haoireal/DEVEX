@@ -25,7 +25,7 @@ public class BeverageDetailController {
     }
 	
 	@ModelAttribute("sizes")
-	public Map<String, String> geSize() {
+	public Map<String, String> getSize() {
 		Map<String, String> map = new HashMap<>();
 		map.put("S", "0");
 		map.put("M", "5000");

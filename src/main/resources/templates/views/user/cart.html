@@ -153,12 +153,9 @@
                                       		
                                             <label for="quantitySelect" class="col-3 m-0 p-0">Quantity:</label>
                                             <div class="width-size2">
-                                                <!--<select class="form-control col-9 m-0 p-0" id="quantitySelect" th:name="qty"  onChange="this.form.submit()" >
-                                                    <option th:each="qty : ${quantities}" th:value="${qty.value}" th:text="${qty.key}"></option>
-                                                </select>-->
-                                                <select class="form-control col-9 m-0 p-0 quantitySelect" th:value="${item.qty}" th:name="qty" onChange="this.form.submit()">
+                                                <select class="form-control col-9 m-0 p-0 quantitySelect" id="qtySelect" th:name="qty"  onchange="this.form.submit()">
 														<option th:each="quantity : ${quantities}"
-															th:value="${quantity}" th:text="${quantity}"></option>
+															th:value="${quantity}" th:text="${quantity}" th:selected="${quantity == item.qty}"></option>
 												</select>
                                             </div>
                                         </div>
@@ -229,6 +226,45 @@
     </div>
 
     <div th:replace="~{flagment/footLink :: footLinkFragment}"></div>
+    
+    <script>
+	    function changeSelectValue() {
+	    	console.log(111);
+    	  var selectElement = document.getElementById("qtySelect");
+    	  var selectedValue = selectElement.value;
+
+    	  // Gửi yêu cầu Ajax đến Controller
+//     	  $.ajax({
+//     	    type: "POST",
+//     	    url: "/hnbcoffee/cart/update",
+//     	    data: { selectedValue: selectedValue },
+//     	    success: function(response) {
+//     	      // Xử lý phản hồi từ Controller
+//     	      var newOptionValue = response.newValue;
+    	      
+//     	      // Thay đổi giá trị của thẻ <select>
+//     	      selectElement.value = newOptionValue;
+//     	    }
+//     	  });
+    	  var xhr = new XMLHttpRequest();
+    	  xhr.open("POST", "/hnbcoffee/cart/update", true); // Thay đổi URL tại đây
+    	  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    	  console.log(122);
+    	  xhr.onreadystatechange = function() {
+    		  console.log(123);
+    	    if (xhr.readyState === 4 && xhr.status === 200) {
+    	    	console.log(133);
+    	      // Xử lý phản hồi từ endpoint trong Spring Boot
+    	      var response = JSON.parse(xhr.responseText);
+    	      var newOptionValue = response.newValue;
+    	      
+    	      // Thay đổi giá trị của thẻ <select>
+    	      selectElement.value = newOptionValue;
+    	    }
+    	  };
+    	}
+
+    </script>
 </body>
 
 </html>

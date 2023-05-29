@@ -11,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hnbcoffee.Sevice.ShoppingCartService;
 import com.hnbcoffee.Utils.ParamService;
@@ -91,6 +94,21 @@ public class ShoppingCartController {
 
 		return quantities;
 	}
+	
+//	@PostMapping("/cart/update")
+//    @ResponseBody
+//    public Map<String, Integer> changeSelectValue(@RequestParam("selectedValue") Integer selectedValue) {
+//		// Xử lý logic và thay đổi giá trị
+//		Integer newOptionValue = selectedValue;
+//		Integer id = param.getInteger("id", 0);
+//		int qty = param.getInteger("qty", 0);
+//		cart.update(id, qty);
+//		// Tạo đối tượng phản hồi
+//		Map<String, Integer> response = new HashMap<>();
+//		response.put("newValue", newOptionValue);
+//		    
+//		return response;
+//    }
 	
 	
 }
