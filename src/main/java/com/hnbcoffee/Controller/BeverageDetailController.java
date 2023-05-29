@@ -1,8 +1,11 @@
 package com.hnbcoffee.Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import com.hnbcoffee.Utils.DataSharing;
 @RequestMapping("/hnbcoffee")
 public class BeverageDetailController {
 	
+	
 	@GetMapping("/coffee/detail/{beverageId}")
     public String showProductDetail(@PathVariable("beverageId") Integer beverageId, Model model) {
 		CartItem items = DataSharing.items.get(beverageId);
@@ -26,11 +30,13 @@ public class BeverageDetailController {
 	
 	@ModelAttribute("sizes")
 	public Map<String, String> geSize() {
-		Map<String, String> map = new HashMap<>();
-		map.put("S", "0");
-		map.put("M", "5000");
-		map.put("L", "10000");
+		Map<String, String> sizes = new HashMap<>();
+		sizes.put("S", "0");
+		sizes.put("M", "5000");
+		sizes.put("L", "10000");
 
-		return map;
+		return sizes;
 	}
+	
+
 }
