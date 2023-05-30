@@ -63,7 +63,7 @@ public class ShoppingCartController {
 	}
 	
 	@ModelAttribute("sizes")
-	public Map<String, String> geSize() {
+	public Map<String, String> getSize() {
 		Map<String, String> map = new HashMap<>();
 		map.put("S", "0");
 		map.put("M", "5000");
@@ -73,7 +73,8 @@ public class ShoppingCartController {
 	}
 	
 	@ModelAttribute("quantities")
-	public List<Integer> geQuantity() {
+
+	public List<Integer> getQuantity() {
 		List<Integer> quantities = new ArrayList<>();
 		quantities.add(1);
 		quantities.add(2);
@@ -88,4 +89,21 @@ public class ShoppingCartController {
 
 		return quantities;
 	}
+	
+//	@PostMapping("/cart/update")
+//    @ResponseBody
+//    public Map<String, Integer> changeSelectValue(@RequestParam("selectedValue") Integer selectedValue) {
+//		// Xử lý logic và thay đổi giá trị
+//		Integer newOptionValue = selectedValue;
+//		Integer id = param.getInteger("id", 0);
+//		int qty = param.getInteger("qty", 0);
+//		cart.update(id, qty);
+//		// Tạo đối tượng phản hồi
+//		Map<String, Integer> response = new HashMap<>();
+//		response.put("newValue", newOptionValue);
+//		    
+//		return response;
+//    }
+	
+	
 }

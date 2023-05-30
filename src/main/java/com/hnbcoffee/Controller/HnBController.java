@@ -24,14 +24,4 @@ public class HnBController {
 		return "user/index";
 	}
 
-	@GetMapping("/signin")
-	public String signin() {
-		session.set("cartCount", cart.getCount());
-		return "account/signin";
-	}
-	@GetMapping("/signup")
-	public String signupController() {
-		session.set("cartCount", cart.getCount());
-		return "account/signup";
-	}
 }
