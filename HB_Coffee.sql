@@ -15,7 +15,7 @@ create table [User] (
 	[Gender] bit,
 	[Birthday] date,
 	[Address] nvarchar(100),
-	[Role] bit,
+	[Role] varchar(10),
 	VerifiCode int not null,
 	Active bit null
 	CONSTRAINT uc_Users_Email UNIQUE (Email)
@@ -94,9 +94,9 @@ create table [DetailOfBill] (
 go
 -- Insert data
 insert into [User]
-values	('baolh',N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận',0, '123456',1),
-		('haoireal',N'Phạm Gia Hào', N'haoireal@gmail.com', '123', 1, '2003-11-11', N'Gò Vấp', 0, '123456',1),
-		('admin',N'HB Coffee', N'hbcoffee@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 1, '123456',1)
+values	('baolh',N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
+		('haoireal',N'Phạm Gia Hào', N'haoireal@gmail.com', '123', 1, '2003-11-11', N'Gò Vấp', 'CUSTOMER', '123456',1),
+		('admin',N'HB Coffee', N'hbcoffee@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 'ADMIN', '123456',1)
 
 go
 insert into TypeOfBeverage

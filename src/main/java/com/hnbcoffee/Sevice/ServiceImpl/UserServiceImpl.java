@@ -25,12 +25,18 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
-		if(user == null) {
+		if(user == null) { 
 			throw new UsernameNotFoundException("Username not found for: " + username );
 		}
-		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-		return null;
+		
+		
+		return new UserDetailsImpl(user);
 	}
 
 	
 }
+
+
+
+
+

@@ -3,19 +3,28 @@ package com.hnbcoffee.Controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/hnbcoffee")
+@RestController
 public class UserController {
 
-	@GetMapping("/signin")
+//	@GetMapping("/signin")
+//	public String showSignin() {
+//		return "account/signin";
+//	}
+//	@GetMapping("/signup")
+//    public String showSignup() {
+//
+//		return "account/signup";
+//    }
+	
+	@GetMapping("/home")
 	public String showSignin() {
-		return "account/signin";
+		return "This is home Page";
 	}
-	@GetMapping("/signup")
+	@GetMapping("/admin")
     public String showSignup() {
 
-		return "account/signup";
+		return "This is admin page";
     }
-	
 }

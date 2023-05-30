@@ -37,7 +37,7 @@ public class User {
 	@Column(name = "Address")
 	String address;
 	@Column(name = "Role")
-	boolean role;
+	String role;
 	@Column(name = "VerifiCode")
 	int vericode;
 	@Column(name = "Active")
