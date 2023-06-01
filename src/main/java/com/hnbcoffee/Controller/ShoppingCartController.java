@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hnbcoffee.Sevice.ParamService;
+import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.ShoppingCartService;
-import com.hnbcoffee.Utils.ParamService;
-import com.hnbcoffee.Utils.SessionService;
 
 
 @Controller

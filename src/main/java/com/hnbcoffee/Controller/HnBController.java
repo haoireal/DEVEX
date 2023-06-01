@@ -5,8 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.hnbcoffee.Sevice.ShoppingCartService;
-import com.hnbcoffee.Utils.SessionService;
+import com.hnbcoffee.Sevice.*;
 
 
 @Controller

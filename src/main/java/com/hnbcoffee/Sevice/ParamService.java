@@ -1,4 +1,4 @@
-package com.hnbcoffee.Utils;
+package com.hnbcoffee.Sevice;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
-@Service
+@Service("paramService")
 public class ParamService {
 	@Autowired
 	HttpServletRequest request;

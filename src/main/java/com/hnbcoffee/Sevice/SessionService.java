@@ -1,11 +1,11 @@
-package com.hnbcoffee.Utils;
+package com.hnbcoffee.Sevice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
 
-@Service
+@Service("sessionService")
 public class SessionService {
 	@Autowired
 	HttpSession session;

@@ -97,7 +97,7 @@ insert into [User]
 values	('baolh',N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
 		('haoireal',N'Phạm Gia Hào', N'haoireal@gmail.com', '123', 1, '2003-11-11', N'Gò Vấp', 'CUSTOMER', '123456',1),
 		('admin',N'HB Coffee', N'hbcoffee@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 'ADMIN', '123456',1)
-
+		select * from [User]
 go
 insert into TypeOfBeverage
 values	(N'Cà phê'),
