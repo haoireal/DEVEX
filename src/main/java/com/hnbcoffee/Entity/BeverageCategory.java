@@ -19,15 +19,20 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+<<<<<<< HEAD:src/main/java/com/hnbcoffee/Entity/TypeOfBeverage.java
 
 @Table(name = "TypeOfBeverage")
 public class TypeOfBeverage implements Serializable {
+=======
+@Table(name = "Beverage_Category")
+public class BeverageCategory implements Serializable {
+>>>>>>> cb64f82f25dee311b943a2d3af14f87d4b392ab3:src/main/java/com/hnbcoffee/Entity/BeverageCategory.java
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private Integer id;
 	@Column(name = "Name")
 	private String name;
-	@OneToMany(mappedBy = "typeOfBeverage")
+	@OneToMany(mappedBy = "category")
 	List<Beverage> beverages;
 }

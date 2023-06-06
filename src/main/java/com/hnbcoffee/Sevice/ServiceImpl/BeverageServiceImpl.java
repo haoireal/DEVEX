@@ -90,8 +90,8 @@ public class BeverageServiceImpl implements BeverageService {
 	}
 
 	@Override
-	public List<Beverage> findByType(Integer id) {
-		return beverageRepository.findByType(id);
+	public List<Beverage> findByType(String type) {
+		return beverageRepository.findByType(type);
 	}
 	
 	

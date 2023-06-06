@@ -21,7 +21,7 @@ create table [User] (
 	CONSTRAINT uc_Users_Email UNIQUE (Email)
 )
 go
-create table [TypeOfBeverage] (
+create table [Beverage_Category] (
 	[ID] int identity(101,1) primary key,
 	[Name] nvarchar(50) not null
 )
@@ -33,10 +33,10 @@ create table [Beverage] (
 	[Description] nvarchar(max) not null,
 	[Image] nvarchar(100) not null,
 	[Type_ID] int not null,
-	FOREIGN KEY ([Type_ID]) REFERENCES [TypeOfBeverage](ID)
+	FOREIGN KEY ([Type_ID]) REFERENCES [Beverage_Category](ID)
 )
 go
-create table [TypeOfTopping] (
+create table [Topping_Category] (
 	[ID] int identity(101,1) primary key,
 	[Name] nvarchar(30) not null
 )
@@ -46,7 +46,7 @@ create table [Topping] (
 	[Name] nvarchar(50) not null,
 	[Price] float not null,
 	[Type_ID] int not null,
-	FOREIGN KEY ([Type_ID]) REFERENCES [TypeOfTopping](ID)
+	FOREIGN KEY ([Type_ID]) REFERENCES [Topping_Category](ID)
 )
 go
 create table [Voucher] (
@@ -60,7 +60,7 @@ create table [Voucher] (
 	[Discount] float not null
 )
 go
-create table [DetailOfVoucher] (
+create table [Voucher_Detail] (
 	[ID] int identity(1001,1) primary key,
 	[Customer_ID] int not null,
 	[Voucher_ID] int not null,
@@ -79,7 +79,7 @@ create table [Bill] (
 	FOREIGN KEY ([Voucher_ID]) REFERENCES [Voucher](ID)
 )
 go
-create table [DetailOfBill] (
+create table [Bill_Detail] (
 	[ID] int identity(10001,1) primary key,
 	[Quantity] int not null,
 	[Size] varchar(1) not null CHECK ([Size] IN('S', 'M', 'L')),
@@ -97,9 +97,8 @@ insert into [User]
 values	('baolh',N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
 		('haoireal',N'Phạm Gia Hào', N'haoireal@gmail.com', '123', 1, '2003-11-11', N'Gò Vấp', 'CUSTOMER', '123456',1),
 		('admin',N'HB Coffee', N'hbcoffee@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 'ADMIN', '123456',1)
-		select * from [User]
 go
-insert into TypeOfBeverage
+insert into Beverage_Category
 values	(N'Coffee'),
 		(N'CloudFee'),
 		(N'CloudTea'),
@@ -142,7 +141,7 @@ values	(N'Cà phê sữa đá', 25000, N'Cà phê Đắk Lắk nguyên chất đ
 		(N'Trà sữa mắc ca trân châu', 49000, N'Mỗi ngày với The Coffee House sẽ là điều tươi mới hơn với sữa hạt mắc ca thơm ngon, bổ dưỡng quyện cùng nền trà oolong cho vị cân bằng, ngọt dịu đi kèm cùng Trân châu trắng giòn dai mang lại cảm giác “đã” trong từng ngụm trà sữa.', N'tra-sua-mac-ca.jpg', 105)
 
 go
-insert into TypeOfTopping
+insert into Topping_Category
 values	(N'Coffee-Cloud'),
 		(N'Tea')
 
@@ -168,7 +167,7 @@ values	(N'Voucher Nice Day', N'Giảm 20% cho hoá đơn trên 120K khi uống t
 		(N'Voucher Quốc Tế Thiếu Nhi', N' Giảm 16% cho hoá đơn trên 70K chỉ áp dụng cho khách hàng dưới 18 tuổi', 'YOUNG16', '2023-6-1', '2023-6-2', 70000, 0.16)
 
 go
-insert into DetailOfVoucher
+insert into Voucher_Detail
 values	(101, 1006),
 		(101, 1002),
 		(102, 1003),
@@ -181,7 +180,7 @@ values	(80000, '2023-4-16', N'Chuyển khoản', 101, null),
 		(105000, '2023-5-15', N'Tiền mặt', 101, null)
 
 go
-insert into DetailOfBill
+insert into Bill_Detail
 values	(1, 'M', 30000, 10001, 10001, null),
 		(1, 'S', 50000, 10001, 10017, null),
 		(1, 'M', 45000, 10002, 10007, null),

@@ -13,7 +13,7 @@ import com.hnbcoffee.Entity.Beverage;
 @EnableJpaRepositories
 @Repository("beverageRepository")
 public interface BeverageRepository extends JpaRepository<Beverage, Integer>{
-	@Query("SELECT o FROM Beverage o WHERE o.typeOfBeverage.id = :id")
-	List<Beverage> findByType(@Param("id") Integer id);
+	@Query("SELECT o FROM Beverage o WHERE o.category.name LIKE :type")
+	List<Beverage> findByType(@Param("type") String type);
 	
 }

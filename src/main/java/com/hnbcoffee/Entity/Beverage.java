@@ -20,17 +20,16 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Table(name = "Beverage")
 public class Beverage implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private Integer id;
 	@Column(name = "Name")
 	private String name;
 	@Column(name = "Price")
-	private float price;
+	private Double price;
 	@Column(name = "Description")
 	private String description;
 	@Column(name = "Image")
@@ -39,5 +38,5 @@ public class Beverage implements Serializable {
 	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Type_ID")
-	private TypeOfBeverage typeOfBeverage;
+	BeverageCategory category;
 }
