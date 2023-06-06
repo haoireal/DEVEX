@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hnbcoffee.Entity.Beverage;
-import com.hnbcoffee.Entity.TypeOfBeverage;
 import com.hnbcoffee.Sevice.BeverageService;
 
 
@@ -31,7 +30,6 @@ public class BeveragesController {
 	public String coffeeController(Model model) {
 		List<Beverage> list = beverageService.findAll();
 		model.addAttribute("beverages", list);
-		System.out.println(list);
 		model.addAttribute("count", beverageService.count());
 		return "user/coffee";
 	}
@@ -43,14 +41,13 @@ public class BeveragesController {
         return "user/beveragedetail";
     }
 	
-//	@GetMapping("/beverage/{typeID}")
-//	public String typeCoffeeController(Model model, @PathVariable("typeID") String type) {
-//		TypeOfBeverage item = typeOfBeverageRepository.findByNameLike(type);
-//		List<Beverage> list = beverageService.findByType(item.getId());
-//		model.addAttribute("beverages", list);
-//		model.addAttribute("count", beverageService.count());
-//		return "user/coffee";
-//	}
+	@GetMapping("/beverage/{type}")
+	public String typeCoffeeController(Model model, @PathVariable("type") String type) {
+		List<Beverage> list = beverageService.findByType(type);
+		model.addAttribute("beverages", list);
+		model.addAttribute("count", beverageService.count());
+		return "user/coffee";
+	}
 	
 	
 	@ModelAttribute("sizes")

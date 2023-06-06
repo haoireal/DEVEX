@@ -39,6 +39,6 @@ public interface BeverageService  {
 	Beverage save(Beverage entity);
 
 
-	List<Beverage> findByType(Integer type);
+	List<Beverage> findByType(String type);
 	
 }

@@ -4,11 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
-import com.hnbcoffee.Entity.TypeOfBeverage;
+import com.hnbcoffee.Entity.BeverageCategory;
+
 
 @EnableJpaRepositories
-@Repository("typeOfBeverageRepository")
-public interface TypeOfBeverageRepository extends JpaRepository<TypeOfBeverage, Integer> {
+@Repository("beverageCategoryRepository")
+public interface BeverageCategoryRepository extends JpaRepository<BeverageCategory, Integer> {
 	
-	TypeOfBeverage findByNameLike(String name);
+	BeverageCategory findByNameLike(String name);
 }
