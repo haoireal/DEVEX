@@ -2,12 +2,12 @@ package com.hnbcoffee.Sevice;
 
 import java.util.Collection;
 
-import com.hnbcoffee.Entity.CartItem;
+import com.hnbcoffee.DTO.CartItem;
 
 
 public interface ShoppingCartService {
 
-	CartItem add(Integer id);
+	CartItem add(CartItem itemCart);
 
 	void remove(Integer id);
 

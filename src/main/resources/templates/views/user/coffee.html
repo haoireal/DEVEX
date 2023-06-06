@@ -16,8 +16,9 @@
 
 		<div id="header-content"
 			class="row container-fluid m-0 mt-4 justify-content-center">
-			<h4 class="col-xl-10 col-md-8 col-sm-5 col-6 p-0 m-0">Men's
-				Shoes(374)</h4>
+			<h4 class="col-xl-10 col-md-8 col-sm-5 col-6 p-0 m-0">
+				Beverages (<span th:text="${count}"></span>)
+			</h4>
 
 			<div id="hide-sort"
 				class="col-xl-2 col-md-4 col-sm-6 col-6 p-0 m-0 d-flex justify-content-end">
@@ -86,40 +87,88 @@
 						</div>
 					</div>
 					<section id="sidebar">
-						<div>
-							<h6 class="p-1 border-bottom">Home Furniture</h6>
-							<ul>
-								<li><a href="#">Living</a></li>
-								<li><a href="#">Dining</a></li>
-								<li><a href="#">Office</a></li>
-								<li><a href="#">Bedroom</a></li>
-								<li><a href="#">Kitchen</a></li>
-							</ul>
-						</div>
-						<div>
-							<h6 class="p-1 border-bottom">Filter By</h6>
-						</div>
-						<div>
-							<h6>Price</h6>
-							<form class="ml-md-2">
-								<div class="form-inline border rounded p-sm-2 my-2">
-									<input ng-model="sortType" type="radio" name="type" id="boring">
-									<label class="pl-1 pt-sm-0 pt-1">NOR</label>
+						<div class="menu">
+
+
+							<div id="accordianId" role="tablist" aria-multiselectable="false"
+								class="text-decoration-none">
+								<div class="card" style="border-left: none; border-right: none; border-top: none;">
+									<div class="card-header bg-white" role="tab" id="section1HeaderId">
+										<h5 class="mb-0">
+											<a class="d-inline-block w-100"  data-toggle="collapse" data-parent="#accordianId"
+												href="#section1ContentId" aria-expanded="true"
+												aria-controls="section1ContentId">
+												<span class="text-secondary">Type</span>
+											</a>
+										</h5>
+									</div>
+									<div id="section1ContentId" class="collapse in" role="tabpanel"
+										aria-labelledby="section1HeaderId" data-parent="#accordianId">
+										<div class="card-body">
+											<a href="#" class="list-group-item text-secondary">Coffee</a> 
+											<a href="#" class="list-group-item text-secondary">CloudFee</a> 
+											<a href="#" class="list-group-item text-secondary">CloudTea</a> 
+											<a href="#" class="list-group-item text-secondary">Hi-Tea Healthy</a> 
+											<a href="#" class="list-group-item text-secondary">Fruit tea & Milk tea</a>
+										</div>
+									</div>
 								</div>
-								<div class="form-inline border rounded p-sm-2 my-2">
-									<input ng-click="sortType = '-price'"
-										ng-class="{'active': sortType == '-price'}" ng-value="true"
-										type="radio" name="type" id="ASC"> <label
-										class="pl-1 pt-sm-0 pt-1">ASC</label>
+								<div class="card" style="border-left: none; border-right: none; border-top: none;">
+									<div class="card-header bg-white" role="tab" id="section2HeaderId">
+										<h5 class="mb-0">
+											<a class="d-inline-block w-100" data-toggle="collapse" data-parent="#accordianId"
+												href="#section2ContentId" aria-expanded="true"
+												aria-controls="section2ContentId">
+												<span class="text-secondary">Filter By Price</span>
+											</a>
+										</h5>
+									</div>
+									<div id="section2ContentId" class="collapse in" role="tabpanel"
+										aria-labelledby="section2HeaderId" data-parent="#accordianId">
+										<div class="card-body">
+											<form class="ml-md-2">
+												<div class="form-inline border rounded p-sm-2 my-2">
+													<input ng-model="sortType" type="radio" name="type" id="boring">
+													<label class="pl-1 pt-sm-0 pt-1">NOR</label>
+												</div>
+												<div class="form-inline border rounded p-sm-2 my-2">
+													<input ng-click="sortType = '-price'"
+														ng-class="{'active': sortType == '-price'}" ng-value="true"
+														type="radio" name="type" id="ASC"> <label
+														class="pl-1 pt-sm-0 pt-1">ASC</label>
+												</div>
+												<div class="form-inline border rounded p-md-2 p-sm-1">
+													<input ng-click="sortType = '+price'"
+														ng-class="{'active': sortType == '+price'}" ng-value="false"
+														type="radio" name="type" id="DESC"> <label
+														class="pl-1 pt-sm-0 pt-1">DESC</label>
+												</div>
+											</form>
+										</div>
+									</div>
 								</div>
-								<div class="form-inline border rounded p-md-2 p-sm-1">
-									<input ng-click="sortType = '+price'"
-										ng-class="{'active': sortType == '+price'}" ng-value="false"
-										type="radio" name="type" id="DESC"> <label
-										class="pl-1 pt-sm-0 pt-1">DESC</label>
+								<div class="card" style="border-left: none; border-right: none; border-top: none;">
+									<div class="card-header bg-white" role="tab" id="section3HeaderId">
+										<h5 class="mb-0">
+											<a class="d-inline-block w-100" data-toggle="collapse" data-parent="#accordianId"
+												href="#section3ContentId" aria-expanded="true"
+												aria-controls="section3ContentId">
+												<span class="text-secondary">Filter By Other</span>
+											</a>
+										</h5>
+									</div>
+									<div id="section3ContentId" class="collapse in" role="tabpanel"
+										aria-labelledby="section3HeaderId" data-parent="#accordianId">
+										<div class="card-body">
+											<a href="#" class="list-group-item text-secondary">Best Sellers</a>
+											<a href="#" class="list-group-item text-secondary">Newest</a>
+										</div>
+									</div>
 								</div>
-							</form>
+							</div>
 						</div>
+						
+						
 					</section>
 				</aside>
 			</div>
@@ -131,21 +180,21 @@
 
 				<!-- PRODUCT-ROW-COL3 -->
 				<div class="lider row container-fluid ml-0 p-0 ">
-					<th:block th:each="item : ${beverages}">
+					<th:block th:each="item : ${beverages}" >
 						<div
 							class="media-container justify-content-center col-xl-4 col-md-4 col-6 mb-3"
 							id="products">
-							<a th:href="@{/hnbcoffee/coffee/detail/__${item.id}__}"> <img
-								th:src="@{/img/coffee/__${item.image}__}"
+							<a th:href="@{/hnbcoffee/beverage/detail/__${item.id}__}"> <img
+								th:src="@{/img/beverage/__${item.image}__}"
 								class="img-fluid rounded shadow mb-3" alt="">
 								<div class=" row pb-0 justify-content-center">
 									<div class=" p-0  col-xl-7 col-6 font">
 										<b class="" style="font-size: 1rem;" th:text="${item.name}"></b>
-										<p class="" style="font-size: 0.7rem;"  >Đồ uống H&B Coffee luôn tuyệt nhất</p>
 									</div>
 									<p class=" col-4  col-xl-4  text-right p-0"
-										style="font-size: 0.9rem;" th:text="${item.price}">
-
+										style="font-size: 0.9rem;">
+										<span th:inline="text">[[${#numbers.formatDecimal(item.price,
+											0, 'POINT', 0, 'COMMA')}]]</span> đ
 									</p>
 								</div>
 							</a>

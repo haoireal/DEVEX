@@ -1,5 +1,9 @@
 package com.hnbcoffee.Entity;
 
+import java.util.List;
+
+import jakarta.persistence.OneToMany;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,4 +29,6 @@ public class TypeOfBeverage {
 	private int id;
 	@Column(name = "Name")
 	private String name;
+	@OneToMany(mappedBy = "typeOfBeverage")
+	List<Beverage> beverages;
 }

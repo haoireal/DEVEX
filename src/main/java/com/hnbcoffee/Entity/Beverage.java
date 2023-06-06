@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -35,6 +36,7 @@ public class Beverage {
 	@Column(name = "Image")
 	private String image;
 
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Type_ID")
 	private TypeOfBeverage typeOfBeverage;

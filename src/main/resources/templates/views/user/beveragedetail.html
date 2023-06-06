@@ -161,59 +161,71 @@
 	<div class="container-fluid">
 		<div th:replace="~{flagment/header :: headerFragment}"></div>
 		<!-- PRODUCT DETAIL -->
-		<div class="product-detail">
-			<div
-				class="first-pdd row container-fluid d-flex justify-content-center m-0">
-				<div id="image" class="col-12 col-sm-12 col-md-7 col-xl-7">
-					<img class="img-fluid"
-						th:src="@{/img/coffee/__${beverage.image}__}" alt="First slide" />
-				</div>
+		<form th:action="@{/hnbcoffee/cart/add/__${beverage.id}__}"
+			th:method="post">
+			<div class="product-detail">
+				<div
+					class="first-pdd row container-fluid d-flex justify-content-center m-0">
+
+					<div id="image" class="col-12 col-sm-12 col-md-7 col-xl-7">
+						<img class="img-fluid"
+							th:src="@{/img/beverage/__${beverage.image}__}" 
+							alt="First slide" /> 
+						<input type="hidden"
+							th:value="${beverage.image}" th:name="image">
+						
+					</div>
 
 
-				<div class="detail-pd col-12 col-sm-12 col-md-5 col-xl-5 container">
-					<h2 th:text="${beverage.name}"></h2>
-					<p class="mt-2" >Đồ uống H&B Coffee luôn tuyệt nhất</p>
+					<div class="detail-pd col-12 col-sm-12 col-md-5 col-xl-5 container">
+						<h2 th:text="${beverage.name}" ></h2>
+						<input type="hidden" th:value="${beverage.name}" th:name="name">
 
-					<p class="mb-5" th:text="${beverage.price}"> </p> 
-					<p class="mt-5">Select Size</p>
-					<div  class="row">
-						<div  class="form-check col-4" th:each="entry : ${sizes}">
-							<label class="form-check-label" th:text="${entry.key}" id="label-${entry.key}"
-								for="size_${entry.key}"></label>
-							<input class="form-check-input" type="radio" th:name="size" th:value="${entry.value}" />
-							
+						<p class="mb-4" th:text="${beverage.price}" ></p>
+						<input type="hidden" th:value="${beverage.price}" th:name="price">
+						<div class="row">
+							<div class="form-check col-4">
+								<span class="mt-3">Quantity</span>
+								<input class="text-center pt-2 pb-2" style="width: 200px" type="number"
+									th:name="qty" min="1" max="10" />
+
+							</div>
 						</div>
-					</div>
+						<p class="mt-3">Select Size</p>
+						<div class="row">
+							<div class="form-check col-4" th:each="entry : ${sizes}">
+								<label class="form-check-label" th:text="${entry.key}"
+									id="label-${entry.key}" for="size_${entry.key}"></label> <input
+									class="form-check-input" type="radio" th:name="size"
+									th:value="${entry.value}" />
 
-					<div
-						class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
-						<a th:href="@{/hnbcoffee/cart/add/__${beverage.id}__}">
-							<button aria-label="Add to Bag" id="add-to-bag"
-							class="ncss-btn-primary-dark btn-lg add-to-cart-btn">
-							Add to Bag</button></a>
-					</div>
-					<div class="pt-5 prl6-sm prl0-lg">
-						<div class="description-preview body-2 css-1pbvugb">
-							<p>Intertwining functionality with fashion, the Air Max Bliss
-								lets you bring chic style outdoors. From rustic colours to
-								desert-inspired textures (including faux snakeskin), it delivers
-								the perfect amount of wild. 2-tone laces nod to traditional
-								hiking boots, while the plush design pairs soft cushioning with
-								pillowy padding around the ankle. Where will your adventure take
-								you?</p>
-							<ul
-								class="description-preview__features pt8-sm pb6-sm ncss-list-ul">
-								<li class="description-preview__color-description ncss-li mb-3">Colour
-									Shown: Pale Ivory/Summit White/Oatmeal/Picante Red</li>
-								<li class="description-preview__style-color ncss-li">Style:
-									FB9752-100</li>
-							</ul>
+							</div>
+						</div>
+
+						<div
+							class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
+							<a th:href="@{/hnbcoffee/cart/add/__${beverage.id}__}">
+								<button aria-label="Add to Bag" id="add-to-bag"
+									class="ncss-btn-primary-dark btn-lg add-to-cart-btn">
+									Add to Bag</button>
+							</a>
+						</div>
+						<div class="pt-5 prl6-sm prl0-lg">
+							<div class="description-preview body-2 css-1pbvugb">
+								<p th:text="${beverage.description}"></p>
+								<ul
+									class="description-preview__features pt8-sm pb6-sm ncss-list-ul">
+									<li class="description-preview__color-description ncss-li mb-3">Colour
+										Shown: Pale Ivory/Summit White/Oatmeal/Picante Red</li>
+									<li class="description-preview__style-color ncss-li">Style:
+										FB9752-100</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-
+		</form>
 	</div>
 
 	<div th:replace="~{flagment/footer :: footerFragment}"></div>

@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.hnbcoffee.Entity.CartItem;
+import com.hnbcoffee.DTO.CartItem;
 import com.hnbcoffee.Sevice.ShoppingCartService;
 import com.hnbcoffee.Utils.DataSharing;
 
@@ -16,14 +16,13 @@ import com.hnbcoffee.Utils.DataSharing;
 public class ShoppingCartServiceImpl implements ShoppingCartService{
 	Map<Integer, CartItem> map = new HashMap<>();
 	@Override
-	public CartItem add(Integer id) {
-		CartItem item = map.get(id);
+	public CartItem add(CartItem cartItem) {
+		CartItem item = map.get(cartItem.getId());
 		if(item == null) {
-			item = DataSharing.items.get(id);
-			item.setQty(1);
-			map.put(id, item);
+			item = cartItem;
+			map.put(cartItem.getId(), item);
 		} else {
-			item.setQty(item.getQty() + 1);
+			item.setQty(item.getQty() + cartItem.getQty());
 		}
 		return item;
 	}

@@ -1,4 +1,4 @@
-package com.hnbcoffee.Entity;
+package com.hnbcoffee.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

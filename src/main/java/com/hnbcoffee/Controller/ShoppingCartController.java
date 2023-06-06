@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hnbcoffee.DTO.CartItem;
 import com.hnbcoffee.Sevice.ParamService;
 import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.ShoppingCartService;
@@ -38,7 +39,15 @@ public class ShoppingCartController {
 
 	@RequestMapping("/cart/add/{id}")
 	public String add(@PathVariable("id") Integer id) {
-		cart.add(id);
+		CartItem item = new CartItem();
+		item.setId(id);
+		item.setName(param.getString("name", null));
+		item.setImage(param.getString("image", null));
+		item.setPrice(param.getDouble("price", 0));
+		item.setSize(param.getString("size", "S"));
+		item.setQty(param.getInteger("qty", 1));
+		cart.add(item);
+		System.out.print(item);
 		return "redirect:/hnbcoffee/cart";
 	}
 	

@@ -1,8 +1,11 @@
 package com.hnbcoffee.Controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,27 +13,47 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.hnbcoffee.Entity.CartItem;
-import com.hnbcoffee.Utils.DataSharing;
+import com.hnbcoffee.Entity.Beverage;
+import com.hnbcoffee.Entity.TypeOfBeverage;
+import com.hnbcoffee.Sevice.BeverageService;
+
 
 @Controller
 @RequestMapping("/hnbcoffee")
 public class BeveragesController {
-
-	@GetMapping("/coffee")
+	@Autowired
+	BeverageService beverageService;
+	
+//	@Autowired
+//	TypeOfBeverageRepository typeOfBeverageRepository;
+	
+	@GetMapping("/beverage")
 	public String coffeeController(Model model) {
-		model.addAttribute("beverages", DataSharing.items.values());
+		List<Beverage> list = beverageService.findAll();
+		model.addAttribute("beverages", list);
+		System.out.println(list);
+		model.addAttribute("count", beverageService.count());
 		return "user/coffee";
 	}
-	@GetMapping("/coffee/detail/{beverageId}")
+	
+	@GetMapping("/beverage/detail/{beverageId}")
     public String showProductDetail(@PathVariable("beverageId") Integer beverageId, Model model) {
-		CartItem items = DataSharing.items.get(beverageId);
-        model.addAttribute("beverage", items);
+		Beverage item = beverageService.findById(beverageId).get();
+        model.addAttribute("beverage", item);
         return "user/beveragedetail";
     }
 	
+//	@GetMapping("/beverage/{typeID}")
+//	public String typeCoffeeController(Model model, @PathVariable("typeID") String type) {
+//		TypeOfBeverage item = typeOfBeverageRepository.findByNameLike(type);
+//		List<Beverage> list = beverageService.findByType(item.getId());
+//		model.addAttribute("beverages", list);
+//		model.addAttribute("count", beverageService.count());
+//		return "user/coffee";
+//	}
+	
+	
 	@ModelAttribute("sizes")
-
 	public Map<String, String> getSize() {
 		Map<String, String> map = new HashMap<>();
 		map.put("S", "0");

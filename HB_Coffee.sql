@@ -30,7 +30,7 @@ create table [Beverage] (
 	[ID] int identity(10001,1) primary key,
 	[Name] nvarchar(100) not null,
 	[Price] float not null,
-	[Description] varchar(max) not null,
+	[Description] nvarchar(max) not null,
 	[Image] nvarchar(100) not null,
 	[Type_ID] int not null,
 	FOREIGN KEY ([Type_ID]) REFERENCES [TypeOfBeverage](ID)
@@ -100,11 +100,11 @@ values	('baolh',N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10',
 		select * from [User]
 go
 insert into TypeOfBeverage
-values	(N'Cà phê'),
+values	(N'Coffee'),
 		(N'CloudFee'),
 		(N'CloudTea'),
 		(N'Hi-Tea Healthy'),
-		(N'Trà Trái Cây - Trà Sữa')
+		(N'Fruit-tea & Milk-tea')
 
 go
 insert into Beverage
