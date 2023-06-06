@@ -32,6 +32,9 @@ public class BeveragesController {
 		List<Beverage> list = beverageService.findAll();
 		model.addAttribute("beverages", list);
 		System.out.println(list);
+//		for (Beverage b : list) {
+//			System.out.println(b.getTypeOfBeverage().getName());
+//		}
 		model.addAttribute("count", beverageService.count());
 		return "user/coffee";
 	}

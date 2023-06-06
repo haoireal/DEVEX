@@ -1,5 +1,6 @@
 package com.hnbcoffee.Entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import jakarta.persistence.*;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 
 @Table(name = "User")
-public class User {
+public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")

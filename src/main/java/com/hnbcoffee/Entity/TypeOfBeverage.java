@@ -1,5 +1,6 @@
 package com.hnbcoffee.Entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.OneToMany;
@@ -11,18 +12,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Table(name = "TypeOfBeverage")
-public class TypeOfBeverage {
+public class TypeOfBeverage implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
