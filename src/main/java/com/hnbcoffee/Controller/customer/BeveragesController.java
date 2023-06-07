@@ -1,4 +1,4 @@
-package com.hnbcoffee.Controller;
+package com.hnbcoffee.Controller.customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

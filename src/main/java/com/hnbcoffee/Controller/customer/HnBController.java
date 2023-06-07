@@ -1,4 +1,4 @@
-package com.hnbcoffee.Controller;
+package com.hnbcoffee.Controller.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

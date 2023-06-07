@@ -6,17 +6,17 @@ use HB_Coffee
 go
 
 -- create table
-create table [User] (
+create table [Users] (
 	[ID] int identity(101,1) primary key,
-	[UserName] varchar(50) not null,
+	[Username] varchar(50) not null unique,
 	[Fullname] nvarchar(50) not null,
-	[Email] nvarchar(30) not null,
+	[Email] nvarchar(30) not null unique,
 	[Password] nvarchar(30) not null,
 	[Gender] bit,
 	[Birthday] date,
 	[Address] nvarchar(100),
 	[Role] varchar(10),
-	VerifiCode int not null,
+	Verifi_Code int not null,
 	Active bit null
 	CONSTRAINT uc_Users_Email UNIQUE (Email)
 )
@@ -64,7 +64,7 @@ create table [Voucher_Detail] (
 	[ID] int identity(1001,1) primary key,
 	[Customer_ID] int not null,
 	[Voucher_ID] int not null,
-	FOREIGN KEY ([Customer_ID]) REFERENCES [User](ID),
+	FOREIGN KEY ([Customer_ID]) REFERENCES [Users](ID),
 	FOREIGN KEY ([Voucher_ID]) REFERENCES [Voucher](ID)
 )
 go
@@ -75,7 +75,7 @@ create table [Bill] (
 	[Payment] nvarchar(15) not null CHECK ([Payment] IN(N'Tiền mặt', N'Chuyển khoản')),
 	[Customer_ID] int not null,
 	[Voucher_ID] int null,
-	FOREIGN KEY ([Customer_ID]) REFERENCES [User](ID),
+	FOREIGN KEY ([Customer_ID]) REFERENCES [Users](ID),
 	FOREIGN KEY ([Voucher_ID]) REFERENCES [Voucher](ID)
 )
 go
@@ -93,11 +93,12 @@ create table [Bill_Detail] (
 )
 go
 -- Insert data
-insert into [User]
+insert into [Users]
 values	('baolh',N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
 		('haoireal',N'Phạm Gia Hào', N'haoireal@gmail.com', '123', 1, '2003-11-11', N'Gò Vấp', 'CUSTOMER', '123456',1),
-		('admin',N'HB Coffee', N'hbcoffee@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 'ADMIN', '123456',1)
+		('hnbcoffee',N'H&B Coffee', N'hnbcoffee@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 'ADMIN', '123456',1)
 go
+
 insert into Beverage_Category
 values	(N'Coffee'),
 		(N'CloudFee'),
