@@ -16,4 +16,12 @@ public interface BeverageRepository extends JpaRepository<Beverage, Integer>{
 	@Query("SELECT o FROM Beverage o WHERE o.category.name LIKE :type")
 	List<Beverage> findByType(@Param("type") String type);
 	
+	@Query("SELECT COUNT(o) FROM Beverage o WHERE o.category.name LIKE :type")
+	long countByType(@Param("type") String type);
+	
+	@Query("SELECT o FROM Beverage o WHERE o.name LIKE :keywords")
+	List<Beverage> findByKeywordName(@Param("keywords") String keywords);
+	
+	@Query("SELECT COUNT(o) FROM Beverage o WHERE o.name LIKE :keywords")
+	long countByKeywordName(@Param("keywords") String keywords);
 }

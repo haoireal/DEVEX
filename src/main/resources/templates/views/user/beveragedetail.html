@@ -186,9 +186,12 @@
 						<div class="row">
 							<div class="form-check col-4">
 								<span class="mt-3">Quantity</span>
-								<input class="text-center pt-2 pb-2" style="width: 200px" type="number"
-									th:name="qty" min="1" max="10" />
-
+<!-- 								<input class="text-center pt-2 pb-2" style="width: 200px" type="number" -->
+<!-- 									th:name="qty" min="1" max="10" th:value="1" /> -->
+									<select class="form-control col-9 m-0 p-0 text-center quantitySelect" id="qtySelect" th:name="qty">
+														<option th:each="quantity : ${quantities}"
+															th:value="${quantity}" th:text="${quantity}"></option>
+												</select>
 							</div>
 						</div>
 						<p class="mt-3">Select Size</p>

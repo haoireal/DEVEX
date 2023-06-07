@@ -75,15 +75,15 @@
 					id="navbarDropdown" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> Service </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Account Information</a>
+						<a class="dropdown-item" href="#">Profile</a>
 						 <a class="dropdown-item" href="#">Change Password</a>
 					</div></li>
 			</ul>
 			<!-- SEARCH VÀ TRÁI TIM VÀ GIỎ HÀNG -->
-			<form class="form-inline col-sm-5 row search-and-heart p-0">
+			<form action="/hnbcoffee/beverage/search" class="form-inline col-sm-5 row search-and-heart p-0">
 				<div class="form-group has-search col-xl-6 col-md-6 col-8">
 					<span class="fa fa-search form-control-feedback"></span> <input
-						ng-model="search" id="search-bar" type="text"
+						 id="search-bar" type="text" th:name="search" th:value="${session.keywordsSearch}"
 						class="form-control rounded-pill bg-light border-0"
 						placeholder="Search">
 				</div>
