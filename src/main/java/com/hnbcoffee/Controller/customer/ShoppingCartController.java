@@ -1,7 +1,8 @@
-package com.hnbcoffee.Controller;
+package com.hnbcoffee.Controller.customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,7 +74,7 @@ public class ShoppingCartController {
 	
 	@ModelAttribute("sizes")
 	public Map<String, String> getSize() {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new LinkedHashMap<>();
 		map.put("S", "0");
 		map.put("M", "5000");
 		map.put("L", "10000");
@@ -82,7 +83,6 @@ public class ShoppingCartController {
 	}
 	
 	@ModelAttribute("quantities")
-
 	public List<Integer> getQuantity() {
 		List<Integer> quantities = new ArrayList<>();
 		quantities.add(1);

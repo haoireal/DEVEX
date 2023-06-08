@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
+	public User findByEmailLike(String email) {
+		return userRepository.findByEmailLike(email);
 	}
 
 	@Override
@@ -92,6 +92,17 @@ public class UserServiceImpl implements UserService {
 	public void deleteAll() {
 		userRepository.deleteAll();
 	}
+
+	@Override
+	public User checkLogin(String email, String pass) {
+		return userRepository.checkLogin(email, pass);
+	}
+
+
+	
+	
+	
+	
 
 //	@Override
 //	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

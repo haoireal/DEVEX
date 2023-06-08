@@ -93,6 +93,25 @@ public class BeverageServiceImpl implements BeverageService {
 	public List<Beverage> findByType(String type) {
 		return beverageRepository.findByType(type);
 	}
+
+	@Override
+	public long countByType(String type) {
+		return beverageRepository.countByType(type);
+	}
+
+	@Override
+	public List<Beverage> findByKeywordName(String keywords) {
+		return beverageRepository.findByKeywordName(keywords);
+	}
+
+	@Override
+	public long countByKeywordName(String keywords) {
+		return beverageRepository.countByKeywordName(keywords);
+	}
+	
+	
+	
+	
 	
 	
 	

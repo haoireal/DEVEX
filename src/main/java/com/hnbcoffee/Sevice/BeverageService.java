@@ -40,5 +40,11 @@ public interface BeverageService  {
 
 
 	List<Beverage> findByType(String type);
+
+	long countByType(String type);
+
+	List<Beverage> findByKeywordName(String keywords);
+
+	long countByKeywordName(String keywords);
 	
 }

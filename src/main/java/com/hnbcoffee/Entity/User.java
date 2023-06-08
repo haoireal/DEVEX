@@ -17,13 +17,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Table(name = "User")
+@Table(name = "Users")
 public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
 	Integer id;
-	@Column(name = "UserName")
+	@Column(name = "Username")
 	String username;
 	@Column(name = "Fullname")
 	String fullname;
@@ -38,9 +38,9 @@ public class User implements Serializable {
 	@Column(name = "Address")
 	String address;
 	@Column(name = "Role")
-	String role;
-	@Column(name = "VerifiCode")
+	String role = "CUSTOMER";
+	@Column(name = "Verifi_Code")
 	int vericode;
 	@Column(name = "Active")
-	boolean isveri;
+	boolean isveri = true;
 }

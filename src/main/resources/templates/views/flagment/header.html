@@ -15,7 +15,8 @@
 					H&B Coffee</a></li>
 			<li class="jordan"><a href="#">Order: 0711.1006</a></li>
 			<li class="jordan"><a href="#">Free shipping from 50,000 VND</a></li>
-			<li class="jordan"><a href="/hnbcoffee/signin">Sign In</a></li>
+			<li class="jordan font-weight-bold"><a th:href="@{/hnbcoffee/__${session.user == null ? 'signin' : 'profile'}__}" 
+			th:text="${session.user == null ? 'Sign In' : session.user.fullname}"></a></li>
 		</ul>
 	</nav>
 
@@ -70,20 +71,21 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link navbarDropdown" href="#">History</a></li>
 				<!-- Menu SNKRS -->
-				<li class="nav-item dropdown"><a
+				<li class="nav-item dropdown"  th:if="${session.user != null}"><a
 					class="nav-link navbarDropdown dropdown-toggle" href="#"
 					id="navbarDropdown" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> Service </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Account Information</a>
-						 <a class="dropdown-item" href="#">Change Password</a>
+						<a class="dropdown-item" th:href="@{/hnbcoffee/profile}">Profile</a>
+						 <a class="dropdown-item" href="/hnbcoffee/change-password">Change password</a>
+						 <a class="dropdown-item" href="/hnbcoffee/signout" >Sign out</a>
 					</div></li>
 			</ul>
 			<!-- SEARCH VÀ TRÁI TIM VÀ GIỎ HÀNG -->
-			<form class="form-inline col-sm-5 row search-and-heart p-0">
+			<form action="/hnbcoffee/beverage/search" class="form-inline col-sm-5 row search-and-heart p-0">
 				<div class="form-group has-search col-xl-6 col-md-6 col-8">
 					<span class="fa fa-search form-control-feedback"></span> <input
-						ng-model="search" id="search-bar" type="text"
+						 id="search-bar" type="text" th:name="search" th:value="${session.keywordsSearch}"
 						class="form-control rounded-pill bg-light border-0"
 						placeholder="Search">
 				</div>
