@@ -20,6 +20,8 @@ create table [Users] (
 	Active bit null
 	CONSTRAINT uc_Users_Email UNIQUE (Email)
 )
+delete from [users] where id > 103
+select * from [users]
 go
 create table [Beverage_Category] (
 	[ID] int identity(101,1) primary key,

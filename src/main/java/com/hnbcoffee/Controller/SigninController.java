@@ -49,7 +49,7 @@ public class SigninController {
 		User user = userService.checkLogin(email, pass);
 		
 		if(user != null) {
-			if(user.isIsveri()) {
+			if(user.isAcive()) {
 				session.set("user", user);
 				if(remember == true) {
 					cookie.add("email", email, 10);
