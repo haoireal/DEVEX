@@ -6,23 +6,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/hnbcoffee/admin")
-public class TestController {
+public class AdminController {
+	
 	@GetMapping("/home")
-    public String test1() {
+    public String getAdminHome() {
 		return "admin/index";
     }
 	
 	@GetMapping("/beverage")
-    public String test2() {
+    public String getAdminBeverage() {
 		return "admin/beverage";
     }
+	
 	@GetMapping("/sales")
-    public String test3() {
+    public String getAdminSales() {
 		return "admin/sales";
     }
+	
 	@GetMapping("/account")
-    public String test4() {
+    public String getAdminAccount() {
 		return "admin/account";
     }
-	
 }

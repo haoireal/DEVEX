@@ -40,5 +40,15 @@ public class SignupController {
 		return "account/signup";
     }
 	
-
+	
+	
+//	@GetMapping("/home")
+//	public String showSignin() {
+//		return "This is home Page";
+//	}
+//	@GetMapping("/admin")
+//    public String showSignup() {
+//
+//		return "This is admin page";
+//    }
 }

@@ -197,10 +197,10 @@
 						<p class="mt-3">Select Size</p>
 						<div class="row">
 							<div class="form-check col-4" th:each="entry : ${sizes}">
-								<label class="form-check-label" th:text="${entry.key}"
-									id="label-${entry.key}" for="size_${entry.key}"></label> <input
-									class="form-check-input" type="radio" th:name="size"
-									th:value="${entry.value}" />
+								<label class="form-check-label sizes" th:text="${entry.key}"
+									 th:for="${'size_' + entry.key}" tabindex="0"></label> <input
+									class="form-check-input" type="radio" th:name="size" th:id="${'size_' + entry.key}"
+									th:value="${entry.key}" />
 
 							</div>
 						</div>
@@ -261,25 +261,38 @@
 
 			lastScrollTop = st <= 0 ? 0 : st;
 		});
-		// var app = angular.module("myapp", []).controller("myCtrl", function ($scope, $http) {
-		//     $scope.product = {
+		// Lấy tất cả các phần tử label và input
+		const labels = document.querySelectorAll('.form-check-label');
+		const inputs = document.querySelectorAll('.form-check-input');
+	
+		// Lặp qua từng label
+		labels.forEach((label) => {
+		  // Gắn sự kiện click cho mỗi label
+		  label.addEventListener('click', function() {
+		    // Lấy id của label và input tương ứng
+		    const inputId = this.getAttribute('for');
+		    console.log(inputId);
+		    const input = document.getElementById(inputId);
+	
+		    if (input.checked) {
+		        input.checked = false;
+		        label.style.boxShadow = 'rgb(229, 229, 229) 0px 0px 0px 1px'; // Xóa box-shadow nếu input đã được chọn
+		      } else {
+		        input.checked = true;
+		        label.style.boxShadow = 'rgb(17, 17, 17) 0px 0px 0px 1px inset'; // Áp dụng box-shadow nếu input chưa được chọn
+		      }
+		    
+		 // Đặt trạng thái unchecked và xóa box-shadow cho các label khác
+		    labels.forEach((otherLabel) => {
+		      const otherInputId = otherLabel.getAttribute('for');
+		      const otherInput = document.getElementById(otherInputId);
 
-		//     };
-		//     $http.get('Data/men-products.json').then(function (reponse) {
-		//         $scope.product = reponse.data[0];
-		//         console.log($scope.product)
-
-		//     });
-		// });
-		// Initialize the carousel
-		$(document).ready(function() {
-			$("#product-carousel").carousel();
-		});
-
-		// Update the carousel on window resize
-		$(window).on("resize", function() {
-			$("#product-carousel").carousel("dispose");
-			$("#product-carousel").carousel();
+		      if (otherInput !== input) {
+		        otherInput.checked = false;
+		        otherLabel.style.boxShadow = 'rgb(229, 229, 229) 0px 0px 0px 1px';
+		      }
+		    });
+		  });
 		});
 	</script>
 	<div th:replace="~{flagment/footLink :: footLinkFragment}"></div>
