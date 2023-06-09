@@ -15,6 +15,17 @@ import com.hnbcoffee.Utils.DataSharing;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService{
 	Map<Integer, CartItem> map = new HashMap<>();
+	
+	public long priceSize(String size) {
+		if(size.equalsIgnoreCase("L")) {
+			return 10000;
+		}else if(size.equalsIgnoreCase("M")) {
+			return 5000;
+		}else {
+			return 0;
+		}
+	}
+	
 	@Override
 	public CartItem add(CartItem cartItem) {
 		CartItem item = map.get(cartItem.getId());
@@ -33,9 +44,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 	}
 	
 	@Override
-	public CartItem update(Integer id, int qty) {
+	public CartItem update(Integer id, int qty, String size) {
 		CartItem item = map.get(id);
 		item.setQty(qty);
+		item.setSize(size);
 		return item;
 	}
 	
@@ -60,7 +72,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 	@Override
 	public double getAmount() {
 		return map.values().stream()
-				.mapToDouble(item -> item.getPrice()*item.getQty())
+				.mapToDouble(item -> (item.getPrice() + priceSize(item.getSize())) *item.getQty())
 				.sum();
 	}
 }

@@ -1,7 +1,7 @@
 package com.hnbcoffee.Entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import jakarta.persistence.*;
 
@@ -42,5 +42,5 @@ public class User implements Serializable {
 	@Column(name = "Verifi_Code")
 	int vericode;
 	@Column(name = "Active")
-	boolean isveri = true;
+	boolean Acive = true;
 }

@@ -202,6 +202,7 @@
 						</div>
 						<p class="mt-3">Select Size</p>
 						<div class="row">
+
 							<div class="form-check col-4" th:each="size : ${sizes}">
 								<label class="form-check-label" th:text="${size}"
 									 th:for="${'size_' + size}" tabindex="0"></label> <input
@@ -242,6 +243,34 @@
 
 
 	<script>
+		
+		
+	
+		const header = document.querySelector("#secondnav");
+		let lastScrollTop = 0;
+
+		window.addEventListener("scroll", function() {
+			let st = window.pageYOffset || document.documentElement.scrollTop;
+
+			if (st > lastScrollTop) {
+				header.classList.remove("visible");
+				header.classList.add("notvisible");
+
+				console.log("Scrolling down");
+
+			} else {
+				header.classList.add("visible");
+				header.classList.remove("notvisible");
+				if (st == 0) {
+					header.classList.remove("visible");
+
+				}
+				console.log("Scrolling up");
+
+			}
+
+			lastScrollTop = st <= 0 ? 0 : st;
+		});
 		// Lấy tất cả các phần tử label và input
 		const labels = document.querySelectorAll('.form-check-label');
 		const inputs = document.querySelectorAll('.form-check-input');
@@ -274,54 +303,6 @@
 		      }
 		    });
 		  });
-		});
-		
-		
-	
-		const header = document.querySelector("#secondnav");
-		let lastScrollTop = 0;
-
-		window.addEventListener("scroll", function() {
-			let st = window.pageYOffset || document.documentElement.scrollTop;
-
-			if (st > lastScrollTop) {
-				header.classList.remove("visible");
-				header.classList.add("notvisible");
-
-				console.log("Scrolling down");
-
-			} else {
-				header.classList.add("visible");
-				header.classList.remove("notvisible");
-				if (st == 0) {
-					header.classList.remove("visible");
-
-				}
-				console.log("Scrolling up");
-
-			}
-
-			lastScrollTop = st <= 0 ? 0 : st;
-		});
-		// var app = angular.module("myapp", []).controller("myCtrl", function ($scope, $http) {
-		//     $scope.product = {
-
-		//     };
-		//     $http.get('Data/men-products.json').then(function (reponse) {
-		//         $scope.product = reponse.data[0];
-		//         console.log($scope.product)
-
-		//     });
-		// });
-		// Initialize the carousel
-		$(document).ready(function() {
-			$("#product-carousel").carousel();
-		});
-
-		// Update the carousel on window resize
-		$(window).on("resize", function() {
-			$("#product-carousel").carousel("dispose");
-			$("#product-carousel").carousel();
 		});
 	</script>
 	<div th:replace="~{flagment/footLink :: footLinkFragment}"></div>

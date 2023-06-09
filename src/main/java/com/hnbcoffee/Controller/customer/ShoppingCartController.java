@@ -62,7 +62,8 @@ public class ShoppingCartController {
 	public String update() {
 		Integer id = param.getInteger("id", 0);
 		int qty = param.getInteger("qty", 0);
-		cart.update(id, qty);
+		String size = param.getString("sz", "S");
+		cart.update(id, qty, size);
 		return "redirect:/hnbcoffee/cart";
 	}
 	
@@ -73,14 +74,15 @@ public class ShoppingCartController {
 	}
 	
 	@ModelAttribute("sizes")
-	public Map<String, String> getSize() {
-		Map<String, String> map = new LinkedHashMap<>();
-		map.put("S", "0");
-		map.put("M", "5000");
-		map.put("L", "10000");
+	public List<String> getSize() {
+		List<String> list = new ArrayList<>();
+		list.add("S");
+		list.add("M");
+		list.add("L");
 
-		return map;
+		return list;
 	}
+	
 	
 	@ModelAttribute("quantities")
 	public List<Integer> getQuantity() {

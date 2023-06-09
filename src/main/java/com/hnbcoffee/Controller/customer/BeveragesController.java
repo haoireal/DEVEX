@@ -95,13 +95,13 @@ public class BeveragesController {
 	
 	
 	@ModelAttribute("sizes")
-	public Map<String, String> getSize() {
-		Map<String, String> map = new LinkedHashMap<>();
-		map.put("S", "0");
-		map.put("M", "5000");
-		map.put("L", "10000");
-		
-		return map;
+	public List<String> getSize() {
+		List<String> list = new ArrayList<>();
+		list.add("S");
+		list.add("M");
+		list.add("L");
+
+		return list;
 	}
 	
 	@ModelAttribute("quantities")
