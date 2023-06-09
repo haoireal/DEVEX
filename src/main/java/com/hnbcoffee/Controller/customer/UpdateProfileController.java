@@ -31,7 +31,7 @@ public class UpdateProfileController {
 	@GetMapping("/profile")
 	public String showProfile() {
 		
-		return "/account/profile";
+		return "user/profile";
 	}
 	
 	@PostMapping("/profile")

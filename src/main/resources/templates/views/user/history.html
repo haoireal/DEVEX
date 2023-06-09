@@ -1,0 +1,170 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+<div th:replace="~{flagment/head :: headFragment}"></div>
+<div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
+<link rel="stylesheet" href="/css/shoes.css">
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="~{flagment/header :: headerFragment}"></div>
+		<div class="wall-header-offset p-1"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper m-0">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1>Profile</h1>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<!-- /.card -->
+
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">DataTable with default features</h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<table id="example1" class="table table-bordered table-hover">
+<!-- TIÊU ĐỀ TABLE -->
+										<thead>
+											<tr>
+												<th>Rendering engine</th>
+												<th>Browser</th>
+												<th>Platform(s)</th>
+												<th>Engine version</th>
+												<th>CSS grade</th>
+											</tr>
+										</thead>
+										<!--/ TIÊU ĐỀ TABLE -->
+										<tbody>
+											<!--HOÁ ĐƠN -->
+											<tr data-widget="expandable-table" aria-expanded="false">
+												<td>Trident</td>
+												<td>Internet Explorer 4.0</td>
+												<td>Win 95+</td>
+												<td>4</td>
+												<td>X</td>
+											</tr>
+											<!-- NỘI DỤNG CỦA HOÁ ĐƠN -->
+											<tr class="expandable-body bg-dark">
+												<td colspan="5 bg-white">
+													<table class="table table-sm bg-white">
+														<thead>
+															<tr>
+																<th>BEVERAGE NAME</th>
+																<th>PRICE</th>
+																<th>QUANTITY</th>
+																<th style="width: 25%">TOTAL</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>Update software</td>
+																<td>
+																	<div class="progress progress-xs">
+																		<div class="progress-bar progress-bar-danger"
+																			style="width: 55%"></div>
+																	</div>
+																</td>
+																<td><span class="badge bg-danger">55%</span></td>
+																<td>0.0</td>
+															</tr>
+															<tr>
+																<td>Fix and squish bugs</td>
+																<td>
+																	<div
+																		class="progress progress-xs progress-striped active">
+																		<div class="progress-bar bg-success"
+																			style="width: 90%"></div>
+																	</div>
+																</td>
+																<td><span class="badge bg-success">90%</span></td>
+																<td>0.0</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+											<!-- / NỘI DỤNG CỦA HOÁ ĐƠN -->
+										</tbody>
+										<!--TIÊU ĐỀ TABLE -->
+										<tfoot>
+											<tr>
+												<th>Rendering engine</th>
+												<th>Browser</th>
+												<th>Platform(s)</th>
+												<th>Engine version</th>
+												<th>CSS grade</th>
+											</tr>
+										</tfoot>
+										<!--/ TIÊU ĐỀ TABLE -->
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<!-- END CONTENT-MEN-SHOES -->
+		<div th:replace="~{flagment/footer :: footerFragment}"></div>
+
+	</div>
+	<!-- FOOTER -->
+	<script>
+		const header = document.querySelector("#secondnav");
+		let lastScrollTop = 0;
+
+		window.addEventListener("scroll", function() {
+			let st = window.pageYOffset || document.documentElement.scrollTop;
+
+			if (st > lastScrollTop) {
+				header.classList.remove("visible");
+				header.classList.add("notvisible");
+
+				console.log("Scrolling down");
+
+			} else {
+				header.classList.add("visible");
+				header.classList.remove("notvisible");
+				if (st == 0) {
+					header.classList.remove("visible");
+
+				}
+				console.log("Scrolling up");
+
+			}
+
+			lastScrollTop = st <= 0 ? 0 : st;
+		});
+	</script>
+	<div th:replace="~{flagment/footLink :: footLinkFragment}"></div>
+	<div
+		th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
+</body>
+
+</html>
