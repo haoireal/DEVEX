@@ -93,6 +93,7 @@ create table [Bill_Detail] (
 	FOREIGN KEY ([Beverage_ID]) REFERENCES [Beverage](ID),
 	FOREIGN KEY ([Topping_ID]) REFERENCES [Topping](ID)
 )
+
 go
 -- Insert data
 insert into [Users]

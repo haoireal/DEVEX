@@ -1,6 +1,5 @@
 package com.hnbcoffee.Controller.customer;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
 
@@ -11,13 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.hnbcoffee.Constant.SessiconAttr;
 import com.hnbcoffee.Entity.User;
 import com.hnbcoffee.Sevice.CookieService;
-import com.hnbcoffee.Sevice.EmailService;
 import com.hnbcoffee.Sevice.ParamService;
 import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.UserService;
+import com.hnbcoffee.Sevice.ServiceImpl.MailerServiceImpl;
+
+import jakarta.mail.MessagingException;
 
 @Controller
 @RequestMapping("/hnbcoffee")
@@ -36,7 +36,7 @@ public class SignupController {
 	ParamService param;
 	
 	@Autowired
-	EmailService emailService;
+	MailerServiceImpl emailService;
 	
 	@GetMapping("/signup")
     public String showSignup() {
@@ -79,7 +79,13 @@ public class SignupController {
 		if (user != null) {
 			session.set("user", user);
 			System.out.println("email ne: "+user.getEmail());
-			emailService.sendEmail(user, "code");
+			
+			try {
+				emailService.sendMailToFormat("verifi", user);
+			} catch (MessagingException e) {
+				// TODO: handle exception
+				return e.getMessage();
+			}
 			return "redirect:/hnbcoffee/verifi";
 		} else {
 			return "redirect:/hnbcoffee/login";
