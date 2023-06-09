@@ -143,8 +143,8 @@
                                         <div class="form-group row col-6">
                                             <label for="sizeSelect" class="col-3 m-0 p-0">Size:</label>
                                             <div class="width-size" >
-                                                <select class="form-control col-9 m-0 p-0" id="sizeSelect"  >
-                                                    <option th:each="size : ${sizes}" th:value="${size.value}" th:text="${size.key}"></option>
+                                                <select class="form-control col-9 m-0 p-0" id="sizeSelect" th:name="sz" onchange="this.form.submit()" >
+                                                    <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}" th:selected="${size == item.size}"></option>
                                                 </select>
                                             </div>
                                         </div>
@@ -163,7 +163,7 @@
                                     </div>
                                 </div>
                                 <div class="col-4  col-xl-4 col">
-                                    <p class="text-right p-0" style="font-size: 1rem;" th:text="${item.price}">
+                                    <p class="text-right p-0" style="font-size: 1rem;" th:text="${item.price + (item.size == 'L' ? 10000 : (item.size == 'M' ? 5000 : 0))}">
                                         
 
                                     </p>
@@ -173,7 +173,8 @@
                                     </p>
                                     
                                     <hr>
-                                    <p class="text-right"><span class="font-weight-bold" style="float: left;">Total: </span><span class="font-weight-bold" style="font-size: 1rem;" th:text="${item.price * item.qty}">
+                                    <p class="text-right"><span class="font-weight-bold" style="float: left;">Total: </span><span class="font-weight-bold" style="font-size: 1rem;"
+                                     th:text="${(item.price + (item.size == 'L' ? 10000 : (item.size == 'M' ? 5000 : 0))) * item.qty}">
                                     </span> VNĐ</p>
 				
                                     <a th:href="@{/hnbcoffee/cart/remove/__${item.id}__}"><button class="btn-remove mt-2 ml-2" type="button" aria-label="Remove"
