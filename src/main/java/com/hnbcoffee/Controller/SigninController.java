@@ -60,7 +60,7 @@ public class SigninController {
 				}
 				
 				if(user.getRole().equalsIgnoreCase("ADMIN")) {
-					return "redirect:/hnbcoffee/admin";
+					return "redirect:/hnbcoffee/admin/home";
 				}else {
 					return "redirect:/hnbcoffee/home";
 				}

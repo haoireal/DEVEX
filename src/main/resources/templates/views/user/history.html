@@ -44,24 +44,23 @@
 <!-- TIÊU ĐỀ TABLE -->
 										<thead>
 											<tr>
-												<th>Rendering engine</th>
-												<th>Browser</th>
-												<th>Platform(s)</th>
-												<th>Engine version</th>
-												<th>CSS grade</th>
+												<th>ID Bill</th>
+												<th>Total</th>
+												<th>Date</th>
+												<th>Payment</th>
 											</tr>
 										</thead>
 										<!--/ TIÊU ĐỀ TABLE -->
 										<tbody>
 											<!--HOÁ ĐƠN -->
-											<tr data-widget="expandable-table" aria-expanded="false">
-												<td>Trident</td>
-												<td>Internet Explorer 4.0</td>
-												<td>Win 95+</td>
-												<td>4</td>
-												<td>X</td>
-											</tr>
-											<!-- NỘI DỤNG CỦA HOÁ ĐƠN -->
+											<th:block th:each="bill : ${list}">
+												<tr data-widget="expandable-table" aria-expanded="false">
+													<td th:text="${bill.id}"></td>
+													<td th:text="${bill.total}"></td>
+													<td th:text="${#dates.format(bill.date, 'dd-MM-yyyy')}"></td>
+													<td th:text="${bill.payment}"></td>
+												</tr>
+												<!-- NỘI DỤNG CỦA HOÁ ĐƠN -->
 											<tr class="expandable-body bg-dark">
 												<td colspan="5 bg-white">
 													<table class="table table-sm bg-white">
@@ -75,15 +74,10 @@
 														</thead>
 														<tbody>
 															<tr>
-																<td>Update software</td>
-																<td>
-																	<div class="progress progress-xs">
-																		<div class="progress-bar progress-bar-danger"
-																			style="width: 55%"></div>
-																	</div>
-																</td>
-																<td><span class="badge bg-danger">55%</span></td>
-																<td>0.0</td>
+																<td th:text=""></td>
+																<td></td>
+																<td></td>
+																<td></td>
 															</tr>
 															<tr>
 																<td>Fix and squish bugs</td>
@@ -101,16 +95,18 @@
 													</table>
 												</td>
 											</tr>
+											</th:block>
+											
+											
 											<!-- / NỘI DỤNG CỦA HOÁ ĐƠN -->
 										</tbody>
 										<!--TIÊU ĐỀ TABLE -->
 										<tfoot>
 											<tr>
-												<th>Rendering engine</th>
-												<th>Browser</th>
-												<th>Platform(s)</th>
-												<th>Engine version</th>
-												<th>CSS grade</th>
+												<th>ID Bill</th>
+												<th>Total</th>
+												<th>Date</th>
+												<th>Payment</th>
 											</tr>
 										</tfoot>
 										<!--/ TIÊU ĐỀ TABLE -->
