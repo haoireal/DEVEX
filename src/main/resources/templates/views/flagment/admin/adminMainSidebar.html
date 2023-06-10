@@ -15,7 +15,7 @@
             <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">UserName</a>
+            <a href="#" class="d-block" th:text="${session.user == null ? 'Sign In' : session.user.fullname}"}></a>
           </div>
         </div>
 
