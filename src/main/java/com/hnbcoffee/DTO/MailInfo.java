@@ -1,4 +1,4 @@
-package com.hnbcoffee.Entity;
+package com.hnbcoffee.DTO;
 
 import java.io.File;
 import java.util.ArrayList;

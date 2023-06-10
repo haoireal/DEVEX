@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hnbcoffee.Entity.User;
 import com.hnbcoffee.Sevice.CookieService;
+import com.hnbcoffee.Sevice.MailerService;
 import com.hnbcoffee.Sevice.ParamService;
 import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.UserService;
-import com.hnbcoffee.Sevice.ServiceImpl.MailerServiceImpl;
 
 import jakarta.mail.MessagingException;
 
@@ -36,7 +36,7 @@ public class SignupController {
 	ParamService param;
 	
 	@Autowired
-	MailerServiceImpl emailService;
+	MailerService emailService;
 	
 	@GetMapping("/signup")
     public String showSignup() {
@@ -60,7 +60,6 @@ public class SignupController {
 		//Tạo user mới
 		User newUser  = new User();
 		//THêm dữ liệu vào user mới
-		newUser.setUsername(fullname);
 		newUser.setFullname(fullname);
 		newUser.setEmail(email);
 		newUser.setAddress(address);

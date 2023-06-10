@@ -13,7 +13,6 @@ import com.hnbcoffee.Entity.User;
 @EnableJpaRepositories
 @Repository("userRepository")
 public interface UserRepository  extends CrudRepository<User, Integer>{
-	public User findByUsername(String username);
 	
 	@Query("Select o FROM User o WHERE o.email = :email")
 	User findByEmailLike(@Param("email") String email);

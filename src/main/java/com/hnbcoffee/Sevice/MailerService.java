@@ -1,7 +1,7 @@
 package com.hnbcoffee.Sevice;
 
 
-import com.hnbcoffee.Entity.MailInfo;
+import com.hnbcoffee.DTO.MailInfo;
 import com.hnbcoffee.Entity.User;
 
 import jakarta.mail.MessagingException;
@@ -12,7 +12,8 @@ public interface MailerService {
 	
 	void send(String to, String subject, String body) throws MessagingException;
 	
-	void sendMailToFormat(String type,User user) throws MessagingException;
+	void sendMailToFormat(String type, User user) throws MessagingException;
+	
 	
 	void queue(MailInfo mail);
 	

@@ -8,7 +8,6 @@ go
 -- create table
 create table [Users] (
 	[ID] int identity(101,1) primary key,
-	[Username] varchar(50) not null unique,
 	[Fullname] nvarchar(50) not null,
 	[Email] nvarchar(30) not null unique,
 	[Password] nvarchar(30) not null,
@@ -37,69 +36,34 @@ create table [Beverage] (
 	[Type_ID] int not null,
 	FOREIGN KEY ([Type_ID]) REFERENCES [Beverage_Category](ID)
 )
+
 go
-create table [Topping_Category] (
-	[ID] int identity(101,1) primary key,
-	[Name] nvarchar(30) not null
-)
-go
-create table [Topping] (
-	[ID] int identity(101,1) primary key,
-	[Name] nvarchar(50) not null,
-	[Price] float not null,
-	[Type_ID] int not null,
-	FOREIGN KEY ([Type_ID]) REFERENCES [Topping_Category](ID)
-)
-go
-create table [Voucher] (
-	[ID] int identity(1001,1) primary key,
-	[Name] nvarchar(100) not null,
-	[Description] nvarchar(max) not null,
-	[Code] nvarchar(10) not null,
-	[Start_Date] date not null,
-	[End_Date] date not null,
-	[RequestTotal] float null,
-	[Discount] float not null
-)
-go
-create table [Voucher_Detail] (
-	[ID] int identity(1001,1) primary key,
-	[Customer_ID] int not null,
-	[Voucher_ID] int not null,
-	FOREIGN KEY ([Customer_ID]) REFERENCES [Users](ID),
-	FOREIGN KEY ([Voucher_ID]) REFERENCES [Voucher](ID)
-)
-go
-create table [Bill] (
+create table [Orders] (
 	[ID] int identity(10001,1) primary key,
 	[Total] float not null,
 	[Date] date not null,
 	[Payment] nvarchar(15) not null CHECK ([Payment] IN(N'Tiền mặt', N'Chuyển khoản')),
 	[Customer_ID] int not null,
-	[Voucher_ID] int null,
 	FOREIGN KEY ([Customer_ID]) REFERENCES [Users](ID),
-	FOREIGN KEY ([Voucher_ID]) REFERENCES [Voucher](ID)
 )
 go
-create table [Bill_Detail] (
+create table [Orders_Detail] (
 	[ID] int identity(10001,1) primary key,
 	[Quantity] int not null,
 	[Size] varchar(1) not null CHECK ([Size] IN('S', 'M', 'L')),
 	[Price] float not null,
-	[Bill_ID] int not null,
+	[Orders_ID] int not null,
 	[Beverage_ID] int not null,
-	[Topping_ID] int null,
-	FOREIGN KEY ([Bill_ID]) REFERENCES [Bill](ID),
+	FOREIGN KEY ([Orders_ID]) REFERENCES [Orders](ID),
 	FOREIGN KEY ([Beverage_ID]) REFERENCES [Beverage](ID),
-	FOREIGN KEY ([Topping_ID]) REFERENCES [Topping](ID)
 )
 
 go
 -- Insert data
 insert into [Users]
-values	('baolh',N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
-		('haoireal',N'Phạm Gia Hào', N'haoireal@gmail.com', '123', 1, '2003-11-11', N'Gò Vấp', 'CUSTOMER', '123456',1),
-		('hnbcoffee',N'H&B Coffee', N'hnbcoffee@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 'ADMIN', '123456',1)
+values	(N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
+		(N'Phạm Gia Hào', N'haoireal@gmail.com', '123', 1, '2003-11-11', N'Gò Vấp', 'CUSTOMER', '123456',1),
+		(N'H&B Coffee', N'hnbcoffeentea@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 'ADMIN', '123456',1)
 go
 
 insert into Beverage_Category
@@ -144,50 +108,16 @@ values	(N'Cà phê sữa đá', 25000, N'Cà phê Đắk Lắk nguyên chất đ
 		(N'Trà đen Macchiato', 45000, N'Trà đen được ủ mới mỗi ngày, giữ nguyên được vị chát mạnh mẽ đặc trưng của lá trà, phủ bên trên là lớp Macchiato "homemade" bồng bềnh quyến rũ vị phô mai mặn mặn mà béo béo.', N'tra-den-matchiato.jpg', 105),
 		(N'Trà sữa mắc ca trân châu', 49000, N'Mỗi ngày với The Coffee House sẽ là điều tươi mới hơn với sữa hạt mắc ca thơm ngon, bổ dưỡng quyện cùng nền trà oolong cho vị cân bằng, ngọt dịu đi kèm cùng Trân châu trắng giòn dai mang lại cảm giác “đã” trong từng ngụm trà sữa.', N'tra-sua-mac-ca.jpg', 105)
 
-go
-insert into Topping_Category
-values	(N'Coffee-Cloud'),
-		(N'Tea')
+insert into Orders
+values	(80000, '2023-4-16', N'Chuyển khoản', 101),
+		(90000, '2023-4-30', N'Tiền mặt', 102),
+		(105000, '2023-5-15', N'Tiền mặt', 101)
 
 go
-insert into Topping
-values	(N'Kem phô mai Macchiato', 10000, 101),
-		(N'Sốt Caramel', 5000, 101),
-		(N'Thạch cafe', 10000, 101),
-		(N'Kem trứng', 10000, 101),
-		(N'Đào miếng', 8000, 102),
-		(N'Trái vải', 8000, 102),
-		(N'Trân châu trắng', 10000, 102),
-		(N'Hạt sen', 8000, 102),
-		(N'Milk foam', 10000, 102)
-
-go
-insert into Voucher
-values	(N'Voucher Nice Day', N'Giảm 20% cho hoá đơn trên 120K khi uống tại quán', 'DONFLOW20', '2023-5-1', '2023-5-30', 120000, 0.2),
-		(N'Voucher Happy Birthday H&B Coffee', N'Giảm 30K cho hoá đơn trên 70K duy nhất trong ngày khi đến quán uống trực tiếp và đã đăng kí thành viên H&B Coffee', 'BIRTHDAY30', '2023-3-20', '2023-3-21', 70000, -30000),
-		(N'Voucher Couple Festival', N'Giảm 15% cho các cặp đôi nhân ngày 14-2 khi order hoá đơn trên 80K kéo dài đến hết ngày 16-2', 'COUPLE142', '2023-2-14', '2023-2-16', 80000, 0.15),
-		(N'Voucher Tết Dương Lịch 1-1', N'Giảm 11% cho hoá đơn trên 111K khi uống tại quán duy nhất trong ngày 1-1', 'TETTET11', '2023-1-1', '2023-1-2', 111000,  0.11),
-		(N'Voucher Combo 30-4 & 1-5', N' Giảm 25K cho hoá đơn trên 80K khi uống tại quán trong hai ngày 30-4 và 1-5', 'HOLIDAY25', '2023-4-30', '2023-5-1', 80000, -25000),
-		(N'Voucher Quốc Tế Thiếu Nhi', N' Giảm 16% cho hoá đơn trên 70K chỉ áp dụng cho khách hàng dưới 18 tuổi', 'YOUNG16', '2023-6-1', '2023-6-2', 70000, 0.16)
-
-go
-insert into Voucher_Detail
-values	(101, 1006),
-		(101, 1002),
-		(102, 1003),
-		(102, 1001)
-
-go
-insert into Bill
-values	(80000, '2023-4-16', N'Chuyển khoản', 101, null),
-		(65000, '2023-4-30', N'Tiền mặt', 102, 1005),
-		(105000, '2023-5-15', N'Tiền mặt', 101, null)
-
-go
-insert into Bill_Detail
-values	(1, 'M', 30000, 10001, 10001, null),
-		(1, 'S', 50000, 10001, 10017, null),
-		(1, 'M', 45000, 10002, 10007, null),
-		(1, 'S', 45000, 10002, 10023, null),
-		(1, 'S', 59000, 10003, 10030, 107),
-		(2, 'S', 46000, 10003, 10002, null)
+insert into Orders_Detail
+values	(1, 'M', 30000, 10001, 10001),
+		(1, 'S', 50000, 10001, 10017),
+		(1, 'M', 45000, 10002, 10007),
+		(1, 'S', 45000, 10002, 10023),
+		(1, 'L', 59000, 10003, 10030),
+		(2, 'S', 46000, 10003, 10002)

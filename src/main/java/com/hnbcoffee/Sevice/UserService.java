@@ -39,7 +39,6 @@ public interface UserService// extends UserDetailsService
 
 	User findByEmailLike(String email);
 
-	User findByUsername(String username);
 
 	User checkLogin(String email, String pass);
 

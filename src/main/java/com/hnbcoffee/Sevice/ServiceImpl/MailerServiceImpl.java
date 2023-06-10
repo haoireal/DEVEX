@@ -9,13 +9,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
-import com.hnbcoffee.Entity.MailInfo;
+import com.hnbcoffee.DTO.MailInfo;
 import com.hnbcoffee.Entity.User;
 import com.hnbcoffee.Sevice.MailerService;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+
+@SessionScope
 @Service("emailService")
 public class MailerServiceImpl implements MailerService{
 	private static final String EMAIL_VERIFI = "ĐÂY LÀ MÃ XÁC THỰC CỦA BẠN CHO TRANG WEB H&B COFFEE";
@@ -96,9 +99,6 @@ public class MailerServiceImpl implements MailerService{
 
 	@Override
 	public void sendMailToFormat(String type, User user) throws MessagingException{
-		
-
-
 			try {
 				String content = null;
 				String contentAdmin = null;
@@ -112,8 +112,9 @@ public class MailerServiceImpl implements MailerService{
 							+ ", đây là mã xác thực của bạn tại H&B COFFEE " + user.getVericode();
 					// send message
 					this.send(user.getEmail(), subject, content);
-				}
 					break;
+				}
+					
 				case "forget": {
 					subject = EMAIL_FORGET;
 					content = "Gửi " + user.getFullname()
@@ -123,13 +124,10 @@ public class MailerServiceImpl implements MailerService{
 					break;
 				}
 				case "order": {
-					subject = EMAIL_ORDER_CUSTOMER;
-					subjectAdmin = EMAIL_ORDER_ADMIN;
-					
-					content = "";
-					contentAdmin = "";
+					subject = EMAIL_ORDER_CUSTOMER;			
+					content = "Gửi " + user.getFullname() + ". Đơn hàng của bạn đã được đặt thành công, để biết thêm chi tiết "
+							+ "vui lòng kiểm tra đơn hàng trên website H&B COFFEE";
 					this.send(user.getEmail(), subject, content);
-					this.send(EMAIL_ADMIN, subjectAdmin, contentAdmin);
 					break;
 				}
 				default:

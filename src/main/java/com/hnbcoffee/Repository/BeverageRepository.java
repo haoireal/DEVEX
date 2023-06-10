@@ -24,4 +24,6 @@ public interface BeverageRepository extends JpaRepository<Beverage, Integer>{
 	
 	@Query("SELECT COUNT(o) FROM Beverage o WHERE o.name LIKE :keywords")
 	long countByKeywordName(@Param("keywords") String keywords);
+	
+	
 }
