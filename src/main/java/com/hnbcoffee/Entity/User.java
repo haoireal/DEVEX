@@ -40,5 +40,5 @@ public class User implements Serializable {
 	@Column(name = "Verifi_Code")
 	int vericode;
 	@Column(name = "Active")
-	boolean Acive = true;
+	boolean Acive;
 }

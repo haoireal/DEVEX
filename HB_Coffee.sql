@@ -19,7 +19,7 @@ create table [Users] (
 	Active bit null
 	CONSTRAINT uc_Users_Email UNIQUE (Email)
 )
-delete from [users] where id > 103
+
 select * from [users]
 go
 create table [Beverage_Category] (
@@ -61,7 +61,8 @@ create table [Orders_Detail] (
 go
 -- Insert data
 insert into [Users]
-values	(N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
+values	(N'Demo User', N'demo@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
+		(N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
 		(N'Phạm Gia Hào', N'haoireal@gmail.com', '123', 1, '2003-11-11', N'Gò Vấp', 'CUSTOMER', '123456',1),
 		(N'H&B Coffee', N'hnbcoffeentea@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 'ADMIN', '123456',1)
 go

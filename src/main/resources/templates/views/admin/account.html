@@ -15,140 +15,320 @@
 		</div>
 
 		<div th:replace="~{flagment/admin/adminHeader :: adminHeaderFragment}"></div>
-		<div th:replace="~{flagment/admin/adminMainSidebar :: adminMainSidebarFragment}"></div>
-		    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">ACCOUNT</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Overview</li>
-              </ol>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
+		<div
+			th:replace="~{flagment/admin/adminMainSidebar :: adminMainSidebarFragment}"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0">ACCOUNT</h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active">Overview</li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
 
-     <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <!-- /.card -->
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<!-- /.card -->
 
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-hover table-striped">
-                  <thead>
-                  <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <tr data-widget="expandable-table" aria-expanded="false">
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                  </tr>
-                  <tr class="expandable-body">
-                    <td colspan="5">
-                      <div class="tab-pane" id="settings">
-                        <form class="form-horizontal">
-                          <div class="form-group row">
-                            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
-                              <input type="email" class="form-control" id="inputName" placeholder="Name">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
-                              <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
-                              <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
-                            <div class="col-sm-10">
-                              <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
-                            <div class="col-sm-10">
-                              <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <div class="offset-sm-2 col-sm-10">
-                              <div class="checkbox">
-                                <label>
-                                  <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <div class="offset-sm-2 col-sm-10">
-                              <button type="submit" class="btn btn-danger">Submit</button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </td>
-                  </tr>
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-		
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">ACCOUNT MANAGE</h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<table id="example1"
+										class="table table-bordered table-hover table-striped">
+										<thead>
+											<tr>
+												<th>Id</th>
+												<th>Fullname</th>
+												<th>Email</th>
+												<th>Password</th>
+												<th>Gender</th>
+												<th>Birthday</th>
+												<th>Address</th>
+												<th>Role</th>
+												<th>Active</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!--CHANGE ROLE OF USER -->
+											<tr data-widget="expandable-table" aria-expanded="false">
+												<td colspan="9"
+													class="text-success font-weight-bold text-center bg-navy">CHANGE
+													ROLE</td>
+											</tr>
+											<tr class="expandable-body">
+												<td colspan="9">
+													<form method="post" class="form-horizontal m-3">
+														<div class="card">
+															<div class="card-body">
+																<div class="tab-content">
+																	<div class="active tab-pane" id="activity">
+																		<div class="tab-pane" id="settings">
+																			<form class="mt-4 form-horizontal" method="post">
+
+																				<div id="form-controller" class="row">
+																					<div
+																						class="mb-3 bg-white rounded px-2 form-horizontal col-6">
+																						<input type="email" id="inputEmail"
+																							placeholder="Email address"
+																							pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+																							maxlength="50" minlength="5" required
+																							class="form-control border-1 p-0 pl-2"
+																							name="email">
+																					</div>
+																					<div class="form-horizontal col-6">
+																						<div class="form-group">
+																							<select name="role" id="role"
+																								class="form-control">
+																								<option selected="selected" disabled="disabled"
+																									value="null">ROLE</option>
+																								<option value="ADMIN">ADMIN</option>
+																								<option value="CUSTOMER">CUSTOMER</option>
+																							</select>
+																						</div>
+																						<!--SOME INPUT RIGHT HERE -->
+																					</div>
+																				</div>
+
+																				<div class="form-group row text-center">
+																					<div class="offset-sm-2 col-sm-12 m-0">
+																						<button type="submit" class="btn btn-success"
+																							th:formaction="@{/hnbcoffee/admin/account/role}">SAVE</button>
+																					</div>
+																				</div>
+																			</form>
+
+																		</div>
+																		<!-- /.tab-pane -->
+																	</div>
+																	<!-- /.tab-content -->
+																</div>
+																<!-- /.card-body -->
+															</div>
+															<!-- /.card -->
+														</div>
+														<!-- /.col -->
+													</form>
+												</td>
+											</tr>
+											<!--BLOCK OR UNBLOCK USER -->
+											<tr data-widget="expandable-table" aria-expanded="false">
+												<td colspan="9"
+													class="text-success font-weight-bold text-center bg-danger">ACTIVE OR BLOCK</td>
+											</tr>
+											<tr class="expandable-body">
+												<td colspan="9">
+													<form method="post" class="form-horizontal m-3">
+														<div class="card">
+															<div class="card-body">
+																<div class="tab-content">
+																	<div class="active tab-pane" id="activity">
+																		<div class="tab-pane" id="settings">
+																			<form class="mt-4 form-horizontal" method="post">
+
+																				<div id="form-controller" class="row">
+																					<div
+																						class="mb-3 bg-white rounded px-2 form-horizontal col-6">
+																						<input type="email" id="inputEmail"
+																							placeholder="Email address"
+																							pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+																							maxlength="50" minlength="5" required
+																							class="form-control border-1 p-0 pl-2"
+																							name="email">
+																					</div>
+																					<div class="form-horizontal col-6">
+																						<div class="form-group">
+																							<select name="active" id="active"
+																								class="form-control">
+																								<option selected="selected" disabled="disabled"
+																									value="null">ACTIVITY</option>
+																								<option value="true">ACTIVE</option>
+																								<option value="false">BLOCK</option>
+																							</select>
+																						</div>
+																						<!--SOME INPUT RIGHT HERE -->
+																					</div>
+																				</div>
+
+																				<div class="form-group row text-center">
+																					<div class="offset-sm-2 col-sm-12 m-0">
+																						<button type="submit" class="btn btn-success"
+																							th:formaction="@{/hnbcoffee/admin/account/active}">SAVE</button>
+																					</div>
+																				</div>
+																			</form>
+
+																		</div>
+																		<!-- /.tab-pane -->
+																	</div>
+																	<!-- /.tab-content -->
+																</div>
+																<!-- /.card-body -->
+															</div>
+															<!-- /.card -->
+														</div>
+														<!-- /.col -->
+													</form>
+												</td>
+											</tr>
+											<!--DATA -->
+											<div th:each="user : ${users}">
+												<tr data-widget="expandable-table" aria-expanded="false">
+													<td th:text="${user.id}"></td>
+													<td th:text="${user.fullname}"></td>
+													<td th:text="${user.email}"></td>
+													<td th:text="${user.password}"></td>
+													<td th:text="${user.gender ? 'MALE' : 'FEMALE'}"></td>
+													<td th:text="${#dates.format(user.birthday, 'dd/MM/yyyy')}"></td>
+													<td th:text="${user.address}"></td>
+													<td th:text="${user.role}"></td>
+													<td th:text="${user.Acive ? 'Acive' : 'Block'}"></td>
+
+												</tr>
+												<tr class="expandable-body">
+													<td colspan="9">
+														<form method="post" class="form-horizontal m-3">
+															<div class="card">
+																<div class="card-body">
+																	<div class="tab-content">
+																		<div class="active tab-pane" id="activity">
+																			<div class="tab-pane" id="settings">
+																				<form class="mt-4 form-horizontal" method="post">
+																					<div class="mb-3 bg-white rounded px-2">
+																						<input type="text" id="inputFullname"
+																							placeholder="Fullname" pattern="[a-zA-ZÀ-ỹ ]+"
+																							title="Name does not contain number" required
+																							class="form-control border-1 p-0 pl-2"
+																							name="fullname" th:value="${user.fullname}">
+																					</div>
+																					<div class="mb-3 bg-white rounded px-2">
+																						<input type="email" id="inputEmail"
+																							placeholder="Email address"
+																							pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+																							maxlength="50" minlength="5" required
+																							class="form-control border-1 p-0 pl-2"
+																							name="email" th:value="${user.email}">
+																					</div>
+																					<div class="mb-3 bg-white rounded px-2">
+																						<input type="text" id="inputPassword"
+																							placeholder="Password" maxlength="50"
+																							minlength="5" required th:value="${user.password}"
+																							class="form-control border-1 p-0 pl-2"
+																							name="password">
+																					</div>
+																					<div class="mb-3 bg-white rounded px-2">
+																						<input type="text" id="inputAddress"
+																							placeholder="Address" maxlength="50"
+																							minlength="5" required th:value="${user.address}"
+																							class="form-control border-1 p-0 pl-2"
+																							name="address">
+																					</div>
+																					<div id="form-controller" class="row">
+
+																						<div class="form-signup col-6">
+
+																							<div class="mb-3 bg-white rounded px-2">
+																								<input type="date" id="inputBirthday" th:value="${#dates.format(user.birthday, 'yyyy-MM-dd')}"
+																									class="form-control border-1 p-0 pl-2"
+																									name="birthday" >
+																							</div>
+																							<!-- SOME INPUT RIGHT HERE -->
+																						</div>
+																						<div class="form-horizontal col-6">
+																							<div class="form-group">
+																								<select name="gender" id="gender"
+																									class="form-control">
+																									<option selected="selected" disabled="disabled"
+																										value="null">Gender</option>
+																									<option th:selected="${user.gender == true}" value="true" >Male</option>
+																									<option th:selected="${user.gender == false}" value="true">Female</option>
+																								</select>
+																							</div>
+																							<!--SOME INPUT RIGHT HERE -->
+																						</div>
+																					</div>
+
+																					<div class="form-group row w-100 text-center">
+																						<div class="offset-sm-2 col-sm-12 m-0">
+																							<button type="submit"
+																								class="btn btn-success mr-5"
+																								th:formaction="@{/hnbcoffee/admin/account/update/__${user.id}__}">SAVE</button>
+																							<button type="submit" class="btn btn-danger ml-5"
+																								th:formaction="@{/hnbcoffee/admin/account/delete/__${user.id}__}">DELETE</button>
+																						</div>
+
+																					</div>
+
+																				</form>
+
+																			</div>
+																			<!-- /.tab-pane -->
+																		</div>
+																		<!-- /.tab-content -->
+																	</div>
+																	<!-- /.card-body -->
+																</div>
+																<!-- /.card -->
+															</div>
+															<!-- /.col -->
+														</form>
+
+													</td>
+												</tr>
+											</div>
+										</tbody>
+										<tfoot>
+											<tr>
+												<th>Id</th>
+												<th>Fullname</th>
+												<th>Email</th>
+												<th>Password</th>
+												<th>Gender</th>
+												<th>Birthday</th>
+												<th>Address</th>
+												<th>Role</th>
+												<th>Active</th>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
 		<div th:replace="~{flagment/admin/adminFooter :: adminFooterFragment}"></div>
-		<div th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
+		<div
+			th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
 	</div>
 
 </body>
