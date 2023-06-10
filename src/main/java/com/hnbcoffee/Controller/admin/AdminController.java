@@ -37,10 +37,6 @@ public class AdminController {
 		return "admin/index";
     }
 	
-	@GetMapping("/sales")
-    public String getAdminSales() {
-		return "admin/sales";
-    }
 	
 	
 

@@ -53,85 +53,33 @@
                 <table id="salestable" class="table table-bordered table-hover table-striped">
                   <thead>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>ID Beverage</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th><a th:href="@{/hnbcoffee/admin/report(field='quantity')}" class="text-dark">Quantity</a></th>
+                    <th><a th:href="@{/hnbcoffee/admin/report(field='total')}" class="text-dark">Total</a></th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                   <td class="project-actions text-right">
-                          <a class="btn btn-primary btn-sm" href="#">
-                              <i class="fas fa-folder">
-                              </i>
-                              View
-                          </a>
-                          <a class="btn btn-info btn-sm" href="#">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              Edit
-                          </a>
-                          <a class="btn btn-danger btn-sm" href="#">
-                              <i class="fas fa-trash">
-                              </i>
-                              Delete
-                          </a>
-                      </td>
-                  </tr>
-                  <tr>
-                    <td>Misc</td>
-                    <td>IE Mobile</td>
-                    <td>Windows Mobile 6</td>
-                    <td>-</td>
-                  <td class="project-actions text-right">
-                          <a class="btn btn-primary btn-sm" href="#">
-                              <i class="fas fa-folder">
-                              </i>
-                              View
-                          </a>
-                          <a class="btn btn-info btn-sm" href="#">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              Edit
-                          </a>
-                          <a class="btn btn-danger btn-sm" href="#">
-                              <i class="fas fa-trash">
-                              </i>
-                              Delete
-                          </a>
-                      </td>
-                    
-                  </tr>
-                  <tr>
-                    <td>Misc</td>
-                    <td>PSP browser</td>
-                    <td>PSP</td>
-                    <td>-</td>
-                    <td>C</td>
-                  </tr>
-                  <tr>
-                    <td>Other browsers</td>
-                    <td>All others</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>U</td>
-                  </tr>
+	                  <th:block th:each="item : ${list}">
+						<tr>
+							<td th:text="${item.beverage.id}"></td>
+							<td th:text="${item.beverage.name}"></td>
+							<td style="width: 90px;"><img class="img-fluid" th:src="@{/img/beverage/__${item.beverage.image}__}" /></td>
+							<td th:text="${item.qty}" class="text-center"></td>
+							<td ><span th:inline="text">[[${#numbers.formatDecimal(item.total,
+												0, 'POINT', 0, 'COMMA')}]]</span></td>
+						</tr>
+					</th:block>
+                 
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>ID Beverage</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
                   </tr>
                   </tfoot>
                 </table>

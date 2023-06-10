@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.hnbcoffee.Entity.Order;
+import com.hnbcoffee.Entity.User;
 import com.hnbcoffee.Repository.OrderRepository;
 import com.hnbcoffee.Sevice.OrderService;
 
@@ -85,6 +86,12 @@ public class OrderServiceImpl implements OrderService{
 	public void deleteAll() {
 		order.deleteAll();
 	}
+
+	@Override
+	public List<Order> findByAccount(User user) {
+		return order.findByAccount(user);
+	}
+	
 	
 	
 }

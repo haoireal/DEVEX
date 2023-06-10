@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.hnbcoffee.Entity.Order;
+import com.hnbcoffee.Entity.User;
 
 public interface OrderService {
 
@@ -37,5 +38,7 @@ public interface OrderService {
 	List<Order> saveAll(List<Order>entities);
 
 	Order save(Order entity);
+
+	List<Order> findByAccount(User user);
 
 }

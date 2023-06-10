@@ -16,6 +16,8 @@ public interface ShoppingCartService {
 	void clear();
 
 	Collection<CartItem> getItems();
+	
+	CartItem getItemById(Integer id);
 
 	int getCount();
 

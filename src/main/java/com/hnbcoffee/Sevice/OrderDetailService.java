@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.hnbcoffee.DTO.ReportSale;
 import com.hnbcoffee.DTO.Top6Beverage;
 import com.hnbcoffee.Entity.OrderDetail;
 
@@ -43,6 +44,12 @@ public interface OrderDetailService {
 	OrderDetail save(OrderDetail entity);
 
 	Page<Top6Beverage> findTop6Beverage(Pageable pageable);
+
+//	Page<ReportSale> reportSale(Pageable pageable);
+
+//	List<ReportSale> reportSale(Sort sort);
+
+	List<ReportSale> reportSale();
 
 
 }

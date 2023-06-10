@@ -9,7 +9,6 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import com.hnbcoffee.DTO.CartItem;
 import com.hnbcoffee.Sevice.ShoppingCartService;
-import com.hnbcoffee.Utils.DataSharing;
 
 @SessionScope
 @Service
@@ -28,14 +27,32 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 	
 	@Override
 	public CartItem add(CartItem cartItem) {
-		CartItem item = map.get(cartItem.getId());
-		if(item == null) {
-			item = cartItem;
-			map.put(cartItem.getId(), item);
-		} else {
-			item.setQty(item.getQty() + cartItem.getQty());
-		}
-		return item;
+		for (Map.Entry<Integer, CartItem> entry : map.entrySet()) {
+            Integer key = entry.getKey();
+            CartItem value = entry.getValue();
+            if(value.getIdBeverage().equals(cartItem.getIdBeverage())) {
+            	if(value.getSize().equals(cartItem.getSize())) {
+            		value.setQty(value.getQty() + cartItem.getQty());
+            		return value;
+    			}else {
+    				map.put(cartItem.getId(), cartItem);
+    				return cartItem;
+    			}
+            }
+        }
+		map.put(cartItem.getId(), cartItem);
+//		if(item == null) {
+//			item = cartItem;
+//			map.put(cartItem.getId(), item);
+//		} else {
+//			if(item.getSize().equals(cartItem.getSize())) {
+//				item.setQty(item.getQty() + cartItem.getQty());
+//			}else {
+////				item = cartItem;
+//				map.put(cartItem.getId(), cartItem);
+//			}
+//		}
+		return cartItem;
 	}
 	
 	@Override
@@ -62,6 +79,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 	}
 	
 	@Override
+	public CartItem getItemById(Integer id) {
+		return map.get(id);
+	}
+	
+	@Override
 	public int getCount() {
 
 		return map.values().stream()
@@ -75,4 +97,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 				.mapToDouble(item -> (item.getPrice() + priceSize(item.getSize())) *item.getQty())
 				.sum();
 	}
+
+	
 }

@@ -39,7 +39,10 @@ public class Order implements Serializable {
     @Column(name = "Payment")
     private String payment = "Tiền mặt";
     
-    @ToString.Exclude
+    @Column(name = "Status")
+    private boolean status = false;
+    
+    
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Customer_ID")
     private User customer;

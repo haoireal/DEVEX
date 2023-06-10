@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hnbcoffee.DTO.CartItem;
+import com.hnbcoffee.Entity.User;
 import com.hnbcoffee.Sevice.ParamService;
 import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.ShoppingCartService;
@@ -33,23 +35,44 @@ public class ShoppingCartController {
 	
 	@RequestMapping("/cart")
 	public String view(Model model) {
-		model.addAttribute("cart", cart);
-		session.set("cartCount", cart.getCount());
-		return "user/cart";
+		User user = session.get("user", null);
+		if(user != null) {
+			model.addAttribute("cart", cart);
+			session.set("cartCount", cart.getCount());
+			return "user/cart";
+		}else {
+			return "redirect:/hnbcoffee/signin";
+		}
+		
 	}
 
 	@RequestMapping("/cart/add/{id}")
 	public String add(@PathVariable("id") Integer id) {
-		CartItem item = new CartItem();
-		item.setId(id);
-		item.setName(param.getString("name", null));
-		item.setImage(param.getString("image", null));
-		item.setPrice(param.getDouble("price", 0));
-		item.setSize(param.getString("size", "S"));
-		item.setQty(param.getInteger("qty", 1));
-		cart.add(item);
-		System.out.print(item);
-		return "redirect:/hnbcoffee/cart";
+		User user = session.get("user", null);
+		if(user != null) {
+			CartItem item = new CartItem();
+			// Tạo một đối tượng Random
+	        Random random = new Random();
+	        // Sinh số ngẫu nhiên có 4 chữ số
+	        int randomNumber = random.nextInt(9000) + 1000;
+	        CartItem item2 = cart.getItemById(randomNumber);
+	        while (item2 != null) {
+	            randomNumber = random.nextInt(9000) + 1000;
+	        }
+			item.setId(randomNumber);
+			item.setIdBeverage(id);
+			item.setName(param.getString("name", null));
+			item.setImage(param.getString("image", null));
+			item.setPrice(param.getDouble("price", 0));
+			item.setSize(param.getString("size", "S"));
+			item.setQty(param.getInteger("qty", 1));
+			cart.add(item);
+			return "redirect:/hnbcoffee/cart";
+		}else {
+			return "redirect:/hnbcoffee/signin";
+		}
+		
+		
 	}
 	
 	@RequestMapping("/cart/remove/{id}")
@@ -100,21 +123,7 @@ public class ShoppingCartController {
 
 		return quantities;
 	}
-	
-//	@PostMapping("/cart/update")
-//    @ResponseBody
-//    public Map<String, Integer> changeSelectValue(@RequestParam("selectedValue") Integer selectedValue) {
-//		// Xử lý logic và thay đổi giá trị
-//		Integer newOptionValue = selectedValue;
-//		Integer id = param.getInteger("id", 0);
-//		int qty = param.getInteger("qty", 0);
-//		cart.update(id, qty);
-//		// Tạo đối tượng phản hồi
-//		Map<String, Integer> response = new HashMap<>();
-//		response.put("newValue", newOptionValue);
-//		    
-//		return response;
-//    }
+
 	
 	
 }

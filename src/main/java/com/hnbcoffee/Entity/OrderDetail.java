@@ -37,15 +37,15 @@ public class OrderDetail implements Serializable{
     @Column(name = "Price")
     private Double price;
     
-    @ToString.Exclude
+    
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Orders_ID")
     private Order order;
     
-    @ToString.Exclude
+    
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Beverage_ID")
-    private Beverage beverage;
+    Beverage beverage;
     
 }
 

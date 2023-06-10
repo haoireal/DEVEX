@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.hnbcoffee.DTO.ReportSale;
 import com.hnbcoffee.DTO.Top6Beverage;
 import com.hnbcoffee.Entity.OrderDetail;
 import com.hnbcoffee.Repository.OrderDetailRepository;
@@ -96,6 +97,23 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public void deleteAll() {
 		orderDetail.deleteAll();
 	}
+
+	@Override
+	public List<ReportSale> reportSale() {
+		return orderDetail.reportSale();
+	}
+
+//	@Override
+//	public List<ReportSale> reportSale(Sort sort) {
+//		return orderDetail.reportSale(sort);
+//	}
+
+//	@Override
+//	public Page<ReportSale> reportSale(Pageable pageable) {
+//		return orderDetail.reportSale(pageable);
+//	}
+	
+	
 	
 	
 }

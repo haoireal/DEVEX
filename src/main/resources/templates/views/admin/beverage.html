@@ -143,7 +143,8 @@
 											<tr data-widget="expandable-table" aria-expanded="false">
 												<td th:text="${beverage.id}"></td>
 												<td th:text="${beverage.name}"></td>
-												<td th:text="${beverage.price}"></td>
+												<td ><span th:inline="text">[[${#numbers.formatDecimal(beverage.price,
+												0, 'POINT', 0, 'COMMA')}]]</span></td>
 												<td class="w-50" th:text="${beverage.description}"></td>
 												<td th:text="${beverage.category.name}"></td>
 												<td style="width: 90px;"><img class="img-fluid"

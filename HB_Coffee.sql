@@ -43,6 +43,7 @@ create table [Orders] (
 	[Total] float not null,
 	[Date] date not null,
 	[Payment] nvarchar(15) not null CHECK ([Payment] IN(N'Tiền mặt', N'Chuyển khoản')),
+	[Status] bit,
 	[Customer_ID] int not null,
 	FOREIGN KEY ([Customer_ID]) REFERENCES [Users](ID),
 )
@@ -61,7 +62,7 @@ create table [Orders_Detail] (
 go
 -- Insert data
 insert into [Users]
-values	(N'Demo User', N'demo@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
+values	
 		(N'Lê Huy Bảo', N'baolh106@gmail.com', '123', 1, '2003-06-10', N'Phú Nhuận','CUSTOMER', '123456',1),
 		(N'Phạm Gia Hào', N'haoireal@gmail.com', '123', 1, '2003-11-11', N'Gò Vấp', 'CUSTOMER', '123456',1),
 		(N'H&B Coffee', N'hnbcoffeentea@gmail.com', '123', 0, '2003-06-20', N'Quận 1', 'ADMIN', '123456',1)
@@ -110,13 +111,29 @@ values	(N'Cà phê sữa đá', 25000, N'Cà phê Đắk Lắk nguyên chất đ
 		(N'Trà sữa mắc ca trân châu', 49000, N'Mỗi ngày với The Coffee House sẽ là điều tươi mới hơn với sữa hạt mắc ca thơm ngon, bổ dưỡng quyện cùng nền trà oolong cho vị cân bằng, ngọt dịu đi kèm cùng Trân châu trắng giòn dai mang lại cảm giác “đã” trong từng ngụm trà sữa.', N'tra-sua-mac-ca.jpg', 105)
 
 insert into Orders
-values	(80000, '2023-4-16', N'Chuyển khoản', 101),
-		(90000, '2023-4-30', N'Tiền mặt', 102),
-		(105000, '2023-5-15', N'Tiền mặt', 101)
+values	(100000, '2023-4-10', N'Tiền mặt', 1, 101),
+		(120000, '2023-4-11', N'Chuyển khoản', 1, 101),
+		(40000, '2023-4-13', N'Tiền mặt', 1, 102),
+		(49000, '2023-4-12', N'Tiền mặt', 1, 102),
+		(45000, '2023-4-20', N'Tiền mặt', 1, 102),
+		(45000, '2023-4-20', N'Tiền mặt', 0, 101),
+		(45000, '2023-4-20', N'Tiền mặt', 1, 102),
+		(80000, '2023-4-16', N'Chuyển khoản', 1, 101),
+		(90000, '2023-4-30', N'Tiền mặt', 0, 102),
+		(105000, '2023-5-15', N'Tiền mặt', 1, 101)
 
 go
 insert into Orders_Detail
-values	(1, 'M', 30000, 10001, 10001),
+values	(2, 'S', 100000, 10004, 10015),
+		(1, 'S', 40000, 10005, 10006),
+		(1, 'S', 40000, 10005, 10007),
+		(1, 'S', 40000, 10005, 10008),
+		(1, 'M', 40000, 10006, 10004),
+		(1, 'L', 49000, 10007, 10003),
+		(1, 'S', 45000, 10008, 10022),
+		(1, 'S', 45000, 10009, 10022),
+		(1, 'S', 45000, 10010, 10023),
+		(1, 'M', 30000, 10001, 10001),
 		(1, 'S', 50000, 10001, 10017),
 		(1, 'M', 45000, 10002, 10007),
 		(1, 'S', 45000, 10002, 10023),
