@@ -20,6 +20,7 @@ import com.hnbcoffee.Sevice.MailerService;
 import com.hnbcoffee.Sevice.ParamService;
 import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.ShoppingCartService;
+import com.hnbcoffee.Sevice.UserService;
 
 
 @Controller
@@ -37,14 +38,21 @@ public class ShoppingCartController {
 	@Autowired
 	MailerService mailService;
 	
+	@Autowired
+	UserService userService;
+	
 	@RequestMapping("/cart")
 	public String view(Model model) {
 		User user = session.get("user", null);
 		if(user != null) {
 			model.addAttribute("cart", cart);
 			session.set("cartCount", cart.getCount());
+			if(user.getRole().equalsIgnoreCase("ADMIN")) {
+				List<User> list = userService.findAll();
+				model.addAttribute("users", list);
+			}
 			return "user/cart";
-		}else {
+		}else{
 			return "redirect:/hnbcoffee/signin";
 		}
 		
@@ -103,6 +111,23 @@ public class ShoppingCartController {
 	@RequestMapping("/cart/order")
 	public String order() {
 		User user = session.get("user");
+		if(user != null) {
+			try {
+				mailService.sendMailToFormat("order", user);
+				cart.clear();
+			} catch (Exception e) {
+				return e.getMessage();
+			}
+		}else {
+			return "redirect:/hnbcoffee/cart";
+		}
+		return "redirect:/hnbcoffee/cart";
+	}
+	
+	@RequestMapping("/cart/admin/order")
+	public String orderAdmin(@ModelAttribute("email") String customerEmail) {
+		User user = userService.findByEmailLike(customerEmail);
+		System.out.println(customerEmail);
 		if(user != null) {
 			try {
 				mailService.sendMailToFormat("order", user);

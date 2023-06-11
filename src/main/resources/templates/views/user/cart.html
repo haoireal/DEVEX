@@ -6,6 +6,10 @@
 
 <head>
 <div th:replace="~{flagment/head :: headFragment}"></div>
+<!-- CSS -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+	rel="stylesheet" />
 </head>
 <style>
 .bag-product img {
@@ -111,6 +115,37 @@ button.ncss-btn-primary-dark {
 	text-decoration: none;
 	color: inherit;
 }
+
+/* DROPDOWN AND SEARCH */
+.select2-container {
+	width: 100% !important;
+	margin-bottom: 15px;
+}
+
+.select2-container .select2-selection--single {
+	height: 38px;
+	padding: 8px 12px;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #F0F5F9;
+	background-clip: padding-box;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	background-clip: padding-box;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered
+	{
+	line-height: 21px;
+}
+
+.select2-container .select2-selection--single .select2-selection__arrow
+	{
+	height: 36px;
+	top: 1px;
+}
 </style>
 
 <body>
@@ -119,7 +154,7 @@ button.ncss-btn-primary-dark {
 		<div class="content-layout row container-fluid">
 			<!-- BAG -->
 			<div id="bag" class="col-xl-8 col-12">
-				<h4 class="col-xl-10 col-md-8 col-sm-5 col-6 p-0 m-0">BAG</h4>
+				<h4 class="col-xl-10 col-md-8 col-sm-5 col-12 p-0 m-0">BAG</h4>
 				<th:block th:each="item : ${cart.items}">
 					<form action="/hnbcoffee/cart/update" method="post">
 
@@ -127,7 +162,8 @@ button.ncss-btn-primary-dark {
 							<div class="product col-12 pt-3 pb-3">
 								<div class="row">
 									<input type="hidden" th:name="id" th:value="${item.id}">
-									<a th:href="@{/hnbcoffee/beverage/detail/__${item.idBeverage}__}"
+									<a
+										th:href="@{/hnbcoffee/beverage/detail/__${item.idBeverage}__}"
 										class="col-3"> <img
 										th:src="@{/img/beverage/__${item.image}__}" class="img-fluid"
 										alt="">
@@ -223,10 +259,40 @@ button.ncss-btn-primary-dark {
 						<span class="text-right" th:text="${cart.amount}"></span> VNĐ
 					</span>
 				</div>
-				<div
+				<div th:if="${session.user.role == 'ADMIN'}"
+					>
+					<form action="/hnbcoffee/cart/admin/order"  class="m-0 p-0 btn-ctrl col mt-4 row d-flex justify-content-center" method="post">
+						<div class="form-control select2 h-100 w-100 font-weight-bold">
+							<select id="mySelect" name="email"
+								class="form-control rounded-pill bg-light border-0">
+								<option value="null" selected disabled="disabled">CUSTOMER
+									EMAIL</option>
+								<option style="background-color: #F0F5F9;"
+									th:each="user : ${users}" th:value="${user.email}"
+									th:text="${user.email}"></option>
+							</select>
+						</div>
+					
+					<div
+						class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col-6 mt-4 ">
+						<a href="/hnbcoffee/cart/order"><button
+								aria-label="Add to Bag" id="add-to-bag"
+								class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Order</button></a>
+					</div>
+					<div
+						class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col-6 mt-4 ">
+						<button
+								aria-label="Add to Bag" id="add-to-bag" type="submit"
+								class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Order
+								To</button>
+					</div>
+					</form>
+				</div>
+				<div th:if="${session.user.role != 'ADMIN'}"
 					class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
-					<a href="/hnbcoffee/cart/order"><button aria-label="Add to Bag" id="add-to-bag"
-						class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Order</button></a>
+					<a href="/hnbcoffee/cart/order"><button aria-label="Add to Bag"
+							id="add-to-bag"
+							class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Order</button></a>
 				</div>
 				<div
 					class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
@@ -280,7 +346,27 @@ button.ncss-btn-primary-dark {
 				}
 			};
 		}
+		$(document).ready(function() {
+			$('#mySelect').select2({
+				width : '100%',
+				placeholder : 'Search...',
+				allowClear : true
+			});
+		});
+		 // Lắng nghe sự kiện khi select thay đổi giá trị
+		  document.getElementById("mySelect").addEventListener("change", function() {
+		    // Lấy giá trị email đã chọn
+		    var selectedEmail = this.value;
+		    
+		    // Thay đổi giá trị của action của form
+		    var form = document.querySelector("form");
+		    form.action = "/hnbcoffee/cart/admin/order/" + selectedEmail;
+		  });
 	</script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 </body>
 
 </html>
