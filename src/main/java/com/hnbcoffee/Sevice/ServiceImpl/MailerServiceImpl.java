@@ -2,6 +2,7 @@ package com.hnbcoffee.Sevice.ServiceImpl;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.hnbcoffee.DTO.CartItem;
 import com.hnbcoffee.DTO.MailInfo;
 import com.hnbcoffee.Entity.User;
 import com.hnbcoffee.Sevice.MailerService;
+import com.hnbcoffee.Sevice.SessionService;
+import com.hnbcoffee.Sevice.ShoppingCartService;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -23,13 +27,19 @@ import jakarta.mail.internet.MimeMessage;
 public class MailerServiceImpl implements MailerService{
 	private static final String EMAIL_VERIFI = "ĐÂY LÀ MÃ XÁC THỰC CỦA BẠN CHO TRANG WEB H&B COFFEE";
 	private static final String EMAIL_FORGET = "ĐÂY LÀ MẬT KHẨU CỦA BẠN CHO TRANG WEB H&B COFFEE";
-	private static final String EMAIL_ORDER_CUSTOMER = "BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG VUI LÒNG KIỂM TRA ĐƠN HÀNG";
-	private static final String EMAIL_ORDER_ADMIN = "THÔNG BÁO! BẠN ĐÃ CÓ MỘT ĐƠN HÀNG MỚI";
+	private static final String EMAIL_ORDER_ADMIN = "BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG VUI LÒNG KIỂM TRA ĐƠN HÀNG";
+	private static final String EMAIL_ORDER_CUSTOMER = "THÔNG BÁO! BẠN ĐÃ CÓ MỘT ĐƠN HÀNG MỚI";
 	private static final String EMAIL_ADMIN = "hnbcoffeentea@gmail.com";
 	List<MailInfo> list = new ArrayList<>();
 	
 	@Autowired
 	JavaMailSender sender;
+	
+	@Autowired
+	ShoppingCartService cart;
+	
+	@Autowired
+	SessionService session;
 	
 	@Override
 	public void send(MailInfo mail) throws MessagingException {
@@ -100,7 +110,7 @@ public class MailerServiceImpl implements MailerService{
 	@Override
 	public void sendMailToFormat(String type, User user) throws MessagingException{
 			try {
-				String content = null;
+				String content = "";
 				String contentAdmin = null;
 				String subject = null;
 				String subjectAdmin = null;
@@ -124,10 +134,21 @@ public class MailerServiceImpl implements MailerService{
 					break;
 				}
 				case "order": {
-					subject = EMAIL_ORDER_CUSTOMER;			
-					content = "Gửi " + user.getFullname() + ". Đơn hàng của bạn đã được đặt thành công, để biết thêm chi tiết "
-							+ "vui lòng kiểm tra đơn hàng trên website H&B COFFEE";
-					this.send(user.getEmail(), subject, content);
+					subject = EMAIL_ORDER_CUSTOMER;
+					content = "Customer: " + user.getEmail();
+					for (CartItem item : cart.getItems()) {
+						content = content + " | Name: " + item.getName() + ", Size: " + item.getSize() + ", Quantity: " + item.getQty();
+					}
+					this.send(EMAIL_ADMIN, subject, content);
+					break;
+				}
+				case "returnOrder": {
+					subject = EMAIL_ORDER_CUSTOMER;
+					content = "Customer: " + user.getEmail();
+					for (CartItem item : cart.getItems()) {
+						content = content + " | Name: " + item.getName() + ", Size: " + item.getSize() + ", Quantity: " + item.getQty();
+					}
+					this.send(EMAIL_ADMIN, subject, content);
 					break;
 				}
 				default:

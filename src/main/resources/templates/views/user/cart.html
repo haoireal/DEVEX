@@ -127,7 +127,7 @@ button.ncss-btn-primary-dark {
 							<div class="product col-12 pt-3 pb-3">
 								<div class="row">
 									<input type="hidden" th:name="id" th:value="${item.id}">
-									<a th:href="@{/hnbcoffee/beverage/detail/__${item.id}__}"
+									<a th:href="@{/hnbcoffee/beverage/detail/__${item.idBeverage}__}"
 										class="col-3"> <img
 										th:src="@{/img/beverage/__${item.image}__}" class="img-fluid"
 										alt="">
@@ -225,9 +225,8 @@ button.ncss-btn-primary-dark {
 				</div>
 				<div
 					class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
-					<button aria-label="Add to Bag" id="add-to-bag"
-						class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Guest
-						Checkout</button>
+					<a href="/hnbcoffee/cart/order"><button aria-label="Add to Bag" id="add-to-bag"
+						class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Order</button></a>
 				</div>
 				<div
 					class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">

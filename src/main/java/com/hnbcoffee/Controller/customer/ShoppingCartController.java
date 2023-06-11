@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hnbcoffee.DTO.CartItem;
 import com.hnbcoffee.Entity.User;
+import com.hnbcoffee.Sevice.MailerService;
 import com.hnbcoffee.Sevice.ParamService;
 import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.ShoppingCartService;
@@ -32,6 +33,9 @@ public class ShoppingCartController {
 	
 	@Autowired
 	SessionService session;
+	
+	@Autowired
+	MailerService mailService;
 	
 	@RequestMapping("/cart")
 	public String view(Model model) {
@@ -93,6 +97,22 @@ public class ShoppingCartController {
 	@RequestMapping("/cart/clear")
 	public String clear() {
 		cart.clear();
+		return "redirect:/hnbcoffee/cart";
+	}
+	
+	@RequestMapping("/cart/order")
+	public String order() {
+		User user = session.get("user");
+		if(user != null) {
+			try {
+				mailService.sendMailToFormat("order", user);
+				cart.clear();
+			} catch (Exception e) {
+				return e.getMessage();
+			}
+		}else {
+			return "redirect:/hnbcoffee/cart";
+		}
 		return "redirect:/hnbcoffee/cart";
 	}
 	
