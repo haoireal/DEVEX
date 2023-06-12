@@ -16,9 +16,12 @@
 
 		<div id="header-content"
 			class="row container-fluid m-0 mt-4 justify-content-center">
-			<h4 class="col-xl-10 col-md-8 col-sm-5 col-6 p-0 m-0">
-				Beverages (<span th:text="${count}"></span>)
-			</h4>
+			<div class="col-xl-10 col-md-8 col-sm-5 col-6 p-0 m-0">
+				<h4>
+					<th:block th:text="${beverages.size() < 30  } ? ${beverages[0].getCategory().getName()} : Beverages"></th:block>
+					(<span th:text="${count}"></span>)
+				</h4>
+			</div>
 
 			<div id="hide-sort"
 				class="col-xl-2 col-md-4 col-sm-6 col-6 p-0 m-0 d-flex justify-content-end">

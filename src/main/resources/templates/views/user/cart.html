@@ -146,6 +146,12 @@ button.ncss-btn-primary-dark {
 	height: 36px;
 	top: 1px;
 }
+
+.alert-success {
+	background-color: #d4edda;
+	color: #155724;
+	border-color: #c3e6cb;
+}
 </style>
 
 <body>
@@ -233,8 +239,6 @@ button.ncss-btn-primary-dark {
 							</div>
 						</div>
 					</form>
-				</th:block>
-
 			</div>
 			<!-- END BAG -->
 
@@ -259,9 +263,10 @@ button.ncss-btn-primary-dark {
 						<span class="text-right" th:text="${cart.amount}"></span> VNĐ
 					</span>
 				</div>
-				<div th:if="${session.user.role == 'ADMIN'}"
-					>
-					<form action="/hnbcoffee/cart/admin/order"  class="m-0 p-0 btn-ctrl col mt-4 row d-flex justify-content-center" method="post">
+				<div th:if="${session.user.role == 'ADMIN'}">
+					<form action="/hnbcoffee/cart/admin/order"
+						class="m-0 p-0 btn-ctrl col mt-4 row d-flex justify-content-center"
+						method="post">
 						<div class="form-control select2 h-100 w-100 font-weight-bold">
 							<select id="mySelect" name="email"
 								class="form-control rounded-pill bg-light border-0">
@@ -272,44 +277,52 @@ button.ncss-btn-primary-dark {
 									th:text="${user.email}"></option>
 							</select>
 						</div>
-					
-					<div
-						class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col-6 mt-4 ">
-						<a href="/hnbcoffee/cart/order"><button
-								aria-label="Add to Bag" id="add-to-bag"
-								class="ncss-btn-primary-dark btn-lg add-to-cart-btn" disabled >Order</button></a>
-					</div>
-					<div
-						class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col-6 mt-4 ">
-						<button
-								aria-label="Add to Bag" id="add-to-bag" type="submit"
+
+						<div
+							class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col-6 mt-4 ">
+							<a href="/hnbcoffee/cart/order"><button
+									aria-label="Add to Bag" id="add-to-bag" onclick="alert('ORDER WAS SUCCESS');"
+									th:disabled="${cart.items != null and !cart.items.isEmpty() ? false : true}"
+									th:style="${cart.items != null and !cart.items.isEmpty() ? '' : 'background-color: gray !important;'}"
+									class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Order</button></a>
+						</div>
+						<div
+							class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col-6 mt-4 ">
+							<button aria-label="Add to Bag" id="add-to-bag" type="submit" onclick="alert('ORDER WAS SUCCESS');"
+								th:disabled="${cart.items != null and !cart.items.isEmpty() ? false : true}"
+								th:style="${cart.items != null and !cart.items.isEmpty() ? '' : 'background-color: gray !important;'}"
 								class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Order
 								To</button>
-					</div>
+						</div>
 					</form>
 				</div>
 
 				<div th:if="${session.user.role != 'ADMIN'}"
-					class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
-					<a href="/hnbcoffee/cart/order"><button aria-label="Add to Bag"
+					class=" mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
+					<a href="/hnbcoffee/cart/order"><button aria-label="Add to Bag" onclick="alert('ORDER WAS SUCCESS');"
+							th:disabled="${cart.items != null and !cart.items.isEmpty() ? false : true}"
+							th:style="${cart.items != null and !cart.items.isEmpty() ? '' : 'background-color: gray !important;'}"
 							id="add-to-bag"
-							class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Order</button></a>
+							class="btn-ctrl ncss-btn-primary-dark btn-lg add-to-cart-btn">Order</button></a>
 				</div>
 				<div
 					class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
 					<a th:href="@{/hnbcoffee/cart/clear}"><button
 							aria-label="Add to Bag" id="add-to-bag"
-							class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Clear</button></a>
+							th:disabled="${cart.items != null and !cart.items.isEmpty() ? false : true}"
+							th:style="${cart.items != null and !cart.items.isEmpty() ? '' : 'background-color: gray !important;'}"
+							class="ncss-btn-primary-dark btn-lg add-to-cart-btn "
+							onclick="alert('CLEAR WAS SUCCESS');">Clear</button></a>
 				</div>
 			</div>
+			</th:block>
+
 			<!--END SUMMARY -->
 		</div>
 		<div th:replace="~{flagment/footer :: footerFragment}"></div>
 
 	</div>
-
 	<div th:replace="~{flagment/footLink :: footLinkFragment}"></div>
-
 	<script>
 		function changeSelectValue() {
 			console.log(111);
@@ -354,15 +367,18 @@ button.ncss-btn-primary-dark {
 				allowClear : true
 			});
 		});
-		 // Lắng nghe sự kiện khi select thay đổi giá trị
-		  document.getElementById("mySelect").addEventListener("change", function() {
-		    // Lấy giá trị email đã chọn
-		    var selectedEmail = this.value;
-		    
-		    // Thay đổi giá trị của action của form
-		    var form = document.querySelector("form");
-		    form.action = "/hnbcoffee/cart/admin/order/" + selectedEmail;
-		  });
+		// Lắng nghe sự kiện khi select thay đổi giá trị
+		document.getElementById("mySelect").addEventListener(
+				"change",
+				function() {
+					// Lấy giá trị email đã chọn
+					var selectedEmail = this.value;
+
+					// Thay đổi giá trị của action của form
+					var form = document.querySelector("form");
+					form.action = "/hnbcoffee/cart/admin/order/"
+							+ selectedEmail;
+				});
 	</script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

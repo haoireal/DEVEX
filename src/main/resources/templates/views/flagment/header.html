@@ -15,8 +15,9 @@
 					H&B Coffee</a></li>
 			<li class="jordan"><a href="#">Order: 0711.1006</a></li>
 			<li class="jordan"><a href="#">Free shipping from 50,000 VND</a></li>
-			<li class="jordan font-weight-bold"><a th:href="@{/hnbcoffee/__${session.user == null ? 'signin' : 'profile'}__}" 
-			th:text="${session.user == null ? 'Sign In' : session.user.fullname}"></a></li>
+			<li class="jordan font-weight-bold"><a
+				th:href="@{/hnbcoffee/__${session.user == null ? 'signin' : 'profile'}__}"
+				th:text="${session.user == null ? 'Sign In' : session.user.fullname}"></a></li>
 		</ul>
 	</nav>
 
@@ -50,19 +51,21 @@
 					class="nav-link navbarDropdown" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false"> Dessert </a></li>
-				
+
 				<!-- menu Customies  -->
 				<li class="nav-item dropdown"><a
 					class="nav-link navbarDropdown dropdown-toggle" href="#"
 					id="navbarDropdown" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> Menu </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					   	 <a class="dropdown-item" href="/hnbcoffee/beverage/coffee">Coffee</a>
-						 <a class="dropdown-item" href="/hnbcoffee/beverage/cloudfee">CloudFee</a>
-						 <a class="dropdown-item" href="/hnbcoffee/beverage/cloudtea">CloudTea</a>
-						 <a class="dropdown-item" href="/hnbcoffee/beverage/hi-tea healthy">Hi-Tea Healthy</a>
-						 <a class="dropdown-item" href="/hnbcoffee/beverage/fruit-tea & milk-tea">Fruit tea & Mile tea</a>
-							
+						<a class="dropdown-item" href="/hnbcoffee/beverage/coffee">Coffee</a>
+						<a class="dropdown-item" href="/hnbcoffee/beverage/cloudfee">CloudFee</a>
+						<a class="dropdown-item" href="/hnbcoffee/beverage/cloudtea">CloudTea</a>
+						<a class="dropdown-item" href="/hnbcoffee/beverage/hi-tea healthy">Hi-Tea
+							Healthy</a> <a class="dropdown-item"
+							href="/hnbcoffee/beverage/fruit-tea & milk-tea">Fruit tea &
+							Mile tea</a>
+
 					</div></li>
 				<!-- menu Voucher -->
 				<li class="nav-item dropdown"><a
@@ -71,22 +74,26 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link navbarDropdown" href="/hnbcoffee/history">History</a></li>
 				<!-- Menu SNKRS -->
-				<li class="nav-item dropdown"  th:if="${session.user != null}"><a
+				<li class="nav-item dropdown" th:if="${session.user != null}"><a
 					class="nav-link navbarDropdown dropdown-toggle" href="#"
 					id="navbarDropdown" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> Service </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" th:if="${session.user.role == 'ADMIN'}" th:href="@{/hnbcoffee/admin/home}">ADMIN HOME PAGE</a>
-						<a class="dropdown-item" th:href="@{/hnbcoffee/profile}">Profile</a>
-						 <a class="dropdown-item" href="/hnbcoffee/change-password">Change password</a>
-						 <a class="dropdown-item" href="/hnbcoffee/signout" >Sign out</a>
+						<a class="dropdown-item" th:if="${session.user.role == 'ADMIN'}"
+							th:href="@{/hnbcoffee/admin/home}">ADMIN HOME PAGE</a> <a
+							class="dropdown-item" th:href="@{/hnbcoffee/profile}">Profile</a>
+						<a class="dropdown-item" href="/hnbcoffee/change-password">Change
+							password</a> <a class="dropdown-item" href="/hnbcoffee/signout">Sign
+							out</a>
 					</div></li>
 			</ul>
 			<!-- SEARCH VÀ TRÁI TIM VÀ GIỎ HÀNG -->
-			<form action="/hnbcoffee/beverage/search" class="form-inline col-sm-5 row search-and-heart p-0">
+			<form action="/hnbcoffee/beverage/search"
+				class="form-inline col-sm-5 row search-and-heart p-0">
 				<div class="form-group has-search col-xl-6 col-md-6 col-8">
 					<span class="fa fa-search form-control-feedback"></span> <input
-						 id="search-bar" type="text" th:name="search" th:value="${session.keywordsSearch}"
+						id="search-bar" type="text" th:name="search"
+						th:value="${session.keywordsSearch}"
 						class="form-control rounded-pill bg-light border-0"
 						placeholder="Search">
 				</div>

@@ -31,7 +31,8 @@ public class SigninController {
 	@GetMapping("/signout")
     public String doSignout() {
 		session.remove("user");
-		return "redirect:/hnbcoffee/home";
+		session.remove("cartCount");
+		return "user/index";
     }
 
 	@GetMapping("/signin")

@@ -1,5 +1,6 @@
 package com.hnbcoffee.Controller.customer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,6 +30,8 @@ import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.ShoppingCartService;
 import com.hnbcoffee.Sevice.UserService;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 
 @Controller
 @RequestMapping("/hnbcoffee")
@@ -57,6 +60,8 @@ public class ShoppingCartController {
 	@Autowired
 	OrderService orderService;
 	
+	@Autowired
+	HttpServletResponse resp;
 	@RequestMapping("/cart")
 	public String view(Model model) {
 		User user = session.get("user", null);
@@ -67,15 +72,16 @@ public class ShoppingCartController {
 				List<User> list = userService.findAll();
 				model.addAttribute("users", list);
 			}
+			
 			return "user/cart";
 		}else{
-			return "redirect:/hnbcoffee/signin";
+			return "redirect:/hnbcoffee/signin?message=Plesse signin before order!";
 		}
 		
 	}
 
 	@RequestMapping("/cart/add/{id}")
-	public String add(@PathVariable("id") Integer id) {
+	public String add(@PathVariable("id") Integer id, Model model) {
 		User user = session.get("user", null);
 		if(user != null) {
 			CartItem item = new CartItem();
@@ -95,9 +101,11 @@ public class ShoppingCartController {
 			item.setSize(param.getString("size", "S"));
 			item.setQty(param.getInteger("qty", 1));
 			cart.add(item);
-			return "redirect:/hnbcoffee/cart";
+			model.addAttribute("cart", cart);
+			session.set("cartCount", cart.getCount());
+			return "redirect:/hnbcoffee/beverage/detail/" + id;
 		}else {
-			return "redirect:/hnbcoffee/signin";
+			return "redirect:/hnbcoffee/signin?message=Plesse signin before order!";
 		}
 		
 		
