@@ -246,64 +246,66 @@
 					</button>
 					<!-- END PRODUCT MEN SHOES  -->
 				</div>
-</div>
-				<!-- END CONTENT-MEN-SHOES -->
 			</div>
-			<div th:replace="~{flagment/footer :: footerFragment}"></div>
-
+			<!-- END CONTENT-MEN-SHOES -->
 		</div>
-		<!-- FOOTER -->
-		<script>
-			function showMore() {
-				var element = document.getElementById("showMore");
-				var elementBtn = document.getElementById("arrow");
-				if (element.classList.contains("d-none")) {
-					element.classList.remove("d-none")
-					elementBtn.classList.remove("fa-caret-down");
-					elementBtn.classList.add("fa-caret-up");
-				} else {
-					element.classList.add("d-none");
-					elementBtn.classList.remove("fa-caret-up");
-					elementBtn.classList.add("fa-caret-down");
-					
-				}
+		<div th:replace="~{flagment/footer :: footerFragment}"></div>
+
+	</div>
+	<!-- FOOTER -->
+	<script>
+		function showMore() {
+			var element = document.getElementById("showMore");
+			var elementBtn = document.getElementById("arrow");
+			if (element.classList.contains("d-none")) {
+				element.classList.remove("d-none")
+				elementBtn.classList.remove("fa-caret-down");
+				elementBtn.classList.add("fa-caret-up");
+			} else {
+				element.classList.add("d-none");
+				elementBtn.classList.remove("fa-caret-up");
+				elementBtn.classList.add("fa-caret-down");
+				scrollToElement("header");
+
 			}
-			
-			function scrollToElement(elementId) {
-			    var element = document.getElementById(elementId);
-			    if (element) {
-			        element.scrollIntoView({ behavior: 'smooth' });
-			    }
+		}
+
+		function scrollToElement(elementId) {
+			var element = document.getElementById(elementId);
+			if (element) {
+				element.scrollIntoView({
+					behavior : 'smooth'
+				});
 			}
+		}
 
-			const header = document.querySelector("#secondnav");
-			let lastScrollTop = 0;
+		const header = document.querySelector("#secondnav");
+		let lastScrollTop = 0;
 
-			window.addEventListener("scroll", function() {
-				let st = window.pageYOffset
-						|| document.documentElement.scrollTop;
+		window.addEventListener("scroll", function() {
+			let st = window.pageYOffset || document.documentElement.scrollTop;
 
-				if (st > lastScrollTop) {
+			if (st > lastScrollTop) {
+				header.classList.remove("visible");
+				header.classList.add("notvisible");
+
+				console.log("Scrolling down");
+
+			} else {
+				header.classList.add("visible");
+				header.classList.remove("notvisible");
+				if (st == 0) {
 					header.classList.remove("visible");
-					header.classList.add("notvisible");
-
-					console.log("Scrolling down");
-
-				} else {
-					header.classList.add("visible");
-					header.classList.remove("notvisible");
-					if (st == 0) {
-						header.classList.remove("visible");
-
-					}
-					console.log("Scrolling up");
 
 				}
+				console.log("Scrolling up");
 
-				lastScrollTop = st <= 0 ? 0 : st;
-			});
-		</script>
-		<div th:replace="~{flagment/footLink :: footLinkFragment}"></div>
+			}
+
+			lastScrollTop = st <= 0 ? 0 : st;
+		});
+	</script>
+	<div th:replace="~{flagment/footLink :: footLinkFragment}"></div>
 </body>
 
 </html>
