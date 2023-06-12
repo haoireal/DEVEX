@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Top6Beverage implements Serializable{
+public class TopBeverage implements Serializable{
 	@Id
 	Beverage beverage;
 	long sum;

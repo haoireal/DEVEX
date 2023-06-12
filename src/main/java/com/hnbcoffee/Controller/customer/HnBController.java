@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.hnbcoffee.DTO.Top6Beverage;
+import com.hnbcoffee.DTO.TopBeverage;
 import com.hnbcoffee.Sevice.OrderDetailService;
 import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.ShoppingCartService;
@@ -32,7 +32,7 @@ public class HnBController {
 	public String homePageController(Model model) {
 		session.set("cartCount", cart.getCount());
 		Pageable pageable = PageRequest.of(0, 6);
-		Page<Top6Beverage> list = orderDetailService.findTop6Beverage(pageable);
+		Page<TopBeverage> list = orderDetailService.findTopBeverage(pageable);
 		model.addAttribute("listTop6", list);
 		return "user/index";
 	}

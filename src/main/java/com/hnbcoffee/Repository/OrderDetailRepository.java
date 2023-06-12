@@ -12,15 +12,19 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import com.hnbcoffee.DTO.ReportSale;
-import com.hnbcoffee.DTO.Top6Beverage;
+import com.hnbcoffee.DTO.TopBeverage;
+import com.hnbcoffee.Entity.Beverage;
 import com.hnbcoffee.Entity.OrderDetail;
 
 
 @EnableJpaRepositories
 @Repository("orderDetailRepository")
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer>{
-	@Query("SELECT new Top6Beverage(o.beverage, sum(o.quantity)) FROM OrderDetail o GROUP BY o.beverage ORDER BY sum(o.quantity) DESC")
-	Page<Top6Beverage> findTop6Beverage(Pageable pageable);
+	@Query("SELECT new TopBeverage(o.beverage, sum(o.quantity)) FROM OrderDetail o GROUP BY o.beverage ORDER BY sum(o.quantity) DESC")
+	Page<TopBeverage> findTopBeverage(Pageable pageable);
+	
+	@Query("SELECT new TopBeverage(o.beverage, sum(o.quantity)) FROM OrderDetail o GROUP BY o.beverage ORDER BY sum(o.quantity) DESC")
+	List<TopBeverage> findTopBeverage();
 
 //	@Query("SELECT new ReportSale(o.beverage.id, o.beverage.name, o.beverage.image, sum(o.quantity), sum(o.price)) FROM OrderDetail o GROUP BY o.beverage.id, o.beverage.name")
 //	Page<ReportSale> reportSale(Pageable pageable);

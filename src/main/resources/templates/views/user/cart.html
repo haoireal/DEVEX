@@ -277,7 +277,7 @@ button.ncss-btn-primary-dark {
 						class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col-6 mt-4 ">
 						<a href="/hnbcoffee/cart/order"><button
 								aria-label="Add to Bag" id="add-to-bag"
-								class="ncss-btn-primary-dark btn-lg add-to-cart-btn">Order</button></a>
+								class="ncss-btn-primary-dark btn-lg add-to-cart-btn" disabled >Order</button></a>
 					</div>
 					<div
 						class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col-6 mt-4 ">
@@ -288,6 +288,7 @@ button.ncss-btn-primary-dark {
 					</div>
 					</form>
 				</div>
+
 				<div th:if="${session.user.role != 'ADMIN'}"
 					class="btn-ctrl mt-sm-10 mb-sm-6 pr-sm-6 pl-sm-6 pr-lg-l0 col mt-4 ">
 					<a href="/hnbcoffee/cart/order"><button aria-label="Add to Bag"

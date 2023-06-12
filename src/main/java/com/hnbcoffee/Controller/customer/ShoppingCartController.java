@@ -1,6 +1,7 @@
 package com.hnbcoffee.Controller.customer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,8 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hnbcoffee.DTO.CartItem;
+import com.hnbcoffee.Entity.Beverage;
+import com.hnbcoffee.Entity.Order;
+import com.hnbcoffee.Entity.OrderDetail;
 import com.hnbcoffee.Entity.User;
+import com.hnbcoffee.Sevice.BeverageService;
 import com.hnbcoffee.Sevice.MailerService;
+import com.hnbcoffee.Sevice.OrderDetailService;
+import com.hnbcoffee.Sevice.OrderService;
 import com.hnbcoffee.Sevice.ParamService;
 import com.hnbcoffee.Sevice.SessionService;
 import com.hnbcoffee.Sevice.ShoppingCartService;
@@ -40,6 +47,15 @@ public class ShoppingCartController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	BeverageService beverageService;
+	
+	@Autowired
+	OrderDetailService orderDetailService;
+	
+	@Autowired
+	OrderService orderService;
 	
 	@RequestMapping("/cart")
 	public String view(Model model) {
@@ -124,13 +140,40 @@ public class ShoppingCartController {
 		return "redirect:/hnbcoffee/cart";
 	}
 	
+	public long priceSize(String size) {
+		if(size.equalsIgnoreCase("L")) {
+			return 10000;
+		}else if(size.equalsIgnoreCase("M")) {
+			return 5000;
+		}else {
+			return 0;
+		}
+	}
+	
 	@RequestMapping("/cart/admin/order")
 	public String orderAdmin(@ModelAttribute("email") String customerEmail) {
 		User user = userService.findByEmailLike(customerEmail);
 		System.out.println(customerEmail);
 		if(user != null) {
 			try {
-				mailService.sendMailToFormat("order", user);
+				//tạo bill
+				Order order = new Order();
+				Date date = new Date();
+				order.setDate(date);
+				order.setTotal(cart.getAmount());
+				order.setCustomer(user);
+				orderService.save(order);
+				//thêm sp vào bill
+				for (CartItem item : cart.getItems()) {
+					OrderDetail od = new OrderDetail();
+					Beverage sp = beverageService.findById(item.getIdBeverage()).get();
+					od.setBeverage(sp);
+					od.setPrice(item.getPrice() + priceSize(item.getSize()));
+					od.setQuantity(item.getQty());
+					od.setSize(item.getSize());
+					od.setOrder(order);
+					orderDetailService.save(od);
+				}
 				cart.clear();
 			} catch (Exception e) {
 				return e.getMessage();

@@ -40,7 +40,7 @@ public class Order implements Serializable {
     private String payment = "Tiền mặt";
     
     @Column(name = "Status")
-    private boolean status = false;
+    private boolean status = true;
     
     
 	@ManyToOne(fetch = FetchType.LAZY)

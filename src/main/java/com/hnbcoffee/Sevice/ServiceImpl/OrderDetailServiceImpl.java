@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.hnbcoffee.DTO.ReportSale;
-import com.hnbcoffee.DTO.Top6Beverage;
+import com.hnbcoffee.DTO.TopBeverage;
 import com.hnbcoffee.Entity.OrderDetail;
 import com.hnbcoffee.Repository.OrderDetailRepository;
 import com.hnbcoffee.Sevice.OrderDetailService;
@@ -24,9 +24,18 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	OrderDetailRepository orderDetail;
 	
 	@Override
-	public Page<Top6Beverage> findTop6Beverage(Pageable pageable) {
-		return orderDetail.findTop6Beverage(pageable);
+	public Page<TopBeverage> findTopBeverage(Pageable pageable) {
+		return orderDetail.findTopBeverage(pageable);
 	}
+	
+	
+
+	@Override
+	public List<TopBeverage> findTopBeverage() {
+		return orderDetail.findTopBeverage();
+	}
+
+
 
 	@Override
 	public OrderDetail save(OrderDetail entity) {

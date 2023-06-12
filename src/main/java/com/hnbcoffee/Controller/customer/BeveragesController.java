@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hnbcoffee.DTO.TopBeverage;
 import com.hnbcoffee.Entity.Beverage;
 import com.hnbcoffee.Sevice.BeverageService;
+import com.hnbcoffee.Sevice.OrderDetailService;
 import com.hnbcoffee.Sevice.SessionService;
 
 
@@ -35,6 +37,9 @@ public class BeveragesController {
 	
 	@Autowired
 	SessionService sessionService;
+	
+	@Autowired
+	OrderDetailService orderDetailService;
 	
 	@GetMapping("/beverage")
 	public String coffeeController(Model model) {
@@ -56,6 +61,21 @@ public class BeveragesController {
 		List<Beverage> list = beverageService.findByType(type);
 		model.addAttribute("beverages", list);
 		model.addAttribute("count", beverageService.countByType(type));
+		return "user/coffee";
+	}
+	
+	@GetMapping("/beverage/bestseller")
+	public String bestSeller(Model model) {
+		List<TopBeverage> list = orderDetailService.findTopBeverage();
+		List<Beverage> top = new ArrayList<>();
+		int count = 0;
+		for(TopBeverage item : list) {
+			Beverage sp = item.getBeverage();
+			top.add(sp);
+			count ++;
+		}
+		model.addAttribute("beverages", top);
+		model.addAttribute("count", count);
 		return "user/coffee";
 	}
 	

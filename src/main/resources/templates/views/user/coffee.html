@@ -158,7 +158,7 @@
 									<div id="section3ContentId" class="collapse in" role="tabpanel"
 										aria-labelledby="section3HeaderId" data-parent="#accordianId">
 										<div class="card-body">
-											<a href="#" class="list-group-item text-secondary">Best Sellers</a>
+											<a href="/hnbcoffee/beverage/bestseller" class="list-group-item text-secondary">Best Sellers</a>
 											<a href="#" class="list-group-item text-secondary">Newest</a>
 										</div>
 									</div>
@@ -178,7 +178,7 @@
 
 				<!-- PRODUCT-ROW-COL3 -->
 				<div class="lider row container-fluid ml-0 p-0 ">
-					<th:block th:each="item : ${beverages}" >
+					<th:block th:each="item : ${beverages}">
 						<div
 							class="media-container justify-content-center col-xl-4 col-md-4 col-6 mb-3"
 							id="products">
@@ -199,6 +199,7 @@
 						</div>
 					</th:block>
 				</div>
+				
 				<button id="more" class="animated-scroll" ng-click="showMore()">
 					<i class="fas fa-caret-down"></i>
 				</button>

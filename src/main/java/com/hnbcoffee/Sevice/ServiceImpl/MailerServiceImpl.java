@@ -140,7 +140,7 @@ public class MailerServiceImpl implements MailerService {
 				subject = EMAIL_ORDER_CUSTOMER;
 				content = "Bạn đã đặt hàng thành công từ H&B COFFEE.<br> Vui lòng kiểm tra kĩ đơn hàng nếu có sai sót hãy phản hồi sớm nhất tới "+  EMAIL_ADMIN;
 				for (CartItem item : cart.getItems()) {
-					Double itemPrice = item.getPrice();
+					Double itemPrice = item.getPrice() + priceSize(item.getSize());
 					Integer itemQuantity = item.getQty();
 					Double itemTotalPrice = itemPrice * itemQuantity;
 
@@ -157,6 +157,16 @@ public class MailerServiceImpl implements MailerService {
 
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+	}
+	
+	public long priceSize(String size) {
+		if(size.equalsIgnoreCase("L")) {
+			return 10000;
+		}else if(size.equalsIgnoreCase("M")) {
+			return 5000;
+		}else {
+			return 0;
 		}
 	}
 
