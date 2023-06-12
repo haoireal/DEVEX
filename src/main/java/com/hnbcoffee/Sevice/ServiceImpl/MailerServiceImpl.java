@@ -138,6 +138,7 @@ public class MailerServiceImpl implements MailerService {
 				subjectAdmin = EMAIL_ORDER_ADMIN;
 				contentAdmin = "Customer: " + user.getEmail();
 				subject = EMAIL_ORDER_CUSTOMER;
+				
 				content = "Bạn đã đặt hàng thành công từ H&B COFFEE.<br> Vui lòng kiểm tra kĩ đơn hàng nếu có sai sót hãy phản hồi sớm nhất tới "+  EMAIL_ADMIN;
 				for (CartItem item : cart.getItems()) {
 					Double itemPrice = item.getPrice() + priceSize(item.getSize());
@@ -148,6 +149,7 @@ public class MailerServiceImpl implements MailerService {
 					              + ", Price: " + itemPrice + ", Total Price: " + itemTotalPrice;
 
 				}
+				bill += "<br> ===>>> <strong style='color: red;'>Total: " + cart.getAmount() + "</strong> <<<===";
 				this.send(EMAIL_ADMIN, subjectAdmin, contentAdmin + bill);
 				this.send(user.getEmail(), subject, content + bill);
 				break;
