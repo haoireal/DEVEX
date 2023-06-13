@@ -24,7 +24,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 		if(user == null) {
 			message = "Please login!";
 		}else if(!user.getRole().equalsIgnoreCase("ADMIN") && uri.startsWith("/hnbcoffee/admin/")) {
-			message = "Access denied!";
+			resp.sendRedirect("/hnbcoffee/404");
 		}
 		if(message.length() > 0) {
 			session.set("security-uri", uri);

@@ -31,7 +31,7 @@ public class SigninController {
 	@GetMapping("/signout")
     public String doSignout() {
 		session.remove("user");
-
+		session.set("keywordsSearch", "");
 		return "redirect:/hnbcoffee/home";
     }
 
@@ -41,6 +41,11 @@ public class SigninController {
 		model.addAttribute("password", cookie.getValue("password", ""));
 		return "account/signin";
 	}
+	
+	@GetMapping("/404")
+    public String get404() {
+		return "admin/erorr404";
+    }
 	
 	@PostMapping("/signin")
 	public String doSignin(Model model) {
