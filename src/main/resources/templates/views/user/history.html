@@ -67,6 +67,7 @@
 														<thead>
 															<tr>
 																<th>BEVERAGE NAME</th>
+																<th>IMAGE</th>
 																<th>SIZE</th>
 																<th>QUANTITY</th>
 																<th style="width: 25%">PRICE</th>
@@ -75,6 +76,8 @@
 														<tbody>
 															<tr th:each="item : ${bill.orderDetail}">
 																<td th:text="${item.beverage.name}"></td>
+																<td style="width: 90px;"><img class="img-fluid"
+																	th:src="@{/img/beverage/__${item.beverage.image}__}" /></td>
 																<td th:text="${item.size}" class="text-center"></td>
 																<td th:text="${item.quantity}" class="text-center"></td>
 																<td th:text="${item.price}"></td>

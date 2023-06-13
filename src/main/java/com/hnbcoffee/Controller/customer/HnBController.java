@@ -30,7 +30,12 @@ public class HnBController {
 	
 	@GetMapping("/home")
 	public String homePageController(Model model) {
-		session.set("cartCount", cart.getCount());
+		if(session.get("user") != null) {
+			session.set("cartCount", cart.getCount());
+		}else {
+			session.set("cartCount", 0);
+		}
+		
 		Pageable pageable = PageRequest.of(0, 6);
 		Page<TopBeverage> list = orderDetailService.findTopBeverage(pageable);
 		model.addAttribute("listTop6", list);
