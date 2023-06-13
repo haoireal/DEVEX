@@ -41,4 +41,6 @@ public interface OrderService {
 
 	List<Order> findByAccount(User user);
 
+	double getTotalMoney();
+
 }

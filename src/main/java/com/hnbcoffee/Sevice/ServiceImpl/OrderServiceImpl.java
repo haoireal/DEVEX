@@ -58,6 +58,11 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
+	public double getTotalMoney() {
+		return order.getTotalMoney();
+	}
+
+	@Override
 	public long count() {
 		return order.count();
 	}

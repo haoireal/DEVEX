@@ -14,8 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hnbcoffee.Entity.Beverage;
 import com.hnbcoffee.Repository.BeverageCategoryRepository;
 import com.hnbcoffee.Sevice.BeverageService;
+import com.hnbcoffee.Sevice.OrderService;
 import com.hnbcoffee.Sevice.ParamService;
 import com.hnbcoffee.Sevice.SessionService;
+import com.hnbcoffee.Sevice.UserService;
 
 @Controller
 @RequestMapping("/hnbcoffee/admin")
@@ -32,8 +34,18 @@ public class AdminController {
 	@Autowired
 	ParamService paramService;
 	
+	@Autowired
+	OrderService orderService;
+	
+	@Autowired
+	UserService userService;
+	
 	@GetMapping("/home")
-    public String getAdminHome() {
+    public String getAdminHome(Model model) {
+		model.addAttribute("beverageCount", beverageService.count());
+		model.addAttribute("orderCount", orderService.count());
+		model.addAttribute("userCount", userService.count());
+		model.addAttribute("totalMoney", orderService.getTotalMoney());
 		return "admin/index";
     }
 	

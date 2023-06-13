@@ -19,5 +19,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer>{
 	@Query("SELECT o FROM Order o WHERE o.customer = :user AND o.status = true")
 	List<Order> findByAccount(User user);
 	
-	
+	@Query("SELECT sum(o.total) FROM Order o")
+	double getTotalMoney();
 }
