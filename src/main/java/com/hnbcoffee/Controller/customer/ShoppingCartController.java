@@ -137,6 +137,24 @@ public class ShoppingCartController {
 		User user = session.get("user");
 		if(user != null) {
 			try {
+				//tạo bill
+				Order order = new Order();
+				Date date = new Date();
+				order.setDate(date);
+				order.setTotal(cart.getAmount());
+				order.setCustomer(user);
+				orderService.save(order);
+				//thêm sp vào bill
+				for (CartItem item : cart.getItems()) {
+					OrderDetail od = new OrderDetail();
+					Beverage sp = beverageService.findById(item.getIdBeverage()).get();
+					od.setBeverage(sp);
+					od.setPrice(item.getPrice() + priceSize(item.getSize()));
+					od.setQuantity(item.getQty());
+					od.setSize(item.getSize());
+					od.setOrder(order);
+					orderDetailService.save(od);
+				}
 				mailService.sendMailToFormat("order", user);
 				cart.clear();
 			} catch (Exception e) {
@@ -161,7 +179,9 @@ public class ShoppingCartController {
 	@RequestMapping("/cart/admin/order")
 	public String orderAdmin(@ModelAttribute("email") String customerEmail) {
 		User user = userService.findByEmailLike(customerEmail);
+		
 		System.out.println(customerEmail);
+		
 		if(user != null) {
 			try {
 				//tạo bill
@@ -182,6 +202,7 @@ public class ShoppingCartController {
 					od.setOrder(order);
 					orderDetailService.save(od);
 				}
+				mailService.sendMailToFormat("order", user);
 				cart.clear();
 			} catch (Exception e) {
 				return e.getMessage();
