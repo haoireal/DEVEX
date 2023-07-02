@@ -14,9 +14,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Vouchers")
 public class Voucher implements Serializable{
@@ -51,12 +53,5 @@ public class Voucher implements Serializable{
 	@OneToMany(mappedBy = "voucherOrder")
 	private List<Order> orders;
 	
-	public Voucher() {
-        this.code = generateRandomCode();
-    }
-	
-	private String generateRandomCode() {
-        return UUID.randomUUID().toString();
-    }
 
 }

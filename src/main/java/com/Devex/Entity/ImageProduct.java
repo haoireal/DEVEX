@@ -11,9 +11,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Image_Product")
 public class ImageProduct implements Serializable{
@@ -24,7 +26,7 @@ public class ImageProduct implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "ID", columnDefinition = "varchar(50) DEFAULT CONVERT(VARCHAR(50), CRYPT_GEN_RANDOM(20), 2)", nullable = false)
+	@Column(name = "ID")
 	private String id;
 	@Column(name = "Name")
 	private String name;
@@ -33,14 +35,5 @@ public class ImageProduct implements Serializable{
 	@JoinColumn(name = "Product_ID")
 	private Product product;
 	
-	// Constructor
-    public ImageProduct() {
-        this.id = generateRandomId();
-    }
-
-    // Helper method to generate random ID
-    private String generateRandomId() {
-        return UUID.randomUUID().toString();
-    }
 
 }

@@ -14,9 +14,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Orders")
 public class Order implements Serializable{
@@ -27,7 +29,7 @@ public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "ID", columnDefinition = "varchar(50) DEFAULT CONVERT(VARCHAR(50), CRYPT_GEN_RANDOM(25), 2)", nullable = false)
+	@Column(name = "ID")
 	private String id;
 	@Column(name = "Note")
 	private String note;
@@ -57,14 +59,5 @@ public class Order implements Serializable{
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetails> orderDetails;
 	
-	// Constructor
-    public Order() {
-        this.id = generateRandomId();
-    }
-
-    // Helper method to generate random ID
-    private String generateRandomId() {
-        return UUID.randomUUID().toString();
-    }
 
 }

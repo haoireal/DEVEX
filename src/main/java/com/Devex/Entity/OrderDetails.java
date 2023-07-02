@@ -11,9 +11,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Order_Details")
 public class OrderDetails implements Serializable{
@@ -24,7 +26,7 @@ public class OrderDetails implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "ID", columnDefinition = "varchar(50) DEFAULT CONVERT(VARCHAR(50), CRYPT_GEN_RANDOM(30), 2)", nullable = false)
+	@Column(name = "ID")
 	private String id;
 	@Column(name = "Quantity")
 	private int quantity;
@@ -39,14 +41,5 @@ public class OrderDetails implements Serializable{
 	@JoinColumn(name = "Product_ID")
 	private ProductVariant productVariant;
 	
-	// Constructor
-    public OrderDetails() {
-        this.id = generateRandomId();
-    }
-
-    // Helper method to generate random ID
-    private String generateRandomId() {
-        return UUID.randomUUID().toString();
-    }
 
 }
