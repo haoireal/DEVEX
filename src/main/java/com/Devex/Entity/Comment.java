@@ -31,13 +31,13 @@ public class Comment implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "ID", updatable = false)
 	private int id;
 	@Column(name = "Content")
 	private String content;
 	@Column(name = "Rating")
 	private int rating;
-	@Column(name = "CreatedAt")
+	@Column(name = "Createdat")
 	private Date createdAt;
 	
 	@ManyToOne
