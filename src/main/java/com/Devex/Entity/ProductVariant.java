@@ -44,12 +44,8 @@ public class ProductVariant implements Serializable{
 	@JoinColumn(name = "Product_ID")
 	private Product productVariant;
 	
-	@ManyToOne
-	@JoinColumn(name = "Size")
 	private String size;
 	
-	@ManyToOne
-	@JoinColumn(name = "Color")
 	private String color;
 	
 	@OneToMany(mappedBy = "productVariant")

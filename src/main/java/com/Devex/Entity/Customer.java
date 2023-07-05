@@ -34,9 +34,9 @@ public class Customer extends User implements Serializable{
 	@Column(name = "Phone")
 	private String phone;
 	
-//	@OneToOne
-//	@JoinColumn(name = "User_ID")
-//	private User user;
+	@OneToOne
+	@JoinColumn(name = "User_ID")
+	private User userCustomer;
 	
 	@OneToMany(mappedBy = "customer")
 	private List<Follow> follow;

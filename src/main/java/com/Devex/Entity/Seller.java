@@ -38,9 +38,9 @@ public class Seller extends User implements Serializable{
 	@Column(name = "Active")
 	private Boolean active;
 //	
-//	@OneToOne
-//	@JoinColumn(name = "User_ID")
-//	private User user;
+	@OneToOne
+	@JoinColumn(name = "User_ID")
+	private User userSeller;
 	
 	@OneToMany(mappedBy = "seller")
 	private List<Follow> follows;

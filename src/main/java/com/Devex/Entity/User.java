@@ -51,10 +51,10 @@ public class User implements Serializable{
 	@JoinColumn(name = "Role_ID")
 	private Role role;
 	
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "userCustomer")
 	private Customer customer;
 	
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "userSeller")
 	private Seller seller;
 	
 	
