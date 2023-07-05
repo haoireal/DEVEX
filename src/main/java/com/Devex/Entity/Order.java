@@ -29,15 +29,15 @@ public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "ID")
+	@Column(name = "ID", updatable = false)
 	private String id;
 	@Column(name = "Note")
 	private String note;
-	@Column(name = "CreatedDay")
+	@Column(name = "Createdday")
 	private Date createdDay;
 	@Column(name = "Total")
 	private Double total;
-	@Column(name = "PriceDiscount")
+	@Column(name = "Pricediscount")
 	private Double priceDiscount;
 	
 	@ManyToOne

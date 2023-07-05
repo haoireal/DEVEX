@@ -28,15 +28,15 @@ public class Product implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "ID")
+	@Column(name = "ID", updatable = false)
 	private String id;
 	@Column(name = "Name")
 	private String name;
-	@Column(name = "Distributor")
-	private String distributor;
+	@Column(name = "Brand")
+	private String brand;
 	@Column(name = "Description")
 	private String description;
-	@Column(name = "CreatedDay")
+	@Column(name = "Createdday")
 	private Date createdDay;
 	@Column(name = "Active")
 	private Boolean active;

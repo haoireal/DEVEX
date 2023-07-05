@@ -30,7 +30,7 @@ public class Voucher implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "ID", updatable = false)
 	private int id;
 	@Column(name = "Name")
 	private String name;
@@ -38,9 +38,9 @@ public class Voucher implements Serializable{
 	private Double discount;
 	@Column(name = "Note")
 	private String note;
-	@Column(name = "StartDate")
+	@Column(name = "Startdate")
 	private Date startDate;
-	@Column(name = "EndDate")
+	@Column(name = "Enddate")
 	private Date endDate;
 	@Column(name = "Code")
 	private String code;

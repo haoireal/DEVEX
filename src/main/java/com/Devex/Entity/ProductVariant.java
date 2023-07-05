@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -28,13 +30,14 @@ public class ProductVariant implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "ID")
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID", updatable = false)
+	private int id;
 	@Column(name = "Quantity")
 	private int quantity;
 	@Column(name = "Price")
 	private Double price;
-	@Column(name = "PriceSale")
+	@Column(name = "Pricesale")
 	private Double priceSale;
 	
 	@ManyToOne
@@ -42,12 +45,12 @@ public class ProductVariant implements Serializable{
 	private Product productVariant;
 	
 	@ManyToOne
-	@JoinColumn(name = "Size_ID")
-	private Size size;
+	@JoinColumn(name = "Size")
+	private String size;
 	
 	@ManyToOne
-	@JoinColumn(name = "Color_ID")
-	private Color color;
+	@JoinColumn(name = "Color")
+	private String color;
 	
 	@OneToMany(mappedBy = "productVariant")
 	private List<OrderDetails> orderDetails;

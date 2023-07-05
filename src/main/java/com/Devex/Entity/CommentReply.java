@@ -29,13 +29,13 @@ public class CommentReply implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "ID", updatable = false)
 	private int id;
 	@Column(name = "Content")
 	private String content;
-	@Column(name = "CreatedAt")
+	@Column(name = "Createdat")
 	private Date createdAt;
-	@Column(name = "IsCustomerReply")
+	@Column(name = "Iscustomerreply")
 	private Boolean isCustomerReply;
 	
 	@ManyToOne
