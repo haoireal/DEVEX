@@ -24,7 +24,8 @@ public class DevexController {
 	
 	@GetMapping("/home")
     public String doDemo() {
-		return "index";
+
+		return "user/index";
     }
 
 	
