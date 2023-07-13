@@ -1,0 +1,246 @@
+#header-content {
+  position: sticky;
+  top: 0px;
+  z-index: 9;
+  background-color: white;
+}
+
+/* @media only screen and (max-width: 767px) {
+  #contentMen-Shoes .aside-container {
+    display: none;
+
+  }
+} */
+
+@media only screen and (max-width: 575px) {
+  #header-content h4 {
+    font-size: 1.3rem;
+  }
+
+  #header-content button {
+    font-size: 0.8rem;
+
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: grey;
+}
+
+#sidebar {
+  padding: 10px;
+  margin: 0;
+  float: left;
+}
+
+ul {
+  list-style: none;
+  padding: 5px;
+}
+
+li a {
+  color: darkgray;
+  text-decoration: none;
+}
+
+li a:hover {
+  text-decoration: none;
+  color: darksalmon;
+}
+
+.fa-circle {
+  font-size: 20px;
+}
+
+#red {
+  color: #e94545d7;
+}
+
+#teal {
+  color: rgb(69, 129, 129);
+}
+
+#blue {
+  color: #0000ff;
+}
+
+.filter {
+  display: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media(min-width:991px) {
+
+
+  #mobile-filter {
+    display: none;
+  }
+
+  .aside-container {
+    display: flex;
+    height: 560px;
+    position: sticky;
+    top: 55.72px;
+  }
+
+  aside {
+    overflow-y: scroll;
+    width: 300px;
+    height: 100%;
+  }
+  
+}
+
+@media(min-width:768px) and (max-width:991px) {
+  .card {
+    width: 230px;
+    display: inline-block;
+    height: 300px;
+    margin-bottom: 10px;
+  }
+
+  .card-img-top {
+    width: 230px;
+    height: 210px;
+  }
+
+  #mobile-filter {
+    display: none;
+  }
+}
+
+@media(min-width:568px) and (max-width:767px) {
+  #sidebar {
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    float: left;
+  }
+
+  #products {
+    width: 100%;
+    padding: 5px;
+    margin: 0;
+    float: right;
+  }
+
+
+  .list-group-item {
+    padding: 3px;
+  }
+
+  .offset-1 {
+    margin-left: 8%;
+  }
+
+  .filter button{
+    padding: 10px;
+    font-size: 20px;
+
+  }
+  .filter {
+    display: inline-block;
+    position: relative;
+    top: -70px;
+    right: -500px;
+    z-index: 9;
+
+  }
+
+  #sidebar {
+    display: none;
+  }
+
+  #mobile-filter {
+    padding: 15px;
+    padding-top: 0;
+  }
+  #hide-sort,
+  #hide-sort button{
+    display: none;
+  }
+}
+
+@media(max-width:567px) {
+  #sidebar {
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    float: left;
+  }
+
+  #products {
+    width: 100%;
+    padding: 5px;
+    margin: 0;
+    float: right;
+  }
+
+
+  .list-group-item {
+    padding: 3px;
+  }
+
+  .offset-1 {
+    margin-left: 8%;
+  }
+
+  .filter button{
+    padding: 10px;
+    font-size: 20px;
+
+  }
+  .filter {
+    display: inline-block;
+    position: relative;
+    top: -70px;
+    right: -350px;
+    z-index: 9;
+
+  }
+
+  #sidebar {
+    display: none;
+  }
+
+  #mobile-filter {
+    
+    padding: 15px;
+    padding-top: 0;
+  }
+  #hide-sort,
+  #hide-sort button{
+    display: none;
+  }
+}
+
+#more{
+  width: 100%;
+  border: none;
+  background-color: inherit;
+  font-size: 3rem;
+  margin-top: 5rem;
+}
+.animated-scroll {
+  animation-name: scroll;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  50%{
+    transform: translateY(-20%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -19,24 +19,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "Customers")
-public class Customer implements Serializable{
+public class Customer extends User implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@Column(name = "Customer_ID")
-	private String customerId;
+
 	@Column(name = "Address")
 	private String address;
 	@Column(name = "Phone")
 	private String phone;
 	
-	@OneToOne
-	@JoinColumn(name = "User_ID")
-	private User user;
+
 	
 	@OneToMany(mappedBy = "customer")
 	private List<Follow> follow;
