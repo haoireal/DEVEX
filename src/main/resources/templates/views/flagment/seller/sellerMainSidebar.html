@@ -2,9 +2,9 @@
 <!-- Main Sidebar Container -->
 <aside
 	class="main-sidebar sidebar-light-primary bg-light elevation-4 text-sm"
-	th:fragment="adminMainSidebarFragment">
+	th:fragment="sellerMainSidebarFragment">
 	<!-- Brand Logo -->
-	<a href="/devex/admin/home" class="brand-link font-weight-bold"> <img
+	<a href="/seller/home" class="brand-link font-weight-bold"> <img
 		src="/img/banner/LogoDUAn.png" alt="AdminLTE Logo"
 		class="brand-image ml-0"> <span
 		class="brand-text font-weight-bold ml-2">DEVELOP EXPRESS</span>
@@ -20,7 +20,7 @@
 			</div>
 			<div class="info">
 				<a href="#" class="d-block"
-					th:text="${session.user == null ? 'Sign In' : session.user.fullname}"}></a>
+					th:text="${session.user == null ? '@Tên shop' : session.user.fullname}"}></a>
 			</div>
 		</div>
 
@@ -47,98 +47,24 @@
 					<h5 class=" brand-text">Quản lí</h5>
 				</li>
 				<!--END TIÊU ĐỀ MANAGER -->
-				<!-- Menu-1 -->
-				<li class="nav-item"><a href="/devex/user"
-					class="nav-link text-white"
-					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
-						<i class="nav-icon fa-solid fa-user"></i>
-						<p>
-							Người dùng <i class="right fas fa-angle-left"></i>
-						</p>
-				</a>
-					<ul class="nav nav-treeview bg-light"
-						style="background-color: rgba(57, 151, 184, 0.2) !important;">
-						<li class="nav-item border-bottom"><a
-							href="/devex/admin/list/user" class="nav-link">
-
-								<p>Danh sách nhân viên</p>
-						</a></li>
-						<li class="nav-item border-bottom"><a
-							href="/devex/admin/userProfile" class="nav-link">
-								<p>Hiệu chỉnh nhân viên</p>
-						</a></li>
-
-					</ul></li>
-				<!--END Menu-1 -->
-				<!-- Menu-2 -->
-				<li class="nav-item"><a href="#" class="nav-link text-white"
-					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
-						<i class="nav-icon fa-solid fa-user-tie"></i>
-						<p>
-							Nhà phân phối <i class="right fas fa-angle-left"></i>
-						</p>
-				</a>
-					<ul class="nav nav-treeview bg-light"
-						style="background-color: rgba(57, 151, 184, 0.2) !important;">
-						<li class="nav-item border-bottom"><a
-							href="/devex/admin/list/seller" class="nav-link">
-
-								<p>Danh sách nhà phân phối</p>
-						</a></li>
-						<li class="nav-item border-bottom"><a
-							href="/devex/userProfile" class="nav-link">
-								<p>Hiệu chỉnh nhân viên</p>
-						</a></li>
-
-					</ul></li>
-				<!--END Menu-2 -->
-				<!-- Menu-3 -->
-				<li class="nav-item"><a href="#" class="nav-link text-white"
-					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
-						<i class="nav-icon fa-sharp fa-solid fa-users"></i>
-						<p>
-							Nhân viên <i class="right fas fa-angle-left"></i>
-						</p>
-				</a>
-					<ul class="nav nav-treeview bg-light"
-						style="background-color: rgba(57, 151, 184, 0.2) !important;">
-						<li class="nav-item border-bottom"><a href="./index.html"
-							class="nav-link">
-
-								<p>Dashboard v1</p>
-						</a></li>
-						<li class="nav-item border-bottom"><a href="./index2.html"
-							class="nav-link">
-								<p>Dashboard v2</p>
-						</a></li>
-						<li class="nav-item border-bottom"><a href="./index3.html"
-							class="nav-link">
-								<p>Dashboard v3</p>
-						</a></li>
-					</ul></li>
-				<!--END Menu-3 -->
 				<!-- Menu-4 -->
 				<li class="nav-item"><a href="#" class="nav-link text-white"
 					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
-						<i class="nav-icon fas fa-tachometer-alt"></i>
+						<i class="nav-icon fas fa-tachometer-alt mt-1"></i>
 						<p>
 							Sản phẩm <i class="right fas fa-angle-left"></i>
 						</p>
 				</a>
 					<ul class="nav nav-treeview bg-light"
 						style="background-color: rgba(57, 151, 184, 0.2) !important;">
-						<li class="nav-item border-bottom"><a href="./index.html"
-							class="nav-link">
+						<li class="nav-item border-bottom"><a
+							href="/seller/list/products" class="nav-link">
 
-								<p>Dashboard v1</p>
+								<p>Danh sách sản phẩm</p>
 						</a></li>
-						<li class="nav-item border-bottom"><a href="./index2.html"
-							class="nav-link">
-								<p>Dashboard v2</p>
-						</a></li>
-						<li class="nav-item border-bottom"><a href="./index3.html"
-							class="nav-link">
-								<p>Dashboard v3</p>
+						<li class="nav-item border-bottom"><a
+							href="/seller/product/edit" class="nav-link">
+								<p>Hiệu chỉnh sản phẩm</p>
 						</a></li>
 					</ul></li>
 				<!--END Menu-4 -->
@@ -152,18 +78,14 @@
 				</a>
 					<ul class="nav nav-treeview bg-light"
 						style="background-color: rgba(57, 151, 184, 0.2) !important;">
-						<li class="nav-item border-bottom"><a href="./index.html"
+						<li class="nav-item border-bottom"><a href="/seller/list/orders"
 							class="nav-link">
 
-								<p>Dashboard v1</p>
+								<p>Danh sách đơn hàng</p>
 						</a></li>
-						<li class="nav-item border-bottom"><a href="./index2.html"
+						<li class="nav-item border-bottom"><a href="/seller/orderReport"
 							class="nav-link">
-								<p>Dashboard v2</p>
-						</a></li>
-						<li class="nav-item border-bottom"><a href="./index3.html"
-							class="nav-link">
-								<p>Dashboard v3</p>
+								<p>Thống kê chi tiết</p>
 						</a></li>
 					</ul></li>
 				<!--END Menu-5 -->
@@ -180,49 +102,20 @@
 						<li class="nav-item border-bottom"><a href="./index.html"
 							class="nav-link">
 
-								<p>Dashboard v1</p>
+								<p>Đánh giá mới</p>
 						</a></li>
 						<li class="nav-item border-bottom"><a href="./index2.html"
 							class="nav-link">
-								<p>Dashboard v2</p>
-						</a></li>
-						<li class="nav-item border-bottom"><a href="./index3.html"
-							class="nav-link">
-								<p>Dashboard v3</p>
+								<p>Thống kê đánh giá</p>
 						</a></li>
 					</ul></li>
 				<!--END Menu-6 -->
-				<!-- Menu-7 -->
-				<li class="nav-item"><a href="#" class="nav-link text-white"
-					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
-						<i class="nav-icon fa-solid fa-comment"></i>
-						<p>
-							Bình luận <i class="right fas fa-angle-left"></i>
-						</p>
-				</a>
-					<ul class="nav nav-treeview bg-light"
-						style="background-color: rgba(57, 151, 184, 0.2) !important;">
-						<li class="nav-item border-bottom"><a href="./index.html"
-							class="nav-link">
-
-								<p>Dashboard v1</p>
-						</a></li>
-						<li class="nav-item border-bottom"><a href="./index2.html"
-							class="nav-link">
-								<p>Dashboard v2</p>
-						</a></li>
-						<li class="nav-item border-bottom"><a href="./index3.html"
-							class="nav-link">
-								<p>Dashboard v3</p>
-						</a></li>
-					</ul></li>
-				<!--END Menu-7 -->
 				<!-- Menu-8 -->
 				<li class="nav-item"><a href="#" class="nav-link text-white"
 					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
-						<i class="nav-icon fa-solid fa-newspaper"></i>
+						<i class="nav-icon fa-sharp fa-solid fa-tags mt-1"></i>
 						<p>
-							Blog <i class="right fas fa-angle-left"></i>
+							Chương trình <i class="right fas fa-angle-left"></i>
 						</p>
 				</a>
 					<ul class="nav nav-treeview bg-light"
@@ -230,11 +123,11 @@
 						<li class="nav-item border-bottom"><a href="./index.html"
 							class="nav-link">
 
-								<p>Dashboard v1</p>
+								<p>Khuyến mãi</p>
 						</a></li>
 						<li class="nav-item border-bottom"><a href="./index2.html"
 							class="nav-link">
-								<p>Dashboard v2</p>
+								<p>Quà tặng</p>
 						</a></li>
 
 					</ul></li>
