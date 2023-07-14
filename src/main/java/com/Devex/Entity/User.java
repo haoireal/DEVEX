@@ -38,6 +38,8 @@ public class User implements Serializable{
 	private String email;
 	@Column(name = "Password")
 	private String password;
+	@Column(name = "Phone")
+	private Integer phone;
 	@Column(name = "Avatar")
 	private String avatar;
 	@Column(name = "Gender")

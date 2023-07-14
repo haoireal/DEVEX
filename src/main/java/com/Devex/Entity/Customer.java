@@ -29,8 +29,8 @@ public class Customer extends User implements Serializable{
 
 	@Column(name = "Address")
 	private String address;
-	@Column(name = "Phone")
-	private String phone;
+	@Column(name = "Phoneaddress")
+	private String phoneAddress;
 	
 
 	

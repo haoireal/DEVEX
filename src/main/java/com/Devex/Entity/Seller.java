@@ -28,8 +28,8 @@ public class Seller extends User implements Serializable{
 	
 	@Column(name = "Address")
 	private String address;
-	@Column(name = "Phone")
-	private String phone;
+	@Column(name = "Phoneaddress")
+	private String phoneAddress;
 	@Column(name = "Mall")
 	private Boolean mall;
 	@Column(name = "Active")
