@@ -306,7 +306,13 @@
     
     .container_main_middle {
         /* border: 1px solid black; */
-        height: 100%;
+        height: auto;
+        border-radius: 0.625rem;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+    .container_main_middle1 {
+        /* border: 1px solid black; */
+        height: 500px;
         border-radius: 0.625rem;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
