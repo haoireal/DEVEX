@@ -38,6 +38,8 @@ public class User implements Serializable{
 	private String email;
 	@Column(name = "Password")
 	private String password;
+	@Column(name = "Phone")
+	private Integer phone;
 	@Column(name = "Avatar")
 	private String avatar;
 	@Column(name = "Gender")
@@ -50,12 +52,6 @@ public class User implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "Role_ID")
 	private Role role;
-	
-	@OneToOne(mappedBy = "userCustomer")
-	private Customer customer;
-	
-	@OneToOne(mappedBy = "userSeller")
-	private Seller seller;
 	
 	
 }

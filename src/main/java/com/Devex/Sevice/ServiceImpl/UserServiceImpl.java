@@ -90,6 +90,11 @@ public class UserServiceImpl implements  UserService{
 	public void deleteAll() {
 		userRepository.deleteAll();
 	}
+
+	@Override
+	public User checkLogin(String username, String pass) {
+		return userRepository.checkLogin(username, pass);
+	}
 	
 	
 

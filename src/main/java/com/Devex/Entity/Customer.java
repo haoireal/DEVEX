@@ -26,17 +26,13 @@ public class Customer extends User implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-//	@Id
-//	@Column(name = "Customer_ID")
-//	private String customerId;
+
 	@Column(name = "Address")
 	private String address;
-	@Column(name = "Phone")
-	private String phone;
+	@Column(name = "Phoneaddress")
+	private String phoneAddress;
 	
-	@OneToOne
-	@JoinColumn(name = "User_ID")
-	private User userCustomer;
+
 	
 	@OneToMany(mappedBy = "customer")
 	private List<Follow> follow;

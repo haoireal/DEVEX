@@ -27,6 +27,5 @@ public class DevexController {
 
 		return "user/index";
     }
-
 	
 }
