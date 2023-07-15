@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <title>Product Details</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS v5.2.1 -->
+
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+            crossorigin="anonymous">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+        <!--cnd fontawesome-->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Theme style -->
+        <!-- <link rel="stylesheet" href="../admin/dist/css/userIndex.css"> -->
+        <link rel="stylesheet" href="/static/admin/dist/css/productDetail.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+
+        <!--slick-->
+        <link rel="stylesheet" type="text/css"
+            href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+
+    </head>
+
+    <body>
+        <header>
+            <div class="container-fluid header-inf">
+                <div class="container ">
+                    <div class="row">
+                        <div class="menu-bar"
+                            style="color: #fff; margin: 0; padding: 0; ">
+                            <nav
+                                class="navbar float-end navbar-expand-lg navbar-light"
+                                style="height: 35px">
+
+                                <div class="collapse navbar-collapse  text-end "
+                                    id="navbarNavDropdown">
+                                    <ul class="text-end navbar-nav ml-auto">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Hỗ
+                                                trợ dịch vụ</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Bán
+                                                hàng</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Sản
+                                                phẩm đã xem</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Kiếu
+                                                nại</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Tra
+                                                cứu đơn hàng</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Tuyển
+                                                dụng</a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Đăng
+                                                nhập</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </nav>
+                            <!-- hết thanh vav -->
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="container container_mid   mt-3" style="height: 90px; ">
+                <div class="row mt-2 " style="height: 50px;">
+                    <div class="col-md-2 ">
+                        <img class="img-fluid img_logo"
+                            src="/static/admin/dist/img/DEVE2.jpg" alt>
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="search-box pt-2 order-4 order-xl-3">
+                            <form>
+                                <div class="input-group no-shadow">
+                                    <input type="text" class=" form-control"
+                                        placeholder="Bạn cần tìm gì hôm nay ?"
+                                        name="keyword" ng-model="find"
+                                        style="height: 40px; border-radius: 15px; font-weight: bold; font-size: 13px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px gray; "
+                                        ng-model="search">
+
+                                    <span class="position-relative "
+                                        style="right: 2.5rem; z-index: 100; margin-top: -2px; width: 0px;">
+                                        <a href="#"
+                                            style="color: #fff; font-size: 16px;">
+                                            <i
+                                                class=" fa-solid fa-magnifying-glass fs-3 mt-2 text-dark "></i>
+                                        </a>
+                                    </span>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+                        <div class="row" style="margin-left: 10px;">
+                            <div class="col-6 pt-1">
+                                <a href>
+                                    <i
+                                        class="bi bi-cart3 fs-2 text-dark fw-bold "></i>
+                                </a>
+                            </div>
+                            <div class="col-6 pt-1">
+                                <a href>
+                                    <i
+                                        class="bi bi-person-circle fs-2 text-dark fw-bold "></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="container  mt-3">
+                <div class="row">
+                    <div class="col-12">
+                        <span class="content"><a class="path_content" href>Trang
+                                Chủ</a></span>
+                        <span class="path_arrow"> <i
+                                class="fa-solid fa-chevron-right"></i></span>
+                        <span class="content"><a class="path_content" href>Điện
+                                Thoại</a></span>
+                        <span class="path_arrow"> <i
+                                class="fa-solid fa-chevron-right"></i></span>
+                        <span class="content"><a class="path_content" href>SamSung
+                                Galaxy S23 Untral</a></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="container container_main mt-4 ">
+                <div class="row   ">
+                    <!--main-left-->
+                    <div class="col-5 mt-3 slick-Slider-Syncing ">
+                        <!--slider-for-->
+                        <div class="slider-for">
+                            <div class="image-item">
+                                <div class="image">
+                                    <img
+                                        src="https://cdn.hoanghamobile.com/i/productlist/dst/Uploads/2023/02/02/image-removebg-preview-2_638109032737377121.png"
+                                        alt />
+                                </div>
+
+                            </div>
+                            <div class="image-item">
+                                <div class="image">
+                                    <img
+                                        src="https://cdn.hoanghamobile.com/i/productlist/dst/Uploads/2023/02/02/image-removebg-preview-4.png"
+                                        alt />
+                                </div>
+
+                            </div>
+                            <div class="image-item">
+                                <div class="image">
+                                    <img
+                                        src="https://cdn.hoanghamobile.com/i/productlist/dst/Uploads/2023/02/02/image-removebg-preview_638109032737367137.png"
+                                        alt />
+                                </div>
+
+                            </div>
+                            <div class="image-item">
+                                <div class="image">
+                                    <img
+                                        src="https://cdn.hoanghamobile.com/i/productlist/dst/Uploads/2023/02/02/image-removebg-preview-3_638109032737347141.png"
+                                        alt />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!--slider-nav-->
+                        <div class=" col-12 slick-slider_nav">
+
+                            <div class="image-slider">
+                                <div class="image-item">
+                                    <div class="image-nav">
+                                        <img class="slider_nav-img" tabindex="0"
+                                            src="https://cdn.hoanghamobile.com/i/productlist/dst/Uploads/2023/02/02/image-removebg-preview-2_638109032737377121.png"
+                                            alt />
+                                    </div>
+
+                                </div>
+                                <div class="image-item">
+                                    <div class="image-nav">
+                                        <img class="slider_nav-img" tabindex="0"
+                                            src="https://cdn.hoanghamobile.com/i/productlist/dst/Uploads/2023/02/02/image-removebg-preview-4.png"
+                                            alt />
+                                    </div>
+
+                                </div>
+                                <div class="image-item">
+                                    <div class="image-nav">
+                                        <img class="slider_nav-img" tabindex="0"
+                                            src="https://cdn.hoanghamobile.com/i/productlist/dst/Uploads/2023/02/02/image-removebg-preview_638109032737367137.png"
+                                            alt />
+                                    </div>
+
+                                </div>
+                                <div class="image-item">
+                                    <div class="image-nav">
+                                        <img class="slider_nav-img" tabindex="0"
+                                            src="https://cdn.hoanghamobile.com/i/productlist/dst/Uploads/2023/02/02/image-removebg-preview-3_638109032737347141.png"
+                                            alt />
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--main-right-->
+                    <div class="col-7 mt-3">
+                        <!--Title-->
+                        <div class="row"
+                            style=" height: 3.4375rem; ">
+                            <div class="col-12"
+                                style=" width: 100%; height: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                <span class="text_name-product">SamSung Galaxy
+                                    S23 UntralSamSung Galaxy
+                                    S23 UntralSamSung Galaxy
+                                    S23 UntralSamSung Galaxy
+                                    S23 UntralSamSung Galaxy
+                                    S23 Untral </span>
+                            </div>
+
+                        </div>
+                        <!--Evalue-->
+                        <div class="row" style="height: 20px;">
+                            <div class="col-3 evaluate d-flex  ">
+                                <div class>
+                                    <span class="evaluate-text">4.7</span>
+                                </div>
+
+                                <div class="evaluate-star">
+                                    <a class="icon-star text-center"
+                                        style="text-decoration: none;">
+
+                                        <i class="bi bi-star"></i>
+                                        <i class="bi bi-star"></i>
+                                        <i class="bi bi-star"></i>
+                                        <i class="bi bi-star"></i>
+                                        <i class="bi bi-star"></i>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="col-3 evaluate d-flex  ">
+                                <div class>
+                                    <span class="evaluate-value text-dark "><a
+                                            href>29,2K</a></span>
+                                </div>
+
+                                <div class="evaluate-content">
+                                    <span class="evaluate-content_text ">Đánh
+                                        Giá</span>
+                                </div>
+
+                            </div>
+
+                            <div class="col-3 d-flex">
+
+                                <div
+                                    class="evaluate-sold ">
+                                    <span
+                                        class="evaluate-sold-value text-dark ">264,2K</span>
+                                </div>
+
+                                <div class="evaluate-sold-content ">
+                                    <span
+                                        class="evaluate-sold-content_text ps-2 ">Đã
+                                        Bán</span>
+                                </div>
+
+                            </div>
+                            <div class="col-3">
+                                <div class="report float-end">
+                                    <span><a class=" " href>Tố Cáo</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--price-->
+                        <div class="row mt-3 d-flex align-items-center ">
+
+                            <div class=" col-2">
+                                <span>Giá bán:</span>
+                            </div>
+
+                            <div class=" col-10">
+                                <span> <strong class="fs-3 fw-bold"
+                                        style="color:#ee4d2d; ">8,490,000
+                                        ₫</strong></span>
+                            </div>
+                            <!--GIÁ TRƯỚC KHI GIẢM-->
+                            <!-- <div class="col-4">
+                                        <strike class="fs-5 "
+                                            style="color: #ee4d2d">11,990,000
+                                            ₫</strike>
+                                    </div> -->
+
+                        </div>
+
+                        <!--Color-->
+                        <div class="row mt-3   d-flex justify-content-between ">
+                            <div class="col-2">
+                                <span>Màu sắc: </span>
+                            </div>
+                            <div class="col-10">
+                                <button class="product-variation"
+                                    aria-label="Đen" aria-disabled="false"><span>Đen</span></button>
+                                <button class="product-variation "
+                                    aria-label="Trắng" aria-disabled="false"><span>Trắng</span></button>
+                                <button class="product-variation "
+                                    aria-label="Hồng" aria-disabled="false"><span>Hồng</span></button>
+                                <button class="product-variation "
+                                    aria-label="Đỏ" aria-disabled="false"><span>Đỏ</span>
+                                </button>
+                                <button class="product-variation "
+                                    aria-label="Xanh" aria-disabled="false"><span>Xanh</span></button>
+
+                            </div>
+                        </div>
+                        <!--quantity-->
+                        <div
+                            class="row mt-3 d-flex justify-content-center align-items-center ">
+                            <div class="col-2">
+                                <span>Số lượng: </span>
+                            </div>
+                            <div class="col-10">
+                                <div
+                                    class="number  ">
+
+                                    <div class="control d-flex ">
+
+                                        <button
+                                            class="button btn_Sub border-0 fs-3 "
+                                            onclick="subtract(this)"><i
+                                                class="fa-solid fa-minus icon_Sub"></i></button>
+                                        <input
+                                            class="text-center product_quantity "
+                                            type="number" id="inputField"
+                                            min="1" value="1" disabled><br>
+                                        <button
+                                            class="button btn_Add border-0 fs-3"
+                                            onclick="add(this)"><i
+                                                class="fa-solid fa-plus icon_Add"></i></button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--total money-->
+                        <div class="row mt-3 d-flex align-items-center ">
+
+                            <div class=" col-2">
+                                <span>Tổng tiền:</span>
+                            </div>
+
+                            <div class=" col-10">
+                                <span> <strong class="fs-3 fw-bold"
+                                        style="color:#ee4d2d; ">8,490,000
+                                        ₫</strong></span>
+                            </div>
+                            <!--GIÁ TRƯỚC KHI GIẢM-->
+                            <!-- <div class="col-4">
+                                <strike class="fs-5 "
+                                    style="color: #ee4d2d">11,990,000
+                                    ₫</strike>
+                            </div> -->
+
+                        </div>
+
+                        <!--Purchase(mua)-->
+                        <div class="row mt-3 d-flex  ">
+                            <div class="col-4"><button class="btn_add_cart"
+                                    type="button" class="btn"><i
+                                        class="fa-solid fa-basket-shopping"></i>
+                                    Thêm Vào Giỏ Hàng</button></div>
+                            <div class="col-4"><button class="btn_buy"
+                                    type="button" class="btn"> <i
+                                        class="fa-solid fa-cart-shopping"></i>
+                                    Đặt Hàng</button></div>
+                            <div class="col-4"></div>
+                        </div>
+                        <hr>
+                        <!--List-favourite-->
+                        <div class="row mt-4">
+                            <div class><a href="#"
+                                    class="btn border-0  list-favourite "
+                                    aria-disabled="true" role="button">Thêm vào
+                                    danh sách yêu tích</a></div>
+
+                        </div>
+                        <!--share-->
+                        <div class="row mt-3 d-flex align-items-center"
+                            style="height: 40px;">
+                            <div class="col-2">Chia sẻ:</div>
+                            <div class="col-10 d-flex ">
+                                <div
+                                    class="jssocials-share jssocials-share-email text-center   "
+                                    style="width: 35px; height: 35px; background: #6594db;">
+                                    <a class="link_share" href="#"><i
+                                            class="jssocials-share-logo  fa-regular fa-envelope"></i></a>
+                                </div>
+                                <div
+                                    class="jssocials-share jssocials-share-twitter text-center  "
+                                    style="width: 35px; height: 35px; background-color: #1DA1F2;">
+                                    <a class="link_share" href="#"><i
+                                            class="jssocials-share-logo fa-brands fa-twitter"></i></a>
+                                </div>
+                                <div
+                                    class="jssocials-share jssocials-share-facebook text-center  "
+                                    style="width: 35px; height: 35px; background-color: #3B5998;">
+                                    <a class="link_share" href="#"><i
+                                            class="jssocials-share-logo fa-brands fa-facebook-f "></i></a>
+                                </div>
+                                <div
+                                    class="jssocials-share jssocials-share-instagram text-center  "
+                                    style="width: 35px; height: 35px; background-color: #a0ade2;">
+                                    <a class="link_share" href="#"><i
+                                            class="jssocials-share-logo fa-brands fa-instagram"></i></a>
+                                </div>
+                                <div
+                                    class="jssocials-share jssocials-share-whatsapp text-center  "
+                                    style="width: 35px; height: 35px; background-color: #25D366;">
+                                    <a class="link_share" href="#"><i
+                                            class="jssocials-share-logo fa-brands fa-whatsapp"></i></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--describe(mô tả)-->
+            <div class="container container_describe mt-5 border border-1 "
+                style="height: 100%; padding-bottom: 1.5rem;">
+                <div class="row mt-3  mx-2 "
+                    style="height: 50px; background-color: rgb(153, 153, 153,0.3);  ">
+
+                    <div class=" d-flex align-items-center mx-2">
+                        <h2 class="describe_content my-auto">MÔ TẢ SẢN PHẨM</h2>
+
+                    </div>
+
+                </div>
+                <div class="row mt-3 mx-3">
+                    <div class="">
+                        <pre style="font-size: 16px;">
+*Đổi trả theo đúng quy định của Chợ nông phẩm online:
+1. Điều kiện áp dụng (trong vòng 03 ngày kể từ khi nhận sản phẩm)
+- Vui lòng quay video trước khi khui hàng
+- Hàng hoá bị lỗi hoặc hư hỏng do vận chuyển hoặc do nhà sản xuất 
+2. Trường hợp được chấp nhận: 
+- Hàng không đúng chủng loại, mẫu mã như quý khách đặt hàng 
+- Không đủ số lượng, không đủ bộ như trong đơn hàng
+                        </pre>
+                   
+                       
+                    </div>
+                </div>
+            </div>
+            <!--Đánh giá sp-->
+            <div class="container container_evaluate_end  mt-4 border border-1" style="height: 500px;">
+                <div class="row mt-3  mx-2 "
+                    style="height: 50px;   ">
+
+                    <div class=" d-flex align-items-center mx-2">
+                        <h2 class="describe_content my-auto">ĐÁNH GIÁ SẢN PHẨM</h2>
+
+                    </div>
+                    
+
+                </div>
+              
+                <div class="row mx-4   border border-1   "  style="padding: 30px;" >
+                    <div class="col-2  text-center  flex-column " >
+                        <span class="fs-5 text-danger " style="font-weight: 350;"><strong class="fs-2">5</strong> trên 5</span> 
+
+                        <div>
+                            <a class="icon-star text-center" style="text-decoration: none;"> <i class="icon-flash text-red"></i>
+                                <i class="fa-solid fa-star fs-4 text-danger"></i>
+                                <i class="fa-solid fa-star fs-4 text-danger"></i>
+                                <i class="fa-solid fa-star fs-4 text-danger"></i>
+                                <i class="fa-solid fa-star fs-4 text-danger"></i>
+                                <i class="fa-solid fa-star fs-4 text-danger"></i>
+                            </a> 
+                        </div>
+                        
+                       
+
+                    </div>
+                    <div class="col-10 d-flex  align-items-center ">
+                       
+                        <div class="row   ">
+                            <div class="col-2" style="width: 150px; height: 2rem;">
+                                <button class="btn-star"
+                                aria-label="Đen" aria-disabled="false"><span>Tất Cả</span></button>
+                            </div>
+                            <div class="col-2" style="width: 150px; height: 2rem;">
+                                <button class="btn-star"
+                                aria-label="Đen" aria-disabled="false"><span>5 Sao(0)</span></button>
+                            </div>
+                            <div class="col-2" style="width: 150px; height: 2rem;">
+                                <button class="btn-star"
+                                aria-label="Đen" aria-disabled="false"><span>4 Sao(0)</span></button>
+                            </div>
+                            <div class="col-2" style="width: 150px; height: 2rem;">
+                                <button class="btn-star"
+                                aria-label="Đen" aria-disabled="false"><span>3 Sao(0)</span></button>
+                            </div>
+                            <div class="col-2" style="width: 150px; height: 2rem;">
+                                <button class="btn-star"
+                                aria-label="Đen" aria-disabled="false"><span>2 Sao(0)</span></button>
+                            </div>
+                            <div class="col-2" style="width: 150px; height: 2rem;">
+                                <button class="btn-star"
+                                aria-label="Đen" aria-disabled="false"><span>1 Sao(0)</span></button>
+                            </div>
+                            
+                           
+                            
+                            
+                        </div>
+                        
+                    </div>
+
+                    
+                </div>
+
+                <div class="row mt-2 mx-4">
+                    <div class="col-1">
+                        <i class="fa-regular fa-user fs-3"></i>
+                    </div>
+                    <div class="col-11">
+                        <span>User</span>
+                        <div>
+                            <a class="icon-star text-center" style="text-decoration: none;"> <i class="icon-flash text-red"></i>
+                                <i class="fa-solid fa-star text-danger"></i>
+                                <i class="fa-solid fa-star text-danger"></i>
+                                <i class="fa-solid fa-star text-danger"></i>
+                                <i class="fa-solid fa-star text-danger"></i>
+                                <i class="fa-solid fa-star text-danger"></i>
+                            </a> 
+                        </div>
+                        <span>Thời gian: loại sp</span> <br>
+                        <span>Đánh giá: ok? !ok</span>
+                        <div class="feedback">
+                            <span>Phản Hồi Của người bán</span>
+                        </div>
+                        
+                    </div>
+                    <hr>
+                </div>
+                    
+                    
+                    
+               
+            </div>
+            <!--Gợi Ý Sản Phẩm-->
+            <div class="container container_main mt-3">
+                <div class="row ">
+
+                    <div class="col-7 text-dark content_price mt-2 ">Gợi Ý Dành
+                        Cho Bạn</div>
+
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12  ">
+                        <div class="card-slider d-flex justify-content-start">
+                            <div class="col-2">
+                                <div class="card" style="width: 110%; ">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
+                                        class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div
+                                                    class="evaluate-sold">
+                                                    <strong class="fs-6"
+                                                        style="color:#fd475a; ">150,000
+                                                        ₫</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 "
+                                                style="padding: 0;">
+                                                <div
+                                                    class="row d-flex align-items-end">
+                                                    <div class="col-6 "
+                                                        style="padding: 0;">
+                                                        <div
+                                                            class="position-relative">
+                                                            <span
+                                                                class="position-absolute text-suggest-content  "
+                                                                style="font-size: 13px;">Đã
+                                                                Bán</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div
+                                                            class="evaluate-sold">
+                                                            <span
+                                                                class=" text-suggest"
+                                                                style="font-size: 10px; right:0;">264,2K</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card" style="width: 110%;">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80"
+                                        class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div
+                                                    class="evaluate-sold">
+                                                    <strong class="fs-6"
+                                                        style="color:#fd475a; ">150,000
+                                                        ₫</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 "
+                                                style="padding: 0;">
+                                                <div
+                                                    class="row d-flex align-items-end">
+                                                    <div class="col-6 "
+                                                        style="padding: 0;">
+                                                        <div
+                                                            class="position-relative">
+                                                            <span
+                                                                class="position-absolute text-suggest-content  "
+                                                                style="font-size: 13px;">Đã
+                                                                Bán</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div
+                                                            class="evaluate-sold">
+                                                            <span
+                                                                class=" text-suggest"
+                                                                style="font-size: 10px; right:0;">264,2K</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card" style="width: 110%;">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80"
+                                        class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div
+                                                    class="evaluate-sold">
+                                                    <strong class="fs-6"
+                                                        style="color:#fd475a; ">150,000
+                                                        ₫</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 "
+                                                style="padding: 0;">
+                                                <div
+                                                    class="row d-flex align-items-end">
+                                                    <div class="col-6 "
+                                                        style="padding: 0;">
+                                                        <div
+                                                            class="position-relative">
+                                                            <span
+                                                                class="position-absolute text-suggest-content  "
+                                                                style="font-size: 13px;">Đã
+                                                                Bán</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div
+                                                            class="evaluate-sold">
+                                                            <span
+                                                                class=" text-suggest"
+                                                                style="font-size: 10px; right:0;">264,2K</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card" style="width: 110%;">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
+                                        class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div
+                                                    class="evaluate-sold">
+                                                    <strong class="fs-6"
+                                                        style="color:#fd475a; ">150,000
+                                                        ₫</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 "
+                                                style="padding: 0;">
+                                                <div
+                                                    class="row d-flex align-items-end">
+                                                    <div class="col-6 "
+                                                        style="padding: 0;">
+                                                        <div
+                                                            class="position-relative">
+                                                            <span
+                                                                class="position-absolute text-suggest-content  "
+                                                                style="font-size: 13px;">Đã
+                                                                Bán</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div
+                                                            class="evaluate-sold">
+                                                            <span
+                                                                class=" text-suggest"
+                                                                style="font-size: 10px; right:0;">264,2K</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card" style="width: 110%;">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80"
+                                        class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div
+                                                    class="evaluate-sold">
+                                                    <strong class="fs-6"
+                                                        style="color:#fd475a; ">150,000
+                                                        ₫</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 "
+                                                style="padding: 0;">
+                                                <div
+                                                    class="row d-flex align-items-end">
+                                                    <div class="col-6 "
+                                                        style="padding: 0;">
+                                                        <div
+                                                            class="position-relative">
+                                                            <span
+                                                                class="position-absolute text-suggest-content  "
+                                                                style="font-size: 13px;">Đã
+                                                                Bán</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div
+                                                            class="evaluate-sold">
+                                                            <span
+                                                                class=" text-suggest"
+                                                                style="font-size: 10px; right:0;">264,2K</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        <footer>
+            <!-- place footer here -->
+
+            <div class="container-fluid mt-3 "
+                style=" background: linear-gradient(90deg, rgba(25,38,186,1) 0%, rgba(57,151,184,1) 54%, rgba(0,212,255,1) 100%);">
+                <div class="container ">
+                    <div class="row  ">
+                        <div class="col-xs-6 col-md-4 col-lg-2 mt-2 ">
+                            <span class="footer_title_content"> Hỗ Trợ Khách
+                                Khàng</span>
+                            <ul class="list_customers"
+                                style="list-style-type: none; padding: 0;">
+
+                                <li><a href
+                                        class="text-decoration-none text-light">Các
+                                        Câu Hỏi Thường Gặp</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Gửi
+                                        Yêu Cầu Hỗ Trợ</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Hướng
+                                        Dẫn Đặt Hàng</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Phương
+                                        thức vận chuyển</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Chính
+                                        Sách Đổi Trả</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Hướng
+                                        Dẫn Trả Góp</a></li>
+
+                            </ul>
+
+                        </div>
+                        <div class="col-xs-6 col-md-4 col-lg-2 mt-2">
+                            <span class="footer_title_content"> Về Chúng Tôi
+                                DEVEX</span>
+                            <ul class="list_customers"
+                                style="list-style-type: none; padding: 0;">
+
+                                <li><a href
+                                        class="text-decoration-none text-light">Giới
+                                        Thiệu</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Tuyển
+                                        Dụng</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Chính
+                                        Sách Bảo Mật Và Thanh Toán</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Bán
+                                        Hàng Doanh Nghiệp</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Điều
+                                        Kiện Vận Chuyển</a></li>
+
+                            </ul>
+
+                        </div>
+                        <div class="col-xs-6 col-md-4 col-lg-2 mt-2">
+                            <span class="footer_title_content"> Hợp Tác Và Liên
+                                Kết</span>
+                            <ul class="list_customers"
+                                style="list-style-type: none; padding: 0;">
+
+                                <li><a href
+                                        class="text-decoration-none text-light">Hỗ
+                                        Trợ Khách Khàng</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Hỗ
+                                        Trợ Khách Khàng</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Hỗ
+                                        Trợ Khách Khàng</a></li>
+                                <li><a href
+                                        class="text-decoration-none text-light">Hỗ
+                                        Trợ Khách Khàng</a></li>
+
+                            </ul>
+
+                        </div>
+                        <div class="col-xs-6 col-md-4 col-lg-3 mt-2">
+                            <span class="footer_title_content"> Giao Hàng Và Các
+                                Phương Thức Thanh Toán</span>
+                            <ul class="list_customers"
+                                style="list-style-type: none; padding: 0;">
+
+                                <li><a href
+                                        class="text-decoration-none text-light">Hỗ
+                                        Trợ Khách Khàng</a></li>
+
+                            </ul>
+
+                        </div>
+
+                        <div class="col-xs-6 col-md-4 col-lg-3 mt-2">
+                            <h3 class="footer_title_content">HOTLINE: **********</h3>
+                            <ul class="list-customers"
+                                style="list-style-type: none; padding: 0;">
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="content_footer ">
+                        <div class="row ">
+                            <div class="col-12">
+                                <div class="row">
+                                    <span
+                                        class="text-center   content_footer-text">Trụ
+                                        sở chính: Tòa nhà Viettel, Số 285, đường
+                                        Cách Mạng Tháng 8, phường 12, quận 10,
+                                        Thành phố Hồ Chí Minh
+                                        DEVEX nhận đặt hàng trực tuyến và giao
+                                        hàng tận nơi, chưa hỗ trợ mua và nhận
+                                        hàng trực tiếp tại văn phòng hoặc trung
+                                        tâm xử lý đơn hàng
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <span
+                                        class="text-center content_footer-text">Giấy
+                                        chứng nhận Đăng ký Kinh doanh số
+                                        0309532909 do Sở Kế hoạch và Đầu tư
+                                        Thành phố Hồ Chí Minh cấp lần đầu ngày
+                                        06/01/2010 và sửa đổi lần thứ 23 ngày
+                                        14/02/2022
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row ">
+                                        <span
+                                            class="text-center content_footer-text">
+                                            © 2022 - Bản quyền của Công ty TNHH
+                                            DEVEX</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </footer>
+
+            <!-- Bootstrap JavaScript Libraries -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+                integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+                crossorigin="anonymous">
+        </script>
+
+            <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+                integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+                crossorigin="anonymous">
+        </script>
+            <!--slick slide-->
+            <script>
+            // function deleteProduct(button) {
+            //     var card = button.closest('.card');
+            //     card.remove();
+            // }
+            function subtract(button) {
+                var input = button.parentNode.querySelector(".product_quantity");
+                var currentValue = parseInt(input.value);
+                if (currentValue > 1) {
+                    input.value = currentValue - 1;
+                    updateTotalPrice(button);
+                }
+            }
+
+            function add(button) {
+                var input = button.parentNode.querySelector(".product_quantity");
+                var currentValue = parseInt(input.value);
+                input.value = currentValue + 1;
+                updateTotalPrice(button);
+            }
+        </script>
+            <script type="text/javascript"
+                src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+            <script type="text/javascript"
+                src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+            <script type="text/javascript"
+                src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+            <script src="/static/admin/dist/js/user/productDetail.js"></script>
+        </body>
+
+    </html>
