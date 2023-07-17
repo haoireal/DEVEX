@@ -148,6 +148,7 @@ create table [Orders] (
 	[Createdday] date not null,
 	[Total] float not null,
 	[Pricediscount] float null,
+	[Address] nvarchar(255) not null,
 	[Voucher_ID] int null,
 	[Customer_ID] varchar(20) not null,
 	[Payment_ID] int not null,
