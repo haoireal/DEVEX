@@ -22,7 +22,7 @@ public class MailInfo {
 	List<File> files = new ArrayList<>();
 	
 	public MailInfo(String to, String subject, String body) {
-		this.from = "H&B COFFEE <poly@fpt.edu.vn>";
+		this.from = "DEVEX <poly@fpt.edu.vn>";
 		this.to = to;
 		this.subject = subject;
 		this.body = body;

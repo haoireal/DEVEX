@@ -10,7 +10,6 @@ import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.SessionService;
 
 @Controller
-@RequestMapping("/devex")
 public class DevexController {
 
 	@Autowired
