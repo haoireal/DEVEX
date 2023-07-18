@@ -1,5 +1,7 @@
 package com.Devex.Controller.seller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.Devex.Entity.Product;
+import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.SessionService;
@@ -24,6 +28,9 @@ public class DevexSellerController {
 
 	@Autowired
 	ParamService param;
+	
+	@Autowired
+	ProductRepository productRepository;
 
 	@GetMapping("/home")
 	public String getHomePage() {
@@ -34,9 +41,13 @@ public class DevexSellerController {
 	@GetMapping("/list/{listName}")
 	public String getAnyList(@PathVariable("listName") String listName, Model model) {
 		switch (listName) {
-		case "product": {
+		case "products": {
 			model.addAttribute("titleType", "Sản phẩm");
-			//câu lệnh select user ở đây
+			List<Product> listProducts = productRepository.findAll();
+//			for (Product product : listProducts) {
+//				System.out.println(product);
+//			}
+			model.addAttribute("products", listProducts);
 			break;
 		}
 		case "orders": {
@@ -55,6 +66,13 @@ public class DevexSellerController {
 		model.addAttribute("listName", listName);
 		return "seller/listManage";
 	}
+	
+	@GetMapping("/product/show")
+	public String showProduct() {
+		
+		return "seller/formManage";
+	}
+	
 	@GetMapping("/profile")
 	public String getSellerProfile() {
 
