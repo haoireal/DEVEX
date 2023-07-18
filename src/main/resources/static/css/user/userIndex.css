@@ -274,14 +274,12 @@ button {
 
 .card-slider .col-2 {
 	left: 0px !important;
-	width: 185px !important;
 	margin-left: 1rem;
 }
 
 .card {
 	left: 0;
 	position: relative;
-	height: 376px;
 	/* width: 150%; */
 }
 
@@ -431,11 +429,11 @@ button {
 
 .icon-sale {
 	width: auto;
-	height: 25px;
 	background-color: #2550b9;
 	position: absolute;
 	border-radius: 20px;
 	margin-top: 150px;
+	font-size: .75rem;
 }
 
 .icon-sale>a {
