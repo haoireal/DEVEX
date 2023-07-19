@@ -95,8 +95,8 @@
 													<td th:text="${product.brand}"></td>
 													<td th:text="${product.categoryDetails.name}"></td>
 													<td class="product-name" th:text="${product.description}"></td>
-													<td th:text="${product.createdDay}"></td>
-													<td th:text="${product.active ? 'Bán' : 'Không bán'}"></td>
+													<td th:text="${#dates.format(product.createdDay, 'dd/MM/yyyy')}"></td>
+													<td th:text="${product.active ? 'Đang bán' : 'Không bán'}"></td>
 													
 													<td class="text-center">
 														<div
@@ -131,9 +131,13 @@
 										th:case="'orders'">
 										<thead>
 											<tr>
-												<th>Birthday</th>
-												<th>Address</th>
-												<th>Role</th>
+												<th>Mã hóa đơn</th>
+												<th>Tổng giá</th>
+												<th>Ngày tạo</th>
+												<th>Địa chỉ</th>
+												<th>Người đặt</th>
+												<th>Phương thức thanh toán</th>
+												<th>Trạng thái</th>
 												<th>Edit</th>
 											</tr>
 
@@ -141,26 +145,34 @@
 										<tbody>
 
 											<!--DATA -->
-											<div>
-												<!-- <tr data-widget="expandable-table" aria-expanded="false">
-													<td value="xx">xx</td>
-													<td value="xx">xx</td>
-													<td value="xx">xx</td>
-													<td class="text-center"><div
-															class="btn-group btn-group-sm">
-															<a href="/seller/orderDetail" class="btn btn-info"><i
-																class="fas fa-edit"></i></a>
-														</div> </a></td>
-
-												</tr> -->
-
+											<div th:each="order : ${orders}">
+												<tr >
+													<td th:text="${order.id}"></td>
+													<td th:text="${order.total}"></td>
+													<td th:text="${#dates.format(order.createdDay, 'dd/MM/yyyy')}"></td>
+													<td class="product-name" th:text="${order.address}"></td>
+													<td th:text="${order.customerOrder.fullname}"></td>
+													<td th:text="${order.payment.name}"></td>
+													<td th:text="${order.orderStatus.name}"></td>
+													<td class="text-center">
+														<div class="btn-group btn-group-sm">
+															<a href="/seller/orderDetail" class="btn btn-info">
+																<i class="fas fa-edit"></i>
+															</a>
+														</div>
+													</td>
+												</tr>
 											</div>
 										</tbody>
 										<tfoot>
 											<tr>
-												<th>Id</th>
-												<th>Fullname</th>
-												<th>Password</th>
+												<th>Mã hóa đơn</th>
+												<th>Tổng giá</th>
+												<th>Ngày tạo</th>
+												<th>Địa chỉ</th>
+												<th>Người đặt</th>
+												<th>Phương thức thanh toán</th>
+												<th>Trạng thái</th>
 												<th>Edit</th>
 											</tr>
 										</tfoot>

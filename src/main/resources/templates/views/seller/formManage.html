@@ -69,112 +69,27 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-12">
-							<!-- /.UP LOAD ẢNH -->
-							<div class="card-body">
-								<div id="actions" class="row">
-									<div class="col-lg-6">
-										<div class="btn-group w-100">
-											<span class="btn btn-success col fileinput-button"> <i
-												class="fas fa-plus"></i> <span>Add files</span>
-											</span>
-											<button type="submit" class="btn btn-primary col start">
-												<i class="fas fa-upload"></i> <span>Start upload</span>
-											</button>
-											<button type="reset" class="btn btn-warning col cancel">
-												<i class="fas fa-times-circle"></i> <span>Cancel
-													upload</span>
-											</button>
-										</div>
-									</div>
-									<div class="col-lg-6 d-flex align-items-center">
-										<div class="fileupload-process w-100">
-											<div id="total-progress"
-												class="progress progress-striped active" role="progressbar"
-												aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-												<div class="progress-bar progress-bar-success"
-													style="width: 0%;" data-dz-uploadprogress></div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="table table-striped files" id="previews">
-									<div id="template" class="row mt-2">
-										<div class="col-auto">
-											<span class="preview"><img src="data:," alt=""
-												data-dz-thumbnail /></span>
-										</div>
-										<div class="col d-flex align-items-center">
-											<p class="mb-0">
-												<span class="lead" data-dz-name></span> (<span data-dz-size></span>)
-											</p>
-											<strong class="error text-danger" data-dz-errormessage></strong>
-										</div>
-										<div class="col-4 d-flex align-items-center">
-											<div class="progress progress-striped active w-100"
-												role="progressbar" aria-valuemin="0" aria-valuemax="100"
-												aria-valuenow="0">
-												<div class="progress-bar progress-bar-success"
-													style="width: 0%;" data-dz-uploadprogress></div>
-											</div>
-										</div>
-										<div class="col-auto d-flex align-items-center">
-											<div class="btn-group">
-												<button class="btn btn-primary start">
-													<i class="fas fa-upload"></i> <span>Start</span>
-												</button>
-												<button data-dz-remove class="btn btn-warning cancel">
-													<i class="fas fa-times-circle"></i> <span>Cancel</span>
-												</button>
-												<button data-dz-remove class="btn btn-danger delete">
-													<i class="fas fa-trash"></i> <span>Delete</span>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
+							<h1>Thông tin sản phẩm</h1>
+							<!-- Thông tin sản phẩm -->
+							
+							<!-- Hình ảnh -->
+							<div class="card form-group">
+								<label>Hình ảnh</label>
+								<button class="btn btn-primary col-1 mb-2" type="file">Thêm</button>
 							</div>
-							<!-- /.card-body -->
-							<!-- /.UPLOAD ẢNH -->
-							<!--Table size -->
+							<!-- END Hình ảnh -->
+							
 							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title">Bordered Table</h3>
-								</div>
-								<!-- /.card-header -->
-								<div class="card-body">
-									<table class="table table-bordered" id="data-table">
-										<thead>
-											<tr>
-												<th style="width: 10px">Kích cỡ</th>
-												<th>Màu sắc</th>
-												<th>Giá tiền</th>
-												<th style="width: 40px">Số lượng hàng</th>
-											</tr>
-										</thead>
-										<tbody id="table-body">
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>
-													<div class="progress progress-xs">
-														<div class="progress-bar progress-bar-danger"
-															style="width: 55%"></div>
-													</div>
-												</td>
-												<td><span class="badge bg-danger">55%</span></td>
-											</tr>
-										</tbody>
-									</table>
-									<button id="add-row-btn" class="btn btn-primary">Thêm
-										hàng</button>
-								</div>
-
+							<!-- Tên sản phẩm -->
+							<div class="form-group">
+								<label>Tên sản phẩm</label>
+								<input class="form-control" placeholder="">
 							</div>
-							<!-- /.card -->
-							<!-- END TABLE SIZe -->
+							<!-- END Tên sản phẩm -->
+							
 							<!-- COMBOBOX AND SEARCH -->
 							<div class="form-group">
-								<label>Minimal</label> <select class="form-control select2"
+								<label>Nhà sản xuất</label> <select class="form-control select2"
 									style="width: 100%;">
 									<option selected="selected">Alabama</option>
 									<option>Alaska</option>
@@ -186,6 +101,71 @@
 								</select>
 							</div>
 							<!-- END COMBOBOX SEARCH -->
+							</div>
+							<!-- Loại sản phẩm -->
+							<div class="row">
+								<div class="form-group col-6">
+									<label>Loại sản phẩm</label> <select class="form-control select2"
+										style="width: 100%;">
+										<option selected="selected">Alabama</option>
+										<option>Alaska</option>
+										<option>California</option>
+										<option>Delaware</option>
+										<option>Tennessee</option>
+										<option>Texas</option>
+										<option>Washington</option>
+									</select>
+								</div>
+								<div class="form-group col-6">
+									<label>Loại chi tiết</label> <select class="form-control select2"
+										style="width: 100%;">
+										<option selected="selected">Alabama</option>
+										<option>Alaska</option>
+										<option>California</option>
+										<option>Delaware</option>
+										<option>Tennessee</option>
+										<option>Texas</option>
+										<option>Washington</option>
+									</select>
+								</div>
+							</div>
+							<!-- END Loại sản phẩm -->
+							<!-- END Thông tin sản phẩm -->
+							<!--Table size -->
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">Bordered Table</h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<table class="table table-bordered text-center" id="data-table">
+										<thead>
+											<tr>
+												<th style="width: 10px">Kích cỡ</th>
+												<th>Màu sắc</th>
+												<th>Giá tiền</th>
+												<th style="width: 40px">Số lượng hàng</th>
+											</tr>
+										</thead>
+										<tbody id="table-body">
+											<tr>
+												<td><input type="text" class="size0" name="size0"></td>
+												<td><input type="text" class="color0" name="color0"></td>
+												<td><input type="text" class="price0" name="price0"></td>
+												<td><input type="text" class="quantity0" name="quantity0"></td>
+											</tr>
+										</tbody>
+									</table>
+									<button id="add-row-btn" class="btn btn-primary">Thêm
+										hàng</button>
+								</div>
+
+							</div>
+							<!-- /.card -->
+							<!-- END TABLE SIZe -->
+							<div class="text-center">
+								<button class="btn btn-primary">Lưu</button>
+							</div>
 						</div>
 						<!-- /.col -->
 					</div>

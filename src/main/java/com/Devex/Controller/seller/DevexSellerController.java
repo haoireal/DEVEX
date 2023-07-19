@@ -48,7 +48,7 @@ public class DevexSellerController {
 		switch (listName) {
 		case "products": {
 			model.addAttribute("titleType", "Sản phẩm");
-			List<Product> listProducts = productRepository.findAll();
+			List<Product> listProducts = productRepository.findProductBySellerUsername("khanhtq");
 //			for (Product product : listProducts) {
 //				System.out.println(product);
 //			}
@@ -57,7 +57,8 @@ public class DevexSellerController {
 		}
 		case "orders": {
 			model.addAttribute("titleType", "Đơn hàng");
-			
+			List<Order> listOrder = orderRepository.findOrdersBySellerUsername("khanhtq");
+			model.addAttribute("orders", listOrder);
 			break;
 		}
 		case "rating": {
