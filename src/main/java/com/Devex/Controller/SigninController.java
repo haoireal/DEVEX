@@ -15,8 +15,7 @@ import com.Devex.Entity.User;
 
 
 @Controller
-@RequestMapping("/devex")
-public class AccountController {
+public class SigninController {
 	@Autowired
 	UserService userService;
 	
@@ -37,6 +36,18 @@ public class AccountController {
 		return "account/signin";
 	}
 	
+	@GetMapping("/signout")
+    public String doSignout() {
+		session.remove("user");
+//		session.set("keywordsSearch", "");
+		return "redirect:/devex/home";
+    }
+	
+	@GetMapping("/404")
+    public String get404() {
+		return "admin/erorr404";
+    }
+	
 	@PostMapping("/signin")
 	public String doSignin(Model model) {
 		String username = param.getString("username", "");
@@ -56,17 +67,19 @@ public class AccountController {
 				}
 				
 				if(user.getRole().getName().equalsIgnoreCase("Customer")) {
-					return "redirect:/hnbcoffee/admin/home";
+					return "redirect:/devex/home";
+				}if(user.getRole().getName().equalsIgnoreCase("Seller")) {
+					return "redirect:/devex/seller/home";
 				}else {
-					return "redirect:/hnbcoffee/home";
+					return "redirect:/devex/admin/home";
 				}
 			}else {
-				model.addAttribute("message", "This account is blocked!");
+				model.addAttribute("message", "Tài khoản này đã bị khoá!");
 				return "account/signin";
 			}
 			
 		}else {
-			model.addAttribute("message", "Sign in fail!");
+			model.addAttribute("message", "Đăng nhập thất bại!");
 			return "account/signin";
 		}
 	}

@@ -2,1013 +2,880 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-    <!--cnd fontawesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
-    <!-- Theme style -->
-    <!-- <link rel="stylesheet" href="../admin/dist/css/userIndex.css"> -->
-    <link rel="stylesheet" href="/admin/dist/css/userIndex.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
-
-    <!--slick-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<div th:replace="~{flagment/user/userHead :: userHeadFragment}"></div>
 </head>
 
 <body>
-    <header>
-        <div class="container-fluid header-inf">
-            <div class="container ">
-                <div class="row">
-                    <div class="menu-bar" style="color: #fff; margin: 0; padding: 0; ">
-                        <nav class="navbar float-end navbar-expand-lg navbar-light" style="height: 35px">
-
-                            <div class="collapse navbar-collapse  text-end " id="navbarNavDropdown">
-                                <ul class="text-end navbar-nav ml-auto">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Hỗ
-                                                trợ dịch vụ</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Bán
-                                                hàng</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Sản
-                                                phẩm đã xem</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Kiếu
-                                                nại</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Tra
-                                                cứu đơn hàng</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Tuyển
-                                                dụng</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Đăng
-                                                nhập</a>
-                                    </li>
-
-                                </ul>
-                            </div>
-
-                        </nav>
-                        <!-- hết thanh vav -->
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="container container_mid   mt-3" style="height: 500px; ">
-            <div class="row mt-2 " style="height: 50px;">
-                <div class="col-md-2 ">
-                    <img class="img-fluid img_logo" src=" /admin/dist/img/DEVE2.jpg" alt>
-                </div>
-                <div class="col-md-8 ">
-                    <div class="search-box pt-2 order-4 order-xl-3">
-                        <form>
-                            <div class="input-group no-shadow">
-                                <input type="text" class=" form-control" placeholder="Bạn cần tìm gì hôm nay ?" name="keyword" ng-model="find" style="height: 40px; border-radius: 15px; font-weight: bold; font-size: 13px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px gray; "
-                                    >
-
-                                <span class="position-relative " style="right: 2.5rem; z-index: 100; margin-top: -2px; width: 0px;">
-                                        <a href="#"
-                                            style="color: #fff; font-size: 16px;">
-                                            <i
-                                                class=" fa-solid fa-magnifying-glass fs-3 mt-2 text-dark "></i>
-                                        </a>
-                                    </span>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-2 ">
-                    <div class="row" style="margin-left: 10px;">
-                        <div class="col-6 pt-1">
-                            <a href>
-                                <i class="bi bi-cart3 fs-2 text-dark fw-bold "></i>
-                            </a>
-                        </div>
-                        <div class="col-6 pt-1">
-                            <a href>
-                                <i class="bi bi-person-circle fs-2 text-dark fw-bold "></i>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="row" style="height: 360px;">
-                <div class="col-md-2 d-md-none d-lg-flex list_type  mt-4 overflow-scroll">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item text-center rounded"><a class="list_type_product" href>Máy Tính</a></li>
-                        <li class="list-group-item text-center"><a class="list_type_product" href>Áo Quần</a></li>
-                        <li class="list-group-item text-center"><a class="list_type_product" href>Phụ Kiện</a></li>
-                        <li class="list-group-item text-center"><a class="list_type_product" href>Điện Thoại</a></li>
-                        <li class="list-group-item text-center"><a class="list_type_product" href>Giày Dép</a></li>
-                        <li class="list-group-item text-center"><a class="list_type_product" href>Bàn Ghế</a></li>
-                        <li class="list-group-item text-center"><a class="list_type_product" href>Bàn Ghế</a></li>
-                        <li class="list-group-item text-center"><a class="list_type_product" href>Bàn Ghế</a></li>
-                    </ul>
-                    </ul>
-
-                </div>
-
-                <!--banners advertisement ( slide show)-->
-                <div class=" col-12 col-lg-10  mt-4 slideShow">
-
-                    <div class="image-slider">
-                        <div class="image-item">
-                            <div class="image">
-                                <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" alt />
-                            </div>
-
-                        </div>
-                        <div class="image-item">
-                            <div class="image">
-                                <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80" alt />
-                            </div>
-
-                        </div>
-                        <div class="image-item">
-                            <div class="image">
-                                <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80" alt />
-                            </div>
-
-                        </div>
-                        <div class="image-item">
-                            <div class="image">
-                                <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" alt />
-                            </div>
-
-                        </div>
-                        <div class="image-item">
-                            <div class="image">
-                                <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80" alt />
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    </header>
-    <main>
-        <div class="container container_main mt-3" style="height: 500px;">
-            <div class="row">
-                <div class="col-12 col-lg-4 ">
-                    <div class="row">
-                        <div class=" col-4 col-lg-7 text-dark content_price">Giá Tốt Hôm Nay</div>
-                        <div class=" col-5 col-lg-5 d-flex ">
-                            <button class=" btn_time" id="hour-btn">Giờ</button>
-                            <span class="text-dark fw-bolder text_dots ">:</span>
-                            <button class=" btn_time" id="minute-btn">Phút</button>
-                            <span class="text-dark fw-bolder text_dots ">:</span>
-                            <button class="t btn_time" id="second-btn">Giây</button>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-12  ">
-                    <div class="card-slider d-flex justify-content-start">
-                        <div class="col-2">
-                            <div class="card" style="width: 110%; ">
-                                <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                                <div class="card-body" style="padding: 5px;">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="width: 110%;">
-                                <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0;">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="width: 110%;">
-                                <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0;">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="width: 110%;">
-                                <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0;">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="width: 110%;">
-                                <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0;">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container container_main_middle mt-3 pb-5">
-            <div class="row mt-3">
-
-                <div class="text-dark content_price">
-                    <span class="container_main_middle-contten  mt-3" style="color: #2A62B9  ;">Dành Cho Bạn</span>
-
-                </div>
-
-            </div>
-
-            <div class="row d-flex justify-content-between align-items-center px-3">
-
-                <div class="col-6 col-md-4 col-lg-2 pt-2">
-                    <div class="card" style="width: 110%; height: 420px;">
-                        <div class="hot-sale text-center">
-                            <a href=""> HOT SALE</a>
-                        </div>
-                        <div class="icon-sale text-center">
-                            <a href=""> Giảm 100.000.000 VND <i class="bi bi-lightning-charge-fill"></i></a>
-                        </div>
-                        <img src=" /admin/dist/img/apple1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title text-center tensp">Iphone 11 64GB - Chính Hãng Iphone 11 64GB - Chính Hãng</h5>
-                            <a class="price text-center" style="text-decoration: none;"> <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#ff0821; font-size: 16px; font-weight: 600;">8,490,000 VND
-                                        </strong>
-                            </a>
-                            <a class="price text-center" style="text-decoration: none;"> <i class="icon-flash text-red"></i>
-                                <strike class="fs" style="color:#3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000 VND
-                                </strike>
-                            </a>
-                            <a class="icon-star text-center" style="text-decoration: none;"> <i class="icon-flash text-red"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                            </a>
-                        </div>
-
-                        <div><a href="#" class="btn btn-primary btn_add add-cart">Thêm Vào Giỏ Hàng
-                        </a></div>
-
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2 ">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2 ">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2 ">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2 ">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2 ">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2 ">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-2 pt-2">
-                    <div class="card" style="width: 110%; ">
-                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                        <div class="card-body" style="padding: 5px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="price">
-                                <i class="icon-flash text-red"></i>
-                                <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                        ₫</strong>
-
-                                <strike class="fs-6 text-dark">11,990,000 ₫</strike>
-
-                            </p>
-                            <a href="#" class="btn btn-primary btn_add" style="margin: 0; padding: 0; ">Thêm Vào Giỏ
-                                    Hàng</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-        <!--Danh Mục sản Phẩm-->
-
-        <div class="container container_main mt-3 pb-3">
-            <div class="row pt-2">
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-12 text-dark content_price">Danh Mục Sản Phẩm</div>
-                    </div>
-
-                </div>
-
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-4">
-                            <button type="button " class="btn  btn_type_product"><span>Chính Hãng</span> </button>
-                        </div>
-                        <div class="col-4"><button type="button" class="btn  btn_type_product"><span>Xã Kho</span> </button></div>
-                        <div class="col-4"><button type="button" class="btn  btn_type_product "><span>Free Ship</span>  </button></div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="row">
-
-                <div class="col-12">
-                    <div class="row mt-2 ">
-                        <div class="col-12 card_type_product-slide ">
-                            <div class="card_type_product d-flex  justify-content-between align-items-center">
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center "> Đồ Công Nghệ</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center">Điện Thoại</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center">Áo Quần</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center">Xe</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center">Phụ Kiện</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center "> Đồ Công Nghệ</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center">Điện Thoại</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center">Áo Quần</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center">Xe</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 me-2">
-                                    <div class="card">
-                                        <img src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn" class="card-img-top" alt="...">
-                                        <div class="card-body ">
-                                            <p class="card-text text-dark text-center">Phụ Kiện</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-
-        <!--gợi ý sp -->
-        <div class="container container_main mt-3" style="height: 500px;">
-            <div class="row">
-
-                <div class="col-7 text-dark content_price">Gợi Ý Hôm Nay</div>
-
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-12  ">
-                    <div class="card-slider d-flex justify-content-start">
-                        <div class="col-2">
-                            <div class="card" style="width: 110%; ">
-                                <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                                <div class="card-body" style="padding: 5px;">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add  ms-4 " style="margin: 0; padding: 0; ">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="width: 110%;">
-                                <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add ms-4" style="margin: 0; padding: 0;">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="width: 110%;">
-                                <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add ms-4" style="margin: 0; padding: 0;">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="width: 110%;">
-                                <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add ms-4" style="margin: 0; padding: 0;">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="width: 110%;">
-                                <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="price">
-                                        <i class="icon-flash text-red"></i>
-                                        <strong class="fs-6" style="color:#fd475a; ">8,490,000
-                                                ₫</strong>
-
-                                        <strike class="fs-6 text-dark">11,990,000
-                                                ₫</strike>
-
-                                    </p>
-                                    <a href="#" class="btn btn-primary btn_add ms-4" style="margin: 0; padding: 0;">Thêm
-                                            Vào Giỏ Hàng</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--tin tucưc-->
-        <div class="container container_news mt-3 pb-3">
-            <div class="row pt-2">
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-12 text-dark content_price">Tin Tức 24H</div>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-
-            <div class="row">
-                <div class="col-4">
-                    <div class="card mb-3 card_news">
-                        <div class="row g-0">
-                            <div class="col-md-5">
-                                <img style="width: 175px; height: 155px;" src="https://icdn.24h.com.vn/upload/2-2023/images/2023-06-29/120x90/15-555-1688013773-324-width740height555.jpg" class="img-fluid rounded-start " alt="...">
-                            </div>
-                            <div class="col-md-7 position-relative ">
-                                <div class="card-body  position-absolute  ">
-                                    <h5 class="card-title overflow-hidden " style="height: 6.25rem;">
-                                        <a class="text-decoration-none fw-bold text-dark a_link-news" href="https://www.24h.com.vn/bong-da/real-nham-3-ngoi-sao-thay-vi-cho-mbappe-can-nhac-harry-kane-hay-osimhen-c48a1479643.html">Real nhắm 3 ngôi sao thay vì chờ Mbappe: Cân nhắc Harry Kane hay Osimhen</a>
-                                    </h5>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-4">
-                    <div class="card mb-3 card_news">
-                        <div class="row g-0">
-                            <div class="col-md-5">
-                                <img style="width: 175px; height: 155px;" src="https://icdn.24h.com.vn/upload/2-2023/images/2023-06-29/120x90/15-555-1688013773-324-width740height555.jpg" class="img-fluid rounded-start " alt="...">
-                            </div>
-                            <div class="col-md-7 position-relative ">
-                                <div class="card-body  position-absolute  ">
-                                    <h5 class="card-title overflow-hidden " style="height: 6.25rem;">
-                                        <a class="text-decoration-none fw-bold text-dark a_link-news" href="https://www.24h.com.vn/bong-da/real-nham-3-ngoi-sao-thay-vi-cho-mbappe-can-nhac-harry-kane-hay-osimhen-c48a1479643.html">Real nhắm 3 ngôi sao thay vì chờ Mbappe: Cân nhắc Harry Kane hay Osimhen</a>
-                                    </h5>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-4">
-                    <div class="card mb-3 card_news">
-                        <div class="row g-0">
-                            <div class="col-md-5">
-                                <img style="width: 175px; height: 155px;" src="https://icdn.24h.com.vn/upload/2-2023/images/2023-06-29/120x90/15-555-1688013773-324-width740height555.jpg" class="img-fluid rounded-start " alt="...">
-                            </div>
-                            <div class="col-md-7 position-relative ">
-                                <div class="card-body  position-absolute  ">
-                                    <h5 class="card-title overflow-hidden " style="height: 6.25rem;">
-                                        <a class="text-decoration-none fw-bold text-dark a_link-news" href="https://www.24h.com.vn/bong-da/real-nham-3-ngoi-sao-thay-vi-cho-mbappe-can-nhac-harry-kane-hay-osimhen-c48a1479643.html">Real nhắm 3 ngôi sao thay vì chờ Mbappe: Cân nhắc Harry Kane hay Osimhen</a>
-                                    </h5>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-
-
-            </div>
-
-        </div>
-
-
-
-    </main>
-    <footer>
-        <!-- place footer here -->
-
-        <div class="container-fluid mt-3 " style=" background: linear-gradient(90deg, rgba(25,38,186,1) 0%, rgba(57,151,184,1) 54%, rgba(0,212,255,1) 100%);">
-            <div class="container ">
-                <div class="row  ">
-                    <div class="col-xs-6 col-md-4 col-lg-2 mt-2 ">
-                        <span class="footer_title_content"> Hỗ Trợ Khách Khàng</span>
-                        <ul class="list_customers" style="list-style-type: none; padding: 0;">
-
-                            <li><a href="" class="text-decoration-none text-light">Các Câu Hỏi Thường Gặp</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Gửi Yêu Cầu Hỗ Trợ</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Hướng Dẫn Đặt Hàng</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Phương thức vận chuyển</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Chính Sách Đổi Trả</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Hướng Dẫn Trả Góp</a></li>
-
-
-                        </ul>
-
-
-                    </div>
-                    <div class="col-xs-6 col-md-4 col-lg-2 mt-2">
-                        <span class="footer_title_content"> Về Chúng Tôi DEVEX</span>
-                        <ul class="list_customers" style="list-style-type: none; padding: 0;">
-
-                            <li><a href="" class="text-decoration-none text-light">Giới Thiệu</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Tuyển Dụng</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Chính Sách Bảo Mật Và Thanh Toán</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Bán Hàng Doanh Nghiệp</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Điều Kiện Vận Chuyển</a></li>
-
-
-                        </ul>
-
-
-                    </div>
-                    <div class="col-xs-6 col-md-4 col-lg-2 mt-2">
-                        <span class="footer_title_content"> Hợp Tác Và Liên Kết</span>
-                        <ul class="list_customers" style="list-style-type: none; padding: 0;">
-
-                            <li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
-                            <li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
-
-
-                        </ul>
-
-
-                    </div>
-                    <div class="col-xs-6 col-md-4 col-lg-3 mt-2">
-                        <span class="footer_title_content"> Giao Hàng Và Các Phương Thức Thanh Toán</span>
-                        <ul class="list_customers" style="list-style-type: none; padding: 0;">
-
-                            <li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
-
-
-
-                        </ul>
-
-
-                    </div>
-
-
-                    <div class="col-xs-6 col-md-4 col-lg-3 mt-2">
-                        <h3 class="footer_title_content">HOTLINE: **********</h3>
-                        <ul class="list-customers" style="list-style-type: none; padding: 0;">
-
-                        </ul>
-                    </div>
-
-                </div>
-
-                <div class="content_footer ">
-                    <div class="row ">
-                        <div class="col-12">
-                            <div class="row">
-                                <span class="text-center   content_footer-text">Trụ sở chính: Tòa nhà Viettel, Số 285, đường Cách Mạng Tháng 8, phường 12, quận 10, Thành phố Hồ Chí Minh
-                                    DEVEX nhận đặt hàng trực tuyến và giao hàng tận nơi, chưa hỗ trợ mua và nhận hàng trực tiếp tại văn phòng hoặc trung tâm xử lý đơn hàng
-                                    </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="row">
-                                <span class="text-center content_footer-text">Giấy chứng nhận Đăng ký Kinh doanh số 0309532909 do Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh cấp lần đầu ngày 06/01/2010 và sửa đổi lần thứ 23 ngày 14/02/2022
-                                   
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="row ">
-                                <span class="text-center content_footer-text"> © 2022 - Bản quyền của Công ty TNHH DEVEX</span>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </footer>
-
-    <script>
-        // Lấy tham chiếu đến các button
-        var hourButton = document.getElementById('hour-btn');
-        var minuteButton = document.getElementById('minute-btn');
-        var secondButton = document.getElementById('second-btn');
-
-        // Tạo hàm để cập nhật giá trị của button
-        function updateButtons() {
-            var currentTime = new Date();
-
-            // Lấy giờ, phút, giây từ thời gian hiện tại
-            var hours = currentTime.getHours();
-            var minutes = currentTime.getMinutes();
-            var seconds = currentTime.getSeconds();
-
-
-            hourButton.innerHTML = hours;
-            minuteButton.innerHTML = minutes;
-            secondButton.innerHTML = seconds;
-        }
-
-        // Gọi hàm updateButtons để cập nhật giá trị ban đầu
-        updateButtons();
-
-        // Sử dụng setInterval để cập nhật giá trị của button mỗi giây
-        setInterval(updateButtons, 1000);
-    </script>
-    <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-    </script>
-    <!--slick slide-->
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src=" /admin/dist/js/user/userIndex.js"></script>
+	<header>
+		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
+	</header>
+	<main>
+		<div class="container container_main mt-3 pb-3">
+			<div class="row">
+				<div class="col-12 col-md-6 ">
+					<div class="row d-flex justify-content-start content_price">
+						<div class=" col-5 col-md-5 col-xl-3 text-dark p-0"
+							style="color: red !important;">Flash Sale</div>
+						<div class="col-6 col-md-4 col-xl-3 p-0 d-flex">
+							<button class="btn_time" id="countdown-btn"
+								style="color: red !important;">24:00:00</button>
+							<span class="text-dark fw-bolder text_dots"
+								style="color: red !important;">:</span>
+							<button class="btn_time" id="minute-btn"
+								style="color: red !important;"></button>
+							<span class="text-dark fw-bolder text_dots"
+								style="color: red !important;">:</span>
+							<button class="btn_time" id="second-btn"
+								style="color: red !important;"></button>
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
+			<div class="row mt-2">
+				<div class="col-12  ">
+					<div class="card-slider d-flex justify-content-start">
+						<div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
+							<a href="#a" class="text-decoration-none">
+								<div class="card pb-2 m-0" style="width: 11rem;">
+									<div class="hot-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+									<div class="icon-sale text-center p-1">
+										Giảm 100.000.000 VND <i class="bi bi-lightning-charge-fill"></i>
+									</div>
+									<img src=" /img/product/10f22dpa013_3__1.webp"
+										class="img-fluid w-100 p-0" alt="...">
+									<div class="card-body" style="padding: 5px;">
+										<div class="card-title tensp text-left">Áo ba lỗ nam
+											unisex TINOFUN áo thun nam nữ 3 lỗ sát nách tanktop CL A thể
+											thao vải co dãn tập gym ôm body 10 màu</div>
+										<div id="price-box text-left row">
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strong class="fs-10"
+													style="color: #ff0821bb; font-weight: 600;"><span
+													style="color: #ff0821bb;">₫</span>8,490,000</strong>
+											</div>
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strike class="fs-11"
+													style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+											</div>
+										</div>
+										<div class="icon-star text-left"
+											style="text-decoration: none;">
+											<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+											<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="">đã bán 999k</i>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
+							<a href="#a" class="text-decoration-none">
+								<div class="card pb-2 m-0" style="width: 11rem;">
+									<div class="hot-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+									<div class="icon-sale text-center p-1">
+										Giảm 100.000.000 VND <i class="bi bi-lightning-charge-fill"></i>
+									</div>
+									<img src=" /img/product/10f22dpa013_3__1.webp"
+										class="img-fluid w-100 p-0" alt="...">
+									<div class="card-body" style="padding: 5px;">
+										<div class="card-title tensp text-left">Áo ba lỗ nam
+											unisex TINOFUN áo thun nam nữ 3 lỗ sát nách tanktop CL A thể
+											thao vải co dãn tập gym ôm body 10 màu</div>
+										<div id="price-box text-left row">
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strong class="fs-10"
+													style="color: #ff0821bb; font-weight: 600;"><span
+													style="color: #ff0821bb;">₫</span>8,490,000</strong>
+											</div>
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strike class="fs-11"
+													style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+											</div>
+										</div>
+										<div class="icon-star text-left"
+											style="text-decoration: none;">
+											<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+											<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="">đã bán 999k</i>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+<div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
+							<a href="#a" class="text-decoration-none">
+								<div class="card pb-2 m-0" style="width: 11rem;">
+									<div class="hot-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+									<div class="icon-sale text-center p-1">
+										Giảm 100.000.000 VND <i class="bi bi-lightning-charge-fill"></i>
+									</div>
+									<img src=" /img/product/10f22dpa013_3__1.webp"
+										class="img-fluid w-100 p-0" alt="...">
+									<div class="card-body" style="padding: 5px;">
+										<div class="card-title tensp text-left">Áo ba lỗ nam
+											unisex TINOFUN áo thun nam nữ 3 lỗ sát nách tanktop CL A thể
+											thao vải co dãn tập gym ôm body 10 màu</div>
+										<div id="price-box text-left row">
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strong class="fs-10"
+													style="color: #ff0821bb; font-weight: 600;"><span
+													style="color: #ff0821bb;">₫</span>8,490,000</strong>
+											</div>
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strike class="fs-11"
+													style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+											</div>
+										</div>
+										<div class="icon-star text-left"
+											style="text-decoration: none;">
+											<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+											<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="">đã bán 999k</i>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
+							<a href="#a" class="text-decoration-none">
+								<div class="card pb-2 m-0" style="width: 11rem;">
+									<div class="hot-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+									<div class="icon-sale text-center p-1">
+										Giảm 100.000.000 VND <i class="bi bi-lightning-charge-fill"></i>
+									</div>
+									<img src=" /img/product/10f22dpa013_3__1.webp"
+										class="img-fluid w-100 p-0" alt="...">
+									<div class="card-body" style="padding: 5px;">
+										<div class="card-title tensp text-left">Áo ba lỗ nam
+											unisex TINOFUN áo thun nam nữ 3 lỗ sát nách tanktop CL A thể
+											thao vải co dãn tập gym ôm body 10 màu</div>
+										<div id="price-box text-left row">
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strong class="fs-10"
+													style="color: #ff0821bb; font-weight: 600;"><span
+													style="color: #ff0821bb;">₫</span>8,490,000</strong>
+											</div>
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strike class="fs-11"
+													style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+											</div>
+										</div>
+										<div class="icon-star text-left"
+											style="text-decoration: none;">
+											<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+											<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="">đã bán 999k</i>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
+							<a href="#a" class="text-decoration-none">
+								<div class="card pb-2 m-0" style="width: 11rem;">
+									<div class="hot-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+									<div class="icon-sale text-center p-1">
+										Giảm 100.000.000 VND <i class="bi bi-lightning-charge-fill"></i>
+									</div>
+									<img src=" /img/product/10f22dpa013_3__1.webp"
+										class="img-fluid w-100 p-0" alt="...">
+									<div class="card-body" style="padding: 5px;">
+										<div class="card-title tensp text-left">Áo ba lỗ nam
+											unisex TINOFUN áo thun nam nữ 3 lỗ sát nách tanktop CL A thể
+											thao vải co dãn tập gym ôm body 10 màu</div>
+										<div id="price-box text-left row">
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strong class="fs-10"
+													style="color: #ff0821bb; font-weight: 600;"><span
+													style="color: #ff0821bb;">₫</span>8,490,000</strong>
+											</div>
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strike class="fs-11"
+													style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+											</div>
+										</div>
+										<div class="icon-star text-left"
+											style="text-decoration: none;">
+											<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+											<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="">đã bán 999k</i>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
+							<a href="#a" class="text-decoration-none">
+								<div class="card pb-2 m-0" style="width: 11rem;">
+									<div class="hot-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+									<div class="icon-sale text-center p-1">
+										Giảm 100.000.000 VND <i class="bi bi-lightning-charge-fill"></i>
+									</div>
+									<img src=" /img/product/10f22dpa013_3__1.webp"
+										class="img-fluid w-100 p-0" alt="...">
+									<div class="card-body" style="padding: 5px;">
+										<div class="card-title tensp text-left">Áo ba lỗ nam
+											unisex TINOFUN áo thun nam nữ 3 lỗ sát nách tanktop CL A thể
+											thao vải co dãn tập gym ôm body 10 màu</div>
+										<div id="price-box text-left row">
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strong class="fs-10"
+													style="color: #ff0821bb; font-weight: 600;"><span
+													style="color: #ff0821bb;">₫</span>8,490,000</strong>
+											</div>
+											<div class="price col-6 m-0" style="text-decoration: none;">
+												<strike class="fs-11"
+													style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+											</div>
+										</div>
+										<div class="icon-star text-left"
+											style="text-decoration: none;">
+											<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+											<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+												class="">đã bán 999k</i>
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container container_main_middle mt-3 pb-5">
+			<div class="row mt-3">
+
+				<div class="text-dark content_price">
+					<span class="container_main_middle-contten  mt-3"
+						style="color: #2A62B9;">Dành Cho Bạn</span>
+
+				</div>
+
+			</div>
+
+			<div
+				class="row d-flex justify-content-between align-items-center px-3">
+				<div class="col-5 col-md-4 col-lg-3 col-xl-2 pt-2">
+					<a href="#a" class="text-decoration-none">
+						<div class="card pb-2" style="width: 11rem;">
+							<div class="hot-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+							<div class="icon-sale text-center p-1">
+								Giảm 100.000.000 VND <i class="bi bi-lightning-charge-fill"></i>
+							</div>
+							<img src=" /img/product/10f22dpa013_3__1.webp"
+								class="img-fluid w-100 p-0" alt="...">
+							<div class="card-body" style="padding: 5px;">
+								<div class="card-title tensp text-left">Áo ba lỗ nam
+									unisex TINOFUN áo thun nam nữ 3 lỗ sát nách tanktop CL A thể
+									thao vải co dãn tập gym ôm body 10 màu</div>
+								<div id="price-box text-left row">
+									<div class="price col-6 m-0" style="text-decoration: none;">
+										<strong class="fs-10"
+											style="color: #ff0821bb; font-weight: 600;"><span
+											style="color: #ff0821bb;">₫</span>8,490,000</strong>
+									</div>
+									<div class="price col-6 m-0" style="text-decoration: none;">
+										<strike class="fs-11"
+											style="color: #3f3d3d; font-weight: 100;"><span
+											style="color: #3f3d3d;">₫</span>8,490,000</strike>
+									</div>
+								</div>
+								<div class="icon-star text-left" style="text-decoration: none;">
+									<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+									<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+										class="bi bi-star"></i> <i class="bi bi-star"></i> <i class="">đã
+										bán 999k</i>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+
+			</div>
+
+		</div>
+		<!--Danh Mục sản Phẩm-->
+
+		<div class="container container_main mt-3 pb-3">
+			<div class="row pt-2">
+				<div class="col-6">
+					<div class="row">
+						<div class="col-12 text-dark content_price">Danh Mục Sản
+							Phẩm</div>
+					</div>
+
+				</div>
+
+				<div class="col-6">
+					<div class="row">
+						<div class="col-4">
+							<button type="button" class="btn  btn_type_product">
+								<span>Chính Hãng</span>
+							</button>
+						</div>
+						<div class="col-4">
+							<button type="button" class="btn  btn_type_product">
+								<span>Xã Kho</span>
+							</button>
+						</div>
+						<div class="col-4">
+							<button type="button" class="btn  btn_type_product ">
+								<span>Free Ship</span>
+							</button>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<div class="row">
+
+				<div class="col-12">
+					<div class="row mt-2 ">
+						<div class="col-12 card_type_product-slide ">
+							<div
+								class="card_type_product d-flex  justify-content-between align-items-center">
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center ">Đồ Công Nghệ</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center">Điện Thoại</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center">Áo Quần</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center">Xe</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center">Phụ Kiện</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center ">Đồ Công Nghệ</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center">Điện Thoại</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center">Áo Quần</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center">Xe</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 me-2">
+									<div class="card">
+										<img
+											src="https://down-vn.img.susercontent.com/file/978b9e4cb61c611aaaf58664fae133c5_tn"
+											class="card-img-top" alt="...">
+										<div class="card-body ">
+											<p class="card-text text-dark text-center">Phụ Kiện</p>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<!--gợi ý sp -->
+		<div class="container container_main mt-3" style="height: 500px;">
+			<div class="row">
+
+				<div class="col-7 text-dark content_price">Gợi Ý Hôm Nay</div>
+
+			</div>
+
+			<div class="row mt-2">
+				<div class="col-12  ">
+					<div class="card-slider d-flex justify-content-start">
+						<div class="col-2 col-xl-4">
+							<div class="card" style="width: 110%;">
+								<img
+									src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
+									class="card-img-top" alt="...">
+								<div class="card-body" style="padding: 5px;">
+									<h5 class="card-title">Card title</h5>
+									<p class="price">
+										<i class="icon-flash text-red"></i> <strong class="fs-6"
+											style="color: #fd475a;">8,490,000 ₫</strong> <strike
+											class="fs-6 text-dark">11,990,000 ₫</strike>
+
+									</p>
+									<a href="#" class="btn btn-primary btn_add  ms-4 "
+										style="margin: 0; padding: 0;">Thêm Vào Giỏ Hàng</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-2 col-xl-4">
+							<div class="card" style="width: 110%;">
+								<img
+									src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80"
+									class="card-img-top" alt="...">
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<p class="price">
+										<i class="icon-flash text-red"></i> <strong class="fs-6"
+											style="color: #fd475a;">8,490,000 ₫</strong> <strike
+											class="fs-6 text-dark">11,990,000 ₫</strike>
+
+									</p>
+									<a href="#" class="btn btn-primary btn_add ms-4"
+										style="margin: 0; padding: 0;">Thêm Vào Giỏ Hàng</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-2 col-xl-4">
+							<div class="card" style="width: 110%;">
+								<img
+									src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80"
+									class="card-img-top" alt="...">
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<p class="price">
+										<i class="icon-flash text-red"></i> <strong class="fs-6"
+											style="color: #fd475a;">8,490,000 ₫</strong> <strike
+											class="fs-6 text-dark">11,990,000 ₫</strike>
+
+									</p>
+									<a href="#" class="btn btn-primary btn_add ms-4"
+										style="margin: 0; padding: 0;">Thêm Vào Giỏ Hàng</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-2 col-xl-4">
+							<div class="card" style="width: 110%;">
+								<img
+									src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
+									class="card-img-top" alt="...">
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<p class="price">
+										<i class="icon-flash text-red"></i> <strong class="fs-6"
+											style="color: #fd475a;">8,490,000 ₫</strong> <strike
+											class="fs-6 text-dark">11,990,000 ₫</strike>
+
+									</p>
+									<a href="#" class="btn btn-primary btn_add ms-4"
+										style="margin: 0; padding: 0;">Thêm Vào Giỏ Hàng</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-2 col-xl-4">
+							<div class="card" style="width: 110%;">
+								<img
+									src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80"
+									class="card-img-top" alt="...">
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<p class="price">
+										<i class="icon-flash text-red"></i> <strong class="fs-6"
+											style="color: #fd475a;">8,490,000 ₫</strong> <strike
+											class="fs-6 text-dark">11,990,000 ₫</strike>
+
+									</p>
+									<a href="#" class="btn btn-primary btn_add ms-4"
+										style="margin: 0; padding: 0;">Thêm Vào Giỏ Hàng</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--tin tucưc-->
+		<div class="container container_news mt-3 pb-3">
+			<div class="row pt-2">
+				<div class="col-6">
+					<div class="row">
+						<div class="col-12 text-dark content_price">Tin Tức 24H</div>
+
+					</div>
+
+				</div>
+
+
+
+			</div>
+
+
+			<div class="row">
+				<div class="col-4">
+					<div class="card mb-3 card_news">
+						<div class="row g-0">
+							<div class="col-md-5">
+								<img style="width: 175px; height: 155px;"
+									src="https://icdn.24h.com.vn/upload/2-2023/images/2023-06-29/120x90/15-555-1688013773-324-width740height555.jpg"
+									class="img-fluid rounded-start " alt="...">
+							</div>
+							<div class="col-md-7 position-relative ">
+								<div class="card-body  position-absolute  ">
+									<h5 class="card-title overflow-hidden "
+										style="height: 6.25rem;">
+										<a class="text-decoration-none fw-bold text-dark a_link-news"
+											href="https://www.24h.com.vn/bong-da/real-nham-3-ngoi-sao-thay-vi-cho-mbappe-can-nhac-harry-kane-hay-osimhen-c48a1479643.html">Real
+											nhắm 3 ngôi sao thay vì chờ Mbappe: Cân nhắc Harry Kane hay
+											Osimhen</a>
+									</h5>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-4">
+					<div class="card mb-3 card_news">
+						<div class="row g-0">
+							<div class="col-md-5">
+								<img style="width: 175px; height: 155px;"
+									src="https://icdn.24h.com.vn/upload/2-2023/images/2023-06-29/120x90/15-555-1688013773-324-width740height555.jpg"
+									class="img-fluid rounded-start " alt="...">
+							</div>
+							<div class="col-md-7 position-relative ">
+								<div class="card-body  position-absolute  ">
+									<h5 class="card-title overflow-hidden "
+										style="height: 6.25rem;">
+										<a class="text-decoration-none fw-bold text-dark a_link-news"
+											href="https://www.24h.com.vn/bong-da/real-nham-3-ngoi-sao-thay-vi-cho-mbappe-can-nhac-harry-kane-hay-osimhen-c48a1479643.html">Real
+											nhắm 3 ngôi sao thay vì chờ Mbappe: Cân nhắc Harry Kane hay
+											Osimhen</a>
+									</h5>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-4">
+					<div class="card mb-3 card_news">
+						<div class="row g-0">
+							<div class="col-md-5">
+								<img style="width: 175px; height: 155px;"
+									src="https://icdn.24h.com.vn/upload/2-2023/images/2023-06-29/120x90/15-555-1688013773-324-width740height555.jpg"
+									class="img-fluid rounded-start " alt="...">
+							</div>
+							<div class="col-md-7 position-relative ">
+								<div class="card-body  position-absolute  ">
+									<h5 class="card-title overflow-hidden "
+										style="height: 6.25rem;">
+										<a class="text-decoration-none fw-bold text-dark a_link-news"
+											href="https://www.24h.com.vn/bong-da/real-nham-3-ngoi-sao-thay-vi-cho-mbappe-can-nhac-harry-kane-hay-osimhen-c48a1479643.html">Real
+											nhắm 3 ngôi sao thay vì chờ Mbappe: Cân nhắc Harry Kane hay
+											Osimhen</a>
+									</h5>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+
+			</div>
+
+		</div>
+
+
+
+	</main>
+	<footer>
+		<!-- place footer here -->
+
+		<div class="container-fluid mt-3 "
+			style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+			<div class="container ">
+				<div class="row  ">
+					<div class="col-xs-6 col-md-4 col-lg-2 mt-2 ">
+						<span class="footer_title_content"> Hỗ Trợ Khách Khàng</span>
+						<ul class="list_customers"
+							style="list-style-type: none; padding: 0;">
+
+							<li><a href="" class="text-decoration-none text-light">Các
+									Câu Hỏi Thường Gặp</a></li>
+							<li><a href="" class="text-decoration-none text-light">Gửi
+									Yêu Cầu Hỗ Trợ</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hướng
+									Dẫn Đặt Hàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Phương
+									thức vận chuyển</a></li>
+							<li><a href="" class="text-decoration-none text-light">Chính
+									Sách Đổi Trả</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hướng
+									Dẫn Trả Góp</a></li>
+
+
+						</ul>
+
+
+					</div>
+					<div class="col-xs-6 col-md-4 col-lg-2 mt-2">
+						<span class="footer_title_content"> Về Chúng Tôi DEVEX</span>
+						<ul class="list_customers"
+							style="list-style-type: none; padding: 0;">
+
+							<li><a href="" class="text-decoration-none text-light">Giới
+									Thiệu</a></li>
+							<li><a href="" class="text-decoration-none text-light">Tuyển
+									Dụng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Chính
+									Sách Bảo Mật Và Thanh Toán</a></li>
+							<li><a href="" class="text-decoration-none text-light">Bán
+									Hàng Doanh Nghiệp</a></li>
+							<li><a href="" class="text-decoration-none text-light">Điều
+									Kiện Vận Chuyển</a></li>
+
+
+						</ul>
+
+
+					</div>
+					<div class="col-xs-6 col-md-4 col-lg-2 mt-2">
+						<span class="footer_title_content"> Hợp Tác Và Liên Kết</span>
+						<ul class="list_customers"
+							style="list-style-type: none; padding: 0;">
+
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
+
+
+						</ul>
+
+
+					</div>
+					<div class="col-xs-6 col-md-4 col-lg-3 mt-2">
+						<span class="footer_title_content"> Giao Hàng Và Các Phương
+							Thức Thanh Toán</span>
+						<ul class="list_customers"
+							style="list-style-type: none; padding: 0;">
+
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
+
+
+
+						</ul>
+
+
+					</div>
+
+
+					<div class="col-xs-6 col-md-4 col-lg-3 mt-2">
+						<h3 class="footer_title_content">HOTLINE: **********</h3>
+						<ul class="list-customers"
+							style="list-style-type: none; padding: 0;">
+
+						</ul>
+					</div>
+
+				</div>
+
+				<div class="content_footer ">
+					<div class="row ">
+						<div class="col-12">
+							<div class="row">
+								<span class="text-center   content_footer-text">Trụ sở
+									chính: Tòa nhà Viettel, Số 285, đường Cách Mạng Tháng 8, phường
+									12, quận 10, Thành phố Hồ Chí Minh DEVEX nhận đặt hàng trực
+									tuyến và giao hàng tận nơi, chưa hỗ trợ mua và nhận hàng trực
+									tiếp tại văn phòng hoặc trung tâm xử lý đơn hàng </span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="row">
+								<span class="text-center content_footer-text">Giấy chứng
+									nhận Đăng ký Kinh doanh số 0309532909 do Sở Kế hoạch và Đầu tư
+									Thành phố Hồ Chí Minh cấp lần đầu ngày 06/01/2010 và sửa đổi
+									lần thứ 23 ngày 14/02/2022 
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="row ">
+								<span class="text-center content_footer-text"> © 2022 -
+									Bản quyền của Công ty TNHH DEVEX</span>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+		</div>
+
+	</footer>
+
+	<script>
+		var countdownButton = document.getElementById('countdown-btn');
+		var minuteButton = document.getElementById('minute-btn');
+		var secondButton = document.getElementById('second-btn');
+		function updateCountdown() {
+			var currentTime = new Date();
+
+			// Lấy giờ, phút, giây từ thời gian hiện tại
+			var hours = currentTime.getHours();
+			var minutes = currentTime.getMinutes();
+			var seconds = currentTime.getSeconds();
+
+			// Đổi thành giá trị đếm ngược
+			var remainingHours = 24 - hours;
+			var remainingMinutes = 59 - minutes;
+			var remainingSeconds = 60 - seconds;
+			if (remainingMinutes < 10) {
+				remainingMinutes = '0' + remainingMinutes;
+			}
+			if (remainingSeconds < 10) {
+				remainingSeconds = '0' + remainingSeconds;
+			}
+			// Định dạng thời gian thành chuỗi
+			var countdownString = padNumber(remainingHours) + ':'
+					+ padNumber(remainingMinutes) + ':'
+					+ padNumber(remainingSeconds);
+
+			countdownButton.innerHTML = remainingHours;
+			minuteButton.innerHTML = remainingMinutes;
+			secondButton.innerHTML = remainingSeconds;
+		}
+
+		function padNumber(number) {
+			return number.toString().padStart(2, '0');
+		}
+
+		// Gọi hàm updateCountdown để cập nhật giá trị ban đầu
+		updateCountdown();
+
+		// Sử dụng setInterval để cập nhật giá trị của button mỗi giây
+		setInterval(updateCountdown, 1000);
+	</script>
+	<!-- Bootstrap JavaScript Libraries -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous">
+		
+	</script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+		crossorigin="anonymous">
+		
+	</script>
+	<!--slick slide-->
+
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<script src=" /admin/dist/js/user/userIndex.js"></script>
 </body>
 
 </html>

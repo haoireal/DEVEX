@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="/admin/plugins/daterangepicker/daterangepicker.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="/admin/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="/admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="/admin/plugins/bs-stepper/css/bs-stepper.min.css">
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- Preloader -->
+		<div
+			class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__wobble" src="/img/banner/logotitle.png"
+				alt="AdminLTELogo" height="60" width="60">
+		</div>
+		<div
+			th:replace="~{flagment/seller/sellerHeader :: sellerHeaderFragment}"></div>
+		<div
+			th:replace="~{flagment/seller/sellerMainSidebar :: sellerMainSidebarFragment}"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0" th:text="${titleType}"></h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="/devex/home">Trang
+										chủ</a></li>
+								<li class="breadcrumb-item active" th:text="${titleType}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<!-- /.card -->
+							<div class="card-body">
+								<div id="actions" class="row">
+									<div class="col-lg-6">
+										<div class="btn-group w-100">
+											<span class="btn btn-success col fileinput-button"> <i
+												class="fas fa-plus"></i> <span>Add files</span>
+											</span>
+											<button type="submit" class="btn btn-primary col start">
+												<i class="fas fa-upload"></i> <span>Start upload</span>
+											</button>
+											<button type="reset" class="btn btn-warning col cancel">
+												<i class="fas fa-times-circle"></i> <span>Cancel
+													upload</span>
+											</button>
+										</div>
+									</div>
+									<div class="col-lg-6 d-flex align-items-center">
+										<div class="fileupload-process w-100">
+											<div id="total-progress"
+												class="progress progress-striped active" role="progressbar"
+												aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+												<div class="progress-bar progress-bar-success"
+													style="width: 0%;" data-dz-uploadprogress></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="table table-striped files" id="previews">
+									<div id="template" class="row mt-2">
+										<div class="col-auto">
+											<span class="preview"><img src="data:," alt=""
+												data-dz-thumbnail /></span>
+										</div>
+										<div class="col d-flex align-items-center">
+											<p class="mb-0">
+												<span class="lead" data-dz-name></span> (<span data-dz-size></span>)
+											</p>
+											<strong class="error text-danger" data-dz-errormessage></strong>
+										</div>
+										<div class="col-4 d-flex align-items-center">
+											<div class="progress progress-striped active w-100"
+												role="progressbar" aria-valuemin="0" aria-valuemax="100"
+												aria-valuenow="0">
+												<div class="progress-bar progress-bar-success"
+													style="width: 0%;" data-dz-uploadprogress></div>
+											</div>
+										</div>
+										<div class="col-auto d-flex align-items-center">
+											<div class="btn-group">
+												<button class="btn btn-primary start">
+													<i class="fas fa-upload"></i> <span>Start</span>
+												</button>
+												<button data-dz-remove class="btn btn-warning cancel">
+													<i class="fas fa-times-circle"></i> <span>Cancel</span>
+												</button>
+												<button data-dz-remove class="btn btn-danger delete">
+													<i class="fas fa-trash"></i> <span>Delete</span>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.card-body -->
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<div
+			th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
+		<div
+			th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
+		<!-- Select2 -->
+		<script src="/admin/plugins/select2/js/select2.full.min.js"></script>
+		<!-- Bootstrap4 Duallistbox -->
+		<script
+			src="/admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+		<!-- InputMask -->
+		<script src="/admin/plugins/moment/moment.min.js"></script>
+		<script src="/admin/plugins/inputmask/jquery.inputmask.min.js"></script>
+		<!-- dropzonejs -->
+		<script src="/admin/plugins/dropzone/min/dropzone.min.js"></script>
+	</div>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+	<script src="app.js"></script>
+	<script type="text/javascript">
+		// DropzoneJS Demo Code Start
+		Dropzone.autoDiscover = false
+
+		// Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+		var previewNode = document.querySelector("#template")
+		previewNode.id = ""
+		var previewTemplate = previewNode.parentNode.innerHTML
+		previewNode.parentNode.removeChild(previewNode)
+
+		var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+			url : "/seller/home", // Set the url
+			thumbnailWidth : 80,
+			thumbnailHeight : 80,
+			parallelUploads : 20,
+			previewTemplate : previewTemplate,
+			autoQueue : false, // Make sure the files aren't queued until manually added
+			previewsContainer : "#previews", // Define the container to display the previews
+			clickable : ".fileinput-button", // Define the element that should be used as click trigger to select files.
+		      // Các tùy chọn khác...
+			  success: function(file, response) {
+			    // Hàm xử lý khi tải lên thành công (mã lỗi 0)
+			    console.log("Tải lên thành công!");
+			    console.log("Đáp ứng từ máy chủ:", response);
+			  },
+			  error: function(file, errorMessage) {
+			    // Hàm xử lý khi xảy ra lỗi
+			    console.error("Lỗi khi tải lên tệp tin:", errorMessage);
+			  }})
+
+		myDropzone.on("addedfile", function(file) {
+			// Hookup the start button
+			file.previewElement.querySelector(".start").onclick = function() {
+				myDropzone.enqueueFile(file)
+			}
+		})
+
+		// Update the total progress bar
+		myDropzone
+				.on(
+						"totaluploadprogress",
+						function(progress) {
+							document
+									.querySelector("#total-progress .progress-bar").style.width = progress
+									+ "%"
+						})
+
+		myDropzone.on("sending", function(file) {
+			// Show the total progress bar when upload starts
+			document.querySelector("#total-progress").style.opacity = "1"
+			// And disable the start button
+			file.previewElement.querySelector(".start").setAttribute(
+					"disabled", "disabled")
+		})
+
+		// Hide the total progress bar when nothing's uploading anymore
+		myDropzone.on("queuecomplete", function(progress) {
+			document.querySelector("#total-progress").style.opacity = "0"
+		})
+
+		// Setup the buttons for all transfers
+		// The "add files" button doesn't need to be setup because the config
+		// `clickable` has already been specified.
+		document.querySelector("#actions .start").onclick = function() {
+			myDropzone.enqueueFiles(myDropzone
+					.getFilesWithStatus(Dropzone.ADDED))
+		}
+		document.querySelector("#actions .cancel").onclick = function() {
+			myDropzone.removeAllFiles(true)
+		}
+		// DropzoneJS Demo Code End
+	</script>
+</body>
+
+</html>
