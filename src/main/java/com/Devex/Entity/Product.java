@@ -52,7 +52,7 @@ public class Product implements Serializable{
 	@OneToMany(mappedBy = "product")
 	private List<ImageProduct> imageProducts;
 	
-	@OneToMany(mappedBy = "productVariant")
+	@OneToMany(mappedBy = "product")
 	private List<ProductVariant> productVariants;
 	
 	@OneToMany(mappedBy = "productComment")

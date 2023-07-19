@@ -42,7 +42,7 @@ public class ProductVariant implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "Product_ID")
-	private Product productVariant;
+	private Product product;
 	
 	private String size;
 	
