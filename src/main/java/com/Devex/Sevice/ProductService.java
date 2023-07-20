@@ -25,7 +25,9 @@ public interface ProductService {
 	List<Product> findAllById(Iterable<String> ids);
 
 	List<Product> findAll();
-
+	
+	List<Product> findAllProperties();
+	
 	Page<Product> findAll(Pageable pageable);
 
 	Optional<Product> findOne(Example<Product> example);

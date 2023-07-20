@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Formula;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,6 +46,9 @@ public class Product implements Serializable{
 	private Date createdDay;
 	@Column(name = "Active")
 	private Boolean active;
+	
+	@Formula("(SELECT COUNT(od.ID) FROM Order_Details od INNER JOIN Product_Variant pv ON od.Product_ID = pv.ID WHERE pv.Product_ID = ID)")
+    private int soldCount;
 	
 	@ManyToOne
 	@JoinColumn(name = "Shop_ID")
