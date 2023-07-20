@@ -88,9 +88,9 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<Product> findAllProperties() {
-		// TODO Auto-generated method stub
-		return null;
+
+	public List<Product> findProductBySellerUsername(String sellerUsername) {
+		return productRepository.findProductBySellerUsername(sellerUsername);
 	}
 	
 	

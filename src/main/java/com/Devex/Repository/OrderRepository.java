@@ -20,4 +20,7 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	           "WHERE s.username = ?1")
 	    List<Order> findOrdersBySellerUsername(String sellerUsername);
 	
+	@Query("SELECT o FROM Order o WHERE o.id like ?1")
+	Order findOrderById(String id);
+	
 }
