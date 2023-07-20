@@ -15,6 +15,8 @@ import com.Devex.Entity.Order;
 import com.Devex.Repository.OrderRepository;
 import com.Devex.Sevice.OrderService;
 
+import jakarta.transaction.Transactional;
+
 @SessionScope
 @Service("orderService")
 public class OrderServiceImpl implements OrderService{
@@ -95,6 +97,12 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public Order findOrderById(String id) {
 		return orderRepository.findOrderById(id);
+	}
+
+	@Override
+	@Transactional
+	public void updateIdOrderStatus(int ido, String id) {
+		orderRepository.updateIdOrderStatus(ido, id);
 	}
 	
 	
