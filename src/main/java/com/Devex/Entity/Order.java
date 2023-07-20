@@ -39,6 +39,8 @@ public class Order implements Serializable{
 	private Double total;
 	@Column(name = "Pricediscount")
 	private Double priceDiscount;
+	@Column(name = "Address")
+	private String address;
 	
 	@ManyToOne
 	@JoinColumn(name = "Payment_ID")

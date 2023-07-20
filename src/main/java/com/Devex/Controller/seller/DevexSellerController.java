@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.Devex.Entity.Order;
 import com.Devex.Entity.Product;
+import com.Devex.Repository.OrderRepository;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.ParamService;
@@ -31,6 +33,9 @@ public class DevexSellerController {
 	
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+	OrderRepository orderRepository;
 
 	@GetMapping("/home")
 	public String getHomePage() {
@@ -43,7 +48,7 @@ public class DevexSellerController {
 		switch (listName) {
 		case "products": {
 			model.addAttribute("titleType", "Sản phẩm");
-			List<Product> listProducts = productRepository.findAll();
+			List<Product> listProducts = productRepository.findProductBySellerUsername("khanhtq");
 //			for (Product product : listProducts) {
 //				System.out.println(product);
 //			}
@@ -52,7 +57,8 @@ public class DevexSellerController {
 		}
 		case "orders": {
 			model.addAttribute("titleType", "Đơn hàng");
-			// câu lệnh select seller ở đây
+			List<Order> listOrder = orderRepository.findOrdersBySellerUsername("khanhtq");
+			model.addAttribute("orders", listOrder);
 			break;
 		}
 		case "rating": {
