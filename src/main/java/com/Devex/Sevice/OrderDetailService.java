@@ -38,4 +38,6 @@ public interface OrderDetailService {
 
 	OrderDetails save(OrderDetails entity);
 
+	List<OrderDetails> findOrderDetailsByOrderID(String id);
+
 }

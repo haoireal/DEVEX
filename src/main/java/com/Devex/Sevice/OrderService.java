@@ -38,4 +38,8 @@ public interface OrderService {
 
 	Order save(Order entity);
 
+	List<Order> findOrdersBySellerUsername(String sellerUsername);
+
+	Order findOrderById(String id);
+
 }

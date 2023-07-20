@@ -86,6 +86,16 @@ public class OrderServiceImpl implements OrderService{
 	public void deleteAll() {
 		orderRepository.deleteAll();
 	}
+
+	@Override
+	public List<Order> findOrdersBySellerUsername(String sellerUsername) {
+		return orderRepository.findOrdersBySellerUsername(sellerUsername);
+	}
+
+	@Override
+	public Order findOrderById(String id) {
+		return orderRepository.findOrderById(id);
+	}
 	
 	
 

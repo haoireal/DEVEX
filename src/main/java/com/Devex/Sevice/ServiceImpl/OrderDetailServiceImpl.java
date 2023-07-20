@@ -86,6 +86,11 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	public void deleteAll() {
 		orderDetailRepository.deleteAll();
 	}
+
+	@Override
+	public List<OrderDetails> findOrderDetailsByOrderID(String id) {
+		return orderDetailRepository.findOrderDetailsByOrderID(id);
+	}
 	
 	
 	

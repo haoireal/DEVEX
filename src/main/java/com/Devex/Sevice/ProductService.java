@@ -38,4 +38,6 @@ public interface ProductService {
 
 	Product save(Product entity);
 
+	List<Product> findProductBySellerUsername(String sellerUsername);
+
 }
