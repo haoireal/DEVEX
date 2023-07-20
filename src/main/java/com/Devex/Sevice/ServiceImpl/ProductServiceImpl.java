@@ -92,6 +92,12 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> findProductBySellerUsername(String sellerUsername) {
 		return productRepository.findProductBySellerUsername(sellerUsername);
 	}
+
+	@Override
+	public List<Product> findAllProperties() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

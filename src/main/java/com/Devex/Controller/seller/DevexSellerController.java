@@ -93,11 +93,24 @@ public class DevexSellerController {
 		return "seller/formManage";
 	}
 	
+	@GetMapping("/order/xacnhan")
+	public String xacNhanDonHang(@RequestParam("id") String id) {
+		orderService.updateIdOrderStatus(1002, id);
+		return "redirect:/seller/orderDetail/" + id;
+	}
+	
+	@GetMapping("/order/hoanthanh")
+	public String hoanthanh(@RequestParam("id") String id) {
+		orderService.updateIdOrderStatus(1006, id);
+		return "redirect:/seller/orderDetail/" + id;
+	}
+	
 	@GetMapping("/profile")
 	public String getSellerProfile() {
 
 		return "seller/sellerProfile";
 	}
+	
 	@GetMapping("/orderDetail/{id}")
 	public String getOrderDetail(@PathVariable("id") String id, Model model) {
 		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id);
@@ -105,12 +118,20 @@ public class DevexSellerController {
 		model.addAttribute("idPrint", id);
 		Order order = orderService.findOrderById(id);
 		model.addAttribute("order", order);
+		if (order.getOrderStatus() != null && order.getOrderStatus().getName().equalsIgnoreCase("Hoàn thành")) {
+		    model.addAttribute("check", false);
+		} else {
+		    model.addAttribute("check", true);
+		}
 		return "seller/order/orderDetail";
 	}
 	@GetMapping("/orderPrint")
 	public String getOrderPrint(Model model, @RequestParam("id") String id) {
 		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id);
 		model.addAttribute("orderDetails", listOrderDetails);
+		model.addAttribute("idPrint", id);
+		Order order = orderService.findOrderById(id);
+		model.addAttribute("order", order);
 		return "seller/order/orderPrint";
 	}
 	@GetMapping("/orderReport")

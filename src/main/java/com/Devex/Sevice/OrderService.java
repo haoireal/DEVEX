@@ -42,4 +42,6 @@ public interface OrderService {
 
 	Order findOrderById(String id);
 
+	void updateIdOrderStatus(int ido, String id);
+
 }
