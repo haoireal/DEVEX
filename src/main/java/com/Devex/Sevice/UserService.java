@@ -42,4 +42,8 @@ public interface UserService {
 
 	User checkLogin(String username, String pass);
 
+	User findPhone(String phone);
+
+	User findEmail(String email);
+
 }

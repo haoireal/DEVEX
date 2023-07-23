@@ -86,6 +86,18 @@ public class ProductServiceImpl implements ProductService{
 	public void deleteAll() {
 		productRepository.deleteAll();
 	}
+
+	@Override
+
+	public List<Product> findProductBySellerUsername(String sellerUsername) {
+		return productRepository.findProductBySellerUsername(sellerUsername);
+	}
+
+	@Override
+	public List<Product> findAllProperties() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

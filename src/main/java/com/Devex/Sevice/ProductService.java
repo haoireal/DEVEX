@@ -25,7 +25,9 @@ public interface ProductService {
 	List<Product> findAllById(Iterable<String> ids);
 
 	List<Product> findAll();
-
+	
+	List<Product> findAllProperties();
+	
 	Page<Product> findAll(Pageable pageable);
 
 	Optional<Product> findOne(Example<Product> example);
@@ -37,5 +39,7 @@ public interface ProductService {
 	Optional<Product> findById(String id);
 
 	Product save(Product entity);
+
+	List<Product> findProductBySellerUsername(String sellerUsername);
 
 }

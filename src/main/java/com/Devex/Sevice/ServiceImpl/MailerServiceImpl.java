@@ -21,7 +21,7 @@ import jakarta.mail.internet.MimeMessage;
 @SessionScope
 @Service("emailService")
 public class MailerServiceImpl implements MailerService {
-	private static final String EMAIL_VERIFI = "ĐÂY LÀ MÃ XÁC THỰC CỦA BẠN CHO TRANG WEB H&B COFFEE";
+	private static final String EMAIL_VERIFI = "[THÔNG BÁO] MÃ XÁC THỰC OTP CỦA BẠN CHO TRANG WEB DEVEX";
 	private static final String EMAIL_FORGET = "ĐÂY LÀ MẬT KHẨU CỦA BẠN CHO TRANG WEB H&B COFFEE";
 	private static final String EMAIL_ORDER_CUSTOMER = "BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG VUI LÒNG KIỂM TRA ĐƠN HÀNG";
 	private static final String EMAIL_ORDER_ADMIN = "THÔNG BÁO! BẠN ĐÃ CÓ MỘT ĐƠN HÀNG MỚI";
@@ -99,6 +99,15 @@ public class MailerServiceImpl implements MailerService {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	
+	@Override
+	public void sendMailOtpSignUp(String mail, String otp) throws MessagingException {
+		String subject = EMAIL_VERIFI;
+		String content = "Devex: Mã OTP của bạn là " + otp + ", vui lòng không chia sẻ mã này cho người khác.";
+		// send message
+		this.send(mail, subject, content);
 	}
 
 	@Override

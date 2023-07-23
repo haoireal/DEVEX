@@ -4,12 +4,18 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Formula;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +47,9 @@ public class Product implements Serializable{
 	@Column(name = "Active")
 	private Boolean active;
 	
+	@Formula("(SELECT COUNT(od.ID) FROM Order_Details od INNER JOIN Product_Variant pv ON od.Product_ID = pv.ID WHERE pv.Product_ID = ID)")
+    private int soldCount;
+	
 	@ManyToOne
 	@JoinColumn(name = "Shop_ID")
 	private Seller sellerProduct;
@@ -52,7 +61,7 @@ public class Product implements Serializable{
 	@OneToMany(mappedBy = "product")
 	private List<ImageProduct> imageProducts;
 	
-	@OneToMany(mappedBy = "productVariant")
+	@OneToMany(mappedBy = "product")
 	private List<ProductVariant> productVariants;
 	
 	@OneToMany(mappedBy = "productComment")

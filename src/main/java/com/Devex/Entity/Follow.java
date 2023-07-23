@@ -32,7 +32,7 @@ public class Follow implements Serializable{
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name = "UserFollow_ID")
+	@JoinColumn(name = "Userfollow_ID")
 	private Customer customer;
 	
 	@ManyToOne

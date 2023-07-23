@@ -4,6 +4,15 @@
 
 <head>
 <div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
+ <style>
+        /* CSS để giới hạn chiều rộng của cột 'Product Name' */
+        .product-name {
+            max-width: 100px; /* Đặt giới hạn chiều rộng, ví dụ 200px */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+ </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -57,17 +66,19 @@
 								<!-- /.card-header -->
 								<div class="card-body" th:switch="${listName}">
 									<!-- TABLE USER LIST -->
-									<table id="example1" class="table table-bordered table-striped"
+									<table id="example1" class="table table-hover"
 										th:case="'products'">
 										<thead>
 											<tr>
-												<th>Mã</th>
-												<th>Tên sản phẩm</th>
+												<th>Mã sản phẩm</th>
 												<th>Hình ảnh</th>
+												<th>Tên sản phẩm</th>
 												<th>Brand</th>
 												<th>Loại</th>
 												<th>Mô tả</th>
-												<th>Lượt bán</th>
+												<th>Giá</th>
+												<th>Ngày tạo</th>
+												<th>Trạng thái</th>
 												<th>Edit</th>
 											</tr>
 
@@ -76,21 +87,26 @@
 
 											<!--DATA -->
 											<div>
-												<tr data-widget="expandable-table" aria-expanded="false">
-													<td value="xx">123</td>
-													<td value="xx">Bao cao su phản quang</td>
-													<td value="xx"><img src="https://placehold.it/150x100"
-														alt="..."></td>
-													<td value="xx">durex</td>
-													<td value="xx">hàng tiêu dùng</td>
-													<td value="xx">cái này dùng rất tốt</td>
-													<td value="xx">100000</td>
-													<td class="text-center"><div
+												<tr th:each="product : ${products}">
+													<td class="product-name" th:text="${product.id}"></td>
+													<td>
+														<img alt="" th:src="@{|/img/product/${product.imageProducts[0].name}|}" width="60px">
+													</td>
+													<td class="product-name" th:text="${product.name}"></td>
+													<td th:text="${product.brand}"></td>
+													<td th:text="${product.categoryDetails.name}"></td>
+													<td class="product-name" th:text="${product.description}"></td>
+													<td th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0, 'COMMA', 0, 'POINT')}"></td>
+													<td th:text="${#dates.format(product.createdDay, 'dd/MM/yyyy')}"></td>
+													<td th:text="${product.active ? 'Đang bán' : 'Không bán'}"></td>
+													
+													<td class="text-center">
+														<div
 															class="btn-group btn-group-sm">
-															<a href="#" class="btn btn-info"><i
-																class="fas fa-eye"></i></a> <a href="#"
-																class="btn btn-danger"><i class="fas fa-edit"></i></a>
-														</div></td>
+															<a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a> 
+															<a href="#" class="btn btn-danger"><i class="fas fa-edit"></i></a>
+														</div>
+													</td>
 
 												</tr>
 
@@ -104,20 +120,27 @@
 												<th>Brand</th>
 												<th>Loại</th>
 												<th>Mô tả</th>
-												<th>Lượt bán</th>
+												<th>Giá</th>
+												<th>Ngày tạo</th>
+												<th>Trạng thái</th>
 												<th>Edit</th>
 											</tr>
+
 										</tfoot>
 									</table>
 									<!-- ..END TABLE USER LIST.. -->
 									<!-- TABLE SELLER LIST -->
-									<table id="example1" class="table table-bordered table-striped"
+									<table id="example1" class="table table-hover"
 										th:case="'orders'">
 										<thead>
 											<tr>
-												<th>Birthday</th>
-												<th>Address</th>
-												<th>Role</th>
+												<th>Mã hóa đơn</th>
+												<th>Tổng giá</th>
+												<th>Ngày tạo</th>
+												<th>Địa chỉ</th>
+												<th>Người đặt</th>
+												<th>Phương thức thanh toán</th>
+												<th>Trạng thái</th>
 												<th>Edit</th>
 											</tr>
 
@@ -126,25 +149,33 @@
 
 											<!--DATA -->
 											<div>
-												<tr data-widget="expandable-table" aria-expanded="false">
-													<td value="xx">xx</td>
-													<td value="xx">xx</td>
-													<td value="xx">xx</td>
-													<td class="text-center"><div
-															class="btn-group btn-group-sm">
-															<a href="/seller/orderDetail" class="btn btn-info"><i
-																class="fas fa-edit"></i></a>
-														</div> </a></td>
-
+												<tr th:each="order : ${orders}">
+													<td th:text="${order.id}"></td>
+													<td th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')}"></td>
+													<td th:text="${#dates.format(order.createdDay, 'dd/MM/yyyy')}"></td>
+													<td class="product-name" th:text="${order.address}"></td>
+													<td th:text="${order.customerOrder.fullname}"></td>
+													<td th:text="${order.payment.name}"></td>
+													<td th:text="${order.orderStatus.name}"></td>
+													<td class="text-center">
+														<div class="btn-group btn-group-sm">
+															<a th:href="@{|/seller/orderDetail/${order.id}|}" class="btn btn-info">
+																<i class="fas fa-edit"></i>
+															</a>
+														</div>
+													</td>
 												</tr>
-
 											</div>
 										</tbody>
 										<tfoot>
 											<tr>
-												<th>Id</th>
-												<th>Fullname</th>
-												<th>Password</th>
+												<th>Mã hóa đơn</th>
+												<th>Tổng giá</th>
+												<th>Ngày tạo</th>
+												<th>Địa chỉ</th>
+												<th>Người đặt</th>
+												<th>Phương thức thanh toán</th>
+												<th>Trạng thái</th>
 												<th>Edit</th>
 											</tr>
 										</tfoot>
