@@ -17,5 +17,7 @@ public interface MailerService {
 	void queue(MailInfo mail);
 	
 	void queue(String to, String subjecct, String body);
+
+	void sendMailOtpSignUp(String mail, String otp) throws MessagingException;
 	
 }

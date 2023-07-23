@@ -40,7 +40,7 @@ public class SigninController {
     public String doSignout() {
 		session.remove("user");
 //		session.set("keywordsSearch", "");
-		return "redirect:/devex/home";
+		return "redirect:/home";
     }
 	
 	@GetMapping("/404")
@@ -67,11 +67,11 @@ public class SigninController {
 				}
 				
 				if(user.getRole().getName().equalsIgnoreCase("Customer")) {
-					return "redirect:/devex/home";
+					return "redirect:/home";
 				}if(user.getRole().getName().equalsIgnoreCase("Seller")) {
-					return "redirect:/devex/seller/home";
+					return "redirect:/seller/home";
 				}else {
-					return "redirect:/devex/admin/home";
+					return "redirect:/admin/home";
 				}
 			}else {
 				model.addAttribute("message", "Tài khoản này đã bị khoá!");
