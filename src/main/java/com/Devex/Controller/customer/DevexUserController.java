@@ -1,20 +1,21 @@
 package com.Devex.Controller.customer;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Devex.Entity.Product;
-import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.ProductService;
+import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SessionService;
 
 @Controller
@@ -22,20 +23,26 @@ import com.Devex.Sevice.SessionService;
 public class DevexUserController {
 
 	@Autowired
-	SessionService session;
+	SessionService sessionService;
 
 	@Autowired
-	CookieService cookie;
+	CookieService cookieService;
 
 	@Autowired
-	ParamService param;
+	ParamService paramService;
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	RecommendationSystem recomendationService;
+	
 
 	@GetMapping("/home")
 	public String getHomePage(Model model) {
-		List<Product> listProducts = productService.findAll();
+		List<Product> listProducts = recomendationService.recomendProduct("mbqeok970");
+		//Trộn ví trí sản phẩm
+		Collections.shuffle(listProducts);
 		model.addAttribute("products", listProducts);
 		return "user/index";
 	}
@@ -45,5 +52,15 @@ public class DevexUserController {
 	public String getUserProfile() {
 
 		return "admin/userManage/userProfile";
+	}
+	
+	@GetMapping("/product/search")
+	public String searchBeverage(Model model, @RequestParam("search") Optional<String> kw) {
+		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
+		sessionService.set("keywordsSearch", kwords);
+		List<Product> list = productService.findByKeywordName("%" + kwords + "%");
+		model.addAttribute("beverages", list);
+		model.addAttribute("count", productService.countByKeywordName("%" + kwords + "%"));
+		return "user/coffee";
 	}
 }

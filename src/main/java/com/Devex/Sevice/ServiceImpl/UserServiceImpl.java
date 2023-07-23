@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.Devex.Entity.Product;
 import com.Devex.Entity.User;
 import com.Devex.Repository.UserRepository;
 import com.Devex.Sevice.UserService;
@@ -95,6 +96,7 @@ public class UserServiceImpl implements  UserService{
 	public User checkLogin(String username, String pass) {
 		return userRepository.checkLogin(username, pass);
 	}
+
 	
 	
 

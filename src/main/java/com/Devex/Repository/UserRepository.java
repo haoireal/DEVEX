@@ -1,5 +1,7 @@
 package com.Devex.Repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -13,4 +15,5 @@ import com.Devex.Entity.User;
 public interface UserRepository extends JpaRepository<User, String>{
 	@Query("Select o FROM User o WHERE o.username = :username AND o.password = :password")
 	User checkLogin(@Param("username") String username, @Param("password") String pass);
+
 }
