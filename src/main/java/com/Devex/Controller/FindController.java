@@ -24,15 +24,15 @@ public class FindController {
 	ProductVariantRepository proDao;
 	
 	
-	
-		@RequestMapping("find")
-		public String find(ModelMap model) {
-			Pageable pageable = PageRequest.of(0, 30);
-			Page<Product> product = proDao.findAllProducts(pageable);//hiện thị all sản phẩm lên 
-			model.addAttribute("product", product);
-			
-			List<Product> proramdom = proDao.findRandomProducts();
-			model.addAttribute("proramdom", proramdom);
-			return "user/findproduct";
-		}
+//	
+//		@RequestMapping("find")
+//		public String find(ModelMap model) {
+//			Pageable pageable = PageRequest.of(0, 30);
+//			Page<Product> product = proDao.findAllProducts(pageable);//hiện thị all sản phẩm lên 
+//			model.addAttribute("product", product);
+//			
+//			List<Product> proramdom = proDao.findRandomProducts();
+//			model.addAttribute("proramdom", proramdom);
+//			return "user/findproduct";
+//		}
 }

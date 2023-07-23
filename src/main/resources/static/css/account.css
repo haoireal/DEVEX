@@ -45,6 +45,7 @@ body {
 
 p a:hover {
 	color: red !important;
+	text-decoration: none;
 }
 
 mark {
@@ -89,4 +90,9 @@ input[type=number] {
 	grid-template-columns:  auto auto auto auto auto auto;
 	grid-gap: 10px;
 	padding: 5%;
+}
+
+.send-again:hover {
+	background-color: green;
+	transition: 0.5s all;
 }

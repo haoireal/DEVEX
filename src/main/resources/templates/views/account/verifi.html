@@ -23,32 +23,32 @@
 					<div id="OTP_Div">
 						<input style="background-color: rgba(82, 97, 107, 0.2);" name="o1"
 							autofocus class="form-control otp-input"
-							oninput="handleInput(this, 'o2')" maxlength="1" required
+							oninput="handleInput(this, 'o2')" maxlength="1" 
 							type="number" id="o1" onkeydown="handleInput(this, 'o1')" /> <input
 							name="o2" style="background-color: rgba(82, 97, 107, 0.2);"
-							class="form-control otp-input" required maxlength="1"
+							class="form-control otp-input"  maxlength="1"
 							type="number" id="o2" oninput="handleInput(this, 'o3')"
 							onkeydown="handleInput(this, 'o1')" /> <input name="o3"
 							style="background-color: rgba(82, 97, 107, 0.2);"
-							class="form-control otp-input" required maxlength="1"
+							class="form-control otp-input"  maxlength="1"
 							type="number" id="o3" oninput="handleInput(this, 'o4')"
 							onkeydown="handleInput(this, 'o2')" /> <input name="o4"
 							style="background-color: rgba(82, 97, 107, 0.2);"
-							class="form-control otp-input" required maxlength="1"
+							class="form-control otp-input"  maxlength="1"
 							type="number" id="o4" oninput="handleInput(this, 'o5')"
 							onkeydown="handleInput(this, 'o3')" /> <input name="o5"
 							style="background-color: rgba(82, 97, 107, 0.2);"
-							class="form-control otp-input" required maxlength="1"
+							class="form-control otp-input"  maxlength="1"
 							type="number" id="o5" oninput="handleInput(this, 'o6')"
 							 onkeydown="handleInput(this, 'o4')" />
 							<input name="o6"
 							style="background-color: rgba(82, 97, 107, 0.2);"
-							class="form-control otp-input" required maxlength="1"
+							class="form-control otp-input"  maxlength="1"
 							type="number" id="o6" onkeydown="handleInput(this, 'o5')" />
 					</div>
 
 				</div>
-
+				<mark th:text="${message}"></mark>
 				<button type="submit" class="btn btn-danger mt-3" name="submit_button"
 					value="Submit" style="width: 100%;">Xác nhận</button>
 
@@ -57,7 +57,7 @@
 					<div class="m-0 small-text text-dark  mb-3">
 						<span style="color: rgba(30, 32, 34, 0.75);">Chưa nhận
 							được mã thì bấm vào</span>
-						<button class="btn btn-secondary small-text" formaction="${url}/send_verifi">
+						<button class="send-again btn btn-secondary small-text" formmethod="post" formaction="/signup">
 							Gửi lại mã
 						</button>
 					</div>
