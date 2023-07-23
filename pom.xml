@@ -33,6 +33,15 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.12.3</version>
 		</dependency>
+		
+			<!-- Các dependencies khác của dự án -->
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.15</version> <!-- Phiên bản mới nhất của thư viện
+				(hoặc bạn có thể chọn phiên bản phù hợp) -->
+			</dependency>
+		
 
 		<!-- thymeleaf -->
 		<dependency>
@@ -58,6 +67,11 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+
+
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -70,7 +84,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.12.3</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
