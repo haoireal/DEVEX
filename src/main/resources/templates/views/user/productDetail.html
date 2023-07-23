@@ -135,10 +135,10 @@
 			</div>
 		</div>
 	</header>
-	<main th:object="${prodt}">
+	<main th:object="${prodt}"><!-- duyện qua product trả về -->
 		<div class="container container_main mt-4 ">
 			<div  class="row   ">
-				<!-- duyện qua product trả về -->
+				
 				<!--main-left-->
 				<div class=" col-12 col-lg-5 mt-3 slick-Slider-Syncing ">
 					<!--slider-for-->
@@ -270,14 +270,14 @@
 
 						</div> 
 						
-						<div  class="mt-2 d-none d-lg-flex  justify-content-between ">
+						<div th:if="*{#lists.size(productVariants[0].size)} > 0" class="checkNull mt-2 d-none d-lg-flex  justify-content-between ">
 							<div class="col-12 col-lg-2">
 								<span>Size: </span>
 							</div>
 							<div class="col-12 col-lg-10 d-flex">
 	
 								<div th:each="size, iter : *{productVariants}" class="form-check product-variation ms-1  align-items-center justify-content-center ">
-									<input class="  form-check-input" style="margin-left: -1em !important; padding: 3px;" type="radio"
+									<input th:if="${#lists.isEmpty(size)} == false" class="  form-check-input" style="margin-left: -1em !important; padding: 3px;" type="radio"
 										name="flexRadioDefault" th:id="'flexRadioDefault2'+${iter.count}" checked  >
 									<label class="form-check-label pe-1 " style="margin-left: 0.3rem; padding:3px" th:for="'flexRadioDefault2'+${iter.count}" th:text="${size.size}">
 										 </label>
@@ -302,8 +302,8 @@
 										onclick="subtract(this)">
 										<i class="fa-solid fa-minus icon_Sub"></i>
 									</button>
-									<input class="text-center product_quantity " type="number"
-										id="inputField" min="1" value="1" disabled><br>
+									<input class="text-center product_quantity " type="text"
+										id="inputField" min="1" value="1" ><br>
 									<button class="button btn_Add border-0 fs-4"
 										onclick="add(this)">
 										<i class="fa-solid fa-plus icon_Add"></i>
@@ -315,19 +315,7 @@
 
 					</div>
 					<!--total money-->
-					<div class="row mt-3 d-none d-lg-flex align-items-center ">
-
-						<div class=" col-2">
-							<span>Tổng tiền:</span>
-						</div>
-
-						<div class=" col-10">
-							<span> <strong class="fs-3 fw-bold totalPrice"
-								style="color: #ee4d2d;" th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'COMMA',0,'POINT')}+'₫'"></strong></span>
-						</div>
-						
-
-					</div>
+					
 
 					<!--Purchase(mua)-->
 					<div class="row mt-3 d-flex  ">
