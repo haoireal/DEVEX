@@ -98,6 +98,19 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Product> findByKeywordName(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long countByKeywordName(String keywords) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 	
 	
 }

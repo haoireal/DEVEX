@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.Devex.Entity.Category;
+import com.Devex.Entity.Product;
 import com.Devex.Entity.User;
 
 public interface UserService {

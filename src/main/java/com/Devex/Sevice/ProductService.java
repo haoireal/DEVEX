@@ -7,6 +7,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 
 import com.Devex.Entity.Product;
 
@@ -41,5 +42,9 @@ public interface ProductService {
 	Product save(Product entity);
 
 	List<Product> findProductBySellerUsername(String sellerUsername);
+	
+	List<Product> findByKeywordName(String keyword);
+	
+	long countByKeywordName(String keywords);
 
 }
