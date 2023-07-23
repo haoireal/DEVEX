@@ -15,18 +15,22 @@
 	<div class="d-flex justify-content-center align-items-center"
 		style="width: 100vw;">
 		<section class="login-box">
-			<h2 class="text-dark font-weight-bold">Verify Information</h2>
+			<h2 class="text-dark font-weight-bold">
+				<span th:if="${type == null or type == ''}">Verify
+					Information</span> <span th:if="${type == 'email' or type == 'phone'}">Nhập
+					thông tin mới</span>
+			</h2>
 			<form class="mt-4" method="post">
 				<div class="mb-3 bg-white rounded px-2">
 					<input type="text" id="inputEmail-Phone"
 						onchange="validateInput(this)"
-						placeholder="Email hoặc số điện thoại" required
-						class="form-control border-0 p-0" name="email-phone">
+						placeholder="#{${type == null or type == ''} ? 'Email hoặc số điện thoại' : (${type == 'email'} ? 'Email' : 'Số điện thoại'})"
+						required class="form-control border-0 p-0" name="email-phone">
 				</div>
-				<mark id="message-error"></mark>
+				<mark id="message-error" th:text="${message}"></mark>
 				<button type="submit" class="btn btn-danger mt-3"
 					style="width: 100%;">Send OTP</button>
-				
+
 				<div class="mt-3 ">
 					<p class="m-0  text-dark">
 						<span style="color: rgba(30, 32, 34, 0.75);">Already have

@@ -13,6 +13,10 @@ import com.Devex.Entity.Product;
 @EnableJpaRepositories
 @Repository("productRepository")
 public interface ProductRepository extends JpaRepository<Product, String>{
+	
+	
+	@Query("SELECT p FROM Product p WHERE p.id = ?1")
+	Product findByIdProduct(String id);
 
 	@Query("SELECT DISTINCT p FROM Product p " +
 	           "JOIN FETCH p.sellerProduct s " +

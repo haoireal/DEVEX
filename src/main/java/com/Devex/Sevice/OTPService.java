@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Devex.Config.TwilioConfig;
+import com.Devex.DTO.MailOtpDTO;
 import com.Devex.DTO.OtpRequestDTO;
 import com.Devex.DTO.OtpResponseDTO;
 import com.Devex.DTO.OtpStatus;
@@ -17,10 +18,16 @@ import com.Devex.DTO.OtpValidationRequest;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
+import jakarta.mail.MessagingException;
+
 @Service
-public class TwilioOTPService {
+public class OTPService {
 	@Autowired
 	private TwilioConfig twilioConfig;
+	
+	@Autowired
+	private MailerService emailService;
+	
 	Map<String, String> otpMap = new HashMap<>();
 
 	public OtpResponseDTO sendSMS(OtpRequestDTO otpRequest) {
@@ -40,17 +47,47 @@ public class TwilioOTPService {
 		}
 		return otpResponse;
 	}
+	
+	public void sendMailOtp(String email) {
+		String otp = generateOtp();
+		try {
+			emailService.sendMailOtpSignUp(email, otp);
+			otpMap.put(email, otp);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
-	public String validateOtp(OtpValidationRequest otpValidationRequest) {
-		Set<String> keys = otpMap.keySet();
-		String username = null;
-		for (String key : keys)
-			username = key;
-		if (otpValidationRequest.getUsername().equals(username)) {
-			otpMap.remove(username, otpValidationRequest.getOtpNumber());
-			return "OTP is valid!";
+	public boolean validateOtp(OtpValidationRequest otpValidationRequest) {
+		String phone = null;
+		String otp = null;
+		
+		for (Map.Entry<String, String> entry : otpMap.entrySet()) {
+			phone = entry.getKey();
+            otp = entry.getValue();
+        }
+		if (otpValidationRequest.getUsername().equals(phone) && otpValidationRequest.getOtpNumber().equals(otp)) {
+			otpMap.remove(phone, otpValidationRequest.getOtpNumber());
+			return true;
 		} else {
-			return "OTP is invalid!";
+			return false;
+		}
+	}
+	
+	public boolean validateMailOtp(MailOtpDTO mailOtp) {
+		String email = null;
+		String otp = null;
+		for (Map.Entry<String, String> entry : otpMap.entrySet()) {
+			email = entry.getKey();
+            otp = entry.getValue();
+        }
+		if (mailOtp.getEmail().equals(email) && mailOtp.getOtp().equals(otp)) {
+			otpMap.remove(email, mailOtp.getOtp());
+			return true;
+		} else {
+			return false;
 		}
 	}
 	

@@ -97,6 +97,16 @@ public class UserServiceImpl implements  UserService{
 		return userRepository.checkLogin(username, pass);
 	}
 
+	@Override
+	public User findEmail(String email) {
+		return userRepository.findEmail(email);
+	}
+
+	@Override
+	public User findPhone(String phone) {
+		return userRepository.findPhone(phone);
+	}
+
 	
 	
 
