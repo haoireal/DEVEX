@@ -77,9 +77,9 @@ public class CartController {
 		coler="Xanh";
 		size="S";
 		
-		System.out.println("số Lượng"+ soLuong);
+		
 		cart.add(id,soLuong,coler,size);
-		System.out.println("số Lượngcart :"+cart.getCount());
+		
 		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
 				.collect(Collectors.toMap(CartProdcut::getName, Function.identity()));
 		String cartValue = objectMapper.writeValueAsString(itemsMap);
@@ -96,22 +96,24 @@ public class CartController {
 	}
 	@RequestMapping("/devex/cartproduct/remove/{idProduct}")
 	public String remove(@PathVariable("idProduct") String id) throws JsonProcessingException {
-		System.out.println("hihi"+id);
-		cart.remove(id);
-		
-		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
-				.collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
-		String cartValue = objectMapper.writeValueAsString(itemsMap);
-		// Giải mã chuỗi Base64
-		byte[] encodedBytes = Base64.decodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
-		String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);
+	    System.out.println("hihi" + id);
+	    cart.remove(id);
+	    cart.remove(id);
+	    Map<String, CartProdcut> itemsMap = cart.getItems().stream()
+	            .collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
+	    String cartValue = objectMapper.writeValueAsString(itemsMap);
 
-		cookie = new Cookie("myCart", encodedCartValue);
-		cookie.setMaxAge(86400);
-		cookie.setPath("/");
-		resp.addCookie(cookie);
-		
-		return "redirect:/devex/cart";
+	    // Giải mã chuỗi Base64
+	    byte[] encodedBytes = Base64.encodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
+	    String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);
+
+	    cookie = new Cookie("myCart", encodedCartValue);
+	    cookie.setMaxAge(86400);
+	    cookie.setPath("/");
+	    resp.addCookie(cookie);
+
+	    return "redirect:/devex/cart";
 	}
+
 	
 }
