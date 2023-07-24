@@ -27,11 +27,12 @@ public interface ProductRepository extends JpaRepository<Product, String>{
 	    @Query("SELECT p FROM Product p WHERE p.categoryDetails.category.id = :categoryId")
 	    List<Product> findProductsByCategoryId(@Param("categoryId") int categoryId);
 	    
-	    @Query("SELECT p FROM Product p WHERE p.name LIKE :keywords")
+	    @Query(value = "EXEC FindProductsByKeyword :keywords", nativeQuery = true)
 		List<Product> findByKeywordName(@Param("keywords") String keywords);
 		
 		@Query("SELECT COUNT(o) FROM Product o WHERE o.name LIKE :keywords")
 		long countByKeywordName(@Param("keywords") String keywords);
+		
 		
 
 
