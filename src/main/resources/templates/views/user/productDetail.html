@@ -279,8 +279,8 @@
 	
 								<div th:each="size, iter : *{productVariants}" class="form-check product-variation ms-1  align-items-center justify-content-center ">
 									<input th:if="${#lists.isEmpty(size)} == false" class="  form-check-input" style="margin-left: -1em !important; padding: 3px;" type="radio"
-										name="flexRadioDefault" th:id="'flexRadioDefault2'+${iter.count}" checked  >
-									<label class="form-check-label pe-1 " style="margin-left: 0.3rem; padding:3px" th:for="'flexRadioDefault2'+${iter.count}" th:text="${size.size}">
+										name="flexRadio" th:id="'flexRadio'+${iter.count}" checked  >
+									<label class="form-check-label pe-1 " style="margin-left: 0.3rem; padding:3px" th:for="'flexRadio'+${iter.count}" th:text="${size.size}">
 										 </label>
 								</div>
 							</div>
@@ -299,16 +299,16 @@
 
 								<div class="control d-flex align-items-center ">
 
-									<!-- <button class="button btn_Sub border-0 fs-3 "
+									<label class="button btn_Sub border-0 fs-3 "
 										onclick="subtract(this)">
 										<i class="fa-solid fa-minus icon_Sub"></i>
-									</button> -->
+									</label>
 									<input class="text-center product_quantity " type="number" name="soluong"
-										id="inputField" min="1" value="1"><br>
-									<button class="button btn_Add border-0 fs-4"
+										id="inputField" min="1" value="1" max="100"><br>
+									<label class="button btn_Add border-0 fs-4"
 										onclick="add(this)">
 										<i class="fa-solid fa-plus icon_Add"></i>
-									</button>
+									</label>
 
 								</div>
 							</div>
@@ -421,7 +421,7 @@
 			</div>
 		</div>
 		<!--Đánh giá sp-->
-		<div class="container d-none d-lg-inline container_evaluate_end  mt-4 border border-1"
+		<div class="container d-none d-lg-grid container_evaluate_end  mt-4 border border-1"
 			style="height: 500px;">
 			<div class="row mt-3  mx-2 " style="height: 50px;">
 
