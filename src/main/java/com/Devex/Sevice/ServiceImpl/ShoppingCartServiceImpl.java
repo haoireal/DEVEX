@@ -28,7 +28,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public CartProdcut add(String id, int SoLuong, String Size, String Color) {
 		CartProdcut cartProduct = cart.getItems().get(id);
-
+		
         if (cartProduct == null) {
             Product product = dao.findByIdProduct(id);
             if (product != null && !product.getProductVariants().isEmpty()) {
@@ -56,12 +56,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public void remove(String id) {
 		
-		if (cart.getItems().containsKey(id)) {
-	        cart.getItems().remove(id);
-	        System.out.println("[a"+id);
-	    }else {
-	    	System.out.println("không xóa dcd");
-	    }
+		cart.removeItem(id);
+		
 	}
 		
 	

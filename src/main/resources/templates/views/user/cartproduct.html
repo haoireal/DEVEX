@@ -126,15 +126,17 @@
 					style="color: #2A62B9; margin-left: -25px; font-size: 20px;">Giỏ hàng</span>
 			</div>
 		</div>
-		<div class="container container_main_middle  pt-1" style="padding: 20px;">
+		<div class="container container_main_middle  pt-1" style="padding: 20px;" >
 			<div class="row" style="padding: 15px;">
-				<div class="col-md-7" style=" height: auto">
+				
+				<div class="col-md-7" style=" height: auto" >
+					
 					<div class="row " style="padding: 10px; border: 1px solid #2A62B9; border-radius: 10px; margin-top: 10px; height: auto;" th:each="product, index : ${cart.items}">
 						<div class="col-md-3" style="border-radius: 10px;">
 							<!-- Product Image -->
 							<img th:src="@{'/img/product/' + ${product.img}}" alt="Product Image"  width="200px" height="200px" style="border-radius: 10px;">
 						</div>
-						<div class="col-md-9">
+						<div class="col-md-9" >
 							<!-- Product Information -->
 							<div class="card" style="height: auto;border: none; margin-top: -10px; margin-left: 20px;">
 								<div class="card-body" style="font-size: 15px;">
@@ -153,7 +155,7 @@
 										<!-- Color Dropdown -->
 										<div class="mb-3 d-flex">
 											<label for="colorSelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-left: 10px; margin-top: 5px;">Color:</label>
-											<select class="form-select" id="colorSelect" style="width: 60px; height: 30px; font-size: 14px ; font-weight: bold; margin-left: 5px;">
+											<select class="form-select" id="colorSelect" style="width: 60px; height: 30px; font-size: 14px ; font-weight: bold; margin-left: 5px;" onchange="updateTotalPrice(this)">
 												<option value="red">Red</option>
 												<option value="blue">Blue</option>
 												<option value="green">Green</option>
@@ -173,7 +175,7 @@
 										</div>
 									</div>
 									<div class="mb-3 d-flex">
-										<p class="card-text col-md-6" style="color: #ff0821;font-weight: bold; font-size: 18px; margin-top: 15px;">Tổng Giá : <a th:text="${#numbers.formatDecimal(product.soluong * product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></a></p>
+										<p class="card-text col-md-6" id="totalPrice"  style="color: #ff0821;font-weight: bold; font-size: 18px; margin-top: 15px;">Tổng Giá : <a th:text="${#numbers.formatDecimal(product.soluong * product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></a></p>
 									
 									<a th:href="@{'/devex/cartproduct/remove/' + ${product.id}}" type="submit" class="btn btn-primary" style="margin-left: 150px; width: 100px; height: 40px;  background: linear-gradient(
 											90deg,
@@ -773,7 +775,19 @@
 		</div>
 
 	</footer>
-	
+	<script>
+		function updateTotalPrice(selectElement) {
+			// Get the selected quantity from the dropdown
+			const quantity = selectElement.value;
+			
+			// Calculate the new total price
+			const totalPrice = quantity * product.price;
+			
+			// Update the content of the <p> element with the new total price
+			const totalPriceElement = document.getElementById("totalPrice");
+			totalPriceElement.innerHTML = "Tổng Giá : " + totalPrice.toLocaleString() + " VND";
+		}
+	</script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
 		</script>
