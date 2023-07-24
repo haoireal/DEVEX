@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Devex.Entity.CartProdcut;
 import com.Devex.Entity.Product;
@@ -71,10 +72,14 @@ public class CartController {
 		return "user/cartproduct";
 	}
 	@RequestMapping("/devex/cartproduct/add/{idProduct}")
-	public String addCart(@PathVariable("idProduct") String id, Model model) throws JsonProcessingException {
+	public String addCart(@PathVariable("idProduct") String id, Model model , @RequestParam(name="soluong") int soLuong,
+			String coler , String size) throws JsonProcessingException {
+		coler="Xanh";
+		size="S";
 		
-		cart.add(id);
-	
+		System.out.println("số Lượng"+ soLuong);
+		cart.add(id,soLuong,coler,size);
+		System.out.println("số Lượngcart :"+cart.getCount());
 		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
 				.collect(Collectors.toMap(CartProdcut::getName, Function.identity()));
 		String cartValue = objectMapper.writeValueAsString(itemsMap);
@@ -87,15 +92,16 @@ public class CartController {
 		cookie.setPath("/");
 		resp.addCookie(cookie);
 		System.out.println(cart.getCount());
-		return "redirect:/devex/productPRO";
+		return "redirect:/details/{idProduct}";
 	}
 	@RequestMapping("/devex/cartproduct/remove/{idProduct}")
 	public String remove(@PathVariable("idProduct") String id) throws JsonProcessingException {
+		System.out.println("hihi"+id);
 		cart.remove(id);
+		
 		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
-				.collect(Collectors.toMap(CartProdcut::getName, Function.identity()));
+				.collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
 		String cartValue = objectMapper.writeValueAsString(itemsMap);
-		cart.clear();
 		// Giải mã chuỗi Base64
 		byte[] encodedBytes = Base64.decodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
 		String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);

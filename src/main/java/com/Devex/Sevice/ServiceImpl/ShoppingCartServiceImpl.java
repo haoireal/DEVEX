@@ -26,7 +26,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ProductRepository dao;
 
 	@Override
-	public CartProdcut add(String id) {
+	public CartProdcut add(String id, int SoLuong, String Size, String Color) {
 		CartProdcut cartProduct = cart.getItems().get(id);
 
         if (cartProduct == null) {
@@ -34,12 +34,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             if (product != null && !product.getProductVariants().isEmpty()) {
                 ProductVariant variant = product.getProductVariants().get(0);
                 cartProduct = new CartProdcut();
-               
+               cartProduct.setId(product.getId());
                 cartProduct.setName(product.getName());
                 cartProduct.setImg(product.getImageProducts().get(0).getName());
                 cartProduct.setColor(variant.getColor());
                 cartProduct.setSize(variant.getSize());
-               
+                cartProduct.setSoluong(SoLuong);
                 cartProduct.setPrice(variant.getPriceSale());
                 cartProduct.setTotal(variant.getPriceSale());
                 cart.getItems().put(id, cartProduct);
@@ -55,10 +55,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public void remove(String id) {
-		cart.getItems().remove(id);
 		
+		if (cart.getItems().containsKey(id)) {
+	        cart.getItems().remove(id);
+	        System.out.println("[a"+id);
+	    }else {
+	    	System.out.println("không xóa dcd");
+	    }
 	}
-
+		
+	
 	@Override
 	public CartProdcut update(String id, int qty) {
 		// TODO Auto-generated method stub
@@ -68,7 +74,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public void clear() {
 		cart.getItems().clear();
-		
 	}
 
 	@Override
