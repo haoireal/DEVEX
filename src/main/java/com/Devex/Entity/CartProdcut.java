@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartProdcut {
+	public String id;
 	public String name;
 	public String img;
 	public Double price;
