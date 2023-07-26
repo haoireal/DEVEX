@@ -263,7 +263,7 @@
 	
 								<div th:each="variant, iter : *{productVariants}" class="form-check product-variation ms-1  align-items-center justify-content-center ">
 									<input class="  form-check-input" style="margin-left: -1em !important; padding: 3px;" type="radio"
-										name="flexRadioDefault" th:id="'flexRadioDefault'+${iter.count}" checked>
+										name="coler" th:id="'flexRadioDefault'+${iter.count}" th:value="${variant.color}" checked>
 									<label class="form-check-label pe-1 " style="margin-left: 0.3rem; padding:3px" th:for="'flexRadioDefault'+${iter.count}" th:text="${variant.color}">
 										 </label>
 								</div>
@@ -279,7 +279,7 @@
 	
 								<div th:each="size, iter : *{productVariants}" class="form-check product-variation ms-1  align-items-center justify-content-center ">
 									<input th:if="${#lists.isEmpty(size)} == false" class="  form-check-input" style="margin-left: -1em !important; padding: 3px;" type="radio"
-										name="flexRadio" th:id="'flexRadio'+${iter.count}" checked  >
+										name="flexRadio" th:id="'flexRadio'+${iter.count}" th:value="${size.size}" checked  >
 									<label class="form-check-label pe-1 " style="margin-left: 0.3rem; padding:3px" th:for="'flexRadio'+${iter.count}" th:text="${size.size}">
 										 </label>
 								</div>

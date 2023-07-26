@@ -15,5 +15,5 @@ public class CartProdcut {
 	public String color;
 	public String size;
 	public int soluong;
-	public Double total;
+	public String nameShop;
 }

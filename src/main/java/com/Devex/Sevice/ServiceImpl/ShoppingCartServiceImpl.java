@@ -2,15 +2,18 @@ package com.Devex.Sevice.ServiceImpl;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.Devex.Controller.FindController;
 import com.Devex.Entity.CartProdcut;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
+import com.Devex.Entity.Seller;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.ShoppingCartDTO;
 import com.Devex.Sevice.ShoppingCartService;
@@ -31,33 +34,38 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		
         if (cartProduct == null) {
             Product product = dao.findByIdProduct(id);
-            if (product != null && !product.getProductVariants().isEmpty()) {
-                ProductVariant variant = product.getProductVariants().get(0);
+            if (product != null ) {
+				ProductVariant variant = product.getProductVariants().get(0);
+				String shopname = product.getSellerProduct().getShopName();
                 cartProduct = new CartProdcut();
-               cartProduct.setId(product.getId());
+                cartProduct.setId(product.getId());
                 cartProduct.setName(product.getName());
                 cartProduct.setImg(product.getImageProducts().get(0).getName());
-                cartProduct.setColor(variant.getColor());
-                cartProduct.setSize(variant.getSize());
+                cartProduct.setColor(Size);
+                cartProduct.setSize(Color);
                 cartProduct.setSoluong(SoLuong);
                 cartProduct.setPrice(variant.getPriceSale());
-                cartProduct.setTotal(variant.getPriceSale());
+                cartProduct.setNameShop(shopname);
                 cart.getItems().put(id, cartProduct);
             }
-        } else {
-            cartProduct.setSoluong(cartProduct.getSoluong() + 1);
-            cartProduct.setTotal(cartProduct.getSoluong() * cartProduct.getPrice());
+           
         }
-
+        else {
+        	System.out.println("đã tới");
+            cartProduct.setSoluong(cartProduct.getSoluong() + 1);
+            
+        }
+        
+        
         return cartProduct;
 		
 	}
+	// Phương thức để in thông tin sản phẩm đã thêm vào giỏ hàng
+
 
 	@Override
 	public void remove(String id) {
-		
-		cart.removeItem(id);
-		
+		cart.getItems().remove(id);
 	}
 		
 	
