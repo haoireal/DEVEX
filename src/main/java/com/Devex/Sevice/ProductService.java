@@ -47,4 +47,8 @@ public interface ProductService {
 	
 	long countByKeywordName(String keywords);
 
+	List<Product> findAllProductById(String id);
+
+	Product findByIdProduct(String id);
+
 }

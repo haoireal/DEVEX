@@ -63,9 +63,8 @@ public class DevexUserController {
 	public String searchProduct(Model model, @RequestParam("search") Optional<String> kw) {
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
 		sessionService.set("keywordsSearch", kwords);
-		List<Product> list = productService.findByKeywordName("%" + kwords + "%");
+		List<Product> list = productService.findByKeywordName(kwords);
 		model.addAttribute("products", list);
-		model.addAttribute("count", productService.countByKeywordName("%" + kwords + "%"));
 		return "user/findproduct";
 	}
 }
