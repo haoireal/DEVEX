@@ -10,7 +10,7 @@ import com.Devex.Entity.Product;
 
 public interface ShoppingCartService {
 
-	CartProdcut add(String i);
+	CartProdcut add(String i, int SoLuong, String Size, String Color);
 	void remove(String id);
 	CartProdcut update(String id, int qty);
 	void clear();

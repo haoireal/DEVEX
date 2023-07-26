@@ -1,6 +1,7 @@
 package com.Devex.Controller;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Devex.Entity.CartProdcut;
 import com.Devex.Entity.Product;
@@ -42,19 +44,13 @@ public class CartController {
 	
 	ObjectMapper objectMapper = new ObjectMapper();
 	Cookie cookie =null;
-	@RequestMapping("/devex/productPRO")
-	public String showProdcutDetail(Model model) {
-		List<Product> product = daop.findAll();
-		model.addAttribute("products", product);
-		return "user/demoProductdetal";
-	}
 	@RequestMapping("/devex/cart")
 	public String showcart(Model model , @CookieValue(value ="myCart",required = false) String cartValue) {
+		cart.clear();
 		if (cartValue != null && !cartValue.isEmpty()) {
 			// Giải mã chuỗi Base64
 			byte[] decodedBytes = Base64.decodeBase64(cartValue);
 			String decodedValue = new String(decodedBytes, StandardCharsets.UTF_8);
-
 			try {
 				Map<String, CartProdcut> map = objectMapper.readValue(decodedValue, new com.fasterxml.jackson.core.type.TypeReference<Map<String, CartProdcut>>() {
 				});
@@ -62,6 +58,7 @@ public class CartController {
 			} catch (JsonProcessingException e) {
 				// Xử lý lỗi khi chuyển đổi chuỗi JSON
 			}
+			
 			model.addAttribute("cart", cart);
 			model.addAttribute("total", cart.getAmount());
 			List<Product> list = daop.findAll();
@@ -71,14 +68,15 @@ public class CartController {
 		return "user/cartproduct";
 	}
 	@RequestMapping("/devex/cartproduct/add/{idProduct}")
-	public String addCart(@PathVariable("idProduct") String id, Model model) throws JsonProcessingException {
+	public String addCart(@PathVariable("idProduct") String id, Model model , @RequestParam(name="soluong") int soLuong,
+			@RequestParam(name="flexRadio", required = false) String size  ,@RequestParam(name= "coler", required = false) String cloer) throws JsonProcessingException {
 		
-		cart.add(id);
-	
+		cart.add(id,soLuong,cloer,size);
+		System.out.println("size"+size);
 		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
-				.collect(Collectors.toMap(CartProdcut::getName, Function.identity()));
+				.collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
 		String cartValue = objectMapper.writeValueAsString(itemsMap);
-	
+		cart.clear();
 		// Mã hóa chuỗi JSON thành chuỗi Base64
 		byte[] encodedBytes = Base64.encodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
 		String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);
@@ -86,26 +84,26 @@ public class CartController {
 		cookie.setMaxAge(86400);
 		cookie.setPath("/");
 		resp.addCookie(cookie);
-		System.out.println(cart.getCount());
-		return "redirect:/devex/productPRO";
+		
+		return "redirect:/details/{idProduct}";
 	}
 	@RequestMapping("/devex/cartproduct/remove/{idProduct}")
 	public String remove(@PathVariable("idProduct") String id) throws JsonProcessingException {
-		cart.remove(id);
-		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
-				.collect(Collectors.toMap(CartProdcut::getName, Function.identity()));
-		String cartValue = objectMapper.writeValueAsString(itemsMap);
-		cart.clear();
-		// Giải mã chuỗi Base64
-		byte[] encodedBytes = Base64.decodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
-		String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);
+	    cart.remove(id);
+	    Map<String, CartProdcut> itemsMap = cart.getItems().stream()
+	            .collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
+	    String cartValue = objectMapper.writeValueAsString(itemsMap);
+	    cart.clear();
+	    // Giải mã chuỗi Base64
+	    byte[] encodedBytes = Base64.encodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
+	    String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);
+	    cookie = new Cookie("myCart", encodedCartValue);
+	    cookie.setMaxAge(86400);
+	    cookie.setPath("/");
+	    resp.addCookie(cookie);
 
-		cookie = new Cookie("myCart", encodedCartValue);
-		cookie.setMaxAge(86400);
-		cookie.setPath("/");
-		resp.addCookie(cookie);
-		
-		return "redirect:/devex/cart";
+	    return "redirect:/devex/cart";
 	}
+
 	
 }

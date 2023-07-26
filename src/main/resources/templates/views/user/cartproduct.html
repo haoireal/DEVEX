@@ -15,8 +15,8 @@
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<!-- Theme style -->
 	<!-- <link rel="stylesheet" href="../admin/dist/css/userIndex.css"> -->
-	<link rel="stylesheet" href="/static/admin/dist/css/userIndex.css">
-	<link rel="stylesheet" href="/static/admin/dist/css/findproduct.css">
+	<link rel="stylesheet" href="/admin/dist/css/userIndex.css">
+	<link rel="stylesheet" href="/admin/dist/css/findproduct.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
 	<!--slick-->
@@ -81,7 +81,7 @@
 		<div class="container container_mid   mt-3" style="height: 90px ;background-color: white; ">
 			<div class="row mt-2 " style="height: 50px;">
 				<div class="col-md-2 ">
-					<img class="img-fluid img_logo" src="/static/admin/dist/img/DEVE2.jpg" alt>
+					<img class="img-fluid img_logo" src="/admin/dist/img/DEVE2.jpg" alt>
 				</div>
 				<div class="col-md-8">
 					<div class="search-box pt-2 order-4 order-xl-3">
@@ -105,8 +105,9 @@
 				<div class="col-md-2 ">
 					<div class="row" style="margin-left: 10px;">
 						<div class="col-6 pt-1">
-							<a href>
+							<a href="#" style="text-decoration: none; font-size: 20px;">
 								<i class="bi bi-cart3 fs-2 text-dark fw-bold "></i>
+							<a th:text="${cart.getCount()}" style="color: #2550b9;"></a>
 							</a>
 						</div>
 						<div class="col-6 pt-1">
@@ -126,157 +127,68 @@
 					style="color: #2A62B9; margin-left: -25px; font-size: 20px;">Giỏ hàng</span>
 			</div>
 		</div>
-		<div class="container container_main_middle  pt-1" style="padding: 20px;">
+		<div class="container container_main_middle  pt-1" style="padding: 20px;" >
 			<div class="row" style="padding: 15px;">
-				<div class="col-md-7" style=" height: auto">
-					<div class="row " style="padding: 10px; border: 1px solid #2A62B9; border-radius: 10px; margin-top: 10px;" >
-						<div class="col-md-3" style="border-radius: 10px;">
-							<!-- Product Image -->
-							<img src="/static/img/product/-16057-slide-products-609a4dbc02673.webp" alt="Product Image"  width="200px" height="200px" style="border-radius: 10px;">
-						</div>
-						<div class="col-md-9">
-							<!-- Product Information -->
-							<div class="card" style="height: 200px;border: none; margin-top: -10px; margin-left: 20px;">
-								<div class="card-body" style="font-size: 15px;">
-									<h5 class="card-title" style="font-size: 20px; font-weight: bold;">Shop: </h5>
-									<p class="card-text" style="color: #2A62B9; font-weight: bold;">Tên Sản Phẩm : Sam Sung Galaxy</p>
-									<p class="card-text" style="color: #ff0821;font-weight: bold; font-size: 17px; margin-top: -10px;">Giá :1.000.000 VND</p>
-									<div class="d-flex" style=" margin-top: -10px;">
-										<div class="mb-3 d-flex ">
-											<label for="quantitySelect" class="form-label" style="color: #2A62B9;font-weight: bold; margin-top: 5px;">Số Lượng : </label>
-											<select class="form-select" id="quantitySelect" style="width: 60px; height: 30px; font-size: 14px ; font-weight: bold; margin-left: 5px;  ">
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<!-- Add more options as needed -->
-											</select>
-										</div>
-										
-										<!-- Color Dropdown -->
-										<div class="mb-3 d-flex">
-											<label for="colorSelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-left: 10px; margin-top: 5px;">Color:</label>
-											<select class="form-select" id="colorSelect" style="width: 60px; height: 30px; font-size: 14px ; font-weight: bold; margin-left: 5px;">
-												<option value="red">Red</option>
-												<option value="blue">Blue</option>
-												<option value="green">Green</option>
-												<!-- Add more options as needed -->
-											</select>
-										</div>
-										
-										<!-- Size Dropdown -->
-										<div class="mb-3 d-flex">
-											<label for="sizeSelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-left: 10px; margin-top: 5px;">Size:</label>
-											<select class="form-select" id="sizeSelect" style="width: 60px; height: 30px; font-size: 14px ; font-weight: bold; margin-left: 5px;">
-												<option value="small">Small</option>
-												<option value="medium">Medium</option>
-												<option value="large">Large</option>
-												<!-- Add more options as needed -->
-											</select>
-										</div>
-									</div>
-									<div class="mb-3 d-flex">
-										<p class="card-text col-md-6" style="color: #ff0821;font-weight: bold; font-size: 18px; margin-top: 15px;">Tổng Giá : 11.000.000 VND</p>
-										<a href="#" class="btn btn-primary" style="margin-left: 150px; width: 100px; height: 40px;  background: linear-gradient(
-											90deg,
-											rgba(25, 38, 186, 1) 0%,
-											rgba(57, 151, 184, 1) 54%,
-											rgba(0, 212, 255, 1) 100%
-										  ); border: none;">Xóa</a>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row " style="padding: 10px; border: 1px solid #2A62B9; border-radius: 10px; margin-top: 10px;" >
-						<div class="col-md-3" style="border-radius: 10px;">
-							<!-- Product Image -->
-							<img src="/static/img/product/-16057-slide-products-609a4dbc02673.webp" alt="Product Image"  width="200px" height="200px" style="border-radius: 10px;">
-						</div>
-						<div class="col-md-9">
-							<!-- Product Information -->
-							<div class="card" style="height: 200px;border: none; margin-top: -10px; margin-left: 20px;">
-								<div class="card-body" style="font-size: 15px;">
-									<h5 class="card-title" style="font-size: 20px; font-weight: bold;">Shop: </h5>
-									<p class="card-text" style="color: #2A62B9; font-weight: bold;">Tên Sản Phẩm : Sam Sung Galaxy</p>
-									<p class="card-text" style="color: #ff0821;font-weight: bold; font-size: 17px; margin-top: -10px;">Giá :1.000.000 VND</p>
-									<div class="d-flex" style=" margin-top: -10px;">
-										<div class="mb-3 d-flex ">
-											<label for="quantitySelect" class="form-label" style="color: #2A62B9;font-weight: bold; margin-top: 5px;">Số Lượng : </label>
-											<select class="form-select" id="quantitySelect" style="width: 60px; height: 30px; font-size: 14px ; font-weight: bold; margin-left: 5px;  ">
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<!-- Add more options as needed -->
-											</select>
-										</div>
-										
-										<!-- Color Dropdown -->
-										<div class="mb-3 d-flex">
-											<label for="colorSelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-left: 10px; margin-top: 5px;">Color:</label>
-											<select class="form-select" id="colorSelect" style="width: 60px; height: 30px; font-size: 14px ; font-weight: bold; margin-left: 5px;">
-												<option value="red">Red</option>
-												<option value="blue">Blue</option>
-												<option value="green">Green</option>
-												<!-- Add more options as needed -->
-											</select>
-										</div>
-										
-										<!-- Size Dropdown -->
-										<div class="mb-3 d-flex">
-											<label for="sizeSelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-left: 10px; margin-top: 5px;">Size:</label>
-											<select class="form-select" id="sizeSelect" style="width: 60px; height: 30px; font-size: 14px ; font-weight: bold; margin-left: 5px;">
-												<option value="small">Small</option>
-												<option value="medium">Medium</option>
-												<option value="large">Large</option>
-												<!-- Add more options as needed -->
-											</select>
-										</div>
-									</div>
-									<div class="mb-3 d-flex">
-										<p class="card-text col-md-6" style="color: #ff0821;font-weight: bold; font-size: 18px; margin-top: 15px;">Tổng Giá : 11.000.000 VND</p>
-										<a href="#" class="btn btn-primary" style="margin-left: 150px; width: 100px; height: 40px;  background: linear-gradient(
-											90deg,
-											rgba(25, 38, 186, 1) 0%,
-											rgba(57, 151, 184, 1) 54%,
-											rgba(0, 212, 255, 1) 100%
-										  ); border: none;">Xóa</a>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-					
 				
+				<div class="col-md-7" style=" height: auto" >
 					
+					<div class="row product-container" style="padding: 10px; border: 1px solid #2A62B9; border-radius: 10px; margin-top: 10px; height: auto;" th:each="product, index : ${cart.items}" >
+						<div>
+							<input type="checkbox" style="border: none; color: #ff0821; width: 18px; height: 18px;" >
+						</div>
+						<div class="col-md-3" style="border-radius: 10px;">
+							<!-- Product Image -->
+							<img th:src="@{'/img/product/' + ${product.img}}" alt="Product Image" width="200px" height="200px" style="border-radius: 10px;">
+						</div>
+						<div class="col-md-9">
+							<!-- Product Information -->
+							<div class="card" style="height: auto; border: none; margin-top: -10px; margin-left: 20px;">
+								<div class="card-body" style="font-size: 15px;">
+									<h5 class="card-title" style="font-size: 20px; font-weight: bold;">Shop:<a th:text="${product.nameShop}" style="font-size: 20px; color: #2550b9"></a> </h5>
+									<p class="card-text" style="color: #2A62B9; font-weight: bold;">Tên Sản Phẩm : <a th:text="${product.name}"></a></p>
+										<p class="card-text" style="color: #ff0821; font-weight: bold; font-size: 17px; margin-top: -10px;">
+										    Giá : <a style="color: #ff0821; font-weight: bold; font-size: 18px; margin-top: 15px; text-decoration: none" class="product-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} " data-price="${product.price}"></a> VND
+										</p>
+
+									<div class="d-flex" style="margin-top: -10px;">
+										<div class="mb-3 d-flex">
+											<label for="quantitySelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-top: 5px;">Số Lượng : </label>
+											<select class="form-select quantity-select" id="quantitySelect" style="width: 70px; height: 30px; font-size: 14px; font-weight: bold; margin-left: 5px;" onchange="updateTotalPrice(this)">
+												<option th:each="i : ${#numbers.sequence(1, 100)}" th:value="${i}" th:text="${i}" th:selected="${i == product.soluong}"></option>
+												<!-- Add more options as needed -->
+											</select>
+										</div>
+					
+										<!-- Color Dropdown -->
+										<div class="mb-3 d-flex" th:if="${product.color != null}">
+											<label for="colorSelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-left: 10px; margin-top: 5px;">Color: <span th:text="${product.color}" style="color: #2550b9;"></span></label>
+					
+										</div>
+					
+										<!-- Size Dropdown -->
+										<div class="mb-3 d-flex" th:if="${product.size != null}">
+											<label for="sizeSelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-left: 10px; margin-top: 5px;">Size: <span th:text="${product.size}" style="color: #2550b9;"></span></label>
+					
+										</div>
+									</div>
+									<div class="mb-3 d-flex">
+										<!-- Thẻ tổng tiền -->
+										<p class="card-text col-md-8 totalPrice" id="totalPrice" style="color: #ff0821; font-weight: bold; font-size: 18px; margin-top: 15px;">Tổng Giá : <a class="totalPriceValue" 
+										th:text="${#numbers.formatDecimal(product.soluong * product.price, 0, 'COMMA', 0, 'POINT')}" 
+										data-total-price="${product.soluong * product.price}" 
+										style="color: #ff0821; font-weight: bold; font-size: 18px;text-decoration: none;"></a> VND</p>
+										<a th:href="@{'/devex/cartproduct/remove/' + ${product.id}}" type="submit" class="btn btn-primary" style="margin-left: 100px; width: 100px; height: 40px; background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%); border: none;">Xóa</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<p>Tổng giá giỏ hàng: <span id="cartTotalPrice" style="color: #2550b9;">0 VND</span></p>
+
 				</div>
 				
 				<div class="col-md-5" style=" width: 510px; height: auto; border: 2px solid #2A62B9; margin-left: 20px; border-radius: 10px;padding: 10px; margin-top: 10px;">
-					<div class="row">
-						<div class="text-center" style="font-size: 20px; color: #2A62B9; font-weight: bold;"> Thông Tin Đặt Hàng</div>
-					</div>
-					<div class="row info-ship" style="font-size: 20px; color: #2A62B9; ">
-						<p>Ngày Tạo</p>
-						<p>Mã Hóa Đơn :</p>
-						<p>Mã Vận Đơn:</p>
-						<p>Số Lượng : </p>
-						<p>Thông Tin Địa Chỉ : <a href="">Trần Quang Khánh ,+843934934344, Xã Iako , Huyện Chư Sê, Tỉnh Gia Lai</a>  </p>
-						<p href="">Phí Vận Chuyển:</a>
-						<p>Vocher :</p>
-						<p>Tổng Tiền:</p>
-						<p>
-							<label for="" style="color: #2550b9;
-							font-size: 15px;font-weight: 500;">Lời Nhắn :</label>
-							<input type="text"  style="border: 2px solid #2550b9; border-radius: 5px;">
-						</p>
-						<a href="#" class="btn btn-primary" style="margin-left: 170px; width: 200px; height: 40px;  background: linear-gradient(
-											90deg,
-											rgba(25, 38, 186, 1) 0%,
-											rgba(57, 151, 184, 1) 54%,
-											rgba(0, 212, 255, 1) 100%
-										  ); border: none;">Tiến Hành Đặt Hàng</a>
-					</div>
+					
 				</div>	
 			</div>
 			
@@ -830,6 +742,28 @@
 		</div>
 
 	</footer>
+
+	<script>
+		function updateTotalPrice(selectElement) {
+		const productContainer = selectElement.closest('.product-container');
+    	const quantity = parseInt(selectElement.value, 10);
+		  const priceText = productContainer.querySelector('.product-price').innerText.trim();
+		const price = parseFloat(priceText.replace(/[^\d.-]/g, ''));
+		  const totalPrice = quantity * price;
+		  productContainer.querySelector('.totalPriceValue').innerText = totalPrice.toLocaleString('vi-VN');
+		  productContainer.querySelector('.totalPriceValue').setAttribute('data-total-price', totalPrice);
+		
+		}
+	
+
+		
+	</script>
+	  
+  
+  
+	  
+  
+	
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
 		</script>

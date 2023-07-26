@@ -21,4 +21,8 @@ public class ShoppingCartDTO {
     public void setItems(Map<String, CartProdcut> items) {
         this.items = items;
     }
+    public void removeItem(String productId) {
+        items.remove(productId);
+    }
+    
 }

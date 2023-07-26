@@ -102,13 +102,24 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<Product> findByKeywordName(String keyword) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return productRepository.findByKeywordName(keyword);
 	}
 
 	@Override
 	public long countByKeywordName(String keywords) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<Product> findAllProductById(String id) {
+		return productRepository.findAllProductById(id);
+	}
+
+	@Override
+	public Product findByIdProduct(String id) {
+		return productRepository.findByIdProduct(id);
 	}
 	
 	

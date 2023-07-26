@@ -38,4 +38,6 @@ public interface ImageProductService {
 
 	ImageProduct save(ImageProduct entity);
 
+	List<ImageProduct> findAllImageProductByProductId(String id);
+
 }

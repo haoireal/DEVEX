@@ -19,7 +19,6 @@ import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SessionService;
 
 @Controller
-@RequestMapping("/user")
 public class DevexUserController {
 
 	@Autowired
@@ -54,13 +53,18 @@ public class DevexUserController {
 		return "admin/userManage/userProfile";
 	}
 	
+	@GetMapping("/product/find")
+	public String getPdDetail() {
+
+		return "user/findproduct";
+	}
+	
 	@GetMapping("/product/search")
-	public String searchBeverage(Model model, @RequestParam("search") Optional<String> kw) {
+	public String searchProduct(Model model, @RequestParam("search") Optional<String> kw) {
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
 		sessionService.set("keywordsSearch", kwords);
-		List<Product> list = productService.findByKeywordName("%" + kwords + "%");
-		model.addAttribute("beverages", list);
-		model.addAttribute("count", productService.countByKeywordName("%" + kwords + "%"));
-		return "user/coffee";
+		List<Product> list = productService.findByKeywordName(kwords);
+		model.addAttribute("products", list);
+		return "user/findproduct";
 	}
 }
