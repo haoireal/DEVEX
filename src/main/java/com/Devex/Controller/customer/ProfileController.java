@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.CustomerService;
@@ -61,11 +63,12 @@ public class ProfileController {
 	}
 	
 	@PostMapping("/profile")
-	public String doEditProfile() {
+	public String doEditProfile(@RequestParam("avatarInput") MultipartFile file) {
 		User user = session.get("user");
 		String fullname = param.getString("fullname", "");
 		String gender = param.getString("gender", "Other");
-		String avatar = param.getString("avatar-hide", null);
+		String avatar = param.getString("avatar", null);
+		param.save(file, "/img/account");
 		user.setGender(gender);
 		user.setFullname(fullname);
 		user.setAvatar(avatar);
@@ -76,7 +79,7 @@ public class ProfileController {
 	@PostMapping("/profile/address")
 	public String doEdiAddress() {
 		Customer customer = session.get("user");
-		String address = param.getString("address", "");
+		String address = param.getString("address", null);
 		String phone = param.getString("phone", null);
 		customer.setAddress(address);
 		customer.setPhoneAddress(phone);
@@ -98,7 +101,7 @@ public class ProfileController {
 			otpService.sendMailOtp(info);
 		}
 		session.set("info-user", info);
-		return "user/verifi";
+		return "account/verifi";
 	}
 	
 	@PostMapping("/profile/verify/{type}")
@@ -130,22 +133,22 @@ public class ProfileController {
         return redirectUrl;
 	}
 	
-	@GetMapping("/profile/change-email)")
+	@GetMapping("/profile/change-email")
 	public String showUpdateEmail(Model model) {
 		model.addAttribute("type", "email");
 		return "account/email-phone";
 	}
 	
-	@GetMapping("/profile/change-phone)")
+	@GetMapping("/profile/change-phone")
 	public String showUpdatePhone(Model model) {
 		model.addAttribute("type", "phone");
 		return "account/email-phone";
 	}
 	
-	@PostMapping("/profile/change-email)")
+	@PostMapping("/profile/change-email")
 	public String doUpdateEmail(Model model) {
 		String info = param.getString("email-phone", session.get("info-user", ""));
-		User user = user = userService.findEmail(info);;
+		User user = user = userService.findEmail(info);
 		
 		if(user != null) {
 			model.addAttribute("message", "Email này đã tồn tại!");
@@ -156,7 +159,7 @@ public class ProfileController {
 		return "redirect:/verify/new-email";
 	}
 	
-	@PostMapping("/profile/change-phone)")
+	@PostMapping("/profile/change-phone")
 	public String doUpdatePhone(Model model) {
 		String info = param.getString("email-phone", session.get("info-user", ""));
 		User user = user = userService.findPhone(info);;
