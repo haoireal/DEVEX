@@ -24,4 +24,5 @@ public class ShoppingCartDTO {
     public void removeItem(String productId) {
         items.remove(productId);
     }
+    
 }

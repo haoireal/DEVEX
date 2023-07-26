@@ -85,6 +85,11 @@ public class CategoryServiceImpl implements CategoryService{
 	public void deleteAll() {
 		categoryRepository.deleteAll();
 	}
+
+	@Override
+	public Category findByProductId(String productId) {
+		return categoryRepository.findByProductId(productId);
+	}
 	
 	
 }

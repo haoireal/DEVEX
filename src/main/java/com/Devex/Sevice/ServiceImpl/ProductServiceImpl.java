@@ -17,7 +17,7 @@ import com.Devex.Sevice.ProductService;
 
 @SessionScope
 @Service("productService")
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ProductRepository productRepository;
 
@@ -95,7 +95,7 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public List<Product> findByKeywordName(String keyword) {
-		
+
 		return productRepository.findByKeywordName(keyword);
 	}
 
@@ -108,7 +108,14 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> findProductsByCategoryId(int cID) {
 		return productRepository.findProductsByCategoryId(cID);
 	}
-	
-	
-	
+
+	public List<Product> findAllProductById(String id) {
+		return productRepository.findAllProductById(id);
+	}
+
+	@Override
+	public Product findByIdProduct(String id) {
+		return productRepository.findByIdProduct(id);
+	}
+
 }

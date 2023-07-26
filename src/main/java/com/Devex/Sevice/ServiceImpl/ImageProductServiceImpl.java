@@ -86,6 +86,11 @@ public class ImageProductServiceImpl implements ImageProductService{
 	public void deleteAll() {
 		imageProductRepository.deleteAll();
 	}
+
+	@Override
+	public List<ImageProduct> findAllImageProductByProductId(String id) {
+		return imageProductRepository.findAllImageProductByProductId(id);
+	}
 	
 	
 }

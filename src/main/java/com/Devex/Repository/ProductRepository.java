@@ -22,15 +22,19 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 			+ "WHERE s.username like ?1 OR s.shopName Like ?1")
 	List<Product> findProductBySellerUsername(String sellerUsername);
 
-	@Query("SELECT p FROM Product p WHERE p.categoryDetails.category.id = :categoryId")
-	List<Product> findProductsByCategoryId(@Param("categoryId") int categoryId);
-
 	@Query(value = "EXEC FindProductsByKeyword :keywords", nativeQuery = true)
 	List<Product> findByKeywordName(@Param("keywords") String keywords);
 
 	@Query(value = "EXEC FillerProductBy :keywords, :sortby, :sorthow", nativeQuery = true)
-	List<Product> fillerProductBy(@Param("keywords") String keywords, @Param("sortby") String sortby, @Param("sorthow") String sorthow);
-	
+	List<Product> fillerProductBy(@Param("keywords") String keywords, @Param("sortby") String sortby,
+			@Param("sorthow") String sorthow);
+
+	@Query("SELECT p FROM Product p WHERE p.id = ?1")
+	List<Product> findAllProductById(String id);
+
+	@Query("SELECT p FROM Product p WHERE p.categoryDetails.category.id = :categoryId")
+	List<Product> findProductsByCategoryId(@Param("categoryId") int categoryId);
+
 	@Query("SELECT COUNT(o) FROM Product o WHERE o.name LIKE :keywords")
 	long countByKeywordName(@Param("keywords") String keywords);
 
