@@ -15,9 +15,11 @@ import java.util.regex.Pattern;
 import com.Devex.DTO.MailOtpDTO;
 import com.Devex.DTO.OtpRequestDTO;
 import com.Devex.DTO.OtpValidationRequest;
+import com.Devex.Entity.Customer;
 import com.Devex.Entity.Role;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CookieService;
+import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.MailerService;
 import com.Devex.Sevice.OTPService;
 import com.Devex.Sevice.ParamService;
@@ -45,6 +47,9 @@ public class AccountController {
 	
 	@Autowired
 	RoleService roleService;
+	
+	@Autowired
+	CustomerService customerService;
 	
 	@Autowired
 	OTPService otpService;
@@ -214,11 +219,104 @@ public class AccountController {
 		return "redirect:/profile";
 	}
 	
+	@GetMapping("/forget-password/information")
+	public String showForgetPassInfo() {
+		return "account/email-phone";
+	}
+	
+	@PostMapping("/forget-password/information")
+	public String doForgetPassInfo(Model model) {
+		String info = param.getString("email-phone", session.get("info-user", ""));
+		User user = null;
+		String type = null;
+		if (isValidEmail(info)) {
+            type = "email";
+            user = userService.findEmail(info);
+        }else if (isValidPhoneNumber(info)) {
+        	user = userService.findPhone(info);
+            // Chuyển đổi định dạng số điện thoại về "+84" nếu cần
+            info = normalizePhoneNumber(info);
+            type = "phone";
+        }
+		
+		if(type.equals("phone")) {
+			OtpRequestDTO otpRequest = new OtpRequestDTO(info, info);
+			otpService.sendSMS(otpRequest);
+		}else if(type.equals("email")) {
+			otpService.sendMailOtp(info);
+		}else {
+        	model.addAttribute("message", "Vui lòng nhập đúng định dạng email hoặc số điện thoại");
+        	return "account/email-phone";
+        }
+        session.set("info-user", info);
+		return "redirect:/forget-password/verify";
+	}
+	
+	@GetMapping("/forget-password/verify")
+	public String showForgetPassVerify() {
+		return "account/verifi";
+	}
+	
+	@PostMapping("/forget-password/verify")
+	public String doForgetPassVerify(Model model) {
+		String otp = "";
+		for (int i = 1; i <= 6; i++) {
+			otp += param.getString("o" + i,"");
+		}
+		String infoUser = session.get("info-user", "");
+		System.out.println(infoUser);
+		String type = null;
+		if (isValidEmail(infoUser)) {
+            type = "email";
+        }else {
+            type = "phone";
+        }
+		boolean flag = false;
+		
+		if(type.equals("email")) {
+			MailOtpDTO mailOtp = new MailOtpDTO(infoUser, otp);
+			flag = otpService.validateMailOtp(mailOtp);
+		}else if(type.equals("phone")) {
+			OtpValidationRequest otpValidationRequest = new OtpValidationRequest(infoUser, otp);
+			flag = otpService.validateOtp(otpValidationRequest);
+		}
+		
+		if(flag == false) {
+			model.addAttribute("message", "Mã xác thực không trùng khớp!");
+			return "account/verifi";
+		}
+		
+		return "redirect:/forget-password/new-pass";
+	}
+	
 
 	
-	@GetMapping("/forget-password")
+	@GetMapping("/forget-password/new-pass")
 	public String showForgetPassword() {
 		return "account/new-password";
+	}
+	
+	@PostMapping("/forget-password/new-pass")
+	public String doForgetPassword(Model model) {
+		User user = null;
+		String info = session.get("info-user", "");
+		if (isValidEmail(info)) {
+			user = userService.findEmail(info);
+        }else if (isValidPhoneNumber(info)) {
+            // Chuyển đổi định dạng số điện thoại về "0.."
+        	info = "0" + info.substring(3);
+        	user = userService.findPhone(info);
+        }
+		
+		String pass = param.getString("password", "");
+		String confirmPass = param.getString("confirm-password", "");
+		if(!confirmPass.equals(pass)) {
+			model.addAttribute("message", "Xác thực mật khẩu không trùng khớp!");
+			return "account/new-password";
+		}
+		user.setPassword(confirmPass);
+		userService.save(user);
+		return "redirect:/signin";
 	}
 	
 	private static boolean isValidEmail(String email) {

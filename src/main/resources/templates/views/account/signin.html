@@ -3,7 +3,8 @@
 <html lang="en">
 
 <head>
-<div th:replace="~{flagment/head :: headFragment}"></div>
+<div th:replace="~{flagment/account/head :: headFragment}"></div>
+<div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
 <!-- My CSS -->
 <link rel="stylesheet" href="/css/account.css" />
 <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -85,7 +86,7 @@ form {
 	
 					<div class="g-recaptcha w-100"
 						data-sitekey="6Ldqv3QlAAAAADvajQMpdcsGFDvklhGu72z9mLTC"></div>
-					<div class="error-message"  style="width: 100%" ><mark th:text="${message}"></mark></div>
+					
 					<div class="error-message"  style="width: 100%" ><mark th:text="${param.message}"></mark></div>
 					<button type="submit" class="btn btn-danger mt-3" style="width: 100%;">Sign
 						In</button>
@@ -100,7 +101,7 @@ form {
 						<p class="m-0 small-text text-dark  mt-2">
 							<span style="color: rgba(30, 32, 34, 0.75);"><a
 								style="color: rgba(30, 32, 34);"
-								href="/forgetpassword">Click here! </a> If
+								href="/forget-password/information">Click here! </a> If
 								you forget your password</span>
 						</p>
 					</div>
@@ -111,6 +112,7 @@ form {
 							<img alt="facebook" src="/img/icon/logo-fb.png" class="img-fluid">
 						</a>
 					</div>
+
 					<div class="login-gg">
 						<a href="#">
 							<img alt="google" src="/img/icon/logo-gg.png" class="img-fluid">
@@ -121,6 +123,7 @@ form {
 			
 		</section>
 	</div>
+
 
 
 	<script

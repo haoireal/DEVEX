@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<div th:replace="~{flagment/head :: headFragment}"></div>
+<div th:replace="~{flagment/account/head :: headFragment}"></div>
 <!-- My CSS -->
 <link rel="stylesheet" href="/css/account.css" />
 </head>
@@ -24,7 +24,7 @@
 				<div class="mb-3 bg-white rounded px-2">
 					<input type="text" id="inputEmail-Phone"
 						onchange="validateInput(this)"
-						placeholder="#{${type == null or type == ''} ? 'Email hoặc số điện thoại' : (${type == 'email'} ? 'Email' : 'Số điện thoại'})"
+						th:placeholder="${type == null or type == '' ? 'Email hoặc số điện thoại' : (type == 'email' ? 'Email' : 'Số điện thoại')}"
 						required class="form-control border-0 p-0" name="email-phone">
 				</div>
 				<mark id="message-error" th:text="${message}"></mark>

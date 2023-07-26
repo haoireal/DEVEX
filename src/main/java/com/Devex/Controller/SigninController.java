@@ -67,10 +67,13 @@ public class SigninController {
 				}
 				
 				if(user.getRole().getName().equalsIgnoreCase("Customer")) {
+					session.set("user", user);
 					return "redirect:/home";
 				}if(user.getRole().getName().equalsIgnoreCase("Seller")) {
+					session.set("user", user);
 					return "redirect:/seller/home";
 				}else {
+					session.set("user", user);
 					return "redirect:/admin/home";
 				}
 			}else {
