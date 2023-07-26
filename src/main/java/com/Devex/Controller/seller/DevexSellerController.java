@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Devex.Entity.Category;
+import com.Devex.Entity.CategoryDetails;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.Seller;
+import com.Devex.Entity.User;
 import com.Devex.Repository.OrderDetailRepository;
 import com.Devex.Repository.OrderRepository;
 import com.Devex.Repository.ProductRepository;
+import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.OrderDetailService;
@@ -57,6 +60,9 @@ public class DevexSellerController {
 	
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	CategoryDetailService categoryDetailService;
 
 	@GetMapping("/home")
 	public String getHomePage() {
@@ -66,10 +72,11 @@ public class DevexSellerController {
 
 	@GetMapping("/list/{listName}")
 	public String getAnyList(@PathVariable("listName") String listName, Model model) {
+		User u = session.get("user");
 		switch (listName) {
 		case "products": {
 			model.addAttribute("titleType", "Sản phẩm");
-			List<Product> listProducts = productService.findProductBySellerUsername("xzmszv277");
+			List<Product> listProducts = productService.findProductBySellerUsername("khanhtq");
 //			for (Product product : listProducts) {
 //				System.out.println(product);
 //			}
@@ -104,8 +111,11 @@ public class DevexSellerController {
 	public String editProduct(@PathVariable("idproduct") String idproduct, Model model) {
 		Product product = productService.findByIdProduct(idproduct);
 		List<Category> listCategory = categoryService.findAll();
+		Category ca = categoryService.findByProductId(idproduct);
+		List<CategoryDetails> listCategoryDetail = categoryDetailService.findAllCategoryDetailsById(ca.getId());
 		model.addAttribute("product", product);
 		model.addAttribute("categorys", listCategory); 
+		model.addAttribute("categorydt", listCategoryDetail); 
 		String id = product.getId();
 		session.set("idproduct", id);
 		System.out.println(id);

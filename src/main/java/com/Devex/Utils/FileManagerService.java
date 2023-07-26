@@ -25,11 +25,11 @@ public class FileManagerService {
     ImageProductService imageProductService;
 
     private Path getPath(String shopname, String id, String filename) {
-    	File shop = Paths.get(fileStoragePath, shopname).toFile();
+    	File shop = Paths.get(fileStoragePath + "/product", shopname).toFile();
     	if(!shop.exists()) {
     		shop.mkdirs();
     	}
-        File dir = Paths.get(fileStoragePath, shopname, id).toFile();
+        File dir = Paths.get(fileStoragePath + "/product", shopname, id).toFile();
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -67,38 +67,17 @@ public class FileManagerService {
     }
 
     public List<String> list(String id, String shopname) {
-    	int index = 0;
         List<ImageProduct> listImageProduct = imageProductService.findAllImageProductByProductId(id);
         List<String> filenames = new ArrayList<String>();
-        File dir = Paths.get(fileStoragePath, shopname, id).toFile();
-        File shop = Paths.get(fileStoragePath, shopname).toFile();
+        File dir = Paths.get(fileStoragePath + "/product", shopname, id).toFile();
+        File shop = Paths.get(fileStoragePath + "/product", shopname).toFile();
         if(!shop.exists()) {
         	shop.mkdirs();
         	if(!dir.exists()){
                 dir.mkdirs();
-                File list = Paths.get(fileStoragePath).toFile();
-                File[] files = list.listFiles();
+                File[] files = dir.listFiles();
                 for (File file : files) {
-                	for (ImageProduct imageProduct : listImageProduct) {
-						if(file.getName().equalsIgnoreCase(imageProduct.getName())) {
-				            try {
-				            	Path source = file.toPath();
-				            	Path target = this.getPath(shopname, id, file.getName());
-				            	Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
-				                filenames.add(file.getName());
-				                index++;
-				                System.out.println(index);
-				                if(index > 1) {
-				                	Path delete = source;
-				                	delete.toFile().delete();
-				                }
-				            } catch (Exception e) {
-				                e.printStackTrace();
-				            }
-							filenames.add("/img/product/"+file.getName());
-		                    System.out.println("có file có list");
-						}
-					}
+                    filenames.add("/img/product/"+file.getName());
                 }
             }
         }else {
@@ -106,40 +85,16 @@ public class FileManagerService {
                 File[] files = dir.listFiles();
                 for (File file : files) {
                     filenames.add("/img/product/"+file.getName());
-                    System.out.println("có file có list");
                 }
             } else if (dir.exists() && listImageProduct == null) {
-                File file = Paths.get(fileStoragePath, shopname).toFile();
+                File file = Paths.get(fileStoragePath + "/product", shopname).toFile();
                 Path path = Paths.get(file.getAbsolutePath(), id);
                 path.toFile().delete();
-                System.out.println("khong file khong list");
-            }else {
-            	if(!dir.exists()){
-                    dir.mkdirs();
-                    File list = Paths.get(fileStoragePath).toFile();
-                    File[] files = list.listFiles();
-                    for (File file : files) {
-                    	for (ImageProduct imageProduct : listImageProduct) {
-    						if(file.getName().equalsIgnoreCase(imageProduct.getName())) {
-    				            try {
-    				            	Path source = file.toPath();
-    				            	Path target = this.getPath(shopname, id, file.getName());
-    				            	Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
-    				                filenames.add(file.getName());
-    				                index++;
-    				                System.out.println(index);
-    				                if(index > 1) {
-    				                	Path delete = source;
-    				                	delete.toFile().delete();
-    				                }
-    				            } catch (Exception e) {
-    				                e.printStackTrace();
-    				            }
-    							filenames.add("/img/product/"+file.getName());
-    		                    System.out.println("có file có list");
-    						}
-    					}
-                    }
+            }else if(!dir.exists()) {
+            	dir.mkdirs();
+            	File[] files = dir.listFiles();
+                for (File file : files) {
+                    filenames.add("/img/product/"+file.getName());
                 }
             }
         }
