@@ -110,6 +110,16 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public List<Product> findAllProductById(String id) {
+		return productRepository.findAllProductById(id);
+	}
+
+	@Override
+	public Product findByIdProduct(String id) {
+		return productRepository.findByIdProduct(id);
+	}
 	
 	
 	

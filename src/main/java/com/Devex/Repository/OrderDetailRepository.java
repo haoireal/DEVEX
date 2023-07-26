@@ -15,7 +15,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 
 	@Query("SELECT DISTINCT o FROM OrderDetails o " +
 	           "JOIN FETCH o.order od " +
-	           "WHERE od.id = ?1")
-	List<OrderDetails> findOrderDetailsByOrderID(String id);
+	           "JOIN FETCH o.productVariant pv " +
+	           "JOIN FETCH pv.product p " +
+	           "JOIN FETCH p.sellerProduct s " +
+	           "WHERE od.id = ?1 AND s.username = ?2")
+	List<OrderDetails> findOrderDetailsByOrderIDAndSellerUsername(String id, String username);
 	
 }
