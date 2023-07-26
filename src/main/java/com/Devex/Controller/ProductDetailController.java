@@ -16,7 +16,7 @@ import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 
 @Controller
-@RequestMapping("/devex")
+
 public class ProductDetailController {
 
 	@Autowired
@@ -25,10 +25,10 @@ public class ProductDetailController {
 	@Autowired
 	ProductVariantService productVariantService;
 	
-	@RequestMapping("/details")
-	public String details(ModelMap model ) {
-		
-		Product product = productService.findById("108-imtmbh293-10097").orElse(new Product()); // or any other default value
+	@RequestMapping("/details/{id}")
+	public String details(ModelMap model, @PathVariable("id") String id) {
+		System.out.println("ssssssssss"+id);
+		Product product = productService.findById(id).orElse(new Product()); // or any other default value
 		
 		System.out.println(product.getId());
 		model.addAttribute("prodt", product);

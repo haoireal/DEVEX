@@ -135,10 +135,11 @@
 			</div>
 		</div>
 	</header>
-	<main th:object="${prodt}">
+	<main th:object="${prodt}"><!-- duyện qua product trả về -->
 		<div class="container container_main mt-4 ">
+			<form th:action="@{'/devex/cartproduct/add/' + *{id}}" method="post">
 			<div  class="row   ">
-				<!-- duyện qua product trả về -->
+				
 				<!--main-left-->
 				<div class=" col-12 col-lg-5 mt-3 slick-Slider-Syncing ">
 					<!--slider-for-->
@@ -270,16 +271,16 @@
 
 						</div> 
 						
-						<div  class="mt-2 d-none d-lg-flex  justify-content-between ">
+						<div th:if="*{#lists.size(productVariants[0].size)} > 0" class="checkNull mt-2 d-none d-lg-flex  justify-content-between ">
 							<div class="col-12 col-lg-2">
 								<span>Size: </span>
 							</div>
 							<div class="col-12 col-lg-10 d-flex">
 	
 								<div th:each="size, iter : *{productVariants}" class="form-check product-variation ms-1  align-items-center justify-content-center ">
-									<input class="  form-check-input" style="margin-left: -1em !important; padding: 3px;" type="radio"
-										name="flexRadioDefault" th:id="'flexRadioDefault2'+${iter.count}" checked  >
-									<label class="form-check-label pe-1 " style="margin-left: 0.3rem; padding:3px" th:for="'flexRadioDefault2'+${iter.count}" th:text="${size.size}">
+									<input th:if="${#lists.isEmpty(size)} == false" class="  form-check-input" style="margin-left: -1em !important; padding: 3px;" type="radio"
+										name="flexRadio" th:id="'flexRadio'+${iter.count}" checked  >
+									<label class="form-check-label pe-1 " style="margin-left: 0.3rem; padding:3px" th:for="'flexRadio'+${iter.count}" th:text="${size.size}">
 										 </label>
 								</div>
 							</div>
@@ -298,16 +299,16 @@
 
 								<div class="control d-flex align-items-center ">
 
-									<button class="button btn_Sub border-0 fs-3 "
+									<label class="button btn_Sub border-0 fs-3 "
 										onclick="subtract(this)">
 										<i class="fa-solid fa-minus icon_Sub"></i>
-									</button>
-									<input class="text-center product_quantity " type="number"
-										id="inputField" min="1" value="1" disabled><br>
-									<button class="button btn_Add border-0 fs-4"
+									</label>
+									<input class="text-center product_quantity " type="number" name="soluong"
+										id="inputField" min="1" value="1" max="100"><br>
+									<label class="button btn_Add border-0 fs-4"
 										onclick="add(this)">
 										<i class="fa-solid fa-plus icon_Add"></i>
-									</button>
+									</label>
 
 								</div>
 							</div>
@@ -315,32 +316,25 @@
 
 					</div>
 					<!--total money-->
-					<div class="row mt-3 d-none d-lg-flex align-items-center ">
-
-						<div class=" col-2">
-							<span>Tổng tiền:</span>
-						</div>
-
-						<div class=" col-10">
-							<span> <strong class="fs-3 fw-bold totalPrice"
-								style="color: #ee4d2d;" th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'COMMA',0,'POINT')}+'₫'"></strong></span>
-						</div>
-						
-
-					</div>
+					
 
 					<!--Purchase(mua)-->
 					<div class="row mt-3 d-flex  ">
 						<div class="col-7 col-lg-5">
-							<button class="btn btn_add_cart" type="button">
-								<i class="fa-solid fa-basket-shopping"></i> Thêm Vào Giỏ Hàng
+							
+							
+								<button class="btn btn_buy" type="submit">
+								Thêm Vào Giỏ Hàng
 							</button>
+						</form> 
 						</div>
 						<div class="col-5 col-lg-4">
 							<button class="btn btn_buy" type="button">
-								<i class="fa-solid fa-cart-shopping"></i> Đặt Hàng
+								<i class="fa-solid fa-cart-shopping" ></i> Đặt Hàng
 							</button>
+							
 						</div>
+						
 						<div class="col-3"></div>
 					</div>
 					<hr>
@@ -393,7 +387,8 @@
 				</div>
 
 			</div>
-		
+		</form>
+		</div>
 		<!--describe(mô tả)-->
 		<div class="container container_describe mt-5 border border-1 "
 			style="height: 100%; padding-bottom: 1.5rem;">
@@ -426,7 +421,7 @@
 			</div>
 		</div>
 		<!--Đánh giá sp-->
-		<div class="container d-none d-lg-inline container_evaluate_end  mt-4 border border-1"
+		<div class="container d-none d-lg-grid container_evaluate_end  mt-4 border border-1"
 			style="height: 500px;">
 			<div class="row mt-3  mx-2 " style="height: 50px;">
 
