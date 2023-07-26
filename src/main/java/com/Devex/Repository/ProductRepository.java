@@ -12,17 +12,16 @@ import com.Devex.Entity.Product;
 
 @EnableJpaRepositories
 @Repository("productRepository")
-public interface ProductRepository extends JpaRepository<Product, String>{
-	
-	
+public interface ProductRepository extends JpaRepository<Product, String> {
+
 	@Query("SELECT p FROM Product p WHERE p.id = ?1")
 	Product findByIdProduct(String id);
 
-	@Query("SELECT DISTINCT p FROM Product p " +
-	           "JOIN FETCH p.sellerProduct s " +
-	           "WHERE s.username = ?1")
-	    List<Product> findProductBySellerUsername(String sellerUsername);
+	@Query("SELECT DISTINCT p FROM Product p " + "JOIN FETCH p.sellerProduct s " + "WHERE s.username = ?1")
+	List<Product> findProductBySellerUsername(String sellerUsername);
 	
+	@Query("SELECT p FROM Product p WHERE p.id = ?1")
+	List<Product> findAllProductById(String id);
 
 	    @Query("SELECT p FROM Product p WHERE p.categoryDetails.category.id = :categoryId")
 	    List<Product> findProductsByCategoryId(@Param("categoryId") int categoryId);
@@ -34,6 +33,5 @@ public interface ProductRepository extends JpaRepository<Product, String>{
 		long countByKeywordName(@Param("keywords") String keywords);
 		
 		
-
 
 }

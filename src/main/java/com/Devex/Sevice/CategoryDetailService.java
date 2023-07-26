@@ -38,4 +38,6 @@ public interface CategoryDetailService {
 
 	CategoryDetails save(CategoryDetails entity);
 
+	List<CategoryDetails> findAllCategoryDetailsById(int id);
+
 }

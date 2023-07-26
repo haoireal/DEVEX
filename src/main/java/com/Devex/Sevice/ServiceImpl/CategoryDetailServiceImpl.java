@@ -85,6 +85,11 @@ public class CategoryDetailServiceImpl implements CategoryDetailService{
 	public void deleteAll() {
 		categoryDetailRepository.deleteAll();
 	}
+
+	@Override
+	public List<CategoryDetails> findAllCategoryDetailsById(int id) {
+		return categoryDetailRepository.findAllCategoryDetailsById(id);
+	}
 	
 	
 }
