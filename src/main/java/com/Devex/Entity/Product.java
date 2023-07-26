@@ -50,20 +50,25 @@ public class Product implements Serializable{
 	@Formula("(SELECT COUNT(od.ID) FROM Order_Details od INNER JOIN Product_Variant pv ON od.Product_ID = pv.ID WHERE pv.Product_ID = ID)")
     private Integer soldCount;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Shop_ID")
 	private Seller sellerProduct;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Category_ID")
 	private CategoryDetails categoryDetails;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ImageProduct> imageProducts;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ProductVariant> productVariants;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "productComment")
 	private List<Comment> comments;
 

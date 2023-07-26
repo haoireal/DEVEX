@@ -3,6 +3,8 @@ package com.Devex.Entity;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,10 +37,12 @@ public class CategoryDetails implements Serializable{
 	@Column(name = "Name")
 	private String Name;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Category_ID")
 	private Category category;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "categoryDetails")
 	private List<Product> products;
 

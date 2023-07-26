@@ -38,4 +38,6 @@ public interface CategoryService {
 
 	Category save(Category entity);
 
+	Category findByProductId(String productId);
+
 }
