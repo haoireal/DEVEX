@@ -7,90 +7,7 @@
 <link rel="stylesheet" href="/admin/dist/css/findproduct.css">
 </head>
 <body>
-	<header>
-		<div class="container-fluid header-inf">
-			<div class="container ">
-				<div class="row">
-					<div class="menu-bar" style="color: #fff; margin: 0; padding: 0;">
-						<nav class="navbar float-end navbar-expand-lg navbar-light"
-							style="height: 35px">
-
-							<div class="collapse navbar-collapse  text-end "
-								id="navbarNavDropdown">
-								<ul class="text-end navbar-nav ml-auto">
-									<li class="nav-item"><a class="nav-link" href="#">Hỗ
-											trợ dịch vụ</a></li>
-									<li class="nav-item"><a class="nav-link" href="#">Bán
-											hàng</a></li>
-									<li class="nav-item"><a class="nav-link" href="#">Sản
-											phẩm đã xem</a></li>
-									<li class="nav-item"><a class="nav-link" href="#">Kiếu
-											nại</a></li>
-									<li class="nav-item"><a class="nav-link" href="#">Tra
-											cứu đơn hàng</a></li>
-									<li class="nav-item"><a class="nav-link" href="#">Tuyển
-											dụng</a></li>
-
-									<li class="nav-item"><a class="nav-link" href="#">Đăng
-											nhập</a></li>
-
-								</ul>
-							</div>
-
-						</nav>
-						<!-- hết thanh vav -->
-					</div>
-
-				</div>
-
-			</div>
-
-		</div>
-		<div class="container container_mid mt-3 text-center"
-			style="background-color: white;">
-			<div class="row mt-2 mb-2 col-12">
-				<div class="col-md-2 col-3 text-center">
-					<img class="img-fluid img_logo m-0 mt-1"
-						src=" /img/banner/logoDUAN.png" alt>
-				</div>
-				<div class="col-md-9 col-7 mt-2">
-					<div class="search-box order-4 order-xl-3">
-						<form action="/product/search">
-							<div class="input-group no-shadow">
-								<input type="text" class=" form-control" th:name="search"
-									th:value="${session.keywordsSearch}"
-									placeholder="Bạn cần tìm gì hôm nay ?" name="keyword"
-									style="height: 40px; border-radius: 15px; font-weight: bold; font-size: 13px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px gray;">
-
-								<span class="position-relative "
-									style="right: 2.5rem; z-index: 100; margin-top: -2px; width: 0px;">
-									<a href="#" style="color: #fff; font-size: 12px;" class="mt-1">
-										<i
-										class=" fa-solid fa-magnifying-glass fs-4 mt-2 pt-1 text-dark "></i>
-								</a>
-								</span>
-
-							</div>
-
-						</form>
-					</div>
-				</div>
-				<div class="col-md-1 col-2 mt-2">
-					<div class="row">
-						<div class="col-6 pt-1">
-							<a href> <i class="bi bi-cart3 fs-4 text-dark fw-bold "></i>
-							</a>
-						</div>
-						<div class="col-6 pt-1">
-							<a href> <i
-								class="bi bi-person-circle fs-4 text-dark fw-bold "></i>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-	</header>
+			<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
 	<main>
 		<div class="container">
 			<div class="text-dark content_price" style="margin-top: 10px;">
@@ -130,7 +47,7 @@
 			<div class="row d-flex px-3">
 				<div class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
 					th:each="product : ${products}">
-					<a href="#a" class="text-decoration-none">
+					<a th:href="@{|/details/${product.id}|}" class="text-decoration-none">
 						<div class="card pb-2" style="width: 10.8rem;">
 							<div class="icon-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
 							<div class=" hot-sale text-center p-1"
