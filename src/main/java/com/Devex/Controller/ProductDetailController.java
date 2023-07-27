@@ -57,7 +57,7 @@ public class ProductDetailController {
 		
 		model.addAttribute("listColor", listColor);
 		model.addAttribute("listSize", listSize);
-		model.addAttribute("prodt", product);
+		model.addAttribute("product", product);
 
 		return "user/productDetail";
 	}

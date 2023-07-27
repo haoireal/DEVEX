@@ -36,7 +36,7 @@
 
 </head>
 
-<body lang="en" th:object="${prodt}">
+<body lang="en" th:object="${product}">
 	<header>
 		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
 		<div class="container  mt-3">
@@ -53,7 +53,7 @@
 			</div>
 		</div>
 	</header>
-	<main th:object="${prodt}">
+	<main th:object="${product}">
 		<!-- duyện qua product trả về -->
 		<div class="container container_main mt-4 ">
 			<form th:action="@{'/devex/cartproduct/add/' + *{id}}" method="post">
@@ -68,7 +68,9 @@
 
 								<div class="image">
 
-									<img th:src="'/img/product/'+${img.name}" alt="null" />
+									<img
+									 th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${img.name}|}"
+									 alt="null" />
 								</div>
 
 							</div>
@@ -83,7 +85,7 @@
 									class="image-item">
 									<div class="image-nav">
 										<img style="height: 70px; width: 100%;" class="slider_nav-img"
-											tabindex="0" th:src="'/img/product/'+${img.name}" />
+											tabindex="0"  th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${img.name}|}" />
 									</div>
 
 								</div>

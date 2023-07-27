@@ -280,7 +280,7 @@
 								<span th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
 								%
 							</div>
-							<img th:src="@{|/img/product/${product.imageProducts[0].name}|}"
+							<img th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
 								class="img-fluid w-100 p-0" th:alt="${product.name}">
 							<div class="card-body" style="padding: 5px;">
 								<div class="card-title tensp text-left" style=" height: 40px;"
