@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Devex.Entity.ImageProduct;
 import com.Devex.Sevice.ImageProductService;
 
-@Service("fileManagerService")
+@Service
 public class FileManagerService {
     @Value("${myapp.file-storage-path}")
     private String fileStoragePath;
@@ -25,11 +25,11 @@ public class FileManagerService {
     ImageProductService imageProductService;
 
     private Path getPath(String shopname, String id, String filename) {
-    	File shop = Paths.get(fileStoragePath + "img/product", shopname).toFile();
+    	File shop = Paths.get(fileStoragePath + "/product", shopname).toFile();
     	if(!shop.exists()) {
     		shop.mkdirs();
     	}
-        File dir = Paths.get(fileStoragePath + "img/product", shopname, id).toFile();
+        File dir = Paths.get(fileStoragePath + "/product", shopname, id).toFile();
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -69,8 +69,8 @@ public class FileManagerService {
     public List<String> list(String id, String shopname) {
         List<ImageProduct> listImageProduct = imageProductService.findAllImageProductByProductId(id);
         List<String> filenames = new ArrayList<String>();
-        File dir = Paths.get(fileStoragePath + "img/product", shopname, id).toFile();
-        File shop = Paths.get(fileStoragePath + "img/product", shopname).toFile();
+        File dir = Paths.get(fileStoragePath + "/product", shopname, id).toFile();
+        File shop = Paths.get(fileStoragePath + "/product", shopname).toFile();
         if(!shop.exists()) {
         	shop.mkdirs();
         	if(!dir.exists()){
