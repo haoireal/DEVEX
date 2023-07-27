@@ -11,13 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.Devex.Entity.CartProdcut;
 import com.Devex.Entity.Product;
+import com.Devex.Entity.User;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.ShoppingCartService;
 
 @Controller
 public class DevexUserController {
@@ -40,10 +43,30 @@ public class DevexUserController {
 	@Autowired
 	ProductRepository productRepository;
 	
+	@Autowired
+	ShoppingCartService cartService;
+	
 
 	@GetMapping("/home")
 	public String getHomePage(Model model) {
-		List<Product> listProducts = recomendationService.recomendProduct("mbqeok970");
+		User user = new User();
+		List<Product> listProducts = new ArrayList<>();
+		user = sessionService.get("user");
+		//Giỏ hàng
+		if(sessionService.get("user") != null) {
+			sessionService.set("cartCount", cartService.getCount());
+			listProducts.addAll(recomendationService.recomendProduct(user.getUsername()));
+			//fix tạm
+			if(listProducts.size()<=0) {
+				listProducts.addAll(recomendationService.recomendProduct("baolh"));
+			}
+			//end fix tạm
+		}else {
+			//fix tạm
+			listProducts.addAll(recomendationService.recomendProduct("baolh"));
+			//end fix tạm
+			sessionService.set("cartCount", 0);
+		}
 		//Trộn ví trí sản phẩm
 		Collections.shuffle(listProducts);
 		model.addAttribute("products", listProducts);

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.Devex.Entity.CartProdcut;
 import com.Devex.Entity.Product;
 import com.Devex.Repository.ProductRepository;
+import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.ShoppingCartDTO;
 import com.Devex.Sevice.ShoppingCartService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,6 +34,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CartController {
+	
+	@Autowired
+	SessionService session;
 	@Autowired
 	ProductRepository daop;
 	@Autowired
@@ -60,6 +64,7 @@ public class CartController {
 			}
 			
 			model.addAttribute("cart", cart);
+			session.set("cartCount", cart.getCount());
 			model.addAttribute("total", cart.getAmount());
 			List<Product> list = daop.findAll();
 			model.addAttribute("test", list);
@@ -76,6 +81,7 @@ public class CartController {
 		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
 				.collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
 		String cartValue = objectMapper.writeValueAsString(itemsMap);
+		session.set("cartCount", cart.getCount());
 		cart.clear();
 		// Mã hóa chuỗi JSON thành chuỗi Base64
 		byte[] encodedBytes = Base64.encodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));

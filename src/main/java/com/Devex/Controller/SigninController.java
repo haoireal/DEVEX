@@ -54,8 +54,14 @@ public class SigninController {
 		String pass = param.getString("password", "");
 		boolean remember = param.getBoolean("remember", false);
 		User user = userService.checkLogin(username, pass);
-		
+		System.out.println(user.getFullname());
 		if(user != null) {
+			//fix tạm thời
+			if(user.getRole().getName().equalsIgnoreCase("Seller")) {
+				session.set("user", user);
+				return "redirect:/seller/home";
+			}
+			//end fix tạm thời
 			if(user.getActive()) {
 				session.set("user", user);
 				if(remember == true) {
@@ -69,10 +75,12 @@ public class SigninController {
 				if(user.getRole().getName().equalsIgnoreCase("Customer")) {
 					session.set("user", user);
 					return "redirect:/home";
-				}if(user.getRole().getName().equalsIgnoreCase("Seller")) {
-					session.set("user", user);
-					return "redirect:/seller/home";
-				}else {
+				}
+//				if(user.getRole().getName().equalsIgnoreCase("Seller")) {
+//					session.set("user", user);
+//					return "redirect:/seller/home";
+//				}
+				else {
 					session.set("user", user);
 					return "redirect:/admin/home";
 				}

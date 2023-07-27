@@ -72,11 +72,11 @@ public class DevexSellerController {
 
 	@GetMapping("/list/{listName}")
 	public String getAnyList(@PathVariable("listName") String listName, Model model) {
-		User u = session.get("user");
+		User user = session.get("user");
 		switch (listName) {
 		case "products": {
 			model.addAttribute("titleType", "Sản phẩm");
-			List<Product> listProducts = productService.findProductBySellerUsername("khanhtq");
+			List<Product> listProducts = productService.findProductBySellerUsername(user.getUsername());
 //			for (Product product : listProducts) {
 //				System.out.println(product);
 //			}
@@ -85,7 +85,7 @@ public class DevexSellerController {
 		}
 		case "orders": {
 			model.addAttribute("titleType", "Đơn hàng");
-			List<Order> listOrder = orderService.findOrdersBySellerUsername("khanhtq");
+			List<Order> listOrder = orderService.findOrdersBySellerUsername(user.getUsername());
 			model.addAttribute("orders", listOrder);
 			break;
 		}
@@ -142,7 +142,8 @@ public class DevexSellerController {
 	
 	@GetMapping("/orderDetail/{id}")
 	public String getOrderDetail(@PathVariable("id") String id, Model model) {
-		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, "khanhtq");
+		User user = session.get("user");
+		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, user.getUsername());
 		model.addAttribute("orderDetails", listOrderDetails);
 		model.addAttribute("idPrint", id);
 		Order order = orderService.findOrderById(id);
@@ -156,7 +157,8 @@ public class DevexSellerController {
 	}
 	@GetMapping("/orderPrint")
 	public String getOrderPrint(Model model, @RequestParam("id") String id) {
-		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, "khanhtq");
+		User user = session.get("user");
+		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, user.getUsername());
 		model.addAttribute("orderDetails", listOrderDetails);
 		model.addAttribute("idPrint", id);
 		Order order = orderService.findOrderById(id);
