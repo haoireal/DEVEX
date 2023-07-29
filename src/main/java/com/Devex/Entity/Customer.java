@@ -3,6 +3,7 @@ package com.Devex.Entity;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -45,5 +46,8 @@ public class Customer extends User implements Serializable{
 	
 	@OneToMany(mappedBy = "customerOrder")
 	private List<Order> orders;
+	
+	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private Cart cart;
 
 }

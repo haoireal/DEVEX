@@ -34,6 +34,6 @@ public class Role implements Serializable{
 	private String name;
 	
 	@OneToMany(mappedBy = "role")
-	private List<User> users;
+	private List<UserRole> users;
 	
 }

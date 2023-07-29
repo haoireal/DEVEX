@@ -2,6 +2,7 @@ package com.Devex.Entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,6 +13,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -55,9 +57,7 @@ public class User implements Serializable{
 	@Column(name = "Active")
 	private Boolean active;
 	
-	@ManyToOne
-	@JoinColumn(name = "Role_ID")
-	private Role role;
 	
-	
+	@OneToMany(mappedBy = "user")
+	private List<UserRole> roles;
 }

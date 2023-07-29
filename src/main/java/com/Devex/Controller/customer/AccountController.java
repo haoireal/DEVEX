@@ -138,7 +138,7 @@ public class AccountController {
 		user.setGender(gender);
 		user.setActive(active);
 		user.setAvatar(null);
-		user.setRole(role);
+//		user.setRole(role);
 		
 		userService.save(user);
 		

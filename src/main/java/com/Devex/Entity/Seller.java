@@ -36,8 +36,8 @@ public class Seller extends User implements Serializable{
 	private String phoneAddress;
 	@Column(name = "Mall")
 	private Boolean mall;
-	@Column(name = "Active")
-	private Boolean active;
+	@Column(name = "Activeshop")
+	private Boolean activeShop;
 	
 	@OneToMany(mappedBy = "seller")
 	private List<Follow> follows;
