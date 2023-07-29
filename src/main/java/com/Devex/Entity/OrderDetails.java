@@ -34,6 +34,10 @@ public class OrderDetails implements Serializable{
 	private Double price;
 	
 	@ManyToOne
+	@JoinColumn(name = "Status_ID")
+	private OrderStatus status;
+	
+	@ManyToOne
 	@JoinColumn(name = "Order_ID")
 	private Order order;
 	
