@@ -10,7 +10,6 @@ import com.Devex.Entity.Seller;
 @EnableJpaRepositories
 @Repository("sellerRepository")
 public interface SellerRepository extends JpaRepository<Seller, String>{
+	
 
-	
-	
 }

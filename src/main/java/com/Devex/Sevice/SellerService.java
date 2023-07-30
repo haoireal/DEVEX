@@ -37,5 +37,7 @@ public interface SellerService {
 	List<Seller> saveAll(List<Seller> entities);
 
 	Seller save(Seller entity);
-
+	
+	
+	
 }
