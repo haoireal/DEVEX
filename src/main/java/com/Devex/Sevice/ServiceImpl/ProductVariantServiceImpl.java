@@ -87,6 +87,11 @@ public class ProductVariantServiceImpl implements ProductVariantService{
 	public ProductVariant getById(Integer id) {
 		return productVariantRepository.getById(id);
 	}
+
+	@Override
+	public List<ProductVariant> findAllProductVariantByProductId(String id) {
+		return productVariantRepository.findAllProductVariantByProductId(id);
+	}
 	
 	
 }

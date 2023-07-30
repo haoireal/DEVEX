@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,10 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Devex.Entity.Category;
 import com.Devex.Entity.CategoryDetails;
 import com.Devex.Entity.Product;
+import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.ProductService;
+import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Utils.FileManagerService;
 
@@ -41,6 +45,9 @@ public class DevexSellerRestController {
 	
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	ProductVariantService productVariantService;
 	
 	@GetMapping("/img/product")
     public List<String> listImage() {
@@ -96,6 +103,20 @@ public class DevexSellerRestController {
 	public List<Category> idCategoryDetails() {
 		List<Category> listCategory = categoryService.findAll();
 		return listCategory;
+	}
+	
+	@GetMapping("/api/productvariant")
+	public List<ProductVariant> getProductVariant(){
+		System.out.println("aaaaaaaaaaaaaaaaaaa");
+		String idp = session.get("idproduct");
+		List<ProductVariant> listproductvariant = productVariantService.findAllProductVariantByProductId(idp);
+		return listproductvariant;
+	}
+	
+	@PutMapping("/info/product")
+	public Product updateProduct(@RequestBody Product product) {
+		System.out.println(product.getId());
+		return productService.save(product);
 	}
 	
 }

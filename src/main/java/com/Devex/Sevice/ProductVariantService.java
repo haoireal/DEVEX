@@ -38,4 +38,6 @@ public interface ProductVariantService {
 
 	ProductVariant save(ProductVariant entity);
 
+	List<ProductVariant> findAllProductVariantByProductId(String id);
+
 }

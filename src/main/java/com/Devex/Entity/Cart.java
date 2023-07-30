@@ -34,7 +34,7 @@ public class Cart implements Serializable {
 	
 	@OneToOne
 	@JoinColumn(name = "Customer_ID")
-	private Customer customer;
+	private Customer person;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "cart")
