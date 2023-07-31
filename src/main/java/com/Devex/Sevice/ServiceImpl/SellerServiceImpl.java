@@ -85,6 +85,11 @@ public class SellerServiceImpl implements SellerService{
 	public void deleteAll() {
 		sellerRepository.deleteAll();
 	}
+
+	@Override
+	public Seller findFirstByUsername(String username) {
+		return sellerRepository.findFirstByUsername(username);
+	}
 	
 	
 	

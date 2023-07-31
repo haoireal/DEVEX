@@ -40,4 +40,6 @@ public interface CategoryDetailService {
 
 	List<CategoryDetails> findAllCategoryDetailsById(int id);
 
+	CategoryDetails findCategoryDetailsById(int id);
+
 }

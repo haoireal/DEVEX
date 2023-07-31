@@ -15,6 +15,8 @@ import com.Devex.Entity.ImageProduct;
 import com.Devex.Repository.ImageProductRepository;
 import com.Devex.Sevice.ImageProductService;
 
+import jakarta.transaction.Transactional;
+
 @SessionScope
 @Service("imageProductService")
 public class ImageProductServiceImpl implements ImageProductService{
@@ -91,6 +93,25 @@ public class ImageProductServiceImpl implements ImageProductService{
 	public List<ImageProduct> findAllImageProductByProductId(String id) {
 		return imageProductRepository.findAllImageProductByProductId(id);
 	}
+
+	@Override
+	@Transactional
+	public void insertImageProduct(String id, String name, String productId) {
+		imageProductRepository.insertImageProduct(id, name, productId);
+	}
+
+	@Override
+	@Transactional
+	public void deleteImageProductByNameAndProductId(String name, String productId) {
+		imageProductRepository.deleteImageProductByNameAndProductId(name, productId);
+	}
+
+	@Override
+	@Transactional
+	public void deleteImageProductByProductId(String productId) {
+		imageProductRepository.deleteImageProductByProductId(productId);
+	}
+	
 	
 	
 }

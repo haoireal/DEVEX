@@ -10,6 +10,8 @@ import org.springframework.data.domain.Sort;
 
 import com.Devex.Entity.ProductVariant;
 
+import jakarta.transaction.Transactional;
+
 public interface ProductVariantService {
 
 	ProductVariant getById(Integer id);
@@ -39,5 +41,11 @@ public interface ProductVariantService {
 	ProductVariant save(ProductVariant entity);
 
 	List<ProductVariant> findAllProductVariantByProductId(String id);
+
+	void updateProductVariant(Integer id, Integer quantity, Double price, Double priceSale, String size, String color);
+
+	void addProductVariant(Integer quantity, Double price, Double priceSale, String size, String color, String productId);
+
+	void deleteProductVariantByProductId(String productId);
 
 }

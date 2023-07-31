@@ -1,8 +1,10 @@
 package com.Devex.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -21,6 +23,10 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	@Query("SELECT DISTINCT p FROM Product p " + "JOIN FETCH p.sellerProduct s "
 			+ "WHERE s.username like ?1 OR s.shopName Like ?1")
 	List<Product> findProductBySellerUsername(String sellerUsername);
+	
+	@Query("SELECT DISTINCT p FROM Product p " + "JOIN FETCH p.sellerProduct s "
+			+ "WHERE s.username like ?1 AND p.isdelete = false")
+	List<Product> findProductBySellerUsernameAndIsdeleteProduct(String sellerUsername);
 
 	@Query(value = "EXEC FindProductsByKeyword :keywords", nativeQuery = true)
 	List<Product> findByKeywordName(@Param("keywords") String keywords);
@@ -37,5 +43,13 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 	@Query("SELECT COUNT(o) FROM Product o WHERE o.name LIKE :keywords")
 	long countByKeywordName(@Param("keywords") String keywords);
+	
+	@Modifying
+	@Query("UPDATE Product p SET p.name = :name, p.brand = :brand, p.description = :description, p.createdDay = :createdDay, p.active = :active, p.sellerProduct.username = :sellerId, p.categoryDetails.id = :categoryDetailsId WHERE p.id = :id")
+	void updateProduct(@Param("id") String id, @Param("name") String name, @Param("brand") String brand, @Param("description") String description, @Param("createdDay") Date createdDay, @Param("active") Boolean active, @Param("sellerId") String sellerId, @Param("categoryDetailsId") int categoryDetailsId);
+
+	@Modifying
+	@Query(value = "UPDATE Product SET Isdelete = :isdelete WHERE ID = :id", nativeQuery = true)
+	void updateProductIsDeleteById(@Param("isdelete") boolean isdelete, @Param("id") String id);
 
 }

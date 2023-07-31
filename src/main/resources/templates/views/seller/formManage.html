@@ -62,19 +62,19 @@
 							<!-- Thông tin sản phẩm -->
 
 							<!-- Hình ảnh -->
-							<div class="card form-group" >
+							<div class="card form-group">
 								<label class="col-12">Hình ảnh</label>
 								<!-- Hiển thị hình ảnh -->
 								<div class="row">
 									<label class="col-1" title="Click vào hình ảnh 2 lần để xóa"
 										ng-repeat="filename in filenames">
 										<img alt="" class="img-fluid" ng-src="{{filename}}"
-											ng-dblclick="delete(filename)">
+											ng-dblclick="deleteimg(filename)">
 									</label>
 									<div class="col-2">
 										<!-- Chọn file -->
 										<input id="fileInput" style="display: none;" type="file" multiple="multiple"
-											onchange="angular.element(this).scope().upload(this.files)">
+											onchange="angular.element(this).scope().uploadimg(this.files)">
 										<button class="btn btn-primary mb-2" onclick="openFilePicker()">Thêm</button>
 										<!-- END chọn file -->
 									</div>
@@ -84,7 +84,7 @@
 							</div>
 							<!-- END Hình ảnh -->
 							<!-- Thông tin sản phẩm -->
-							<div >
+							<div>
 								<form action="" method="post">
 									<div class="card">
 										<!-- Tên sản phẩm -->
@@ -116,11 +116,13 @@
 											<div class="form-group col-6">
 												<label>Loại chi tiết</label>
 												<select id="categorydt" class="form-control select2"
-													style="width: 100%;" ng-model="selectedCategoryDetail">
-													<option th:each="categorydt : ${categorydt}"
+													style="width: 100%;" ng-model="selectedCategoryDetail"
+													ng-options="catedt.id as catedt.name for catedt in categorydetail"
+													ng-selected="selectedCategoryId == catedt.id">
+													<!-- <option th:each="categorydt : ${categorydt}"
 														th:text="${categorydt.name}" th:value="${categorydt.id}"
 														th:selected="${product.categoryDetails.id} == ${categorydt.id}">
-													</option>
+													</option> -->
 												</select>
 											</div>
 										</div>
@@ -161,7 +163,6 @@
 									</table>
 									<button id="add-row-btn" class="btn btn-primary" ng-click="addRow()">Thêm
 										hàng</button>
-									<button ng-click="submitData()" class="btn btn-primary">Gửi dữ liệu</button>
 								</div>
 
 							</div>
@@ -169,6 +170,7 @@
 							<!-- END TABLE SIZe -->
 							<div class="text-center">
 								<button class="btn btn-primary" ng-click="save()">Lưu</button>
+								<button class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
 							</div>
 						</div>
 						<!-- /.col -->
@@ -375,23 +377,23 @@
 	<!-- script xử lý hình ảnh -->
 	<script>
 		app = angular.module("app", []);
-		app.controller("sellerproduct", function ($scope, $http) {
-			var url = 'http://localhost:8888/img/product';
+		app.controller("sellerproduct", function ($scope, $http, $window) {
+			var urlimg = 'http://localhost:8888/img/product';
 			/* $scope.url = function(filename) {
 				console.log(filename);
 			};  */
 
-			$scope.list = function () {
-				$http.get(url).then(resp => {
+			$scope.listimg = function () {
+				$http.get(urlimg).then(resp => {
 					$scope.filenames = resp.data;
 				}).catch(error => {
 					console.log("errors", error);
 				})
 			};
 
-			$scope.delete = function (filename) {
+			$scope.deleteimg = function (filename) {
 				$http.delete(filename).then(resp => {
-					$scope.list();
+					$scope.listimg();
 					let i = $scope.filenames.findindex(name => name == filename);
 					$scope.filenames.splice(i, 1);
 					console.log(filename);
@@ -400,36 +402,33 @@
 				});
 			};
 
-			$scope.upload = function (files) {
+			$scope.uploadimg = function (files) {
 				var form = new FormData();
 				for (var i = 0; i < files.length; i++) {
 					form.append('files', files[i]);
 				}
-				$http.post(url, form, {
+				$http.post(urlimg, form, {
 					transformRequest: angular.identity,
 					headers: {
 						'Content-Type': undefined
 					}
 				}).then(resp => {
 					$scope.filenames.push(...resp.data);
-					$scope.list();
+					$scope.listimg();
 				}).catch(error => {
 					console.log("errors", error);
 				})
 			};
 
-			$scope.list();
+			$scope.listimg();
 
-		
-
-		
 			var url = 'http://localhost:8888/api/product';
 			$scope.id = '';
 			$scope.selectedCategoryId = '';
 			$scope.form = {};
 			$scope.categorys = [];
 			$scope.selectedCategory = $scope.selectedCategory;
-			$scope.info = function () {
+			$scope.infoproduct = function () {
 				$http.get(url).then(resp => {
 					$scope.form = resp.data;
 				}).catch(error => {
@@ -438,22 +437,9 @@
 			};
 
 			$scope.getCategoryDetails = function () {
-				console.log("aaaaaaaaaaaaaaaaaaaaaaa");
-
 				$http.get('/categoryDetails/' + $scope.selectedCategory)
-					.then(function (response) {
-						// Xóa các tùy chọn hiện tại của combobox categorydt
-						var categorydt = document.getElementById('categorydt');
-						categorydt.innerHTML = '';
-
-						// Thêm các tùy chọn mới từ dữ liệu trả về
-						var categoryDetails = response.data;
-						for (var i = 0; i < categoryDetails.length; i++) {
-							var option = document.createElement('option');
-							option.value = categoryDetails[i].id;
-							option.text = categoryDetails[i].name;
-							categorydt.add(option);
-						}
+					.then(function (resp) {
+						$scope.categorydetail = resp.data;
 					});
 			};
 
@@ -473,20 +459,20 @@
 
 			$scope.getca();
 			$scope.getidp();
-			$scope.info();
+			$scope.infoproduct();
 
-		
-
-		
 			var url = 'http://localhost:8888/api/productvariant';
-
+			var id = 0;
 			$scope.addRow = function () {
+				id++;
 				$scope.variant.push({
+					id,
 					size: '',
 					color: '',
 					price: '',
 					quantity: ''
 				});
+				console.log(id);
 			}
 
 			$scope.lista = function () {
@@ -497,17 +483,28 @@
 				})
 			};
 
-			$scope.submitData = function () {
-				console.log($scope.variant);
-			}
+			$scope.save = function () {
 
-			$scope.save = function (files) {
-				
+				$scope.form.idCategoryDetails = $scope.selectedCategoryDetail;
+				$scope.form.listvariant = $scope.variant;
+				console.log($scope.form);
 				$http.put("/info/product", $scope.form).then(resp => {
-					$scope.form = resp.data;
+
 				}).catch(error => {
 					console.log("errors", error);
 				})
+			};
+
+			$scope.deleteProduc = function () {
+				// Gửi dữ liệu đến REST controller
+				$http.delete('/delete/product/'+$scope.form.id)
+					.then(function (response) {
+						// Xử lý kết quả trả về từ REST controller
+					});
+
+				// Chuyển hướng đến URL mới
+				// console.log('/delete/product/'+$scope.form.id);
+				$window.location.href = '/seller/list/products';
 			};
 
 			$scope.lista();
