@@ -38,4 +38,6 @@ public interface SellerService {
 
 	Seller save(Seller entity);
 
+	Seller findFirstByUsername(String username);
+
 }
