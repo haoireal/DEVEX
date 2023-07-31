@@ -320,7 +320,45 @@ button.btn_add_cart:hover {
 .btn-star:focus {
   border: 1px solid red;
 }
+/*Shop name*/
+.container-shop{
+  padding: 1.5625rem; 
+  border: 1px solid rgb(0, 0, 0,0.2);
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.05);
+  border-radius: 5px;
+}
+.img_salles{
+  overflow: hidden;
 
+}
+.img_salles-logo{
+  border: 1px solid rgb(0, 0, 0, 0.2);
+    width: 78px;
+    height: 78px;
+    border-radius: 70%;
+
+}
+.contact{
+  border-right: 1px solid rgb(0, 0, 0, 0.3);
+}
+button.btn_chat,
+button.btn_seeShop{
+  width: 100%;
+  padding: 5px !important;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+button.btn_chat{
+  background-color:rgba(248, 161, 161, 0.4);
+  border: 1px solid rgba(247, 7, 7, 0.4);
+}
+label.dis-shop{
+  font-size: 0.875rem;
+}
+span.parameter-content{
+  font-size: 0.875rem;
+}
 /*Gợi Ý Sản Phẩm*/
 
 .card-slider .col-2 {
@@ -416,7 +454,7 @@ button.btn_add_cart:hover {
 #model-demo {
   height: auto;
   background-color: #fff;
-  max-width: 100%;
+  width: 100%;
   bottom: 0;
   left: 0;
   transition: all 0.25s ease-in-out;

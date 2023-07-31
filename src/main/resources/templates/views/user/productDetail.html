@@ -186,7 +186,7 @@
 										<input class="  form-check-input"
 											style="margin-left: -1em !important; padding: 3px;"
 											type="radio" name="flexRadioDefault"
-											th:id="'flexRadioDefault'+${iter.count}" checked> <label
+											th:id="'flexRadioDefault'+${iter.count}" > <label
 											class="form-check-label pe-1 "
 											style="margin-left: 0.3rem; padding: 3px"
 											th:for="'flexRadioDefault'+${iter.count}" th:text="${color}">
@@ -250,13 +250,14 @@
 						<!--Purchase(mua)-->
 						<div class="row mt-3 d-none d-lg-flex  ">
 							<div class="col-7 col-lg-5">
-
-
 								<button class="btn btn_buy" type="submit">Thêm Vào Giỏ
 									Hàng</button>
+
+								
 			</form>
+							
 		</div>
-		<div class="col-5 col-lg-4">
+		<div class="col-5 col-lg-4 mb-3">
 			<button class="btn btn_buy" type="button">
 				<i class="fa-solid fa-cart-shopping"></i> Đặt Hàng
 			</button>
@@ -265,9 +266,10 @@
 
 		<div class="col-3"></div>
 		<hr>
+		<!-- hết thẻ đặt hàng -->
 		<!--List-favourite-->
 		<div class="row mt-4">
-			<div class>
+			<div >
 				<a href="#" class="btn border-0  list-favourite "
 					aria-disabled="true" role="button">Thêm vào danh sách yêu tích</a>
 			</div>
@@ -306,8 +308,85 @@
 			</div>
 		</div>
 
-	</main>
-	
+	</main> 
+
+		<!--shop name-->
+		<div th:object="${seller}" class="container container-shop mt-3 " > <!-- sài chung cho toàn bộ trang -->
+			<div class="row">
+				<div class="col-4">
+					<div class="row d-flex justify-content-between ">
+						<div class="col-3" style="padding: 0;">
+							<div class="img_salles">
+								<img class="img_salles-logo" th:src="@{|/img/account/*{sellerProduct.avatar}}" alt="">
+							</div>
+						</div>
+						<div class="col-9 contact ">
+							<div class="shop_name" th:text="*{sellerProduct.shopName}">
+								
+							</div>
+							<div class="contact-content mt-2">
+								<div class="row">
+									<div class="col-6">
+										<button class="btn_chat">					
+											<div class="content_chat ">
+												<i class="fs-6 fa-solid fa-message"></i>
+												<span style="font-size: .875rem;">Chat
+													ngay</span>
+											</div>
+					
+										</button>
+									</div>
+									<div class="col-6">
+										<button class="btn_seeShop">					
+											<div class="content_seeShop ">
+												<i class="fs-6 fa-solid fa-shop"></i>
+												<span style="font-size: .875rem;">Xem Shop</span>
+											</div>
+					
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-8 d-grid align-items-center">
+					<div class="row">
+						<div class="col-4 d-flex justify-content-between">
+							<label class="dis-shop">Đánh Giá:</label>
+							<span class=" parameter-content text-danger">29,9k</span>
+						</div>
+						<div class="col-4 d-flex justify-content-between">
+							<label class="dis-shop">Tỷ lệ Phản Hồi:</label>
+							<span class=" parameter-content text-danger">29,9k</span>
+						</div>
+						<div class="col-4 d-flex justify-content-between">
+							<label class="dis-shop">Tham Gia:</label>
+							<span class=" parameter-content text-danger" th:text="*{sellerProduct.createDay}">29,9k</span>
+						</div>
+						
+					</div>
+					<div  class="row">
+						<div  class="col-4 d-flex justify-content-between">
+							<label class="dis-shop">Sản Phẩm:</label>
+							<span class=" parameter-content text-danger" th:text="*{productVariants.size()}">29,9k</span>
+						</div>
+						<div class="col-4 d-flex justify-content-between">
+							<label class="dis-shop">Thời Gian Phản Hồi:</label>
+							<span class=" parameter-content text-danger">Trong vài giờ</span>
+						</div>
+						<div class="col-4 d-flex justify-content-between">
+							<label class="dis-shop">Người Theo Dõi:</label>
+							<span class=" parameter-content text-danger">29,9k</span>
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+			
+
+		</div>
 		<!--describe(mô tả)-->
 		<div class="container container_describe mt-5 border border-1 "
 			style="height: 100%; padding-bottom: 1.5rem;">
@@ -701,11 +780,12 @@
 								<input class="  form-check-input"
 									style="margin-left: -1em !important; padding: 3px;"
 									type="radio" name="flexRadioDefault"
-									th:id="'flexRadioDefault'+${iter.count}" checked> <label
+									th:id="'flexRadioDefault'+${iter.count}" > 
+									<label
 									class="form-check-label pe-1 "
 									style="margin-left: 0.3rem; padding: 3px"
-									th:for="'flexRadioDefault'+${iter.count}" th:text="${color}">
-								</label>
+									th:for="'flexRadioDefault'+${iter.count}" th:text="${color}"></label>
+								
 							</div>
 						</div>
 
@@ -1008,29 +1088,7 @@
 		
 		
 	</script>
-	<!-- <script>
-		window.onload = function() {
-			var buttons = document.getElementsByClassName("product-variation");
-			// Tạo một mảng để lưu các màu sắc đã xuất hiện
-			var colors = [];
-			// Duyệt qua từng button
-			for (var i = 0; i < buttons.length; i++) {
-				// Lấy màu sắc của button hiện tại
-				var color = buttons[i].textContent;
-				// Kiểm tra xem màu sắc này đã xuất hiện trong mảng chưa
-				if (colors.includes(color)) {
-					// Nếu đã xuất hiện thì ẩn button này đi
-					buttons[i].style.display = "none";
-				} else {
-					// Nếu chưa xuất hiện thì thêm vào mảng
-					colors.push(color);
-				}
-			}
-			
-			
-			
-		};
-	</script> -->
+
 
 	<script>
 		const btn_add_cart = document.getElementById('btn_add_cart')

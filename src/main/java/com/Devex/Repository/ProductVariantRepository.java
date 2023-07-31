@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.Devex.Entity.ProductVariant;
+import com.Devex.Entity.User;
 
 @EnableJpaRepositories
 @Repository("productVariantRepository")
@@ -30,5 +31,4 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 	@Query(value = "DELETE FROM Product_Variant WHERE Product_ID = :productId", nativeQuery = true)
 	void deleteProductVariantByProductId(@Param("productId") String productId);
 
-	
 }
