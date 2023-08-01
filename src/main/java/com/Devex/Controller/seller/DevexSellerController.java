@@ -76,7 +76,7 @@ public class DevexSellerController {
 		switch (listName) {
 		case "products": {
 			model.addAttribute("titleType", "Sản phẩm");
-			List<Product> listProducts = productService.findProductBySellerUsername("aligqd911");
+			List<Product> listProducts = productService.findProductBySellerUsernameAndIsdeleteProduct("aligqd911");
 //			for (Product product : listProducts) {
 //				System.out.println(product);
 //			}
