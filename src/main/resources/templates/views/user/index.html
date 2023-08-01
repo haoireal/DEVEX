@@ -7,10 +7,11 @@
 
 <body>
 	<header>
-		<div th:replace="~{flagment/user/userHeader :: userHeaderHomePageFragment}"></div>
+		<div
+			th:replace="~{flagment/user/userHeader :: userHeaderHomePageFragment}"></div>
 	</header>
 	<main>
-		<div class="container container_main mt-3 pb-3">
+		<div class="container container_main mt-3 pb-3 bg-white">
 			<div class="row">
 				<div class="col-12 col-md-6 ">
 					<div class="row d-flex justify-content-start content_price">
@@ -57,9 +58,8 @@
 													style="color: #ff0821bb;">₫</span>8,490,000</strong>
 											</div>
 											<div class="price col-6 m-0" style="text-decoration: none;">
-												<strike class="fs-11"
-													style="color: #3f3d3d; font-weight: 100;"><span
-													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+												<s class="fs-11" style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</s>
 											</div>
 										</div>
 										<div class="icon-star text-left"
@@ -93,9 +93,8 @@
 													style="color: #ff0821bb;">₫</span>8,490,000</strong>
 											</div>
 											<div class="price col-6 m-0" style="text-decoration: none;">
-												<strike class="fs-11"
-													style="color: #3f3d3d; font-weight: 100;"><span
-													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+												<s class="fs-11" style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</s>
 											</div>
 										</div>
 										<div class="icon-star text-left"
@@ -129,9 +128,8 @@
 													style="color: #ff0821bb;">₫</span>8,490,000</strong>
 											</div>
 											<div class="price col-6 m-0" style="text-decoration: none;">
-												<strike class="fs-11"
-													style="color: #3f3d3d; font-weight: 100;"><span
-													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+												<s class="fs-11" style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</s>
 											</div>
 										</div>
 										<div class="icon-star text-left"
@@ -165,9 +163,8 @@
 													style="color: #ff0821bb;">₫</span>8,490,000</strong>
 											</div>
 											<div class="price col-6 m-0" style="text-decoration: none;">
-												<strike class="fs-11"
-													style="color: #3f3d3d; font-weight: 100;"><span
-													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+												<s class="fs-11" style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</s>
 											</div>
 										</div>
 										<div class="icon-star text-left"
@@ -201,9 +198,8 @@
 													style="color: #ff0821bb;">₫</span>8,490,000</strong>
 											</div>
 											<div class="price col-6 m-0" style="text-decoration: none;">
-												<strike class="fs-11"
-													style="color: #3f3d3d; font-weight: 100;"><span
-													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+												<s class="fs-11" style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</s>
 											</div>
 										</div>
 										<div class="icon-star text-left"
@@ -237,9 +233,8 @@
 													style="color: #ff0821bb;">₫</span>8,490,000</strong>
 											</div>
 											<div class="price col-6 m-0" style="text-decoration: none;">
-												<strike class="fs-11"
-													style="color: #3f3d3d; font-weight: 100;"><span
-													style="color: #3f3d3d;">₫</span>8,490,000</strike>
+												<s class="fs-11" style="color: #3f3d3d; font-weight: 100;"><span
+													style="color: #3f3d3d;">₫</span>8,490,000</s>
 											</div>
 										</div>
 										<div class="icon-star text-left"
@@ -257,7 +252,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container container_main_middle mt-3 pb-5">
+		<div class="container container_main_middle mt-3 pb-5 bg-white">
 			<div class="row mt-3">
 
 				<div class="text-dark content_price">
@@ -272,46 +267,47 @@
 				class="row d-flex justify-content-between align-items-center px-3">
 				<div class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
 					th:each="product : ${products}">
-					<a th:href="@{|/details/${product.id}|}" class="text-decoration-none">
+					<a th:href="@{|/details/${product.id}|}"
+						class="text-decoration-none">
 						<div class="card pb-2" style="width: 10.8rem;">
 							<div class="icon-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
-							<div class=" hot-sale text-center p-1" th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0"
-								>Giảm 
-								<span th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
+							<div class=" hot-sale text-center p-1"
+								th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
+								Giảm <span
+									th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
 								%
 							</div>
-							<img th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
+							<img
+								th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
 								class="img-fluid w-100 p-0" th:alt="${product.name}">
 							<div class="card-body" style="padding: 5px;">
-								<div class="card-title tensp text-left" style=" height: 40px;"
+								<div class="card-title tensp text-left" style="height: 40px;"
 									th:text="${product.name}" th:title="${product.name}"></div>
 								<div id="price-box text-left row">
 									<div class="price col-6 m-0" style="text-decoration: none;">
 										<span style="color: #ff0821bb;">₫</span><strong class="fs-10"
-										th:text="${#numbers.formatDecimal(product.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
-											
+											th:text="${#numbers.formatDecimal(product.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
 											style="color: #ff0821bb; font-weight: 600;">8,490,000</strong>
 									</div>
 									<div class="price col-6 m-0" style="text-decoration: none;">
-										<strike class="fs-11"
+										<s class="fs-11"
 											th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0 , 'POINT', 0, 'COMMA')}"
 											style="color: #3f3d3d; font-weight: 100;"><span
-											style="color: #3f3d3d;">₫</span>8,490,000</strike>
+											style="color: #3f3d3d;">₫</span>8,490,000</s>
 									</div>
 								</div>
 								<div class="icon-star text-left" style="text-decoration: none;">
-									<i class="icon-flash text-red"></i>
-									<i class="bi bi-star"></i>
-									<i class="bi bi-star"></i>
-									<i class="bi bi-star"></i>
-									<i class="bi bi-star"></i>
-									<i class="bi bi-star"></i>
-									<p class="text-info m-0">đã
-										bán <i class="text-info m-0" th:text="${product.soldCount}"></i> </p>
+									<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+									<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+										class="bi bi-star"></i> <i class="bi bi-star"></i>
+									<p class="text-info m-0">
+										đã bán <i class="text-info m-0"
+											th:text="${product.soldCount}"></i>
+									</p>
 								</div>
 							</div>
 						</div>
-						
+
 					</a>
 				</div>
 
@@ -320,7 +316,7 @@
 		</div>
 		<!--Danh Mục sản Phẩm-->
 
-		<div class="container container_main mt-3 pb-3">
+		<div class="container container_main mt-3 pb-3 bg-white">
 			<div class="row pt-2">
 				<div class="col-6">
 					<div class="row">
@@ -354,7 +350,7 @@
 			</div>
 
 
-			<div class="row">
+			<div class="row bg-white">
 
 				<div class="col-12">
 					<div class="row mt-2 ">
@@ -477,7 +473,8 @@
 
 
 		<!--gợi ý sp -->
-		<div class="container container_main mt-3" style="height: 500px;">
+		<div class="container container_main mt-3 bg-white"
+			style="height: 500px;">
 			<div class="row">
 
 				<div class="col-7 text-dark content_price">Gợi Ý Hôm Nay</div>
@@ -496,8 +493,8 @@
 									<h5 class="card-title">Card title</h5>
 									<p class="price">
 										<i class="icon-flash text-red"></i> <strong class="fs-6"
-											style="color: #fd475a;">8,490,000 ₫</strong> <strike
-											class="fs-6 text-dark">11,990,000 ₫</strike>
+											style="color: #fd475a;">8,490,000 ₫</strong> <s
+											class="fs-6 text-dark">11,990,000 ₫</s>
 
 									</p>
 									<a href="#" class="btn btn-primary btn_add  ms-4 "
@@ -514,8 +511,8 @@
 									<h5 class="card-title">Card title</h5>
 									<p class="price">
 										<i class="icon-flash text-red"></i> <strong class="fs-6"
-											style="color: #fd475a;">8,490,000 ₫</strong> <strike
-											class="fs-6 text-dark">11,990,000 ₫</strike>
+											style="color: #fd475a;">8,490,000 ₫</strong> <s
+											class="fs-6 text-dark">11,990,000 ₫</s>
 
 									</p>
 									<a href="#" class="btn btn-primary btn_add ms-4"
@@ -532,8 +529,8 @@
 									<h5 class="card-title">Card title</h5>
 									<p class="price">
 										<i class="icon-flash text-red"></i> <strong class="fs-6"
-											style="color: #fd475a;">8,490,000 ₫</strong> <strike
-											class="fs-6 text-dark">11,990,000 ₫</strike>
+											style="color: #fd475a;">8,490,000 ₫</strong> <s
+											class="fs-6 text-dark">11,990,000 ₫</s>
 
 									</p>
 									<a href="#" class="btn btn-primary btn_add ms-4"
@@ -550,8 +547,8 @@
 									<h5 class="card-title">Card title</h5>
 									<p class="price">
 										<i class="icon-flash text-red"></i> <strong class="fs-6"
-											style="color: #fd475a;">8,490,000 ₫</strong> <strike
-											class="fs-6 text-dark">11,990,000 ₫</strike>
+											style="color: #fd475a;">8,490,000 ₫</strong> <s
+											class="fs-6 text-dark">11,990,000 ₫</s>
 
 									</p>
 									<a href="#" class="btn btn-primary btn_add ms-4"
@@ -568,8 +565,8 @@
 									<h5 class="card-title">Card title</h5>
 									<p class="price">
 										<i class="icon-flash text-red"></i> <strong class="fs-6"
-											style="color: #fd475a;">8,490,000 ₫</strong> <strike
-											class="fs-6 text-dark">11,990,000 ₫</strike>
+											style="color: #fd475a;">8,490,000 ₫</strong> <s
+											class="fs-6 text-dark">11,990,000 ₫</s>
 
 									</p>
 									<a href="#" class="btn btn-primary btn_add ms-4"
@@ -583,7 +580,7 @@
 			</div>
 		</div>
 		<!--tin tucưc-->
-		<div class="container container_news mt-3 pb-3">
+		<div class="container container_news mt-3 pb-3 bg-white">
 			<div class="row pt-2">
 				<div class="col-6">
 					<div class="row">

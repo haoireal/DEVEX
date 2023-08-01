@@ -1,5 +1,6 @@
 package com.Devex.Sevice;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 
 import com.Devex.Entity.Product;
+
+import jakarta.transaction.Transactional;
+
 
 public interface ProductService {
 
@@ -52,5 +56,13 @@ public interface ProductService {
 	Product findByIdProduct(String id);
 
 	Product findProductById(String id);
+	void updateProduct(String id, String name, String brand, String description, Date createdDay, Boolean active, String sellerId,
+			int categoryDetailsId);
+
+	void updateProductIsDeleteById(boolean isdelete, String id);
+
+	List<Product> findProductBySellerUsernameAndIsdeleteProduct(String sellerUsername);
+
+	
 
 }

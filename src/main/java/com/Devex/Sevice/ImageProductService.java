@@ -40,4 +40,10 @@ public interface ImageProductService {
 
 	List<ImageProduct> findAllImageProductByProductId(String id);
 
+	void insertImageProduct(String id, String name, String productId);
+
+	void deleteImageProductByNameAndProductId(String name, String productId);
+
+	void deleteImageProductByProductId(String productId);
+
 }

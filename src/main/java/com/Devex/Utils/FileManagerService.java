@@ -15,12 +15,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Devex.Entity.ImageProduct;
 import com.Devex.Sevice.ImageProductService;
+import com.Devex.Sevice.SessionService;
 
 @Service
 public class FileManagerService {
     @Value("${myapp.file-storage-path}")
     private String fileStoragePath;
 
+    @Autowired
+    SessionService session;
+    
     @Autowired
     ImageProductService imageProductService;
 
@@ -54,10 +58,12 @@ public class FileManagerService {
             try {
                 file.transferTo(path);
                 filenames.add(filename);
+                imageProductService.insertImageProduct(id, filename, id);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        session.set("listimg", filenames);
         return filenames;
     }
 
@@ -77,14 +83,14 @@ public class FileManagerService {
                 dir.mkdirs();
                 File[] files = dir.listFiles();
                 for (File file : files) {
-                    filenames.add("/img/product/"+file.getName());
+                	filenames.add("/img/product/"+file.getName());
                 }
             }
         }else {
         	if (dir.exists() && listImageProduct != null) {
                 File[] files = dir.listFiles();
                 for (File file : files) {
-                    filenames.add("/img/product/"+file.getName());
+                	filenames.add("/img/product/"+file.getName());
                 }
             } else if (dir.exists() && listImageProduct == null) {
                 File file = Paths.get(fileStoragePath + "/product", shopname).toFile();

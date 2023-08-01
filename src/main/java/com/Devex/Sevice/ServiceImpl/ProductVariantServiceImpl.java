@@ -15,6 +15,8 @@ import com.Devex.Entity.ProductVariant;
 import com.Devex.Repository.ProductVariantRepository;
 import com.Devex.Sevice.ProductVariantService;
 
+import jakarta.transaction.Transactional;
+
 @SessionScope
 @Service("productVariantService")
 public class ProductVariantServiceImpl implements ProductVariantService{
@@ -101,6 +103,26 @@ public class ProductVariantServiceImpl implements ProductVariantService{
 	@Override
 	public List<ProductVariant> findAllProductVariantByProductId(String id) {
 		return productVariantRepository.findAllProductVariantByProductId(id);
+	}
+
+	@Override
+	@Transactional
+	public void updateProductVariant(Integer id, Integer quantity, Double price, Double priceSale, String size,
+			String color) {
+		productVariantRepository.updateProductVariant(id, quantity, price, priceSale, size, color);
+	}
+	
+	@Override
+	@Transactional
+	public void addProductVariant(Integer quantity, Double price, Double priceSale, String size, String color,
+			String productId) {
+		productVariantRepository.addProductVariant(quantity, price, priceSale, size, color, productId);
+	}
+
+	@Override
+	@Transactional
+	public void deleteProductVariantByProductId(String productId) {
+		productVariantRepository.deleteProductVariantByProductId(productId);
 	}
 	
 	

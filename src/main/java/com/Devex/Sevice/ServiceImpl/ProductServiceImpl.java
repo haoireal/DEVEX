@@ -1,5 +1,6 @@
 package com.Devex.Sevice.ServiceImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.Devex.Entity.Product;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.ProductService;
+
+import jakarta.transaction.Transactional;
 
 @SessionScope
 @Service("productService")
@@ -122,5 +125,25 @@ public class ProductServiceImpl implements ProductService {
 	public Product findByIdProduct(String id) {
 		return productRepository.findByIdProduct(id);
 	}
+
+	@Override
+	@Transactional
+	public void updateProduct(String id, String name, String brand, String description, Date createdDay, Boolean active,
+			String sellerId, int categoryDetailsId) {
+		productRepository.updateProduct(id, name, brand, description, createdDay, active, sellerId, categoryDetailsId);
+	}
+
+	@Override
+	@Transactional
+	public void updateProductIsDeleteById(boolean isdelete, String id) {
+		productRepository.updateProductIsDeleteById(isdelete, id);
+	}
+
+	@Override
+	public List<Product> findProductBySellerUsernameAndIsdeleteProduct(String sellerUsername) {
+		return productRepository.findProductBySellerUsernameAndIsdeleteProduct(sellerUsername);
+	}
+
+	
 
 }
