@@ -51,4 +51,6 @@ public interface ProductService {
 
 	Product findByIdProduct(String id);
 
+	Product findProductById(String id);
+
 }

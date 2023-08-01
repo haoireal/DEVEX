@@ -40,4 +40,8 @@ public interface ProductVariantService {
 
 	List<ProductVariant> findAllProductVariantByProductId(String id);
 
+	Double findPriceByColorAndSize(String id, String color, String size);
+
+	Double findPriceByColor(String id, String color);
+
 }

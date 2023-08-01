@@ -15,7 +15,6 @@ import com.Devex.Entity.Product;
 @Repository("productDetailRepository")
 public interface ProductDetailRepository extends JpaRepository<Product, String>{
 	
-	 @Query("select p from Product p join p.sellerProduct s where p.id = :id")
-	    Product findProductById( String id);
+	
 	
 }
