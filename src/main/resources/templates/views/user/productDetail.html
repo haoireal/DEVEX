@@ -161,7 +161,7 @@
 							</div>
 
 							<div class=" col-10">
-								<span> <strong class="fs-3 fw-bold price"
+								<span> <strong class="fs-3 fw-bold price totalPrice"
 									style="color: #ee4d2d;"
 									th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'COMMA',0,'POINT')}+'₫'"></strong></span>
 
@@ -236,12 +236,12 @@
 
 									<div class="control d-flex align-items-center ">
 
-										<label class="button btn_Sub border-0 fs-3 "
-											onclick="subtract(this)"> <i
+										<label id="btn_quantity" class="button btn_Sub border-0 fs-3 "
+											onclick="subtract(this)" disabled> <i
 											class="fa-solid fa-minus icon_Sub"></i>
 										</label> <input class="text-center product_quantity " type="number"
 											name="soluong" id="inputField" min="1" value="1" max="100"><br>
-										<label class="button btn_Add border-0 fs-4"
+										<label id="btn_quantity" class="button btn_Add border-0 fs-4"
 											onclick="add(this)"> <i
 											class="fa-solid fa-plus icon_Add"></i>
 										</label>
@@ -1051,33 +1051,42 @@
 	<!--slick slide-->
 	<script>
 	
+		
 
-		function updateTotalPrice (button) {
-		  // Lấy phần tử span chứa giá tiền
-		  var span = document.querySelector (".price");
-		  // Lấy nội dung của span, đó chính là giá tiền của sản phẩm
-		  var price = span.textContent;
-		  // Xóa ký tự VNĐ và dấu phẩy khỏi nội dung
-		  price = price.replace ("₫", "").replace (",", "");
-		  // Chuyển giá trị của nội dung thành số
-		  price = parseInt (price);
-		  // Lấy input chứa số lượng
-		  var input = button.parentNode.querySelector (".product_quantity");
-		  // Lấy giá trị của input
-		  var quantity = parseInt (input.value);
-		  // Tính tổng tiền bằng cách nhân giá tiền với số lượng
-		  var total = price * quantity;
-		  // Định dạng tổng tiền theo định dạng VNĐ
-		  var formatter = new Intl.NumberFormat ("vi-VN", {
-		    style: "currency",
-		    currency: "VND",
-		    currencyDisplay: "symbol",
-		  });
-		  // Lấy phần tử span chứa tổng tiền
-		  var span = document.querySelector (".totalPrice");
-		  // Cập nhật nội dung của span bằng tổng tiền đã định dạng
-		  span.textContent = formatter.format (total);
-		}
+						// Khai báo một biến toàn cục để lưu giá bán đầu
+				var originalPrice;
+
+				function updateTotalPrice (button) {
+				// Lấy phần tử span chứa giá tiền
+				var span = document.querySelector (".price");
+				// Kiểm tra nếu biến originalPrice chưa được gán
+				if (!originalPrice) {
+					// Lấy nội dung của span, đó chính là giá bán đầu của sản phẩm
+					var price = span.textContent;
+					// Xóa ký tự VNĐ và dấu phẩy khỏi nội dung
+					price = price.replace(/\.|₫/g, "");
+					// Chuyển giá trị của nội dung thành số
+					price = parseInt(price);
+					// Gán giá trị cho biến originalPrice
+					originalPrice = price;
+				}
+				// Lấy input chứa số lượng
+				var input = button.parentNode.querySelector (".product_quantity");
+				// Lấy giá trị của input
+				var quantity = parseInt (input.value);
+				// Tính tổng tiền bằng cách nhân giá bán đầu với số lượng
+				var total = originalPrice * quantity;
+				// Định dạng tổng tiền theo định dạng VNĐ
+				var formatter = new Intl.NumberFormat ("vi-VN", {
+					style: "currency",
+					currency: "VND",
+					currencyDisplay: "symbol",
+				});
+				// Lấy phần tử span chứa tổng tiền
+				var span = document.querySelector (".totalPrice");
+				// Cập nhật nội dung của span bằng tổng tiền đã định dạng
+				span.textContent = formatter.format(total);
+				}
 	
 		function subtract(button) {
 			var input = button.parentNode.querySelector(".product_quantity");
@@ -1123,18 +1132,29 @@
 	</script>
 
 	<script>
+
+
+			var setNumber =  document.getElementById('inputField');
+			var setLabel = document.getElementById('btn_quantity');
+
 		function sendRadioValue(value) {
 		// lấy giá trị của color
 		var color = document.querySelector("input[name='flexRadioDefault']:checked").value;
 		// lấy giá trị của size
 		
-		//var size = null;
+		var size = "";
 		// kiểm tra nếu có radio được checked
-		//if (document.querySelector("input[name='flexRadio']:checked")) {
-		  // gán giá trị của radio cho size
-		// size = document.querySelector("input[name='flexRadio']:checked").value;
-		// }
-		var size =document.querySelector("input[name='flexRadio']:checked").value;
+		if (document.querySelector("input[name='flexRadio']:checked")) {
+		//   gán giá trị của radio cho size
+		 size = document.querySelector("input[name='flexRadio']:checked").value;
+		 }
+
+
+		 if(document.querySelector("input[name='flexRadioDefault']:checked") || document.querySelector("input[name='flexRadio']:checked")){
+			// Lấy input chứa số lượng
+			setNumber.value = 1;
+		 }
+		// var size =document.querySelector("input[name='flexRadio']:checked").value;
 		
 		var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
 		// hoặc tạo một chuỗi query chứa color và size

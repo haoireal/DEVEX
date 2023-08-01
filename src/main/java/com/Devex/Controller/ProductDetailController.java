@@ -83,11 +83,11 @@ public class ProductDetailController {
 			@RequestParam("size") String size) {
 		System.out.println("sssssss: " + size);
 		Double price = 0.0;
-		if(size != null) {
+//		if(size != null) {
 			 price = productVariantService.findPriceByColorAndSize(id, color, size);
-		}else {
-//			price = productVariantService.findPriceByColor(id, color);
-		}
+//		}else {
+////			price = productVariantService.findPriceByColor(id, color);
+//		}
 		
 		return price;
 	}
