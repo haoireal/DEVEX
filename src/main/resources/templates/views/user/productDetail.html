@@ -102,7 +102,7 @@
 						<div class="row">
 							<div class="col-12"
 								style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-								<span class="text_name-product" th:text="*{name}"> </span>
+								<span th:id="*{id}" class="text_name-product" th:text="*{name}"> </span>
 								<!-- hiện thị tên sp -->
 							</div>
 
@@ -161,7 +161,7 @@
 							</div>
 
 							<div class=" col-10">
-								<span> <strong class="fs-3 fw-bold price"
+								<span> <strong class="fs-3 fw-bold price totalPrice"
 									style="color: #ee4d2d;"
 									th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'COMMA',0,'POINT')}+'₫'"></strong></span>
 
@@ -183,7 +183,11 @@
 
 									<div th:each="color, iter : ${listColor}"
 										class="form-check product-variation ms-1  align-items-center justify-content-center ">
-										<input class="  form-check-input"
+										<input
+											onchange="sendRadioValue(this.value)"
+											th:value="${color}"
+											th:attr="data-id=${product.id}"
+											class="  form-check-input"
 											style="margin-left: -1em !important; padding: 3px;"
 											type="radio" name="flexRadioDefault"
 											th:id="'flexRadioDefault'+${iter.count}" > <label
@@ -205,11 +209,14 @@
 									<div th:each="size, iter : ${listSize}"
 										class="form-check product-variation ms-1  align-items-center justify-content-center ">
 										<input class="  form-check-input"
+											onchange="sendRadioValue(this.value)"
+											th:value="${size}"
 											style="margin-left: -1em !important; padding: 3px;"
 											type="radio" name="flexRadio"
-											th:id="'flexRadio'+${iter.count}" checked> <label
+											th:id="'flexRadio'+${iter.count}" > <label
 											class="form-check-label pe-1 "
 											style="margin-left: 0.3rem; padding: 3px"
+											
 											th:for="'flexRadio'+${iter.count}" th:text="${size}">
 										</label>
 									</div>
@@ -229,12 +236,12 @@
 
 									<div class="control d-flex align-items-center ">
 
-										<label class="button btn_Sub border-0 fs-3 "
-											onclick="subtract(this)"> <i
+										<label id="btn_quantity" class="button btn_Sub border-0 fs-3 "
+											onclick="subtract(this)" disabled> <i
 											class="fa-solid fa-minus icon_Sub"></i>
 										</label> <input class="text-center product_quantity " type="number"
 											name="soluong" id="inputField" min="1" value="1" max="100"><br>
-										<label class="button btn_Add border-0 fs-4"
+										<label id="btn_quantity" class="button btn_Add border-0 fs-4"
 											onclick="add(this)"> <i
 											class="fa-solid fa-plus icon_Add"></i>
 										</label>
@@ -313,7 +320,7 @@
 		<!--shop name-->
 		<div th:object="${seller}" class="container container-shop mt-3 " > <!-- sài chung cho toàn bộ trang -->
 			<div class="row">
-				<div class="col-4">
+				<div class="col-12 col-lg-4">
 					<div class="row d-flex justify-content-between ">
 						<div class="col-3" style="padding: 0;">
 							<div class="img_salles">
@@ -326,7 +333,7 @@
 							</div>
 							<div class="contact-content mt-2">
 								<div class="row">
-									<div class="col-6">
+									<div class="col-6 d-none d-lg-flex">
 										<button class="btn_chat">					
 											<div class="content_chat ">
 												<i class="fs-6 fa-solid fa-message"></i>
@@ -336,8 +343,8 @@
 					
 										</button>
 									</div>
-									<div class="col-6">
-										<button class="btn_seeShop">					
+									<div class="col-6 d-flex">
+										<button class="float-end btn_seeShop">					
 											<div class="content_seeShop ">
 												<i class="fs-6 fa-solid fa-shop"></i>
 												<span style="font-size: .875rem;">Xem Shop</span>
@@ -350,32 +357,32 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-8 d-grid align-items-center">
+				<div class="col-12 col-lg-8 d-flex d-lg-grid align-items-center">
 					<div class="row">
-						<div class="col-4 d-flex justify-content-between">
+						<div class="col-6 col-lg-4 d-flex justify-content-between">
 							<label class="dis-shop">Đánh Giá:</label>
 							<span class=" parameter-content text-danger">29,9k</span>
 						</div>
-						<div class="col-4 d-flex justify-content-between">
-							<label class="dis-shop">Tỷ lệ Phản Hồi:</label>
+						<div class="col-6 col-lg-4 d-flex justify-content-between">
+							<label class="dis-shop">Phản Hồi Chat:</label>
 							<span class=" parameter-content text-danger">29,9k</span>
 						</div>
-						<div class="col-4 d-flex justify-content-between">
-							<label class="dis-shop">Tham Gia:</label>
+						<div class="col-4 d-none d-lg-flex justify-content-between">
+							<label class="dis-shop ">Tham Gia:</label>
 							<span class=" parameter-content text-danger" th:text="*{sellerProduct.createDay}">29,9k</span>
 						</div>
 						
 					</div>
 					<div  class="row">
-						<div  class="col-4 d-flex justify-content-between">
+						<div  class="col-6 col-lg-4 d-flex justify-content-between">
 							<label class="dis-shop">Sản Phẩm:</label>
 							<span class=" parameter-content text-danger" th:text="*{productVariants.size()}">29,9k</span>
 						</div>
-						<div class="col-4 d-flex justify-content-between">
+						<div class="col-4  d-none d-lg-flex justify-content-between">
 							<label class="dis-shop">Thời Gian Phản Hồi:</label>
 							<span class=" parameter-content text-danger">Trong vài giờ</span>
 						</div>
-						<div class="col-4 d-flex justify-content-between">
+						<div class="col-4 d-none d-lg-flex justify-content-between">
 							<label class="dis-shop">Người Theo Dõi:</label>
 							<span class=" parameter-content text-danger">29,9k</span>
 						</div>
@@ -802,9 +809,10 @@
 								<div th:each="size, iter : ${listSize}"
 									class="form-check product-variation ms-1  align-items-center justify-content-center ">
 									<input class="  form-check-input"
+									onchange="(this)"
 										style="margin-left: -1em !important; padding: 3px;"
 										type="radio" name="flexRadio1"
-										th:id="'flexRadio1'+${iter.count}" checked> <label
+										th:id="'flexRadio1'+${iter.count}" > <label
 										class="form-check-label pe-1 "
 										style="margin-left: 0.3rem; padding: 3px"
 										th:for="'flexRadio1'+${iter.count}" th:text="${size}">
@@ -827,8 +835,9 @@
 									<label class="button btn_Sub border-0 fs-3 "
 										onclick="subtract(this)"> <i
 										class="fa-solid fa-minus icon_Sub"></i>
-									</label> <input class="text-center product_quantity " type="number"
-										name="soluong" id="inputField" min="1" value="1" max="100"><br>
+									</label>
+									 <input class="text-center product_quantity " type="number"
+										name="soluong" id="inputField" min="1" value="1" ><br>
 									<label class="button btn_Add border-0 fs-4 "
 										style="outline-style: none;" onclick="add(this)"> <i
 										class="fa-solid fa-plus icon_Add"></i>
@@ -1042,33 +1051,42 @@
 	<!--slick slide-->
 	<script>
 	
+		
 
-		function updateTotalPrice (button) {
-		  // Lấy phần tử span chứa giá tiền
-		  var span = document.querySelector (".price");
-		  // Lấy nội dung của span, đó chính là giá tiền của sản phẩm
-		  var price = span.textContent;
-		  // Xóa ký tự VNĐ và dấu phẩy khỏi nội dung
-		  price = price.replace ("₫", "").replace (",", "");
-		  // Chuyển giá trị của nội dung thành số
-		  price = parseInt (price);
-		  // Lấy input chứa số lượng
-		  var input = button.parentNode.querySelector (".product_quantity");
-		  // Lấy giá trị của input
-		  var quantity = parseInt (input.value);
-		  // Tính tổng tiền bằng cách nhân giá tiền với số lượng
-		  var total = price * quantity;
-		  // Định dạng tổng tiền theo định dạng VNĐ
-		  var formatter = new Intl.NumberFormat ("vi-VN", {
-		    style: "currency",
-		    currency: "VND",
-		    currencyDisplay: "symbol",
-		  });
-		  // Lấy phần tử span chứa tổng tiền
-		  var span = document.querySelector (".totalPrice");
-		  // Cập nhật nội dung của span bằng tổng tiền đã định dạng
-		  span.textContent = formatter.format (total);
-		}
+						// Khai báo một biến toàn cục để lưu giá bán đầu
+				var originalPrice;
+
+				function updateTotalPrice (button) {
+				// Lấy phần tử span chứa giá tiền
+				var span = document.querySelector (".price");
+				// Kiểm tra nếu biến originalPrice chưa được gán
+				if (!originalPrice) {
+					// Lấy nội dung của span, đó chính là giá bán đầu của sản phẩm
+					var price = span.textContent;
+					// Xóa ký tự VNĐ và dấu phẩy khỏi nội dung
+					price = price.replace(/\.|₫/g, "");
+					// Chuyển giá trị của nội dung thành số
+					price = parseInt(price);
+					// Gán giá trị cho biến originalPrice
+					originalPrice = price;
+				}
+				// Lấy input chứa số lượng
+				var input = button.parentNode.querySelector (".product_quantity");
+				// Lấy giá trị của input
+				var quantity = parseInt (input.value);
+				// Tính tổng tiền bằng cách nhân giá bán đầu với số lượng
+				var total = originalPrice * quantity;
+				// Định dạng tổng tiền theo định dạng VNĐ
+				var formatter = new Intl.NumberFormat ("vi-VN", {
+					style: "currency",
+					currency: "VND",
+					currencyDisplay: "symbol",
+				});
+				// Lấy phần tử span chứa tổng tiền
+				var span = document.querySelector (".totalPrice");
+				// Cập nhật nội dung của span bằng tổng tiền đã định dạng
+				span.textContent = formatter.format(total);
+				}
 	
 		function subtract(button) {
 			var input = button.parentNode.querySelector(".product_quantity");
@@ -1111,6 +1129,59 @@
 		btn_close.addEventListener('click',()=>{
 			model_container.classList.remove('show');
 		});
+	</script>
+
+	<script>
+
+
+			var setNumber =  document.getElementById('inputField');
+			var setLabel = document.getElementById('btn_quantity');
+
+		function sendRadioValue(value) {
+		// lấy giá trị của color
+		var color = document.querySelector("input[name='flexRadioDefault']:checked").value;
+		// lấy giá trị của size
+		
+		var size = "";
+		// kiểm tra nếu có radio được checked
+		if (document.querySelector("input[name='flexRadio']:checked")) {
+		//   gán giá trị của radio cho size
+		 size = document.querySelector("input[name='flexRadio']:checked").value;
+		 }
+
+
+		 if(document.querySelector("input[name='flexRadioDefault']:checked") || document.querySelector("input[name='flexRadio']:checked")){
+			// Lấy input chứa số lượng
+			setNumber.value = 1;
+		 }
+		// var size =document.querySelector("input[name='flexRadio']:checked").value;
+		
+		var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
+		// hoặc tạo một chuỗi query chứa color và size
+		var data = "id="+ id +"&color=" + color + "&size=" + size;
+		 console.log(id,color, size);
+		$.ajax({
+			url: "/data", // url của server
+			type: "POST", // phương thức gửi request
+			data: data, // dữ liệu gửi lên server
+			success: function (price){
+				console.log(price);
+				let formatter = new Intl.NumberFormat('vi-VN', {
+				    style: 'currency',
+				    currency: 'VND',
+				  });
+				  // sử dụng phương thức format để định dạng giá tiền
+				  let formattedPrice = formatter.format(price); // "123.456.789 ₫"
+				  $(".price").text(formattedPrice); // giá bán mới
+				  $("del").hide();
+			}
+			
+			
+		});
+		}
+		
+
+
 	</script>
 
 	<script type="text/javascript"

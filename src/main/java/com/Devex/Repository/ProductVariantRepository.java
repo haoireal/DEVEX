@@ -17,6 +17,14 @@ import com.Devex.Entity.User;
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, Integer> {
 
 	@Query("SELECT p FROM ProductVariant p WHERE p.product.id LIKE %?1%")
+	List<ProductVariant> findAllProductVariantByProductId(String id);	
+	
+	@Query("SELECT pv.price FROM ProductVariant pv JOIN pv.product p WHERE p.id = :id AND pv.color = :color")
+	Double findPriceByColor(String id,String color);
+	
+	@Query("SELECT pv.priceSale FROM ProductVariant pv JOIN pv.product p WHERE p.id = :id AND pv.color = :color AND pv.size = :size")
+	Double findPriceByColorAndSize(String id,String color,String size);
+		
 	List<ProductVariant> findAllProductVariantByProductId(String id);
 	
 	@Modifying

@@ -26,6 +26,16 @@ public class ProductVariantServiceImpl implements ProductVariantService{
 	ProductVariantRepository productVariantRepository;
 
 	@Override
+	public Double findPriceByColor(String id, String color) {
+		return productVariantRepository.findPriceByColor(id, color);
+	}
+
+	@Override
+	public Double findPriceByColorAndSize(String id, String color, String size) {
+		return productVariantRepository.findPriceByColorAndSize(id, color, size);
+	}
+
+	@Override
 	public ProductVariant save(ProductVariant entity) {
 		return productVariantRepository.save(entity);
 	}

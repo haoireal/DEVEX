@@ -55,6 +55,7 @@ public interface ProductService {
 
 	Product findByIdProduct(String id);
 
+	Product findProductById(String id);
 	void updateProduct(String id, String name, String brand, String description, Date createdDay, Boolean active, String sellerId,
 			int categoryDetailsId);
 
