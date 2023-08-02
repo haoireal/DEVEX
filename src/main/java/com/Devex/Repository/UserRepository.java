@@ -1,6 +1,5 @@
 package com.Devex.Repository;
 
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +21,5 @@ public interface UserRepository extends JpaRepository<User, String>{
 
 	@Query("Select o FROM User o WHERE o.phone = :phone")
 	User findPhone(@Param("phone") String phone);
+	
 }

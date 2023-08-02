@@ -3,6 +3,7 @@ package com.Devex.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,6 @@ public class SigninController {
 	@GetMapping("/signout")
     public String doSignout() {
 		session.remove("user");
-//		session.set("keywordsSearch", "");
 		return "redirect:/home";
     }
 	
@@ -51,6 +51,7 @@ public class SigninController {
 		return "admin/erorr404";
     }
 	
+
 	@PostMapping("/signin")
 	public String doSignin(Model model) {
 		String username = param.getString("username", "");
@@ -100,5 +101,5 @@ public class SigninController {
 			return "account/signin";
 		}
 	}
-	
+
 }
