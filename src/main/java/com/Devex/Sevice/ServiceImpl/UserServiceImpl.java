@@ -9,15 +9,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.Devex.Entity.Product;
 import com.Devex.Entity.User;
 import com.Devex.Repository.UserRepository;
 import com.Devex.Sevice.UserService;
 
 @SessionScope
 @Service("userService")
+@Transactional
 public class UserServiceImpl implements  UserService{
 	@Autowired
 	UserRepository userRepository;
@@ -106,6 +107,8 @@ public class UserServiceImpl implements  UserService{
 	public User findPhone(String phone) {
 		return userRepository.findPhone(phone);
 	}
+	
+
 
 	
 	
