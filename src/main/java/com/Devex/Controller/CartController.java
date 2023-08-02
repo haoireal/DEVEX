@@ -17,10 +17,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.Devex.Entity.CartDetail;
 import com.Devex.Entity.CartProdcut;
+import com.Devex.Entity.Customer;
 import com.Devex.Entity.Product;
+import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
+import com.Devex.Repository.CartDetailRespository;
 import com.Devex.Repository.ProductRepository;
+import com.Devex.Repository.ProductVariantRepository;
+import com.Devex.Sevice.CartDetailService;
 import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.ShoppingCartService;
@@ -46,7 +52,10 @@ public class CartController {
 	ShoppingCartService cart;
 	@Autowired
 	RecommendationSystem recomendationService;
-
+	@Autowired
+	ProductVariantRepository pv;
+	@Autowired
+	CartDetailService cartsv;
 	ObjectMapper objectMapper = new ObjectMapper();
 	Cookie cookie = null;
 
@@ -96,48 +105,66 @@ public class CartController {
 
 		}
 		return "user/cartproduct";
+		
 	}
-
-	@RequestMapping("/devex/cartproduct/add/{idProduct}")
+	@RequestMapping("/cartproduct/add/{idProduct}")
 	public String addCart(@PathVariable("idProduct") String id, Model model,
-			@RequestParam(name = "soluong") int soLuong,
 			@RequestParam(name = "flexRadio", required = false) String size,
-			@RequestParam(name = "coler", required = false) String cloer) throws JsonProcessingException {
-
-		cart.add(id, soLuong, cloer, size);
-		System.out.println("size" + size);
-		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
-				.collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
-		String cartValue = objectMapper.writeValueAsString(itemsMap);
-		session.set("cartCount", cart.getCount());
-		cart.clear();
-		// Mã hóa chuỗi JSON thành chuỗi Base64
-		byte[] encodedBytes = Base64.encodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
-		String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);
-		cookie = new Cookie("myCart", encodedCartValue);
-		cookie.setMaxAge(86400);
-		cookie.setPath("/");
-		resp.addCookie(cookie);
-
+			@RequestParam(name = "flexRadioDefault", required = false) String cloer,
+			@RequestParam(name = "soluong") int soLuong) throws JsonProcessingException {
+		int idProductVariant = 	pv.findIdProductVaVariantbySizeandColor(cloer, size, id);
+		ProductVariant pv2 = pv.findById(idProductVariant).get();
+		CartDetail cart = new CartDetail();
+		cart.setProductCart(pv2);
+		cart.setQuantity(soLuong);
+		Customer user = session.get("user");
+		cart.setCart(user.getCart());
+		cartsv.save(cart);
 		return "redirect:/details/{idProduct}";
 	}
-
-	@RequestMapping("/devex/cartproduct/remove/{idProduct}")
-	public String remove(@PathVariable("idProduct") String id) throws JsonProcessingException {
-		cart.remove(id);
-		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
-				.collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
-		String cartValue = objectMapper.writeValueAsString(itemsMap);
-		cart.clear();
-		// Giải mã chuỗi Base64
-		byte[] encodedBytes = Base64.encodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
-		String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);
-		cookie = new Cookie("myCart", encodedCartValue);
-		cookie.setMaxAge(86400);
-		cookie.setPath("/");
-		resp.addCookie(cookie);
-
-		return "redirect:/devex/cart";
-	}
+	
+	
+//
+//	@RequestMapping("/devex/cartproduct/add/{idProduct}")
+//	public String addCart(@PathVariable("idProduct") String id, Model model,
+//			@RequestParam(name = "soluong") int soLuong,
+//			@RequestParam(name = "flexRadio", required = false) String size,
+//			@RequestParam(name = "coler", required = false) String cloer) throws JsonProcessingException {
+//
+//		cart.add(id, soLuong, cloer, size);
+//		System.out.println("size" + size);
+//		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
+//				.collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
+//		String cartValue = objectMapper.writeValueAsString(itemsMap);
+//		session.set("cartCount", cart.getCount());
+//		cart.clear();
+//		// Mã hóa chuỗi JSON thành chuỗi Base64
+//		byte[] encodedBytes = Base64.encodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
+//		String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);
+//		cookie = new Cookie("myCart", encodedCartValue);
+//		cookie.setMaxAge(86400);
+//		cookie.setPath("/");
+//		resp.addCookie(cookie);
+//
+//		return "redirect:/details/{idProduct}";
+//	}
+//
+//	@RequestMapping("/devex/cartproduct/remove/{idProduct}")
+//	public String remove(@PathVariable("idProduct") String id) throws JsonProcessingException {
+//		cart.remove(id);
+//		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
+//				.collect(Collectors.toMap(CartProdcut::getId, Function.identity()));
+//		String cartValue = objectMapper.writeValueAsString(itemsMap);
+//		cart.clear();
+//		// Giải mã chuỗi Base64
+//		byte[] encodedBytes = Base64.encodeBase64(cartValue.getBytes(StandardCharsets.UTF_8));
+//		String encodedCartValue = new String(encodedBytes, StandardCharsets.UTF_8);
+//		cookie = new Cookie("myCart", encodedCartValue);
+//		cookie.setMaxAge(86400);
+//		cookie.setPath("/");
+//		resp.addCookie(cookie);
+//
+//		return "redirect:/devex/cart";
+//	}
 
 }

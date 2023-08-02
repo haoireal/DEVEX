@@ -25,7 +25,7 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 	@Query("SELECT pv.priceSale FROM ProductVariant pv JOIN pv.product p WHERE p.id = :id AND pv.color = :color AND pv.size = :size")
 	Double findPriceByColorAndSize(String id,String color,String size);
 		
-	List<ProductVariant> findAllProductVariantByProductId(String id);
+//	List<ProductVariant> findAllProductVariantByProductId(String id)
 	
 	@Modifying
     @Query("UPDATE ProductVariant pv SET pv.quantity = :quantity, pv.price = :price, pv.priceSale = :priceSale, pv.size = :size, pv.color = :color WHERE pv.id = :id")
@@ -38,5 +38,7 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 	@Modifying
 	@Query(value = "DELETE FROM Product_Variant WHERE Product_ID = :productId", nativeQuery = true)
 	void deleteProductVariantByProductId(@Param("productId") String productId);
-
+	
+	@Query("SELECT pv.id FROM ProductVariant pv WHERE pv.color = ?1 and pv.size = ?2 and pv.product.id = ?3  ")
+	int findIdProductVaVariantbySizeandColor(String coler,String size,String id);
 }
