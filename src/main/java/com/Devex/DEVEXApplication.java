@@ -12,7 +12,7 @@ import jakarta.annotation.PostConstruct;
 
 @SpringBootApplication
 @EnableConfigurationProperties
-public class DEVEX1Application {
+public class DEVEXApplication {
 	@Autowired
 	private TwilioConfig twilioConfig;
 	
@@ -22,7 +22,7 @@ public class DEVEX1Application {
 	}
 	
 	public static void main(String[] args) {
-		SpringApplication.run(DEVEX1Application.class, args);
+		SpringApplication.run(DEVEXApplication.class, args);
 	}
 
 }

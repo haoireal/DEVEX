@@ -33,7 +33,7 @@ public class Cart implements Serializable {
 	private int id;
 	
 	@OneToOne
-	@JoinColumn(name = "Customer_ID")
+	@JoinColumn(name = "Username")
 	private Customer person;
 	
 	@JsonIgnore

@@ -156,7 +156,7 @@ public class ProfileController {
 		}
 		otpService.sendMailOtp(info);
         session.set("info-user", info);
-		return "redirect:/verify/new-email";
+		return "redirect:/profile//verify/new-email";
 	}
 	
 	@PostMapping("/profile/change-phone")
@@ -172,16 +172,16 @@ public class ProfileController {
 		OtpRequestDTO otpRequest = new OtpRequestDTO(info, info);
 		otpService.sendSMS(otpRequest);
         session.set("info-user", info);
-		return "redirect:/verify/new-phone";
+		return "redirect:/profile//verify/new-phone";
 	}
 	
-	@GetMapping("verify/new-{type}")
+	@GetMapping("/profile/verify/new-{type}")
 	public String showVerifyToUpdate(@PathVariable("type") String type) {
 		
 		return	"account/verifi";
 	}
 	
-	@PostMapping("verify/new-{type}")
+	@PostMapping("/profile/verify/new-{type}")
 	public String doVerifyToUpdate(@PathVariable("type") String type, Model model) {
 		User user = session.get("user");
 		String otp = "";
