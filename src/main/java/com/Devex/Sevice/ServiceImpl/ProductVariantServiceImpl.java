@@ -124,6 +124,11 @@ public class ProductVariantServiceImpl implements ProductVariantService{
 	public void deleteProductVariantByProductId(String productId) {
 		productVariantRepository.deleteProductVariantByProductId(productId);
 	}
+
+	@Override
+	public int findIdProductVaVariantbySizeandColor(String coler, String size, String id) {
+		return productVariantRepository.findIdProductVaVariantbySizeandColor(coler, size, id);
+	}
 	
 	
 }
