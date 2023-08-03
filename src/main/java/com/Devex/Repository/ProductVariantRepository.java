@@ -25,7 +25,7 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 	@Query("SELECT pv.priceSale FROM ProductVariant pv JOIN pv.product p WHERE p.id = :id AND pv.color = :color AND pv.size = :size")
 	Double findPriceByColorAndSize(String id,String color,String size);
 		
-//	List<ProductVariant> findAllProductVariantByProductId(String id)
+//	List<ProductVariant> findAllProductVariantByProductId(String id);
 	
 	@Modifying
     @Query("UPDATE ProductVariant pv SET pv.quantity = :quantity, pv.price = :price, pv.priceSale = :priceSale, pv.size = :size, pv.color = :color WHERE pv.id = :id")
