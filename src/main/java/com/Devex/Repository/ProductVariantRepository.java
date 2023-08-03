@@ -41,5 +41,4 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 	
 	@Query("SELECT pv.id FROM ProductVariant pv WHERE pv.color = ?1 and pv.size = ?2 and pv.product.id = ?3  ")
 	int findIdProductVaVariantbySizeandColor(String coler,String size,String id);
-
 }

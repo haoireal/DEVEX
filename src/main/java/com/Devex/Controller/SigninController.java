@@ -52,7 +52,6 @@ public class SigninController {
     }
 	
 
-	
 	@PostMapping("/signin")
 	public String doSignin(Model model) {
 		String username = param.getString("username", "");
@@ -102,4 +101,5 @@ public class SigninController {
 			return "account/signin";
 		}
 	}
+
 }
