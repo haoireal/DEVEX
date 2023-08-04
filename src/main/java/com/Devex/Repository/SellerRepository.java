@@ -12,5 +12,7 @@ import com.Devex.Entity.Seller;
 public interface SellerRepository extends JpaRepository<Seller, String>{
 
 	Seller findFirstByUsername(String username);
+
 	
+
 }

@@ -13,7 +13,7 @@ import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.SessionService;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/ad")
 public class DevexAdminController {
 
 	@Autowired

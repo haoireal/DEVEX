@@ -2,32 +2,52 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Giỏ Hàng</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giỏ Hàng</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-	<!--cnd fontawesome-->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-		integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<!-- Theme style -->
-	<!-- <link rel="stylesheet" href="../admin/dist/css/userIndex.css"> -->
-	<link rel="stylesheet" href="/admin/dist/css/userIndex.css">
-	<link rel="stylesheet" href="/admin/dist/css/findproduct.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+<!--cnd fontawesome-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Theme style -->
+<link rel="stylesheet" href="/css/user/userIndex.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
-	<!--slick-->
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-	<style>
+<!--slick-->
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<style>
+/* tắt phím tăng giảm của input number */
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
 
-	</style>
+#cartOrderForm {
+	position: sticky;
+	bottom: 0px;
+	z-index: 9;
+}
+
+a {
+	text-decoration: none;
+}
+</style>
 </head>
 
 <body>
-<header>
+	<header>
 		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
 		<div class="container  mt-3">
 			<div class="row">
@@ -47,526 +67,203 @@
 		<div class="container">
 			<div class="text-dark content_price" style="margin-top: 10px;">
 				<span class="container_main_middle-contten"
-					style="color: #2A62B9; margin-left: -25px; font-size: 20px;">Giỏ hàng</span>
+					style="color: #2A62B9; margin-left: -25px; font-size: 20px;">Giỏ
+					hàng</span>
 			</div>
 		</div>
-		<div class="container container_main_middle  pt-1" style="padding: 20px;" >
-			<div class="row" style="padding: 15px;">
-				
-				<div class="col-md-7" style=" height: auto" >
-					
-					<div class="row product-container" style="padding: 10px; border: 1px solid #2A62B9; border-radius: 10px; margin-top: 10px; height: auto;" th:each="product, index : ${cart.items}" >
-						<div>
-							<input type="checkbox" style="border: none; color: #ff0821; width: 18px; height: 18px;" >
-						</div>
-						<div class="col-md-3" style="border-radius: 10px;">
-							<!-- Product Image -->
-							<img th:src="@{'/img/product/' + ${product.img}}" alt="Product Image" width="200px" height="200px" style="border-radius: 10px;">
-						</div>
-						<div class="col-md-9">
-							<!-- Product Information -->
-							<div class="card" style="height: auto; border: none; margin-top: -10px; margin-left: 20px;">
-								<div class="card-body" style="font-size: 15px;">
-									<h5 class="card-title" style="font-size: 20px; font-weight: bold;">Shop:<a th:text="${product.nameShop}" style="font-size: 20px; color: #2550b9"></a> </h5>
-									<p class="card-text" style="color: #2A62B9; font-weight: bold;">Tên Sản Phẩm : <a th:text="${product.name}"></a></p>
-										<p class="card-text" style="color: #ff0821; font-weight: bold; font-size: 17px; margin-top: -10px;">
-										    Giá : <a style="color: #ff0821; font-weight: bold; font-size: 18px; margin-top: 15px; text-decoration: none" class="product-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} " data-price="${product.price}"></a> VND
-										</p>
+		<div class="container container_main_middle bg-white pt-1"
+			style="padding: 20px;">
+			<div
+				class="d-flex justify-content-between gap-3 align-items-center px-3 pt-1">
 
-									<div class="d-flex" style="margin-top: -10px;">
-										<div class="mb-3 d-flex">
-											<label for="quantitySelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-top: 5px;">Số Lượng : </label>
-											<select class="form-select quantity-select" id="quantitySelect" style="width: 70px; height: 30px; font-size: 14px; font-weight: bold; margin-left: 5px;" onchange="updateTotalPrice(this)">
-												<option th:each="i : ${#numbers.sequence(1, 100)}" th:value="${i}" th:text="${i}" th:selected="${i == product.soluong}"></option>
-												<!-- Add more options as needed -->
-											</select>
-										</div>
-					
-										<!-- Color Dropdown -->
-										<div class="mb-3 d-flex" th:if="${product.color != null}">
-											<label for="colorSelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-left: 10px; margin-top: 5px;">Color: <span th:text="${product.color}" style="color: #2550b9;"></span></label>
-					
-										</div>
-					
-										<!-- Size Dropdown -->
-										<div class="mb-3 d-flex" th:if="${product.size != null}">
-											<label for="sizeSelect" class="form-label" style="color: #2A62B9; font-weight: bold; margin-left: 10px; margin-top: 5px;">Size: <span th:text="${product.size}" style="color: #2550b9;"></span></label>
-					
-										</div>
+				<button
+					class="d-flex justify-content-start gap-3 align-items-center border-0 bg-transparent"
+					type="button">
+					<div class="">
+						<img alt=""
+							src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_189ab9e4c9c%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_189ab9e4c9c%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.3359375%22%20y%3D%2242%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+							class="rounded-circle img-fluid  " style="width: 2.5rem;">
+					</div>
+					<p class="d-flex align-items-center m-0">shopname</p>
+				</button>
+				<div class="">
+					<a class="text-success" href="">Chọn tất cả</a> / <a
+						class="text-danger" href="">Xóa</a>
+				</div>
+			</div>
+			<div class="row px-3 pb-3 pt-2">
+				<div class="col-md-12">
+					<!--CART -->
+					<div class="border-0 border-top bg-light">
+						<div class="card-body p-2">
+							<div
+								class="row d-flex justify-content-between align-items-center">
+
+								<div
+									class="col-md-2 col-lg-2 col-xl-2 row d-flex justify-content-between align-items-center">
+									<div class="col-4 pe-0">
+										<input class="form-check-input" type="checkbox" value=""
+											id="flexCheckDefault">
 									</div>
-									<div class="mb-3 d-flex">
-										<!-- Thẻ tổng tiền -->
-										<p class="card-text col-md-8 totalPrice" id="totalPrice" style="color: #ff0821; font-weight: bold; font-size: 18px; margin-top: 15px;">Tổng Giá : <a class="totalPriceValue" 
-										th:text="${#numbers.formatDecimal(product.soluong * product.price, 0, 'COMMA', 0, 'POINT')}" 
-										data-total-price="${product.soluong * product.price}" 
-										style="color: #ff0821; font-weight: bold; font-size: 18px;text-decoration: none;"></a> VND</p>
-										<a th:href="@{'/devex/cartproduct/remove/' + ${product.id}}" type="submit" class="btn btn-primary" style="margin-left: 100px; width: 100px; height: 40px; background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%); border: none;">Xóa</a>
+									<img style="height: 8rem;"
+										src="/img/product/aligqd911/101-aligqd911-10001/ao-khoac-du-surfing-form-regular-ak051_2_small-17999.webp"
+										class="img-fluid rounded-3 p-0 col-8" alt="Cotton T-shirt">
+								</div>
+								<div class="col-md-3 col-lg-3 col-xl-4">
+									<p class="fw-normal mb-2 card-title tensp">Giày Thể
+										Thao Nam MWC NATT- 5445 Giày Thể Thao Nam Cao Cấp, Sneaker Nam
+										Cổ Thấp Năng Động Cá Tính</p>
+									<button type="button"
+										class="btn btn-secondary p-1 mb-2  w-100 d-flex justify-content-center">
+										<div class="m-0 px-3">
+											Size: <span class="text-white">M </span>
+										</div>
+										<div class="m-0 px-3">
+											Color: <span class="text-white">Grey</span>
+										</div>
+									</button>
+									<div class="row">
+										<s class="col-4">999,999$</s>
+										<p class="text-danger fw-bold col-4">999,999$</p>
 									</div>
+								</div>
+								<div class="col-md-3 col-lg-3 col-xl-1 d-flex">
+									<button class="btn btn-link px-2 p-0"
+										onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+										<i class="fas fa-minus"></i>
+									</button>
+
+									<input id="form1" min="0" name="quantity" value="2"
+										type="number" class="form-control form-control-sm"
+										style="width: 2rem;" inputmode="numeric" />
+
+									<button class="btn btn-link px-2 p-0"
+										onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+										<i class="fas fa-plus"></i>
+									</button>
+								</div>
+								<div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+									<h5 class="mb-0">$499.00</h5>
+								</div>
+								<div class="col-md-1 col-lg-1 col-xl-1 text-end">
+									<a href="#!" class="text-danger"><i
+										class="fas fa-trash fa-lg"></i></a>
 								</div>
 							</div>
 						</div>
 					</div>
-					<p>Tổng giá giỏ hàng: <span id="cartTotalPrice" style="color: #2550b9;">0 VND</span></p>
-
+					<!--END CART -->
 				</div>
-				
-				<div class="col-md-5" style=" width: 510px; height: auto; border: 2px solid #2A62B9; margin-left: 20px; border-radius: 10px;padding: 10px; margin-top: 10px;">
-					
-				</div>	
-			</div>
-			
 
-
-			
-			
-
-			
-		</div>
-		<div class="container pt-1"
-			style=" background-color: white; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; margin-top: 20px; border-radius: 10px; padding: 10px;">
-			<div class="container">
-				<div class="text-dark content_price" style="margin-top: 10px;">
-					<span class="container_main_middle-contten"
-						style="color: #2A62B9; margin-left: -25px; font-size: 18px;">Thông tin khách hàng đặt
-						hàng</span>
-				</div>
-			</div>
-			<div class="cotainer">
-				<div class="row">
-					<form>
-						<div class="mb-3">
-							<label for="name" class="form-label">Tên KH</label>
-							<input type="text" class="form-control" id="name" placeholder="Nhập tên khách hàng">
-						</div>
-						<div class="mb-3">
-							<label for="phone" class="form-label">SDT</label>
-							<input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại">
-						</div>
-						<div class="mb-3">
-							<label for="address" class="form-label">Địa Chỉ</label>
-							<input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ">
-						</div>
-						<div class="mb-3">
-							<label for="note" class="form-label">Ghi Chú</label>
-							<textarea class="form-control" id="note" rows="3" placeholder="Nhập ghi chú"></textarea>
-						</div>
-						<div class="mb-3">
-							<label for="payment" class="form-label">Thanh Toán</label>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="payment" id="payment-transfer"
-									value="transfer">
-								<label class="form-check-label" for="payment-transfer">
-									Chuyển Khoản
-								</label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="payment" id="payment-cod"
-									value="cod">
-								<label class="form-check-label" for="payment-cod">
-									Thanh Toán Sau Khi Nhận
-								</label>
-							</div>
-						</div>
-						<div class="mb-3">
-							<label for="delivery" class="form-label">Phương thức nhận hàng</label>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="delivery" id="delivery-ship"
-									value="ship">
-								<label class="form-check-label" for="delivery-ship">
-									Ship
-								</label>
-							</div>
-						</div>
-						<button type="submit" class="btn add-cart"
-							style="color: #fff; width: 150px;position: absolute; margin-left: 1000px; margin-top: -50px;height: 50px;">Đặt
-							hàng</button>
-					</form>
-				</div>
 			</div>
 		</div>
-		<div class="container">
-			<div class="text-dark content_price" style="margin-top: 10px;">
-				<span class="container_main_middle-contten"
-					style="color: #2A62B9; margin-left: -25px; font-size: 20px;">Gợi ý cho bạn</span>
-			</div>
-		</div>
-		<div class="container container_main_middle1 mt-1 pb-4">
+		<div class="container" id="cartOrderForm"
+			style="background-color: white; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; margin-top: 20px; border-radius: 10px; padding: 20px 10px;">
 			<div class="row">
-				<div class="col-12">
-					<div class="row mt-2">
-						<div class="col-12 card_type_product-slide ">
-							<div class="card_type_product d-flex  justify-content-between align-items-center">
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-													class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/static/admin/dist/img/apple1.jpg" class="card-img-top" alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB - Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strong class="fs-6"
-													style="color:#ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND
-												</strong>
-											</a>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strike class="fs"
-													style="color:#3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND
-												</strike>
-											</a>
-											<a class="icon-star text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-											</a>
-										</div>
+				<div class="col-3 chose-all" style="margin: auto 0;">
+					<label>
+						<input class="form-check-input" type="checkbox" value=""
+											id="chose-all-product">
+					</label>
+					<button class="btn btn-transparents" id="btn-chose-all-product">Chọn Tất Cả (<span id="cart-count-product">100</span>)</button>
+				</div>
+				<div class="col-6 total-all-product" style="margin: auto 0;">
+					<p class="mb-0" style="float: right;" >Tổng Thanh Toán (<span id="count-prod-order">2</span> sản phẩm): <span id="total-price">1230123</span>@</p>
+				</div>
+				<div class="col-3 order-product">
+					<button class="btn btn-primary w-100 p-2" id="btn-order">Mua Hàng</button>
+				</div>
+				
+			</div>
+			
+		</div>
+		<div class="container container_main_middle mt-3 pb-5 bg-white">
+			<div class="row mt-3">
 
-										<div style="margin-top: 100px;"><a href="#"
-												class="btn btn-primary btn_add add-cart">Thêm Vào Giỏ Hàng
-											</a></div>
+				<div class="text-dark content_price">
+					<span class="container_main_middle-contten  mt-3"
+						style="color: #2A62B9;">Dành Cho Bạn</span>
 
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-													class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/static/admin/dist/img/apple1.jpg" class="card-img-top" alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB - Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strong class="fs-6"
-													style="color:#ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND
-												</strong>
-											</a>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strike class="fs"
-													style="color:#3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND
-												</strike>
-											</a>
-											<a class="icon-star text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;"><a href="#"
-												class="btn btn-primary btn_add add-cart">Thêm Vào Giỏ Hàng
-											</a></div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-													class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/static/admin/dist/img/apple1.jpg" class="card-img-top" alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB - Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strong class="fs-6"
-													style="color:#ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND
-												</strong>
-											</a>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strike class="fs"
-													style="color:#3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND
-												</strike>
-											</a>
-											<a class="icon-star text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;"><a href="#"
-												class="btn btn-primary btn_add add-cart">Thêm Vào Giỏ Hàng
-											</a></div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-													class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/static/admin/dist/img/apple1.jpg" class="card-img-top" alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB - Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strong class="fs-6"
-													style="color:#ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND
-												</strong>
-											</a>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strike class="fs"
-													style="color:#3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND
-												</strike>
-											</a>
-											<a class="icon-star text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;"><a href="#"
-												class="btn btn-primary btn_add add-cart">Thêm Vào Giỏ Hàng
-											</a></div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-													class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/static/admin/dist/img/apple1.jpg" class="card-img-top" alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB - Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strong class="fs-6"
-													style="color:#ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND
-												</strong>
-											</a>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strike class="fs"
-													style="color:#3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND
-												</strike>
-											</a>
-											<a class="icon-star text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;"><a href="#"
-												class="btn btn-primary btn_add add-cart">Thêm Vào Giỏ Hàng
-											</a></div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-													class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/static/admin/dist/img/apple1.jpg" class="card-img-top" alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB - Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strong class="fs-6"
-													style="color:#ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND
-												</strong>
-											</a>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strike class="fs"
-													style="color:#3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND
-												</strike>
-											</a>
-											<a class="icon-star text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;"><a href="#"
-												class="btn btn-primary btn_add add-cart">Thêm Vào Giỏ Hàng
-											</a></div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-													class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/static/admin/dist/img/apple1.jpg" class="card-img-top" alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB - Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strong class="fs-6"
-													style="color:#ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND
-												</strong>
-											</a>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strike class="fs"
-													style="color:#3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND
-												</strike>
-											</a>
-											<a class="icon-star text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;"><a href="#"
-												class="btn btn-primary btn_add add-cart">Thêm Vào Giỏ Hàng
-											</a></div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-													class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/static/admin/dist/img/apple1.jpg" class="card-img-top" alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB - Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strong class="fs-6"
-													style="color:#ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND
-												</strong>
-											</a>
-											<a class="price text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<strike class="fs"
-													style="color:#3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND
-												</strike>
-											</a>
-											<a class="icon-star text-center" style="text-decoration: none;"> <i
-													class="icon-flash text-red"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-												<i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;"><a href="#"
-												class="btn btn-primary btn_add add-cart">Thêm Vào Giỏ Hàng
-											</a></div>
-
-									</div>
-								</div>
-
-
-
-							</div>
-						</div>
-					</div>
 				</div>
 
 			</div>
+
+			<div
+				class="row d-flex justify-content-between align-items-center px-3">
+				<div class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
+					th:each="product : ${products}">
+					<a th:href="@{|/details/${product.id}|}"
+						class="text-decoration-none">
+						<div class="card pb-2" style="width: 10.8rem;">
+							<div class="icon-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+							<div class=" hot-sale text-center p-1"
+								th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
+								Giảm <span
+									th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
+								%
+							</div>
+							<img
+								th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
+								class="img-fluid w-100 p-0" th:alt="${product.name}">
+							<div class="card-body" style="padding: 5px;">
+								<div class="card-title tensp text-left" style="height: 40px;"
+									th:text="${product.name}" th:title="${product.name}"></div>
+								<div id="price-box text-left row">
+									<div class="price col-6 m-0" style="text-decoration: none;">
+										<span style="color: #ff0821bb;">₫</span><strong class="fs-10"
+											th:text="${#numbers.formatDecimal(product.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
+											style="color: #ff0821bb; font-weight: 600;">8,490,000</strong>
+									</div>
+									<div class="price col-6 m-0" style="text-decoration: none;">
+										<s class="fs-11"
+											th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0 , 'POINT', 0, 'COMMA')}"
+											style="color: #3f3d3d; font-weight: 100;"><span
+											style="color: #3f3d3d;">₫</span>8,490,000</s>
+									</div>
+								</div>
+								<div class="icon-star text-left" style="text-decoration: none;">
+									<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+									<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+										class="bi bi-star"></i> <i class="bi bi-star"></i>
+									<p class="text-info m-0">
+										đã bán <i class="text-info m-0"
+											th:text="${product.soldCount}"></i>
+									</p>
+								</div>
+							</div>
+						</div>
+
+					</a>
+				</div>
+
+			</div>
+
+		</div>
 	</main>
 	<footer>
 		<!-- place footer here -->
 
 		<div class="container-fluid mt-3 "
-			style=" background: linear-gradient(90deg, rgba(25,38,186,1) 0%, rgba(57,151,184,1) 54%, rgba(0,212,255,1) 100%);">
+			style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
 			<div class="container ">
 				<div class="row  ">
 					<div class="col-xs-6 col-md-4 col-lg-2 mt-2 ">
 						<span class="footer_title_content"> Hỗ Trợ Khách Khàng</span>
-						<ul class="list_customers" style="list-style-type: none; padding: 0;">
+						<ul class="list_customers"
+							style="list-style-type: none; padding: 0;">
 
-							<li><a href="" class="text-decoration-none text-light">Các Câu Hỏi Thường Gặp</a></li>
-							<li><a href="" class="text-decoration-none text-light">Gửi Yêu Cầu Hỗ Trợ</a></li>
-							<li><a href="" class="text-decoration-none text-light">Hướng Dẫn Đặt Hàng</a></li>
-							<li><a href="" class="text-decoration-none text-light">Phương thức vận chuyển</a></li>
-							<li><a href="" class="text-decoration-none text-light">Chính Sách Đổi Trả</a></li>
-							<li><a href="" class="text-decoration-none text-light">Hướng Dẫn Trả Góp</a></li>
+							<li><a href="" class="text-decoration-none text-light">Các
+									Câu Hỏi Thường Gặp</a></li>
+							<li><a href="" class="text-decoration-none text-light">Gửi
+									Yêu Cầu Hỗ Trợ</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hướng
+									Dẫn Đặt Hàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Phương
+									thức vận chuyển</a></li>
+							<li><a href="" class="text-decoration-none text-light">Chính
+									Sách Đổi Trả</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hướng
+									Dẫn Trả Góp</a></li>
 
 
 						</ul>
@@ -575,14 +272,19 @@
 					</div>
 					<div class="col-xs-6 col-md-4 col-lg-2 mt-2">
 						<span class="footer_title_content"> Về Chúng Tôi DEVEX</span>
-						<ul class="list_customers" style="list-style-type: none; padding: 0;">
+						<ul class="list_customers"
+							style="list-style-type: none; padding: 0;">
 
-							<li><a href="" class="text-decoration-none text-light">Giới Thiệu</a></li>
-							<li><a href="" class="text-decoration-none text-light">Tuyển Dụng</a></li>
-							<li><a href="" class="text-decoration-none text-light">Chính Sách Bảo Mật Và Thanh Toán</a>
-							</li>
-							<li><a href="" class="text-decoration-none text-light">Bán Hàng Doanh Nghiệp</a></li>
-							<li><a href="" class="text-decoration-none text-light">Điều Kiện Vận Chuyển</a></li>
+							<li><a href="" class="text-decoration-none text-light">Giới
+									Thiệu</a></li>
+							<li><a href="" class="text-decoration-none text-light">Tuyển
+									Dụng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Chính
+									Sách Bảo Mật Và Thanh Toán</a></li>
+							<li><a href="" class="text-decoration-none text-light">Bán
+									Hàng Doanh Nghiệp</a></li>
+							<li><a href="" class="text-decoration-none text-light">Điều
+									Kiện Vận Chuyển</a></li>
 
 
 						</ul>
@@ -591,12 +293,17 @@
 					</div>
 					<div class="col-xs-6 col-md-4 col-lg-2 mt-2">
 						<span class="footer_title_content"> Hợp Tác Và Liên Kết</span>
-						<ul class="list_customers" style="list-style-type: none; padding: 0;">
+						<ul class="list_customers"
+							style="list-style-type: none; padding: 0;">
 
-							<li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
-							<li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
-							<li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
-							<li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
 
 
 						</ul>
@@ -604,10 +311,13 @@
 
 					</div>
 					<div class="col-xs-6 col-md-4 col-lg-3 mt-2">
-						<span class="footer_title_content"> Giao Hàng Và Các Phương Thức Thanh Toán</span>
-						<ul class="list_customers" style="list-style-type: none; padding: 0;">
+						<span class="footer_title_content"> Giao Hàng Và Các Phương
+							Thức Thanh Toán</span>
+						<ul class="list_customers"
+							style="list-style-type: none; padding: 0;">
 
-							<li><a href="" class="text-decoration-none text-light">Hỗ Trợ Khách Khàng</a></li>
+							<li><a href="" class="text-decoration-none text-light">Hỗ
+									Trợ Khách Khàng</a></li>
 
 
 
@@ -619,7 +329,8 @@
 
 					<div class="col-xs-6 col-md-4 col-lg-3 mt-2">
 						<h3 class="footer_title_content">HOTLINE: **********</h3>
-						<ul class="list-customers" style="list-style-type: none; padding: 0;">
+						<ul class="list-customers"
+							style="list-style-type: none; padding: 0;">
 
 						</ul>
 					</div>
@@ -630,29 +341,29 @@
 					<div class="row ">
 						<div class="col-12">
 							<div class="row">
-								<span class="text-center   content_footer-text">Trụ sở chính: Tòa nhà Viettel, Số 285,
-									đường Cách Mạng Tháng 8, phường 12, quận 10, Thành phố Hồ Chí Minh
-									DEVEX nhận đặt hàng trực tuyến và giao hàng tận nơi, chưa hỗ trợ mua và nhận hàng
-									trực tiếp tại văn phòng hoặc trung tâm xử lý đơn hàng
-								</span>
+								<span class="text-center   content_footer-text">Trụ sở
+									chính: Tòa nhà Viettel, Số 285, đường Cách Mạng Tháng 8, phường
+									12, quận 10, Thành phố Hồ Chí Minh DEVEX nhận đặt hàng trực
+									tuyến và giao hàng tận nơi, chưa hỗ trợ mua và nhận hàng trực
+									tiếp tại văn phòng hoặc trung tâm xử lý đơn hàng </span>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-12">
 							<div class="row">
-								<span class="text-center content_footer-text">Giấy chứng nhận Đăng ký Kinh doanh số
-									0309532909 do Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh cấp lần đầu ngày
-									06/01/2010 và sửa đổi lần thứ 23 ngày 14/02/2022
-
+								<span class="text-center content_footer-text">Giấy chứng
+									nhận Đăng ký Kinh doanh số 0309532909 do Sở Kế hoạch và Đầu tư
+									Thành phố Hồ Chí Minh cấp lần đầu ngày 06/01/2010 và sửa đổi
+									lần thứ 23 ngày 14/02/2022 
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-12">
 							<div class="row ">
-								<span class="text-center content_footer-text"> © 2022 - Bản quyền của Công ty TNHH
-									DEVEX</span>
+								<span class="text-center content_footer-text"> © 2022 -
+									Bản quyền của Công ty TNHH DEVEX</span>
 
 							</div>
 						</div>
@@ -668,37 +379,47 @@
 
 	<script>
 		function updateTotalPrice(selectElement) {
-		const productContainer = selectElement.closest('.product-container');
-    	const quantity = parseInt(selectElement.value, 10);
-		  const priceText = productContainer.querySelector('.product-price').innerText.trim();
-		const price = parseFloat(priceText.replace(/[^\d.-]/g, ''));
-		  const totalPrice = quantity * price;
-		  productContainer.querySelector('.totalPriceValue').innerText = totalPrice.toLocaleString('vi-VN');
-		  productContainer.querySelector('.totalPriceValue').setAttribute('data-total-price', totalPrice);
-		
-		}
-	
+			const productContainer = selectElement
+					.closest('.product-container');
+			const quantity = parseInt(selectElement.value, 10);
+			const priceText = productContainer.querySelector('.product-price').innerText
+					.trim();
+			const price = parseFloat(priceText.replace(/[^\d.-]/g, ''));
+			const totalPrice = quantity * price;
+			productContainer.querySelector('.totalPriceValue').innerText = totalPrice
+					.toLocaleString('vi-VN');
+			productContainer.querySelector('.totalPriceValue').setAttribute(
+					'data-total-price', totalPrice);
 
+		}
+	</script>
+
+
+
+
+
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous">
 		
 	</script>
-	  
-  
-  
-	  
-  
-	
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-		</script>
 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-		</script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+		crossorigin="anonymous">
+		
+	</script>
 	<!--slick slide-->
 
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<script src="/static/admin/dist/js/user/userIndex.js"></script>
 </body>
 

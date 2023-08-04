@@ -44,6 +44,10 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	@Query("SELECT COUNT(o) FROM Product o WHERE o.name LIKE :keywords")
 	long countByKeywordName(@Param("keywords") String keywords);
 	
+	 @Query("select p from Product p join p.sellerProduct s where p.id = :id")
+	 Product findProductById( String id);
+	
+
 	@Modifying
 	@Query("UPDATE Product p SET p.name = :name, p.productbrand.id = :brand, p.description = :description, p.createdDay = :createdDay, p.active = :active, p.sellerProduct.username = :sellerId, p.categoryDetails.id = :categoryDetailsId WHERE p.id = :id")
 	void updateProduct(@Param("id") String id, @Param("name") String name, @Param("brand") int brand, @Param("description") String description, @Param("createdDay") Date createdDay, @Param("active") Boolean active, @Param("sellerId") String sellerId, @Param("categoryDetailsId") int categoryDetailsId);

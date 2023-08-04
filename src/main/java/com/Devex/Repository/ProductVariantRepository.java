@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.Devex.Entity.ProductVariant;
+import com.Devex.Entity.User;
 
 @EnableJpaRepositories
 @Repository("productVariantRepository")
@@ -19,6 +20,15 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 	@Query("SELECT p FROM ProductVariant p WHERE p.product.id LIKE %?1%")
 	List<ProductVariant> findAllProductVariantByProductId(String id);
 
+	
+	@Query("SELECT pv.price FROM ProductVariant pv JOIN pv.product p WHERE p.id = :id AND pv.color = :color")
+	Double findPriceByColor(String id,String color);
+	
+	@Query("SELECT pv.priceSale FROM ProductVariant pv JOIN pv.product p WHERE p.id = :id AND pv.color = :color AND pv.size = :size")
+	Double findPriceByColorAndSize(String id,String color,String size);
+		
+//	List<ProductVariant> findAllProductVariantByProductId(String id);
+	
 	@Modifying
 	@Query("UPDATE ProductVariant pv SET pv.quantity = :quantity, pv.price = :price, pv.priceSale = :priceSale, pv.size = :size, pv.color = :color WHERE pv.id = :id")
 	void updateProductVariant(@Param("id") Integer id, @Param("quantity") Integer quantity,
@@ -34,6 +44,7 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 	@Modifying
 	@Query(value = "DELETE FROM Product_Variant WHERE Product_ID = :productId", nativeQuery = true)
 	void deleteProductVariantByProductId(@Param("productId") String productId);
-
 	
+	@Query("SELECT pv.id FROM ProductVariant pv WHERE pv.color = ?1 and pv.size = ?2 and pv.product.id = ?3  ")
+	int findIdProductVaVariantbySizeandColor(String coler,String size,String id);
 }

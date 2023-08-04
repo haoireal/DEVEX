@@ -15,10 +15,6 @@ import com.Devex.Entity.Product;
 @Repository("productDetailRepository")
 public interface ProductDetailRepository extends JpaRepository<Product, String>{
 	
-////	@Query("SELECT p   FROM Product p JOIN p.imageProducts i WHERE p.id = : 101-aligqd911-10001")
-////	List<Object[]> findProductDetailsById();
-//	
-//	
-//	 Optional<Product> findById(String id);
+	
 	
 }

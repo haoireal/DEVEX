@@ -4,423 +4,111 @@
 <div th:replace="~{flagment/user/userHead :: userHeadFragment}"></div>
 <!-- Theme style -->
 <!-- <link rel="stylesheet" href="../admin/dist/css/userIndex.css"> -->
+
 <link rel="stylesheet" href="/admin/dist/css/findproduct.css">
 </head>
 <body>
-			<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
+	<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
 	<main>
-		<div class="container">
-			<div class="text-dark content_price" style="margin-top: 10px;">
-				<span class="container_main_middle-contten"
-					style="color: #2A62B9; margin-left: -25px; font-size: 20px;">Tìm
-					Kiếm</span>
-			</div>
-		</div>
-		<div class="container container_main_middle  pb-4">
-			<div class="row">
-				<div class="col-md-2 filter-textprodcut" style="height: 20px;">
-					<a href="" style="font-weight: bold; font-size: 20px;">Lọc </a>
-				</div>
-				<div class="col-md-4 filter-textprodcut" style="height: 20px;">
-					<a href="">Theo Giá :</a> <select class="option-product"
-						id="price-sort" name="price-sort">
-						<option value="low-to-high">Thấp đến cao</option>
-						<option value="high-to-low">Cao đến thấp</option>
-					</select>
-				</div>
-				<div class="col-md-3 filter-textprodcut" style="height: 20px;">
-					<a href="">Theo Tên:</a> <select class="option-product"
-						id="price-sort" name="price-sort">
-						<option value="low-to-high">Từ A-Z</option>
-						<option value="high-to-low">Từ Z-A</option>
-					</select>
-				</div>
-				<div class="col-md-3 filter-textprodcut" style="height: 20px;">
-					<a href="" style="font-weight: bold;">Hàng Mall</a> <a href=""
-						style="font-weight: bold;">Bán Chạy</a>
+		<form action="/filter/price">
+			<div class="container">
+				<div class="text-dark content_price" style="margin-top: 10px;">
+					<span class="container_main_middle-contten"
+						style="color: #2A62B9; margin-left: -25px; font-size: 20px;">Tìm
+						Kiếm "<i style="color: #2A62B9;"
+						th:text="${session.keywordsSearch}"></i>"
+					</span>
 				</div>
 			</div>
+			<div class="container container_main_middle pb-2 bg-white">
+				<div class="row">
+					<div class="col-md-2 col-3 filter-textprodcut"
+						style="height: 20px;">
+						<a href="" style="font-weight: bold; font-size: 20px;">Lọc </a>
+					</div>
+					<div class="col-md-3 col-3 filter-textprodcut row optionbox"
+						style="height: 20px; color: #2A62B9;">
+						<select class="form-select form-select-sm" name="sortprice"
+							onchange="this.form.submit()"
+							aria-label=".form-select-sm example">
+							<option class="text-dark" selected>Giá (Mặc định)</option>
+							<option class=" text-dark" value="ASC">Tăng dần</option>
+							<option class=" text-dark" value="DESC">Giảm dần</option>
+						</select>
+					</div>
+					<div class="col filter-textprodcut">
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="danger-outlined" value="BAN_CHAY" autocomplete="off"
+							onchange="filterProducts()"> <label
+							class="btn btn-outline-danger" for="danger-outlined">BÁN
+							CHẠY</label>
+					</div>
+					<div class="col filter-textprodcut">
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="success-outlined" value="DEVEX_MALL" autocomplete="off"
+							onchange="filterProducts()"> <label
+							class="btn btn-outline-success" for="success-outlined">DEVEX
+							MALL</label>
+					</div>
+
+				</div>
 
 
-		</div>
-		<div class="container container_main_middle mt-3 pb-5">
-			<div class="row d-flex px-3">
-				<div class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
-					th:each="product : ${products}">
-					<a th:href="@{|/details/${product.id}|}" class="text-decoration-none">
-						<div class="card pb-2" style="width: 10.8rem;">
-							<div class="icon-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
-							<div class=" hot-sale text-center p-1"
-								th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
-								Giảm <span
-									th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
-								%
+			</div>
+			<div class="container container_main_middle mt-3 pb-5 bg-white">
+				<div class="row d-flex px-3">
+					<div class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
+						th:each="product : ${products}">
+						<a th:href="@{|/details/${product.id}|}"
+							class="text-decoration-none">
+							<div class="card pb-2" style="width: 10.8rem;">
+								<div class="icon-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+								<div class=" hot-sale text-center p-1"
+									th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
+									Giảm <span
+										th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
+									%
+								</div>
+								<img
+									th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
+									class="img-fluid w-100 p-0" th:alt="${product.name}">
+								<div class="card-body" style="padding: 5px;">
+									<div class="card-title tensp text-left" style="height: 40px;"
+										th:text="${product.name}" th:title="${product.name}"></div>
+									<div id="price-box text-left row">
+										<div class="price col-6 m-0" style="text-decoration: none;">
+											<span style="color: #ff0821bb;">₫</span><strong class="fs-10"
+												th:text="${#numbers.formatDecimal(product.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
+												style="color: #ff0821bb; font-weight: 600;">8,490,000</strong>
+										</div>
+										<div class="price col-6 m-0" style="text-decoration: none;">
+											<strike class="fs-11"
+												th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0 , 'POINT', 0, 'COMMA')}"
+												style="color: #3f3d3d; font-weight: 100;"><span
+												style="color: #3f3d3d;">₫</span>8,490,000</strike>
+										</div>
+									</div>
+									<div class="icon-star text-left" style="text-decoration: none;">
+										<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
+										<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
+											class="bi bi-star"></i> <i class="bi bi-star"></i>
+										<p class="text-info m-0">
+											đã bán <i class="text-info m-0"
+												th:text="${product.soldCount}"></i>
+										</p>
+									</div>
+								</div>
 							</div>
-							<img th:src="@{|/img/product/${product.imageProducts[0].name}|}"
-								class="img-fluid w-100 p-0" th:alt="${product.name}">
-							<div class="card-body" style="padding: 5px;">
-								<div class="card-title tensp text-left" style=" height: 40px;"
-									th:text="${product.name}" th:title="${product.name}"></div>
-								<div id="price-box text-left row">
-									<div class="price col-6 m-0" style="text-decoration: none;">
-										<span style="color: #ff0821bb;">₫</span><strong class="fs-10"
-											th:text="${#numbers.formatDecimal(product.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
-											style="color: #ff0821bb; font-weight: 600;">8,490,000</strong>
-									</div>
-									<div class="price col-6 m-0" style="text-decoration: none;">
-										<strike class="fs-11"
-											th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0 , 'POINT', 0, 'COMMA')}"
-											style="color: #3f3d3d; font-weight: 100;"><span
-											style="color: #3f3d3d;">₫</span>8,490,000</strike>
-									</div>
-								</div>
-								<div class="icon-star text-left" style="text-decoration: none;">
-									<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-									<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-										class="bi bi-star"></i> <i class="bi bi-star"></i>
-									<p class="text-info m-0">
-										đã bán <i class="text-info m-0"
-											th:text="${product.soldCount}"></i>
-									</p>
-								</div>
-							</div>
-						</div>
-					</a>
-				</div>
-			</div>
-			<div class="text-dark content_price text-center">
-				<span class="container_main_middle-contten "
-					style="color: #2A62B9; margin-left: -25px; font-size: 18px;">Xem
-					Thêm ....</span>
-			</div>
-		</div>
-		<div class="container">
-			<div class="text-dark content_price" style="margin-top: 10px;">
-				<span class="container_main_middle-contten"
-					style="color: #2A62B9; margin-left: -25px; font-size: 20px;">Gợi
-					ý cho bạn</span>
-			</div>
-		</div>
-		<div class="container container_main_middle1 mt-1 pb-4">
-			<div class="row">
-				<div class="col-12">
-					<div class="row mt-2">
-						<div class="col-12 card_type_product-slide ">
-							<div
-								class="card_type_product d-flex  justify-content-between align-items-center">
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-												class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/admin/dist/img/apple1.jpg" class="card-img-top"
-											alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB
-												- Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strong class="fs-6"
-												style="color: #ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND </strong>
-											</a> <a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strike class="fs"
-												style="color: #3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND </strike>
-											</a> <a class="icon-star text-center"
-												style="text-decoration: none;"> <i
-												class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-												<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-												class="bi bi-star"></i> <i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;">
-											<a href="#" class="btn btn-primary btn_add add-cart">Thêm
-												Vào Giỏ Hàng </a>
-										</div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-												class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/admin/dist/img/apple1.jpg" class="card-img-top"
-											alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB
-												- Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strong class="fs-6"
-												style="color: #ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND </strong>
-											</a> <a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strike class="fs"
-												style="color: #3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND </strike>
-											</a> <a class="icon-star text-center"
-												style="text-decoration: none;"> <i
-												class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-												<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-												class="bi bi-star"></i> <i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;">
-											<a href="#" class="btn btn-primary btn_add add-cart">Thêm
-												Vào Giỏ Hàng </a>
-										</div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-												class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/admin/dist/img/apple1.jpg" class="card-img-top"
-											alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB
-												- Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strong class="fs-6"
-												style="color: #ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND </strong>
-											</a> <a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strike class="fs"
-												style="color: #3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND </strike>
-											</a> <a class="icon-star text-center"
-												style="text-decoration: none;"> <i
-												class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-												<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-												class="bi bi-star"></i> <i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;">
-											<a href="#" class="btn btn-primary btn_add add-cart">Thêm
-												Vào Giỏ Hàng </a>
-										</div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-												class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/admin/dist/img/apple1.jpg" class="card-img-top"
-											alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB
-												- Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strong class="fs-6"
-												style="color: #ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND </strong>
-											</a> <a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strike class="fs"
-												style="color: #3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND </strike>
-											</a> <a class="icon-star text-center"
-												style="text-decoration: none;"> <i
-												class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-												<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-												class="bi bi-star"></i> <i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;">
-											<a href="#" class="btn btn-primary btn_add add-cart">Thêm
-												Vào Giỏ Hàng </a>
-										</div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-												class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/admin/dist/img/apple1.jpg" class="card-img-top"
-											alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB
-												- Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strong class="fs-6"
-												style="color: #ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND </strong>
-											</a> <a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strike class="fs"
-												style="color: #3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND </strike>
-											</a> <a class="icon-star text-center"
-												style="text-decoration: none;"> <i
-												class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-												<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-												class="bi bi-star"></i> <i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;">
-											<a href="#" class="btn btn-primary btn_add add-cart">Thêm
-												Vào Giỏ Hàng </a>
-										</div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-												class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/admin/dist/img/apple1.jpg" class="card-img-top"
-											alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB
-												- Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strong class="fs-6"
-												style="color: #ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND </strong>
-											</a> <a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strike class="fs"
-												style="color: #3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND </strike>
-											</a> <a class="icon-star text-center"
-												style="text-decoration: none;"> <i
-												class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-												<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-												class="bi bi-star"></i> <i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;">
-											<a href="#" class="btn btn-primary btn_add add-cart">Thêm
-												Vào Giỏ Hàng </a>
-										</div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-												class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/admin/dist/img/apple1.jpg" class="card-img-top"
-											alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB
-												- Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strong class="fs-6"
-												style="color: #ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND </strong>
-											</a> <a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strike class="fs"
-												style="color: #3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND </strike>
-											</a> <a class="icon-star text-center"
-												style="text-decoration: none;"> <i
-												class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-												<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-												class="bi bi-star"></i> <i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;">
-											<a href="#" class="btn btn-primary btn_add add-cart">Thêm
-												Vào Giỏ Hàng </a>
-										</div>
-
-									</div>
-								</div>
-								<div class="col-6 col-md-4 col-lg-2 pt-3">
-									<div class="card"
-										style="width: 90%; height: 450px; border: 1px solid #7aa3e4; border-radius: 10px;">
-										<div class="hot-sale text-center">
-											<a href=""> HOT SALE</a>
-										</div>
-										<div class="icon-sale text-center">
-											<a href=""> Giảm 100.000.000 VND <i
-												class="bi bi-lightning-charge-fill"></i></a>
-										</div>
-										<img src="/admin/dist/img/apple1.jpg" class="card-img-top"
-											alt="...">
-										<div class="card-body" style="padding: 5px;">
-											<h5 class="card-title text-center tensp">Iphone 11 64GB
-												- Chính Hãng</h5>
-											<a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strong class="fs-6"
-												style="color: #ff0821; font-size: 16px; font-weight: 600;">8,490,000
-													VND </strong>
-											</a> <a class="price text-center" style="text-decoration: none;">
-												<i class="icon-flash text-red"></i> <strike class="fs"
-												style="color: #3f3d3d; font-size: 14px; font-weight: 100; margin-left: 5px;">8,490,000
-													VND </strike>
-											</a> <a class="icon-star text-center"
-												style="text-decoration: none;"> <i
-												class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-												<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-												class="bi bi-star"></i> <i class="bi bi-star"></i>
-											</a>
-										</div>
-
-										<div style="margin-top: 100px;">
-											<a href="#" class="btn btn-primary btn_add add-cart">Thêm
-												Vào Giỏ Hàng </a>
-										</div>
-
-									</div>
-								</div>
-
-
-
-							</div>
-						</div>
+						</a>
 					</div>
 				</div>
-
+				<div class="text-dark content_price text-center">
+					<span class="container_main_middle-contten "
+						style="color: #2A62B9; margin-left: -25px; font-size: 18px;">Xem
+						Thêm ....</span>
+				</div>
 			</div>
+		</form>
 	</main>
 	<footer>
 		<!-- place footer here -->
@@ -577,11 +265,31 @@
 	<!--slick slide-->
 
 	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<script type="text/javascript"
 		src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<script src="/admin/dist/js/user/userIndex.js"></script>
+	<script src="/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="/admin/dist/js/adminlte.min.js"></script>
+	<script>
+		function filterProducts() {
+			var selectedValue = document
+					.querySelector('input[name="options-outlined"]:checked').value;
+
+			// Gửi yêu cầu POST tới Spring Boot
+			var form = document.createElement("form");
+			form.method = "POST";
+			form.action = "/filter/ban-chay";
+
+			var input = document.createElement("input");
+			input.type = "hidden";
+			input.name = "filterValue";
+			input.value = selectedValue;
+
+			form.appendChild(input);
+			document.body.appendChild(form);
+
+			form.submit();
+		}
+	</script>
 </body>
 </html>
