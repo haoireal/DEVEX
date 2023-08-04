@@ -123,7 +123,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public void updateProduct(String id, String name, String brand, String description, Date createdDay, Boolean active,
+	public void updateProduct(String id, String name, int brand, String description, Date createdDay, Boolean active,
 			String sellerId, int categoryDetailsId) {
 		productRepository.updateProduct(id, name, brand, description, createdDay, active, sellerId, categoryDetailsId);
 	}
@@ -139,6 +139,28 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findProductBySellerUsernameAndIsdeleteProduct(sellerUsername);
 	}
 
+	@Override
+	public List<Product> findProductBySellerUsernameAndIsdeleteTrueAndActiveTrueProduct(String sellerUsername) {
+		return productRepository.findProductBySellerUsernameAndIsdeleteTrueAndActiveTrueProduct(sellerUsername);
+	}
+
+	@Override
+	public long getProductCount() {
+        return productRepository.count();
+    }
+
+	@Override
+	@Transactional
+	public void insertProduct(String id, String name, int brand, String description, Date createdDay, Boolean active,
+			Boolean isdelete, String shopId, Integer categoryId) {
+		productRepository.insertProduct(id, name, brand, description, createdDay, active, isdelete, shopId, categoryId);
+	}
+
+	@Override
+	public Product findLatestProductBySellerUsername(String username) {
+		return productRepository.findLatestProductBySellerUsername(username);
+	}
+	
 	
 
 }

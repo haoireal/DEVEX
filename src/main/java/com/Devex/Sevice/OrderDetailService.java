@@ -40,4 +40,8 @@ public interface OrderDetailService {
 
 	List<OrderDetails> findOrderDetailsByOrderIDAndSellerUsername(String id, String username);
 
+	void updateIdOrderDetailsStatus(int ido, String id);
+
+	List<OrderDetails> findOrderDetailsByOrderID(String id);
+
 }

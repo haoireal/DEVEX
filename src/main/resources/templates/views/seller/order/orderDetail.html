@@ -108,17 +108,23 @@
 													<th>Tên sản phẩm</th>
 													<th>Số lượng</th>
 													<th>Giá</th>
+													<th>Trạng thái</th>
+													<th class="text-center">Shop bán</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr th:each="od : ${orderDetails}">
 													<td th:text="${od.productVariant.product.id}"></td>
 													<td>
-														<img alt="" th:src="@{|/img/product/${od.productVariant.product.imageProducts[0].name}|}" width="60px">
+														<img alt="" th:src="@{|/img/product/${od.productVariant.product.sellerProduct.username}/${od.productVariant.product.id}/${od.productVariant.product.imageProducts[0].name}|}" width="60px">
 													</td>
 													<td th:text="${od.productVariant.product.name}"></td>
-													<td th:text="${od.quantity}"></td>
+													<td class="text-center" th:text="${od.quantity}"></td>
 													<td th:text="${#numbers.formatDecimal(od.price, 0, 'COMMA', 0, 'POINT')}"></td>
+													<td th:if="${od.status.name == 'Chờ xác nhận'}" th:text="${od.status.name}" class="text-danger"></td>
+													<td th:if="${od.status.name == 'Đã xác nhận'}" th:text="${od.status.name}" class="text-success"></td>
+													<td class="text-center" th:if="${od.productVariant.product.sellerProduct.username == 'aligqd911'}">Shop của bạn</td>
+													<td class="text-center" th:unless="${od.productVariant.product.sellerProduct.username == 'aligqd911'}" th:text="${od.productVariant.product.sellerProduct.shopName}"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -170,15 +176,26 @@
 											<i class="fas fa-print"></i>Print
 										</a>
 										<label class="ml-5">Tình Trạng đơn hàng: </label>
-										<a th:href="@{/seller/order/xacnhan(id=${idPrint})}" class="btn btn-success" th:if="${order.orderStatus.name == 'Chờ xác nhận'}">Xác Nhận đơn hàng</a>
+										<a class="btn btn-secondary" th:if="${
+										 check == true and order.orderStatus.name != 'Chờ thanh toán' and
+										 order.orderStatus.name != 'Vận chuyển' and
+										 order.orderStatus.name != 'Đang giao' and
+										 order.orderStatus.name != 'Đã xác nhận' and
+										 order.orderStatus.name != 'Nhận hàng' and
+										 order.orderStatus.name != 'Hoàn thành' and
+										 order.orderStatus.name != 'Đã hủy' and
+										 order.orderStatus.name != 'Trả hàng/Hoàn tiền'
+										}" disabled="disabled">Chờ shop khác xác nhận</a>
+										<a th:href="@{/seller/order/xacnhan(id=${idPrint})}" class="btn btn-success" th:if="${check == false}">Xác Nhận đơn hàng</a>
 										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Chờ thanh toán'}" disabled="disabled">Chờ thanh toán</a>
 										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Vận chuyển'}" disabled="disabled">Đang vận chuyển</a>
 										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Đang giao'}" disabled="disabled">Đang giao</a>
-										<a th:href="@{/seller/order/hoanthanh(id=${idPrint})}" class="btn btn-success" th:if="${order.orderStatus.name == 'Nhận hàng'}">Đang nhận hàng</a>
+										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Đã xác nhận'}" disabled="disabled">Shop đang chuẩn bị hàng</a>
+										<a th:href="@{/seller/order/hoanthanh(id=${idPrint})}" class="btn btn-success" th:if="${order.orderStatus.name == 'Nhận hàng'}">Đã nhận hàng</a>
 										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Hoàn thành'}"  disabled="disabled">Hoàn thành</a>
 										<a class="btn btn-danger" th:if="${order.orderStatus.name == 'Đã huỷ'}" disabled="disabled">Đã hủy</a>
 										<a class="btn btn-warning" th:if="${order.orderStatus.name == 'Trả hàng/Hoàn tiền'}">Trả hàng/Hoàn tiền</a>
-										<button th:if="${check}" disabled="disabled" type="button" class="btn btn-secondary float-right">
+										<button th:if="${checko}" disabled="disabled" type="button" class="btn btn-secondary float-right">
 										    <i class="far fa-credit-card"></i> Submit Payment
 										</button>
 										<button th:unless="${check}" type="button" class="btn btn-success float-right">

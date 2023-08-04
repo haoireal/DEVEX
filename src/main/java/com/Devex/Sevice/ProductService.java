@@ -55,12 +55,21 @@ public interface ProductService {
 
 	Product findByIdProduct(String id);
 
-	void updateProduct(String id, String name, String brand, String description, Date createdDay, Boolean active, String sellerId,
+	void updateProduct(String id, String name, int brand, String description, Date createdDay, Boolean active, String sellerId,
 			int categoryDetailsId);
 
 	void updateProductIsDeleteById(boolean isdelete, String id);
 
 	List<Product> findProductBySellerUsernameAndIsdeleteProduct(String sellerUsername);
+
+	List<Product> findProductBySellerUsernameAndIsdeleteTrueAndActiveTrueProduct(String sellerUsername);
+
+	long getProductCount();
+
+	void insertProduct(String id, String name, int brand, String description, Date createdDay, Boolean active, Boolean isdelete,
+			String shopId, Integer categoryId);
+
+	Product findLatestProductBySellerUsername(String username);
 
 	
 
