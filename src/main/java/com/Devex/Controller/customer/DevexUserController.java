@@ -96,6 +96,7 @@ public class DevexUserController {
 		sessionService.set("keywordsSearch", kwords);
 		// Tìm tên từ theo từ khóa
 		list.addAll(productService.findByKeywordName(kwords));
+		System.out.println("chan loi");
 		// Tìm theo shop bán
 		list.addAll(productService.findProductBySellerUsername("%" + kwords + "%"));
 		// FILLTER SẢN PHẨM TRÙNG NHAU
