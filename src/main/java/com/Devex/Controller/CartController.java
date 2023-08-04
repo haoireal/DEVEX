@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import com.Devex.Entity.Cart;
 import com.Devex.Entity.CartDetail;
 import com.Devex.Entity.CartProdcut;
@@ -24,9 +25,11 @@ import com.Devex.Entity.Customer;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
+import com.Devex.Repository.CartDetailRespository;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Repository.ProductVariantRepository;
 import com.Devex.Sevice.CartDetailService;
+
 import com.Devex.Sevice.CartService;
 import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.ProductService;
@@ -64,7 +67,10 @@ public class CartController {
 	
 	@Autowired
 	ProductVariantService pvService;
-
+	@Autowired
+	ProductVariantRepository pv;
+	@Autowired
+	CartDetailService cartsv;
 	ObjectMapper objectMapper = new ObjectMapper();
 	Cookie cookie = null;
 
@@ -114,7 +120,9 @@ public class CartController {
 
 		}
 		return "user/cartproduct";
+		
 	}
+
 	
 	@RequestMapping("/cart/add/{idProduct}")
 	public String addCart(@PathVariable("idProduct") String id, Model model,
@@ -167,6 +175,7 @@ public class CartController {
 //	}
 
 //	@RequestMapping("/cart/remove/{idProduct}")
+
 //	public String remove(@PathVariable("idProduct") String id) throws JsonProcessingException {
 //		cart.remove(id);
 //		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
@@ -181,6 +190,7 @@ public class CartController {
 //		cookie.setPath("/");
 //		resp.addCookie(cookie);
 //
+
 //		return "redirect:/cart";
 //	}
 

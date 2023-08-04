@@ -27,6 +27,7 @@ public class Role implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+
 	@Column(name = "ID", updatable = false)
 	private String id;
 	@Column(name = "Name")
