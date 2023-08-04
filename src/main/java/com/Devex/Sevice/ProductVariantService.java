@@ -54,4 +54,6 @@ public interface ProductVariantService {
 
 	int findIdProductVaVariantbySizeandColor(String coler, String size, String id);
 
+	int findIdProductVaVariantbySize(String coler, String id);
+
 }
