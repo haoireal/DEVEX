@@ -86,25 +86,47 @@ public class CartController {
 			@RequestParam(name = "flexRadio", required = false) String size,
 			@RequestParam(name = "flexRadioDefault", required = false) String cloer,
 			@RequestParam(name = "soluong") int soLuong) throws JsonProcessingException {
-		int idProductVariant = 	pvService.findIdProductVaVariantbySizeandColor(cloer, size, id);
-		ProductVariant pv2 = pvService.findById(idProductVariant).get();
-		CartDetail cartDetail = new CartDetail();
-		cartDetail.setProductCart(pv2);
-		cartDetail.setQuantity(soLuong);
-		Customer user = session.get("user");
-		System.out.println(user.getEmail());
-		System.out.println(user.getPhoneAddress());
-		Cart cart = user.getCart();
-		if(cart == null) {
-			cart = new Cart();
-			cart.setPerson(user);
-			System.out.println(2);
-			cartService.save(cart);
+			int idProductVariant= 0;
+			System.out.println("size:"+size);
+			System.out.println("cloer"+cloer);
+		if(size==null) {
+			idProductVariant = pvService.findIdProductVaVariantbySize(cloer,id);
+			ProductVariant pv2 = pvService.findById(idProductVariant).get();
+			CartDetail cartDetail = new CartDetail();
+			cartDetail.setProductCart(pv2);
+			cartDetail.setQuantity(soLuong);
+			Customer user = session.get("user");
+			Cart cart = user.getCart();
+			if(cart == null) {
+				cart = new Cart();
+				cart.setPerson(user);
+				System.out.println(2);
+				cartService.save(cart);
+			}
+			System.out.println(3);
+			cartDetail.setCart(cart);
+			cartDetailService.save(cartDetail);		
+		}else {
+			idProductVariant = 	pvService.findIdProductVaVariantbySizeandColor(cloer, size, id);
+			ProductVariant pv2 = pvService.findById(idProductVariant).get();
+			CartDetail cartDetail = new CartDetail();
+			cartDetail.setProductCart(pv2);
+			cartDetail.setQuantity(soLuong);
+			Customer user = session.get("user");
+			Cart cart = user.getCart();
+			if(cart == null) {
+				cart = new Cart();
+				cart.setPerson(user);
+				System.out.println(2);
+				cartService.save(cart);
+			}
+			System.out.println(3);
+			cartDetail.setCart(cart);
+			cartDetailService.save(cartDetail);
+			
 		}
-		System.out.println(3);
-		cartDetail.setCart(cart);
-		cartDetailService.save(cartDetail);
 		return "redirect:/details/{idProduct}";
+		
 	}
 
 //	@RequestMapping("/cartproduct/add/{idProduct}")

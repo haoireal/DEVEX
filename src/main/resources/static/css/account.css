@@ -1,7 +1,7 @@
 body {
 	background-repeat: round;
 	background-image: linear-gradient(rgba(255, 255, 255, 0.291),
-		rgba(255, 255, 255, 0.116)), url(/img/banner/bg-login.png);
+		rgba(255, 255, 255, 0.116)), url(/img/banner/bg-login.jpg);
 	height: 100vh;
 }
 

@@ -20,8 +20,6 @@ import jakarta.transaction.Transactional;
 @SessionScope
 @Service("productVariantService")
 public class ProductVariantServiceImpl implements ProductVariantService{
-	
-
 	@Autowired
 	ProductVariantRepository productVariantRepository;
 
@@ -128,6 +126,11 @@ public class ProductVariantServiceImpl implements ProductVariantService{
 	@Override
 	public int findIdProductVaVariantbySizeandColor(String coler, String size, String id) {
 		return productVariantRepository.findIdProductVaVariantbySizeandColor(coler, size, id);
+	}
+
+	@Override
+	public int findIdProductVaVariantbySize(String coler, String id) {
+		return productVariantRepository.findIdProductVaVariantbySize(coler, id);
 	}
 	
 	

@@ -183,7 +183,7 @@
 
 									<div th:each="color, iter : ${listColor}"
 										class="form-check product-variation ms-1  align-items-center justify-content-center ">
-										<input
+										<input th:checked="${iter.index==0}"
 											onchange="sendRadioValue(this.value)"
 											th:value="${color}"
 											th:attr="data-id=${product.id}"
@@ -208,7 +208,7 @@
 								<div class="col-12 col-lg-10 d-flex">
 									<div th:each="size, iter : ${listSize}"
 										class="form-check product-variation ms-1  align-items-center justify-content-center ">
-										<input class="  form-check-input"
+										<input class="  form-check-input" th:checked="${iter.index==0}"
 											onchange="sendRadioValue(this.value)"
 											th:value="${size}"
 											style="margin-left: -1em !important; padding: 3px;"
