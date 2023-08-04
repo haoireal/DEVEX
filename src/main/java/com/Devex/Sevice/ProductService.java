@@ -32,6 +32,7 @@ public interface ProductService {
 	List<Product> findAll();
 	
 	Page<Product> findAll(Pageable pageable);
+	Product findProductById(String id);
 
 	Optional<Product> findOne(Example<Product> example);
 
