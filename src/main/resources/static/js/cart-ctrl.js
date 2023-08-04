@@ -147,7 +147,6 @@ app.controller("cart-ctrl", function ($scope, $http) {
   });
 
   $cart.loadProductCart();
-
   // Đặt hàng
   $scope.order = {
     get account() {
