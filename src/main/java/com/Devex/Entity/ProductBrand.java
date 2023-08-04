@@ -27,7 +27,7 @@ public class ProductBrand {
 	@Column(name = "ID", updatable = false)
 	private int id;
 	@Column(name = "Name")
-	private String Name;
+	private String name;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "productbrand")
