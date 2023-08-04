@@ -15,7 +15,7 @@ import com.Devex.Entity.ImageProduct;
 @Repository("imageProductRepository")
 public interface ImageProductRepository extends JpaRepository<ImageProduct, String>{
 
-	@Query("SELECT p FROM ImageProduct p WHERE p.product.id LIKE %?1%")
+	@Query("SELECT p FROM ImageProduct p WHERE p.product.id LIKE ?1")
 	List<ImageProduct> findAllImageProductByProductId(String id);
 	
 	@Modifying

@@ -49,10 +49,25 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 
 	@Modifying
-	@Query("UPDATE Product p SET p.name = :name, p.brand = :brand, p.description = :description, p.createdDay = :createdDay, p.active = :active, p.sellerProduct.username = :sellerId, p.categoryDetails.id = :categoryDetailsId WHERE p.id = :id")
-	void updateProduct(@Param("id") String id, @Param("name") String name, @Param("brand") String brand, @Param("description") String description, @Param("createdDay") Date createdDay, @Param("active") Boolean active, @Param("sellerId") String sellerId, @Param("categoryDetailsId") int categoryDetailsId);
+	@Query("UPDATE Product p SET p.name = :name, p.productbrand.id = :brand, p.description = :description, p.createdDay = :createdDay, p.active = :active, p.sellerProduct.username = :sellerId, p.categoryDetails.id = :categoryDetailsId WHERE p.id = :id")
+	void updateProduct(@Param("id") String id, @Param("name") String name, @Param("brand") int brand, @Param("description") String description, @Param("createdDay") Date createdDay, @Param("active") Boolean active, @Param("sellerId") String sellerId, @Param("categoryDetailsId") int categoryDetailsId);
 
 	@Modifying
 	@Query(value = "UPDATE Product SET Isdelete = :isdelete WHERE ID = :id", nativeQuery = true)
 	void updateProductIsDeleteById(@Param("isdelete") boolean isdelete, @Param("id") String id);
+	
+	@Query("SELECT DISTINCT p FROM Product p " + "JOIN FETCH p.sellerProduct s "
+			+ "WHERE s.username like ?1 AND p.isdelete = true AND p.active = true")
+	List<Product> findProductBySellerUsernameAndIsdeleteTrueAndActiveTrueProduct(String sellerUsername);
+
+	@Modifying
+	@Query(value = "INSERT INTO Product (ID, Name, Description, Createdday, Active, Isdelete, Shop_ID, Category_ID, Brand_ID) VALUES (:id, :name, :description, :createdDay, :active, :isdelete, :shopId, :categoryId, :brand)", nativeQuery = true)
+	void insertProduct(@Param("id") String id, @Param("name") String name, @Param("brand") int brand,
+			@Param("description") String description, @Param("createdDay") Date createdDay,
+			@Param("active") Boolean active, @Param("isdelete") Boolean isdelete, @Param("shopId") String shopId,
+			@Param("categoryId") Integer categoryId);
+	
+	@Query("SELECT p FROM Product p WHERE p.sellerProduct.username = :username ORDER BY p.createdDay DESC LIMIT 1")
+	Product findLatestProductBySellerUsername(@Param("username") String username);
+
 }
