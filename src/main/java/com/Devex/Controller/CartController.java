@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Devex.Entity.Cart;
 import com.Devex.Entity.CartDetail;
-import com.Devex.Entity.CartProdcut;
 import com.Devex.Entity.Customer;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
@@ -75,50 +74,8 @@ public class CartController {
 	Cookie cookie = null;
 
 	@RequestMapping("/cart")
-	public String showcart(Model model, @CookieValue(value = "myCart", required = false) String cartValue) {
-		shoppingCartService.clear();
-		User user = new User();
-		List<Product> listProducts = new ArrayList<>();
-		user = session.get("user");
-		// Giỏ hàng
-		if (session.get("user") != null) {
-			session.set("cartCount", shoppingCartService.getCount());
-			listProducts.addAll(recomendationService.recomendProduct(user.getUsername()));
-			// fix tạm
-			if (listProducts.size() <= 0) {
-				listProducts.addAll(recomendationService.recomendProduct("baolh"));
-			}
-			// end fix tạm
-		} else {
-			// fix tạm
-			listProducts.addAll(recomendationService.recomendProduct("baolh"));
-			// end fix tạm
-			session.set("cartCount", 0);
-		}
-		// Trộn ví trí sản phẩm
-		Collections.shuffle(listProducts);
-		model.addAttribute("products", listProducts);
+	public String showcart(Model model) {
 		
-		if (cartValue != null && !cartValue.isEmpty()) {
-			// Giải mã chuỗi Base64
-			byte[] decodedBytes = Base64.decodeBase64(cartValue);
-			String decodedValue = new String(decodedBytes, StandardCharsets.UTF_8);
-			try {
-				Map<String, CartProdcut> map = objectMapper.readValue(decodedValue,
-						new com.fasterxml.jackson.core.type.TypeReference<Map<String, CartProdcut>>() {
-						});
-				shoppingCartService.setItems(map);
-			} catch (JsonProcessingException e) {
-				// Xử lý lỗi khi chuyển đổi chuỗi JSON
-			}
-
-			model.addAttribute("cart", shoppingCartService);
-			session.set("cartCount", shoppingCartService.getCount());
-			model.addAttribute("total", shoppingCartService.getAmount());
-			List<Product> list = daop.findAll();
-			model.addAttribute("test", list);
-
-		}
 		return "user/cartproduct";
 		
 	}
