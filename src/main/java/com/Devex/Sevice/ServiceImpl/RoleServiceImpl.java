@@ -52,12 +52,12 @@ public class RoleServiceImpl implements RoleService{
 	}
 
 	@Override
-	public List<Role> findAllById(Iterable<Integer> ids) {
+	public List<Role> findAllById(Iterable<String> ids) {
 		return roleRepository.findAllById(ids);
 	}
 
 	@Override
-	public Optional<Role> findById(Integer id) {
+	public Optional<Role> findById(String id) {
 		return roleRepository.findById(id);
 	}
 
@@ -67,12 +67,12 @@ public class RoleServiceImpl implements RoleService{
 	}
 
 	@Override
-	public void deleteById(Integer id) {
+	public void deleteById(String id) {
 		roleRepository.deleteById(id);
 	}
 
 	@Override
-	public Role getById(Integer id) {
+	public Role getById(String id) {
 		return roleRepository.getById(id);
 	}
 

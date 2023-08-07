@@ -33,9 +33,9 @@ public class CartAPIController {
 	@DeleteMapping("/rest/cart/{id}")
 	public ResponseEntity<String> deleteCartDetail(@PathVariable int id) {
 	    Optional<CartDetail> optionalCartDetail = cart.findById(id);
+
 	    if (optionalCartDetail.isPresent()) {
 	        cart.delete(optionalCartDetail.get());
-	        
 	        return ResponseEntity.ok("Cart detail deleted successfully.");
 	    } else {
 	        return ResponseEntity.notFound().build();

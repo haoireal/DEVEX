@@ -7,7 +7,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
     shopGroups: {},
     // load sản phẩm trong giỏ hàng
     loadProductCart() {
-      $http.get("/rest/cart").then(function (response) {
+      $http.get("/cart").then(function (response) {
         this.items = response.data;
         this.groupByShopId();
       });
@@ -20,7 +20,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
       item.quantity = qty;
       // Gọi API để cập nhật  sản phẩm trong cơ sở dữ liệu
       $http
-        .put(`/rest/cart/${id}`, item)
+        .put(`/cart/${id}`, item)
         .then(function (resp) {
           // Xử lý phản hồi từ server nếu cần thiết
           var index = this.items.findIndex((item) => item.id == id);
@@ -41,7 +41,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
       item.color = color;
       // Gọi API để cập nhật  sản phẩm trong cơ sở dữ liệu
       $http
-        .put(`/rest/cart/${id}`, item)
+        .put(`/cart/${id}`, item)
         .then(function (resp) {
           // Xử lý phản hồi từ server nếu cần thiết
           var index = this.items.findIndex((item) => item.id == id);
@@ -58,7 +58,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
       // xóa sản phẩm khỏi giỏ hàng
       // Gọi API để xóa sản phẩm khỏi cơ sở dữ liệu
       $http
-        .delete(`/rest/cart/${id}`)
+        .delete(`/cart/${id}`)
         .then(function (resp) {
           // Xử lý phản hồi từ server nếu cần thiết
           console.log("Success", resp);
@@ -77,7 +77,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
       this.items = this.items.filter((item) => item.shopId !== idShop);
       // Gọi API để cập nhật giỏ hàng trong cơ sở dữ liệu
       $http
-        .put(`/rest/cart`, this.items)
+        .put(`/cart`, this.items)
         .then(function (resp) {
           // Xử lý phản hồi từ server nếu cần thiết
           this.items = response.data;
@@ -100,7 +100,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
       this.clearAllItems(); // Gán mảng rỗng để xóa sạch các mặt hàng trong giỏ hàng
       // Gọi API để cập nhật giỏ hàng trong cơ sở dữ liệu
       $http
-        .put(`/rest/cart`, this.items)
+        .put(`/cart`, this.items)
         .then(function (resp) {
           // Xử lý phản hồi từ server nếu cần thiết
           this.items = response.data;
