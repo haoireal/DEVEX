@@ -21,6 +21,7 @@ import com.Devex.DTO.OtpValidationRequest;
 import com.Devex.Entity.Customer;
 import com.Devex.Entity.Role;
 import com.Devex.Entity.User;
+import com.Devex.Entity.UserRole;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.MailerService;
@@ -28,6 +29,7 @@ import com.Devex.Sevice.OTPService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.RoleService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.UserRoleService;
 import com.Devex.Sevice.UserService;
 
 import jakarta.mail.MessagingException;
@@ -47,6 +49,9 @@ public class AccountController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserRoleService userRoleService;
 	
 	@Autowired
 	RoleService roleService;
@@ -78,21 +83,28 @@ public class AccountController {
 		return "account/email-phone";
 	}
 	
+	// nhập email sdt
 	@PostMapping("/signup")
 	public String sendSmsSignup(Model model) {
-		String info = param.getString("email-phone", session.get("info-user", ""));
+		String info = param.getString("email-phone","");
+		System.out.println(info);
+		System.out.println(1);
 		User user = null;
+		System.out.println(2);
 		String type = null;
 		if (isValidEmail(info)) {
             type = "email";
             user = userService.findEmail(info);
+            System.out.println(3);
         }else if (isValidPhoneNumber(info)) {
         	user = userService.findPhone(info);
             // Chuyển đổi định dạng số điện thoại về "+84" nếu cần
             info = normalizePhoneNumber(info);
+            System.out.println(3);
             type = "phone";
         }
-		
+		System.out.println(user);
+		System.out.println(4);
 		if(user != null) {
 			model.addAttribute("message", "Email hoặc số điện thoại này đã tồn tại!");
         	return "account/email-phone";
@@ -115,15 +127,15 @@ public class AccountController {
 		return "account/signup";
 	}
 	
+	//điền thông tin tài khoản
 	@PostMapping("/signup-information")
 	public String doInfSignup() {
-		User user = new User();
+		User user = new Customer();
 		String username = param.getString("username", "");
 		String fullname = param.getString("fullname", "");
 		String password = param.getString("password", "");
 		String gender = param.getString("gender", "Other");
 		boolean active = true;
-		Role role = roleService.findById(101).orElse(null);
 		Date createdDate = new Date();
 		String email = null;
 		String phone = null;
@@ -145,9 +157,25 @@ public class AccountController {
 		user.setGender(gender);
 		user.setActive(active);
 		user.setAvatar(null);
-//		user.setRole(role);
-		
 		userService.save(user);
+		Customer customer = new Customer();
+		customer.setUsername(username);
+		customer.setFullname(fullname);
+		customer.setPhone(phone);
+		customer.setEmail(email);
+		customer.setPassword(passwordEncoder.encode(password));
+		customer.setCreateDay(createdDate);
+		customer.setGender(gender);
+		customer.setActive(active);
+		customer.setAvatar(null);
+		customer.setAddress(null);
+		customer.setPhoneAddress(null);
+		customerService.save(customer);
+		Role role = roleService.findById("CUSTOMER").orElse(null);
+		UserRole userRole = new UserRole();
+		userRole.setUser(user);
+		userRole.setRole(role);
+		userRoleService.save(userRole);
 		
 		return "redirect:/signin";
 	}
@@ -157,7 +185,7 @@ public class AccountController {
 		return "account/verifi";
 	}
 	
-	
+	//xác thực email sdt
 	@PostMapping("/verify")
 	public String doVerify(Model model) {
 		String otp = "";
@@ -195,6 +223,7 @@ public class AccountController {
 		return "account/current-password";
 	}
 	
+	//xác thực pass hiện tại
 	@PostMapping("/verify-password")
 	public String doVerifyPassword(Model model) {
 		User user = session.get("user");
@@ -212,6 +241,7 @@ public class AccountController {
 		return "account/new-password";
 	}
 	
+	//đổi pass
 	@PostMapping("/change-password")
 	public String doChangePassword(Model model) {
 		User user = session.get("user");
@@ -231,6 +261,8 @@ public class AccountController {
 		return "account/email-phone";
 	}
 	
+	
+	//quên pass nhập email phone
 	@PostMapping("/forget-password/information")
 	public String doForgetPassInfo(Model model) {
 		String info = param.getString("email-phone", session.get("info-user", ""));
@@ -245,7 +277,10 @@ public class AccountController {
             info = normalizePhoneNumber(info);
             type = "phone";
         }
-		
+		if(user==null) {
+			model.addAttribute("message", "Email hoặc số điện thoại này chưa được đăng kí!");
+        	return "account/email-phone";
+		}
 		if(type.equals("phone")) {
 			OtpRequestDTO otpRequest = new OtpRequestDTO(info, info);
 			otpService.sendSMS(otpRequest);
@@ -264,6 +299,7 @@ public class AccountController {
 		return "account/verifi";
 	}
 	
+	//xác thực otp
 	@PostMapping("/forget-password/verify")
 	public String doForgetPassVerify(Model model) {
 		String otp = "";
@@ -303,6 +339,7 @@ public class AccountController {
 		return "account/new-password";
 	}
 	
+	//nhập pass mới
 	@PostMapping("/forget-password/new-pass")
 	public String doForgetPassword(Model model) {
 		User user = null;

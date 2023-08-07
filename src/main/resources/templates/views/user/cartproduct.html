@@ -36,6 +36,13 @@
       type="text/css"
       href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
     />
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
+      integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <style>
       /* tắt phím tăng giảm của input number */
       input[type="number"]::-webkit-inner-spin-button,
@@ -56,7 +63,7 @@
     </style>
   </head>
 
-  <body>
+  <body ng-app="app" ng-controller="cart-ctrl">
     <header>
       <div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
       <div class="container mt-3">
@@ -66,15 +73,11 @@
             <span class="path_arrow">
               <i class="fa-solid fa-chevron-right"></i
             ></span>
-            <span class="content"
-              ><a class="path_content" th:text="*{brand.name}"></a
-            ></span>
+            <span class="content"><a class="path_content">123123wq</a></span>
             <span class="path_arrow">
               <i class="fa-solid fa-chevron-right"></i>
             </span>
-            <span class="content"
-              ><a class="path_content" th:text="*{name}"></a
-            ></span>
+            <span class="content"><a class="path_content">qweq</a></span>
           </div>
         </div>
       </div>
@@ -94,7 +97,7 @@
         style="padding: 20px"
       >
         <!-- Lặp qua các shop và sản phẩm -->
-        <ng-container *ngFor="let shopId of Object.keys(shopGroups)">
+        <div ng-repeat="(shopId, shopData) in cart.shopGroups">
           <div
             class="d-flex justify-content-between gap-3 align-items-center px-3 pt-1"
           >
@@ -111,9 +114,7 @@
                 />
               </div>
               <!-- Tên shop -->
-              <p class="d-flex align-items-center m-0">
-                {{ shopGroups[shopId][0].shopName }}
-              </p>
+              <p class="d-flex align-items-center m-0">123</p>
             </button>
             <div class="text-center d-flex align-items-center">
               <input
@@ -132,7 +133,7 @@
               <!--CART -->
               <div
                 class="border-0 border-top bg-light"
-                *ngFor="let item of shopGroups[shopId]"
+                ng-repeat="item in cart.shopGroups[shopId]"
               >
                 <div class="card-body p-2">
                   <div
@@ -158,7 +159,7 @@
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-4">
                       <p class="fw-normal mb-2 card-title tensp">
-                        {{ item.name }}
+                        {{ item.nameProduct }}
                       </p>
                       <button
                         type="button"
@@ -225,7 +226,7 @@
               <!--END CART -->
             </div>
           </div>
-        </ng-container>
+        </div>
       </div>
       <div
         class="container"
@@ -574,6 +575,6 @@
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
     ></script>
-    <script src="/static/admin/dist/js/user/userIndex.js"></script>
+    <!-- <script src="/static/admin/dist/js/user/userIndex.js"></script> -->
   </body>
 </html>

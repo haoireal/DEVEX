@@ -16,15 +16,15 @@ public interface RoleService {
 
 	void delete(Role entity);
 
-	Role getById(Integer id);
+	Role getById(String id);
 
-	void deleteById(Integer id);
+	void deleteById(String id);
 
 	long count();
 
-	Optional<Role> findById(Integer id);
+	Optional<Role> findById(String id);
 
-	List<Role> findAllById(Iterable<Integer> ids);
+	List<Role> findAllById(Iterable<String> ids);
 
 	List<Role> findAll();
 
