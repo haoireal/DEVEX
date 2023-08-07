@@ -20,10 +20,9 @@ public class CartDetailDTo {
     private String color;
     private String size;
     private String nameShop;
-//    private String idShop;
-//    private String idProdcut;
-//    private String avatarShop;
-    
-//    private String img;
+    private String idShop;
+    private String idProduct;
+    private String avatarShop;
+    private String img;
     
 }
