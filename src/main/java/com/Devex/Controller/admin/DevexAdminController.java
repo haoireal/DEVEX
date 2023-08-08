@@ -56,4 +56,10 @@ public class DevexAdminController {
 
 		return "admin/userManage/userProfile";
 	}
+	
+	@GetMapping("/userManage")
+	public String getUserManage() {
+
+		return "admin/userManage/userManage";
+	}
 }
