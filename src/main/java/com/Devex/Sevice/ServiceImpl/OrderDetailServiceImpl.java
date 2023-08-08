@@ -101,8 +101,8 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	}
 
 	@Override
-	public List<OrderDetails> findOrderDetailsByOrderID(String id) {
-		return orderDetailRepository.findOrderDetailsByOrderID(id);
+	public List<OrderDetails> findOrderDetailsByOrderID(String id, String username) {
+		return orderDetailRepository.findOrderDetailsByOrderID(id, username);
 	}
 	
 	

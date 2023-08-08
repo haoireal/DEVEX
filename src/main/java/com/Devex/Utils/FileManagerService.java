@@ -114,8 +114,8 @@ public class FileManagerService {
     }
     
     public void changeImage(String shopname, String id) {
-    	Path source = Paths.get(fileStoragePath + "/product", "default.png");
-    	Path target = this.getPath(shopname, id, "default.png");
+    	Path source = Paths.get(fileStoragePath + "/product", "default.webp");
+    	Path target = this.getPath(shopname, id, "default.webp");
     	try {
 			Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {

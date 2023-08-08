@@ -78,28 +78,32 @@ public class DevexSellerRestController {
 	@GetMapping("/img/product")
 	public List<String> listImage() {
 		// Kích hoạt FileManagerService
+		User u = session.get("user");
 		String id = session.get("idproduct");
-		List<String> imageUrls = fileManagerService.list(id, "aligqd911");
+		List<String> imageUrls = fileManagerService.list(id, u.getUsername());
 		return imageUrls;
 	}
 
 	@GetMapping("/img/product/{filename}")
 	public byte[] download(@PathVariable("filename") String filename) {
+		User u = session.get("user");
 		String id = session.get("idproduct");
-		return fileManagerService.read("aligqd911", id, filename);
+		return fileManagerService.read(u.getUsername(), id, filename);
 	}
 
 	@DeleteMapping("/img/product/{filename}")
 	public void delete(@PathVariable("filename") String filename) {
+		User u = session.get("user");
 		String id = session.get("idproduct");
-		fileManagerService.delete("aligqd911", id, filename);
+		fileManagerService.delete(u.getUsername(), id, filename);
 		imageProductService.deleteImageProductByNameAndProductId(filename, id);
 	}
 
 	@PostMapping("/img/product")
 	public List<String> upload(@PathParam("files") MultipartFile[] files) {
+		User u = session.get("user");
 		String id = session.get("idproduct");
-		return fileManagerService.save("aligqd911", id, files);
+		return fileManagerService.save(u.getUsername(), id, files);
 	}
 
 	@GetMapping("/api/product")
@@ -161,6 +165,7 @@ public class DevexSellerRestController {
 	@SuppressWarnings("unused")
 	@PutMapping("/info/product")
 	public void updateProduct(@RequestBody Object object) throws ParseException {
+		User u = session.get("user");
 		// Chuyển object sang json sau đó đọc ra
 		JsonNode jsonNode = objectMapper.valueToTree(object);
 		JsonNode listNode = jsonNode.get("listvariant");
@@ -175,7 +180,7 @@ public class DevexSellerRestController {
 		String id = jsonNode.get("id").asText();
 		String name = jsonNode.get("name").asText();
 		CategoryDetails categoryDetails = categoryDetailService.findCategoryDetailsById(idCategoryDetails);
-		Seller seller = sellerService.findFirstByUsername("aligqd911");
+		Seller seller = sellerService.findFirstByUsername(u.getUsername());
 		// Update product
 		productService.updateProduct(id, name, brand, description, daycreated, active, seller.getUsername(),
 				categoryDetails.getId());
@@ -202,8 +207,9 @@ public class DevexSellerRestController {
 	
 	@PostMapping("/addimageproduct/{id}")
 	public void insertImageProduct(@PathVariable("id") String id) {
-		imageProductService.insertImageProduct("1", "default.png", id);
-		fileManagerService.changeImage("aligqd911", id);
+		User u = session.get("user");
+		imageProductService.insertImageProduct("1", "default.webp", id);
+		fileManagerService.changeImage(u.getUsername(), id);
 	}
 	
 	@DeleteMapping("productvariant/delete/{id}")
