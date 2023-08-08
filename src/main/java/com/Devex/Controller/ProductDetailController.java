@@ -48,6 +48,7 @@ public class ProductDetailController {
 //		System.out.println("sssss"+id);
 		Product product = productService.findById(id).orElse(new Product());
 
+
 		System.out.println(">>>>>>" + product.getProductbrand().getName());
 
 		List<String> listSize = new ArrayList<>();
@@ -81,13 +82,8 @@ public class ProductDetailController {
 	@ResponseBody
 	public Double Data(@RequestParam("id") String id, @RequestParam("color") String color,
 			@RequestParam("size") String size) {
-		System.out.println("sssssss: " + size);
-		Double price = 0.0;
-//		if(size != null) {
+			Double price = 0.0;
 			 price = productVariantService.findPriceByColorAndSize(id, color, size);
-//		}else {
-////			price = productVariantService.findPriceByColor(id, color);
-//		}
 		
 		return price;
 	}
