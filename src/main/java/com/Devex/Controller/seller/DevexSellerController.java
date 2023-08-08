@@ -89,24 +89,23 @@ public class DevexSellerController {
 		switch (listName) {
 		case "products": {
 			model.addAttribute("titleType", "Sản phẩm");
-			List<Product> listProducts = productService.findProductBySellerUsernameAndIsdeleteProduct("aligqd911");
+			List<Product> listProducts = productService.findProductBySellerUsernameAndIsdeleteProduct(u.getUsername());
 			for (Product product : listProducts) {
 				if(product.getImageProducts().size() == 0) {
 					try {
-						imageProductService.insertImageProduct("1", "default.png", product.getId());
-						fileManagerService.changeImage("aligqd911", product.getId());
+						imageProductService.insertImageProduct("1", "default.webp", product.getId());
+						fileManagerService.changeImage(u.getUsername(), product.getId());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
-			List<Product> listProductsc = productService.findProductBySellerUsernameAndIsdeleteProduct("aligqd911");
-			model.addAttribute("products", listProductsc);
+			model.addAttribute("products", listProducts);
 			break;
 		}
 		case "orders": {
 			model.addAttribute("titleType", "Đơn hàng");
-			List<Order> listOrder = orderService.findOrdersBySellerUsername("aligqd911");
+			List<Order> listOrder = orderService.findOrdersBySellerUsername(u.getUsername());
 			model.addAttribute("orders", listOrder);
 			break;
 		}
@@ -117,7 +116,7 @@ public class DevexSellerController {
 		}
 		case "restore": {
 			model.addAttribute("titleType", "Khôi phục sản phẩm đã xóa");
-			List<Product> listproduct = productService.findProductBySellerUsernameAndIsdeleteTrueAndActiveTrueProduct("aligqd911");
+			List<Product> listproduct = productService.findProductBySellerUsernameAndIsdeleteTrueAndActiveTrueProduct(u.getUsername());
 			model.addAttribute("restore", listproduct);
 			break;
 		}
@@ -150,12 +149,23 @@ public class DevexSellerController {
 	
 	@GetMapping("/order/xacnhan")
 	public String xacNhanDonHang(@RequestParam("id") String id) {
+		User u = session.get("user");
 		List<OrderDetails> listOrderDetails = session.get("listIdOrderDetails");
 		for (OrderDetails orderDetails : listOrderDetails) {
-			if(orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername().equalsIgnoreCase("aligqd911")) {
+			if(orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername().equalsIgnoreCase(u.getUsername())) {
 					detailService.updateIdOrderDetailsStatus(1009, orderDetails.getId());
-			}else {
-				System.out.println(orderDetails.getProductVariant().getProduct().getName()+"không update");
+			}
+		}
+		return "redirect:/seller/orderDetail/" + id;
+	}
+	
+	@GetMapping("/order/huy")
+	public String huyDonHang(@RequestParam("id") String id) {
+		User u = session.get("user");
+		List<OrderDetails> listOrderDetails = session.get("listIdOrderDetails");
+		for (OrderDetails orderDetails : listOrderDetails) {
+			if(orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername().equalsIgnoreCase(u.getUsername())) {
+					detailService.updateIdOrderDetailsStatus(1007, orderDetails.getId());
 			}
 		}
 		return "redirect:/seller/orderDetail/" + id;
@@ -175,35 +185,42 @@ public class DevexSellerController {
 	
 	@GetMapping("/orderDetail/{id}")
 	public String getOrderDetail(@PathVariable("id") String id, Model model) {
-		boolean check = false;
-		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id);
-		List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, "aligqd911");
+		User u = session.get("user");
+		String check = "";
+		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id, u.getUsername());
+		List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, u.getUsername());
 		for (OrderDetails orderDetails : listcheckbutton) {
 			if(orderDetails.getStatus().getId() == 1009) {
-				check = true;
-			}else {
-				check = false;
+				check = "Đã xác nhận";
+			}else if(orderDetails.getStatus().getId() == 1007){
+				check = "Đã huỷ";
+			}else if(orderDetails.getStatus().getId() == 1001){
+				check = "Chờ xác nhận";
 			}
 		}
+		
 		session.set("listIdOrderDetails", listOrderDetails);
 		model.addAttribute("orderDetails", listOrderDetails);
 		model.addAttribute("idPrint", id);
 		model.addAttribute("check", check);
 		Order order = orderService.findOrderById(id);
+		System.out.println(order.getOrderStatus().getName());
 		model.addAttribute("order", order);
+		model.addAttribute("u", u.getUsername());
 		if (order.getOrderStatus() != null && order.getOrderStatus().getName().equalsIgnoreCase("Hoàn thành")) {
-		    model.addAttribute("checko", false);
-		} else {
 		    model.addAttribute("checko", true);
+		} else {
+		    model.addAttribute("checko", false);
 		}
 		return "seller/order/orderDetail";
 	}
 	
 	@GetMapping("/orderPrint")
 	public String getOrderPrint(Model model, @RequestParam("id") String id) {
+		User u = session.get("user");
 		boolean check = false;
-		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id);
-		List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, "aligqd911");
+		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id, u.getUsername());
+		List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, u.getUsername());
 		for (OrderDetails orderDetails : listcheckbutton) {
 			if(orderDetails.getStatus().getId() == 1009) {
 				check = true;
@@ -232,11 +249,12 @@ public class DevexSellerController {
 	
 	@GetMapping("/product/create")
 	public String create() {
-		productService.insertProduct("1", "Nhập tên sản phẩm tại đây", 101, null, new Date(), false, false, "aligqd911", 101);
-		Product product = productService.findLatestProductBySellerUsername("aligqd911");
+		User u = session.get("user");
+		productService.insertProduct("1", "Nhập tên sản phẩm tại đây", 101, null, new Date(), false, false, u.getUsername(), 101);
+		Product product = productService.findLatestProductBySellerUsername(u.getUsername());
 		productVariantService.addProductVariant(1, 0.0, 0.0, "", "Đen", product.getId());
-		fileManagerService.changeImage("aligqd911", product.getId());
-		imageProductService.insertImageProduct("1", "default.png", product.getId());
+		fileManagerService.changeImage(u.getUsername(), product.getId());
+		imageProductService.insertImageProduct("1", "default.webp", product.getId());
 		session.set("idproduct", product.getId());
 		return "redirect:/seller/product/edit/" + product.getId();
 	}
