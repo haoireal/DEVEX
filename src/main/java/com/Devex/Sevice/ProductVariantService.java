@@ -45,10 +45,15 @@ public interface ProductVariantService {
 	Double findPriceByColorAndSize(String id, String color, String size);
 
 	Double findPriceByColor(String id, String color);
+	
 	void updateProductVariant(Integer id, Integer quantity, Double price, Double priceSale, String size, String color);
 
 	void addProductVariant(Integer quantity, Double price, Double priceSale, String size, String color, String productId);
 
 	void deleteProductVariantByProductId(String productId);
+
+	int findIdProductVaVariantbySizeandColor(String coler, String size, String id);
+
+	int findIdProductVaVariantbySize(String coler, String id);
 
 }

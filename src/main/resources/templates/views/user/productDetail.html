@@ -45,7 +45,7 @@
 					<span class="content"><a class="path_content">Trang Chủ</a></span>
 					<span class="path_arrow"> <i
 						class="fa-solid fa-chevron-right"></i></span> <span class="content"><a
-						class="path_content" th:text="*{brand}"></a></span> <span
+						class="path_content" th:text="*{productbrand.name}"></a></span> <span
 						class="path_arrow"> <i class="fa-solid fa-chevron-right"></i>
 					</span> <span class="content"><a class="path_content"
 						th:text="*{name}"></a></span>
@@ -56,7 +56,7 @@
 	<main th:object="${product}">
 		<!-- duyện qua product trả về -->
 		<div class="container container_main mt-4 ">
-			<form th:action="@{'/cartproduct/add/' + *{id}}" method="post">
+			<form th:action="@{'/cart/add/' + *{id}}" method="post">
 				<div class="row   ">
 
 					<!--main-left-->
@@ -184,7 +184,6 @@
 									<div th:each="color, iter : ${listColor}"
 										class="  form-check product-variation ms-1  align-items-center justify-content-center ">
 										<input
-											
 											onchange="sendRadioValue(this.value) "
 											th:value="${color}"
 											th:attr="data-id=${product.id}"
@@ -211,7 +210,7 @@
 								<div class="col-12 col-lg-10 d-flex">
 									<div th:each="size, iter : ${listSize}"
 										class="form-check product-variation ms-1  align-items-center justify-content-center ">
-										<input class="  form-check-input"
+										<input class="  form-check-input" th:checked="${iter.index==0}"
 											onchange="sendRadioValue(this.value)"
 											th:value="${size}"
 											style="margin-left: -1em !important; padding: 3px;"

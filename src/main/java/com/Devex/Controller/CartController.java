@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+import com.Devex.Entity.Cart;
 import com.Devex.Entity.CartDetail;
-import com.Devex.Entity.CartProdcut;
 import com.Devex.Entity.Customer;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
@@ -27,6 +28,11 @@ import com.Devex.Repository.CartDetailRespository;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Repository.ProductVariantRepository;
 import com.Devex.Sevice.CartDetailService;
+
+import com.Devex.Sevice.CartService;
+import com.Devex.Sevice.CustomerService;
+import com.Devex.Sevice.ProductService;
+import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.ShoppingCartService;
@@ -39,19 +45,27 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CartController {
-
+	@Autowired
+	CartDetailService cartDetailService;
+	@Autowired
+	CartService cartService;
+	@Autowired
+	CustomerService customerService;
 	@Autowired
 	SessionService session;
 	@Autowired
-	ProductRepository daop;
+	ProductService daop;
 	@Autowired
 	HttpServletResponse resp;
 	@Autowired
 	HttpServletRequest req;
 	@Autowired
-	ShoppingCartService cart;
+	ShoppingCartService shoppingCartService;
 	@Autowired
 	RecommendationSystem recomendationService;
+	
+	@Autowired
+	ProductVariantService pvService;
 	@Autowired
 	ProductVariantRepository pv;
 	@Autowired
@@ -59,73 +73,63 @@ public class CartController {
 	ObjectMapper objectMapper = new ObjectMapper();
 	Cookie cookie = null;
 
-	@RequestMapping("/devex/cart")
-	public String showcart(Model model, @CookieValue(value = "myCart", required = false) String cartValue) {
-		cart.clear();
-		User user = new User();
-		List<Product> listProducts = new ArrayList<>();
-		user = session.get("user");
-		// Giỏ hàng
-		if (session.get("user") != null) {
-			session.set("cartCount", cart.getCount());
-			listProducts.addAll(recomendationService.recomendProduct(user.getUsername()));
-			// fix tạm
-			if (listProducts.size() <= 0) {
-				listProducts.addAll(recomendationService.recomendProduct("baolh"));
-			}
-			// end fix tạm
-		} else {
-			// fix tạm
-			listProducts.addAll(recomendationService.recomendProduct("baolh"));
-			// end fix tạm
-			session.set("cartCount", 0);
-		}
-		// Trộn ví trí sản phẩm
-		Collections.shuffle(listProducts);
-		model.addAttribute("products", listProducts);
+	@RequestMapping("/cart")
+	public String showcart(Model model) {
 		
-		if (cartValue != null && !cartValue.isEmpty()) {
-			// Giải mã chuỗi Base64
-			byte[] decodedBytes = Base64.decodeBase64(cartValue);
-			String decodedValue = new String(decodedBytes, StandardCharsets.UTF_8);
-			try {
-				Map<String, CartProdcut> map = objectMapper.readValue(decodedValue,
-						new com.fasterxml.jackson.core.type.TypeReference<Map<String, CartProdcut>>() {
-						});
-				cart.setItems(map);
-			} catch (JsonProcessingException e) {
-				// Xử lý lỗi khi chuyển đổi chuỗi JSON
-			}
-
-			model.addAttribute("cart", cart);
-			session.set("cartCount", cart.getCount());
-			model.addAttribute("total", cart.getAmount());
-			List<Product> list = daop.findAll();
-			model.addAttribute("test", list);
-
-		}
 		return "user/cartproduct";
 		
 	}
-	@RequestMapping("/cartproduct/add/{idProduct}")
+
+	
+	@RequestMapping("/cart/add/{idProduct}")
 	public String addCart(@PathVariable("idProduct") String id, Model model,
 			@RequestParam(name = "flexRadio", required = false) String size,
 			@RequestParam(name = "flexRadioDefault", required = false) String cloer,
 			@RequestParam(name = "soluong") int soLuong) throws JsonProcessingException {
-		int idProductVariant = 	pv.findIdProductVaVariantbySizeandColor(cloer, size, id);
-		ProductVariant pv2 = pv.findById(idProductVariant).get();
-		CartDetail cart = new CartDetail();
-		cart.setProductCart(pv2);
-		cart.setQuantity(soLuong);
-		Customer user = session.get("user");
-		cart.setCart(user.getCart());
-		cartsv.save(cart);
+			int idProductVariant= 0;
+			System.out.println("size:"+size);
+			System.out.println("cloer"+cloer);
+		if(size==null) {
+			idProductVariant = pvService.findIdProductVaVariantbySize(cloer,id);
+			ProductVariant pv2 = pvService.findById(idProductVariant).get();
+			CartDetail cartDetail = new CartDetail();
+			cartDetail.setProductCart(pv2);
+			cartDetail.setQuantity(soLuong);
+			Customer user = session.get("user");
+			Cart cart = user.getCart();
+			if(cart == null) {
+				cart = new Cart();
+				cart.setPerson(user);
+				System.out.println(2);
+				cartService.save(cart);
+			}
+			System.out.println(3);
+			cartDetail.setCart(cart);
+			cartDetailService.save(cartDetail);		
+		}else {
+			idProductVariant = 	pvService.findIdProductVaVariantbySizeandColor(cloer, size, id);
+			ProductVariant pv2 = pvService.findById(idProductVariant).get();
+			CartDetail cartDetail = new CartDetail();
+			cartDetail.setProductCart(pv2);
+			cartDetail.setQuantity(soLuong);
+			Customer user = session.get("user");
+			Cart cart = user.getCart();
+			if(cart == null) {
+				cart = new Cart();
+				cart.setPerson(user);
+				System.out.println(2);
+				cartService.save(cart);
+			}
+			System.out.println(3);
+			cartDetail.setCart(cart);
+			cartDetailService.save(cartDetail);
+			
+		}
 		return "redirect:/details/{idProduct}";
+		
 	}
-	
-	
-//
-//	@RequestMapping("/devex/cartproduct/add/{idProduct}")
+
+//	@RequestMapping("/cartproduct/add/{idProduct}")
 //	public String addCart(@PathVariable("idProduct") String id, Model model,
 //			@RequestParam(name = "soluong") int soLuong,
 //			@RequestParam(name = "flexRadio", required = false) String size,
@@ -148,8 +152,9 @@ public class CartController {
 //
 //		return "redirect:/details/{idProduct}";
 //	}
-//
-//	@RequestMapping("/devex/cartproduct/remove/{idProduct}")
+
+//	@RequestMapping("/cart/remove/{idProduct}")
+
 //	public String remove(@PathVariable("idProduct") String id) throws JsonProcessingException {
 //		cart.remove(id);
 //		Map<String, CartProdcut> itemsMap = cart.getItems().stream()
@@ -164,7 +169,8 @@ public class CartController {
 //		cookie.setPath("/");
 //		resp.addCookie(cookie);
 //
-//		return "redirect:/devex/cart";
+
+//		return "redirect:/cart";
 //	}
 
 }

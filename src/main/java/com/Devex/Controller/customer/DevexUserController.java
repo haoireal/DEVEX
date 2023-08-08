@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.Devex.Entity.CartProdcut;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.User;
 import com.Devex.Repository.ProductRepository;
@@ -58,7 +57,7 @@ public class DevexUserController {
 		user = sessionService.get("user");
 		// Giỏ hàng
 		if (sessionService.get("user") != null) {
-			sessionService.set("cartCount", cartService.getCount());
+			
 			listProducts.addAll(recomendationService.recomendProduct(user.getUsername()));
 			// fix tạm
 			if (listProducts.size() <= 0) {
@@ -97,6 +96,7 @@ public class DevexUserController {
 		sessionService.set("keywordsSearch", kwords);
 		// Tìm tên từ theo từ khóa
 		list.addAll(productService.findByKeywordName(kwords));
+		System.out.println("chan loi");
 		// Tìm theo shop bán
 		list.addAll(productService.findProductBySellerUsername("%" + kwords + "%"));
 		// FILLTER SẢN PHẨM TRÙNG NHAU

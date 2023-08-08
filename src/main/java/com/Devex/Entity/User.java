@@ -62,5 +62,6 @@ public class User implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<UserRole> roles;
 }

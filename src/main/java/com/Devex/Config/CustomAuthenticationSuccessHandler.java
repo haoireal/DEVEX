@@ -43,7 +43,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			System.out.println(4);
 			if (authority.getAuthority().equals("ADMIN")) {
 				// Nếu có vai trò "ADMIN", chuyển hướng đến "/admin/home"
-				response.sendRedirect("/admin/home");
+				response.sendRedirect("/ad/home");
 				return;
 			} else if (authority.getAuthority().equals("MANAGER")) {
 				// Nếu có vai trò "MANAGER", chuyển hướng đến "/manager/home"

@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
-import com.Devex.Entity.Role;
+import com.Devex.Entity.UserRole;
 
 @EnableJpaRepositories
-@Repository("roleRepository")
-public interface RoleRepository extends JpaRepository<Role, String>{
-
+@Repository("userRoleRepository")
+public interface UserRoleRespository extends JpaRepository<UserRole, Integer>{
+	
 }

@@ -48,7 +48,8 @@ public class ProductDetailController {
 //		System.out.println("sssss"+id);
 		Product product = productService.findById(id).orElse(new Product());
 
-//		System.out.println(">>>>>>" + product.getBrand());
+
+		System.out.println(">>>>>>" + product.getProductbrand().getName());
 
 		List<String> listSize = new ArrayList<>();
 		product.getProductVariants().forEach(sv -> {
