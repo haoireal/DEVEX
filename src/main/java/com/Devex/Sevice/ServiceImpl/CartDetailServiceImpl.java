@@ -25,6 +25,20 @@ public class CartDetailServiceImpl implements CartDetailService{
 	public CartDetail save(CartDetail entity) {
 		return cartDetail.save(entity);
 	}
+	
+	
+
+	@Override
+	public List<CartDetail> saveAll(List<CartDetail> entities) {
+		return cartDetail.saveAll(entities);
+	}
+
+
+	@Override
+	public void deleteAllInBatch(List<CartDetail> entities) {
+		cartDetail.deleteAllInBatch(entities);
+	}
+
 
 	@Override
 	public List<CartDetail> findAll(Sort sort) {

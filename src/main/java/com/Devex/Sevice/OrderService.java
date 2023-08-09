@@ -46,4 +46,6 @@ public interface OrderService {
 
 	Order saveAndFlush(Order entity);
 
+	Order findLatestOrder();
+
 }

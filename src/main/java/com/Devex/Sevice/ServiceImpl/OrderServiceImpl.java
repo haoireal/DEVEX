@@ -36,6 +36,15 @@ public class OrderServiceImpl implements OrderService{
 		entity.setId("1");
 		return orderRepository.saveAndFlush(entity);
 	}
+	
+	
+
+
+
+	@Override
+	public Order findLatestOrder() {
+		return orderRepository.findLatestOrder();
+	}
 
 
 
