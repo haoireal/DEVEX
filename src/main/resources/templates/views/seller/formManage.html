@@ -96,10 +96,14 @@
 										<!-- END Tên sản phẩm -->
 
 										<!-- COMBOBOX AND SEARCH -->
-										<div class="form-group">
-											<label>Nhà sản xuất</label>
-											<input class="form-control" ng-model="form.brand"
-												placeholder="Nhập tên thương hiệu">
+										<div class="row">
+											<div class="form-group col-6">
+												<label>Loại sản phẩm</label>
+												<select id="brands" class="form-control select2" style="width: 100%;"
+													ng-change="getbrand()" ng-model="selectedbrand"
+													ng-options="brand.id as brand.name for brand in brands">
+												</select>
+											</div>
 										</div>
 										<!-- END COMBOBOX SEARCH -->
 										<!-- Loại sản phẩm -->
@@ -108,21 +112,14 @@
 												<label>Loại sản phẩm</label>
 												<select id="categorys" class="form-control select2" style="width: 100%;"
 													ng-change="getCategoryDetails()" ng-model="selectedCategory"
-													ng-options="category.id as category.name for category in categorys"
-													ng-selected="selectedCategoryId == category.id">
-
+													ng-options="category.id as category.name for category in categorys">
 												</select>
 											</div>
 											<div class="form-group col-6">
 												<label>Loại chi tiết</label>
 												<select id="categorydt" class="form-control select2"
 													style="width: 100%;" ng-model="selectedCategoryDetail"
-													ng-options="catedt.id as catedt.name for catedt in categorydetail"
-													ng-selected="selectedCategoryId == catedt.id">
-													<!-- <option th:each="categorydt : ${categorydt}"
-														th:text="${categorydt.name}" th:value="${categorydt.id}"
-														th:selected="${product.categoryDetails.id} == ${categorydt.id}">
-													</option> -->
+													ng-options="catedt.id as catedt.name for catedt in categorydetail">
 												</select>
 											</div>
 										</div>
@@ -158,11 +155,16 @@
 												<td><input type="text" ng-model="item.color"></td>
 												<td><input type="text" ng-model="item.price"></td>
 												<td><input type="text" ng-model="item.quantity"></td>
+												<td>
+													<button class="btn btn-danger"
+														ng-click="deleteproductvariant(item.id)">
+														<i class="fa-regular fa-trash-can"></i>
+													</button>
+												</td>
 											</tr>
 										</tbody>
 									</table>
-									<button id="add-row-btn" class="btn btn-primary" ng-click="addRow()">Thêm
-										hàng</button>
+									<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()">Thêm chi tiết sản phẩm</button>
 								</div>
 
 							</div>
@@ -197,7 +199,7 @@
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-	<script src="app.js"></script>
+	<!-- <script src="app.js"></script> -->
 	<script>
 		$(function () {
 			//Initialize Select2 Elements
@@ -393,8 +395,8 @@
 
 			$scope.deleteimg = function (filename) {
 				$http.delete(filename).then(resp => {
-					$scope.listimg();
-					let i = $scope.filenames.findindex(name => name == filename);
+					// $scope.listimg();
+					let i = $scope.filenames.findIndex(name => name == filename);
 					$scope.filenames.splice(i, 1);
 					console.log(filename);
 				}).catch(error => {
@@ -425,12 +427,13 @@
 			var url = 'http://localhost:8888/api/product';
 			$scope.id = '';
 			$scope.selectedCategoryId = '';
-			$scope.form = {};
-			$scope.categorys = [];
-			$scope.selectedCategory = $scope.selectedCategory;
+
 			$scope.infoproduct = function () {
 				$http.get(url).then(resp => {
 					$scope.form = resp.data;
+					if($scope.form.name == 'Nhập tên sản phẩm tại đây'){
+						$scope.form.name = '';
+					}
 				}).catch(error => {
 					console.log("errors", error);
 				})
@@ -440,26 +443,50 @@
 				$http.get('/categoryDetails/' + $scope.selectedCategory)
 					.then(function (resp) {
 						$scope.categorydetail = resp.data;
+						$scope.selectedCategoryDetail = $scope.categorydetail[0].id;
 					});
 			};
 
-			$scope.getidp = function () {
-				$http.get('/idca').then(resp => {
+			$scope.getidcategoryDetails = function () {
+				$http.get('/idCategoryDetails').then(resp => {
 					$scope.id = resp.data;
-					$scope.selectedCategoryId = $scope.id;
-					console.log($scope.selectedCategoryId);
+					$scope.selectedCategoryDetail = $scope.id; 
 				})
 			};
 
-			$scope.getca = function () {
-				$http.get('/idcadt').then(resp => {
+			$scope.getidcategory = function () {
+				$http.get('/idcategory').then(resp => {
+					$scope.id = resp.data;
+					$scope.selectedCategory = $scope.id;
+					$scope.getCategoryDetails();
+					$scope.getidcategoryDetails();
+				})
+			};
+
+			$scope.getcategory = function () {
+				$http.get('/category').then(resp => {
 					$scope.categorys = resp.data;
 				})
 			}
 
-			$scope.getca();
-			$scope.getidp();
+			$scope.getbrand = function () {
+				$http.get('/brand').then(resp => {
+					$scope.brands = resp.data;
+				})
+			}
+
+			$scope.getidbrand = function () {
+				$http.get('/idbrand').then(resp => {
+					$scope.id = resp.data;
+					$scope.selectedbrand = $scope.id;
+				})
+			}
+
+			$scope.getcategory();
+			$scope.getidcategory();
 			$scope.infoproduct();
+			$scope.getbrand();
+			$scope.getidbrand();
 
 			var url = 'http://localhost:8888/api/productvariant';
 			var id = 0;
@@ -487,6 +514,7 @@
 
 				$scope.form.idCategoryDetails = $scope.selectedCategoryDetail;
 				$scope.form.listvariant = $scope.variant;
+				$scope.form.brand = $scope.selectedbrand;
 				console.log($scope.form);
 				$http.put("/info/product", $scope.form).then(resp => {
 
@@ -497,7 +525,7 @@
 
 			$scope.deleteProduc = function () {
 				// Gửi dữ liệu đến REST controller
-				$http.delete('/delete/product/'+$scope.form.id)
+				$http.delete('/delete/product/' + $scope.form.id)
 					.then(function (response) {
 						// Xử lý kết quả trả về từ REST controller
 					});
@@ -508,6 +536,24 @@
 			};
 
 			$scope.lista();
+
+			window.onbeforeunload = function (event) {
+				if ($scope.filenames.length === 0) {
+					var data = $scope.form.id;
+					navigator.sendBeacon('/addimageproduct/' + $scope.form.id, JSON.stringify(data));
+					alert('Vì không có hình ảnh nên hệ thống sẽ thêm 1 ảnh mặc định');
+				}
+			}
+
+			$scope.deleteproductvariant = function (id) {
+				$http.delete('/productvariant/delete/' + id).then(resp => {
+					let i = $scope.filenames.findIndex(item => item == id);
+					$scope.variant.splice(i, 1);
+				}).catch(error => {
+					console.log("errors", error);
+				});
+			}
+
 		});
 	</script>
 	<!-- END script xử lý hình ảnh -->

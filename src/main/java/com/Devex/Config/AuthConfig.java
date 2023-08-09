@@ -44,7 +44,7 @@ public class AuthConfig {
             .requestMatchers("/ad/**").hasAuthority("ADMIN")
             .requestMatchers("/manager/**").hasAuthority("MANAGER")
             .requestMatchers("/seller/**").hasAuthority("SELLER")
-            .requestMatchers("/profile", "/profile/**", "/cart/**").hasAuthority("CUSTOMER")
+            .requestMatchers("/profile", "/profile/**", "/cart/**","/order/**").hasAuthority("CUSTOMER")
             .anyRequest().permitAll()
             .and()
             .formLogin(

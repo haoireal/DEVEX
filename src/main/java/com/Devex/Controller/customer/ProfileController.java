@@ -29,7 +29,6 @@ import com.Devex.Entity.Customer;
 import com.Devex.Entity.User;
 
 @Controller
-@Slf4j
 public class ProfileController {
 	private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private static final String PHONE_NUMBER_REGEX = "^(\\+84|0)[1-9]\\d{8}$";
@@ -156,7 +155,7 @@ public class ProfileController {
 		}
 		otpService.sendMailOtp(info);
         session.set("info-user", info);
-		return "redirect:/profile//verify/new-email";
+		return "redirect:/profile/verify/new-email";
 	}
 	
 	@PostMapping("/profile/change-phone")
@@ -172,7 +171,7 @@ public class ProfileController {
 		OtpRequestDTO otpRequest = new OtpRequestDTO(info, info);
 		otpService.sendSMS(otpRequest);
         session.set("info-user", info);
-		return "redirect:/profile//verify/new-phone";
+		return "redirect:/profile/verify/new-phone";
 	}
 	
 	@GetMapping("/profile/verify/new-{type}")

@@ -21,12 +21,14 @@ import com.Devex.Entity.Category;
 import com.Devex.Entity.CategoryDetails;
 import com.Devex.Entity.ImageProduct;
 import com.Devex.Entity.Product;
+import com.Devex.Entity.ProductBrand;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.ImageProductService;
+import com.Devex.Sevice.ProductBrandService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
@@ -65,6 +67,9 @@ public class DevexSellerRestController {
 
 	@Autowired
 	ImageProductService imageProductService;
+	
+	@Autowired
+	ProductBrandService brandService;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -73,35 +78,37 @@ public class DevexSellerRestController {
 	@GetMapping("/img/product")
 	public List<String> listImage() {
 		// Kích hoạt FileManagerService
+		User u = session.get("user");
 		String id = session.get("idproduct");
-		List<String> imageUrls = fileManagerService.list(id, "aligqd911");
+		List<String> imageUrls = fileManagerService.list(id, u.getUsername());
 		return imageUrls;
 	}
 
 	@GetMapping("/img/product/{filename}")
 	public byte[] download(@PathVariable("filename") String filename) {
+		User u = session.get("user");
 		String id = session.get("idproduct");
-		return fileManagerService.read("aligqd911", id, filename);
+		return fileManagerService.read(u.getUsername(), id, filename);
 	}
 
 	@DeleteMapping("/img/product/{filename}")
 	public void delete(@PathVariable("filename") String filename) {
+		User u = session.get("user");
 		String id = session.get("idproduct");
-		fileManagerService.delete("aligqd911", id, filename);
-		System.out.println(filename);
+		fileManagerService.delete(u.getUsername(), id, filename);
 		imageProductService.deleteImageProductByNameAndProductId(filename, id);
 	}
 
 	@PostMapping("/img/product")
 	public List<String> upload(@PathParam("files") MultipartFile[] files) {
+		User u = session.get("user");
 		String id = session.get("idproduct");
-		return fileManagerService.save("aligqd911", id, files);
+		return fileManagerService.save(u.getUsername(), id, files);
 	}
 
 	@GetMapping("/api/product")
 	public Product getProduct() {
 		String id = session.get("idproduct");
-		System.out.println(id);
 		return productService.findByIdProduct(id);
 	}
 
@@ -109,12 +116,19 @@ public class DevexSellerRestController {
 	public List<CategoryDetails> listCategoryDetails(@PathVariable("idca") int idca) {
 		// Kích hoạt FileManagerService
 		int id = idca;
-		System.out.println(id);
 		List<CategoryDetails> listcategory = categoryDetailService.findAllCategoryDetailsById(id);
 		return listcategory;
 	}
+	
+	@GetMapping("/idCategoryDetails")
+	public int idCategorydetails() {
+		String idp = session.get("idproduct");
+		Product p = productService.findByIdProduct(idp);
+		int id = p.getCategoryDetails().getId();
+		return id;
+	}
 
-	@GetMapping("/idca")
+	@GetMapping("/idcategory")
 	public int idCategory() {
 		String idp = session.get("idproduct");
 		Product p = productService.findByIdProduct(idp);
@@ -122,15 +136,27 @@ public class DevexSellerRestController {
 		return id;
 	}
 
-	@GetMapping("/idcadt")
+	@GetMapping("/category")
 	public List<Category> idCategoryDetails() {
 		List<Category> listCategory = categoryService.findAll();
 		return listCategory;
 	}
+	
+	@GetMapping("/brand")
+	public List<ProductBrand> listBrand(){
+		return brandService.findAll();
+	}
+	
+	@GetMapping("/idbrand")
+	public int idBrand() {
+		String idp = session.get("idproduct");
+		Product p = productService.findByIdProduct(idp);
+		int id = p.getProductbrand().getId();
+		return id;
+	}
 
 	@GetMapping("/api/productvariant")
 	public List<ProductVariant> getProductVariant() {
-		System.out.println("aaaaaaaaaaaaaaaaaaa");
 		String idp = session.get("idproduct");
 		List<ProductVariant> listproductvariant = productVariantService.findAllProductVariantByProductId(idp);
 		return listproductvariant;
@@ -139,6 +165,7 @@ public class DevexSellerRestController {
 	@SuppressWarnings("unused")
 	@PutMapping("/info/product")
 	public void updateProduct(@RequestBody Object object) throws ParseException {
+		User u = session.get("user");
 		// Chuyển object sang json sau đó đọc ra
 		JsonNode jsonNode = objectMapper.valueToTree(object);
 		JsonNode listNode = jsonNode.get("listvariant");
@@ -146,25 +173,14 @@ public class DevexSellerRestController {
 		});
 		int idCategoryDetails = jsonNode.get("idCategoryDetails").asInt();
 		Boolean active = jsonNode.get("active").asBoolean();
-		String brand = jsonNode.get("brand").asText();
+		int brand = jsonNode.get("brand").asInt();
 		String createdDay = jsonNode.get("createdDay").asText();
 		Date daycreated = dateFormat.parse(createdDay);
 		String description = jsonNode.get("description").asText();
 		String id = jsonNode.get("id").asText();
 		String name = jsonNode.get("name").asText();
 		CategoryDetails categoryDetails = categoryDetailService.findCategoryDetailsById(idCategoryDetails);
-		Seller seller = sellerService.findFirstByUsername("aligqd911");
-		System.out.println(categoryDetails.getName());
-		// Gán chữ liệu vào product
-		Product product = new Product();
-		product.setId(id);
-		product.setBrand(brand);
-		product.setActive(active);
-		product.setCategoryDetails(categoryDetails);
-		product.setCreatedDay(daycreated);
-		product.setDescription(description);
-		product.setName(name);
-		product.setSellerProduct(seller);
+		Seller seller = sellerService.findFirstByUsername(u.getUsername());
 		// Update product
 		productService.updateProduct(id, name, brand, description, daycreated, active, seller.getUsername(),
 				categoryDetails.getId());
@@ -186,8 +202,19 @@ public class DevexSellerRestController {
 
 	@DeleteMapping("/delete/product/{idproduct}")
 	public void deleteproduct(@PathVariable("idproduct") String idproduct) {
-		System.out.println(idproduct);
 		productService.updateProductIsDeleteById(true, idproduct);
+	}
+	
+	@PostMapping("/addimageproduct/{id}")
+	public void insertImageProduct(@PathVariable("id") String id) {
+		User u = session.get("user");
+		imageProductService.insertImageProduct("1", "default.webp", id);
+		fileManagerService.changeImage(u.getUsername(), id);
+	}
+	
+	@DeleteMapping("productvariant/delete/{id}")
+	public void deleteProductVariant(@PathVariable("id") Integer id) {
+		productVariantService.deleteById(id);
 	}
 
 }

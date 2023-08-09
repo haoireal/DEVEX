@@ -8,6 +8,6 @@ import com.Devex.Entity.Role;
 
 @EnableJpaRepositories
 @Repository("roleRepository")
-public interface RoleRepository extends JpaRepository<Role, Integer>{
+public interface RoleRepository extends JpaRepository<Role, String>{
 
 }

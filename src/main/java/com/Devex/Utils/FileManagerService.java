@@ -76,9 +76,11 @@ public class FileManagerService {
         List<ImageProduct> listImageProduct = imageProductService.findAllImageProductByProductId(id);
         List<String> filenames = new ArrayList<String>();
         File dir = Paths.get(fileStoragePath + "/product", shopname, id).toFile();
-        File shop = Paths.get(fileStoragePath + "/product", shopname).toFile();
+        File shop = Paths.get(fileStoragePath + "/product", shopname).toFile(); 
+        System.out.println(dir.getAbsolutePath());
         if(!shop.exists()) {
         	shop.mkdirs();
+        	
         	if(!dir.exists()){
                 dir.mkdirs();
                 File[] files = dir.listFiles();
@@ -87,16 +89,20 @@ public class FileManagerService {
                 }
             }
         }else {
-        	if (dir.exists() && listImageProduct != null) {
+        	if (dir.exists() && listImageProduct.size() > 0) {
+        		System.out.println(listImageProduct.size());
+        		System.out.println(id+"check2");
                 File[] files = dir.listFiles();
                 for (File file : files) {
                 	filenames.add("/img/product/"+file.getName());
                 }
-            } else if (dir.exists() && listImageProduct == null) {
+            } else if (dir.exists() && listImageProduct.size() == 0) {
+            	System.out.println(id+"check1");
                 File file = Paths.get(fileStoragePath + "/product", shopname).toFile();
                 Path path = Paths.get(file.getAbsolutePath(), id);
                 path.toFile().delete();
             }else if(!dir.exists()) {
+            	System.out.println(id+"check");
             	dir.mkdirs();
             	File[] files = dir.listFiles();
                 for (File file : files) {
@@ -105,5 +111,15 @@ public class FileManagerService {
             }
         }
         return filenames;
+    }
+    
+    public void changeImage(String shopname, String id) {
+    	Path source = Paths.get(fileStoragePath + "/product", "default.webp");
+    	Path target = this.getPath(shopname, id, "default.webp");
+    	try {
+			Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 }

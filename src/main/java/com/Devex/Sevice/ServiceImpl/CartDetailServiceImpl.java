@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.Devex.DTO.CartDetailDTo;
 import com.Devex.Entity.CartDetail;
 import com.Devex.Repository.CartDetailRespository;
 import com.Devex.Sevice.CartDetailService;
@@ -68,6 +69,16 @@ public class CartDetailServiceImpl implements CartDetailService{
 	@Override
 	public void deleteAll() {
 		cartDetail.deleteAll();
+	}
+
+	@Override
+	public List<CartDetailDTo> findAllCartDTO(String username) {
+		return cartDetail.findAllCartDTO(username);
+	}
+
+	@Override
+	public CartDetail findByIDProduct(int id) {
+		return cartDetail.findByIDProduct(id);
 	}
 	
 	

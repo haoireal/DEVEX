@@ -1,5 +1,6 @@
 package com.Devex.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +18,8 @@ import com.Devex.Entity.User;
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, Integer> {
 
 	@Query("SELECT p FROM ProductVariant p WHERE p.product.id LIKE %?1%")
-	List<ProductVariant> findAllProductVariantByProductId(String id);	
+	List<ProductVariant> findAllProductVariantByProductId(String id);
+
 	
 	@Query("SELECT pv.price FROM ProductVariant pv JOIN pv.product p WHERE p.id = :id AND pv.color = :color")
 	Double findPriceByColor(String id,String color);
@@ -28,13 +30,17 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 //	List<ProductVariant> findAllProductVariantByProductId(String id);
 	
 	@Modifying
-    @Query("UPDATE ProductVariant pv SET pv.quantity = :quantity, pv.price = :price, pv.priceSale = :priceSale, pv.size = :size, pv.color = :color WHERE pv.id = :id")
-    void updateProductVariant(@Param("id") Integer id, @Param("quantity") Integer quantity, @Param("price") Double price, @Param("priceSale") Double priceSale, @Param("size") String size, @Param("color") String color);
-	
+	@Query("UPDATE ProductVariant pv SET pv.quantity = :quantity, pv.price = :price, pv.priceSale = :priceSale, pv.size = :size, pv.color = :color WHERE pv.id = :id")
+	void updateProductVariant(@Param("id") Integer id, @Param("quantity") Integer quantity,
+			@Param("price") Double price, @Param("priceSale") Double priceSale, @Param("size") String size,
+			@Param("color") String color);
+
 	@Modifying
-    @Query(value = "INSERT INTO Product_Variant (quantity, price, priceSale, size, color, Product_ID) VALUES (:quantity, :price, :priceSale, :size, :color, :productId)", nativeQuery = true)
-    void addProductVariant(@Param("quantity") Integer quantity, @Param("price") Double price, @Param("priceSale") Double priceSale, @Param("size") String size, @Param("color") String color, @Param("productId") String productId);
-	
+	@Query(value = "INSERT INTO Product_Variant (quantity, price, priceSale, size, color, Product_ID) VALUES (:quantity, :price, :priceSale, :size, :color, :productId)", nativeQuery = true)
+	void addProductVariant(@Param("quantity") Integer quantity, @Param("price") Double price,
+			@Param("priceSale") Double priceSale, @Param("size") String size, @Param("color") String color,
+			@Param("productId") String productId);
+
 	@Modifying
 	@Query(value = "DELETE FROM Product_Variant WHERE Product_ID = :productId", nativeQuery = true)
 	void deleteProductVariantByProductId(@Param("productId") String productId);

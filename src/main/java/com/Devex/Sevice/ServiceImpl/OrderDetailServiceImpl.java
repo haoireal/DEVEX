@@ -15,6 +15,8 @@ import com.Devex.Entity.OrderDetails;
 import com.Devex.Repository.OrderDetailRepository;
 import com.Devex.Sevice.OrderDetailService;
 
+import jakarta.transaction.Transactional;
+
 @SessionScope
 @Service("orderDetailsService")
 public class OrderDetailServiceImpl implements OrderDetailService{
@@ -26,6 +28,16 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 		entity.setId("1");
 		return orderDetailRepository.save(entity);
 	}
+	
+	
+
+	@Override
+	public OrderDetails saveAndFlush(OrderDetails entity) {
+		entity.setId("1");
+		return orderDetailRepository.saveAndFlush(entity);
+	}
+
+
 
 	@Override
 	public List<OrderDetails> saveAll(List<OrderDetails> entities) {
@@ -90,6 +102,17 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	@Override
 	public List<OrderDetails> findOrderDetailsByOrderIDAndSellerUsername(String id, String username) {
 		return orderDetailRepository.findOrderDetailsByOrderIDAndSellerUsername(id, username);
+	}
+
+	@Override
+	@Transactional
+	public void updateIdOrderDetailsStatus(int ido, String id) {
+		orderDetailRepository.updateIdOrderDetailsStatus(ido, id);
+	}
+
+	@Override
+	public List<OrderDetails> findOrderDetailsByOrderID(String id, String username) {
+		return orderDetailRepository.findOrderDetailsByOrderID(id, username);
 	}
 	
 	

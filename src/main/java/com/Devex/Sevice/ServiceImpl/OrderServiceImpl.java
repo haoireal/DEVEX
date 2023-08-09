@@ -28,6 +28,16 @@ public class OrderServiceImpl implements OrderService{
 		entity.setId("1");
 		return orderRepository.save(entity);
 	}
+	
+	
+
+	@Override
+	public Order saveAndFlush(Order entity) {
+		entity.setId("1");
+		return orderRepository.saveAndFlush(entity);
+	}
+
+
 
 	@Override
 	public List<Order> saveAll(List<Order> entities) {

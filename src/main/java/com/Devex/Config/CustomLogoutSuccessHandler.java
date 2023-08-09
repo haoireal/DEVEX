@@ -24,6 +24,6 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler{
         // Xóa thông tin người dùng khỏi session khi đăng xuất thành công
 		session.remove("user");
         // Chuyển hướng sau khi đăng xuất thành công
-        response.sendRedirect("/signin");
+        response.sendRedirect("/home");
     }
 }

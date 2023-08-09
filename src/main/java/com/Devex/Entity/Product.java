@@ -36,8 +36,6 @@ public class Product implements Serializable{
 	private String id;
 	@Column(name = "Name")
 	private String name;
-	@Column(name = "Brand")
-	private String brand;
 	@Column(name = "Description")
 	private String description;
 	@Column(name = "Createdday")
@@ -59,6 +57,11 @@ public class Product implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "Category_ID")
 	private CategoryDetails categoryDetails;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "Brand_ID")
+	private ProductBrand productbrand;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
