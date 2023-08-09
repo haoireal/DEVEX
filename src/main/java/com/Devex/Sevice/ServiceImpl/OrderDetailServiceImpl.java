@@ -28,6 +28,16 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 		entity.setId("1");
 		return orderDetailRepository.save(entity);
 	}
+	
+	
+
+	@Override
+	public OrderDetails saveAndFlush(OrderDetails entity) {
+		entity.setId("1");
+		return orderDetailRepository.saveAndFlush(entity);
+	}
+
+
 
 	@Override
 	public List<OrderDetails> saveAll(List<OrderDetails> entities) {

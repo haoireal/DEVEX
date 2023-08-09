@@ -72,8 +72,13 @@ public class CartDetailServiceImpl implements CartDetailService{
 	}
 
 	@Override
-	public List<CartDetailDTo> findAllCartDTO() {
-		return cartDetail.findAllCartDTO();
+	public List<CartDetailDTo> findAllCartDTO(String username) {
+		return cartDetail.findAllCartDTO(username);
+	}
+
+	@Override
+	public CartDetail findByIDProduct(int id) {
+		return cartDetail.findByIDProduct(id);
 	}
 	
 	

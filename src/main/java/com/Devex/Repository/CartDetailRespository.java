@@ -26,6 +26,9 @@ public interface CartDetailRespository extends JpaRepository<CartDetail, Integer
 			+ "WHERE ip.product = cd.productCart.product and cd.cart.person.username = ?1 ")
     	List<CartDetailDTo> findAllCartDTO(String username );
 	
-
+	@Query("SELECT o FROM CartDetail o WHERE o.productCart.id = ?1")
+	CartDetail findByIDProduct(int id);
+	
+	
 
 }

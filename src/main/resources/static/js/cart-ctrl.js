@@ -100,7 +100,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
           // Sau khi xoá thành công, cập nhật lại danh sách sản phẩm trong giỏ hàng trên frontend
           // this.items = this.items.filter((item) => item.id !== id);
           console.log("Success", resp);
-          this.toggleItemOrder(id);
+          this.itemsOrder = this.itemsOrder.filter((item) => item.id !== id);
           this.loadProductCart();
         })
         .catch((error) => {
@@ -256,35 +256,38 @@ app.controller("cart-ctrl", function ($scope, $http) {
   $cart.loadProductCart();
 
   // Đặt hàng
-  $scope.order = {
-    get account() {
-      return { username: $auth.user.username };
-    },
-    createDate: new Date(),
-    address: "",
-    get orderDetails() {
-      return $cart.items.map((item) => {
-        return {
-          product: { id: item.id },
-          price: item.price,
-          quantity: item.qty,
-        };
+
+  $scope.checkAndPerformAction = function () {
+    var userAddress = document.getElementById("userAddress").value;
+    var userPhoneAddress = document.getElementById("userPhoneAddress").value;
+    if ($cart.itemsOrder.length === 0) {
+      alert("Vui lòng chọn sản phẩm!");
+    } else if (userAddress === "" || userPhoneAddress === "") {
+      this.showAlert();
+    } else {
+      this.purchase();
+    }
+  };
+
+  $scope.showAlert = function () {
+    alert(
+      "Vui lòng cập nhật thông tin địa chỉ và số điện thoại trước khi mua hàng!"
+    );
+  };
+
+  $scope.purchase = function () {
+    // Thực hiện đặt hàng
+    var url = `${host}/cart/order`;
+    $http
+      .post(url, $cart.itemsOrder)
+      .then((resp) => {
+        alert("Đặt hàng thành công!");
+        console.log(resp);
+        $cart.loadProductCart();
+      })
+      .catch((error) => {
+        alert("Đặt hàng lỗi!");
+        console.log(error);
       });
-    },
-    purchase() {
-      var order = angular.copy(this);
-      // Thực hiện đặt hàng
-      $http
-        .post("/rest/orders", order)
-        .then((resp) => {
-          alert("Đặt hàng thành công!");
-          $cart.clear();
-          location.href = "/order/detail/" + resp.data.id;
-        })
-        .catch((error) => {
-          alert("Đặt hàng lỗi!");
-          console.log(error);
-        });
-    },
   };
 });
