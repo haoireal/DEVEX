@@ -2,32 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
-	<!-- daterange picker -->
-	<link rel="stylesheet" href="/admin/plugins/daterangepicker/daterangepicker.css">
-	<!-- iCheck for checkboxes and radio inputs -->
-	<link rel="stylesheet" href="/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-	<!-- Bootstrap Color Picker -->
-	<link rel="stylesheet" href="/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-	<!-- Tempusdominus Bootstrap 4 -->
-	<link rel="stylesheet" href="/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-	<!-- Select2 -->
-	<link rel="stylesheet" href="/admin/plugins/select2/css/select2.min.css">
-	<link rel="stylesheet" href="/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-	<!-- Bootstrap4 Duallistbox -->
-	<link rel="stylesheet" href="/admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-	<!-- BS Stepper -->
-	<link rel="stylesheet" href="/admin/plugins/bs-stepper/css/bs-stepper.min.css">
+<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
+<!-- daterange picker -->
+<link rel="stylesheet"
+	href="/admin/plugins/daterangepicker/daterangepicker.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet"
+	href="/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<!-- Bootstrap Color Picker -->
+<link rel="stylesheet"
+	href="/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet"
+	href="/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="/admin/plugins/select2/css/select2.min.css">
+<link rel="stylesheet"
+	href="/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<!-- Bootstrap4 Duallistbox -->
+<link rel="stylesheet"
+	href="/admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+<!-- BS Stepper -->
+<link rel="stylesheet"
+	href="/admin/plugins/bs-stepper/css/bs-stepper.min.css">
+<!-- Bootstrap5 Duallistbox -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+	crossorigin="anonymous">
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="sellerproduct">
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app"
+	ng-controller="sellerproduct">
 	<div class="wrapper">
 		<!-- Preloader -->
-		<div class="preloader flex-column justify-content-center align-items-center">
-			<img class="animation__wobble" src="/img/banner/logotitle.png" alt="AdminLTELogo" height="60" width="60">
+		<div
+			class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__wobble" src="/img/banner/logotitle.png"
+				alt="AdminLTELogo" height="60" width="60">
 		</div>
-		<div th:replace="~{flagment/seller/sellerHeader :: sellerHeaderFragment}"></div>
-		<div th:replace="~{flagment/seller/sellerMainSidebar :: sellerMainSidebarFragment}"></div>
+		<div
+			th:replace="~{flagment/seller/sellerHeader :: sellerHeaderFragment}"></div>
+		<div
+			th:replace="~{flagment/seller/sellerMainSidebar :: sellerMainSidebarFragment}"></div>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -42,12 +60,101 @@
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="/devex/home">Trang
 										chủ</a></li>
-								<li class="breadcrumb-item active" th:text="${titleType}"></li>
+								<!-- <li class="breadcrumb-item active" th:text="${titleType}"></li> -->
 							</ol>
 						</div>
 						<!-- /.col -->
 					</div>
 					<!-- /.row -->
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">User Manage</h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body" th:object="${userdetail}">
+									<form th:action="@{/admin/user/update}" method="post">
+										<div class="mb-3">
+											<label for="UserName" class="form-label">Username</label> <input
+												type="text" class="form-control" id="UserName"
+												aria-describedby="UserName" th:value="*{username}" disabled>
+
+										</div>
+										<div class="mb-3">
+											<label for="FullName" class="form-label">FullName</label> <input
+												type="text" class="form-control" id="FullName"
+												aria-describedby="FullName" th:value="*{fullname}">
+
+										</div>
+										<div class="mb-3">
+											<label for="Email" class="form-label">Email</label> <input
+												type="Email" class="form-control" id="Email"
+												aria-describedby="Email" th:value="*{email}">
+
+										</div>
+										<div class="mb-3">
+											<label for="Password" class="form-label">Password</label> <input
+												type="password" class="form-control" id="Password"
+												aria-describedby="Password" th:value="*{password}">
+
+										</div>
+										<div class="mb-3">
+											<label for="Phone" class="form-label">Phone</label> <input
+												type="text" class="form-control" id="Phone"
+												aria-describedby="Phone" th:value="*{phone}">
+
+										</div>
+										<div class="mb-3 d-flex">
+											<label for="Role" class="form-label me-4">Gender</label> <br>
+											<div class="form-check pe-3">
+												<input class="form-check-input" type="radio" name="gender"
+													id="Nam" th:checked="*{gender == 'Nam'}"> <label
+													class="form-check-label" for="Nam"> Nam </label>
+											</div>
+											<div class="form-check" style="margin: 0px 20px;">
+												<input class="form-check-input" type="radio" name="gender"
+													id="Nữ" th:checked="*{gender == 'Nữ'}"> <label
+													class="form-check-label" for="Nữ"> Nữ </label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="gender"
+													id="Orther" th:checked="*{gender == 'Other'}"> <label
+													class="form-check-label" for="Other"> Khác </label>
+											</div>
+
+										</div>
+										<div class="mb-3 d-flex">
+											<label for="Role" class="form-label me-4">Active</label>
+											<div class="form-check pe-3">
+												<input class="form-check-input" type="radio" name="active"
+													id="true" th:checked="*{active}"> <label
+													class="form-check-label" for="true"> Avtice </label>
+											</div>
+											<div class="form-check" style="margin: 0px 20px;">
+												<input class="form-check-input" type="radio" name="active"
+													id="false" th:checked="*{!active}"> <label
+													class="form-check-label" for="false"> Inactive </label>
+											</div>
+
+										</div>
+										<div class="mb-3">
+											<label for="Role" class="form-label">Role</label>
+											 <input type="text" class="form-control" id="Role" aria-describedby="Role" th:value="*{roles[0].role.name}" disabled > 
+
+
+										</div>
+
+
+										<button type="submit" class="btn btn-primary">Update</button>
+									</form>
+								</div>
+								<!-- /.card-body -->
+							</div>
+						</div>
+					</div>
+
 				</div>
 				<!-- /.container-fluid -->
 			</div>
@@ -56,127 +163,7 @@
 			<!-- Main content -->
 			<section class="content">
 				<div class="container-fluid">
-					<div class="row">
-						<div class="col-12">
-							<h1>Thông tin sản phẩm</h1>
-							<!-- Thông tin sản phẩm -->
-
-							<!-- Hình ảnh -->
-							<div class="card form-group">
-								<label class="col-12">Hình ảnh</label>
-								<!-- Hiển thị hình ảnh -->
-								<div class="row">
-									<label class="col-1" title="Click vào hình ảnh 2 lần để xóa"
-										ng-repeat="filename in filenames">
-										<img alt="" class="img-fluid" ng-src="{{filename}}"
-											ng-dblclick="deleteimg(filename)">
-									</label>
-									<div class="col-2">
-										<!-- Chọn file -->
-										<input id="fileInput" style="display: none;" type="file" multiple="multiple"
-											onchange="angular.element(this).scope().uploadimg(this.files)">
-										<button class="btn btn-primary mb-2" onclick="openFilePicker()">Thêm</button>
-										<!-- END chọn file -->
-									</div>
-									<!-- END Hiển thị hình ảnh -->
-
-								</div>
-							</div>
-							<!-- END Hình ảnh -->
-							<!-- Thông tin sản phẩm -->
-							<div>
-								<form action="" method="post">
-									<div class="card">
-										<!-- Tên sản phẩm -->
-										<div class="form-group">
-											<label>Tên sản phẩm</label>
-											<input class="form-control" ng-model="form.name"
-												placeholder="Nhập tên sản phẩm">
-										</div>
-										<!-- END Tên sản phẩm -->
-
-										<!-- COMBOBOX AND SEARCH -->
-										<div class="row">
-											<div class="form-group col-6">
-												<label>Loại sản phẩm</label>
-												<select id="brands" class="form-control select2" style="width: 100%;"
-													ng-change="getbrand()" ng-model="selectedbrand"
-													ng-options="brand.id as brand.name for brand in brands">
-												</select>
-											</div>
-										</div>
-										<!-- END COMBOBOX SEARCH -->
-										<!-- Loại sản phẩm -->
-										<div class="row">
-											<div class="form-group col-6">
-												<label>Loại sản phẩm</label>
-												<select id="categorys" class="form-control select2" style="width: 100%;"
-													ng-change="getCategoryDetails()" ng-model="selectedCategory"
-													ng-options="category.id as category.name for category in categorys">
-												</select>
-											</div>
-											<div class="form-group col-6">
-												<label>Loại chi tiết</label>
-												<select id="categorydt" class="form-control select2"
-													style="width: 100%;" ng-model="selectedCategoryDetail"
-													ng-options="catedt.id as catedt.name for catedt in categorydetail">
-												</select>
-											</div>
-										</div>
-										<!-- END Loại sản phẩm -->
-										<div class="form-group">
-											<label for="exampleFormControlTextarea1">Mô tả sản phẩm</label>
-											<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-												ng-model="form.description"></textarea>
-										</div>
-									</div>
-								</form>
-							</div>
-							<!-- END Thông tin sản phẩm -->
-							<!--Table size -->
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title font-weight-bold">Chi tiết sản phẩm</h3>
-								</div>
-								<!-- /.card-header -->
-								<div class="card-body">
-									<table class="table table-bordered text-center" id="data-table">
-										<thead>
-											<tr>
-												<th style="width: 10px">Kích cỡ</th>
-												<th>Màu sắc</th>
-												<th>Giá tiền</th>
-												<th style="width: 40px">Số lượng hàng</th>
-											</tr>
-										</thead>
-										<tbody id="table-body" ng-repeat="item in variant">
-											<tr>
-												<td><input type="text" ng-model="item.size"></td>
-												<td><input type="text" ng-model="item.color"></td>
-												<td><input type="text" ng-model="item.price"></td>
-												<td><input type="text" ng-model="item.quantity"></td>
-												<td>
-													<button class="btn btn-danger"
-														ng-click="deleteproductvariant(item.id)">
-														<i class="fa-regular fa-trash-can"></i>
-													</button>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()">Thêm chi tiết sản phẩm</button>
-								</div>
-
-							</div>
-							<!-- /.card -->
-							<!-- END TABLE SIZe -->
-							<div class="text-center">
-								<button class="btn btn-primary" ng-click="save()">Lưu</button>
-								<button class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
-							</div>
-						</div>
-						<!-- /.col -->
-					</div>
+					<div class="row"></div>
 					<!-- /.row -->
 				</div>
 				<!-- /.container-fluid -->
@@ -185,12 +172,15 @@
 		</div>
 		<!-- /.content-wrapper -->
 
-		<div th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
-		<div th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
+		<div
+			th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
+		<div
+			th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
 		<!-- Select2 -->
 		<script src="/admin/plugins/select2/js/select2.full.min.js"></script>
 		<!-- Bootstrap4 Duallistbox -->
-		<script src="/admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+		<script
+			src="/admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 		<!-- InputMask -->
 		<script src="/admin/plugins/moment/moment.min.js"></script>
 		<script src="/admin/plugins/inputmask/jquery.inputmask.min.js"></script>
@@ -198,8 +188,9 @@
 		<script src="/admin/plugins/dropzone/min/dropzone.min.js"></script>
 	</div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-	<!-- <script src="app.js"></script> -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+	<script src="app.js"></script>
 	<script>
 		$(function () {
 			//Initialize Select2 Elements
@@ -339,7 +330,8 @@
 		}
 		// DropzoneJS Demo Code End
 	</script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- <script>
 		var addRowButton = document.getElementById('add-row-btn');
 		var tableBody = document.getElementById('table-body');
@@ -395,8 +387,8 @@
 
 			$scope.deleteimg = function (filename) {
 				$http.delete(filename).then(resp => {
-					// $scope.listimg();
-					let i = $scope.filenames.findIndex(name => name == filename);
+					$scope.listimg();
+					let i = $scope.filenames.findindex(name => name == filename);
 					$scope.filenames.splice(i, 1);
 					console.log(filename);
 				}).catch(error => {
@@ -427,13 +419,12 @@
 			var url = 'http://localhost:8888/api/product';
 			$scope.id = '';
 			$scope.selectedCategoryId = '';
-
+			$scope.form = {};
+			$scope.categorys = [];
+			$scope.selectedCategory = $scope.selectedCategory;
 			$scope.infoproduct = function () {
 				$http.get(url).then(resp => {
 					$scope.form = resp.data;
-					if($scope.form.name == 'Nhập tên sản phẩm tại đây'){
-						$scope.form.name = '';
-					}
 				}).catch(error => {
 					console.log("errors", error);
 				})
@@ -443,50 +434,26 @@
 				$http.get('/categoryDetails/' + $scope.selectedCategory)
 					.then(function (resp) {
 						$scope.categorydetail = resp.data;
-						$scope.selectedCategoryDetail = $scope.categorydetail[0].id;
 					});
 			};
 
-			$scope.getidcategoryDetails = function () {
-				$http.get('/idCategoryDetails').then(resp => {
+			$scope.getidp = function () {
+				$http.get('/idca').then(resp => {
 					$scope.id = resp.data;
-					$scope.selectedCategoryDetail = $scope.id; 
+					$scope.selectedCategoryId = $scope.id;
+					console.log($scope.selectedCategoryId);
 				})
 			};
 
-			$scope.getidcategory = function () {
-				$http.get('/idcategory').then(resp => {
-					$scope.id = resp.data;
-					$scope.selectedCategory = $scope.id;
-					$scope.getCategoryDetails();
-					$scope.getidcategoryDetails();
-				})
-			};
-
-			$scope.getcategory = function () {
-				$http.get('/category').then(resp => {
+			$scope.getca = function () {
+				$http.get('/idcadt').then(resp => {
 					$scope.categorys = resp.data;
 				})
 			}
 
-			$scope.getbrand = function () {
-				$http.get('/brand').then(resp => {
-					$scope.brands = resp.data;
-				})
-			}
-
-			$scope.getidbrand = function () {
-				$http.get('/idbrand').then(resp => {
-					$scope.id = resp.data;
-					$scope.selectedbrand = $scope.id;
-				})
-			}
-
-			$scope.getcategory();
-			$scope.getidcategory();
+			$scope.getca();
+			$scope.getidp();
 			$scope.infoproduct();
-			$scope.getbrand();
-			$scope.getidbrand();
 
 			var url = 'http://localhost:8888/api/productvariant';
 			var id = 0;
@@ -514,7 +481,6 @@
 
 				$scope.form.idCategoryDetails = $scope.selectedCategoryDetail;
 				$scope.form.listvariant = $scope.variant;
-				$scope.form.brand = $scope.selectedbrand;
 				console.log($scope.form);
 				$http.put("/info/product", $scope.form).then(resp => {
 
@@ -525,7 +491,7 @@
 
 			$scope.deleteProduc = function () {
 				// Gửi dữ liệu đến REST controller
-				$http.delete('/delete/product/' + $scope.form.id)
+				$http.delete('/delete/product/'+$scope.form.id)
 					.then(function (response) {
 						// Xử lý kết quả trả về từ REST controller
 					});
@@ -536,24 +502,6 @@
 			};
 
 			$scope.lista();
-
-			window.onbeforeunload = function (event) {
-				if ($scope.filenames.length === 0) {
-					var data = $scope.form.id;
-					navigator.sendBeacon('/addimageproduct/' + $scope.form.id, JSON.stringify(data));
-					alert('Vì không có hình ảnh nên hệ thống sẽ thêm 1 ảnh mặc định');
-				}
-			}
-
-			$scope.deleteproductvariant = function (id) {
-				$http.delete('/productvariant/delete/' + id).then(resp => {
-					let i = $scope.filenames.findIndex(item => item == id);
-					$scope.variant.splice(i, 1);
-				}).catch(error => {
-					console.log("errors", error);
-				});
-			}
-
 		});
 	</script>
 	<!-- END script xử lý hình ảnh -->

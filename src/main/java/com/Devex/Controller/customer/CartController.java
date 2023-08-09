@@ -96,6 +96,7 @@ public class CartController {
 			cartDetail.setProductCart(pv2);
 			cartDetail.setQuantity(soLuong);
 			Customer user = session.get("user");
+			System.out.println("Tên 2 : "+user.getUsername());
 			Cart cart = user.getCart();
 			if(cart == null) {
 				cart = new Cart();
