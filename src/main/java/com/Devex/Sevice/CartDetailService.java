@@ -32,6 +32,8 @@ public interface CartDetailService {
 
 	CartDetail save(CartDetail entity);
 
-	List<CartDetailDTo> findAllCartDTO();
+	List<CartDetailDTo> findAllCartDTO(String username);
+
+	CartDetail findByIDProduct(int id);
 
 }

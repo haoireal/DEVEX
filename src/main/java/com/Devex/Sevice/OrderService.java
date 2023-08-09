@@ -44,4 +44,6 @@ public interface OrderService {
 
 	void updateIdOrderStatus(int ido, String id);
 
+	Order saveAndFlush(Order entity);
+
 }
