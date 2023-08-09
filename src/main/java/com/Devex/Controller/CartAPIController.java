@@ -75,6 +75,20 @@ public class CartAPIController {
 	        return ResponseEntity.notFound().build();
 	    }
 	}
+	@DeleteMapping("/rest/cart")
+	public ResponseEntity<String> deleteCartDetailAll() {
+		cart.deleteAll();
+		return ResponseEntity.ok("All cart details deleted successfully.");
+	}
+	
+	@DeleteMapping("/rest/cart/shop/{idShop}")
+	public ResponseEntity<String> deleteCartDetailsByShopId(@PathVariable String idShop) {
+		 List<CartDetail> cartDetailsToDelete = cart.findCartDetailsByShopId(idShop);
+		 cart.deleteAll(cartDetailsToDelete);
+
+	    
+	    return ResponseEntity.ok("Cart details for shop with ID " + idShop + " deleted successfully.");
+	}
 	@PostMapping("/rest/cart")
 	public ResponseEntity<String> createCartDetail(@RequestBody CartDetail cartDetail) {
 	    CartDetail savedCartDetail = cart.save(cartDetail);
