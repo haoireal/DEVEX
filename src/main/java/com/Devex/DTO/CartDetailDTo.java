@@ -1,4 +1,4 @@
-package com.Devex.Sevice;
+package com.Devex.DTO;
 
 import java.util.List;
 

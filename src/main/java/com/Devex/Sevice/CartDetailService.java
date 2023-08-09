@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.Devex.DTO.CartDetailDTo;
 import com.Devex.Entity.CartDetail;
 
 public interface CartDetailService {
@@ -30,5 +31,7 @@ public interface CartDetailService {
 	List<CartDetail> findAll(Sort sort);
 
 	CartDetail save(CartDetail entity);
+
+	List<CartDetailDTo> findAllCartDTO();
 
 }
