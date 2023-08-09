@@ -123,6 +123,14 @@ public class OrderServiceImpl implements OrderService{
 	public void updateIdOrderStatus(int ido, String id) {
 		orderRepository.updateIdOrderStatus(ido, id);
 	}
+
+
+
+	@Override
+	public List<Order> findOrdersByCustomerID(String customerID) {
+		
+		return orderRepository.findOrdersByCustomerID(customerID);
+	}
 	
 	
 

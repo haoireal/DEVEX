@@ -35,4 +35,11 @@ public interface OrderRepository extends JpaRepository<Order, String>{
     @Query("SELECT o FROM Order o WHERE o.createdDay = (SELECT MAX(o2.createdDay) FROM Order o2)")
     Order findLatestOrder();
 	
+    @Query("SELECT DISTINCT o FROM Order o " +
+	           "JOIN FETCH o.orderDetails od " +
+	           "JOIN FETCH od.productVariant pv " +
+	           "JOIN FETCH pv.product p " +
+	           "JOIN FETCH p.sellerProduct s " +
+	           "WHERE o.customerOrder.id = ?1")
+	    List<Order> findOrdersByCustomerID(String customerID);
 }
