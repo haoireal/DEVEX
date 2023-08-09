@@ -1,4 +1,4 @@
-package com.Devex.Controller;
+package com.Devex.Controller.customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

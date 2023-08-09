@@ -155,7 +155,7 @@ public class ProfileController {
 		}
 		otpService.sendMailOtp(info);
         session.set("info-user", info);
-		return "redirect:/profile//verify/new-email";
+		return "redirect:/profile/verify/new-email";
 	}
 	
 	@PostMapping("/profile/change-phone")
@@ -171,7 +171,7 @@ public class ProfileController {
 		OtpRequestDTO otpRequest = new OtpRequestDTO(info, info);
 		otpService.sendSMS(otpRequest);
         session.set("info-user", info);
-		return "redirect:/profile//verify/new-phone";
+		return "redirect:/profile/verify/new-phone";
 	}
 	
 	@GetMapping("/profile/verify/new-{type}")

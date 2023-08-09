@@ -1,4 +1,4 @@
-package com.Devex.Controller;
+package com.Devex.Controller.customer;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
