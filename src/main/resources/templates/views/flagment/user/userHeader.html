@@ -8,9 +8,9 @@
 					<nav class="navbar float-end navbar-expand-lg navbar-light"
 						style="height: 35px">
 
-						<div class="collapse navbar-collapse  text-end "
+						<div class="collapse navbar-collapse text-end " 
 							id="navbarNavDropdown">
-							<ul class="text-end navbar-nav ml-auto">
+							<ul class="text-end navbar-nav ml-auto" >
 								<li class="nav-item"><a class="nav-link" href="#">Hỗ
 										trợ dịch vụ</a></li>
 								<li class="nav-item"><a class="nav-link" href="#">Bán
@@ -19,17 +19,16 @@
 										phẩm đã xem</a></li>
 								<li class="nav-item"><a class="nav-link" href="#">Kiếu
 										nại</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">Tra
+								<li class="nav-item"><a class="nav-link" href="/order">Tra
 										cứu đơn hàng</a></li>
 								<li class="nav-item"><a class="nav-link" href="#">Tuyển
 										dụng</a></li>
 
-								<li class="nav-item"><a name="username" th:if="${session.user == null}"
-									class="nav-link" href="/signin">Đăng nhập</a> <a
-									th:if="${session.user != null}"
-									th:text="${#strings.toUpperCase(session.user.username)}"
-									class="nav-link text-danger fw-bold" href="/profile">Đăng
-										nhập</a></li>
+								<li class="nav-item"><a style="color: #fff"
+									th:if="${session.user == null}" class="nav-link" href="/signin">Đăng
+										nhập</a> <a th:if="${session.user != null}"
+									class="nav-link text-danger fw-bold" href="/signout">Đăng
+										xuất</a></li>
 
 							</ul>
 						</div>
@@ -44,7 +43,8 @@
 
 	</div>
 
-	<div class="container container_mid mt-3 bg-white" style="height: 500px;">
+	<div class="container container_mid mt-3 bg-white"
+		style="height: 500px;">
 		<div class="row mt-2 mb-2 col-12">
 			<div class="col-md-2 col-3 text-center">
 				<a href="/home"> <img class="img-fluid img_logo m-0 mt-1"
@@ -77,14 +77,20 @@
 			<div class="col-md-1 col-2 mt-2">
 				<div class="row">
 					<div class="col-6 pt-1">
-						<a href="/cart"> <i class="bi bi-cart3 fs-4 text-dark fw-bold "></i>
-						<i class="d-flex" th:text="${session.cartCount}" style="color: #2550b9;"></i>
+						<a href="/cart" style="position: relative;"> <i
+							class="bi bi-cart3 fs-4 text-dark fw-bold "></i> <i
+							class="d-flex rounded-circle px-1" th:text="${session.cartCount}"
+							style="font-size: 0.8rem; background-color: #2550b9AB; color: white; position: absolute; top: -1rem; right: -0.15rem; text-decoration: none;"></i>
 						</a>
 					</div>
-					<div class="col-6 pt-1">
-						<a href> <i
-							class="bi bi-person-circle fs-4 text-dark fw-bold "></i>
+					<div class="col-6 pt-1 col">
+						<a href="/profile" style="position: relative; display:flex; justify-content: center;"> <i
+							class="bi bi-person-circle fs-4 text-dark fw-bold "></i> <i
+							th:if="${session.user != null}"
+							style="font-size: 1rem; background-color: #2550b9AB; color: white; position: absolute;top: 2rem;  text-decoration: none;"
+							th:text="${session.user.username}"></i>
 						</a>
+
 					</div>
 				</div>
 
@@ -169,35 +175,35 @@
 </div>
 <!-- /.navbar -->
 <header th:fragment="userHeaderFragment">
-	<div class="container-fluid header-inf ">
+	<div class="container-fluid header-inf">
 		<div class="container ">
-			<div class="row">
+			<div class="row-12">
 				<div class="menu-bar" style="color: #fff; margin: 0; padding: 0;">
 					<nav class="navbar float-end navbar-expand-lg navbar-light"
 						style="height: 35px">
 
-						<div class="collapse navbar-collapse  text-end "
+						<div
+							class="collapse navbar-collapse  text-end"
 							id="navbarNavDropdown">
-							<ul class="text-end navbar-nav ml-auto">
-								<li class="nav-item"><a class="nav-link" href="#">Hỗ
-										trợ dịch vụ</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">Bán
-										hàng</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">Sản
-										phẩm đã xem</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">Kiếu
-										nại</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">Tra
-										cứu đơn hàng</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">Tuyển
-										dụng</a></li>
+							<ul class="text-end navbar-nav ml-auto" style="display:flex; justify-content:center;">
+								<li class="nav-item"><a style="color: #fff"
+									class="nav-link" href="#">Hỗ trợ dịch vụ</a></li>
+								<li class="nav-item"><a style="color: #fff"
+									class="nav-link" href="#">Bán hàng</a></li>
+								<li class="nav-item"><a style="color: #fff"
+									class="nav-link" href="#">Sản phẩm đã xem</a></li>
+								<li class="nav-item"><a style="color: #fff"
+									class="nav-link" href="#">Kiếu nại</a></li>
+								<li class="nav-item"><a style="color: #fff"
+									class="nav-link" href="/order">Tra cứu đơn hàng</a></li>
+								<li class="nav-item"><a style="color: #fff"
+									class="nav-link" href="#">Tuyển dụng</a></li>
 
-								<li class="nav-item"><a th:if="${session.user == null}"
-									class="nav-link" href="/signin">Đăng nhập</a> <a
-									th:if="${session.user != null}"
-									th:text="${#strings.toUpperCase(session.user.username)}"
-									class="nav-link text-danger fw-bold" href="/profile">Đăng
-										nhập</a></li>
+								<li class="nav-item"><a style="color: #fff"
+									th:if="${session.user == null}" class="nav-link" href="/signin">Đăng
+										nhập</a> <a th:if="${session.user != null}"
+									class="nav-link text-danger fw-bold" href="/signout">Đăng
+										xuất</a></li>
 							</ul>
 						</div>
 
@@ -210,7 +216,7 @@
 		</div>
 
 	</div>
-	<div class="container container_mid mt-3 text-center bg-white"
+	<div class="container container_mid mt-3 text-center bg-white pb-3"
 		style="background-color: white;">
 		<div class="row mt-2 mb-2 col-12">
 			<div class="col-md-2 col-3 text-center">
@@ -244,14 +250,20 @@
 			<div class="col-md-1 col-2 mt-2">
 				<div class="row">
 					<div class="col-6 pt-1">
-						<a href="/devex/cart"> <i class="bi bi-cart3 fs-4 text-dark fw-bold "></i>
-						<i class="d-flex" th:text="${session.cartCount}" style="color: #2550b9;"></i>
+						<a href="/cart" style="position: relative;"> <i
+							class="bi bi-cart3 fs-4 text-dark fw-bold "></i> <i
+							class="d-flex rounded-circle px-1" th:text="${session.cartCount}"
+							style="font-size: 0.8rem; background-color: #2550b9AB; color: white; position: absolute; top: -1rem; right: -0.15rem; text-decoration: none;"></i>
 						</a>
 					</div>
-					<div class="col-6 pt-1">
-						<a href> <i
-							class="bi bi-person-circle fs-4 text-dark fw-bold "></i>
+					<div class="col-6 pt-1 col">
+						<a href="/profile" style="position: relative; display:flex; justify-content: center;"> <i
+							class="bi bi-person-circle fs-4 text-dark fw-bold "></i> <i
+							th:if="${session.user != null}"
+							style="font-size: 1rem; background-color: #2550b9AB; color: white; position: absolute;top: 2rem;  text-decoration: none;"
+							th:text="${session.user.username}"></i>
 						</a>
+
 					</div>
 				</div>
 

@@ -69,8 +69,8 @@
 								<div class="image">
 
 									<img
-									 th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${img.name}|}"
-									 alt="null" />
+										th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${img.name}|}"
+										alt="null" />
 								</div>
 
 							</div>
@@ -85,7 +85,8 @@
 									class="image-item">
 									<div class="image-nav">
 										<img style="height: 70px; width: 100%;" class="slider_nav-img"
-											tabindex="0"  th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${img.name}|}" />
+											tabindex="0"
+											th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${img.name}|}" />
 									</div>
 
 								</div>
@@ -102,7 +103,8 @@
 						<div class="row">
 							<div class="col-12"
 								style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-								<span th:id="*{id}" class="text_name-product" th:text="*{name}"> </span>
+								<span th:id="*{id}" class="text_name-product" th:text="*{name}">
+								</span>
 								<!-- hiện thị tên sp -->
 							</div>
 
@@ -183,42 +185,38 @@
 
 									<div th:each="color, iter : ${listColor}"
 										class="  form-check product-variation ms-1  align-items-center justify-content-center ">
-										<input
-											onchange="sendRadioValue(this.value) "
-											th:value="${color}"
-											th:attr="data-id=${product.id}"
+										<input onchange="sendRadioValue(this.value) "
+											th:value="${color}" th:attr="data-id=${product.id}"
 											class="  form-check-input"
 											style="margin-left: -1em !important; padding: 3px;"
 											type="radio" name="flexRadioDefault"
-											th:id="'flexRadioDefault'+${iter.count}"  
-											> 
-											<label
-											class="form-check-label pe-1 "
+											th:id="'flexRadioDefault'+${iter.count}">
+										<label class="form-check-label pe-1 "
 											style="margin-left: 0.3rem; padding: 3px"
 											th:for="'flexRadioDefault'+${iter.count}" th:text="${color}">
-											</label>
+										</label>
 									</div>
 								</div>
 
 							</div>
 
 							<div th:if="*{#lists.size(productVariants[0].size)} > 0"
-								id="size" class=" mt-2 d-none  d-lg-flex  justify-content-between ">
+								id="size"
+								class=" mt-2 d-none  d-lg-flex  justify-content-between ">
 								<div class="col-12 col-lg-2">
 									<span>Size: </span>
 								</div>
 								<div class="col-12 col-lg-10 d-flex">
 									<div th:each="size, iter : ${listSize}"
 										class="form-check product-variation ms-1  align-items-center justify-content-center ">
-										<input class="  form-check-input" th:checked="${iter.index==0}"
-											onchange="sendRadioValue(this.value)"
-											th:value="${size}"
+										<input class="  form-check-input"
+											th:checked="${iter.index==0}"
+											onchange="sendRadioValue(this.value)" th:value="${size}"
 											style="margin-left: -1em !important; padding: 3px;"
 											type="radio" name="flexRadio"
-											th:id="'flexRadio'+${iter.count}" > <label
+											th:id="'flexRadio'+${iter.count}"> <label
 											class="form-check-label pe-1 "
 											style="margin-left: 0.3rem; padding: 3px"
-											
 											th:for="'flexRadio'+${iter.count}" th:text="${size}">
 										</label>
 									</div>
@@ -236,17 +234,18 @@
 							<div class="col-12 col-lg-10">
 								<div id="number_quantity" class=" pe-none ">
 
-									<div class="  control d-flex align-items-center " >
+									<div class="  control d-flex align-items-center ">
 
-										<label id="btn_quantity" class="button  btn_Sub border-0 fs-3 "
-											onclick="subtract(this)"  > <i
+										<label id="btn_quantity"
+											class="button  btn_Sub border-0 fs-3 "
+											onclick="subtract(this)"> <i
 											class="fa-solid fa-minus icon_Sub"></i>
-										</label>
-										 <input oninput ="updateTotalPrice(this)" class="text-center product_quantity " type="number"
-											name="soluong" id="inputField" min="1" value="1" max="100"  ><br>
+										</label> <input oninput="updateTotalPrice(this)"
+											class="text-center product_quantity " type="number"
+											name="soluong" id="inputField" min="1" value="1" max="100"><br>
 										<label id="btn_quantity" class="button btn_Add border-0 fs-4"
-											onclick="add(this)"  > 
-											<i class="fa-solid fa-plus icon_Add"></i>
+											onclick="add(this)"> <i
+											class="fa-solid fa-plus icon_Add"></i>
 										</label>
 
 									</div>
@@ -262,10 +261,8 @@
 							<div class="col-7 col-lg-5">
 								<button class="btn btn_buy" type="submit">Thêm Vào Giỏ
 									Hàng</button>
-
-								
 			</form>
-							
+
 		</div>
 		<div class="col-5 col-lg-4 mb-3">
 			<button class="btn btn_buy" type="button">
@@ -279,7 +276,7 @@
 		<!-- hết thẻ đặt hàng -->
 		<!--List-favourite-->
 		<div class="row mt-4">
-			<div >
+			<div>
 				<a href="#" class="btn border-0  list-favourite "
 					aria-disabled="true" role="button">Thêm vào danh sách yêu tích</a>
 			</div>
@@ -318,103 +315,106 @@
 			</div>
 		</div>
 
-	</main> 
+	</main>
 
-		<!--shop name-->
-		<div th:object="${seller}" class="container container-shop mt-3 " > <!-- sài chung cho toàn bộ trang -->
-			<div class="row">
-				<div class="col-12 col-lg-4">
-					<div class="row d-flex justify-content-between ">
-						<div class="col-3" style="padding: 0;">
-							<div class="img_salles">
-								<img class="img_salles-logo" th:src="@{|/img/account/*{sellerProduct.avatar}}" alt="">
-							</div>
+	<!--shop name-->
+	<div th:object="${seller}" class="container container-shop mt-3 ">
+		<!-- sài chung cho toàn bộ trang -->
+		<div class="row">
+			<div class="col-12 col-lg-4">
+				<div class="row d-flex justify-content-between ">
+					<div class="col-3" style="padding: 0;">
+						<div class="img_salles">
+							<img class="img_salles-logo"
+								th:src="@{|/img/account/*{sellerProduct.avatar}}" alt="">
 						</div>
-						<div class="col-9 contact ">
-							<div class="shop_name" th:text="*{sellerProduct.shopName}">
-								
-							</div>
-							<div class="contact-content mt-2">
-								<div class="row">
-									<div class="col-6 d-none d-lg-flex">
-										<button class="btn_chat">					
-											<div class="content_chat ">
-												<i class="fs-6 fa-solid fa-message"></i>
-												<span style="font-size: .875rem;">Chat
-													ngay</span>
-											</div>
-					
-										</button>
-									</div>
-									<div class="col-6 d-flex">
-										<button class="float-end btn_seeShop">					
-											<div class="content_seeShop ">
-												<i class="fs-6 fa-solid fa-shop"></i>
-												<span style="font-size: .875rem;">Xem Shop</span>
-											</div>
-					
-										</button>
-									</div>
+					</div>
+					<div class="col-9 contact ">
+						<div class="shop_name" th:text="*{sellerProduct.shopName}">
+
+						</div>
+						<div class="contact-content mt-2">
+							<div class="row">
+								<div class="col-6 d-none d-lg-flex">
+									<button class="btn_chat">
+										<div class="content_chat ">
+											<i class="fs-6 fa-solid fa-message"></i> <span
+												style="font-size: .875rem;">Chat ngay</span>
+										</div>
+
+									</button>
+								</div>
+								<div class="col-6 d-flex">
+									<button class="float-end btn_seeShop">
+										<div class="content_seeShop ">
+											<i class="fs-6 fa-solid fa-shop"></i> <span
+												style="font-size: .875rem;">Xem Shop</span>
+										</div>
+
+									</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-12 col-lg-8 d-flex d-lg-grid align-items-center">
-					<div class="row">
-						<div class="col-6 col-lg-4 d-flex justify-content-between">
-							<label class="dis-shop">Đánh Giá:</label>
-							<span class=" parameter-content text-danger">29,9k</span>
-						</div>
-						<div class="col-6 col-lg-4 d-flex justify-content-between">
-							<label class="dis-shop">Phản Hồi Chat:</label>
-							<span class=" parameter-content text-danger">29,9k</span>
-						</div>
-						<div class="col-4 d-none d-lg-flex justify-content-between">
-							<label class="dis-shop ">Tham Gia:</label>
-							<span class=" parameter-content text-danger" th:text="*{sellerProduct.createDay}">29,9k</span>
-						</div>
-						
-					</div>
-					<div  class="row">
-						<div  class="col-6 col-lg-4 d-flex justify-content-between">
-							<label class="dis-shop">Sản Phẩm:</label>
-							<span class=" parameter-content text-danger" th:text="*{productVariants.size()}">29,9k</span>
-						</div>
-						<div class="col-4  d-none d-lg-flex justify-content-between">
-							<label class="dis-shop">Thời Gian Phản Hồi:</label>
-							<span class=" parameter-content text-danger">Trong vài giờ</span>
-						</div>
-						<div class="col-4 d-none d-lg-flex justify-content-between">
-							<label class="dis-shop">Người Theo Dõi:</label>
-							<span class=" parameter-content text-danger">29,9k</span>
-						</div>
-						
-					</div>
-					
-				</div>
 			</div>
-			
+			<div class="col-12 col-lg-8 d-flex d-lg-grid align-items-center">
+				<div class="row">
+					<div class="col-6 col-lg-4 d-flex justify-content-between">
+						<label class="dis-shop">Đánh Giá:</label> <span
+							class=" parameter-content text-danger">29,9k</span>
+					</div>
+					<div class="col-6 col-lg-4 d-flex justify-content-between">
+						<label class="dis-shop">Phản Hồi Chat:</label> <span
+							class=" parameter-content text-danger">29,9k</span>
+					</div>
+					<div class="col-4 d-none d-lg-flex justify-content-between">
+						<label class="dis-shop ">Tham Gia:</label> <span
+							class=" parameter-content text-danger"
+							th:text="*{sellerProduct.createDay}">29,9k</span>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-6 col-lg-4 d-flex justify-content-between">
+						<label class="dis-shop">Sản Phẩm:</label> <span
+							class=" parameter-content text-danger"
+							th:text="*{productVariants.size()}">29,9k</span>
+					</div>
+					<div class="col-4  d-none d-lg-flex justify-content-between">
+						<label class="dis-shop">Thời Gian Phản Hồi:</label> <span
+							class=" parameter-content text-danger">Trong vài giờ</span>
+					</div>
+					<div class="col-4 d-none d-lg-flex justify-content-between">
+						<label class="dis-shop">Người Theo Dõi:</label> <span
+							class=" parameter-content text-danger">29,9k</span>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+	<!--describe(mô tả)-->
+	<div class="container container_describe mt-5 border border-1 "
+		style="height: 100%; padding-bottom: 1.5rem;">
+		<div class="row mt-3  mx-2 "
+			style="height: 50px; background-color: rgb(153, 153, 153, 0.3);">
+
+			<div class=" d-flex align-items-center mx-2">
+				<h2 class="describe_content my-auto">MÔ TẢ SẢN PHẨM</h2>
+
+			</div>
 
 		</div>
-		<!--describe(mô tả)-->
-		<div class="container container_describe mt-5 border border-1 "
-			style="height: 100%; padding-bottom: 1.5rem;">
-			<div class="row mt-3  mx-2 "
-				style="height: 50px; background-color: rgb(153, 153, 153, 0.3);">
-
-				<div class=" d-flex align-items-center mx-2">
-					<h2 class="describe_content my-auto">MÔ TẢ SẢN PHẨM</h2>
-
-				</div>
-
-			</div>
-			<div class="row mt-3 mx-3">
-				<div class="">
-					<pre th:text="*{description}">
+		<div class="row mt-3 mx-3">
+			<div class="">
+				<pre th:text="*{description}">
 
                         </pre>
-					<pre>
+				<pre>
 *Đổi trả theo đúng quy định của DEVEX online:
 1. Điều kiện áp dụng (trong vòng 03 ngày kể từ khi nhận sản phẩm)
 - Vui lòng quay video trước khi khui hàng
@@ -425,456 +425,447 @@
                         </pre>
 
 
-				</div>
 			</div>
 		</div>
-		<!--Đánh giá sp-->
-		<div
-			class="container d-none d-lg-grid container_evaluate_end  mt-4 border border-1"
-			style="height: 500px;">
-			<div class="row mt-3  mx-2 " style="height: 50px;">
+	</div>
+	<!--Đánh giá sp-->
+	<div
+		class="container d-none d-lg-grid container_evaluate_end  mt-4 border border-1"
+		style="height: 500px;">
+		<div class="row mt-3  mx-2 " style="height: 50px;">
 
-				<div class=" d-flex align-items-center mx-2">
-					<h2 class="describe_content my-auto">ĐÁNH GIÁ SẢN PHẨM</h2>
-
-				</div>
-
+			<div class=" d-flex align-items-center mx-2">
+				<h2 class="describe_content my-auto">ĐÁNH GIÁ SẢN PHẨM</h2>
 
 			</div>
-
-			<div class="row mx-4   border border-1   " style="padding: 30px;">
-				<div class="col-2  text-center  flex-column ">
-					<span class="fs-5 text-danger " style="font-weight: 350;"><strong
-						class="fs-2">5</strong> trên 5</span>
-
-					<div>
-						<a class="icon-star text-center" style="text-decoration: none;">
-							<i class="icon-flash text-red"></i> <i
-							class="fa-solid fa-star fs-5 text-danger"></i> <i
-							class="fa-solid fa-star fs-5 text-danger"></i> <i
-							class="fa-solid fa-star fs-5 text-danger"></i> <i
-							class="fa-solid fa-star fs-5 text-danger"></i> <i
-							class="fa-solid fa-star fs-5 text-danger"></i>
-						</a>
-					</div>
-
-
-
-				</div>
-				<div class="col-10 d-flex  align-items-center ">
-
-					<div class="row   ">
-						<div class="col-2" style="width: 150px; height: 2rem;">
-							<button class="btn-star" aria-label="Đen" aria-disabled="false">
-								<span>Tất Cả</span>
-							</button>
-						</div>
-						<div class="col-2" style="width: 150px; height: 2rem;">
-							<button class="btn-star" aria-label="Đen" aria-disabled="false">
-								<span>5 Sao(0)</span>
-							</button>
-						</div>
-						<div class="col-2" style="width: 150px; height: 2rem;">
-							<button class="btn-star" aria-label="Đen" aria-disabled="false">
-								<span>4 Sao(0)</span>
-							</button>
-						</div>
-						<div class="col-2" style="width: 150px; height: 2rem;">
-							<button class="btn-star" aria-label="Đen" aria-disabled="false">
-								<span>3 Sao(0)</span>
-							</button>
-						</div>
-						<div class="col-2" style="width: 150px; height: 2rem;">
-							<button class="btn-star" aria-label="Đen" aria-disabled="false">
-								<span>2 Sao(0)</span>
-							</button>
-						</div>
-						<div class="col-2" style="width: 150px; height: 2rem;">
-							<button class="btn-star" aria-label="Đen" aria-disabled="false">
-								<span>1 Sao(0)</span>
-							</button>
-						</div>
-
-
-
-
-					</div>
-
-				</div>
-
-
-			</div>
-
-			<div class="row mt-2 mx-4">
-				<div class="col-1">
-					<i class="fa-regular fa-user fs-3"></i>
-				</div>
-				<div class="col-11">
-					<span>User</span>
-					<div>
-						<a class="icon-star text-center" style="text-decoration: none;">
-							<i class="icon-flash text-red"></i> <i
-							class="fa-solid fa-star text-danger"></i> <i
-							class="fa-solid fa-star text-danger"></i> <i
-							class="fa-solid fa-star text-danger"></i> <i
-							class="fa-solid fa-star text-danger"></i> <i
-							class="fa-solid fa-star text-danger"></i>
-						</a>
-					</div>
-					<span>Thời gian: loại sp</span> <br> <span>Đánh giá:
-						ok? !ok</span>
-					<div class="feedback">
-						<span>Phản Hồi Của người bán</span>
-					</div>
-
-				</div>
-				<hr>
-			</div>
-
-
 
 
 		</div>
-		<!--Gợi Ý Sản Phẩm-->
-		<div class="container container_main mt-3">
-			<div class="row ">
 
-				<div class="col-12 col-lg-7 text-dark content_price mt-2 ">Dành
-					Cho Bạn</div>
+		<div class="row mx-4   border border-1   " style="padding: 30px;">
+			<div class="col-2  text-center  flex-column ">
+				<span class="fs-5 text-danger " style="font-weight: 350;"><strong
+					class="fs-2">5</strong> trên 5</span>
+
+				<div>
+					<a class="icon-star text-center" style="text-decoration: none;">
+						<i class="icon-flash text-red"></i> <i
+						class="fa-solid fa-star fs-5 text-danger"></i> <i
+						class="fa-solid fa-star fs-5 text-danger"></i> <i
+						class="fa-solid fa-star fs-5 text-danger"></i> <i
+						class="fa-solid fa-star fs-5 text-danger"></i> <i
+						class="fa-solid fa-star fs-5 text-danger"></i>
+					</a>
+				</div>
+
+
 
 			</div>
+			<div class="col-10 d-flex  align-items-center ">
 
-			<div class="row mt-2">
-				<div class="col-12  ">
-					<div class="card-slider d-flex justify-content-start">
-						<div class="col-2">
-							<div class="card" style="width: 110%;">
-								<img
-									src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
-									class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-
-									<div class="row">
-										<div class="col-6">
-											<div class="evaluate-sold">
-												<strong class="fs-6" style="color: #fd475a;">150,000
-													₫</strong>
-											</div>
-										</div>
-										<div class="col-6 " style="padding: 0;">
-											<div class="row d-flex align-items-end">
-												<div class="col-6 " style="padding: 0;">
-													<div class="position-relative">
-														<span class="position-absolute text-suggest-content  "
-															style="font-size: 13px;">Đã Bán</span>
-													</div>
-												</div>
-												<div class="col-6">
-													<div class="evaluate-sold">
-														<span class=" text-suggest"
-															style="font-size: 10px; right: 0;">264,2K</span>
-													</div>
-												</div>
-
-											</div>
-
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="card" style="width: 110%;">
-								<img
-									src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80"
-									class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<div class="row">
-										<div class="col-6">
-											<div class="evaluate-sold">
-												<strong class="fs-6" style="color: #fd475a;">150,000
-													₫</strong>
-											</div>
-										</div>
-										<div class="col-6 " style="padding: 0;">
-											<div class="row d-flex align-items-end">
-												<div class="col-6 " style="padding: 0;">
-													<div class="position-relative">
-														<span class="position-absolute text-suggest-content  "
-															style="font-size: 13px;">Đã Bán</span>
-													</div>
-												</div>
-												<div class="col-6">
-													<div class="evaluate-sold">
-														<span class=" text-suggest"
-															style="font-size: 10px; right: 0;">264,2K</span>
-													</div>
-												</div>
-
-											</div>
-
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="card" style="width: 110%;">
-								<img
-									src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80"
-									class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<div class="row">
-										<div class="col-6">
-											<div class="evaluate-sold">
-												<strong class="fs-6" style="color: #fd475a;">150,000
-													₫</strong>
-											</div>
-										</div>
-										<div class="col-6 " style="padding: 0;">
-											<div class="row d-flex align-items-end">
-												<div class="col-6 " style="padding: 0;">
-													<div class="position-relative">
-														<span class="position-absolute text-suggest-content  "
-															style="font-size: 13px;">Đã Bán</span>
-													</div>
-												</div>
-												<div class="col-6">
-													<div class="evaluate-sold">
-														<span class=" text-suggest"
-															style="font-size: 10px; right: 0;">264,2K</span>
-													</div>
-												</div>
-
-											</div>
-
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="card" style="width: 110%;">
-								<img
-									src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
-									class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<div class="row">
-										<div class="col-6">
-											<div class="evaluate-sold">
-												<strong class="fs-6" style="color: #fd475a;">150,000
-													₫</strong>
-											</div>
-										</div>
-										<div class="col-6 " style="padding: 0;">
-											<div class="row d-flex align-items-end">
-												<div class="col-6 " style="padding: 0;">
-													<div class="position-relative">
-														<span class="position-absolute text-suggest-content  "
-															style="font-size: 13px;">Đã Bán</span>
-													</div>
-												</div>
-												<div class="col-6">
-													<div class="evaluate-sold">
-														<span class=" text-suggest"
-															style="font-size: 10px; right: 0;">264,2K</span>
-													</div>
-												</div>
-
-											</div>
-
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="card" style="width: 110%;">
-								<img
-									src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80"
-									class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<div class="row">
-										<div class="col-6">
-											<div class="evaluate-sold">
-												<strong class="fs-6" style="color: #fd475a;">150,000
-													₫</strong>
-											</div>
-										</div>
-										<div class="col-6 " style="padding: 0;">
-											<div class="row d-flex align-items-end">
-												<div class="col-6 " style="padding: 0;">
-													<div class="position-relative">
-														<span class="position-absolute text-suggest-content  "
-															style="font-size: 13px;">Đã Bán</span>
-													</div>
-												</div>
-												<div class="col-6">
-													<div class="evaluate-sold">
-														<span class=" text-suggest"
-															style="font-size: 10px; right: 0;">264,2K</span>
-													</div>
-												</div>
-
-											</div>
-
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="model-container">
-			<div class="model bg-light" id="model-demo">
-				<div id="model-header" style="padding: 5px;">
-					<div class="row border-bottom border-bottom-1">
-						<div class="col-5">
-							<div class="model-header_image">
-								<img class="img-fluid"
-								th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}" alt="null" />
-							</div>
-						</div>
-						<div class="col-5 position-relative ">
-							<div class="model-header_price position-absolute "
-								style="bottom: 0;">
-
-								<div class="model-header_price-real ">
-									<span> <strong class="fs-6 fw-bold price_real"
-										style="color: #ee4d2d;"
-										th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'COMMA',0,'POINT')}+'₫'"></strong></span>
-
-									<del class="fs-6 ms-3 opacity-50"
-										th:text="*{#numbers.formatDecimal(productVariants[0].price, 0,'COMMA',0,'POINT')}+'₫'"></del>
-
-									<p class="text-info m-0">
-										Tồn kho: <i class="text-info m-0"
-											th:text="*{productVariants[0].quantity}">###</i>
-									</p>
-								</div>
-
-
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="model-header_close">
-								<label id="btn-close" class="float-end me-2 "><i
-									class="fa-solid fa-xmark"></i></label>
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<!--model body-->
-				<div class="model-body" style="padding: 5px;">
-					<div class="row border-bottom border-bottom-1">
-						<div class="col-12 col-lg-2">
-							<span class="opacity-md-25 opacity-lg-100">Màu sắc: </span>
-						</div>
-						<div class="col-12 col-lg-10 d-flex my-2">
-
-							<div th:each="color, iter : ${listColor}"
-								class="form-check product-variation ms-1  align-items-center justify-content-center ">
-								<input			
-									onchange="sendRadioValue(this.value) "
-									th:value="${color}"
-									th:attr="data-id=${product.id}"
-									class="  form-check-input"
-									style="margin-left: -1em !important; padding: 3px;"
-									type="radio" name="flexRadioDefault"
-									th:id="'flexRadioDefault'+${iter.count}"  
-									> 
-								<label
-									class="form-check-label pe-1 "
-									style="margin-left: 0.3rem; padding: 3px"
-									th:for="'flexRadioDefault'+${iter.count}" th:text="${color}">
-									</label>
-							
-							</div>
-						</div>
-
-					</div>
-
-					<div class="row border-bottom border-bottom-1 ">
-						<div id="size" th:if="*{#lists.size(productVariants[0].size)} > 0"
-							class="checkNull mt-2  d-flex flex-column justify-content-between ">
-							<div class="col-12 col-lg-2">
-								<span>Size: </span>
-							</div>
-							<div class=" col-12 col-lg-10 d-flex my-2">
-
-								<div th:each="size, iter : ${listSize}"
-									class="form-check product-variation ms-1  align-items-center justify-content-center ">
-									<input class="  form-check-input"
-											onchange="sendRadioValue(this.value)"
-											th:value="${size}"
-											style="margin-left: -1em !important; padding: 3px;"
-											type="radio" name="flexRadio"
-											th:id="'flexRadio'+${iter.count}" > <label
-											class="form-check-label pe-1 "
-											style="margin-left: 0.3rem; padding: 3px"
-											
-											th:for="'flexRadio'+${iter.count}" th:text="${size}">
-										</label>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--số lượng- mobile-->
-					<div class="row mt-2 ">
-
-						<div class="col-6 ">
-							<span>Số lượng: </span>
-						</div>
-						<div class="col-6 ">
-							<div id="number_quantity_mobile" class=" pe-none  float-end ">
-
-								<div class="control d-flex align-items-center ">
-
-									<label class="button btn_Sub border-0 fs-3 "
-										onclick="subtract(this)"> <i
-										class="fa-solid fa-minus icon_Sub"></i>
-									</label>
-									 <input class="text-center product_quantity " type="number"
-										name="soluong" id="inputField" min="1" value="1" ><br>
-									<label class="button btn_Add border-0 fs-4 "
-										style="outline-style: none;" onclick="add(this)"> <i
-										class="fa-solid fa-plus icon_Add"></i>
-									</label>
-
-								</div>
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-				<!--model footer-->
-				<div class="model-footer">
-					<div class="row d-flex justify-content-center">
-						<button id="btn_add_buy" class="product-bottom-mobile_add-cart" style="background-color:  #2550b9 !important;">
-							<div class="content_Add-cart " style="line-height: 50px;">
-								<span class="text-light" style="font-size: .875rem;">Thêm
-									vào Giỏ hàng</span>
-							</div>
+				<div class="row   ">
+					<div class="col-2" style="width: 150px; height: 2rem;">
+						<button class="btn-star" aria-label="Đen" aria-disabled="false">
+							<span>Tất Cả</span>
 						</button>
 					</div>
+					<div class="col-2" style="width: 150px; height: 2rem;">
+						<button class="btn-star" aria-label="Đen" aria-disabled="false">
+							<span>5 Sao(0)</span>
+						</button>
+					</div>
+					<div class="col-2" style="width: 150px; height: 2rem;">
+						<button class="btn-star" aria-label="Đen" aria-disabled="false">
+							<span>4 Sao(0)</span>
+						</button>
+					</div>
+					<div class="col-2" style="width: 150px; height: 2rem;">
+						<button class="btn-star" aria-label="Đen" aria-disabled="false">
+							<span>3 Sao(0)</span>
+						</button>
+					</div>
+					<div class="col-2" style="width: 150px; height: 2rem;">
+						<button class="btn-star" aria-label="Đen" aria-disabled="false">
+							<span>2 Sao(0)</span>
+						</button>
+					</div>
+					<div class="col-2" style="width: 150px; height: 2rem;">
+						<button class="btn-star" aria-label="Đen" aria-disabled="false">
+							<span>1 Sao(0)</span>
+						</button>
+					</div>
+
+
+
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+		<div class="row mt-2 mx-4">
+			<div class="col-1">
+				<i class="fa-regular fa-user fs-3"></i>
+			</div>
+			<div class="col-11">
+				<span>User</span>
+				<div>
+					<a class="icon-star text-center" style="text-decoration: none;">
+						<i class="icon-flash text-red"></i> <i
+						class="fa-solid fa-star text-danger"></i> <i
+						class="fa-solid fa-star text-danger"></i> <i
+						class="fa-solid fa-star text-danger"></i> <i
+						class="fa-solid fa-star text-danger"></i> <i
+						class="fa-solid fa-star text-danger"></i>
+					</a>
+				</div>
+				<span>Thời gian: loại sp</span> <br> <span>Đánh giá: ok?
+					!ok</span>
+				<div class="feedback">
+					<span>Phản Hồi Của người bán</span>
+				</div>
+
+			</div>
+			<hr>
+		</div>
+
+
+
+
+	</div>
+	<!--Gợi Ý Sản Phẩm-->
+	<div class="container container_main mt-3">
+		<div class="row ">
+
+			<div class="col-12 col-lg-7 text-dark content_price mt-2 ">Dành
+				Cho Bạn</div>
+
+		</div>
+
+		<div class="row mt-2">
+			<div class="col-12  ">
+				<div class="card-slider d-flex justify-content-start">
+					<div class="col-2">
+						<div class="card" style="width: 110%;">
+							<img
+								src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
+								class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+
+								<div class="row">
+									<div class="col-6">
+										<div class="evaluate-sold">
+											<strong class="fs-6" style="color: #fd475a;">150,000
+												₫</strong>
+										</div>
+									</div>
+									<div class="col-6 " style="padding: 0;">
+										<div class="row d-flex align-items-end">
+											<div class="col-6 " style="padding: 0;">
+												<div class="position-relative">
+													<span class="position-absolute text-suggest-content  "
+														style="font-size: 13px;">Đã Bán</span>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="evaluate-sold">
+													<span class=" text-suggest"
+														style="font-size: 10px; right: 0;">264,2K</span>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="card" style="width: 110%;">
+							<img
+								src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80"
+								class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<div class="row">
+									<div class="col-6">
+										<div class="evaluate-sold">
+											<strong class="fs-6" style="color: #fd475a;">150,000
+												₫</strong>
+										</div>
+									</div>
+									<div class="col-6 " style="padding: 0;">
+										<div class="row d-flex align-items-end">
+											<div class="col-6 " style="padding: 0;">
+												<div class="position-relative">
+													<span class="position-absolute text-suggest-content  "
+														style="font-size: 13px;">Đã Bán</span>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="evaluate-sold">
+													<span class=" text-suggest"
+														style="font-size: 10px; right: 0;">264,2K</span>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="card" style="width: 110%;">
+							<img
+								src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80"
+								class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<div class="row">
+									<div class="col-6">
+										<div class="evaluate-sold">
+											<strong class="fs-6" style="color: #fd475a;">150,000
+												₫</strong>
+										</div>
+									</div>
+									<div class="col-6 " style="padding: 0;">
+										<div class="row d-flex align-items-end">
+											<div class="col-6 " style="padding: 0;">
+												<div class="position-relative">
+													<span class="position-absolute text-suggest-content  "
+														style="font-size: 13px;">Đã Bán</span>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="evaluate-sold">
+													<span class=" text-suggest"
+														style="font-size: 10px; right: 0;">264,2K</span>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="card" style="width: 110%;">
+							<img
+								src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
+								class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<div class="row">
+									<div class="col-6">
+										<div class="evaluate-sold">
+											<strong class="fs-6" style="color: #fd475a;">150,000
+												₫</strong>
+										</div>
+									</div>
+									<div class="col-6 " style="padding: 0;">
+										<div class="row d-flex align-items-end">
+											<div class="col-6 " style="padding: 0;">
+												<div class="position-relative">
+													<span class="position-absolute text-suggest-content  "
+														style="font-size: 13px;">Đã Bán</span>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="evaluate-sold">
+													<span class=" text-suggest"
+														style="font-size: 10px; right: 0;">264,2K</span>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="card" style="width: 110%;">
+							<img
+								src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80"
+								class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<div class="row">
+									<div class="col-6">
+										<div class="evaluate-sold">
+											<strong class="fs-6" style="color: #fd475a;">150,000
+												₫</strong>
+										</div>
+									</div>
+									<div class="col-6 " style="padding: 0;">
+										<div class="row d-flex align-items-end">
+											<div class="col-6 " style="padding: 0;">
+												<div class="position-relative">
+													<span class="position-absolute text-suggest-content  "
+														style="font-size: 13px;">Đã Bán</span>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="evaluate-sold">
+													<span class=" text-suggest"
+														style="font-size: 10px; right: 0;">264,2K</span>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
-	
+	</div>
+	<div id="model-container">
+		<div class="model bg-light" id="model-demo">
+			<div id="model-header" style="padding: 5px;">
+				<div class="row border-bottom border-bottom-1">
+					<div class="col-5">
+						<div class="model-header_image">
+							<img class="img-fluid"
+								th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
+								alt="null" />
+						</div>
+					</div>
+					<div class="col-5 position-relative ">
+						<div class="model-header_price position-absolute "
+							style="bottom: 0;">
+
+							<div class="model-header_price-real ">
+								<span> <strong class="fs-6 fw-bold price_real"
+									style="color: #ee4d2d;"
+									th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'COMMA',0,'POINT')}+'₫'"></strong></span>
+
+								<del class="fs-6 ms-3 opacity-50"
+									th:text="*{#numbers.formatDecimal(productVariants[0].price, 0,'COMMA',0,'POINT')}+'₫'"></del>
+
+								<p class="text-info m-0">
+									Tồn kho: <i class="text-info m-0"
+										th:text="*{productVariants[0].quantity}">###</i>
+								</p>
+							</div>
+
+
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="model-header_close">
+							<label id="btn-close" class="float-end me-2 "><i
+								class="fa-solid fa-xmark"></i></label>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!--model body-->
+			<div class="model-body" style="padding: 5px;">
+				<div class="row border-bottom border-bottom-1">
+					<div class="col-12 col-lg-2">
+						<span class="opacity-md-25 opacity-lg-100">Màu sắc: </span>
+					</div>
+					<div class="col-12 col-lg-10 d-flex my-2">
+
+						<div th:each="color, iter : ${listColor}"
+							class="form-check product-variation ms-1  align-items-center justify-content-center ">
+							<input onchange="sendRadioValue(this.value) " th:value="${color}"
+								th:attr="data-id=${product.id}" class="  form-check-input"
+								style="margin-left: -1em !important; padding: 3px;" type="radio"
+								name="flexRadioDefault" th:id="'flexRadioDefault'+${iter.count}">
+							<label class="form-check-label pe-1 "
+								style="margin-left: 0.3rem; padding: 3px"
+								th:for="'flexRadioDefault'+${iter.count}" th:text="${color}">
+							</label>
+
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row border-bottom border-bottom-1 ">
+					<div id="size" th:if="*{#lists.size(productVariants[0].size)} > 0"
+						class="checkNull mt-2  d-flex flex-column justify-content-between ">
+						<div class="col-12 col-lg-2">
+							<span>Size: </span>
+						</div>
+						<div class=" col-12 col-lg-10 d-flex my-2">
+
+							<div th:each="size, iter : ${listSize}"
+								class="form-check product-variation ms-1  align-items-center justify-content-center ">
+								<input class="  form-check-input"
+									onchange="sendRadioValue(this.value)" th:value="${size}"
+									style="margin-left: -1em !important; padding: 3px;"
+									type="radio" name="flexRadio" th:id="'flexRadio'+${iter.count}">
+								<label class="form-check-label pe-1 "
+									style="margin-left: 0.3rem; padding: 3px"
+									th:for="'flexRadio'+${iter.count}" th:text="${size}"> </label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--số lượng- mobile-->
+				<div class="row mt-2 ">
+
+					<div class="col-6 ">
+						<span>Số lượng: </span>
+					</div>
+					<div class="col-6 ">
+						<div id="number_quantity_mobile" class=" pe-none  float-end ">
+
+							<div class="control d-flex align-items-center ">
+
+								<label class="button btn_Sub border-0 fs-3 "
+									onclick="subtract(this)"> <i
+									class="fa-solid fa-minus icon_Sub"></i>
+								</label> <input class="text-center product_quantity " type="number"
+									name="soluong" id="inputField" min="1" value="1"><br>
+								<label class="button btn_Add border-0 fs-4 "
+									style="outline-style: none;" onclick="add(this)"> <i
+									class="fa-solid fa-plus icon_Add"></i>
+								</label>
+
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+			<!--model footer-->
+			<div class="model-footer">
+				<div class="row d-flex justify-content-center">
+					<button id="btn_add_buy" class="product-bottom-mobile_add-cart"
+						style="background-color: #2550b9 !important;">
+						<div class="content_Add-cart " style="line-height: 50px;">
+							<span class="text-light" style="font-size: .875rem;">Thêm
+								vào Giỏ hàng</span>
+						</div>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<footer>
 
 		<!--footer Mobile-->
@@ -909,139 +900,20 @@
 					</button>
 
 				</div>
-				<div 
+				<div
 					class="col-6 d-flex justify-content-center align-items-center p-0  bg-danger">
-					<button id="btn_buy-mobile" class="product-bottom_buy" style="background-color:  #2550b9 !important;">
+					<button id="btn_buy-mobile" class="product-bottom_buy"
+						style="background-color: #2550b9 !important;">
 						<div class="content_buy">
 							<span id="text_add_buy" class="text-light"
-								style="font-size: .875rem; ">Mua ngay</span>
+								style="font-size: .875rem;">Mua ngay</span>
 						</div>
 					</button>
 				</div>
 			</div>
 		</div>
 		<!-- place footer here -->
-
-		<div class="container-fluid mt-3 d-none d-lg-grid "
-			style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
-			<div class="container ">
-				<div class="row  ">
-					<div class="col-xs-6 col-md-4 col-lg-2 mt-2 ">
-						<span class="footer_title_content"> Hỗ Trợ Khách Khàng</span>
-						<ul class="list_customers"
-							style="list-style-type: none; padding: 0;">
-
-							<li><a class="text-decoration-none text-light">Các Câu
-									Hỏi Thường Gặp</a></li>
-							<li><a class="text-decoration-none text-light">Gửi Yêu
-									Cầu Hỗ Trợ</a></li>
-							<li><a class="text-decoration-none text-light">Hướng Dẫn
-									Đặt Hàng</a></li>
-							<li><a class="text-decoration-none text-light">Phương
-									thức vận chuyển</a></li>
-							<li><a class="text-decoration-none text-light">Chính
-									Sách Đổi Trả</a></li>
-							<li><a class="text-decoration-none text-light">Hướng Dẫn
-									Trả Góp</a></li>
-
-						</ul>
-
-					</div>
-					<div class="col-xs-6 col-md-4 col-lg-2 mt-2">
-						<span class="footer_title_content"> Về Chúng Tôi DEVEX</span>
-						<ul class="list_customers"
-							style="list-style-type: none; padding: 0;">
-
-							<li><a class="text-decoration-none text-light">Giới
-									Thiệu</a></li>
-							<li><a class="text-decoration-none text-light">Tuyển
-									Dụng</a></li>
-							<li><a class="text-decoration-none text-light">Chính
-									Sách Bảo Mật Và Thanh Toán</a></li>
-							<li><a class="text-decoration-none text-light">Bán Hàng
-									Doanh Nghiệp</a></li>
-							<li><a class="text-decoration-none text-light">Điều Kiện
-									Vận Chuyển</a></li>
-
-						</ul>
-
-					</div>
-					<div class="col-xs-6 col-md-4 col-lg-2 mt-2">
-						<span class="footer_title_content"> Hợp Tác Và Liên Kết</span>
-						<ul class="list_customers"
-							style="list-style-type: none; padding: 0;">
-
-							<li><a class="text-decoration-none text-light">Hỗ Trợ
-									Khách Khàng</a></li>
-							<li><a class="text-decoration-none text-light">Hỗ Trợ
-									Khách Khàng</a></li>
-							<li><a class="text-decoration-none text-light">Hỗ Trợ
-									Khách Khàng</a></li>
-							<li><a class="text-decoration-none text-light">Hỗ Trợ
-									Khách Khàng</a></li>
-
-						</ul>
-
-					</div>
-					<div class="col-xs-6 col-md-4 col-lg-3 mt-2">
-						<span class="footer_title_content"> Giao Hàng Và Các Phương
-							Thức Thanh Toán</span>
-						<ul class="list_customers"
-							style="list-style-type: none; padding: 0;">
-
-							<li><a href class="text-decoration-none text-light">Hỗ
-									Trợ Khách Khàng</a></li>
-
-						</ul>
-
-					</div>
-
-					<div class="col-xs-6 col-md-4 col-lg-3 mt-2">
-						<h3 class="footer_title_content">HOTLINE: **********</h3>
-						<ul class="list-customers"
-							style="list-style-type: none; padding: 0;">
-
-						</ul>
-					</div>
-
-				</div>
-
-				<div class="content_footer ">
-					<div class="row ">
-						<div class="col-12">
-							<div class="row">
-								<span class="text-center   content_footer-text">Trụ sở
-									chính: Tòa nhà Viettel, Số 285, đường Cách Mạng Tháng 8, phường
-									12, quận 10, Thành phố Hồ Chí Minh DEVEX nhận đặt hàng trực
-									tuyến và giao hàng tận nơi, chưa hỗ trợ mua và nhận hàng trực
-									tiếp tại văn phòng hoặc trung tâm xử lý đơn hàng </span>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12">
-							<div class="row">
-								<span class="text-center content_footer-text">Giấy chứng
-									nhận Đăng ký Kinh doanh số 0309532909 do Sở Kế hoạch và Đầu tư
-									Thành phố Hồ Chí Minh cấp lần đầu ngày 06/01/2010 và sửa đổi
-									lần thứ 23 ngày 14/02/2022 
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12">
-							<div class="row ">
-								<span class="text-center content_footer-text"> © 2022 -
-									Bản quyền của Công ty TNHH DEVEX</span>
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-		</div>
+			<div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
 
 	</footer>
 
@@ -1145,7 +1017,7 @@
 		});
 	</script>
 
-	
+
 
 	<script>
 

@@ -29,7 +29,6 @@ import com.Devex.Entity.Customer;
 import com.Devex.Entity.User;
 
 @Controller
-@Slf4j
 public class ProfileController {
 	private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private static final String PHONE_NUMBER_REGEX = "^(\\+84|0)[1-9]\\d{8}$";
