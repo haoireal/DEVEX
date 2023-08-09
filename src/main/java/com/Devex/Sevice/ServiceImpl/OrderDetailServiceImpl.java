@@ -1,5 +1,7 @@
 package com.Devex.Sevice.ServiceImpl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,25 +21,28 @@ import jakarta.transaction.Transactional;
 
 @SessionScope
 @Service("orderDetailsService")
-public class OrderDetailServiceImpl implements OrderDetailService{
+public class OrderDetailServiceImpl implements OrderDetailService {
 	@Autowired
 	OrderDetailRepository orderDetailRepository;
 
 	@Override
 	public OrderDetails save(OrderDetails entity) {
-		entity.setId("1");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		String currentTime = dateFormat.format(new Date());
+
+		// Kết hợp thời gian với một số ngẫu nhiên để tạo chuỗi duy nhất
+		int randomSuffix = (int) (Math.random() * 10000);
+		String timeBasedString = currentTime + "-" + randomSuffix;
+		entity.setId(timeBasedString);
+		System.out.println(timeBasedString);
 		return orderDetailRepository.save(entity);
 	}
-	
-	
 
 	@Override
 	public OrderDetails saveAndFlush(OrderDetails entity) {
-		entity.setId("1");
+		
 		return orderDetailRepository.saveAndFlush(entity);
 	}
-
-
 
 	@Override
 	public List<OrderDetails> saveAll(List<OrderDetails> entities) {
@@ -45,7 +50,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	}
 
 	@Override
-	public  Optional<OrderDetails> findOne(Example<OrderDetails> example) {
+	public Optional<OrderDetails> findOne(Example<OrderDetails> example) {
 		return orderDetailRepository.findOne(example);
 	}
 
@@ -114,8 +119,5 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	public List<OrderDetails> findOrderDetailsByOrderID(String id, String username) {
 		return orderDetailRepository.findOrderDetailsByOrderID(id, username);
 	}
-	
-	
-	
-	
+
 }

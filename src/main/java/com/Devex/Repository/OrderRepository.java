@@ -31,5 +31,8 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	
 	@Query("SELECT MONTH(o.createdDay) as month, SUM(o.total) as total FROM Order o WHERE YEAR(o.createdDay) = :year GROUP BY MONTH(o.createdDay)")
     List<Object[]> getTotalByMonthAndYear(@Param("year") int year);
+    
+    @Query("SELECT o FROM Order o WHERE o.createdDay = (SELECT MAX(o2.createdDay) FROM Order o2)")
+    Order findLatestOrder();
 	
 }

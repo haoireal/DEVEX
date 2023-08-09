@@ -36,4 +36,8 @@ public interface CartDetailService {
 
 	CartDetail findByIDProduct(int id);
 
+	List<CartDetail> saveAll(List<CartDetail> entities);
+
+	void deleteAllInBatch(List<CartDetail> entities);
+
 }

@@ -102,6 +102,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
           console.log("Success", resp);
           this.itemsOrder = this.itemsOrder.filter((item) => item.id !== id);
           this.loadProductCart();
+          // this.amount();
         })
         .catch((error) => {
           console.log("Lỗi khi xoá sản phẩm khỏi giỏ hàng:", error);
@@ -109,20 +110,16 @@ app.controller("cart-ctrl", function ($scope, $http) {
     },
 
     removeAllOfShop(idShop) {
-      //xử lý
-      for (let i = this.items.length - 1; i >= 0; i--) {
-        if (this.items[i].idShop === idShop) {
-          this.items.splice(i, 1); // Xóa phần tử tại vị trí i
-          console.log(this.items[i].idShop);
-        }
-      }
       // Gọi API để cập nhật giỏ hàng trong cơ sở dữ liệu
-      var url = `${host}/cart`;
+      var url = `${host}/cart/shop/${idShop}`;
       $http
-        .put(url, this.items)
+        .delete(url)
         .then((resp) => {
           // Xử lý phản hồi từ server nếu cần thiết
           // this.items = response.data;
+          this.itemsOrder = this.itemsOrder.filter(
+            (item) => item.idShop !== idShop
+          );
           console.log("Success", resp);
           this.loadProductCart();
         })
@@ -140,7 +137,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
       // Gọi API để cập nhật giỏ hàng trong cơ sở dữ liệu
       var url = `${host}/cart`;
       $http
-        .put(url, this.items)
+        .delete(url)
         .then((resp) => {
           // Xử lý phản hồi từ server nếu cần thiết
           this.items = response.data;
@@ -156,6 +153,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
     clearAllItems() {
       this.items = [];
       this.shopGroups = {};
+      this.itemsOrder = [];
     },
 
     amt_of(item) {
@@ -213,6 +211,7 @@ app.controller("cart-ctrl", function ($scope, $http) {
       this.selectAll = !this.selectAll;
       if (this.selectAll) {
         this.itemsOrder = angular.copy(this.items);
+        console.log(this.itemsOrder);
         this.selectedShopIds = Object.keys(this.shopGroups);
       } else {
         this.itemsOrder = [];
@@ -283,6 +282,8 @@ app.controller("cart-ctrl", function ($scope, $http) {
       .then((resp) => {
         alert("Đặt hàng thành công!");
         console.log(resp);
+        $cart.selectAll = true;
+        $cart.toggleSelectAll();
         $cart.loadProductCart();
       })
       .catch((error) => {
