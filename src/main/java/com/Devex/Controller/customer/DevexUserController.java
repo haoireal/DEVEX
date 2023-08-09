@@ -72,6 +72,7 @@ public class DevexUserController {
 		}
 		// Trộn ví trí sản phẩm
 		Collections.shuffle(listProducts);
+		listProducts = listProducts.subList(0, 30);
 		model.addAttribute("products", listProducts);
 		return "user/index";
 	}
