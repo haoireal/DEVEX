@@ -32,4 +32,11 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	@Query("SELECT MONTH(o.createdDay) as month, SUM(o.total) as total FROM Order o WHERE YEAR(o.createdDay) = :year GROUP BY MONTH(o.createdDay)")
     List<Object[]> getTotalByMonthAndYear(@Param("year") int year);
 	
+    @Query("SELECT DISTINCT o FROM Order o " +
+	           "JOIN FETCH o.orderDetails od " +
+	           "JOIN FETCH od.productVariant pv " +
+	           "JOIN FETCH pv.product p " +
+	           "JOIN FETCH p.sellerProduct s " +
+	           "WHERE o.customerOrder.id = ?1")
+	    List<Order> findOrdersByCustomerID(String customerID);
 }

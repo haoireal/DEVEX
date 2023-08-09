@@ -41,46 +41,47 @@ import jakarta.servlet.http.HttpSession;
 public class DevexOrderController {
 
 	@Autowired
-	SessionService session;
+	SessionService sessionService;
 
 	@Autowired
-	CookieService cookie;
+	CookieService cookieService;
 
 	@Autowired
-	ParamService param;
-	
+	ParamService paramService;
+
 	@Autowired
 	ProductService productService;
-	
+
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
 	OrderDetailService detailService;
-	
+
 	@Autowired
 	SellerService sellerService;
-	
+
 	@Autowired
 	CategoryService categoryService;
-	
+
 	@Autowired
 	CategoryDetailService categoryDetailService;
-	
+
 	@Autowired
 	FileManagerService fileManagerService;
-	
+
 	@Autowired
 	ImageProductService imageProductService;
-	
+
 	@Autowired
 	ProductVariantService productVariantService;
 
 	@GetMapping("/order")
-	public String getOrderPage() {
-if(true) {
-	
-}
+	public String getOrderPage(Model model) {
+		User u = sessionService.get("user");
+		List<Order> listOrder = orderService.findOrdersByCustomerID(u.getUsername());
+		model.addAttribute("orders", listOrder);
+		System.out.println("co " + listOrder.size() + " don hang");
 		return "user/orderDetail";
 	}
 
