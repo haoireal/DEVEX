@@ -96,6 +96,7 @@ public class DevexSellerController {
 		case "orders": {
 			model.addAttribute("titleType", "Đơn hàng");
 			List<Order> listOrder = orderService.findOrdersBySellerUsername(u.getUsername());
+			System.out.println(listOrder.size());
 			model.addAttribute("orders", listOrder);
 			break;
 		}

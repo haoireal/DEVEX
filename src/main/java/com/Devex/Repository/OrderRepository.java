@@ -40,6 +40,7 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	           "JOIN FETCH od.productVariant pv " +
 	           "JOIN FETCH pv.product p " +
 	           "JOIN FETCH p.sellerProduct s " +
-	           "WHERE o.customerOrder.id = ?1")
+	           "WHERE o.customerOrder.id = ?1 " +
+	           "ORDER BY o.createdDay DESC")
 	    List<Order> findOrdersByCustomerID(String customerID);
 }
