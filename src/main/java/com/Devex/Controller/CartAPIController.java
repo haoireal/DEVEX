@@ -1,6 +1,9 @@
 package com.Devex.Controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +19,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Devex.Entity.CartDetail;
+import com.Devex.Entity.Customer;
+import com.Devex.Entity.User;
 import com.Devex.Repository.CartDetailRespository;
 import com.Devex.Sevice.CartDetailDTo;
+import com.Devex.Sevice.SessionService;
 
 @CrossOrigin("*")
 @RestController
 public class CartAPIController {
 	@Autowired
 	CartDetailRespository cart;
+	@Autowired
+	SessionService sessionService;
 	
 	@GetMapping("/rest/cart")
 	public List<CartDetailDTo> getAll(Model model){
-		return cart.findAllCartDTO();
+		List<CartDetailDTo> cartDetails = cart.findAllCartDTO("qbfegl329");
+
+	    Map<String, CartDetailDTo> cartDetailMap = new HashMap<>();
+
+	    for (CartDetailDTo cartDetail : cartDetails) {
+	        String uniqueKey = cartDetail.getImg()+ "-" + cartDetail.getColor() + "-" + cartDetail.getSize();
+	        if (cartDetailMap.containsKey(uniqueKey)) {
+	            CartDetailDTo existingCartDetail = cartDetailMap.get(uniqueKey);
+	            existingCartDetail.setQuantity((existingCartDetail.getQuantity() + cartDetail.getQuantity()));
+	        } else {
+	            cartDetailMap.put(uniqueKey, cartDetail);
+	        }
+	    }
+	    for (CartDetailDTo cartDetail : cartDetailMap.values()) {
+	        int totalQuantity = cartDetail.getQuantity();
+	        if(totalQuantity==2 || totalQuantity == 3 || totalQuantity==4) {
+	        	int newQuantity = 1;
+	        	cartDetail.setQuantity(newQuantity);
+	        	
+	        }else {
+	        	int newQuantity = (int) Math.sqrt(totalQuantity);
+	        	cartDetail.setQuantity(newQuantity);
+	        }
+	         // Lấy căn bậc hai của tổng số lượng
+	        
+	    }
+	    return new ArrayList<>(cartDetailMap.values());
 		}
 	
 	@DeleteMapping("/rest/cart/{id}")

@@ -1,6 +1,9 @@
 package com.Devex.Sevice;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.Devex.Entity.ImageProduct;
 
@@ -24,5 +27,7 @@ public class CartDetailDTo {
     private String idProduct;
     private String avatarShop;
     private String img;
+    
+   
     
 }
