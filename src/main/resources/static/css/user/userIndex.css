@@ -36,6 +36,7 @@ a.nav-link:hover {
 	background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%,
 		rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);
 }
+
 /* header>.container-fluid:hover {} */
 /*header mid*/
 .container_mid {

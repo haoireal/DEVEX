@@ -25,15 +25,99 @@
 
 <head>
 <div th:replace="~{flagment/account/head :: headFragment}"></div>
-<div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
 
 </head>
+<style>
+body {
+	font-family: "Poppins", sans-serif;
+	 background-color: #f5f5f5;
+}
 
+/*header top*/
+header a.nav-link {
+	color: white;
+	font-weight: 270;
+	padding: 0 0 0 20px !important;
+	font-size: 13px;
+}
+
+header a.nav-link:hover {
+	color: white;
+	font-weight: 600 !important;
+}
+
+.header-inf:hover {
+	transition: 10s all;
+	height: 35px;
+	background: linear-gradient(90deg, rgba(0, 212, 255, 1) 0%,
+		rgba(57, 151, 184, 1) 36%, rgba(25, 38, 186, 1) 62%);
+}
+
+.header-inf {
+	height: 35px;
+	background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%,
+		rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);
+}
+.header-inf * {
+	background-color: transparent;
+	color: white;
+	font-weight: 400 !important;
+}
+.header-inf a{
+	color: white;
+}
+/* header>.container-fluid:hover {} */
+/*header mid*/
+.container_mid {
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.img_logo {
+	width: 7.5rem;
+	height: 3.4375rem;
+	margin-left: 40px;
+	margin-top: 5px;
+}
+
+.list_type ul{
+	max-height: 360px;
+	min-height: 360px;
+	overflow-y: scroll;
+	position: relative;
+	top: -2rem;
+}
+
+.list_type ul li {
+	max-width: 7.5rem;
+}
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: black;
+}
+/* Tùy chỉnh thanh cuộn trên Chrome, Edge, và Safari */
+*::-webkit-scrollbar {
+	width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+	background: white;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: rgb(90, 89, 89);
+	border-radius: 20px;
+	border: 3px solid white;
+}
+
+</style>
 <body>
-<!-- 	<header> -->
-<!-- 		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div> -->
-<!-- 	</header> -->
-	<div class="container-fluid">
+	<header>
+		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
+	</header>
+	<div class="container">
 		<div class="wall-header-offset p-1"></div>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper m-0">
@@ -76,8 +160,7 @@
 									<ul class="list-group list-group-unbordered mb-3">
 										<li class="list-group-item"><b class="text-secondary">Tổng
 												hoá đơn đã đặt</b> <a class="float-right">1,322</a></li>
-										<li class="list-group-item"><b class="text-secondary">Số
-												cửa hàng đang theo dõi</b> <a class="float-right">543</a></li>
+										<li class="list-group-item"><b class="text-secondary">Đang theo dõi</b> <a class="float-right">543</a></li>
 									</ul>
 
 									<!-- <a href="#" class="btn btn-primary btn-block"
@@ -511,6 +594,10 @@
 
 	</div>
 	<!-- FOOTER -->
+	<footer class="mt-3">
+		<!-- place footer here -->
+		<div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
+	</footer>
 
 
 	<script>
