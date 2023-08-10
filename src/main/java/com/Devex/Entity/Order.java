@@ -56,15 +56,15 @@ public class Order implements Serializable{
 	@JoinColumn(name = "Payment_ID")
 	private Payment payment;
 	
-	@ManyToOne( fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "Status_ID")
 	private OrderStatus orderStatus;
 	
-	@ManyToOne( fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "Customer_ID")
 	private Customer customerOrder;
 	
-	@ManyToOne( fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "Voucher_ID")
 	private Voucher voucherOrder;
 	
