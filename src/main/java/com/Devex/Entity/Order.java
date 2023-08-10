@@ -60,7 +60,7 @@ public class Order implements Serializable{
 	@JoinColumn(name = "Status_ID")
 	private OrderStatus orderStatus;
 	
-	@ManyToOne( fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "Customer_ID")
 	private Customer customerOrder;
 	
