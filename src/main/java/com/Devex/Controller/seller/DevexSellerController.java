@@ -90,22 +90,13 @@ public class DevexSellerController {
 		case "products": {
 			model.addAttribute("titleType", "Sản phẩm");
 			List<Product> listProducts = productService.findProductBySellerUsernameAndIsdeleteProduct(u.getUsername());
-			for (Product product : listProducts) {
-				if(product.getImageProducts().size() == 0) {
-					try {
-						imageProductService.insertImageProduct("1", "default.webp", product.getId());
-						fileManagerService.changeImage(u.getUsername(), product.getId());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
 			model.addAttribute("products", listProducts);
 			break;
 		}
 		case "orders": {
 			model.addAttribute("titleType", "Đơn hàng");
 			List<Order> listOrder = orderService.findOrdersBySellerUsername(u.getUsername());
+			System.out.println(listOrder.size());
 			model.addAttribute("orders", listOrder);
 			break;
 		}
@@ -218,26 +209,31 @@ public class DevexSellerController {
 	@GetMapping("/orderPrint")
 	public String getOrderPrint(Model model, @RequestParam("id") String id) {
 		User u = session.get("user");
-		boolean check = false;
+		String check = "";
 		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id, u.getUsername());
 		List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, u.getUsername());
 		for (OrderDetails orderDetails : listcheckbutton) {
 			if(orderDetails.getStatus().getId() == 1009) {
-				check = true;
-			}else {
-				check = false;
+				check = "Đã xác nhận";
+			}else if(orderDetails.getStatus().getId() == 1007){
+				check = "Đã huỷ";
+			}else if(orderDetails.getStatus().getId() == 1001){
+				check = "Chờ xác nhận";
 			}
 		}
+		
 		session.set("listIdOrderDetails", listOrderDetails);
 		model.addAttribute("orderDetails", listOrderDetails);
 		model.addAttribute("idPrint", id);
 		model.addAttribute("check", check);
 		Order order = orderService.findOrderById(id);
+		System.out.println(order.getOrderStatus().getName());
 		model.addAttribute("order", order);
+		model.addAttribute("u", u.getUsername());
 		if (order.getOrderStatus() != null && order.getOrderStatus().getName().equalsIgnoreCase("Hoàn thành")) {
-		    model.addAttribute("checko", false);
-		} else {
 		    model.addAttribute("checko", true);
+		} else {
+		    model.addAttribute("checko", false);
 		}
 		return "seller/order/orderPrint";
 	}
@@ -250,7 +246,8 @@ public class DevexSellerController {
 	@GetMapping("/product/create")
 	public String create() {
 		User u = session.get("user");
-		productService.insertProduct("1", "Nhập tên sản phẩm tại đây", 101, null, new Date(), false, false, u.getUsername(), 101);
+		List<Product> listProducts = productService.findProductBySellerUsernameAndIsdeleteProduct(u.getUsername());
+		productService.insertProduct(String.valueOf(listProducts.size()+1), "Nhập tên sản phẩm tại đây", 101, null, new Date(), false, false, u.getUsername(), 101);
 		Product product = productService.findLatestProductBySellerUsername(u.getUsername());
 		productVariantService.addProductVariant(1, 0.0, 0.0, "", "Đen", product.getId());
 		fileManagerService.changeImage(u.getUsername(), product.getId());

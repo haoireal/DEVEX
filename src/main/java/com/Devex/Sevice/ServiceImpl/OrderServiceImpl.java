@@ -28,6 +28,25 @@ public class OrderServiceImpl implements OrderService{
 		entity.setId("1");
 		return orderRepository.save(entity);
 	}
+	
+	
+
+	@Override
+	public Order saveAndFlush(Order entity) {
+		entity.setId("1");
+		return orderRepository.saveAndFlush(entity);
+	}
+	
+	
+
+
+
+	@Override
+	public Order findLatestOrder() {
+		return orderRepository.findLatestOrder();
+	}
+
+
 
 	@Override
 	public List<Order> saveAll(List<Order> entities) {
@@ -103,6 +122,14 @@ public class OrderServiceImpl implements OrderService{
 	@Transactional
 	public void updateIdOrderStatus(int ido, String id) {
 		orderRepository.updateIdOrderStatus(ido, id);
+	}
+
+
+
+	@Override
+	public List<Order> findOrdersByCustomerID(String customerID) {
+		
+		return orderRepository.findOrdersByCustomerID(customerID);
 	}
 	
 	

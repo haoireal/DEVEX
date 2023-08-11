@@ -41,47 +41,90 @@ import jakarta.servlet.http.HttpSession;
 public class DevexOrderController {
 
 	@Autowired
-	SessionService session;
+	SessionService sessionService;
 
 	@Autowired
-	CookieService cookie;
+	CookieService cookieService;
 
 	@Autowired
-	ParamService param;
-	
+	ParamService paramService;
+
 	@Autowired
 	ProductService productService;
-	
+
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
 	OrderDetailService detailService;
-	
+
 	@Autowired
 	SellerService sellerService;
-	
+
 	@Autowired
 	CategoryService categoryService;
-	
+
 	@Autowired
 	CategoryDetailService categoryDetailService;
-	
+
 	@Autowired
 	FileManagerService fileManagerService;
-	
+
 	@Autowired
 	ImageProductService imageProductService;
-	
+
 	@Autowired
 	ProductVariantService productVariantService;
 
 	@GetMapping("/order")
-	public String getOrderPage() {
-if(true) {
-	
-}
-		return "user/orderDetail";
+	public String getOrderPage(Model model) {
+		User u = sessionService.get("user");
+		List<Order> listOrder = orderService.findOrdersByCustomerID(u.getUsername());
+		model.addAttribute("orders", listOrder);
+		System.out.println("co " + listOrder.size() + " don hang");
+		return "user/userOrder";
 	}
 
+	@GetMapping("/orderDetail/{id}")
+	public String getOrderDetail(@PathVariable("id") String id, Model model) {
+		User u = sessionService.get("user");
+		String check = "";
+		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id, "%%");
+		List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, "%%");
+		for (OrderDetails orderDetails : listcheckbutton) {
+			if(orderDetails.getStatus().getId() == 1009) {
+				check = "Đã xác nhận";
+			}else if(orderDetails.getStatus().getId() == 1007){
+				check = "Đã huỷ";
+			}else if(orderDetails.getStatus().getId() == 1001){
+				check = "Chờ xác nhận";
+			}
+		}
+		
+		sessionService.set("listIdOrderDetails", listOrderDetails);
+		model.addAttribute("orderDetails", listOrderDetails);
+		model.addAttribute("idPrint", id);
+		model.addAttribute("check", check);
+		Order order = orderService.findOrderById(id);
+		System.out.println(order.getOrderStatus().getName());
+		model.addAttribute("order", order);
+		model.addAttribute("u", u.getUsername());
+		model.addAttribute("user", u);
+		if (order.getOrderStatus() != null && order.getOrderStatus().getName().equalsIgnoreCase("Hoàn thành")) {
+		    model.addAttribute("checko", true);
+		} else {
+		    model.addAttribute("checko", false);
+		}
+		return "user/orderDetail";
+	}
+	
+	@GetMapping("/order/huy")
+	public String huyDonHang(@RequestParam("id") String id) {
+		User u = sessionService.get("user");
+		List<OrderDetails> listOrderDetails = sessionService.get("listIdOrderDetails");
+		for (OrderDetails orderDetails : listOrderDetails) {
+					detailService.updateIdOrderDetailsStatus(1007, orderDetails.getId());
+		}
+		return "redirect:/orderDetail/" + id;
+	}
 }

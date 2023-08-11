@@ -12,14 +12,14 @@ html {
 	font-size: 100%;
 }
 /*header top*/
-a.nav-link {
+header a.nav-link {
 	color: white;
 	font-weight: 270;
 	padding: 0 0 0 20px !important;
 	font-size: 13px;
 }
 
-a.nav-link:hover {
+header a.nav-link:hover {
 	color: white;
 	font-weight: 600;
 }

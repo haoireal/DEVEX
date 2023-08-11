@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,11 +37,11 @@ public class Follow implements Serializable{
 	@Column(name = "ID", updatable = false)
 	private int id;
 	
-	@ManyToOne
+	@ManyToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name = "Userfollow_ID")
 	private Customer customer;
-	
-	@ManyToOne
+
+	@ManyToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name = "Shop_ID")
 	private Seller seller;
 	

@@ -25,6 +25,20 @@ public class CartDetailServiceImpl implements CartDetailService{
 	public CartDetail save(CartDetail entity) {
 		return cartDetail.save(entity);
 	}
+	
+	
+
+	@Override
+	public List<CartDetail> saveAll(List<CartDetail> entities) {
+		return cartDetail.saveAll(entities);
+	}
+
+
+	@Override
+	public void deleteAllInBatch(List<CartDetail> entities) {
+		cartDetail.deleteAllInBatch(entities);
+	}
+
 
 	@Override
 	public List<CartDetail> findAll(Sort sort) {
@@ -72,9 +86,15 @@ public class CartDetailServiceImpl implements CartDetailService{
 	}
 
 	@Override
-	public List<CartDetailDTo> findAllCartDTO() {
-//		return cartDetail.findAllCartDTO(); cmt lại code của khánh
-		return null;
+
+	public List<CartDetailDTo> findAllCartDTO(String username) {
+		return cartDetail.findAllCartDTO(username);
+	}
+
+	@Override
+	public CartDetail findByIDProduct(int id) {
+		return cartDetail.findByIDProduct(id);
+
 	}
 	
 	

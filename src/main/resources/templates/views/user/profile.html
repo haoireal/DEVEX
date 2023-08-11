@@ -3,6 +3,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+
+<head>
+<div th:replace="~{flagment/account/head :: headFragment}"></div>
+</script>
+	<script th:src="@{/js/cart-ctrl.js}"></script>
+
+</head>
 <style>
 .fixed-picture {
 	position: relative;
@@ -23,10 +30,6 @@
 }
 </style>
 
-<head>
-<div th:replace="~{flagment/account/head :: headFragment}"></div>
-
-</head>
 <style>
 body {
 	font-family: "Poppins", sans-serif;

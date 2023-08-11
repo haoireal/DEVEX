@@ -44,4 +44,6 @@ public interface OrderDetailService {
 
 	List<OrderDetails> findOrderDetailsByOrderID(String id, String username);
 
+	OrderDetails saveAndFlush(OrderDetails entity);
+
 }

@@ -3,14 +3,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+<head>
+<div th:replace="~{flagment/account/head :: headFragment}"></div>
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/css/user/userIndex.css" />
+</script>
+<script th:src="@{/js/cart-ctrl.js}"></script>
+</head>
 <style>
 .fixed-picture {
 	position: relative;
-	width: 100px; /* Đặt kích thước khung theo ý muốn */
-	height: 100px; /* Đặt kích thước khung theo ý muốn */
+	width: 100px;
+	/* Đặt kích thước khung theo ý muốn */
+	height: 100px;
+	/* Đặt kích thước khung theo ý muốn */
 	overflow: hidden;
-	left: 50%; /* Di chuyển container sang trái 50% */
-	transform: translateX(-50%); /* Di chuyển lại 50% theo chiều X */
+	left: 50%;
+	/* Di chuyển container sang trái 50% */
+	transform: translateX(-50%);
+	/* Di chuyển lại 50% theo chiều X */
 }
 
 .fixed-picture img {
@@ -22,11 +35,6 @@
 	object-fit: cover;
 }
 </style>
-
-<head>
-<div th:replace="~{flagment/account/head :: headFragment}"></div>
-
-</head>
 <style>
 body {
 	font-family: "Poppins", sans-serif;
@@ -68,6 +76,7 @@ header a.nav-link:hover {
 .header-inf a {
 	color: white;
 }
+
 /* header>.container-fluid:hover {} */
 /*header mid*/
 .container_mid {
@@ -99,6 +108,7 @@ header a.nav-link:hover {
 	scrollbar-width: thin;
 	scrollbar-color: black;
 }
+
 /* Tùy chỉnh thanh cuộn trên Chrome, Edge, và Safari */
 *::-webkit-scrollbar {
 	width: 12px;
@@ -114,6 +124,7 @@ header a.nav-link:hover {
 	border: 3px solid white;
 }
 </style>
+
 <body>
 	<header>
 		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
@@ -121,7 +132,7 @@ header a.nav-link:hover {
 	<div class="container">
 		<div class="wall-header-offset p-1"></div>
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper m-0">
+		<div class="m-0">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
@@ -136,418 +147,180 @@ header a.nav-link:hover {
 
 			<!-- Main content -->
 			<section class="content">
-				<div class="">
+			<div class="container-fluid" >
 					<div class="row">
-						<!-- /.col -->
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header p-2">
-									<ul class="nav nav-pills">
-										<li class="nav-item"><a class="nav-link active"
-											href="#info-account" data-toggle="tab">Hồ sơ</a></li>
-										<li class="nav-item"><a class="nav-link" href="#address"
-											data-toggle="tab">Địa chỉ</a></li>
-										<li class="nav-item"><a class="nav-link" href="#voucher"
-											data-toggle="tab">Kho voucher</a></li>
-										<li class="nav-item"><a class="nav-link"
-											href="#order-status" data-toggle="tab">Đơn mua</a></li>
-									</ul>
-								</div>
-								<!-- /.card-header -->
-								<div class="card-body">
-									<div class="tab-content">
-										<div class="tab-pane" id="address">
-											<form class="mt-4 form-horizontal" method="post"
-												action="/profile/address">
-												<div class="mb-3 bg-white rounded px-2">
-													<textarea class="form-control" rows="5"
-														placeholder="Địa chỉ giao hàng ..."
-														th:text="${session.user.address == null ? 'Địa chỉ giao hàng...' : session.user.address}"></textarea>
-												</div>
+						<div class="col-12">
+							<!-- <div class="callout callout-info">
+								<h5>
+									<i class="fas fa-info"></i> Note:
+								</h5>
+								This page has been enhanced for printing. Click the print button
+								at the bottom of the invoice to test.
+							</div> -->
 
-												<div class="mb-3 bg-white rounded px-2">
-													<input type="text" id="inputPhone"
-														placeholder="Số điện thoại" pattern="[0-9()+-]*"
-														maxlength="15" minlength="10" required
-														class="form-control border-1 p-0 pl-2" name="phone"
-														th:value="${session.user.phoneAddress == null ? 'Số điện thoại liên hệ...' : session.user.phoneAddress}" />
-												</div>
 
-												<button type="submit" class="btn btn-success mt-3"
-													style="width: 100%">Lưu</button>
-											</form>
-										</div>
-
-										<div class="tab-pane" id="voucher">
-											<!-- Post -->
-											<div class="post">
-												<div class="user-block">
-													<img class="img-circle img-bordered-sm"
-														src="../../dist/img/user1-128x128.jpg" alt="user image" />
-													<span class="username"> <a href="#">Jonathan
-															Burke Jr.</a> <a href="#" class="float-right btn-tool"><i
-															class="fas fa-times"></i></a>
-													</span> <span class="description">Shared publicly - 7:30 PM
-														today</span>
-												</div>
-												<!-- /.user-block -->
-												<p>Lorem ipsum represents a long-held tradition for
-													designers, typographers and the like. Some people hate it
-													and argue for its demise, but others ignore the hate as
-													they create awesome tools to help create filler text for
-													everyone from bacon lovers to Charlie Sheen fans.</p>
-
-												<p>
-													<a href="#" class="link-black text-sm mr-2"><i
-														class="fas fa-share mr-1"></i> Share</a> <a href="#"
-														class="link-black text-sm"><i
-														class="far fa-thumbs-up mr-1"></i> Like</a> <span
-														class="float-right"> <a href="#"
-														class="link-black text-sm"> <i
-															class="far fa-comments mr-1"></i> Comments (5)
-													</a>
-													</span>
-												</p>
-
-												<input class="form-control form-control-sm" type="text"
-													placeholder="Type a comment" />
-											</div>
-											<!-- /.post -->
-
-											<!-- Post -->
-											<div class="post clearfix">
-												<div class="user-block">
-													<img class="img-circle img-bordered-sm"
-														src="../../dist/img/user7-128x128.jpg" alt="User Image" />
-													<span class="username"> <a href="#">Sarah Ross</a> <a
-														href="#" class="float-right btn-tool"><i
-															class="fas fa-times"></i></a>
-													</span> <span class="description">Sent you a message - 3
-														days ago</span>
-												</div>
-												<!-- /.user-block -->
-												<p>Lorem ipsum represents a long-held tradition for
-													designers, typographers and the like. Some people hate it
-													and argue for its demise, but others ignore the hate as
-													they create awesome tools to help create filler text for
-													everyone from bacon lovers to Charlie Sheen fans.</p>
-
-												<form class="form-horizontal">
-													<div class="input-group input-group-sm mb-0">
-														<input class="form-control form-control-sm"
-															placeholder="Response" />
-														<div class="input-group-append">
-															<button type="submit" class="btn btn-danger">
-																Send</button>
-														</div>
-													</div>
-												</form>
-											</div>
-											<!-- /.post -->
-
-											<!-- Post -->
-											<div class="post">
-												<div class="user-block">
-													<img class="img-circle img-bordered-sm"
-														src="../../dist/img/user6-128x128.jpg" alt="User Image" />
-													<span class="username"> <a href="#">Adam Jones</a> <a
-														href="#" class="float-right btn-tool"><i
-															class="fas fa-times"></i></a>
-													</span> <span class="description">Posted 5 photos - 5 days
-														ago</span>
-												</div>
-												<!-- /.user-block -->
-												<div class="row mb-3">
-													<div class="col-sm-6">
-														<img class="img-fluid" src="../../dist/img/photo1.png"
-															alt="Photo" />
-													</div>
-													<!-- /.col -->
-													<div class="col-sm-6">
-														<div class="row">
-															<div class="col-sm-6">
-																<img class="img-fluid mb-3"
-																	src="../../dist/img/photo2.png" alt="Photo" /> <img
-																	class="img-fluid" src="../../dist/img/photo3.jpg"
-																	alt="Photo" />
-															</div>
-															<!-- /.col -->
-															<div class="col-sm-6">
-																<img class="img-fluid mb-3"
-																	src="../../dist/img/photo4.jpg" alt="Photo" /> <img
-																	class="img-fluid" src="../../dist/img/photo1.png"
-																	alt="Photo" />
-															</div>
-															<!-- /.col -->
-														</div>
-														<!-- /.row -->
-													</div>
-													<!-- /.col -->
-												</div>
-												<!-- /.row -->
-
-												<p>
-													<a href="#" class="link-black text-sm mr-2"><i
-														class="fas fa-share mr-1"></i> Share</a> <a href="#"
-														class="link-black text-sm"><i
-														class="far fa-thumbs-up mr-1"></i> Like</a> <span
-														class="float-right"> <a href="#"
-														class="link-black text-sm"> <i
-															class="far fa-comments mr-1"></i> Comments (5)
-													</a>
-													</span>
-												</p>
-
-												<input class="form-control form-control-sm" type="text"
-													placeholder="Type a comment" />
-											</div>
-											<!-- /.post -->
-										</div>
-										<!-- /.tab-pane -->
-										<div class="tab-pane" id="order-status">
-											<!-- The timeline -->
-											<div class="timeline timeline-inverse">
-												<!-- timeline time label -->
-												<div class="time-label">
-													<span class="bg-danger"> 10 Feb. 2014 </span>
-												</div>
-												<!-- /.timeline-label -->
-												<!-- timeline item -->
-												<div>
-													<i class="fas fa-envelope bg-primary"></i>
-
-													<div class="timeline-item">
-														<span class="time"><i class="far fa-clock"></i>
-															12:05</span>
-
-														<h3 class="timeline-header">
-															<a href="#">Support Team</a> sent you an email
-														</h3>
-
-														<div class="timeline-body">Etsy doostang zoodles
-															disqus groupon greplin oooj voxy zoodles, weebly ning
-															heekya handango imeem plugg dopplr jibjab, movity jajah
-															plickers sifteo edmodo ifttt zimbra. Babblely odeo
-															kaboodle quora plaxo ideeli hulu weebly balihoo...</div>
-														<div class="timeline-footer">
-															<a href="#" class="btn btn-primary btn-sm">Read more</a>
-															<a href="#" class="btn btn-danger btn-sm">Delete</a>
-														</div>
-													</div>
-												</div>
-												<!-- END timeline item -->
-												<!-- timeline item -->
-												<div>
-													<i class="fas fa-user bg-info"></i>
-
-													<div class="timeline-item">
-														<span class="time"><i class="far fa-clock"></i> 5
-															mins ago</span>
-
-														<h3 class="timeline-header border-0">
-															<a href="#">Sarah Young</a> accepted your friend request
-														</h3>
-													</div>
-												</div>
-												<!-- END timeline item -->
-												<!-- timeline item -->
-												<div>
-													<i class="fas fa-comments bg-warning"></i>
-
-													<div class="timeline-item">
-														<span class="time"><i class="far fa-clock"></i> 27
-															mins ago</span>
-
-														<h3 class="timeline-header">
-															<a href="#">Jay White</a> commented on your post
-														</h3>
-
-														<div class="timeline-body">Take me to your leader!
-															Switzerland is small and neutral! We are more like
-															Germany, ambitious and misunderstood!</div>
-														<div class="timeline-footer">
-															<a href="#" class="btn btn-warning btn-flat btn-sm">View
-																comment</a>
-														</div>
-													</div>
-												</div>
-												<!-- END timeline item -->
-												<!-- timeline time label -->
-												<div class="time-label">
-													<span class="bg-success"> 3 Jan. 2014 </span>
-												</div>
-												<!-- /.timeline-label -->
-												<!-- timeline item -->
-												<div>
-													<i class="fas fa-camera bg-purple"></i>
-
-													<div class="timeline-item">
-														<span class="time"><i class="far fa-clock"></i> 2
-															days ago</span>
-
-														<h3 class="timeline-header">
-															<a href="#">Mina Lee</a> uploaded new photos
-														</h3>
-
-														<div class="timeline-body">
-															<img src="https://placehold.it/150x100" alt="..." /> <img
-																src="https://placehold.it/150x100" alt="..." /> <img
-																src="https://placehold.it/150x100" alt="..." /> <img
-																src="https://placehold.it/150x100" alt="..." />
-														</div>
-													</div>
-												</div>
-												<!-- END timeline item -->
-												<div>
-													<i class="far fa-clock bg-gray"></i>
-												</div>
-											</div>
-										</div>
-										<!-- /.tab-pane -->
-
-										<div class="tab-pane active" id="info-account">
-											<form class="mt-4 form-horizontal" method="post"
-												enctype="multipart/form-data">
-												<div class="mb-3 bg-white rounded px-2">
-													<input type="text" id="inputFullname"
-														placeholder="Fullname" pattern="[a-zA-ZÀ-ỹ ]+"
-														title="Name does not contain number" required
-														class="form-control border-1 p-0 pl-2" name="fullname"
-														th:value="${session.user.fullname}" />
-												</div>
-
-												<div class="input-group mb-3 bg-white rounded px-2">
-													<input type="email" id="inputEmail"
-														th:value="${session.user.email == null ? 'Email chưa được đăng ký...' : session.user.email}"
-														placeholder="Email address"
-														pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-														maxlength="50" minlength="5" required
-														class="form-control border-1 p-0 pl-2" name="email"
-														disabled /> <span class="input-group-append">
-														<button type="button" class="btn btn-info"
-															data-toggle="modal" data-target="#ModalVerifyEmail">
-															<i class="fas fa-edit"></i>
-														</button>
-													</span>
-												</div>
-												<!-- The Modal -->
-												<div class="modal fade" id="ModalVerifyEmail">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<!-- Modal Header -->
-															<div class="modal-header">
-																<h4 class="modal-title">Verify</h4>
-																<button type="button" class="close" data-dismiss="modal">
-																	&times;</button>
-															</div>
-
-															<!-- Modal body -->
-															<div class="modal-body">
-																<div class="icon-security text-center mb-4">
-																	<img class="img-fluid img-circle"
-																		src="img/banner/security.png" alt="icon"
-																		style="width: 80px" />
-																</div>
-																<div class="by-verify text-center mb-4">
-																	<a
-																		th:href="${session.user.email != null} ? @{/profile/verify/email} : @{/profile/change-email}"><label
-																		class="btn btn-danger font-weight-normal"> Xác
-																			minh bằng mã OTP gửi qua Email </label> </a>
-																</div>
-															</div>
-
-														</div>
-													</div>
-												</div>
-
-												<div class="input-group mb-3 bg-white rounded px-2">
-													<input type="text" id="inputPhone"
-														th:value="${session.user.phone == null ? 'Số điện thoại chưa được đăng ký...' : session.user.phone}"
-														placeholder="Phone Number" pattern="[0-9()+-]*"
-														maxlength="15" minlength="5" required
-														class="form-control border-1 p-0 pl-2" name="phone"
-														disabled /> <span class="input-group-append">
-														<button type="button" class="btn btn-info"
-															data-toggle="modal" data-target="#ModalVerifyPhone">
-															<i class="fas fa-edit"></i>
-														</button>
-													</span>
-												</div>
-
-												<!-- The Modal -->
-												<div class="modal fade" id="ModalVerifyPhone">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<!-- Modal Header -->
-															<div class="modal-header">
-																<h4 class="modal-title">Verify</h4>
-																<button type="button" class="close" data-dismiss="modal">
-																	&times;</button>
-															</div>
-
-															<!-- Modal body -->
-															<div class="modal-body">
-																<div class="icon-security text-center mb-4">
-																	<img class="img-fluid img-circle"
-																		src="img/banner/security.png" alt="icon"
-																		style="width: 80px" />
-																</div>
-																<div class="by-verify text-center mb-4">
-																	<a
-																		th:href="${session.user.phone != null} ? @{/profile/verify/phone} : @{/profile/change-phone}"><label
-																		class="btn btn-danger font-weight-normal"> Xác
-																			minh bằng mã OTP gửi qua số điện thoại </label> </a>
-																</div>
-															</div>
-
-															<!-- Modal footer -->
-														</div>
-													</div>
-												</div>
-												<input type="file" id="avatarInput" style="display: none"
-													name="avatarInput" /> <input type="hidden" name="avatar"
-													id="avatar-hide" th:value="${session.user.avatar}" />
-
-												<div class="mb-3 bg-white rounded px-2">
-													<div class="form-group">
-														<select name="gender" id="gender" class="form-control">
-															<option selected="selected" disabled="disabled"
-																value="null">Giới tính</option>
-															<option value="Nam"
-																th:selected="${session.user.gender == 'Nam'}">Nam</option>
-															<option value="Nữ"
-																th:selected="${session.user.gender == 'Nữ'}">Nữ</option>
-															<option value="Other"
-																th:selected="${session.user.gender == 'Other'}">Khác</option>
-														</select>
-													</div>
-													<!--SOME INPUT RIGHT HERE -->
-												</div>
-
-												<div class="row">
-													<div class="form-signup col-6">
-														<div class="mb-3 bg-white rounded px-2">
-															<button type="submit"
-																class="form-control btn btn-success mt-3">Lưu</button>
-														</div>
-													</div>
-													<div class="form-signup col-6">
-														<div class="mb-3 rounded px-2">
-															<a href="/verify-password"
-																class="form-control text-white btn btn-success mt-3">
-																Đổi mật khẩu </a>
-														</div>
-													</div>
-												</div>
-											</form>
-										</div>
-										<!-- /.tab-pane -->
+							<!-- Main content -->
+							<div class="invoice p-3 mb-3" th:fragment="userOrderPrintFragment">
+								<!-- title row -->
+								<div class="row">
+									<div class="col-12">
+										<h4>
+											<img src="/img/banner/LogoDUAn.png" class="img-fluid"
+												style="width: 4rem;" /> <span th:text="${order.orderDetails[0].productVariant.product.sellerProduct.shopName}"></span> 
+											
+											<b class="float-right" th:text="${#dates.format(order.createdDay, 'dd/MM/yyyy')}"></b>
+											<label style="font-weight: 400;" class="float-right">Đơn hàng được tạo vào ngày: </label>
+										</h4>
 									</div>
-									<!-- /.tab-content -->
+									<!-- /.col -->
 								</div>
-								<!-- /.card-body -->
+								<!-- info row -->
+								<div class="row invoice-info">
+									<div class="col-sm-4 invoice-col">
+										From
+										<address>
+											<strong th:text="${order.orderDetails[0].productVariant.product.sellerProduct.shopName}"></strong><br>
+											<label style="font-weight: 400;"  th:text="'Địa chỉ: ' + ${order.address}"></label><br>
+											<label style="font-weight: 400;"  th:text="'Phone: ' + ${order.orderDetails[0].productVariant.product.sellerProduct.phoneAddress}"></label>
+										</address>
+									</div>
+									<!-- /.col -->
+									<div class="col-sm-4 invoice-col">
+										To
+										<address>
+											<strong th:text="${user.fullname}"></strong><br>
+											<label style="font-weight: 400;"  th:text="'Địa chỉ: ' + ${user.address}"></label><br>
+											<label style="font-weight: 400;"  th:text="'Phone: ' + ${user.phoneAddress}"></label>
+										</address>
+									</div>
+									<!-- /.col -->
+									<div class="col-sm-4 invoice-col">
+										<b>Mã vận đơn: E145CMS58</b><br> 
+										<b>Mã đơn hàng: </b><label style="font-weight: 400;" th:text="${order.id}"></label><br>
+										<b>Thanh toán: </b><label style="font-weight: 400;" th:text="${order.payment.name}"></label><br> 
+										<b>Trạng thái: </b><label style="font-weight: 400;" th:text="${order.orderStatus.name}"></label>
+									</div>
+									<!-- /.col -->
+								</div>
+								<!-- /.row -->
+
+								<!-- Table row -->
+								<div class="row">
+									<div class="col-12 table-responsive">
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th>Mã SP</th>
+													<th>Hình ảnh</th>
+													<th>Tên sản phẩm</th>
+													<th>Số lượng</th>
+													<th>Giá</th>
+													<th>Trạng thái</th>
+													<th class="text-center">Shop bán</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="od : ${orderDetails}">
+													<td th:text="${od.productVariant.product.id}"></td>
+													<td>
+														<img alt="" th:src="@{|/img/product/${od.productVariant.product.sellerProduct.username}/${od.productVariant.product.id}/${od.productVariant.product.imageProducts[0].name}|}" width="60px">
+													</td>
+													<td class="product-name" th:text="${od.productVariant.product.name}"></td>
+													<td class="text-center" th:text="${od.quantity}"></td>
+													<td th:text="${#numbers.formatDecimal(od.price, 0, 'COMMA', 0, 'POINT')}"></td>
+													<td th:if="${od.status.name == 'Đã huỷ'}" th:text="${od.status.name}" class="text-danger"></td>
+													<td th:if="${od.status.name == 'Chờ xác nhận'}" th:text="${od.status.name}" class="text-danger"></td>
+													<td th:if="${od.status.name == 'Đã xác nhận'}" th:text="${od.status.name}" class="text-success"></td>
+													<td class="text-center" th:if="${od.productVariant.product.sellerProduct.username == u}">Shop của bạn</td>
+													<td class="text-center" th:unless="${od.productVariant.product.sellerProduct.username == u}" th:text="${od.productVariant.product.sellerProduct.shopName}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- /.col -->
+								</div>
+								<!-- /.row -->
+
+								<div class="row">
+									<!-- accepted payments column -->
+									<div class="col-6">
+										<p class="lead">Phương thức thanh toán:</p>
+										<img src="/admin/dist/img/credit/paypal2.png" alt="Paypal">
+										<span class="btn border border-info rounded p-1 pl-3 pr-3"><b>COD</b></span>
+										<p class="text-muted well well-sm shadow-none"
+											style="margin-top: 10px;">Vui lòng kiểm tra kỹ hóa đơn trước khi tiến hành thanh toán, sửa đổi hoặc in ấn. DEVEX xin cảm ơn</p>
+									</div>
+									<!-- /.col -->
+									<div class="col-6">
+										<div class="table-responsive">
+											<table class="table">
+												<tr>
+													<th style="width: 50%">Giá:</th>
+													<td th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')}"></td>
+												</tr>
+												<tr>
+													<th>Vận chuyển:</th>
+													<td>00.00</td>
+												</tr>
+												<tr>
+													<th>Giảm giá</th>
+													<td th:text="${#numbers.formatDecimal(order.priceDiscount, 0, 'COMMA', 0, 'POINT')}"></td>
+												</tr>
+												<tr>
+													<th>Tổng giá:</th>
+													<td th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')}"></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<!-- /.col -->
+								</div>
+								<!-- /.row -->
+
+								<!-- this row will not appear when printing -->
+								<div class="row no-print">
+									<div class="col-12">
+										<a th:href="@{/seller/orderPrint(id=${idPrint})}" rel="noopener" target="_blank" class="btn btn-default">
+											<i class="fas fa-print"></i>Print
+										</a>
+										<label class="ml-5">Tình Trạng đơn hàng: </label>
+										<a class="btn btn-secondary" th:if="${
+										 check == 'Đã xác nhận' and 
+										 check != 'Đã huỷ' and 
+										 check != 'Chờ xác nhận' and
+										 order.orderStatus.name != 'Chờ thanh toán' and
+										 order.orderStatus.name != 'Vận chuyển' and
+										 order.orderStatus.name != 'Đang giao' and
+										 order.orderStatus.name != 'Đã xác nhận' and
+										 order.orderStatus.name != 'Nhận hàng' and
+										 order.orderStatus.name != 'Hoàn thành' and
+										 order.orderStatus.name != 'Đã huỷ' and
+										 order.orderStatus.name != 'Trả hàng/Hoàn tiền'
+										}" disabled="disabled">Chờ shop khác xác nhận</a>
+										<a th:href="@{/order/huy(id=${idPrint})}" class="btn btn-danger" th:if="${check != 'Đã huỷ' and check != 'Đã xác nhận'}">Hủy đơn hàng</a>
+										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Chờ thanh toán'}" disabled="disabled">Chờ thanh toán</a>
+										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Vận chuyển'}" disabled="disabled">Đang vận chuyển</a>
+										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Đang giao'}" disabled="disabled">Đang giao</a>
+										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Đã xác nhận'}" disabled="disabled">Shop đang chuẩn bị hàng</a>
+										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Hoàn thành'}"  disabled="disabled">Hoàn thành</a>
+										<a class="btn btn-secondary" th:if="${check == 'Đã huỷ' and order.orderStatus.name == 'Chờ xác nhận'}" disabled="disabled">Bạn đã hủy đơn</a>
+										<a class="btn btn-secondary" th:if="${order.orderStatus.name == 'Đã huỷ'}" disabled="disabled">Đã hủy</a>
+										<a class="btn btn-warning" th:if="${order.orderStatus.name == 'Trả hàng/Hoàn tiền'}">Trả hàng/Hoàn tiền</a>
+										<button th:if="${checko}" type="button" class="btn btn-success float-right">
+										    <i class="far fa-credit-card"></i> Submit Payment
+										</button>
+										<button th:unless="${checko}" type="button" class="btn btn-secondary float-right" disabled="disabled">
+										    <i class="far fa-credit-card"></i> Submit Payment
+										</button>
+
+										<button type="button" class="btn btn-primary float-right"
+											style="margin-right: 5px;">
+											<i class="fas fa-download"></i> Generate PDF
+										</button>
+									</div>
+								</div>
 							</div>
-							<!-- /.card -->
+							<!-- /.invoice -->
 						</div>
 						<!-- /.col -->
 					</div>
@@ -603,7 +376,7 @@ header a.nav-link:hover {
 		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
 		crossorigin="anonymous"></script>
 	<!-- 	<div th:replace="~{flagment/account/footLink :: footLinkFragment}"></div> -->
-
+	<script src=" /admin/dist/js/user/userIndex.js"></script>
 </body>
 
 </html>

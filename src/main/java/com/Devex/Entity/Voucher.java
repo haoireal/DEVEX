@@ -40,11 +40,11 @@ public class Voucher implements Serializable{
 	private String name;
 	@Column(name = "Discount")
 	private Double discount;
-	@Column(name = "Note")
+	@Column(name = "Description")
 	private String note;
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Createdday")
+	@Column(name = "Createddate")
 	private Date createdDay;
 	@Column(name = "Startdate")
 	private Date startDate;
