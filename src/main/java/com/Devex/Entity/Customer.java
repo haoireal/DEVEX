@@ -36,7 +36,7 @@ public class Customer extends User implements Serializable{
 	
 
 	
-	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "customer")
 	private List<Follow> follow;
 	
 	@OneToMany(mappedBy = "customerComment")

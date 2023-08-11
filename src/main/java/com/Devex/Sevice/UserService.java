@@ -48,4 +48,6 @@ public interface UserService {
 
 	User findEmail(String email);
 
+	void processOAuthPostLogin(String fullname, String email);
+
 }
