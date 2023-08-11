@@ -29,4 +29,9 @@ public interface UserRoleService {
 
 	UserRole save(UserRole entity);
 
+
+	List<String> findAllroleByUserName(String username);
+
+	List<UserRole> findAllByUserName(String username);
+
 }

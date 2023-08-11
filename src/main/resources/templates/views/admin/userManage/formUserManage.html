@@ -34,7 +34,7 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini" ng-app="app"
-	ng-controller="sellerproduct">
+	ng-controller="myController">
 	<div class="wrapper">
 		<!-- Preloader -->
 		<div
@@ -74,53 +74,64 @@
 									<h3 class="card-title">User Manage</h3>
 								</div>
 								<!-- /.card-header -->
-								<div class="card-body" th:object="${userdetail}">
-									<form th:action="@{/admin/user/update}" method="post">
+								<div ng-if="data.userRoles[0].user" class="card-body"  >
+									<form  method="post" >
 										<div class="mb-3">
-											<label for="UserName" class="form-label">Username</label> <input
+											<label for="UserName" class="form-label">Username</label> 
+											<input ng-model="data.userRoles[0].user.username"
+											name="username"
 												type="text" class="form-control" id="UserName"
-												aria-describedby="UserName" th:value="*{username}" disabled>
-
+												aria-describedby="UserName"   disabled>
+												
 										</div>
 										<div class="mb-3">
-											<label for="FullName" class="form-label">FullName</label> <input
+											<label for="FullName" class="form-label">FullName</label> 
+											<input ng-model="data.userRoles[0].user.fullname"
+												name="fullname"
 												type="text" class="form-control" id="FullName"
-												aria-describedby="FullName" th:value="*{fullname}">
+											aria-describedby="FullName"  >
+												
 
 										</div>
 										<div class="mb-3">
-											<label for="Email" class="form-label">Email</label> <input
+											<label for="Email" class="form-label">Email</label> 
+											<input ng-model="data.userRoles[0].user.email"
+											name="email"
 												type="Email" class="form-control" id="Email"
-												aria-describedby="Email" th:value="*{email}">
+												aria-describedby="Email"  >
 
 										</div>
 										<div class="mb-3">
-											<label for="Password" class="form-label">Password</label> <input
+											<label for="Password" class="form-label">Password</label> 
+											<input ng-model="data.userRoles[0].user.password" 
+											name="password"
 												type="password" class="form-control" id="Password"
-												aria-describedby="Password" th:value="*{password}">
+												aria-describedby="Password"  >
 
 										</div>
 										<div class="mb-3">
-											<label for="Phone" class="form-label">Phone</label> <input
+											<label for="Phone" class="form-label">Phone</label> 
+											<input ng-model="data.userRoles[0].user.phone"
+											name="phone"
 												type="text" class="form-control" id="Phone"
-												aria-describedby="Phone" th:value="*{phone}">
+												aria-describedby="Phone"  >
 
 										</div>
 										<div class="mb-3 d-flex">
 											<label for="Role" class="form-label me-4">Gender</label> <br>
 											<div class="form-check pe-3">
 												<input class="form-check-input" type="radio" name="gender"
-													id="Nam" th:checked="*{gender == 'Nam'}"> <label
+													id="Nam" ng-model="data.userRoles[0].user.gender" ng-value="'Nam'" > <label
 													class="form-check-label" for="Nam"> Nam </label>
 											</div>
 											<div class="form-check" style="margin: 0px 20px;">
 												<input class="form-check-input" type="radio" name="gender"
-													id="Nữ" th:checked="*{gender == 'Nữ'}"> <label
+													id="Nữ"  ng-model="data.userRoles[0].user.gender" ng-value="'Nữ'"> <label
 													class="form-check-label" for="Nữ"> Nữ </label>
 											</div>
 											<div class="form-check">
 												<input class="form-check-input" type="radio" name="gender"
-													id="Orther" th:checked="*{gender == 'Other'}"> <label
+													id="Orther"  ng-model="data.userRoles[0].user.gender" ng-value="'Other'"> <label
 													class="form-check-label" for="Other"> Khác </label>
 											</div>
 
@@ -129,25 +140,27 @@
 											<label for="Role" class="form-label me-4">Active</label>
 											<div class="form-check pe-3">
 												<input class="form-check-input" type="radio" name="active"
-													id="true" th:checked="*{active}"> <label
+													id="true"  ng-model="data.userRoles[0].user.active" ng-value= "true"> <label
 													class="form-check-label" for="true"> Avtice </label>
 											</div>
 											<div class="form-check" style="margin: 0px 20px;">
 												<input class="form-check-input" type="radio" name="active"
-													id="false" th:checked="*{!active}"> <label
+													id="false"  ng-model="data.userRoles[0].user.active" ng-value= "false"> <label
 													class="form-check-label" for="false"> Inactive </label>
 											</div>
 
 										</div>
-										<div class="mb-3">
-											<label for="Role" class="form-label">Role</label>
-											 <input type="text" class="form-control" id="Role" aria-describedby="Role" th:value="*{roles[0].role.name}" disabled > 
-
-
+										<div class="mb-3 d-flex">
+											<label for="Role" class="form-label me-4">Roles</label>
+											<div class="form-check pe-3" ng-repeat="role in data.roles">
+												<input ng-checked="isRoleSelected(role.id)" ng-click="toggleRole(role.id)" class="form-check-input" type="checkbox" name="role" id="{{role.id}}">
+												<label class="form-check-label" for="{{role.id}}">{{ role.name }}</label>
+											</div>
 										</div>
+										
 
 
-										<button type="submit" class="btn btn-primary">Update</button>
+										<button type="submit" class="btn btn-primary" ng-click="updateRoles()">Update</button>
 									</form>
 								</div>
 								<!-- /.card-body -->
@@ -190,7 +203,7 @@
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-	<script src="app.js"></script>
+
 	<script>
 		$(function () {
 			//Initialize Select2 Elements
@@ -332,34 +345,7 @@
 	</script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-	<!-- <script>
-		var addRowButton = document.getElementById('add-row-btn');
-		var tableBody = document.getElementById('table-body');
-		var rowCount = 1;
-
-		addRowButton.addEventListener('click', function () {
-			var newRow = document.createElement('tr');
-
-			// Tạo các cột mới và input tương ứng
-			var columns = ['Size', 'Color', 'Price', 'Quantity'];
-			for (var column of columns) {
-				var columnName = column.toLowerCase();
-				var dataCell = document.createElement('td');
-				var dataInput = document.createElement('input');
-				var inputClassName = columnName + rowCount;
-
-				dataInput.type = 'text';
-				dataInput.className = inputClassName;
-				dataInput.name = inputClassName;
-
-				dataCell.appendChild(dataInput);
-				newRow.appendChild(dataCell);
-			}
-
-			tableBody.appendChild(newRow);
-			rowCount++;
-		});
-	</script> -->
+	
 	<!-- script click button thêm hình ảnh -->
 	<script>
 		function openFilePicker() {
@@ -371,137 +357,178 @@
 	<!-- script xử lý hình ảnh -->
 	<script>
 		app = angular.module("app", []);
-		app.controller("sellerproduct", function ($scope, $http, $window) {
-			var urlimg = 'http://localhost:8888/img/product';
-			/* $scope.url = function(filename) {
-				console.log(filename);
-			};  */
+		app.controller('myController', function($scope, $http, $window) {		
+			$scope.data = []; // khởi tạo biến $scope.fill với một mảng rỗng
+			$scope.fillAll = function () {			
+				$http.get('/api/userDetail').then(resp => {
+					$scope.data = resp.data;
+					// alert('oc cho');
+					// $scope.selectedRoles = [$scope.data.userRoles.role.id];
+					$scope.selectedRoles = $scope.data.userRoles.map(userRole => userRole.role.id);
 
-			$scope.listimg = function () {
-				$http.get(urlimg).then(resp => {
-					$scope.filenames = resp.data;
-				}).catch(error => {
-					console.log("errors", error);
-				})
-			};
-
-			$scope.deleteimg = function (filename) {
-				$http.delete(filename).then(resp => {
-					$scope.listimg();
-					let i = $scope.filenames.findindex(name => name == filename);
-					$scope.filenames.splice(i, 1);
-					console.log(filename);
-				}).catch(error => {
-					console.log("errors", error);
+					console.log($scope.data)
+					
+				}).catch(function(err) {
+					console.error(err); // xử lý lỗi khi gọi API
+					alert('Có lỗi xảy ra khi gọi API'); // hiển thị thông báo lỗi cho người dùng
 				});
+
+			};
+			
+			$scope.fillAll();
+
+			$scope.isRoleSelected = function(roleId) {
+				return $scope.selectedRoles.includes(roleId);
 			};
 
-			$scope.uploadimg = function (files) {
-				var form = new FormData();
-				for (var i = 0; i < files.length; i++) {
-					form.append('files', files[i]);
+			$scope.toggleRole = function(roleId) {
+				var index = $scope.selectedRoles.indexOf(roleId);
+				if (index === -1) {
+					$scope.selectedRoles.push(roleId);  // Nếu role chưa được chọn, thêm vào mảng
+				} else {
+					$scope.selectedRoles.splice(index, 1);  // Nếu role đã được chọn, loại bỏ khỏi mảng
 				}
-				$http.post(urlimg, form, {
-					transformRequest: angular.identity,
-					headers: {
-						'Content-Type': undefined
+			};
+
+		
+			$scope.updateRoles = function() {
+			// Tạo đối tượng chứa dữ liệu cần cập nhật
+				var updatedRoles = {
+					userId: $scope.data.userRoles[0].user.username, // ID của người dùng
+					roles: $scope.selectedRoles // Danh sách roles đã chọn
+				};
+				console.log(updatedRoles);
+				// Gửi yêu cầu cập nhật lên server
+				$http.post('/api/updateUserRoles', updatedRoles).then(response => {
+					if (response.data.message) {
+						alert(response.data.message);
+					} else if (response.data.error) {
+						alert(response.data.error);
+					} else {
+						alert('Cập nhật roles thành công');
 					}
-				}).then(resp => {
-					$scope.filenames.push(...resp.data);
-					$scope.listimg();
 				}).catch(error => {
-					console.log("errors", error);
-				})
-			};
-
-			$scope.listimg();
-
-			var url = 'http://localhost:8888/api/product';
-			$scope.id = '';
-			$scope.selectedCategoryId = '';
-			$scope.form = {};
-			$scope.categorys = [];
-			$scope.selectedCategory = $scope.selectedCategory;
-			$scope.infoproduct = function () {
-				$http.get(url).then(resp => {
-					$scope.form = resp.data;
-				}).catch(error => {
-					console.log("errors", error);
-				})
-			};
-
-			$scope.getCategoryDetails = function () {
-				$http.get('/categoryDetails/' + $scope.selectedCategory)
-					.then(function (resp) {
-						$scope.categorydetail = resp.data;
-					});
-			};
-
-			$scope.getidp = function () {
-				$http.get('/idca').then(resp => {
-					$scope.id = resp.data;
-					$scope.selectedCategoryId = $scope.id;
-					console.log($scope.selectedCategoryId);
-				})
-			};
-
-			$scope.getca = function () {
-				$http.get('/idcadt').then(resp => {
-					$scope.categorys = resp.data;
-				})
-			}
-
-			$scope.getca();
-			$scope.getidp();
-			$scope.infoproduct();
-
-			var url = 'http://localhost:8888/api/productvariant';
-			var id = 0;
-			$scope.addRow = function () {
-				id++;
-				$scope.variant.push({
-					id,
-					size: '',
-					color: '',
-					price: '',
-					quantity: ''
+					console.error(error);
+					alert('Có lỗi xảy ra khi cập nhật roles');
 				});
-				console.log(id);
-			}
-
-			$scope.lista = function () {
-				$http.get(url).then(resp => {
-					$scope.variant = resp.data;
-				}).catch(error => {
-					console.log("errors", error);
-				})
 			};
+			// $scope.deleteimg = function (filename) {
+			// 	$http.delete(filename).then(resp => {
+			// 		$scope.listimg();
+			// 		let i = $scope.filenames.findindex(name => name == filename);
+			// 		$scope.filenames.splice(i, 1);
+			// 		console.log(filename);
+			// 	}).catch(error => {
+			// 		console.log("errors", error);
+			// 	});
+			// };
 
-			$scope.save = function () {
+			// $scope.uploadimg = function (files) {
+			// 	var form = new FormData();
+			// 	for (var i = 0; i < files.length; i++) {
+			// 		form.append('files', files[i]);
+			// 	}
+			// 	$http.post(urlimg, form, {
+			// 		transformRequest: angular.identity,
+			// 		headers: {
+			// 			'Content-Type': undefined
+			// 		}
+			// 	}).then(resp => {
+			// 		$scope.filenames.push(...resp.data);
+			// 		$scope.listimg();
+			// 	}).catch(error => {
+			// 		console.log("errors", error);
+			// 	})
+			// };
 
-				$scope.form.idCategoryDetails = $scope.selectedCategoryDetail;
-				$scope.form.listvariant = $scope.variant;
-				console.log($scope.form);
-				$http.put("/info/product", $scope.form).then(resp => {
+			// $scope.listimg();
 
-				}).catch(error => {
-					console.log("errors", error);
-				})
-			};
+			// var url = 'http://localhost:8888/api/product';
+			// $scope.id = '';
+			// $scope.selectedCategoryId = '';
+			// $scope.form = {};
+			// $scope.categorys = [];
+			// $scope.selectedCategory = $scope.selectedCategory;
+			// $scope.infoproduct = function () {
+			// 	$http.get(url).then(resp => {
+			// 		$scope.form = resp.data;
+			// 	}).catch(error => {
+			// 		console.log("errors", error);
+			// 	})
+			// };
 
-			$scope.deleteProduc = function () {
-				// Gửi dữ liệu đến REST controller
-				$http.delete('/delete/product/'+$scope.form.id)
-					.then(function (response) {
-						// Xử lý kết quả trả về từ REST controller
-					});
+			// $scope.getCategoryDetails = function () {
+			// 	$http.get('/categoryDetails/' + $scope.selectedCategory)
+			// 		.then(function (resp) {
+			// 			$scope.categorydetail = resp.data;
+			// 		});
+			// };
 
-				// Chuyển hướng đến URL mới
-				// console.log('/delete/product/'+$scope.form.id);
-				$window.location.href = '/seller/list/products';
-			};
+			// $scope.getidp = function () {
+			// 	$http.get('/idca').then(resp => {
+			// 		$scope.id = resp.data;
+			// 		$scope.selectedCategoryId = $scope.id;
+			// 		console.log($scope.selectedCategoryId);
+			// 	})
+			// };
 
-			$scope.lista();
+			// $scope.getca = function () {
+			// 	$http.get('/idcadt').then(resp => {
+			// 		$scope.categorys = resp.data;
+			// 	})
+			// }
+
+			// $scope.getca();
+			// $scope.getidp();
+			// $scope.infoproduct();
+
+			// var url = 'http://localhost:8888/api/productvariant';
+			// var id = 0;
+			// $scope.addRow = function () {
+			// 	id++;
+			// 	$scope.variant.push({
+			// 		id,
+			// 		size: '',
+			// 		color: '',
+			// 		price: '',
+			// 		quantity: ''
+			// 	});
+			// 	console.log(id);
+			// }
+
+			// $scope.lista = function () {
+			// 	$http.get(url).then(resp => {
+			// 		$scope.variant = resp.data;
+			// 	}).catch(error => {
+			// 		console.log("errors", error);
+			// 	})
+			// };
+
+			// $scope.save = function () {
+
+			// 	$scope.form.idCategoryDetails = $scope.selectedCategoryDetail;
+			// 	$scope.form.listvariant = $scope.variant;
+			// 	console.log($scope.form);
+			// 	$http.put("/info/product", $scope.form).then(resp => {
+
+			// 	}).catch(error => {
+			// 		console.log("errors", error);
+			// 	})
+			// };
+
+			// $scope.deleteProduc = function () {
+			// 	// Gửi dữ liệu đến REST controller
+			// 	$http.delete('/delete/product/'+$scope.form.id)
+			// 		.then(function (response) {
+			// 			// Xử lý kết quả trả về từ REST controller
+			// 		});
+
+			// 	// Chuyển hướng đến URL mới
+			// 	// console.log('/delete/product/'+$scope.form.id);
+			// 	$window.location.href = '/seller/list/products';
+			// };
+
+			// $scope.lista();
 		});
 	</script>
 	<!-- END script xử lý hình ảnh -->
