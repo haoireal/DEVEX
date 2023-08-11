@@ -61,33 +61,34 @@ public class CartAPIController {
 	@GetMapping("/rest/cart")
 	public List<CartDetailDTo> getAll(Model model) {
 		Customer user = sessionService.get("user");
-		List<CartDetailDTo> cartDetails = cart.findAllCartDTO(user.getUsername());
+		List<CartDetailDTo> cartDetails = cart.findAllCartDTO("baolh");
 
-		Map<String, CartDetailDTo> cartDetailMap = new HashMap<>();
-
-		for (CartDetailDTo cartDetail : cartDetails) {
-			String uniqueKey = cartDetail.getImg() + "-" + cartDetail.getColor() + "-" + cartDetail.getSize();
-			if (cartDetailMap.containsKey(uniqueKey)) {
-				CartDetailDTo existingCartDetail = cartDetailMap.get(uniqueKey);
-				existingCartDetail.setQuantity((existingCartDetail.getQuantity() + cartDetail.getQuantity()));
-			} else {
-				cartDetailMap.put(uniqueKey, cartDetail);
-			}
-		}
-		for (CartDetailDTo cartDetail : cartDetailMap.values()) {
-			int totalQuantity = cartDetail.getQuantity();
-			if (totalQuantity == 2 || totalQuantity == 3 || totalQuantity == 4) {
-				int newQuantity = 1;
-				cartDetail.setQuantity(newQuantity);
-
-			} else {
-				int newQuantity = (int) Math.sqrt(totalQuantity);
-				cartDetail.setQuantity(newQuantity);
-			}
-			// Lấy căn bậc hai của tổng số lượng
-
-		}
-		return new ArrayList<>(cartDetailMap.values());
+//		Map<String, CartDetailDTo> cartDetailMap = new HashMap<>();
+//
+//		for (CartDetailDTo cartDetail : cartDetails) {
+//			String uniqueKey = cartDetail.getImg() + "-" + cartDetail.getColor() + "-" + cartDetail.getSize();
+//			if (cartDetailMap.containsKey(uniqueKey)) {
+//				CartDetailDTo existingCartDetail = cartDetailMap.get(uniqueKey);
+//				existingCartDetail.setQuantity((existingCartDetail.getQuantity() + cartDetail.getQuantity()));
+//			} else {
+//				cartDetailMap.put(uniqueKey, cartDetail);
+//			}
+//		}
+//		for (CartDetailDTo cartDetail : cartDetailMap.values()) {
+//			int totalQuantity = cartDetail.getQuantity();
+//			if (totalQuantity == 2 ||totalQuantity == 3||totalQuantity == 4 ||totalQuantity == 5  ) {
+//				int newQuantity = 1;
+//				cartDetail.setQuantity(newQuantity);
+//
+//			} else {
+//				int newQuantity = (int) Math.sqrt(totalQuantity);
+//				cartDetail.setQuantity(newQuantity);
+//			}
+//			// Lấy căn bậc hai của tổng số lượng
+//
+//		}
+//		return new ArrayList<>(cartDetailMap.values());
+		return cartDetails;
 	}
 
 	@DeleteMapping("/rest/cart/{id}")
