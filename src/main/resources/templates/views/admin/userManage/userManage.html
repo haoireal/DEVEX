@@ -45,7 +45,7 @@
 						</div>
 						<!-- /.col -->
 					</div>
-					<!-- /.row -->
+					<!-- /.row --> 
 				</div>
 				<!-- /.container-fluid -->
 			</div>
@@ -66,7 +66,7 @@
 								<!-- /.card-header -->
 								<div class="card-body">
 									<!-- TABLE USER LIST -->
-									<table id="example1" class="table table-hover"
+									<table   id="example1" class="table table-hover"
 										>
 										<thead>
 											<tr>
@@ -87,27 +87,54 @@
 
 											<!--DATA -->
 											<div>
-												<tr th:each="user,iter : ${user}">
+												<div>
+													<!-- <tr  ng-repeat = "userRole in data.roles" > 
+														
+														<td  > {{$index+1}} </td>
+														<td class="product-name" > {{userRole.user.fullname}}</td>
+														<td class="product-name" >{{userRole.user.username}}</td>
+														<td >{{userRole.user.email}}</td>
+														<td class="product-name">{{userRole.user.password}}</td>
+														<td class="product-name" >{{userRole.user.phone}}</td>
+														<td >{{userRole.user.gender}}</td>
+														<td >{{userRole.user.createDay}}</td>
+														<td >{{userRole.user.active}}</td> 
+														
+														<td class="text-center">
+															<div
+																class="btn-group btn-group-sm">
+																<a href="#" ><i class="fas fa-eye"></i></a> 
+																<a href="#" class="btn btn-danger"><i class="fas fa-edit"></i></a>
+															</div>
+														</td>
+	
+													</tr>  -->
+	
+												
+												
+													<tr th:each="user,iter : ${user}">
 													
-													<td th:text="${iter.index + 1 }" >  </td>
-													<td class="product-name" th:text="${user.fullname}"></td>
-													<td class="product-name" th:text="${user.username}"></td>
-													<td th:text="${user.email}"></td>
-													<td class="product-name" th:text="${user.password}"></td>
-													<td class="product-name" th:text="${user.phone}"></td>
-													<td th:text="${user.gender}"></td>
-													<td th:text="${user.createDay}"></td>
-													<td th:text="${user.active}"></td>
-													
-													<td class="text-center">
-														<div
-															class="btn-group btn-group-sm">
-															<a th:href="@{|/admin/user/edit/${user.username}|}" ><i class="fas fa-eye"></i></a> 
-															<a href="#" class="btn btn-danger"><i class="fas fa-edit"></i></a>
-														</div>
-													</td>
-
-												</tr>
+														<td th:text="${iter.index + 1 }" >  </td>
+														<td class="product-name" th:text="${user.fullname}"></td>
+														<td class="product-name" th:text="${user.username}"></td>
+														<td th:text="${user.email}"></td>
+														<td class="product-name" th:text="${user.password}"></td>
+														<td class="product-name" th:text="${user.phone}"></td>
+														 <td th:text="${user.gender}"></td> 
+														<td th:text="${user.createDay}"></td>
+														<td th:text="${user.active}"></td>
+														
+														<td class="text-center">
+															<div
+																class="btn-group btn-group-sm">
+																<a th:href="@{/ad/edit/__${user.username}__}" ><i class="fas fa-eye"></i></a> 
+																<a href="#" class="btn btn-danger"><i class="fas fa-edit"></i></a>
+															</div>
+														</td>
+	
+													</tr>
+	
+												</div>
 
 											</div>
 										</tbody>
@@ -157,29 +184,24 @@
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-	<script>
-	app = angular.module("app", []);
-	app.controller('myController', function($scope, $https, $window) {
-		
-		$scope.fill = []; // khởi tạo biến $scope.fill với một mảng rỗng
-
-		$scope.fillAll = function () {
+	<!-- <script>
+		app = angular.module("app", []);
+		app.controller('myController', function($scope, $http, $window) {		
+			$scope.data = []; // khởi tạo biến $scope.fill với một mảng rỗng
+			$scope.fillAll = function () {			
+				$http.get('http://localhost:8888/ad/users').then(resp => {
+					$scope.data = resp.data;
+					// alert('oc cho');
+					console.log($scope.data)
+				}).catch(function(err) {
+					console.error(err); // xử lý lỗi khi gọi API
+					// alert('Có lỗi xảy ra khi gọi API'); // hiển thị thông báo lỗi cho người dùng
+				});
+			};
 			
-			$https.get("/admin/userManage1").then(resp => {
-				$scope.fill = resp.data;
-				alert('oc cho');
-				//console.log($scope.fill);
-
-			}).catch(err => {
-				console.log(err); // xử lý lỗi khi gọi API
-				alert('Có lỗi xảy ra khi gọi API'); // hiển thị thông báo lỗi cho người dùng
-			});
-		};
-		
-		$scope.fillAll();
-
-	});
-	</script>
+			$scope.fillAll();
+		});
+	</script> -->
 
 </body>
 
