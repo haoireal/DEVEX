@@ -196,6 +196,7 @@ header a.nav-link:hover {
 												<div class="mb-3 bg-white rounded px-2">
 													<textarea class="form-control" rows="5"
 														placeholder="Địa chỉ giao hàng ..."
+														name="address"
 														th:text="${session.user.address == null ? 'Địa chỉ giao hàng...' : session.user.address}"></textarea>
 												</div>
 
