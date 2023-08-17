@@ -31,7 +31,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		String currentTime = dateFormat.format(new Date());
 
 		// Kết hợp thời gian với một số ngẫu nhiên để tạo chuỗi duy nhất
-		int randomSuffix = (int) (Math.random() * 10000);
+		int randomSuffix = (int) (Math.random() * 1000000);
 		String timeBasedString = currentTime + "-" + randomSuffix;
 		entity.setId(timeBasedString);
 		System.out.println(timeBasedString);

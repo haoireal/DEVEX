@@ -34,13 +34,11 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 
-	<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
-    integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>
-	<script th:src="@{/js/cart-ctrl.js}"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
+	integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:src="@{/js/cart-ctrl.js}"></script>
 </head>
 
 <body lang="en" th:object="${product}">
@@ -197,8 +195,8 @@
 											class="  form-check-input"
 											style="margin-left: -1em !important; padding: 3px;"
 											type="radio" name="flexRadioDefault"
-											th:id="'flexRadioDefault'+${iter.count}">
-										<label class="form-check-label pe-1 "
+											th:id="'flexRadioDefault'+${iter.count}"> <label
+											class="form-check-label pe-1 "
 											style="margin-left: 0.3rem; padding: 3px"
 											th:for="'flexRadioDefault'+${iter.count}" th:text="${color}">
 										</label>
@@ -264,7 +262,7 @@
 
 
 						<!--Purchase(mua)-->
-						<div class="row mt-3 d-none d-lg-flex  ">
+						<div id="addCart" class="row mt-3 d-none d-lg-flex pe-none ">
 							<div class="col-7 col-lg-5">
 								<button class="btn btn_buy" type="submit">Thêm Vào Giỏ
 									Hàng</button>
@@ -745,6 +743,7 @@
 		</div>
 	</div>
 	<div id="model-container">
+		<form th:action="@{'/cart/add/' + *{id}}">
 		<div class="model bg-light" id="model-demo">
 			<div id="model-header" style="padding: 5px;">
 				<div class="row border-bottom border-bottom-1">
@@ -861,16 +860,20 @@
 			<!--model footer-->
 			<div class="model-footer">
 				<div class="row d-flex justify-content-center">
-					<button id="btn_add_buy" class="product-bottom-mobile_add-cart"
-						style="background-color: #2550b9 !important;">
-						<div class="content_Add-cart " style="line-height: 50px;">
-							<span class="text-light" style="font-size: .875rem;">Thêm
-								vào Giỏ hàng</span>
-						</div>
-					</button>
+<!-- 					<a th:href="@{'/cart/add/' + *{id}}"> -->
+						<button id="btn_add_buy" class="product-bottom-mobile_add-cart"
+							style="background-color: #2550b9 !important;">
+							<div class="content_Add-cart " style="line-height: 50px;">
+								<span class="text-light" style="font-size: .875rem;">Thêm
+									vào Giỏ hàng</span>
+							</div>
+						</button>
+<!-- 					</a> -->
+
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 
 	<footer>
@@ -920,7 +923,7 @@
 			</div>
 		</div>
 		<!-- place footer here -->
-			<div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
+		<div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
 
 	</footer>
 
@@ -1034,7 +1037,7 @@
 			const quantity = document.getElementById('number_quantity');
 			const quantity_mobile = document.getElementById('number_quantity_mobile');
 			const size = document.getElementById('size');
-
+			const addCart = document.getElementById('addCart');
 
 		function sendRadioValue(value) {
 		// lấy giá trị của color
@@ -1056,11 +1059,13 @@
 			if(document.querySelector("input[name='flexRadioDefault']:checked") && document.querySelector("input[name='flexRadio']:checked")){
 				quantity.classList.remove("pe-none");
 				quantity_mobile.classList.remove("pe-none");
+				addCart.classList.remove("pe-none");
 			}
 		 }else{
 			if (color != null){
 				quantity.classList.remove("pe-none");
 				quantity_mobile.classList.remove("pe-none");
+				addCart.classList.remove("pe-none");
 			}
 		 }
 

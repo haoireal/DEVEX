@@ -166,6 +166,11 @@ app.controller("cart-ctrl", function ($scope, $http) {
         .map((item) => item.quantity)
         .reduce((total, qty) => (total += qty), 0);
     },
+    
+    get countItem() {
+		return this.items.length;
+
+	},
 
     get countItemOrder() {
       // tính tổng số lượng các mặt hàng trong giỏ
