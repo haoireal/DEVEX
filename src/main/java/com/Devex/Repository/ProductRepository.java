@@ -68,5 +68,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 	@Query("SELECT p FROM Product p WHERE p.sellerProduct.username = :username ORDER BY p.createdDay DESC LIMIT 1")
 	Product findLatestProductBySellerUsername(@Param("username") String username);
+	
+	@Query("SELECT COUNT(p) FROM Product p WHERE p.sellerProduct.username like ?1")
+	int getCountProductBySellerUsername(String username);
 
 }

@@ -38,4 +38,6 @@ public interface FollowService {
 
 	Follow save(Follow entity);
 
+	int getCountFollowBySellerUsername(String username);
+
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.Entity.OrderDetails;
 
 public interface OrderDetailService {
@@ -45,5 +46,7 @@ public interface OrderDetailService {
 	List<OrderDetails> findOrderDetailsByOrderID(String id, String username);
 
 	OrderDetails saveAndFlush(OrderDetails entity);
+
+	List<Object[]> getTotalPriceByMonthAndSellerUsername(int year, int month, String username);
 
 }

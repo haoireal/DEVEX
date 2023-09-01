@@ -42,44 +42,43 @@ import jakarta.servlet.http.HttpSession;
 public class DevexSellerController {
 
 	@Autowired
-	SessionService session;
+	private SessionService session;
 
 	@Autowired
-	CookieService cookie;
+	private CookieService cookie;
 
 	@Autowired
-	ParamService param;
+	private ParamService param;
 	
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 	
 	@Autowired
-	OrderService orderService;
+	private OrderService orderService;
 	
 	@Autowired
-	OrderDetailService detailService;
+	private OrderDetailService detailService;
 	
 	@Autowired
-	SellerService sellerService;
+	private SellerService sellerService;
 	
 	@Autowired
-	CategoryService categoryService;
+	private CategoryService categoryService;
 	
 	@Autowired
-	CategoryDetailService categoryDetailService;
+	private CategoryDetailService categoryDetailService;
 	
 	@Autowired
-	FileManagerService fileManagerService;
+	private FileManagerService fileManagerService;
 	
 	@Autowired
-	ImageProductService imageProductService;
+	private ImageProductService imageProductService;
 	
 	@Autowired
-	ProductVariantService productVariantService;
+	private ProductVariantService productVariantService;
 
 	@GetMapping("/home")
 	public String getHomePage() {
-
 		return "seller/index";
 	}
 

@@ -3,20 +3,18 @@
 <html lang="en">
 
 <head>
-<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
+	<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="sellerrevenue">
 	<div class="wrapper">
 		<!-- Preloader -->
-		<div
-			class="preloader flex-column justify-content-center align-items-center">
-			<img class="animation__wobble" src="/img/banner/logotitle.png"
-				alt="AdminLTELogo" height="60" width="60">
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__wobble" src="/img/banner/logotitle.png" alt="AdminLTELogo" height="60" width="60">
 		</div>
 
 		<div th:replace="~{flagment/seller/sellerHeader :: sellerHeaderFragment}"></div>
-		<div
-			th:replace="~{flagment/seller/sellerMainSidebar :: sellerMainSidebarFragment}"></div>
+		<div th:replace="~{flagment/seller/sellerMainSidebar :: sellerMainSidebarFragment}"></div>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -49,7 +47,7 @@
 							<!-- small box -->
 							<div class="small-box bg-info">
 								<div class="inner">
-									<h3>105</h3>
+									<h3>{{statistical.amountOrder}}</h3>
 
 									<p>Đơn hàng</p>
 								</div>
@@ -57,7 +55,7 @@
 									<i class="ion ion-bag"></i>
 								</div>
 								<a href="#" class="small-box-footer">Thông tin chi tiết <i
-									class="fas fa-arrow-circle-right"></i></a>
+										class="fas fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 						<!-- ./col -->
@@ -66,7 +64,8 @@
 							<div class="small-box bg-success">
 								<div class="inner">
 									<h3>
-										345.980.000 <sup style="font-size: 20px">vnđ</sup>
+										{{statistical.totalRevenue.toLocaleString('vi-VN')}}
+										<sup style="font-size: 20px">vnđ</sup>
 									</h3>
 
 									<p>Doanh thu</p>
@@ -75,7 +74,7 @@
 									<i class="ion ion-stats-bars"></i>
 								</div>
 								<a href="#" class="small-box-footer">Thông tin chi tiết <i
-									class="fas fa-arrow-circle-right"></i></a>
+										class="fas fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 						<!-- ./col -->
@@ -83,7 +82,7 @@
 							<!-- small box -->
 							<div class="small-box bg-warning">
 								<div class="inner">
-									<h3>53</h3>
+									<h3>{{statistical.amountFollow}}</h3>
 
 									<p>Người theo dõi</p>
 								</div>
@@ -91,7 +90,7 @@
 									<i class="ion ion-person-add"></i>
 								</div>
 								<a href="#" class="small-box-footer">Thông tin chi tiết <i
-									class="fas fa-arrow-circle-right"></i></a>
+										class="fas fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 						<!-- ./col -->
@@ -99,137 +98,148 @@
 							<!-- small box -->
 							<div class="small-box bg-danger">
 								<div class="inner">
-									<h3>9</h3>
+									<h3>{{statistical.amountProduct}}</h3>
 
 									<p>Sản phẩm</p>
 								</div>
 								<div class="icon">
 									<i class="ion ion-pie-graph"></i>
 								</div>
-							<a href="#" class="small-box-footer">Thông tin chi tiết <i
-									class="fas fa-arrow-circle-right"></i></a>
+								<a href="#" class="small-box-footer">Thông tin chi tiết <i
+										class="fas fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 						<!-- ./col -->
 					</div>
 					<!-- /.row -->
-				 <!-- /.row -->
+					<!-- /.row -->
 
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="card-title">Thống kê doanh thu tháng này</h5>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">Thống kê doanh thu tháng này</h5>
 
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-8">
-                    <p class="text-center">
-                      <strong>Doanh thu: tháng 1 - 7</strong>
-                    </p>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-8">
+											<p class="text-center">
+												<strong class="fw-1">Doanh thu Tháng </strong>
+												<select id="monthSelect" class="form-control"
+													style="display: inline-block; width: auto;"></select>
+												<strong>Năm</strong>
+												<select id="yearSelect" class="form-control"
+													style="display: inline-block; width: auto;"></select>
 
-                    <div class="chart">
-                      <!-- Sales Chart Canvas -->
-                      <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
-                    </div>
-                    <!-- /.chart-responsive -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-4">
-                    <p class="text-center">
-                      <strong>Thống kê chi tiết</strong>
-                    </p>
+											</p>
 
-                    <div class="progress-group">
-                      Thêm sản phẩm vào giỏ
-                      <span class="float-right"><b>30</b>/200</span>
-                      <div class="progress progress-sm">
-                        <div class="progress-bar bg-primary" style="width: 15%"></div>
-                      </div>
-                    </div>
-                    <!-- /.progress-group -->
 
-                    <div class="progress-group">
-                      Đơn hàng thành công
-                      <span class="float-right"><b>60</b>/200</span>
-                      <div class="progress progress-sm">
-                       <div class="progress-bar bg-success" style="width: 30%"></div>
-                      </div>
-                    </div>
+											<div class="chart">
+												<!-- Sales Chart Canvas -->
+												<canvas id="saleChart" height="150" style="height: 180px;"></canvas>
+											</div>
+											<!-- /.chart-responsive -->
+										</div>
+										<!-- /.col -->
+										<div class="col-md-4">
+											<p class="text-center">
+												<strong>Thống kê chi tiết</strong>
+											</p>
 
-                    <!-- /.progress-group -->
-                    <div class="progress-group">
-                      <span class="progress-text">Đơn hàng đang xử lí</span>
-                      <span class="float-right"><b>10</b>/200</span>
-                      <div class="progress progress-sm">
-                                               <div class="progress-bar bg-warning" style="width: 5%"></div>
-                      </div>
-                    </div>
+											<div class="progress-group">
+												Thêm sản phẩm vào giỏ
+												<span class="float-right"><b>30</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-primary" style="width: 15%"></div>
+												</div>
+											</div>
+											<!-- /.progress-group -->
 
-                    <!-- /.progress-group -->
-                    <div class="progress-group">
-                      Đơn hàng thất bại
-                      <span class="float-right"><b>5</b>/200</span>
-                      <div class="progress progress-sm">
-                         <div class="progress-bar bg-danger" style="width: 1%"></div>
-                      </div>
-                    </div>
-                    <!-- /.progress-group -->
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- ./card-body -->
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-sm-3 col-6">
-                    <div class="description-block border-right">
-                      <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                      <h5 class="description-header">$345.980.000</h5>
-                      <span class="description-text">Tổng doanh thu</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-3 col-6">
-                    <div class="description-block border-right">
-                      <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
-                      <h5 class="description-header">$250.390.900</h5>
-                      <span class="description-text">Chi phí vận hành</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-3 col-6">
-                    <div class="description-block border-right">
-                      <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-                      <h5 class="description-header">$50.590.000</h5>
-                      <span class="description-text">Lợi nhuận</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-3 col-6">
-                    <div class="description-block">
-                      <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
-                      <h5 class="description-header">5</h5>
-                      <span class="description-text">Đơn hàng thất bại</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.card-footer -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
+											<div class="progress-group">
+												Đơn hàng thành công
+												<span class="float-right"><b>60</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-success" style="width: 30%"></div>
+												</div>
+											</div>
+
+											<!-- /.progress-group -->
+											<div class="progress-group">
+												<span class="progress-text">Đơn hàng đang xử lí</span>
+												<span class="float-right"><b>10</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-warning" style="width: 5%"></div>
+												</div>
+											</div>
+
+											<!-- /.progress-group -->
+											<div class="progress-group">
+												Đơn hàng thất bại
+												<span class="float-right"><b>5</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-danger" style="width: 1%"></div>
+												</div>
+											</div>
+											<!-- /.progress-group -->
+										</div>
+										<!-- /.col -->
+									</div>
+									<!-- /.row -->
+								</div>
+								<!-- ./card-body -->
+								<div class="card-footer">
+									<div class="row">
+										<div class="col-sm-3 col-6">
+											<div class="description-block border-right">
+												<span class="description-percentage text-success"><i
+														class="fas fa-caret-up"></i> 17%</span>
+												<h5 class="description-header">$345.980.000</h5>
+												<span class="description-text">Tổng doanh thu</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-3 col-6">
+											<div class="description-block border-right">
+												<span class="description-percentage text-warning"><i
+														class="fas fa-caret-left"></i> 0%</span>
+												<h5 class="description-header">$250.390.900</h5>
+												<span class="description-text">Chi phí vận hành</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-3 col-6">
+											<div class="description-block border-right">
+												<span class="description-percentage text-success"><i
+														class="fas fa-caret-up"></i> 20%</span>
+												<h5 class="description-header">$50.590.000</h5>
+												<span class="description-text">Lợi nhuận</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-3 col-6">
+											<div class="description-block">
+												<span class="description-percentage text-danger"><i
+														class="fas fa-caret-down"></i> 18%</span>
+												<h5 class="description-header">5</h5>
+												<span class="description-text">Đơn hàng thất bại</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+									</div>
+									<!-- /.row -->
+								</div>
+								<!-- /.card-footer -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
 				</div>
 				<!-- /.container-fluid -->
 			</section>
@@ -238,10 +248,137 @@
 		<!-- /.content-wrapper -->
 
 		<div th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
-		<div
-			th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
+		<div th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+		var ctx = document.getElementById('saleChart').getContext('2d');
+		var myChart = null;
 
+		// Hàm cập nhật biểu đồ
+		function updateChart(year, month) {
+			fetch('/revenue/month?year=' + year + '&month=' + month)
+				.then(response => response.json())
+				.then(data => {
+					// Cập nhật dữ liệu cho biểu đồ
+					myChart.data.labels = data.map(liststatis => liststatis.day);
+					myChart.data.datasets[0].data = data.map(liststatis => liststatis.price);
+					myChart.update();
+				});
+		}
+
+
+		// Lấy thẻ select theo id
+		var monthSelect = document.getElementById('monthSelect');
+		var yearSelect = document.getElementById('yearSelect');
+
+		// Tạo các phần tử option cho tháng và năm
+		for (var i = 1; i <= 12; i++) {
+			var option = document.createElement('option');
+			option.value = i;
+			option.textContent = i;
+			monthSelect.appendChild(option);
+		}
+
+		var currentYear = new Date().getFullYear();
+		for (var i = 0; i < 5; i++) {
+			var year = currentYear - i;
+			var option = document.createElement('option');
+			option.value = year;
+			option.textContent = year;
+			yearSelect.appendChild(option);
+		}
+
+		// Gắn sự kiện change cho các thẻ select
+		yearSelect.addEventListener('change', function () {
+			updateChart(yearSelect.value, monthSelect.value);
+		});
+
+		monthSelect.addEventListener('change', function () {
+			updateChart(yearSelect.value, monthSelect.value);
+		});
+
+		// Khởi tạo biểu đồ ban đầu
+		myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: [],
+				datasets: [{
+					label: 'Doanh thu',
+					data: [],
+					borderColor: 'red',
+					fill: false,
+					cubicInterpolationMode: 'monotone',
+					tension: 0.4
+				}]
+			},
+			options: {
+				responsive: true,
+				plugins: {
+					title: {
+						display: false,
+						text: 'Chart.js Line Chart - Cubic interpolation mode'
+					},
+				},
+				interaction: {
+					intersect: false,
+				},
+				scales: {
+					x: {
+						display: true,
+						title: {
+							display: true,
+							text: 'Ngày'
+						}
+					},
+					y: {
+						display: true,
+						title: {
+							display: true,
+							text: 'Doanh thu'
+						},
+						suggestedMin: 0,
+						suggestedMax: 200
+					}
+				}
+			}
+		});
+
+		// Tự động chọn tháng và năm hiện tại
+		monthSelect.value = new Date().getMonth() + 1;
+		yearSelect.value = currentYear;
+
+		// Gọi hàm cập nhật ban đầu để hiển thị dữ liệu
+		updateChart(yearSelect.value, monthSelect.value);
+	</script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+	<script>
+		app = angular.module("app", []);
+		app.controller("sellerrevenue", function ($scope, $http, $window) {
+
+			$scope.total = function () {
+				$http.get('/revenue/gettotalprice').then(resp => {
+					$scope.statistical = resp.data;
+					console.log($scope.statistical);
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+			// $scope.a = function () {
+			// 	$http.get('/revenue/month').then(resp => {
+			// 		$scope.a = resp.data;
+			// 		console.log($scope.a);
+			// 	}).catch(error => {
+			// 		console.log("errors", error);
+			// 	})
+			// };
+
+			// $scope.a();
+			$scope.total();
+
+		});
+	</script>
 </body>
 
 </html>

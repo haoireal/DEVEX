@@ -29,17 +29,11 @@ public class OrderServiceImpl implements OrderService{
 		return orderRepository.save(entity);
 	}
 	
-	
-
 	@Override
 	public Order saveAndFlush(Order entity) {
 		entity.setId("1");
 		return orderRepository.saveAndFlush(entity);
 	}
-	
-	
-
-
 
 	@Override
 	public Order findLatestOrder() {
@@ -124,12 +118,20 @@ public class OrderServiceImpl implements OrderService{
 		orderRepository.updateIdOrderStatus(ido, id);
 	}
 
-
-
 	@Override
 	public List<Order> findOrdersByCustomerID(String customerID) {
 		
 		return orderRepository.findOrdersByCustomerID(customerID);
+	}
+	
+	@Override
+	public Double getTotalOrderValueForSeller(String username) {
+		return orderRepository.getTotalOrderValueForSeller(username);
+	}
+
+	@Override
+	public int getCountOrderForSeller(String username) {
+		return orderRepository.getCountOrderForSeller(username);
 	}
 	
 	
