@@ -4,24 +4,22 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.Devex.Entity.Category;
-import com.Devex.Entity.CategoryDetails;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
-import com.Devex.Repository.OrderDetailRepository;
-import com.Devex.Repository.OrderRepository;
-import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
@@ -34,8 +32,6 @@ import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Utils.FileManagerService;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/seller")
@@ -169,10 +165,15 @@ public class DevexSellerController {
 	}
 	
 	@GetMapping("/profile")
-	public String getSellerProfile() {
-
-		return "seller/sellerProfile";
+	public String getSellerProfile(ModelMap model) {
+		User user =  session.get("user");
+		session.set("userSeller", user.getUsername());
+		
+		return "seller/sellerProfile"; 
 	}
+	
+
+	
 	
 	@GetMapping("/orderDetail/{id}")
 	public String getOrderDetail(@PathVariable("id") String id, Model model) {

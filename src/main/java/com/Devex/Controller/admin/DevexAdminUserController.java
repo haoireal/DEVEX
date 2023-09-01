@@ -41,31 +41,12 @@ public class DevexAdminUserController {
 		return "admin/userManage/userManage";
 	}
 	
-	
 
-	
-
-	
-	
 	@GetMapping("/edit/{username}")
 	public String editUser(@PathVariable("username") String username) {	
 		session.set("username", username);
-//		System.out.println("?>>>>>" + username);
-		
 	return "admin/userManage/formUserManage";
 	}
-	
-	
-//	@GetMapping("/user/update")
-//    public String updateUser(@ModelAttribute("User") User user, ModelMap model) {
-//      
-//		System.out.println("sssssss" + user.getUsername());
-//		
-//		
-//		List<User> user1 = userService.findAll();
-//		model.addAttribute("user", user1);
-//       return "admin/userManage/UserManage";
-//    }
-	
+
 	
 }
