@@ -40,7 +40,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		
 		// Tiến hành phân quyền
 		for (GrantedAuthority authority : authorities) {
-			System.out.println(4);
 			if (authority.getAuthority().equals("ADMIN")) {
 				// Nếu có vai trò "ADMIN", chuyển hướng đến "/admin/home"
 				response.sendRedirect("/ad/home");

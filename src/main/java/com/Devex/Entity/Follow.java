@@ -40,7 +40,7 @@ public class Follow implements Serializable{
 	@ManyToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name = "Userfollow_ID")
 	private Customer customer;
-	
+
 	@ManyToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name = "Shop_ID")
 	private Seller seller;

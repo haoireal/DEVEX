@@ -15,10 +15,10 @@ import com.Devex.Entity.Order;
 public interface OrderRepository extends JpaRepository<Order, String>{
 
 	@Query("SELECT DISTINCT o FROM Order o " +
-	           "JOIN FETCH o.orderDetails od " +
-	           "JOIN FETCH od.productVariant pv " +
-	           "JOIN FETCH pv.product p " +
-	           "JOIN FETCH p.sellerProduct s " +
+	           "JOIN o.orderDetails od " +
+	           "JOIN od.productVariant pv " +
+	           "JOIN pv.product p " +
+	           "JOIN p.sellerProduct s " +
 	           "WHERE s.username = ?1")
 	    List<Order> findOrdersBySellerUsername(String sellerUsername);
 	

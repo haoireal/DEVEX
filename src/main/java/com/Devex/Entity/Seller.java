@@ -3,6 +3,8 @@ package com.Devex.Entity;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -39,9 +41,11 @@ public class Seller extends User implements Serializable{
 	@Column(name = "Activeshop")
 	private Boolean activeShop;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "seller")
 	private List<Follow> follows;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "sellerProduct")
 	private List<Product> products;
 

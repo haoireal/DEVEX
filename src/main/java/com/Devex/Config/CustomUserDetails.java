@@ -20,19 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CustomUserDetails implements UserDetails { 
 	private User user;
-//    private String name;
-//    private String password;
-//    private List<GrantedAuthority> authorities;
 
-//    public UserInfoUserDetails(User userInfo) {
-//        name = userInfo.getUsername();
-//        password = userInfo.getPassword();
-//        System.out.println();
-//        List<UserRole> userRoles = userInfo.getRoles(); // Danh sách các UserRole
-//        authorities = userRoles.stream()
-//                .map(role -> new SimpleGrantedAuthority(role.getRole()))
-//                .collect(Collectors.toList());
-//    }
 	
 	public CustomUserDetails(User user) {
 		super();

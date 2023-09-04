@@ -35,9 +35,20 @@ public class UserRoleServiceImpl implements  UserRoleService{
 		return userRoleRespository.findAll(pageable);
 	}
 
+
+
+	@Override
+	public List<UserRole> findAllByUserName(String username) {
+		return userRoleRespository.findAllByUserName(username);
+	}
+
 	@Override
 	public List<UserRole> findAll() {
 		return userRoleRespository.findAll();
+	}
+
+	public List<String> findAllroleByUserName(String username) {
+		return userRoleRespository.findAllroleByUserName(username);
 	}
 
 	@Override

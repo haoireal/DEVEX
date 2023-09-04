@@ -86,6 +86,7 @@ public class CartDetailServiceImpl implements CartDetailService{
 	}
 
 	@Override
+
 	public List<CartDetailDTo> findAllCartDTO(String username) {
 		return cartDetail.findAllCartDTO(username);
 	}
@@ -93,6 +94,7 @@ public class CartDetailServiceImpl implements CartDetailService{
 	@Override
 	public CartDetail findByIDProduct(int id) {
 		return cartDetail.findByIDProduct(id);
+
 	}
 	
 	

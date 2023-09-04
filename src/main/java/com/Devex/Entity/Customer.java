@@ -3,6 +3,8 @@ package com.Devex.Entity;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,16 +37,19 @@ public class Customer extends User implements Serializable{
 	private String phoneAddress;
 	
 
-	
-	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer")
 	private List<Follow> follow;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "customerComment")
 	private List<Comment> comments;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "customerVoucherDetails")
 	private List<VoucherDetails> voucherDetails;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "customerOrder")
 	private List<Order> orders;
 	
