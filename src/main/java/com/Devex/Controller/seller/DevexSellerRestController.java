@@ -255,29 +255,68 @@ public class DevexSellerRestController {
 	@GetMapping("/revenue/month")
 	public List<StatisticalRevenueMonthDTO> getRevenueByMonth(@RequestParam("year") int year, @RequestParam("month") int month){
 		User u = session.get("user");
-		int a = 0;
+		int yearCompare;
+		int monthCompare;
+		if(month == 1) {
+			yearCompare = year - 1;
+			monthCompare = 12;
+		}else {
+			yearCompare = year;
+			monthCompare = month - 1;
+		}
         List<Object[]> listt = detailService.getTotalPriceByMonthAndSellerUsername(year, month, u.getUsername());
+        List<Object[]> listtc = detailService.getTotalPriceByMonthAndSellerUsername(yearCompare, monthCompare, u.getUsername());
 		List<StatisticalRevenueMonthDTO> liststatis = new ArrayList<>();
 		LocalDate date = LocalDate.of(year, month, 1);
+		LocalDate dateCompare = LocalDate.of(yearCompare, monthCompare, 1);
         int lengthOfMonth = date.lengthOfMonth();
-        for (int i = 1; i <= lengthOfMonth; i++) {
-            boolean found = false;
-            for (Object[] ob : listt) {
-                int day = (ob[0] == null) ? 0 : (int) ob[0];
-                double price = (ob[1] == null) ? 0 : (double) ob[1];
-                if (day == i) {
-                    StatisticalRevenueMonthDTO statistical = new StatisticalRevenueMonthDTO();
-                    statistical.setDay(day);
-                    statistical.setPrice(price);
-                    liststatis.add(statistical);
-                    found = true;
-                    break;
+        int lengthOfMonthCompare = dateCompare.lengthOfMonth();
+        if(lengthOfMonth > lengthOfMonthCompare) {
+        	for (int i = 1; i <= lengthOfMonth; i++) {
+                double price = 0;
+                double priceCompare = 0;
+                for (Object[] ob : listt) {
+                    int day = (ob[0] == null) ? 0 : (int) ob[0];
+                    if (day == i) {
+                    	price = (ob[1] == null) ? 0 : (double) ob[1];
+                        break;
+                    }
                 }
-            }
-            if (!found) {
+                for (Object[] obc : listtc) {
+                    int day = (obc[0] == null) ? 0 : (int) obc[0];
+                    if (day == i) {
+                    	priceCompare = (obc[1] == null) ? 0 : (double) obc[1];
+                        break;
+                    }
+                }
                 StatisticalRevenueMonthDTO statistical = new StatisticalRevenueMonthDTO();
                 statistical.setDay(i);
-                statistical.setPrice(0);
+                statistical.setPrice(price);
+                statistical.setPriceCompare(priceCompare);
+                liststatis.add(statistical);
+            }
+        }else {
+        	for (int i = 1; i <= lengthOfMonthCompare; i++) {
+                double price = 0;
+                double priceCompare = 0;
+                for (Object[] ob : listt) {
+                    int day = (ob[0] == null) ? 0 : (int) ob[0];
+                    if (day == i) {
+                    	price = (ob[1] == null) ? 0 : (double) ob[1];
+                        break;
+                    }
+                }
+                for (Object[] obc : listtc) {
+                    int day = (obc[0] == null) ? 0 : (int) obc[0];
+                    if (day == i) {
+                    	priceCompare = (obc[1] == null) ? 0 : (double) obc[1];
+                        break;
+                    }
+                }
+                StatisticalRevenueMonthDTO statistical = new StatisticalRevenueMonthDTO();
+                statistical.setDay(i);
+                statistical.setPrice(price);
+                statistical.setPriceCompare(priceCompare);
                 liststatis.add(statistical);
             }
         }

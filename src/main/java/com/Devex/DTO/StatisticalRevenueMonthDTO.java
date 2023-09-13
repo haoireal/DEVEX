@@ -11,5 +11,6 @@ public class StatisticalRevenueMonthDTO {
 
 	private int day;
 	private double price;
+	private double priceCompare;
 	
 }
