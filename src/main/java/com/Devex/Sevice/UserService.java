@@ -50,4 +50,6 @@ public interface UserService {
 
 	void processOAuthPostLogin(String fullname, String email);
 
+	void updateUser(String Fullname, String Email, String Password, String Phone, String Gender, Boolean Active, String Username);
+
 }

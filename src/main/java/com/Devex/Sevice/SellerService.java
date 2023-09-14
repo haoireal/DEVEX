@@ -40,4 +40,8 @@ public interface SellerService {
 
 	Seller findFirstByUsername(String username);
 
+	void insertSeller(String Username, String Shopname, String Address, String Phoneaddress, Boolean Mall, Boolean Activeshop);
+
+	void updateSeller(String Shopname, String Address, String Phoneaddress, Boolean Mall, Boolean Activeshop, String Username);
+
 }

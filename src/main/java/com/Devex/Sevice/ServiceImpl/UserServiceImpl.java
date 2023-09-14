@@ -173,6 +173,12 @@ public class UserServiceImpl implements  UserService{
 		
 	}
 
+	@Override
+	public void updateUser(String Fullname, String Email, String Password, String Phone, String Gender, Boolean Active,
+			String Username) {
+		userRepository.updateUser(Fullname, Email, Password, Phone, Gender, Active, Username);
+	}
+
 
 	
 	
