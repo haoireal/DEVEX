@@ -2,8 +2,13 @@ package com.Devex.Controller.seller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.Entity.Category;
 import com.Devex.Entity.CategoryDetails;
 import com.Devex.Entity.ImageProduct;
@@ -27,7 +33,10 @@ import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
+import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.ImageProductService;
+import com.Devex.Sevice.OrderDetailService;
+import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ProductBrandService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
@@ -45,31 +54,40 @@ import jakarta.websocket.server.PathParam;
 public class DevexSellerRestController {
 
 	@Autowired
-	FileManagerService fileManagerService;
+	private FileManagerService fileManagerService;
 
 	@Autowired
-	SessionService session;
+	private SessionService session;
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	@Autowired
-	CategoryDetailService categoryDetailService;
+	private CategoryDetailService categoryDetailService;
 
 	@Autowired
-	CategoryService categoryService;
+	private CategoryService categoryService;
 
 	@Autowired
-	ProductVariantService productVariantService;
+	private ProductVariantService productVariantService;
 
 	@Autowired
-	SellerService sellerService;
+	private SellerService sellerService;
 
 	@Autowired
-	ImageProductService imageProductService;
+	private ImageProductService imageProductService;
 	
 	@Autowired
-	ProductBrandService brandService;
+	private ProductBrandService brandService;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private FollowService followService;
+	
+	@Autowired
+	private OrderDetailService detailService;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -215,6 +233,94 @@ public class DevexSellerRestController {
 	@DeleteMapping("productvariant/delete/{id}")
 	public void deleteProductVariant(@PathVariable("id") Integer id) {
 		productVariantService.deleteById(id);
+	}
+	
+	@SuppressWarnings("deprecation")
+	@GetMapping("/revenue/gettotalprice")
+	public Map<String, Object> getrevenue() {
+		User u = session.get("user");
+		Map<String, Object> mapStatistical = new HashMap<>();
+		int amountOrder = orderService.getCountOrderForSeller(u.getUsername());
+		int amountFollow = followService.getCountFollowBySellerUsername(u.getUsername());
+		int amountProduct = productService.getCountProductBySellerUsername(u.getUsername());
+		Double totalRevenue = orderService.getTotalOrderValueForSeller(u.getUsername());
+		mapStatistical.put("amountOrder", amountOrder);
+		mapStatistical.put("totalRevenue", totalRevenue);
+		mapStatistical.put("amountFollow", amountFollow);
+		mapStatistical.put("amountProduct", amountProduct);
+		return mapStatistical;
+	}
+	
+	@SuppressWarnings("deprecation")
+	@GetMapping("/revenue/month")
+	public List<StatisticalRevenueMonthDTO> getRevenueByMonth(@RequestParam("year") int year, @RequestParam("month") int month){
+		User u = session.get("user");
+		int yearCompare;
+		int monthCompare;
+		if(month == 1) {
+			yearCompare = year - 1;
+			monthCompare = 12;
+		}else {
+			yearCompare = year;
+			monthCompare = month - 1;
+		}
+        List<Object[]> listt = detailService.getTotalPriceByMonthAndSellerUsername(year, month, u.getUsername());
+        List<Object[]> listtc = detailService.getTotalPriceByMonthAndSellerUsername(yearCompare, monthCompare, u.getUsername());
+		List<StatisticalRevenueMonthDTO> liststatis = new ArrayList<>();
+		LocalDate date = LocalDate.of(year, month, 1);
+		LocalDate dateCompare = LocalDate.of(yearCompare, monthCompare, 1);
+        int lengthOfMonth = date.lengthOfMonth();
+        int lengthOfMonthCompare = dateCompare.lengthOfMonth();
+        if(lengthOfMonth > lengthOfMonthCompare) {
+        	for (int i = 1; i <= lengthOfMonth; i++) {
+                double price = 0;
+                double priceCompare = 0;
+                for (Object[] ob : listt) {
+                    int day = (ob[0] == null) ? 0 : (int) ob[0];
+                    if (day == i) {
+                    	price = (ob[1] == null) ? 0 : (double) ob[1];
+                        break;
+                    }
+                }
+                for (Object[] obc : listtc) {
+                    int day = (obc[0] == null) ? 0 : (int) obc[0];
+                    if (day == i) {
+                    	priceCompare = (obc[1] == null) ? 0 : (double) obc[1];
+                        break;
+                    }
+                }
+                StatisticalRevenueMonthDTO statistical = new StatisticalRevenueMonthDTO();
+                statistical.setDay(i);
+                statistical.setPrice(price);
+                statistical.setPriceCompare(priceCompare);
+                liststatis.add(statistical);
+            }
+        }else {
+        	for (int i = 1; i <= lengthOfMonthCompare; i++) {
+                double price = 0;
+                double priceCompare = 0;
+                for (Object[] ob : listt) {
+                    int day = (ob[0] == null) ? 0 : (int) ob[0];
+                    if (day == i) {
+                    	price = (ob[1] == null) ? 0 : (double) ob[1];
+                        break;
+                    }
+                }
+                for (Object[] obc : listtc) {
+                    int day = (obc[0] == null) ? 0 : (int) obc[0];
+                    if (day == i) {
+                    	priceCompare = (obc[1] == null) ? 0 : (double) obc[1];
+                        break;
+                    }
+                }
+                StatisticalRevenueMonthDTO statistical = new StatisticalRevenueMonthDTO();
+                statistical.setDay(i);
+                statistical.setPrice(price);
+                statistical.setPriceCompare(priceCompare);
+                liststatis.add(statistical);
+            }
+        }
+        return liststatis;
 	}
 
 }

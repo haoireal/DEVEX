@@ -134,6 +134,7 @@ public class UserServiceImpl implements  UserService{
 	
 	@Override
 	public String processOAuthPostLogin(String fullname, String email) {
+
 		User existUser = userRepository.findEmail(email);
 		if (existUser == null) {
 			User user = new Customer();
@@ -175,6 +176,12 @@ public class UserServiceImpl implements  UserService{
 		
 	}
 
+
+	@Override
+	public void updateUser(String Fullname, String Email, String Password, String Phone, String Gender, Boolean Active,
+			String Username) {
+		userRepository.updateUser(Fullname, Email, Password, Phone, Gender, Active, Username);
+	}
 
 	
 	

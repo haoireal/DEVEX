@@ -15,6 +15,8 @@ import com.Devex.Entity.Seller;
 import com.Devex.Repository.SellerRepository;
 import com.Devex.Sevice.SellerService;
 
+import jakarta.transaction.Transactional;
+
 @SessionScope
 @Service("sellerService")
 public class SellerServiceImpl implements SellerService{
@@ -89,6 +91,19 @@ public class SellerServiceImpl implements SellerService{
 	@Override
 	public Seller findFirstByUsername(String username) {
 		return sellerRepository.findFirstByUsername(username);
+	}
+
+	@Override
+	@Transactional
+	public void insertSeller(String Username, String Shopname, String Address, String Phoneaddress, Boolean Mall,
+			Boolean Activeshop) {
+		sellerRepository.insertSeller(Username, Shopname, Address, Phoneaddress, Mall, Activeshop);
+	}
+
+	@Override
+	public void updateSeller(String Shopname, String Address, String Phoneaddress, Boolean Mall, Boolean Activeshop,
+			String Username) {
+		sellerRepository.updateSeller(Shopname, Address, Phoneaddress, Mall, Activeshop, Username);
 	}
 	
 	

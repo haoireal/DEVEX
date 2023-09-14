@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.Entity.OrderDetails;
 
 @EnableJpaRepositories
@@ -34,5 +35,19 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 	@Modifying
 	@Query(value = "UPDATE Order_Details SET Status_ID = :statusId WHERE ID = :id", nativeQuery = true)
 	void updateIdOrderDetailsStatus(@Param("statusId") int statusId, @Param("id") String id);
+	
+	@Query("SELECT FUNCTION('DAY', o.createdDay), SUM(od.price) AS totalPrice " +
+		       "FROM OrderDetails od " +
+		       "JOIN  od.order o " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE s.username = :username " +
+		       "AND FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month " +
+		       "GROUP BY FUNCTION('DAY', o.createdDay)")
+	List<Object[]> getTotalPriceByMonthAndSellerUsername(@Param("year") int year,
+		                                                     @Param("month") int month,
+		                                                     @Param("username") String username);
 	
 }

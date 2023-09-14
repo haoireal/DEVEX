@@ -165,6 +165,11 @@ public class ProductServiceImpl implements ProductService {
 	public Product findLatestProductBySellerUsername(String username) {
 		return productRepository.findLatestProductBySellerUsername(username);
 	}
+
+	@Override
+	public int getCountProductBySellerUsername(String username) {
+		return productRepository.getCountProductBySellerUsername(username);
+	}
 	
 	
 

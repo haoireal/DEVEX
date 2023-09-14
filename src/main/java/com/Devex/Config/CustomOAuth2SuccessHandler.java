@@ -82,6 +82,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 			SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 		}
 		
+
 		// Tiến hành phân quyền
 		for (GrantedAuthority authority : updatedAuthorities) {
 			System.out.println(authority.getAuthority());

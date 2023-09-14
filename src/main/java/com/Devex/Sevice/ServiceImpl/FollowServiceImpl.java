@@ -85,6 +85,11 @@ public class FollowServiceImpl implements FollowService{
 	public void deleteAll() {
 		followRepository.deleteAll();
 	}
+
+	@Override
+	public int getCountFollowBySellerUsername(String username) {
+		return followRepository.getCountFollowBySellerUsername(username);
+	}
 	
 	
 }

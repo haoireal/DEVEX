@@ -50,9 +50,9 @@ public class AuthConfig {
             .authorizeHttpRequests()
             .requestMatchers("/css/**", "/admin/**", "/img/**").permitAll()
             .requestMatchers("/ad/**").hasAuthority("ADMIN")
-            .requestMatchers("/manager/**").hasAuthority("MANAGER")
-            .requestMatchers("/seller/**").hasAuthority("SELLER")
-            .requestMatchers("/profile", "/profile/**", "/cart/**","/order/**").hasAuthority("CUSTOMER")
+            .requestMatchers("/manager/**").hasAnyAuthority("MANAGER", "ADMIN")
+            .requestMatchers("/seller/**").hasAnyAuthority("SELLER")
+            .requestMatchers("/profile", "/profile/**", "/cart/**","/order/**").hasAnyAuthority("CUSTOMER")
             .anyRequest().permitAll()
             .and()
             .formLogin(

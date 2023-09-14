@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Repository.OrderDetailRepository;
 import com.Devex.Sevice.OrderDetailService;
@@ -31,7 +32,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		String currentTime = dateFormat.format(new Date());
 
 		// Kết hợp thời gian với một số ngẫu nhiên để tạo chuỗi duy nhất
-		int randomSuffix = (int) (Math.random() * 10000);
+		int randomSuffix = (int) (Math.random() * 1000000);
 		String timeBasedString = currentTime + "-" + randomSuffix;
 		entity.setId(timeBasedString);
 		System.out.println(timeBasedString);
@@ -119,5 +120,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public List<OrderDetails> findOrderDetailsByOrderID(String id, String username) {
 		return orderDetailRepository.findOrderDetailsByOrderID(id, username);
 	}
+
+	@Override
+	public List<Object[]> getTotalPriceByMonthAndSellerUsername(int year, int month, String username) {
+		return orderDetailRepository.getTotalPriceByMonthAndSellerUsername(year, month, username);
+	}
+	
+	
 
 }

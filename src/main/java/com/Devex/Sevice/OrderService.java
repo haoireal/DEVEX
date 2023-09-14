@@ -49,4 +49,8 @@ public interface OrderService {
 
 	Order findLatestOrder();
 
+	Double getTotalOrderValueForSeller(String username);
+
+	int getCountOrderForSeller(String username);
+
 }
