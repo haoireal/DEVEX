@@ -157,7 +157,7 @@
 										<div class="mb-3 d-flex" >
 											<label for="Role" class="form-label me-4">Roles</label>
 											<div class="form-check pe-3" ng-repeat="role in data.roles" >
-												<input     ng-checked="isRoleSelected(role.id)" ng-click="toggleRole(role.id)" class="form-check-input" type="checkbox" name="role" id="{{role.id}}">
+												<input ng-checked="isRoleSelected(role.id)" ng-click="toggleRole(role.id)" class="form-check-input" type="checkbox" name="role" id="{{role.id}}">
 												<label class="form-check-label" for="{{role.id}}">{{ role.name }}</label>
 											</div>
 										</div>
@@ -361,12 +361,12 @@
 	<!-- script xử lý hình ảnh -->
 	<script>
 		app = angular.module("app", []);
+
 		app.controller('myController', function($scope, $http, $window) {	
 			
 			
 			$scope.hasSellerRole = true; // khởi tạo biến chứa roles true ? false
 			$scope.data = []; // khởi tạo biến $scope.fill với một mảng rỗng
-
 			$scope.fillAll = function () {			
 				$http.get('/api/userDetail').then(resp => {
 					$scope.data = resp.data;
@@ -380,10 +380,10 @@
 					console.error(err); // xử lý lỗi khi gọi API
 					alert('Có lỗi xảy ra khi gọi API'); // hiển thị thông báo lỗi cho người dùng
 				});
-
 			};
 			
 			$scope.fillAll();
+
 
 			$scope.isRoleSelected = function(roleId) {
 				return $scope.selectedRoles.includes(roleId);
@@ -400,6 +400,7 @@
 
 		
 			$scope.updateRoles = function() {
+
 				$scope.isUpdateClicked = true; // cập nhập disable
 
 			// Tạo đối tượng chứa dữ liệu cần cập nhật
@@ -425,6 +426,7 @@
 					console.error(error);
 					alert('Có lỗi xảy ra khi cập nhật roles');
 				});
+
 			};
 
 			// disable input roles 

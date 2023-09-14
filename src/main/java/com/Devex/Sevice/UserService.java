@@ -48,7 +48,7 @@ public interface UserService {
 
 	User findEmail(String email);
 
-	void processOAuthPostLogin(String fullname, String email);
+	String processOAuthPostLogin(String fullname, String email);
 
 	void updateUser(String Fullname, String Email, String Password, String Phone, String Gender, Boolean Active, String Username);
 

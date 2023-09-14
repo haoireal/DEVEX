@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdatedRolesDTO {
-
 		private String userId;
 //	 private String username;
 	    private String fullname;

@@ -1,5 +1,6 @@
 package com.Devex.Controller.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,7 @@ public class DevexAdminRestController {
 	
 
 	
+
 	@GetMapping("/userDetail")
 	public Map<String, Object> updateUser() {
 	
@@ -62,6 +64,7 @@ public class DevexAdminRestController {
 	}
 	
 	
+
 	@PostMapping("/updateUserRoles")
 	public ResponseEntity<Map<String, String>> updateUserRoles(@RequestBody UpdatedRolesDTO updatedRoles) {
 	    Map<String, String> response = new HashMap<>();
@@ -88,6 +91,7 @@ public class DevexAdminRestController {
 	                newUserRole.setUser(user);
 	                newUserRole.setRole(role);
 	                userRoleService.save(newUserRole); // Lưu userRole mới
+
 	                // tạo mới seller
 	                if("SELLER".equals(roleId)) {
 	                	if(seller == null) {
@@ -107,8 +111,6 @@ public class DevexAdminRestController {
 	    }
 	}
 
-	
-	
 	//admin rest seller API
 	@GetMapping("/shop")
 	public Map<String, Object> getSeller(){

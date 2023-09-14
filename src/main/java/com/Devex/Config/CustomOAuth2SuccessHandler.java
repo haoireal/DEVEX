@@ -31,42 +31,58 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
-    UserService userService;
-	
+	UserService userService;
+
 	@Autowired
-    SessionService session;
-	
-	
+	SessionService session;
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-        // Kiểm tra trạng thái "active" của tài khoản
+		// Kiểm tra trạng thái "active" của tài khoản
 //        if (!authentication. .getActive()) {
 //            // Nếu tài khoản không active, từ chối đăng nhập
 //            response.sendRedirect("/signin?error=Tài khoản bạn đã bị khoá");
 //            return;
 //        }
 		System.out.println("Authentication name: " + authentication.getName());
-		OAuth2User  oauthUser = (OAuth2User) authentication.getPrincipal();
-		CustomOAuth2User oauth2User = new CustomOAuth2User(oauthUser);
+		CustomOAuth2User oauth2User = (CustomOAuth2User) authentication.getPrincipal();
+//		OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
+//		System.out.println(oauthUser);
+//		CustomOAuth2User oauth2User = new CustomOAuth2User(oauthUser);
+		System.out.println(oauth2User);
 		String fullname = oauth2User.getName();
+		System.out.println(fullname);
 		String email = oauth2User.getEmail();
-		userService.processOAuthPostLogin(fullname, email);
+		System.out.println(email);
+//		String str = userService.processOAuthPostLogin(fullname, email);
+		String str = "";
 		User user = userService.findEmail(email);
 		session.set("user", user);
-        
-        // Lấy thông tin người dùng từ authentication
-	    List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
-	    updatedAuthorities.clear();
-	    updatedAuthorities.add(new SimpleGrantedAuthority("CUSTOMER"));
-	    
-	    // Tạo lại đối tượng Authentication với vai trò mới
-	    Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
-	        authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
-	    
-	    // Set lại Authentication trong SecurityContextHolder
-	    SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-	    
+
+		// Lấy thông tin người dùng từ authentication
+		List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
+//		updatedAuthorities.clear();
+//		updatedAuthorities.add(new SimpleGrantedAuthority("CUSTOMER"));
+
+//		// Tạo lại đối tượng Authentication với vai trò mới
+//		Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
+//				authentication.getCredentials(), updatedAuthorities);
+//
+//		// Set lại Authentication trong SecurityContextHolder
+//		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+		if (str.equals("new")) {
+			// Tạo lại đối tượng Authentication với vai trò mới
+			updatedAuthorities.clear();
+			updatedAuthorities.add(new SimpleGrantedAuthority("CUSTOMER"));
+			// Tạo lại đối tượng Authentication với vai trò mới
+			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
+					authentication.getCredentials(), updatedAuthorities);
+			// Set lại Authentication trong SecurityContextHolder
+			SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+		}
+		
+
 		// Tiến hành phân quyền
 		for (GrantedAuthority authority : updatedAuthorities) {
 			System.out.println(authority.getAuthority());
@@ -87,5 +103,5 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 		// Mặc định chuyển hướng đến "/home" cho các vai trò khác
 		response.sendRedirect("/home");
 	}
-	
+
 }
