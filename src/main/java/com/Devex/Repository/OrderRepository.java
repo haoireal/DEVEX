@@ -42,5 +42,22 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	           "JOIN FETCH p.sellerProduct s " +
 	           "WHERE o.customerOrder.id = ?1 " +
 	           "ORDER BY o.createdDay DESC")
-	    List<Order> findOrdersByCustomerID(String customerID);
+	List<Order> findOrdersByCustomerID(String customerID);
+    
+    @Query("SELECT SUM(o.total) FROM Order o " +
+    	    "JOIN o.orderDetails od " +
+    	    "JOIN od.productVariant pv " +
+    	    "JOIN pv.product p " +
+    	    "JOIN p.sellerProduct s " +
+    	    "WHERE s.username = :username")
+    Double getTotalOrderValueForSeller(@Param("username") String username);
+
+    @Query("SELECT count(o) FROM Order o " +
+    	    "JOIN o.orderDetails od " +
+    	    "JOIN od.productVariant pv " +
+    	    "JOIN pv.product p " +
+    	    "JOIN p.sellerProduct s " +
+    	    "WHERE s.username = :username")
+    int getCountOrderForSeller(@Param("username") String username);
+
 }

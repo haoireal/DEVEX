@@ -72,6 +72,8 @@ public interface ProductService {
 
 	Product findLatestProductBySellerUsername(String username);
 
+	int getCountProductBySellerUsername(String username);
+
 	
 
 }
