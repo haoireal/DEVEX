@@ -3,6 +3,7 @@ package com.Devex.Controller.customer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -99,12 +100,12 @@ public class CartController {
 				cartDetail = new CartDetail();
 				cartDetail.setProductCart(pv2);
 				cartDetail.setQuantity(soLuong);
-				Customer user = session.get("user");
-				System.out.println("Tên 2 : "+user.getUsername());
-				Cart cart = user.getCart();
+				User user = session.get("user");
+				Customer customer = customerService.findById(user.getUsername()).get();
+				Cart cart = customer.getCart();
 				if(cart == null) {
 					cart = new Cart();
-					cart.setPerson(user);
+					cart.setPerson(customer);
 					System.out.println(2);
 					cartService.save(cart);
 				}
@@ -123,12 +124,12 @@ public class CartController {
 				cartDetail = new CartDetail();
 				cartDetail.setProductCart(pv2);
 				cartDetail.setQuantity(soLuong);
-				Customer user = session.get("user");
-				System.out.println("Tên 2 : "+user.getUsername());
-				Cart cart = user.getCart();
+				User user = session.get("user");
+				Customer customer = customerService.findById(user.getUsername()).get();
+				Cart cart = customer.getCart();
 				if(cart == null) {
 					cart = new Cart();
-					cart.setPerson(user);
+					cart.setPerson(customer);
 					System.out.println(2);
 					cartService.save(cart);
 				}
