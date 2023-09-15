@@ -61,7 +61,7 @@ public class CartAPIController {
 	@GetMapping("/rest/cart")
 	public List<CartDetailDTo> getAll(Model model) {
 		Customer user = sessionService.get("user");
-		List<CartDetailDTo> cartDetails = cart.findAllCartDTO("baolh");
+		List<CartDetailDTo> cartDetails = cart.findAllCartDTO(user.getUsername());
 
 //		Map<String, CartDetailDTo> cartDetailMap = new HashMap<>();
 //
