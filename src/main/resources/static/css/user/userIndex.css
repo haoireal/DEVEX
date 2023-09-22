@@ -392,7 +392,7 @@ button {
 
 .tensp {
 	word-wrap: break-word;
-	    overflow: hidden;
+	overflow: hidden;
     display: -webkit-box;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
@@ -418,16 +418,15 @@ button {
 	font-weight: 500;
 }
 
-.icon-star {
-	font-size: 15px;
-	font-weight: 200;
-	text-decoration: none;
+.price-box{
+	display: flex;
+	
+}
+.price-box>p{
 	font-size: .75rem;
 }
 
-.icon-star>i {
-	color: #2550b9;
-}
+
 
 .icon-sale {
 	width: auto;

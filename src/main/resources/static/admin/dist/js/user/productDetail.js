@@ -26,10 +26,10 @@
     $(document).ready(function () {
       $(".card-slider").slick({
         slidesToShow: 5,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        infinite: true,
+        slidesToScroll: 2,
+        // autoplay: true,
+        // autoplaySpeed: 3000,
+        infinite: false,
         arrows: true,
         draggable: true,
         prevArrow: `<button type='button' class='slick-prev slick-arrow'><i class="fa-solid fa-chevron-left"></i></button>`,
@@ -45,7 +45,7 @@
           {
             breakpoint: 480,
             settings: {
-              slidesToShow: 1,
+              slidesToShow: 2,
               arrows: false,
               infinite: false,
             },
