@@ -96,7 +96,7 @@
 													<td th:text="${product.categoryDetails.name}"></td>
 													<td class="product-name" th:text="${product.description}"></td>
 													<td th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0, 'COMMA', 0, 'POINT')}"></td>
-													<td th:text="${#dates.format(product.createdDay, 'dd/MM/yyyy')}"></td>
+													<td th:text="${#dates.format(product.createdDay, 'yyyy/MM/dd')}"></td>
 													<td th:text="${product.active ? 'Đang bán' : 'Không bán'}"></td>
 													
 													<td class="text-center">
@@ -150,7 +150,7 @@
 												<tr th:each="order : ${orders}">
 													<td th:text="${order.id}"></td>
 													<td th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')}"></td>
-													<td th:text="${#dates.format(order.createdDay, 'dd/MM/yyyy')}"></td>
+													<td th:text="${#dates.format(order.createdDay, 'yyyy/MM/dd')}"></td>
 													<td class="product-name" th:text="${order.address}"></td>
 													<td th:text="${order.customerOrder.fullname}"></td>
 													<td th:text="${order.payment.name}"></td>
@@ -209,7 +209,7 @@
 													<td th:text="${product.categoryDetails.name}"></td>
 													<td class="product-name" th:text="${product.description}"></td>
 													<td th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0, 'COMMA', 0, 'POINT')}"></td>
-													<td th:text="${#dates.format(product.createdDay, 'dd/MM/yyyy')}"></td>
+													<td th:text="${#dates.format(product.createdDay, 'yyyy/MM/dd')}"></td>
 													<td class="text-center">
 														<div
 															class="btn-group btn-group-sm">
