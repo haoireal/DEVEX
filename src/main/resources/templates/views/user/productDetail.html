@@ -2,43 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Product Details</title>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Product Details</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link class="devex" rel="icon" href="/img/banner/title-icon.png" />
-<!-- Bootstrap CSS v5.2.1 -->
+	<!-- Bootstrap CSS v5.2.1 -->
 
-<!-- Bootstrap CSS v5.2.1 -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	<!-- Bootstrap CSS v5.2.1 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-<!--cnd fontawesome-->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!-- Theme style -->
+	<!--cnd fontawesome-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- Theme style -->
 
-<link rel="stylesheet" href="/admin/dist/css/productDetail.css" th:href="@{/admin/dist/css/productDetail.css}">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="/admin/dist/css/productDetail.css" th:href="@{/admin/dist/css/productDetail.css}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
-<!--slick-->
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+	<!--slick-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
-	integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script th:src="@{/js/cart-ctrl.js}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
+		integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script th:src="@{/js/cart-ctrl.js}"></script>
 </head>
 
 <body lang="en" th:object="${product}">
@@ -48,12 +39,10 @@
 			<div class="row">
 				<div class="col-12">
 					<span class="content"><a class="path_content">Trang Chủ</a></span>
-					<span class="path_arrow"> <i
-						class="fa-solid fa-chevron-right"></i></span> <span class="content"><a
-						class="path_content" th:text="*{productbrand.name}"></a></span> <span
-						class="path_arrow"> <i class="fa-solid fa-chevron-right"></i>
-					</span> <span class="content"><a class="path_content"
-						th:text="*{name}"></a></span>
+					<span class="path_arrow"> <i class="fa-solid fa-chevron-right"></i></span> <span class="content"><a
+							class="path_content" th:text="*{productbrand.name}"></a></span> <span class="path_arrow"> <i
+							class="fa-solid fa-chevron-right"></i>
+					</span> <span class="content"><a class="path_content" th:text="*{name}"></a></span>
 				</div>
 			</div>
 		</div>
@@ -73,8 +62,7 @@
 
 								<div class="image">
 
-									<img
-										th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${img.name}|}"
+									<img th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${img.name}|}"
 										alt="null" />
 								</div>
 
@@ -86,11 +74,9 @@
 						<div class=" col-12 slick-slider_nav">
 							<!-- Hiện Thị Hình Ảnh sản phẩm  -->
 							<div class="image-slider">
-								<div th:each="img: *{imageProducts}" style="padding-left: 5px;"
-									class="image-item">
+								<div th:each="img: *{imageProducts}" style="padding-left: 5px;" class="image-item">
 									<div class="image-nav">
-										<img style="height: 70px; width: 100%;" class="slider_nav-img"
-											tabindex="0"
+										<img style="height: 70px; width: 100%;" class="slider_nav-img" tabindex="0"
 											th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${img.name}|}" />
 									</div>
 
@@ -123,9 +109,8 @@
 								<div class="evaluate-star">
 									<a class="icon-star text-center" style="text-decoration: none;">
 
-										<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-										class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-										class="bi bi-star"></i>
+										<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i class="bi bi-star"></i>
+										<i class="bi bi-star"></i> <i class="bi bi-star"></i>
 									</a>
 								</div>
 
@@ -167,9 +152,7 @@
 							</div>
 
 							<div class=" col-10">
-								<span> <strong class="fs-3 fw-bold price totalPrice"
-									style="color: #ee4d2d;"
-									th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'POINT',0,'POINT')}+' ₫'"></strong></span>
+								<span> <strong class="fs-3 fw-bold price totalPrice" style="color: #ee4d2d;" th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'POINT',0,'POINT')}+' ₫'"></strong></span>
 
 								<del class="fs-5 ms-3 opacity-50"
 									th:text="*{#numbers.formatDecimal(productVariants[0].price, 0,'POINT',0,'POINT')}+' ₫'"></del>
@@ -251,10 +234,11 @@
 											onclick="add(this)"> <i
 											class="fa-solid fa-plus icon_Add"></i>
 										</label>
-
+										<span style="margin-left: 50px;" id="totalquantity"></span>
 									</div>
 								</div>
 							</div>
+							
 
 						</div>
 						<!--total money-->
@@ -874,6 +858,7 @@
 		
 
 				// Khai báo một biến toàn cục để lưu giá bán đầu
+				var quantityproductvariant;
 				var originalPrice;
 				var isDesktop = window.matchMedia("(min-width: 768px)");
 
@@ -910,6 +895,8 @@
 				}
 				
 				}
+
+		
 	
 		function subtract(button) {
 			var input = button.parentNode.querySelector(".product_quantity");
@@ -923,8 +910,10 @@
 		function add(button) {
 			var input = button.parentNode.querySelector(".product_quantity");
 			var currentValue = parseInt(input.value);
-			input.value = currentValue + 1;
-			input.dispatchEvent(new Event("input"));
+			if(currentValue < quantityproductvariant){
+				input.value = currentValue + 1;
+				input.dispatchEvent(new Event("input"));
+			}
 		}
 		
 		
@@ -996,6 +985,8 @@
 			}
 		 }
 
+		 
+
 		 // check null color vs size
 		 
 
@@ -1008,6 +999,7 @@
 		var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
 		// hoặc tạo một chuỗi query chứa color và size
 		var data = "id="+ id +"&color=" + color + "&size=" + size;
+		var totalquantity = document.getElementById("totalquantity");
 		 console.log(id,color, size);
 		$.ajax({
 			url: "/data", // url của server
@@ -1030,6 +1022,28 @@
 			
 			
 		});
+		$.ajax({
+			url: "/quantityproductvariant", // url của server
+			type: "POST", // phương thức gửi request
+			data: data, // dữ liệu gửi lên server 
+			success: function (quantity){
+				quantityproductvariant = quantity;
+				totalquantity.textContent = "Số lượng kho: " + quantityproductvariant;
+				totalquantity.className = "text-danger";
+				if(quantityproductvariant == 0){
+					addCart.classList.add("pe-none");
+				}
+			}
+		});
+		// console.log(color);
+		// fetch('/quantityproductvariant?id=' + id + '&color=' + color + '&size=' + size)
+		// 		.then(response => response.json())
+		// 		.then(quantity => {
+		// 			// Cập nhật dữ liệu cho biểu đồ
+		// 			quantityproductvariant = quantity;
+		// 			console.log(quantityproductvariant);
+		// 		});
+
 		}
 		
 
