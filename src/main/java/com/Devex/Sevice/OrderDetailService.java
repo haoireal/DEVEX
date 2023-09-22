@@ -49,4 +49,8 @@ public interface OrderDetailService {
 
 	List<Object[]> getTotalPriceByMonthAndSellerUsername(int year, int month, String username);
 
+	List<Object[]> getTotalPriceByYearAndSellerUsername(int year, String username);
+
+	int getTotalOrderDetailsByStatusIdAndSellerUsername(int statusid, String username);
+
 }
