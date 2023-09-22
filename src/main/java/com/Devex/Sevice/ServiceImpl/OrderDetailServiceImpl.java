@@ -125,6 +125,16 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public List<Object[]> getTotalPriceByMonthAndSellerUsername(int year, int month, String username) {
 		return orderDetailRepository.getTotalPriceByMonthAndSellerUsername(year, month, username);
 	}
+
+	@Override
+	public List<Object[]> getTotalPriceByYearAndSellerUsername(int year, String username) {
+		return orderDetailRepository.getTotalPriceByYearAndSellerUsername(year, username);
+	}
+
+	@Override
+	public int getTotalOrderDetailsByStatusIdAndSellerUsername(int statusid, String username) {
+		return orderDetailRepository.getTotalOrderDetailsByStatusIdAndSellerUsername(statusid, username);
+	}
 	
 	
 

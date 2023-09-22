@@ -133,6 +133,16 @@ public class OrderServiceImpl implements OrderService{
 	public int getCountOrderForSeller(String username) {
 		return orderRepository.getCountOrderForSeller(username);
 	}
+
+	@Override
+	public int getTotalOrderByStatusIdAndSellerUsername(int statusid, int statusid1, String username) {
+		return orderRepository.getTotalOrderByStatusIdAndSellerUsername(statusid, statusid1, username);
+	}
+
+	@Override
+	public int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(int statusid, String username) {
+		return orderRepository.getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(statusid, username);
+	}
 	
 	
 

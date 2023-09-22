@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Devex.DTO.StatisticalOrderMonthPieDTO;
 import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.Entity.Category;
 import com.Devex.Entity.CategoryDetails;
@@ -321,6 +322,91 @@ public class DevexSellerRestController {
             }
         }
         return liststatis;
+	}
+	
+	@GetMapping("/revenue/year")
+	public List<StatisticalRevenueMonthDTO> getRevenueByYear(@RequestParam("year") int year){
+		User u = session.get("user");
+		List<StatisticalRevenueMonthDTO> liststatis = new ArrayList<>();
+		List<Object[]> listt = detailService.getTotalPriceByYearAndSellerUsername(year, u.getUsername());
+		List<Object[]> listtc = detailService.getTotalPriceByYearAndSellerUsername(year - 1, u.getUsername());
+		for (int i = 1; i <= 12; i++) {
+			double price = 0;
+            double priceCompare = 0;
+			for (Object[] ob : listt) {
+                int day = (ob[0] == null) ? 0 : (int) ob[0];
+                if (day == i) {
+                	price = (ob[1] == null) ? 0 : (double) ob[1];
+                    break;
+                }
+            }
+            for (Object[] obc : listtc) {
+                int day = (obc[0] == null) ? 0 : (int) obc[0];
+                if (day == i) {
+                	priceCompare = (obc[1] == null) ? 0 : (double) obc[1];
+                    break;
+                }
+            }
+            StatisticalRevenueMonthDTO statistical = new StatisticalRevenueMonthDTO();
+            statistical.setDay(i);
+            statistical.setPrice(price);
+            statistical.setPriceCompare(priceCompare);
+            liststatis.add(statistical);
+		}
+        return liststatis;
+	}
+	
+	@GetMapping("/order/month")
+	public List<StatisticalOrderMonthPieDTO> getStatisOrder(@RequestParam("year") int year, @RequestParam("month") int month) {
+		List<StatisticalOrderMonthPieDTO> listStatisOrderPie = new ArrayList<>();
+		User u = session.get("user");
+		int choxacnhan = orderService.getTotalOrderByStatusIdAndSellerUsername(1001, 1001, u.getUsername());
+		StatisticalOrderMonthPieDTO choxacnhane = new StatisticalOrderMonthPieDTO();
+		choxacnhane.setName("Chờ xác nhận");
+		choxacnhane.setTotalOrderStatus(choxacnhan);
+		listStatisOrderPie.add(choxacnhane);
+		int chothanhtoan = orderService.getTotalOrderByStatusIdAndSellerUsername(1002, 1009, u.getUsername());
+		StatisticalOrderMonthPieDTO chothanhtoane = new StatisticalOrderMonthPieDTO();
+		chothanhtoane.setName("Chờ thanh toán");
+		chothanhtoane.setTotalOrderStatus(chothanhtoan);
+		listStatisOrderPie.add(chothanhtoane);
+		int dangvanchuyen = orderService.getTotalOrderByStatusIdAndSellerUsername(1003, 1009, u.getUsername());
+		StatisticalOrderMonthPieDTO dangvanchuyene = new StatisticalOrderMonthPieDTO();
+		dangvanchuyene.setName("Đang vận chuyển");
+		dangvanchuyene.setTotalOrderStatus(dangvanchuyen);
+		listStatisOrderPie.add(dangvanchuyene);
+		int danggiao = orderService.getTotalOrderByStatusIdAndSellerUsername(1004, 1009, u.getUsername());
+		StatisticalOrderMonthPieDTO danggiaoe = new StatisticalOrderMonthPieDTO();
+		danggiaoe.setName("Đang giao");
+		danggiaoe.setTotalOrderStatus(danggiao);
+		listStatisOrderPie.add(danggiaoe);
+		int danhanhang = orderService.getTotalOrderByStatusIdAndSellerUsername(1005, 1009, u.getUsername());
+		StatisticalOrderMonthPieDTO danhanhange = new StatisticalOrderMonthPieDTO();
+		danhanhange.setName("Đã nhận hàng");
+		danhanhange.setTotalOrderStatus(danhanhang);
+		listStatisOrderPie.add(danhanhange);
+		int dahoanthanh = orderService.getTotalOrderByStatusIdAndSellerUsername(1006, 1009, u.getUsername());
+		StatisticalOrderMonthPieDTO dahoanthanhe = new StatisticalOrderMonthPieDTO();
+		dahoanthanhe.setName("Đã hoàn thành");
+		dahoanthanhe.setTotalOrderStatus(dahoanthanh);
+		listStatisOrderPie.add(dahoanthanhe);
+		int dahuy = orderService.getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(1007, u.getUsername());
+		StatisticalOrderMonthPieDTO dahuye = new StatisticalOrderMonthPieDTO();
+		dahuye.setName("Đã hủy");
+		dahuye.setTotalOrderStatus(dahuy);
+		listStatisOrderPie.add(dahuye);
+		int trahang = orderService.getTotalOrderByStatusIdAndSellerUsername(1008, 1009, u.getUsername());
+		StatisticalOrderMonthPieDTO trahange = new StatisticalOrderMonthPieDTO();
+		trahange.setName("Trả hàng");
+		trahange.setTotalOrderStatus(trahang);
+		listStatisOrderPie.add(trahange);
+		int daxacnhan = orderService.getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(1009, u.getUsername());
+		StatisticalOrderMonthPieDTO daxacnhane = new StatisticalOrderMonthPieDTO();
+		daxacnhane.setName("Đã xác nhận");
+		dahoanthanhe.setTotalOrderStatus(daxacnhan);
+		listStatisOrderPie.add(daxacnhane);
+		
+		return listStatisOrderPie;
 	}
 
 }

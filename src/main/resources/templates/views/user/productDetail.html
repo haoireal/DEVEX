@@ -26,7 +26,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- Theme style -->
 
-<link rel="stylesheet" href="/admin/dist/css/productDetail.css">
+<link rel="stylesheet" href="/admin/dist/css/productDetail.css" th:href="@{/admin/dist/css/productDetail.css}">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
@@ -106,8 +106,7 @@
 					<div class=" col-12 col-lg-7 mt-3">
 						<!--Title-->
 						<div class="row">
-							<div class="col-12"
-								style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+							<div class="col-12 title_product">
 								<span th:id="*{id}" class="text_name-product" th:text="*{name}">
 								</span>
 								<!-- hiện thị tên sp -->
@@ -170,10 +169,10 @@
 							<div class=" col-10">
 								<span> <strong class="fs-3 fw-bold price totalPrice"
 									style="color: #ee4d2d;"
-									th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'COMMA',0,'POINT')}+'₫'"></strong></span>
+									th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'POINT',0,'POINT')}+' ₫'"></strong></span>
 
 								<del class="fs-5 ms-3 opacity-50"
-									th:text="*{#numbers.formatDecimal(productVariants[0].price, 0,'COMMA',0,'POINT')}+'₫'"></del>
+									th:text="*{#numbers.formatDecimal(productVariants[0].price, 0,'POINT',0,'POINT')}+' ₫'"></del>
 							</div>
 							<!--GIÁ TRƯỚC KHI GIẢM-->
 							<div class="col-4"></div>
@@ -540,204 +539,132 @@
 
 
 	</div>
-	<!--Gợi Ý Sản Phẩm-->
-	<div class="container container_main mt-3">
+	<!-- Sản Phẩm của shop-->
+
+	 <div class="container container_main mt-3">
 		<div class="row ">
 
-			<div class="col-12 col-lg-7 text-dark content_price mt-2 ">Dành
-				Cho Bạn</div>
+			<div class="col-12 col-lg-7 text-dark content_price mt-2 ">CÁC SẢN PHẨM KHÁC CỦA SHOP</div>
 
 		</div>
 
 		<div class="row mt-2">
 			<div class="col-12  ">
-				<div class="card-slider d-flex justify-content-start">
-					<div class="col-2">
-						<div class="card" style="width: 110%;">
-							<img
-								src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
-								class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-
-								<div class="row">
-									<div class="col-6">
-										<div class="evaluate-sold">
-											<strong class="fs-6" style="color: #fd475a;">150,000
-												₫</strong>
-										</div>
+				<div class="card-slider d-flex justify-content-start"> <!-- slider sp của shop-->
+					<div id="suggest_Shop" class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
+						th:each="shopProduct : ${shopProduct}">
+							<a
+								th:href="@{|/details/${shopProduct.id}|}"
+								class="text-decoration-none">
+								<div class="card m-2 pb-2">
+									<div id="sale" class="icon-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+									<div
+									class="hot-sale text-center p-1"
+									th:if="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
+									Giảm
+									<span
+										th:text="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
+									
 									</div>
-									<div class="col-6 " style="padding: 0;">
-										<div class="row d-flex align-items-end">
-											<div class="col-6 " style="padding: 0;">
-												<div class="position-relative">
-													<span class="position-absolute text-suggest-content  "
-														style="font-size: 13px;">Đã Bán</span>
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="evaluate-sold">
-													<span class=" text-suggest"
-														style="font-size: 10px; right: 0;">264,2K</span>
-												</div>
+									<img
+									th:src="@{|/img/product/${shopProduct.sellerProduct.username}/${shopProduct.id}/${shopProduct.imageProducts[0].name}|}"
+									class="img-fluid w-100 p-0"
+									th:alt="${shopProduct.name}" />
+									<div class="card-body" style="padding: 5px">
+										<div
+											class="card-title tensp text-left"
+											style="height: 40px"
+											th:text="${shopProduct.name}"
+											th:title="${shopProduct.name}"></div>
+
+										<div id="price-box" >
+											<div class="price_suggest col-6  m-0" >
+											<span style="color: #ff0821bb">₫</span><strong
+												class="fs-10"
+												th:text="${#numbers.formatDecimal(shopProduct.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
+												style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
 											</div>
 
-										</div>
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-2">
-						<div class="card" style="width: 110%;">
-							<img
-								src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80"
-								class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<div class="row">
-									<div class="col-6">
-										<div class="evaluate-sold">
-											<strong class="fs-6" style="color: #fd475a;">150,000
-												₫</strong>
-										</div>
-									</div>
-									<div class="col-6 " style="padding: 0;">
-										<div class="row d-flex align-items-end">
-											<div class="col-6 " style="padding: 0;">
-												<div class="position-relative">
-													<span class="position-absolute text-suggest-content  "
-														style="font-size: 13px;">Đã Bán</span>
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="evaluate-sold">
-													<span class=" text-suggest"
-														style="font-size: 10px; right: 0;">264,2K</span>
-												</div>
+											<div class=" col-6 ">
+												<p class="text-info text-end buy m-0">
+													đã bán  <i class="text-info m-0"
+													th:text="${shopProduct.soldCount}"></i>
+												
+												</p>
 											</div>
 
 										</div>
 
 									</div>
 								</div>
+								
+							</a>
+					</div>	
 
-							</div>
-						</div>
-					</div>
-					<div class="col-2">
-						<div class="card" style="width: 110%;">
-							<img
-								src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80"
-								class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<div class="row">
-									<div class="col-6">
-										<div class="evaluate-sold">
-											<strong class="fs-6" style="color: #fd475a;">150,000
-												₫</strong>
-										</div>
+				</div>
+			</div>
+		</div>
+	</div>	 
+	<!--Gợi Ý Sản Phẩm-->
+	<div class="container container_main mt-3">
+		<div class="row ">
+
+			<div class="col-12 col-lg-7 text-dark content_price mt-2 "> CÓ THỂ BẠN CŨNG THÍCH </div>
+
+		</div>
+
+		<div class="row mt-2">
+			<div class="col-12  ">
+				<div class="row">
+					<div id="suggest" class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
+						th:each="products : ${products}">
+							<a
+								th:href="@{|/details/${products.id}|}"
+								class="text-decoration-none">
+								<div class="card pb-2">
+									<div id="sale" class="icon-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
+									<div
+									class="hot-sale text-center p-1"
+									th:if="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
+									Giảm
+									<span
+										th:text="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
+									
 									</div>
-									<div class="col-6 " style="padding: 0;">
-										<div class="row d-flex align-items-end">
-											<div class="col-6 " style="padding: 0;">
-												<div class="position-relative">
-													<span class="position-absolute text-suggest-content  "
-														style="font-size: 13px;">Đã Bán</span>
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="evaluate-sold">
-													<span class=" text-suggest"
-														style="font-size: 10px; right: 0;">264,2K</span>
-												</div>
+									<img
+									th:src="@{|/img/product/${products.sellerProduct.username}/${products.id}/${products.imageProducts[0].name}|}"
+									class="img-fluid w-100 p-0"
+									th:alt="${products.name}" />
+									<div class="card-body" style="padding: 5px">
+										<div
+											class="card-title tensp text-left"
+											style="height: 40px"
+											th:text="${products.name}"
+											th:title="${products.name}"></div>
+
+										<div id="price-box" >
+											<div class="price_suggest col-6  m-0" >
+											<span style="color: #ff0821bb">₫</span><strong
+												class="fs-10"
+												th:text="${#numbers.formatDecimal(products.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
+												style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
 											</div>
 
-										</div>
-
-									</div>
-								</div>
-
-							</div>
-						</div>
-					</div>
-					<div class="col-2">
-						<div class="card" style="width: 110%;">
-							<img
-								src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
-								class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<div class="row">
-									<div class="col-6">
-										<div class="evaluate-sold">
-											<strong class="fs-6" style="color: #fd475a;">150,000
-												₫</strong>
-										</div>
-									</div>
-									<div class="col-6 " style="padding: 0;">
-										<div class="row d-flex align-items-end">
-											<div class="col-6 " style="padding: 0;">
-												<div class="position-relative">
-													<span class="position-absolute text-suggest-content  "
-														style="font-size: 13px;">Đã Bán</span>
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="evaluate-sold">
-													<span class=" text-suggest"
-														style="font-size: 10px; right: 0;">264,2K</span>
-												</div>
+											<div class=" col-6 ">
+												<p class="text-info text-end buy m-0">
+													đã bán  <i class="text-info m-0"
+													th:text="${products.soldCount}"></i>
+												
+												</p>
 											</div>
 
 										</div>
 
 									</div>
 								</div>
-
-							</div>
-						</div>
-					</div>
-					<div class="col-2">
-						<div class="card" style="width: 110%;">
-							<img
-								src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80"
-								class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<div class="row">
-									<div class="col-6">
-										<div class="evaluate-sold">
-											<strong class="fs-6" style="color: #fd475a;">150,000
-												₫</strong>
-										</div>
-									</div>
-									<div class="col-6 " style="padding: 0;">
-										<div class="row d-flex align-items-end">
-											<div class="col-6 " style="padding: 0;">
-												<div class="position-relative">
-													<span class="position-absolute text-suggest-content  "
-														style="font-size: 13px;">Đã Bán</span>
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="evaluate-sold">
-													<span class=" text-suggest"
-														style="font-size: 10px; right: 0;">264,2K</span>
-												</div>
-											</div>
-
-										</div>
-
-									</div>
-								</div>
-
-							</div>
-						</div>
-					</div>
-
+								
+							</a>
+					</div>											
 				</div>
 			</div>
 		</div>

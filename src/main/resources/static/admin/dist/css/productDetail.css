@@ -183,6 +183,12 @@ img.slider_nav-img {
   background-color: #2cccff;
 }
 /*details-product*/
+.title_product {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .text_name-product {
   color: black;
   font-weight: 500;
@@ -321,51 +327,49 @@ button.btn_add_cart:hover {
   border: 1px solid red;
 }
 /*Shop name*/
-.container-shop{
-  padding: 1.5625rem; 
-  border: 1px solid rgb(0, 0, 0,0.2);
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.05);
+.container-shop {
+  padding: 1.5625rem;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
   border-radius: 5px;
 }
-.img_salles{
+.img_salles {
   overflow: hidden;
-
 }
-.img_salles-logo{
+.img_salles-logo {
   border: 1px solid rgb(0, 0, 0, 0.2);
-    width: 78px;
-    height: 78px;
-    border-radius: 70%;
-
+  width: 78px;
+  height: 78px;
+  border-radius: 70%;
 }
-.contact{
+.contact {
   border-right: 1px solid rgb(0, 0, 0, 0.3);
 }
 button.btn_chat,
-button.btn_seeShop{
+button.btn_seeShop {
   width: 100%;
   padding: 5px !important;
   border: 1px solid rgb(0, 0, 0, 0.2);
   border-radius: 2px;
 }
 
-button.btn_chat{
-  background-color:rgba(248, 161, 161, 0.4);
+button.btn_chat {
+  background-color: rgba(248, 161, 161, 0.4);
   border: 1px solid rgba(247, 7, 7, 0.4);
 }
-label.dis-shop{
+label.dis-shop {
   font-size: 0.875rem;
 }
-span.parameter-content{
+span.parameter-content {
   font-size: 0.875rem;
 }
 /*Gợi Ý Sản Phẩm*/
 
-.card-slider .col-2 {
+/* .card-slider .col-2 {
   left: 0px !important;
   width: 185px !important;
   margin-left: 2rem;
-}
+} */
 
 .card img {
   height: 220px;
@@ -463,7 +467,6 @@ span.parameter-content{
 #model-container.show #model-demo {
   position: absolute;
   bottom: 0;
- 
 }
 .product-bottom-mobile_add-cart {
   width: 100%;
@@ -481,4 +484,63 @@ label#btn-close {
   border: none;
   background: none;
   font-size: 1.1875rem;
+}
+
+/*Sản phẩm của shop*/
+
+
+/*Dành cho bạn*/
+.card {
+  position: relative;
+  left: 0;
+  /* width: 150%; */
+}
+.tensp {
+	word-wrap: break-word;
+	overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+	font-size: .85rem;
+	font-weight: 600;
+	color: #000000;
+}
+.icon-sale {
+  width: auto;
+  background-color: #00BFFF;
+  position: absolute;
+  border-radius: 20px;
+  margin-top: 150px;
+  font-size: 0.75rem;
+}
+
+.icon-sale > a {
+  color: rgb(8, 8, 8);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.hot-sale {
+  background-color: #359bbc;
+  position: absolute;
+  border-radius: 10px;
+  margin-top: 10px;
+  left: -1;
+  font-size: 0.7rem;
+  color: rgb(0, 0, 0);
+}
+/*Gia sp*/
+#price-box{
+  display: flex;
+}
+.price_suggest{
+  word-wrap: break-word;
+	/* overflow: hidden; */
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+
 }
