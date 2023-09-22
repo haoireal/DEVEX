@@ -59,5 +59,25 @@ public interface OrderRepository extends JpaRepository<Order, String>{
     	    "JOIN p.sellerProduct s " +
     	    "WHERE s.username = :username")
     int getCountOrderForSeller(@Param("username") String username);
+    
+    @Query("SELECT SUM(o) FROM Order o " +
+		       "JOIN  OrderDetails od " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE s.username = :username " +
+		       "AND o.orderStatus.id = :statusid " +
+		       "AND od.status.id = :statusid1")
+	int getTotalOrderByStatusIdAndSellerUsername(@Param("statusid") int statusid, @Param("statusid1") int statusid1, 
+			@Param("username") String username);
+    
+    @Query("SELECT SUM(o) FROM Order o " +
+		       "JOIN  OrderDetails od " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE s.username = :username " +
+		       "AND od.status.id = :statusid")
+	int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(@Param("statusid") int statusid, @Param("username") String username);
 
 }

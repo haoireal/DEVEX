@@ -118,55 +118,65 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<h5 class="card-title">Thống kê doanh thu tháng này</h5>
-
+									<h5 class="card-title">Thống kê doanh thu</h5>
 								</div>
 								<!-- /.card-header -->
 								<div class="card-body">
 									<div class="row">
-										<div class="col-md-2"></div>
-										<div class="col-md-8">
+										<!-- <div class="col-md-2"></div> -->
+										<div class="col-md-6">
 											<p class="text-center">
 												<strong class="fw-1">Doanh thu Tháng </strong>
-												<select id="monthSelect" class="form-control"
+												<select id="monthSelectrevenuemonthline" class="form-control"
 													style="display: inline-block; width: auto;"></select>
 												<strong>Năm</strong>
-												<select id="yearSelect" class="form-control"
+												<select id="yearSelectrevenuemonthline" class="form-control"
 													style="display: inline-block; width: auto;"></select>
-
 											</p>
-
-
 											<div class="chart">
 												<!-- Sales Chart Canvas -->
-												<canvas id="statisticalrevenue" height="150" style="height: 180px;"></canvas>
+												<canvas id="statisticalrevenuemonth" height="150"
+													style="height: 180px;"></canvas>
 											</div>
 											<!-- /.chart-responsive -->
+											<div class="description-block border-right"
+												style="background-color: #f4f2f2;">
+												<span class="iconrevenuemonthline text-success">
+													<i class="fas fa-caret-up"></i>
+													<span class="numberrevenuemonthline">17%</span>
+												</span>
+												<h5 class="totalrevenuemonthline">$345.980.000</h5>
+												<span class="description-text">Tổng doanh thu tháng</span>
+											</div>
 										</div>
-										<div class="col-md-2"></div>
+										<div class="col-md-6">
+											<p class="text-center">
+												<strong class="fw-1">Doanh thu Năm </strong>
+												<select id="yearSelectrevenueyearyearline" class="form-control"
+													style="display: inline-block; width: auto;"></select>
+											</p>
+											<div class="chart">
+												<!-- Sales Chart Canvas -->
+												<canvas id="statisticalrevenueyear" height="150"
+													style="height: 180px;"></canvas>
+											</div>
+											<div class="description-block border-right"
+												style="background-color: #f4f2f2;">
+												<span class="iconrevenueyearline text-success">
+													<i class="fas fa-caret-up"></i>
+													<span class="numberrevenueyearline">17%</span>
+												</span>
+												<h5 class="totalrevenueyearline">$345.980.000</h5>
+												<span class="description-text">Tổng doanh thu năm</span>
+											</div>
+										</div>
 										<!-- /.col -->
-										
+
 										<!-- /.col -->
 									</div>
 									<!-- /.row -->
 								</div>
 								<!-- ./card-body -->
-								<div class="card-footer">
-									<div class="row">
-										<div class="col-sm-12 col-6">
-											<div class="description-block border-right">
-												<span class="description-percentage text-success"><i
-														class="fas fa-caret-up"></i> 17%</span>
-												<h5 class="description-header">$345.980.000</h5>
-												<span class="description-text">Tổng doanh thu</span>
-											</div>
-											<!-- /.description-block -->
-										</div>
-										
-									</div>
-									<!-- /.row -->
-								</div>
-								<!-- /.card-footer -->
 							</div>
 							<!-- /.card -->
 						</div>
@@ -177,59 +187,66 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<h5 class="card-title">Thống kê doanh thu tháng này</h5>
-
+									<h5 class="card-title">Thống kê hóa đơn</h5>
 								</div>
-								<!-- /.card-header -->
 								<div class="card-body">
 									<div class="row">
-										<div class="col-md-2"></div>
-										<div class="col-md-8">
+										<div class="col-8">
 											<p class="text-center">
-												<strong class="fw-1">Doanh thu Tháng </strong>
-												<select id="monthSelect" class="form-control"
+												<strong class="fw-1">Doanh thu Năm </strong>
+												<select id="yearSelectrevenueyear" class="form-control"
 													style="display: inline-block; width: auto;"></select>
-												<strong>Năm</strong>
-												<select id="yearSelect" class="form-control"
-													style="display: inline-block; width: auto;"></select>
-
 											</p>
-
-
 											<div class="chart">
 												<!-- Sales Chart Canvas -->
-												<canvas id="saleChart" height="150" style="height: 180px;"></canvas>
+												<canvas id="statisticalordermonth" height="150"
+													style="height: 180px;"></canvas>
 											</div>
-											<!-- /.chart-responsive -->
 										</div>
-										<div class="col-md-2"></div>
-										<!-- /.col -->
-										
-										<!-- /.col -->
-									</div>
-									<!-- /.row -->
-								</div>
-								<!-- ./card-body -->
-								<div class="card-footer">
-									<div class="row">
-										<div class="col-sm-12 col-6">
-											<div class="description-block border-right">
-												<span class="description-percentage text-success"><i
-														class="fas fa-caret-up"></i> 17%</span>
-												<h5 class="description-header">$345.980.000</h5>
-												<span class="description-text">Tổng doanh thu</span>
+										<div class="col-4">
+											<p class="text-center">
+												<strong>Thống kê chi tiết</strong>
+											</p>
+
+											<div class="progress-group">
+												Thêm sản phẩm vào giỏ
+												<span class="float-right"><b>30</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-primary" style="width: 15%"></div>
+												</div>
 											</div>
-											<!-- /.description-block -->
+											<!-- /.progress-group -->
+
+											<div class="progress-group">
+												Đơn hàng thành công
+												<span class="float-right"><b>60</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-success" style="width: 30%"></div>
+												</div>
+											</div>
+
+											<!-- /.progress-group -->
+											<div class="progress-group">
+												<span class="progress-text">Đơn hàng đang xử lí</span>
+												<span class="float-right"><b>10</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-warning" style="width: 5%"></div>
+												</div>
+											</div>
+
+											<!-- /.progress-group -->
+											<div class="progress-group">
+												Đơn hàng thất bại
+												<span class="float-right"><b>5</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-danger" style="width: 1%"></div>
+												</div>
+											</div>
 										</div>
-										
 									</div>
-									<!-- /.row -->
 								</div>
-								<!-- /.card-footer -->
 							</div>
-							<!-- /.card -->
 						</div>
-						<!-- /.col -->
 					</div>
 				</div>
 				<!-- /.container-fluid -->
@@ -243,11 +260,15 @@
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script>
-		var ctx = document.getElementById('statisticalrevenue').getContext('2d');
+		var ctx = document.getElementById('statisticalrevenuemonth').getContext('2d');
+		var ctx1 = document.getElementById('statisticalrevenueyear').getContext('2d');
 		var myChart = null;
+		var myChart1 = null;
+		var iconrevenuemonthline = document.querySelector('.description-block .iconrevenuemonthline i');
+		var iconrevenueyearline = document.querySelector('.description-block .iconrevenueyearline i');
 
 		// Hàm cập nhật biểu đồ
-		function updateChart(year, month) {
+		function updateChartrevenuemonthline(year, month) {
 			fetch('/revenue/month?year=' + year + '&month=' + month)
 				.then(response => response.json())
 				.then(data => {
@@ -256,41 +277,145 @@
 					myChart.data.datasets[0].data = data.map(liststatis => liststatis.price);
 					myChart.data.datasets[1].data = data.map(liststatis => liststatis.priceCompare);
 					myChart.update();
+					let priceChartrevenuemonthline = data.reduce((sum, liststatis) => sum + liststatis.price, 0);
+					let pricecompareChartrevenuemonthline = data.reduce((sum, liststatis) => sum + liststatis
+						.priceCompare, 0);
+					let percentage;
+					if (priceChartrevenuemonthline > pricecompareChartrevenuemonthline) {
+						if (pricecompareChartrevenuemonthline !== 0) {
+							percentage = (priceChartrevenuemonthline / pricecompareChartrevenuemonthline) * 100;
+						} else {
+							percentage = 100;
+						}
+					} else if (priceChartrevenuemonthline < pricecompareChartrevenuemonthline) {
+						if (priceChartrevenuemonthline !== 0) {
+							percentage = (pricecompareChartrevenuemonthline / priceChartrevenuemonthline) * 100;
+						} else {
+							percentage = 100;
+						}
+					} else if (priceChartrevenuemonthline == pricecompareChartrevenuemonthline) {
+						percentage = 0;
+					}
+					let percentageElement = document.querySelector(
+						'.description-block .iconrevenuemonthline .numberrevenuemonthline');
+					let headerElement = document.querySelector('.description-block .totalrevenuemonthline');
+					let formattedPrice = priceChartrevenuemonthline.toLocaleString('vi-VN', {
+						style: 'currency',
+						currency: 'VND'
+					});
+					if (priceChartrevenuemonthline > pricecompareChartrevenuemonthline) {
+						iconrevenuemonthline.className = "fa-solid fa-caret-up";
+						percentageElement.textContent = percentage.toFixed(0) + '%';
+						headerElement.textContent = formattedPrice;
+					} else if (priceChartrevenuemonthline < pricecompareChartrevenuemonthline) {
+						iconrevenuemonthline.className = "fa-solid fa-caret-down text-danger";
+						percentageElement.textContent = '-' + percentage.toFixed(0) + '%';
+						headerElement.textContent = formattedPrice;
+					} else {
+						iconrevenuemonthline.className = "";
+						percentageElement.textContent = percentage.toFixed(0) + '%';
+						headerElement.textContent = formattedPrice;
+					}
 				});
 		}
 
+		function updateChartrevenuemonthpie(year) {
+			fetch('/revenue/year?year=' + year)
+				.then(response => response.json())
+				.then(data => {
+					// Cập nhật dữ liệu cho biểu đồ
+					myChart1.data.labels = data.map(liststatis => liststatis.day);
+					myChart1.data.datasets[0].data = data.map(liststatis => liststatis.price);
+					myChart1.data.datasets[1].data = data.map(liststatis => liststatis.priceCompare);
+					myChart1.update();
+					let priceChartrevenueyearline = data.reduce((sum, liststatis) => sum + liststatis.price, 0);
+					let pricecompareChartrevenueyearline = data.reduce((sum, liststatis) => sum + liststatis.priceCompare,
+						0);
+					let percentage;
+					if (priceChartrevenueyearline > pricecompareChartrevenueyearline) {
+						if (pricecompareChartrevenueyearline !== 0) {
+							percentage = (priceChartrevenueyearline / pricecompareChartrevenueyearline) * 100;
+						} else {
+							percentage = 100;
+						}
+					} else if (priceChartrevenueyearline < pricecompareChartrevenueyearline) {
+						if (priceChartrevenueyearline !== 0) {
+							percentage = (pricecompareChartrevenueyearline / priceChartrevenueyearline) * 100;
+						} else {
+							percentage = 100;
+						}
+					} else if (priceChartrevenueyearline == pricecompareChartrevenueyearline) {
+						percentage = 0;
+					}
+					let percentageElement = document.querySelector(
+						'.description-block .iconrevenueyearline .numberrevenueyearline');
+					let headerElement = document.querySelector('.description-block .totalrevenueyearline');
+					let formattedPrice = priceChartrevenueyearline.toLocaleString('vi-VN', {
+						style: 'currency',
+						currency: 'VND'
+					});
+					if (priceChartrevenueyearline > pricecompareChartrevenueyearline) {
+						iconrevenuemonthline.className = "fa-solid fa-caret-up";
+						percentageElement.textContent = percentage.toFixed(0) + '%';
+						headerElement.textContent = formattedPrice;
+					} else if (priceChartrevenueyearline < pricecompareChartrevenueyearline) {
+						iconrevenuemonthline.className = "fa-solid fa-caret-down text-danger";
+						percentageElement.textContent = '-' + percentage.toFixed(0) + '%';
+						headerElement.textContent = formattedPrice;
+					} else {
+						iconrevenuemonthline.className = "";
+						percentageElement.textContent = percentage.toFixed(0) + '%';
+						headerElement.textContent = formattedPrice;
+					}
+				});
+		}
 
 		// Lấy thẻ select theo id
-		var monthSelect = document.getElementById('monthSelect');
-		var yearSelect = document.getElementById('yearSelect');
+		var monthSelectrevenuemonthline = document.getElementById('monthSelectrevenuemonthline');
+		var yearSelectrevenuemonthline = document.getElementById('yearSelectrevenuemonthline');
+		var yearSelectrevenueyearyearline = document.getElementById('yearSelectrevenueyearyearline');
 
 		// Tạo các phần tử option cho tháng và năm
 		for (var i = 1; i <= 12; i++) {
 			var option = document.createElement('option');
 			option.value = i;
 			option.textContent = i;
-			monthSelect.appendChild(option);
+			monthSelectrevenuemonthline.appendChild(option);
 		}
 
-		var currentYear = new Date().getFullYear();
+		var currentYearMonthline = new Date().getFullYear();
 		for (var i = 0; i < 5; i++) {
-			var year = currentYear - i;
+			var year = currentYearMonthline - i;
 			var option = document.createElement('option');
 			option.value = year;
 			option.textContent = year;
-			yearSelect.appendChild(option);
+			yearSelectrevenuemonthline.appendChild(option);
+		}
+
+		var currentYearYearline = new Date().getFullYear();
+		for (var i = 0; i < 5; i++) {
+			var year = currentYearYearline - i;
+			var option = document.createElement('option');
+			option.value = year;
+			option.textContent = year;
+			yearSelectrevenueyearyearline.appendChild(option);
 		}
 
 		// Gắn sự kiện change cho các thẻ select
-		yearSelect.addEventListener('change', function () {
-			updateChart(yearSelect.value, monthSelect.value);
+		monthSelectrevenuemonthline.addEventListener('change', function () {
+			updateChartrevenuemonthline(yearSelectrevenuemonthline.value, monthSelectrevenuemonthline.value);
 		});
 
-		monthSelect.addEventListener('change', function () {
-			updateChart(yearSelect.value, monthSelect.value);
+		yearSelectrevenuemonthline.addEventListener('change', function () {
+			updateChartrevenuemonthline(yearSelectrevenuemonthline.value, monthSelectrevenuemonthline.value);
+		});
+
+		yearSelectrevenueyearyearline.addEventListener('change', function () {
+			updateChartrevenuemonthpie(yearSelectrevenueyearyearline.value);
 		});
 
 		// Khởi tạo biểu đồ ban đầu
+		// Biểu đồ 1
 		myChart = new Chart(ctx, {
 			type: 'line',
 			data: {
@@ -302,8 +427,59 @@
 					fill: false,
 					cubicInterpolationMode: 'monotone',
 					tension: 0.4
-				},{
+				}, {
 					label: 'Doanh thu tháng trước',
+					data: [],
+					borderColor: 'blue',
+					fill: false,
+					tension: 0.4
+				}]
+			},
+			options: {
+				responsive: true,
+				plugins: {
+					title: {
+						display: false,
+						text: 'Chart.js Line Chart - Cubic interpolation mode'
+					},
+				},
+				interaction: {
+					intersect: false,
+				},
+				scales: {
+					x: {
+						display: true,
+						title: {
+							display: true,
+							text: 'Ngày'
+						}
+					},
+					y: {
+						display: true,
+						title: {
+							display: true,
+							text: 'Doanh thu'
+						},
+						suggestedMin: 0,
+						suggestedMax: 200
+					}
+				}
+			}
+		});
+		//Biểu đồ 2
+		myChart1 = new Chart(ctx1, {
+			type: 'line',
+			data: {
+				labels: [],
+				datasets: [{
+					label: 'Doanh thu năm nay',
+					data: [],
+					borderColor: 'red',
+					fill: false,
+					cubicInterpolationMode: 'monotone',
+					tension: 0.4
+				}, {
+					label: 'Doanh thu năm trước',
 					data: [],
 					borderColor: 'blue',
 					fill: false,
@@ -343,11 +519,13 @@
 		});
 
 		// Tự động chọn tháng và năm hiện tại
-		monthSelect.value = new Date().getMonth() + 1;
-		yearSelect.value = currentYear;
+		monthSelectrevenuemonthline.value = new Date().getMonth() + 1;
+		yearSelectrevenuemonthline.value = currentYearMonthline;
+		yearSelectrevenueyearyearline.value = currentYearYearline;
 
 		// Gọi hàm cập nhật ban đầu để hiển thị dữ liệu
-		updateChart(yearSelect.value, monthSelect.value);
+		updateChartrevenuemonthline(yearSelectrevenuemonthline.value, monthSelectrevenuemonthline.value);
+		updateChartrevenuemonthpie(yearSelectrevenueyearyearline.value);
 	</script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
@@ -362,16 +540,16 @@
 					console.log("errors", error);
 				})
 			};
-			 /* $scope.a = function () {
-			 	$http.get('/revenue/month?year=2023&month=7').then(resp => {
-			 		$scope.a = resp.data;
-			 		console.log($scope.a);
+			$scope.a = function () {
+			 	$http.get('/order/month?year=2023&month=9').then(resp => {
+			 		// $scope.a = resp.data;
+			 		// console.log($scope.a);
 			 	}).catch(error => {
 			 		console.log("errors", error);
 			 	})
 			 };
 
-			 $scope.a(); */
+			 $scope.a();
 			$scope.total();
 
 		});

@@ -53,4 +53,8 @@ public interface OrderService {
 
 	int getCountOrderForSeller(String username);
 
+	int getTotalOrderByStatusIdAndSellerUsername(int statusid, int statusid1, String username);
+
+	int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(int statusid, String username);
+
 }

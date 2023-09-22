@@ -45,9 +45,31 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 		       "WHERE s.username = :username " +
 		       "AND FUNCTION('YEAR', o.createdDay) = :year " +
 		       "AND FUNCTION('MONTH', o.createdDay) = :month " +
+		       "AND od.status.id = 1009 AND o.orderStatus.id = 1006 " +
 		       "GROUP BY FUNCTION('DAY', o.createdDay)")
 	List<Object[]> getTotalPriceByMonthAndSellerUsername(@Param("year") int year,
 		                                                     @Param("month") int month,
 		                                                     @Param("username") String username);
+	
+	@Query("SELECT FUNCTION('MONTH', o.createdDay), SUM(od.price) AS totalPrice " +
+		       "FROM OrderDetails od " +
+		       "JOIN  od.order o " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE s.username = :username " +
+		       "AND FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND od.status.id = 1009 AND o.orderStatus.id = 1006 " +
+		       "GROUP BY FUNCTION('MONTH', o.createdDay)")
+	List<Object[]> getTotalPriceByYearAndSellerUsername(@Param("year") int year, @Param("username") String username);
+	
+	@Query("SELECT SUM(od) FROM OrderDetails od " +
+		       "JOIN  od.order o " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE s.username = :username " +
+		       "AND od.status.id = :statusid")
+	int getTotalOrderDetailsByStatusIdAndSellerUsername(@Param("statusid") int statusid, @Param("username") String username);
 	
 }
