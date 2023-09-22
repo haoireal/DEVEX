@@ -2,9 +2,11 @@ package com.Devex.Controller.customer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -93,6 +95,7 @@ public class DevexUserController {
 	@GetMapping("/product/search")
 	public String searchProduct(Model model, @RequestParam("search") Optional<String> kw) {
 		List<Product> list = new ArrayList<>();
+		Set<Product> uniqueProducts = new HashSet<>();
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
 		sessionService.set("keywordsSearch", kwords);
 		// Tìm tên từ theo từ khóa
@@ -101,16 +104,23 @@ public class DevexUserController {
 		// Tìm theo shop bán
 		list.addAll(productService.findProductBySellerUsername("%" + kwords + "%"));
 		// FILLTER SẢN PHẨM TRÙNG NHAU
-		List<Product> pByC = new ArrayList<>();
-		if (list.size() > 0) {
-			pByC = productService.findProductsByCategoryId(list.get(0).getCategoryDetails().getCategory().getId());
-		}
-		pByC.removeAll(list);
-		// FIll thêm sản phẩm theo loại dựa trên từ khóa tìm kiếm
-		list.addAll(pByC);
-		List<Product> listFillter = productRepository.fillerProductBy(kwords, "price", "desc");
+//		List<Product> pByC = new ArrayList<>();//  hào
+//		if (list.size() > 0) {
+//			pByC = productService.findProductsByCategoryId(list.get(0).getCategoryDetails().getCategory().getId());
+//		} // hào
+//		list.addAll(productService.findProductsByCategoryId(list.get(0).getCategoryDetails().getCategory().getId()));
 
-		model.addAttribute("products", list);
+		list.forEach(pr ->{
+			uniqueProducts.add(pr);
+		});
+		// Chuyển đổi lại thành danh sách (List)
+        List<Product> uniqueProductList = new ArrayList<>(uniqueProducts);
+		/*pByC.removeAll(list);
+		// FIll thêm sản phẩm theo loại dựa trên từ khóa tìm kiếm
+		list.addAll(pByC);*/ 
+//		List<Product> listFillter = productRepository.fillerProductBy(kwords, "price", "desc");//code hào
+
+		model.addAttribute("products", uniqueProductList);
 		return "user/findproduct";
 	}
 
