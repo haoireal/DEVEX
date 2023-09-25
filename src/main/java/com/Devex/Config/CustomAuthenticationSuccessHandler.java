@@ -24,6 +24,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	@Autowired
     UserService userService;
 	
+	@Autowired
+    SessionService session;
+	
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -53,6 +56,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 				response.sendRedirect("/seller/home");
 				return;
 			}
+		}
+		String url = session.get("url");
+		if(url != null) {
+			response.sendRedirect(url);
+			return;
 		}
 		// Mặc định chuyển hướng đến "/home" cho các vai trò khác
 		response.sendRedirect("/home");

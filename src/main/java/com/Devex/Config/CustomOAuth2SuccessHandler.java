@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Devex.Entity.User;
+import com.Devex.Entity.UserRole;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.UserService;
 
@@ -55,9 +56,10 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 		System.out.println(fullname);
 		String email = oauth2User.getEmail();
 		System.out.println(email);
-//		String str = userService.processOAuthPostLogin(fullname, email);
-		String str = "";
+		String str = userService.processOAuthPostLogin(fullname, email);
+		System.out.println(str);
 		User user = userService.findEmail(email);
+		System.out.println(user.getUsername());
 		session.set("user", user);
 
 		// Lấy thông tin người dùng từ authentication
@@ -80,12 +82,23 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 					authentication.getCredentials(), updatedAuthorities);
 			// Set lại Authentication trong SecurityContextHolder
 			SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+		} else {
+			// Tạo lại đối tượng Authentication với vai trò mới
+			updatedAuthorities.clear();
+			for(UserRole role : user.getRoles()) {
+				updatedAuthorities.add(new SimpleGrantedAuthority(role.getRole().getId()));
+			}
+			// Tạo lại đối tượng Authentication với vai trò mới
+			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
+					authentication.getCredentials(), updatedAuthorities);
+			// Set lại Authentication trong SecurityContextHolder
+			SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 		}
-		
 
 		// Tiến hành phân quyền
 		for (GrantedAuthority authority : updatedAuthorities) {
 			System.out.println(authority.getAuthority());
+			System.out.println(2);
 			if (authority.getAuthority().equals("ADMIN")) {
 				// Nếu có vai trò "ADMIN", chuyển hướng đến "/admin/home"
 				response.sendRedirect("/ad/home");
@@ -99,6 +112,13 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 				response.sendRedirect("/seller/home");
 				return;
 			}
+		}
+		
+		String url = session.get("url");
+		System.out.println(url);
+		if(url != null) {
+			response.sendRedirect(url);
+			return;
 		}
 		// Mặc định chuyển hướng đến "/home" cho các vai trò khác
 		response.sendRedirect("/home");
