@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Devex.Entity.Product;
+import com.Devex.Entity.ProductVariant;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
@@ -97,6 +98,15 @@ public class ProductDetailController {
 			@RequestParam("size") String size) {
 			Double price =  productVariantService.findPriceByColorAndSize(id, color, size);
 			return price;
+	}
+	
+	@RequestMapping(value = ("/quantityproductvariant"), method = RequestMethod.POST)
+	@ResponseBody
+	public int quantityProductVariant(@RequestParam("id") String id, @RequestParam("color") String color,
+			@RequestParam("size") String size) {
+			ProductVariant p = productVariantService.findProductVariantByColorAndSizeAndIdProduct(id, color, size);
+			int quantity =  p.getQuantity();
+			return quantity;
 	}
 
 }

@@ -38,25 +38,25 @@ import com.Devex.Sevice.SessionService;
 @RestController
 public class CartAPIController {
 	@Autowired
-	CartDetailService cart;
+	private CartDetailService cart;
 
 	@Autowired
-	SessionService sessionService;
+	private SessionService sessionService;
 
 	@Autowired
-	OrderService orderService;
+	private OrderService orderService;
 
 	@Autowired
-	OrderDetailService orderDetailService;
+	private OrderDetailService orderDetailService;
 
 	@Autowired
-	PaymentService paymentService;
+	private PaymentService paymentService;
 
 	@Autowired
-	OrderStatusService orderStatusService;
+	private OrderStatusService orderStatusService;
 
 	@Autowired
-	ProductVariantService productVariantService;
+	private ProductVariantService productVariantService;
 
 	@GetMapping("/rest/cart")
 	public List<CartDetailDTo> getAll(Model model) {
@@ -154,7 +154,7 @@ public class CartAPIController {
 		order.setPayment(paymentService.findById(1001).get());
 		order.setTotal(listOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum());
 		orderService.save(order);
-
+		
 		for (CartDetailDTo item : listOrder) {
 			OrderDetails orderDetails = new OrderDetails();
 			Order orders = orderService.findLatestOrder();
@@ -165,10 +165,11 @@ public class CartAPIController {
 			ProductVariant prod = productVariantService.findById(id).get();
 			orderDetails.setProductVariant(prod);
 			orderDetails.setQuantity(item.getQuantity());
+			int totalquantity = prod.getQuantity();
+			int countquantity = totalquantity - item.getQuantity();
+			productVariantService.updateQuantity(countquantity, prod.getId());
 			orderDetails.setStatus(orderStatusService.findById(1001).get());
-			System.out.println(orderDetails.getOrder().getId());
 			orderDetailService.save(orderDetails);
-			System.out.println("ok");
 			cart.deleteById(item.getId());
 		}
 

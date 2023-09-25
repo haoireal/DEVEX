@@ -158,7 +158,6 @@
 										style="color: #ee4d2d;"
 
 										th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'POINT',0,'POINT')}+' ₫'"></strong></span>
-
 								<del class="fs-5 ms-3 opacity-50"
 									th:text="*{#numbers.formatDecimal(productVariants[0].price, 0,'POINT',0,'POINT')}+' ₫'"></del>
 							</div>
@@ -228,10 +227,11 @@
 										<label id="btn_quantity" class="button btn_Add border-0 fs-4"
 											onclick="add(this)"> <i class="fa-solid fa-plus icon_Add"></i>
 										</label>
-
+										<span style="margin-left: 50px;" id="totalquantity"></span>
 									</div>
 								</div>
 							</div>
+							
 
 						</div>
 						<!--total money-->
@@ -812,46 +812,43 @@
 		</script>
 	<!--slick slide-->
 	<script>
+				// Khai báo một biến toàn cục để lưu giá bán đầu
+				var quantityproductvariant;
+				var originalPrice;
+				var isDesktop = window.matchMedia("(min-width: 768px)");
 
-
-
-		// Khai báo một biến toàn cục để lưu giá bán đầu
-		var originalPrice;
-		var isDesktop = window.matchMedia("(min-width: 768px)");
-
-		function updateTotalPrice(input) {
-			// Lấy phần tử span chứa giá tiền
-			var span = document.querySelector(".price");
-			// Kiểm tra nếu biến originalPrice chưa được gán
-			if (!originalPrice) {
-				// Lấy nội dung của span, đó chính là giá bán đầu của sản phẩm
-				var price = span.textContent;
-				// Xóa ký tự VNĐ và dấu phẩy khỏi nội dung
-				price = price.replace(/\.|\,|₫/g, "");
-				// Chuyển giá trị của nội dung thành số
-				price = parseInt(price);
-				// Gán giá trị cho biến originalPrice
-				originalPrice = price;
-			}
-			// Lấy input chứa số lượng
-			var quantity = parseInt(input.value);
-			console.log(quantity);
-			// Tính tổng tiền bằng cách nhân giá bán đầu với số lượng
-			var total = originalPrice * quantity;
-			// Định dạng tổng tiền theo định dạng VNĐ
-			var formatter = new Intl.NumberFormat("vi-VN", {
-				style: "currency",
-				currency: "VND",
-				currencyDisplay: "symbol",
-			});
-			if (isDesktop.matches) {
+				function updateTotalPrice (input) {
+				// Lấy phần tử span chứa giá tiền
+				var span = document.querySelector (".price");
+				// Kiểm tra nếu biến originalPrice chưa được gán
+				if (!originalPrice) {
+					// Lấy nội dung của span, đó chính là giá bán đầu của sản phẩm
+					var price = span.textContent;
+					// Xóa ký tự VNĐ và dấu phẩy khỏi nội dung
+					price = price.replace(/\.|\,|₫/g, "");
+					// Chuyển giá trị của nội dung thành số
+					price = parseInt(price);
+					// Gán giá trị cho biến originalPrice
+					originalPrice = price;
+				}
+				// Lấy input chứa số lượng
+				var quantity = parseInt (input.value);
+				console.log (quantity);
+				// Tính tổng tiền bằng cách nhân giá bán đầu với số lượng
+				var total = originalPrice * quantity;
+				// Định dạng tổng tiền theo định dạng VNĐ
+				var formatter = new Intl.NumberFormat ("vi-VN", {
+					style: "currency",
+					currency: "VND",
+					currencyDisplay: "symbol",
+				});
+				if(isDesktop.matches){
 				// Lấy phần tử span chứa tổng tiền
 				var span = document.querySelector(".totalPrice");
 				// Cập nhật nội dung của span bằng tổng tiền đã định dạng
-				span.textContent = formatter.format(total);
-			}
-
-		}
+				span.textContent = formatter.format(total);	
+				}
+				}
 
 		function subtract(button) {
 			var input = button.parentNode.querySelector(".product_quantity");
@@ -865,8 +862,10 @@
 		function add(button) {
 			var input = button.parentNode.querySelector(".product_quantity");
 			var currentValue = parseInt(input.value);
-			input.value = currentValue + 1;
-			input.dispatchEvent(new Event("input"));
+			if(currentValue < quantityproductvariant){
+				input.value = currentValue + 1;
+				input.dispatchEvent(new Event("input"));
+			}
 		}
 
 
@@ -947,40 +946,61 @@
 				}
 			}
 
-			// check null color vs size
-
-
-			if (document.querySelector("input[name='flexRadioDefault']:checked") || document.querySelector("input[name='flexRadio']:checked")) {
-				// Lấy input chứa số lượng
-				setNumber.value = 1;
+		 // check null color vs size
+		 if(document.querySelector("input[name='flexRadioDefault']:checked") || document.querySelector("input[name='flexRadio']:checked")){
+			// Lấy input chứa số lượng
+			setNumber.value = 1;
+		 }
+		// var size =document.querySelector("input[name='flexRadio']:checked").value;
+		
+		var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
+		// hoặc tạo một chuỗi query chứa color và size
+		var data = "id="+ id +"&color=" + color + "&size=" + size;
+		var totalquantity = document.getElementById("totalquantity");
+		 console.log(id,color, size);
+		$.ajax({
+			url: "/data", // url của server
+			type: "POST", // phương thức gửi request
+			data: data, // dữ liệu gửi lên server 
+			success: function (price){
+				console.log(price);
+				let formatter = new Intl.NumberFormat('vi-VN', {
+				    style: 'currency',
+				    currency: 'VND',
+				  });
+				  // sử dụng phương thức format để định dạng giá tiền
+				  let formattedPrice = formatter.format(price); // "123.456.789 ₫"
+				  if(isDesktop.matches){
+					$(".price").text(formattedPrice); // giá bán mới
+				  }
+				  $(".price_real").text(formattedPrice); // giá bán mới
+				//   $("del").hide();
 			}
-			// var size =document.querySelector("input[name='flexRadio']:checked").value;
-
-			var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
-			// hoặc tạo một chuỗi query chứa color và size
-			var data = "id=" + id + "&color=" + color + "&size=" + size;
-			console.log(id, color, size);
-			$.ajax({
-				url: "/data", // url của server
-				type: "POST", // phương thức gửi request
-				data: data, // dữ liệu gửi lên server 
-				success: function (price) {
-					console.log(price);
-					let formatter = new Intl.NumberFormat('vi-VN', {
-						style: 'currency',
-						currency: 'VND',
-					});
-					// sử dụng phương thức format để định dạng giá tiền
-					let formattedPrice = formatter.format(price); // "123.456.789 ₫"
-					if (isDesktop.matches) {
-						$(".price").text(formattedPrice); // giá bán mới
-					}
-					$(".price_real").text(formattedPrice); // giá bán mới
-					//   $("del").hide();
+			
+			
+		});
+		$.ajax({
+			url: "/quantityproductvariant", // url của server
+			type: "POST", // phương thức gửi request
+			data: data, // dữ liệu gửi lên server 
+			success: function (quantity){
+				quantityproductvariant = quantity;
+				totalquantity.textContent = "Số lượng kho: " + quantityproductvariant;
+				totalquantity.className = "text-danger";
+				if(quantityproductvariant == 0){
+					addCart.classList.add("pe-none");
 				}
+			}
+		});
+		// console.log(color);
+		// fetch('/quantityproductvariant?id=' + id + '&color=' + color + '&size=' + size)
+		// 		.then(response => response.json())
+		// 		.then(quantity => {
+		// 			// Cập nhật dữ liệu cho biểu đồ
+		// 			quantityproductvariant = quantity;
+		// 			console.log(quantityproductvariant);
+		// 		});
 
-
-			});
 		}
 
 
