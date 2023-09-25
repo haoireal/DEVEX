@@ -20,6 +20,7 @@ import com.Devex.Entity.ProductVariant;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
+import com.Devex.Sevice.SessionService;
 
 @Controller
 
@@ -33,11 +34,15 @@ public class ProductDetailController {
 	
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+    SessionService session;
 
 	
 
 	@RequestMapping("/details/{id}")
 	public String details(ModelMap model, @PathVariable("id") String id) {
+		session.set("url", "/details/" + id);
 		Product seller = productService.findProductById(id);
 		Product product = productService.findById(id).orElse(new Product());
 		List<String> listSize = new ArrayList<>();
