@@ -48,6 +48,7 @@
 		</div>
 	</header>
 	<main th:object="${product}">
+
 		<!-- duyện qua product trả về -->
 		<div class="container container_main mt-4 ">
 			<form th:action="@{'/cart/add/' + *{id}}" method="post">
@@ -93,7 +94,8 @@
 						<!--Title-->
 						<div class="row">
 							<div class="col-12 title_product">
-								<span th:id="*{id}" class="text_name-product" th:text="*{name}">
+								<span th:id="*{id}" class="text_name-product" th:text="*{name}" id="orderInfo"
+									name="orderInfo">
 								</span>
 								<!-- hiện thị tên sp -->
 							</div>
@@ -152,7 +154,9 @@
 							</div>
 
 							<div class=" col-10">
-								<span> <strong class="fs-3 fw-bold price totalPrice" style="color: #ee4d2d;"
+								<span> <strong class="fs-3 fw-bold price totalPrice" id="amount" name="amount"
+										style="color: #ee4d2d;"
+
 										th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'POINT',0,'POINT')}+' ₫'"></strong></span>
 
 								<del class="fs-5 ms-3 opacity-50"
@@ -234,20 +238,35 @@
 
 
 						<!--Purchase(mua)-->
+						<!--Purchase(mua)-->
 						<div id="addCart" class="row mt-3 d-none d-lg-flex pe-none ">
 							<div class="col-7 col-lg-5">
-								<button onclick="addToCartAndNavigateHome()" class="btn btn_buy" type="submit">Thêm Vào Giỏ
+								<button class="btn btn_buy" type="submit" name="action" value="addcart">Thêm Vào Giỏ
+
 									Hàng</button>
+							</div>
+							<div class="col-5 col-lg-4 mb-3">
+								<button class="btn btn_buy" type="submit"name="action" value="order">
+									<i class="fa-solid fa-cart-shopping" ></i> Đặt Hàng
+								</button>
+							</div>
+							
+						</div>
+
 			</form>
 
 		</div>
-		<div class="col-5 col-lg-4 mb-3">
-			<button class="btn btn_buy" type="button">
-				<i class="fa-solid fa-cart-shopping"></i> Đặt Hàng
-			</button>
+<!--
+		<form th:action="@{/hihi}" method="get" style="position: absolute; margin-left: 300px;">
+			<input type="text" class="form-control" id="orderInfo" name="orderInfo" required
+				value="Thanh toan don hang 2923" style="display: none;">
+			<input type="text" th:value="*{productVariants[0].priceSale}" id="amount" name="amount"
+				style="display: none;" />
 
-		</div>
 
+
+			</div>
+		</form>-->
 		<div class="col-3"></div>
 		<hr>
 		<!-- hết thẻ đặt hàng -->
@@ -696,7 +715,6 @@
 						</div>
 						<div class="col-6 ">
 							<div id="number_quantity_mobile" class=" pe-none  float-end ">
-
 								<div class="control d-flex align-items-center ">
 
 									<label class="button btn_Sub border-0 fs-3 " onclick="subtract(this)"> <i
@@ -712,13 +730,16 @@
 						</div>
 
 
+								<div class="control d-flex align-items-center ">
+
 					</div>
 				</div>
 				<!--model footer-->
 				<div class="model-footer">
 					<div class="row d-flex justify-content-center">
 						<!-- 					<a th:href="@{'/cart/add/' + *{id}}"> -->
-						<button onclick="addToCartAndNavigateHome()" id="btn_add_buy" class="product-bottom-mobile_add-cart"
+						<button id="btn_add_buy" class="product-bottom-mobile_add-cart"
+
 							style="background-color: #2550b9 !important;">
 							<div class="content_Add-cart " style="line-height: 50px;">
 								<span class="text-light" style="font-size: .875rem;">Thêm
@@ -964,6 +985,24 @@
 
 
 
+	</script>
+
+	<script>
+		var spanElement = document.getElementById("amount");
+		var spanText = spanElement.textContent;
+		$.ajax({
+			type: "POST", // Hoặc "GET" tùy vào yêu cầu của bạn
+			url: "/submitOrder", // Đường dẫn đến phương thức trong Controller
+			data: {spanValue: spanText}, // Dữ liệu bạn muốn gửi đến Controller
+			success: function (response) {
+				// Xử lý kết quả từ Controller (nếu cần)
+				console.log(response);
+			},
+			error: function (error) {
+				// Xử lý lỗi (nếu có)
+				console.error(error);
+			}
+		});
 	</script>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
