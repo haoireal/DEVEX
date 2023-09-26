@@ -25,8 +25,10 @@ import com.Devex.Entity.Customer;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.ProductVariant;
+import com.Devex.Entity.User;
 import com.Devex.Repository.CartDetailRespository;
 import com.Devex.Sevice.CartDetailService;
+import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.OrderStatusService;
@@ -44,7 +46,11 @@ public class CartAPIController {
 	private SessionService sessionService;
 
 	@Autowired
-	private OrderService orderService;
+	CustomerService customerService;
+	
+	@Autowired
+	OrderService orderService;
+
 
 	@Autowired
 	private OrderDetailService orderDetailService;
@@ -60,8 +66,15 @@ public class CartAPIController {
 
 	@GetMapping("/rest/cart")
 	public List<CartDetailDTo> getAll(Model model) {
-		Customer user = sessionService.get("user");
-		List<CartDetailDTo> cartDetails = cart.findAllCartDTO(user.getUsername());
+		User user = sessionService.get("user");
+		Customer customer = null;
+		List<CartDetailDTo> cartDetails = new ArrayList<>(); 
+		if(user != null) {
+			customer = customerService.findById(user.getUsername()).get();
+			cartDetails = cart.findAllCartDTO(customer.getUsername());
+		}
+//		Customer customer = customerService.findById(user.getUsername()).get();
+//		List<CartDetailDTo> cartDetails = cart.findAllCartDTO(customer.getUsername());
 
 //		Map<String, CartDetailDTo> cartDetailMap = new HashMap<>();
 //
@@ -140,16 +153,22 @@ public class CartAPIController {
 
 	@PostMapping("/rest/cart/order")
 	public ResponseEntity<Void> order(@RequestBody List<CartDetailDTo> listOrder) {
-		Customer user = sessionService.get("user");
+//		Customer user = sessionService.get("user");
+		User user = sessionService.get("user");
+		Customer customer = null;
+		if(user != null) {
+			customer = customerService.findById(user.getUsername()).get();
+		}
+//		Customer customer = customerService.findById(user.getUsername()).get();
 		Order order = new Order();
 		order.setCreatedDay(new Date());
 		System.out.println(new Date());
 		order.setNote("Đóng gói kĩ và giao vào giờ hành chính");
-		order.setAddress(user.getAddress());
-		order.setPhone(user.getPhoneAddress());
+		order.setAddress(customer.getAddress());
+		order.setPhone(customer.getPhoneAddress());
 		order.setVoucherOrder(null);
 		order.setPriceDiscount(0.0);
-		order.setCustomerOrder(user);
+		order.setCustomerOrder(customer);
 		order.setOrderStatus(orderStatusService.findById(1001).get());
 		order.setPayment(paymentService.findById(1001).get());
 		order.setTotal(listOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum());
