@@ -71,5 +71,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 	@Query("SELECT COUNT(p) FROM Product p WHERE p.sellerProduct.username like ?1")
 	int getCountProductBySellerUsername(String username);
+	
+	
 
 }
