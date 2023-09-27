@@ -2,6 +2,8 @@ let host = "http://localhost:8888/rest";
 const app = angular.module("app", []);
 
 app.controller("cart-ctrl", function ($scope, $http) {
+
+
   //format tiền cho đẹp
   $scope.formatMoney = function (x) {
     var money = "";
@@ -30,7 +32,64 @@ app.controller("cart-ctrl", function ($scope, $http) {
     shopGroups: {},
     selectAll: false,
     selectedShopIds: [],
+    sizes: [],
+    colors: [],
+    selectedProduct:[],
+    // Mở Modal chọn size và màu
+    openModal: function(product) {
+      this.selectedProduct = product; // Sao chép sản phẩm để không ảnh hưởng đến sản phẩm gốc
+      var url = `${host}/cart/color/${product.idProduct}`;
+      $http.get(url).then((response) => {
+            if (response.data === null) {
+              this.colors = null;
+            }else{
+              this.colors = response.data;
+            }
+        this.selectedProduct.colors = this.colors;
+        console.log("độ dài mảng màu là ", this.selectedProduct.colors.length)
+      });
+      // Khai báo danh sách size và color tương ứng với sản phẩm, ví dụ:
+      var url = `${host}/cart/size/${product.idProduct}`;
+      $http.get(url).then((response) => {
+        if (response.data === null) {
+          this.sizes = null;
+        }else{
+          this.sizes = response.data;
+        }
+       this.selectedProduct.sizes = this.sizes;
+        console.log("độ dài mảng color là ",this.selectedProduct.sizes.length)
+      });
+      console.log(product.idProduct)
+      $('#myModal').modal('show');
+    },
 
+    saveSelection: function() {
+      let product = this.selectedProduct;
+      var item = this.items.find((item) => item.id == id);
+      if ($scope.cart.selectedSize === undefined || $scope.cart.selectedSize === null){
+        $scope.cart.selectedSize = product.size;
+      }
+      if ($scope.cart.selectedColor === undefined || $scope.cart.selectedColor === null){
+        $scope.cart.selectedColor = product.color;
+      }
+      console.log("Tên sp sau khi lưu: ",product.idProduct)
+      console.log("Size được chọn:", $scope.cart.selectedSize);
+      console.log("Màu được chọn:", $scope.cart.selectedColor);
+      this.selectedSize =  $scope.cart.selectedSize;
+      this.selectedColor = $scope.cart.selectedColor;
+      var url = `${host}/cart/changeSizenColor/${product.idProduct}`;
+      var data = {
+        size: $scope.cart.selectedSize,
+        color: $scope.cart.selectedColor
+      };
+      $http.put(url, data).then((response) => {
+
+      });
+      $('#myModal').modal('hide');
+    },
+    hideModal: function(){
+      $('#myModal').modal('hide');
+    },
     // load sản phẩm trong giỏ hàng
     loadProductCart() {
       var url = `${host}/cart`;
