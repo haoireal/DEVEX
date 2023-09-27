@@ -53,8 +53,15 @@ public interface OrderService {
 
 	int getCountOrderForSeller(String username);
 
-	int getTotalOrderByStatusIdAndSellerUsername(int statusid, int statusid1, String username);
+	int getTotalOrderByStatusIdAndSellerUsername(int statusid, int statusid1, String username, int year, int month);
 
-	int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(int statusid, String username);
+	int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(int statusid, String username, int year, int month);
+
+	List<Order> getAllOrderByUsernameAndStatusIdAndYearAndMonth(int statusid, int statusid1, String username, int year,
+			int month);
+
+	List<Order> getAllOrderFalseByUsernameAndStatusIdAndYearAndMonth(int statusid, String username, int year, int month);
+
+	Double getTotalPriceOrder();
 
 }
