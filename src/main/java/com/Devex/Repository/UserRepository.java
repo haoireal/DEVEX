@@ -31,4 +31,10 @@ public interface UserRepository extends JpaRepository<User, String>{
 	@Query(value = "UPDATE Users SET Fullname = ?, Email = ?, Password = ?, Phone = ?, Gender = ?, Active = ? WHERE Username = ?", nativeQuery = true)
 	void updateUser(String Fullname, String Email, String Password, String Phone, String Gender, Boolean Active,String Username);
 	
+	@Query("SELECT COUNT(u) FROM User u " + 
+		       "JOIN u.roles rs " +
+		       "JOIN rs.role r " +
+		       "WHERE r.id IN ('CUSTOMER', 'SELLER')")
+	int getAmountUserOfAdmin();
+	
 }

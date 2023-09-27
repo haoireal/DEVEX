@@ -7,17 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.Devex.DTO.SizeColorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.Devex.DTO.CartDetailDTo;
 import com.Devex.Entity.CartDetail;
@@ -75,7 +69,6 @@ public class CartAPIController {
 		}
 //		Customer customer = customerService.findById(user.getUsername()).get();
 //		List<CartDetailDTo> cartDetails = cart.findAllCartDTO(customer.getUsername());
-
 //		Map<String, CartDetailDTo> cartDetailMap = new HashMap<>();
 //
 //		for (CartDetailDTo cartDetail : cartDetails) {
@@ -195,6 +188,7 @@ public class CartAPIController {
 		return ResponseEntity.ok().build();
 	}
 
+
 //	@PostMapping("/rest/cart")
 //	public ResponseEntity<String> createCartDetail(@RequestBody CartDetail cartDetail) {
 //	    CartDetail savedCartDetail = cart.save(cartDetail);
@@ -219,4 +213,92 @@ public class CartAPIController {
 //	    }
 //	}
 
+    @GetMapping("/rest/cart/size/{id}")
+    public List<String> size(@PathVariable("id") String id) {
+        List<ProductVariant> pv = productVariantService.findAllProductVariantByProductId(id);
+        List<String> sizes = new ArrayList<>();
+        for (ProductVariant p : pv) {
+            String size = p.getSize();
+            if (!sizes.contains(size)) {
+                // Nếu chưa tồn tại, thêm phần tử vào danh sách
+                sizes.add(size);
+            }
+        }
+        if (sizes.size() < 0) {
+            return null;
+        }
+        return sizes;
+    }
+
+    @GetMapping("/rest/cart/color/{id}")
+    public List<String> color(@PathVariable("id") String id) {
+        List<ProductVariant> pv = productVariantService.findAllProductVariantByProductId(id);
+        List<String> colors = new ArrayList<>();
+        for (ProductVariant p : pv) {
+            String color = p.getColor();
+            if (!colors.contains(color)) {
+                // Nếu chưa tồn tại, thêm phần tử vào danh sách
+                colors.add(color);
+            }
+        }
+        if (colors.isEmpty()) {
+            return null;
+        }
+        return colors;
+    }
+
+
+    @PutMapping("/rest/cart/changeSizenColor/{id}")
+    public ResponseEntity<ProductVariant> changeSizenColor(@PathVariable("id") String id,
+														   @RequestParam("cartDetailId") int cartDetailId,
+                                                           @RequestBody SizeColorDTO sizeColorDTO) {
+        List<ProductVariant> pvList = productVariantService.findAllProductVariantByProductId(id);
+        ProductVariant item = null;
+		System.out.println(cartDetailId);
+        System.out.println(sizeColorDTO.getSize());
+        System.out.println(sizeColorDTO.getColor());
+		List<String> colors = new ArrayList<>();
+		List<String> sizes = new ArrayList<>();
+		for (ProductVariant p: pvList) {
+			if(!colors.contains(p.getColor())){
+				colors.add(p.getColor());
+			}
+			if(!sizes.contains(p.getSize())){
+				sizes.add(p.getSize());
+			}
+		}
+		for (ProductVariant p: pvList) {
+			if(colors.size() == 1){
+				if (p.getSize().equalsIgnoreCase(sizeColorDTO.getSize())){
+					item = p;
+					CartDetail cd = cart.findById(cartDetailId).get();
+					cd.setProductCart(item);
+					cart.save(cd);
+					break;
+				}
+			} else if(sizes.size() == 1){
+				if (p.getColor().equalsIgnoreCase(sizeColorDTO.getColor())){
+					item = p;
+					CartDetail cd = cart.findById(cartDetailId).get();
+					cd.setProductCart(item);
+					cart.save(cd);
+					break;
+				}
+			}else{
+				if(p.getColor().equalsIgnoreCase(sizeColorDTO.getColor()) && p.getSize().equalsIgnoreCase(sizeColorDTO.getSize()))
+				{
+					item = p;
+					CartDetail cd = cart.findById(cartDetailId).get();
+					cd.setProductCart(item);
+					cart.save(cd);
+					break;
+				}
+			}
+        }
+        if (item != null) {
+            return ResponseEntity.ok(item); // Trả về 200 OK nếu tìm thấy
+        } else {
+            return ResponseEntity.notFound().build(); // Trả về 404 Not Found nếu không tìm thấy
+        }
+    }
 }

@@ -20,6 +20,9 @@ import com.Devex.Entity.Role;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
+import com.Devex.Sevice.OrderDetailService;
+import com.Devex.Sevice.OrderService;
+import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.RoleService;
 import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
@@ -34,23 +37,28 @@ public class DevexAdminRestController {
 
 
 	@Autowired
-	RoleService roleService;
+	private RoleService roleService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	UserRoleService userRoleService;
+	private UserRoleService userRoleService;
 	
 	@Autowired
-	SellerService sellerService;
+	private SellerService sellerService;
 	
 	@Autowired
-	SessionService session;
+	private SessionService session;
 	
-	
+	@Autowired
+	private ProductService productService;
 
+	@Autowired
+	private OrderService orderService;
 	
+	@Autowired
+	private OrderDetailService detailService;
 
 	@GetMapping("/userDetail")
 	public Map<String, Object> updateUser() {
@@ -140,5 +148,19 @@ public class DevexAdminRestController {
 
         return ResponseEntity.ok(response);
     }
+	
+	@GetMapping("/admin/revenue")
+	public Map<String, Object> getRevenueAdmin(){
+		Map<String, Object> mapStatistical = new HashMap<>();
+		long amountorder = orderService.count();
+		Double amountRevenue= orderService.getTotalPriceOrder();
+		int amountUser = userService.getAmountUserOfAdmin();
+		long amountProduct = productService.count();
+		mapStatistical.put("amountorder", amountorder);
+		mapStatistical.put("amountRevenue", amountRevenue);
+		mapStatistical.put("amountUser", amountUser);
+		mapStatistical.put("amountProduct", amountProduct);
+		return mapStatistical;
+	}
 	
 }	 

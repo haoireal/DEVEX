@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Giỏ Hàng</title>
+    <link class="devex" rel="icon" href="/img/banner/title-icon.png"/>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-      crossorigin="anonymous"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+            crossorigin="anonymous"
     />
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
 
     <!--cnd fontawesome-->
@@ -43,25 +44,86 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+       <!-- Thêm thư viện jQuery -->
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
+            integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
     <style>
-      /* tắt phím tăng giảm của input number */
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
+        /* tắt phím tăng giảm của input number */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
-      #cartOrderForm {
-        position: sticky;
-        bottom: 0px;
-        z-index: 9;
-      }
+        #cartOrderForm {
+            position: sticky;
+            bottom: 0px;
+            z-index: 9;
+        }
 
-      a {
-        text-decoration: none;
-      }
+        a {
+            text-decoration: none;
+        }
+        :focus {
+            outline: 0;
+            border-color: #2260ff;
+            box-shadow: 0 0 0 4px #b5c9fc;
+        }
+
+        .mydict div {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+            justify-content: center;
+        }
+
+        .mydict input[type="radio"] {
+            clip: rect(0 0 0 0);
+            clip-path: inset(100%);
+            height: 1px;
+            overflow: hidden;
+            position: absolute;
+            white-space: nowrap;
+            width: 1px;
+        }
+
+        .mydict input[type="radio"]:checked + span,
+        .mydict input[type="radio"]:focus + span,
+        .mydict input[type="radio"]:hover + span{
+            box-shadow: 0 0 0 0.0625em #0043ed;
+            background-color: #dee7ff;
+            z-index: 1;
+            color: #0043ed;
+        }
+
+        label span {
+            display: block;
+            cursor: pointer;
+            background-color: #fff;
+            padding: 0.375em .75em;
+            position: relative;
+            margin-left: .0625em;
+            box-shadow: 0 0 0 0.0625em #b5bfd9;
+            letter-spacing: .05em;
+            color: #3e4963;
+            text-align: center;
+            transition: background-color .5s ease;
+        }
+
+        label:first-child span {
+            border-radius: .375em 0 0 .375em;
+        }
+
+        label:last-child span {
+            border-radius: 0 .375em .375em 0;
+        }
+
     </style>
-  </head>
+</head>
 
   <body ng-app="app" ng-controller="cart-ctrl">
     <header>
@@ -177,23 +239,69 @@
                       <p class="fw-normal mb-2 card-title tensp ng-binding">
                         {{ item.nameProduct }}
                       </p>
-                      <button
-                        type="button"
-                        class="btn btn-secondary p-1 mb-2 w-100 d-flex justify-content-center"
-                      >
-                        <div class="m-0 px-3" ng-if="item.size != ''">
-                          Size:
-                          <span class="text-white ng-binding"
-                            >{{ item.size }}
+                       <button ng-click="cart.openModal(item)"
+                                            type="button"
+                                            class=" btn btn-secondary p-1 mb-2 w-100 d-flex justify-content-center"
+                                    >
+                                        <div class="m-0 px-3" ng-if="item.size != ''">
+                                            Size:
+                                            <span class="text-white ng-binding"
+                                            >{{ item.size }}
                           </span>
-                        </div>
-                        <div class="m-0 px-3">
-                          Color:
-                          <span class="text-white ng-binding"
-                            >{{ item.color }}</span
-                          >
-                        </div>
-                      </button>
+                                        </div>
+                                        <div class="m-0 px-3">
+                                            Color:
+                                            <span class="text-white ng-binding"
+                                            >{{ item.color }}</span
+                                            >
+                                        </div>
+                                    </button>
+                                    <!-- Modal -->
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Chọn Size và Màu</h4>
+
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="modal-title"  ng-if="cart.sizes.length === 1 && cart.colors.length === 1">Sản phẩm này không có loại khác</p>
+                                                    <!-- Thêm các trường lựa chọn size và màu ở đây -->
+                                                    <div class="mydict mb-3"  ng-if="cart.sizes ">
+                                                        <!-- Lặp qua danh sách sizes -->
+                                                        <label >Size:</label>
+                                                            <label  ng-repeat="size in cart.sizes">
+                                                                <input type="radio" class="btn-check" name="size" ng-model="cart.selectedSize"
+                                                                       id="size-{{$index}}"
+                                                                       ng-value="size"
+                                                                      >
+                                                                <span for="size-{{$index}}" style="user-select: none;" >{{
+                                                                    size }}</span>
+                                                            </label>
+                                                    </div>
+                                                    <div class="mydict" ng-if="cart.colors">
+                                                        <!-- Lặp qua danh sách colors -->
+                                                        <label >Màu sắc:</label>
+                                                        <label ng-repeat="color in cart.colors">
+                                                            <input type="radio" ng-model="cart.selectedColor" ng-value="color" id="color-{{$index}}" name="color">
+                                                            <span  for="color-{{$index}}" style="user-select: none;">{{
+            color }}</span>
+                                                        </label>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="modal-footer">
+
+                                                    <button type="button" class="btn btn-primary" ng-if="cart.sizes.length > 1 || cart.colors.length > 1"
+                                                            ng-disabled="!cart.selectedSize || !cart.selectedColor" ng-click="cart.saveSelection()">Lưu
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary" ng-click="cart.hideModal()">Đóng</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                       <div class="row">
                         <s class="col-4 ng-binding"
                           >{{formatMoney(item.price)}} ₫</s
@@ -410,229 +518,50 @@
         </div>
       </div>
     </main>
-    <footer>
-      <!-- place footer here -->
+   <div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
+<!-- <script>
+  function updateTotalPrice(selectElement) {
+    const productContainer = selectElement.closest(".product-container");
+    const quantity = parseInt(selectElement.value, 10);
+    const priceText = productContainer
+      .querySelector(".product-price")
+      .innerText.trim();
+    const price = parseFloat(priceText.replace(/[^\d.-]/g, ""));
+    const totalPrice = quantity * price;
+    productContainer.querySelector(".totalPriceValue").innerText =
+      totalPrice.toLocaleString("vi-VN");
+    productContainer
+      .querySelector(".totalPriceValue")
+      .setAttribute("data-total-price", totalPrice);
+  }
+</script> -->
+<script th:src="@{/js/cart-ctrl.js}"></script>
 
-      <div
-        class="container-fluid mt-3"
-        style="
-          background: linear-gradient(
-            90deg,
-            rgba(25, 38, 186, 1) 0%,
-            rgba(57, 151, 184, 1) 54%,
-            rgba(0, 212, 255, 1) 100%
-          );
-        "
-      >
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-6 col-md-4 col-lg-2 mt-2">
-              <span class="footer_title_content"> Hỗ Trợ Khách Khàng</span>
-              <ul
-                class="list_customers"
-                style="list-style-type: none; padding: 0"
-              >
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Các Câu Hỏi Thường Gặp</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Gửi Yêu Cầu Hỗ Trợ</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Hướng Dẫn Đặt Hàng</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Phương thức vận chuyển</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Chính Sách Đổi Trả</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Hướng Dẫn Trả Góp</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div class="col-xs-6 col-md-4 col-lg-2 mt-2">
-              <span class="footer_title_content"> Về Chúng Tôi DEVEX</span>
-              <ul
-                class="list_customers"
-                style="list-style-type: none; padding: 0"
-              >
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Giới Thiệu</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Tuyển Dụng</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Chính Sách Bảo Mật Và Thanh Toán</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Bán Hàng Doanh Nghiệp</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Điều Kiện Vận Chuyển</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div class="col-xs-6 col-md-4 col-lg-2 mt-2">
-              <span class="footer_title_content"> Hợp Tác Và Liên Kết</span>
-              <ul
-                class="list_customers"
-                style="list-style-type: none; padding: 0"
-              >
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Hỗ Trợ Khách Khàng</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Hỗ Trợ Khách Khàng</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Hỗ Trợ Khách Khàng</a
-                  >
-                </li>
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Hỗ Trợ Khách Khàng</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div class="col-xs-6 col-md-4 col-lg-3 mt-2">
-              <span class="footer_title_content">
-                Giao Hàng Và Các Phương Thức Thanh Toán</span
-              >
-              <ul
-                class="list_customers"
-                style="list-style-type: none; padding: 0"
-              >
-                <li>
-                  <a href="" class="text-decoration-none text-light"
-                    >Hỗ Trợ Khách Khàng</a
-                  >
-                </li>
-              </ul>
-            </div>
+<script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"
+></script>
 
-            <div class="col-xs-6 col-md-4 col-lg-3 mt-2">
-              <h3 class="footer_title_content">HOTLINE: **********</h3>
-              <ul
-                class="list-customers"
-                style="list-style-type: none; padding: 0"
-              ></ul>
-            </div>
-          </div>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"
+></script>
+<!--slick slide-->
 
-          <div class="content_footer">
-            <div class="row">
-              <div class="col-12">
-                <div class="row">
-                  <span class="text-center content_footer-text"
-                    >Trụ sở chính: Tòa nhà Viettel, Số 285, đường Cách Mạng
-                    Tháng 8, phường 12, quận 10, Thành phố Hồ Chí Minh DEVEX
-                    nhận đặt hàng trực tuyến và giao hàng tận nơi, chưa hỗ trợ
-                    mua và nhận hàng trực tiếp tại văn phòng hoặc trung tâm xử
-                    lý đơn hàng
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <div class="row">
-                  <span class="text-center content_footer-text"
-                    >Giấy chứng nhận Đăng ký Kinh doanh số 0309532909 do Sở Kế
-                    hoạch và Đầu tư Thành phố Hồ Chí Minh cấp lần đầu ngày
-                    06/01/2010 và sửa đổi lần thứ 23 ngày 14/02/2022
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <div class="row">
-                  <span class="text-center content_footer-text">
-                    © 2022 - Bản quyền của Công ty TNHH DEVEX</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <!-- <script>
-      function updateTotalPrice(selectElement) {
-        const productContainer = selectElement.closest(".product-container");
-        const quantity = parseInt(selectElement.value, 10);
-        const priceText = productContainer
-          .querySelector(".product-price")
-          .innerText.trim();
-        const price = parseFloat(priceText.replace(/[^\d.-]/g, ""));
-        const totalPrice = quantity * price;
-        productContainer.querySelector(".totalPriceValue").innerText =
-          totalPrice.toLocaleString("vi-VN");
-        productContainer
-          .querySelector(".totalPriceValue")
-          .setAttribute("data-total-price", totalPrice);
-      }
-    </script> -->
-
-    <script th:src="@{/js/cart-ctrl.js}"></script>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-      crossorigin="anonymous"
-    ></script>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-      crossorigin="anonymous"
-    ></script>
-    <!--slick slide-->
-
-    <script
-      type="text/javascript"
-      src="https://code.jquery.com/jquery-1.11.0.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
-    ></script>
-    <!-- <script src="/static/admin/dist/js/user/userIndex.js"></script> -->
+<script
+        type="text/javascript"
+        src="https://code.jquery.com/jquery-1.11.0.min.js"
+></script>
+<script
+        type="text/javascript"
+        src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"
+></script>
+<script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+></script>
+<!-- <script src="/static/admin/dist/js/user/userIndex.js"></script> -->
   </body>
 </html>

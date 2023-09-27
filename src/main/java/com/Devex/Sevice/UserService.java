@@ -52,4 +52,6 @@ public interface UserService {
 
 	void updateUser(String Fullname, String Email, String Password, String Phone, String Gender, Boolean Active, String Username);
 
+	int getAmountUserOfAdmin();
+
 }

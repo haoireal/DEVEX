@@ -106,16 +106,15 @@ public class CartController {
 		
 		cartDetailService.save(cartDetail);	
 	}
-	
+
 
 	@RequestMapping("/cart/add/{idProduct}")
 	public String addCart(@PathVariable("idProduct") String id, Model model,
-			@RequestParam(name = "flexRadio", required = false) String size,
-			@RequestParam(name = "flexRadioDefault", required = false) String cloer,
-			@RequestParam(name = "soluong") int soLuong,
-			@RequestParam(name ="action") String action)
+						  @RequestParam(name = "flexRadio", required = false) String size,
+						  @RequestParam(name = "flexRadioDefault", required = false) String cloer,
+						  @RequestParam(name = "soluong") int soLuong,
+						  @RequestParam(name ="action") String action)
 			throws JsonProcessingException {
-		
 		if ("addcart".equals(action)) {
 			int idProductVariant = 0;
 			System.out.println("size:" + size);
@@ -125,14 +124,13 @@ public class CartController {
 			} else {
 				idProductVariant = pvService.findIdProductVaVariantbySizeandColor(cloer, size, id);
 			}
-			
 			addCartItem(idProductVariant, soLuong);
-			
+
 		}
 		if ("order".equals(action)) {
 			return "redirect:/thanhtoanhoadon";
 		}
-		
+
 		return "redirect:/details/{idProduct}";
 	}
 

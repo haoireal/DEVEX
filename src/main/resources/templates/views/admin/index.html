@@ -5,7 +5,7 @@
 <head>
 <div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="adminrevenue">
 	<div class="wrapper">
 		<!-- Preloader -->
 		<div
@@ -49,7 +49,7 @@
 							<!-- small box -->
 							<div class="small-box bg-info">
 								<div class="inner">
-									<h3>0</h3>
+									<h3>{{statistical.amountorder}}</h3>
 
 									<p>Đơn hàng</p>
 								</div>
@@ -66,7 +66,7 @@
 							<div class="small-box bg-success">
 								<div class="inner">
 									<h3>
-										0 <sup style="font-size: 20px">vnđ</sup>
+										{{statistical.amountRevenue.toLocaleString('vi-VN')}} <sup style="font-size: 20px">vnđ</sup>
 									</h3>
 
 									<p>Doanh thu</p>
@@ -83,7 +83,7 @@
 							<!-- small box -->
 							<div class="small-box bg-warning">
 								<div class="inner">
-									<h3>0</h3>
+									<h3>{{statistical.amountUser}}</h3>
 
 									<p>Người dùng</p>
 								</div>
@@ -99,7 +99,7 @@
 							<!-- small box -->
 							<div class="small-box bg-danger">
 								<div class="inner">
-									<h3>65</h3>
+									<h3>{{statistical.amountProduct}}</h3>
 
 									<p>Sản phẩm</p>
 								</div>
@@ -242,6 +242,24 @@
 			th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
 	</div>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+	<script>
+		app = angular.module("app", []);
+		app.controller("adminrevenue", function ($scope, $http, $window) {
+
+			$scope.a = function () {
+				$http.get('/api/admin/revenue').then(resp => {
+					$scope.a = resp.data;
+					console.log($scope.a);
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+
+			$scope.a();
+
+		});
+	</script>
 </body>
 
 </html>

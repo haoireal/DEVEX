@@ -52,18 +52,22 @@ public class Order implements Serializable{
 	@Column(name = "Phone")
 	private String phone;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Payment_ID")
 	private Payment payment;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Status_ID")
 	private OrderStatus orderStatus;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Customer_ID")
 	private Customer customerOrder;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Voucher_ID")
 	private Voucher voucherOrder;
