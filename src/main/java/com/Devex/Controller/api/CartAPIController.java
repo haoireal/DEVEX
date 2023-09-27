@@ -19,8 +19,10 @@ import com.Devex.Entity.Customer;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.ProductVariant;
+import com.Devex.Entity.User;
 import com.Devex.Repository.CartDetailRespository;
 import com.Devex.Sevice.CartDetailService;
+import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.OrderStatusService;
@@ -31,32 +33,42 @@ import com.Devex.Sevice.SessionService;
 @CrossOrigin("*")
 @RestController
 public class CartAPIController {
-    @Autowired
-    CartDetailService cart;
+	@Autowired
+	private CartDetailService cart;
 
-    @Autowired
-    SessionService sessionService;
+	@Autowired
+	private SessionService sessionService;
 
-    @Autowired
-    OrderService orderService;
+	@Autowired
+	CustomerService customerService;
+	
+	@Autowired
+	OrderService orderService;
 
-    @Autowired
-    OrderDetailService orderDetailService;
 
-    @Autowired
-    PaymentService paymentService;
+	@Autowired
+	private OrderDetailService orderDetailService;
 
-    @Autowired
-    OrderStatusService orderStatusService;
+	@Autowired
+	private PaymentService paymentService;
 
-    @Autowired
-    ProductVariantService productVariantService;
+	@Autowired
+	private OrderStatusService orderStatusService;
 
-    @GetMapping("/rest/cart")
-    public List<CartDetailDTo> getAll(Model model) {
-        Customer user = sessionService.get("user");
-        List<CartDetailDTo> cartDetails = cart.findAllCartDTO(user.getUsername());
+	@Autowired
+	private ProductVariantService productVariantService;
 
+	@GetMapping("/rest/cart")
+	public List<CartDetailDTo> getAll(Model model) {
+		User user = sessionService.get("user");
+		Customer customer = null;
+		List<CartDetailDTo> cartDetails = new ArrayList<>(); 
+		if(user != null) {
+			customer = customerService.findById(user.getUsername()).get();
+			cartDetails = cart.findAllCartDTO(customer.getUsername());
+		}
+//		Customer customer = customerService.findById(user.getUsername()).get();
+//		List<CartDetailDTo> cartDetails = cart.findAllCartDTO(customer.getUsername());
 //		Map<String, CartDetailDTo> cartDetailMap = new HashMap<>();
 //
 //		for (CartDetailDTo cartDetail : cartDetails) {
@@ -82,91 +94,100 @@ public class CartAPIController {
 //
 //		}
 //		return new ArrayList<>(cartDetailMap.values());
-        return cartDetails;
-    }
+		return cartDetails;
+	}
 
-    @DeleteMapping("/rest/cart/{id}")
-    public ResponseEntity<Void> deleteCartDetail(@PathVariable("id") int id) {
-        Optional<CartDetail> optionalCartDetail = cart.findById(id);
+	@DeleteMapping("/rest/cart/{id}")
+	public ResponseEntity<Void> deleteCartDetail(@PathVariable("id") int id) {
+		Optional<CartDetail> optionalCartDetail = cart.findById(id);
 
-        if (optionalCartDetail.isPresent()) {
-            cart.delete(optionalCartDetail.get());
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+		if (optionalCartDetail.isPresent()) {
+			cart.delete(optionalCartDetail.get());
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
-    @DeleteMapping("/rest/cart")
-    public ResponseEntity<Void> deleteCartDetailAll() {
-        cart.deleteAll();
-        return ResponseEntity.ok().build();
-    }
+	@DeleteMapping("/rest/cart")
+	public ResponseEntity<Void> deleteCartDetailAll() {
+		cart.deleteAll();
+		return ResponseEntity.ok().build();
+	}
 
-    @DeleteMapping("/rest/cart/shop/{idShop}")
-    public ResponseEntity<Void> deleteCartDetailsByShopId(@PathVariable("idShop") String idShop) {
-        List<CartDetail> listNew = new ArrayList<>();
-        List<CartDetail> list = cart.findAll();
-        list.forEach(cartDetail -> {
-            if (cartDetail.getProductCart().getProduct().getSellerProduct().getUsername().equals(idShop)) {
-                listNew.add(cartDetail);
-            }
-        });
-        cart.deleteAllInBatch(listNew);
+	@DeleteMapping("/rest/cart/shop/{idShop}")
+	public ResponseEntity<Void> deleteCartDetailsByShopId(@PathVariable("idShop") String idShop) {
+		List<CartDetail> listNew = new ArrayList<>();
+		List<CartDetail> list = cart.findAll();
+		list.forEach(cartDetail -> {
+			if (cartDetail.getProductCart().getProduct().getSellerProduct().getUsername().equals(idShop)) {
+				listNew.add(cartDetail);
+			}
+		});
+		cart.deleteAllInBatch(listNew);
 
-        return ResponseEntity.ok().build();
-    }
+		return ResponseEntity.ok().build();
+	}
 
-    @PutMapping("/rest/cart/{id}")
-    public ResponseEntity<CartDetailDTo> updateCartDetail(@PathVariable int id,
-                                                          @RequestBody CartDetailDTo updatedCartDetail) {
-        CartDetail cartDetail = cart.findById(id).get();
+	@PutMapping("/rest/cart/{id}")
+	public ResponseEntity<CartDetailDTo> updateCartDetail(@PathVariable int id,
+			@RequestBody CartDetailDTo updatedCartDetail) {
+		CartDetail cartDetail = cart.findById(id).get();
 
-        if (cartDetail != null) {
-            cartDetail.setQuantity(updatedCartDetail.getQuantity());
-            cart.save(cartDetail);
-            return ResponseEntity.ok(updatedCartDetail);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+		if (cartDetail != null) {
+			cartDetail.setQuantity(updatedCartDetail.getQuantity());
 
-    @PostMapping("/rest/cart/order")
-    public ResponseEntity<Void> order(@RequestBody List<CartDetailDTo> listOrder) {
-        Customer user = sessionService.get("user");
-        Order order = new Order();
-        order.setCreatedDay(new Date());
-        System.out.println(new Date());
-        order.setNote("Đóng gói kĩ và giao vào giờ hành chính");
-        order.setAddress(user.getAddress());
-        order.setPhone(user.getPhoneAddress());
-        order.setVoucherOrder(null);
-        order.setPriceDiscount(0.0);
-        order.setCustomerOrder(user);
-        order.setOrderStatus(orderStatusService.findById(1001).get());
-        order.setPayment(paymentService.findById(1001).get());
-        order.setTotal(listOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum());
-        orderService.save(order);
+			cart.save(cartDetail);
+			return ResponseEntity.ok(updatedCartDetail);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
-        for (CartDetailDTo item : listOrder) {
-            OrderDetails orderDetails = new OrderDetails();
-            Order orders = orderService.findLatestOrder();
-            orderDetails.setOrder(orders);
-            orderDetails.setPrice(item.getPrice());
-            CartDetail cartDetail = cart.getById(item.getId());
-            int id = cartDetail.getProductCart().getId();
-            ProductVariant prod = productVariantService.findById(id).get();
-            orderDetails.setProductVariant(prod);
-            orderDetails.setQuantity(item.getQuantity());
-            orderDetails.setStatus(orderStatusService.findById(1001).get());
-            System.out.println(orderDetails.getOrder().getId());
-            orderDetailService.save(orderDetails);
-            System.out.println("ok");
-            cart.deleteById(item.getId());
-        }
+	@PostMapping("/rest/cart/order")
+	public ResponseEntity<Void> order(@RequestBody List<CartDetailDTo> listOrder) {
+//		Customer user = sessionService.get("user");
+		User user = sessionService.get("user");
+		Customer customer = null;
+		if(user != null) {
+			customer = customerService.findById(user.getUsername()).get();
+		}
+//		Customer customer = customerService.findById(user.getUsername()).get();
+		Order order = new Order();
+		order.setCreatedDay(new Date());
+		System.out.println(new Date());
+		order.setNote("Đóng gói kĩ và giao vào giờ hành chính");
+		order.setAddress(customer.getAddress());
+		order.setPhone(customer.getPhoneAddress());
+		order.setVoucherOrder(null);
+		order.setPriceDiscount(0.0);
+		order.setCustomerOrder(customer);
+		order.setOrderStatus(orderStatusService.findById(1001).get());
+		order.setPayment(paymentService.findById(1001).get());
+		order.setTotal(listOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum());
+		orderService.save(order);
+		
+		for (CartDetailDTo item : listOrder) {
+			OrderDetails orderDetails = new OrderDetails();
+			Order orders = orderService.findLatestOrder();
+			orderDetails.setOrder(orders);
+			orderDetails.setPrice(item.getPrice());
+			CartDetail cartDetail = cart.getById(item.getId());
+			int id = cartDetail.getProductCart().getId();
+			ProductVariant prod = productVariantService.findById(id).get();
+			orderDetails.setProductVariant(prod);
+			orderDetails.setQuantity(item.getQuantity());
+			int totalquantity = prod.getQuantity();
+			int countquantity = totalquantity - item.getQuantity();
+			productVariantService.updateQuantity(countquantity, prod.getId());
+			orderDetails.setStatus(orderStatusService.findById(1001).get());
+			orderDetailService.save(orderDetails);
+			cart.deleteById(item.getId());
+		}
 
-        return ResponseEntity.ok().build();
-    }
+		return ResponseEntity.ok().build();
+	}
+
 
 //	@PostMapping("/rest/cart")
 //	public ResponseEntity<String> createCartDetail(@RequestBody CartDetail cartDetail) {

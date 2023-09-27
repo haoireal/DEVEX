@@ -132,6 +132,17 @@ public class ProductVariantServiceImpl implements ProductVariantService{
 	public int findIdProductVaVariantbySize(String coler, String id) {
 		return productVariantRepository.findIdProductVaVariantbySize(coler, id);
 	}
+
+	@Transactional
+	@Override
+	public void updateQuantity(int quantity, int id) {
+		productVariantRepository.updateQuantity(quantity, id);
+	}
+
+	@Override
+	public ProductVariant findProductVariantByColorAndSizeAndIdProduct(String productId, String color, String size) {
+		return productVariantRepository.findProductVariantByColorAndSizeAndIdProduct(productId, color, size);
+	}
 	
 	
 }

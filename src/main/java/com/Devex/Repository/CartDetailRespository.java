@@ -34,7 +34,7 @@ List<CartDetailDTo> findAllCartDTO(String username);
 	@Query("SELECT c FROM CartDetail c WHERE c.productCart.product.sellerProduct.username = :idShop")
 	List<CartDetail> findCartDetailsByShopId(@Param("idShop") String idShop);
 
-	@Query("SELECT o FROM CartDetail o WHERE o.productCart.id = ?1")
-	CartDetail findByIDProduct(int id);
+	@Query("SELECT o FROM CartDetail o WHERE o.productCart.id = ?1 AND o.cart.id = ?2")
+	CartDetail findByIDProductAndUser(int idProd, int idCart);
 
 }

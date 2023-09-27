@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import com.Devex.Entity.Cart;
 import com.Devex.Entity.CartDetail;
 import com.Devex.Entity.Customer;
@@ -64,7 +63,7 @@ public class CartController {
 	ShoppingCartService shoppingCartService;
 	@Autowired
 	RecommendationSystem recomendationService;
-	
+
 	@Autowired
 	ProductVariantService pvService;
 	@Autowired
@@ -76,71 +75,108 @@ public class CartController {
 
 	@RequestMapping("/cart")
 	public String showcart(Model model) {
-		
+
 		return "user/cartproduct";
-		
+
 	}
 
+	private void addCartItem(int id, int soLuong) {
+		ProductVariant pv2 = pvService.findById(id).get();
+		User user = session.get("user");
+		Customer customer = customerService.findById(user.getUsername()).get();
+		Cart cart = customer.getCart();
+		if(cart == null) {
+			cart = new Cart();
+			cart.setPerson(customer);
+			System.out.println(2);
+			cartService.save(cart);
+		}
+		
+		CartDetail cartDetail = cartDetailService.findByIDProductAndUser(pv2.getId(), cart.getId());
+		
+		if(cartDetail != null) {
+			cartDetail.setQuantity(cartDetail.getQuantity() + soLuong);
+		}else {
+			cartDetail = new CartDetail();
+			cartDetail.setProductCart(pv2);
+			cartDetail.setQuantity(soLuong);
+			System.out.println(3);
+			cartDetail.setCart(cart);
+		}
+		
+		cartDetailService.save(cartDetail);	
+	}
 	
+
 	@RequestMapping("/cart/add/{idProduct}")
 	public String addCart(@PathVariable("idProduct") String id, Model model,
 			@RequestParam(name = "flexRadio", required = false) String size,
 			@RequestParam(name = "flexRadioDefault", required = false) String cloer,
-			@RequestParam(name = "soluong") int soLuong) throws JsonProcessingException {
-			int idProductVariant= 0;
-			System.out.println("size:"+size);
-			System.out.println("cloer"+cloer);
-		if(size==null) {
-			idProductVariant = pvService.findIdProductVaVariantbySize(cloer,id);
-			ProductVariant pv2 = pvService.findById(idProductVariant).get();
-			CartDetail cartDetail = cartDetailService.findByIDProduct(pv2.getId());
-			if(cartDetail != null) {
-				cartDetail.setQuantity(cartDetail.getQuantity() + soLuong);
-			}else {
-				cartDetail = new CartDetail();
-				cartDetail.setProductCart(pv2);
-				cartDetail.setQuantity(soLuong);
-				User user = session.get("user");
-				Customer customer = customerService.findById(user.getUsername()).get();
-				Cart cart = customer.getCart();
-				if(cart == null) {
-					cart = new Cart();
-					cart.setPerson(customer);
-					System.out.println(2);
-					cartService.save(cart);
+			@RequestParam(name = "soluong") int soLuong,
+			@RequestParam(name ="action") String action)
+			throws JsonProcessingException {
+		
+		if ("addcart".equals(action)) {
+			int idProductVariant = 0;
+			System.out.println("size:" + size);
+			System.out.println("cloer" + cloer);
+			if (size == null) {
+				idProductVariant = pvService.findIdProductVaVariantbySize(cloer, id);
+				ProductVariant pv2 = pvService.findById(idProductVariant).get();
+				CartDetail cartDetail = cartDetailService.findByIDProduct(pv2.getId());
+				if (cartDetail != null) {
+					cartDetail.setQuantity(cartDetail.getQuantity() + soLuong);
+				} else {
+					cartDetail = new CartDetail();
+					cartDetail.setProductCart(pv2);
+					cartDetail.setQuantity(soLuong);
+					User user = session.get("user");
+					Customer customer = customerService.findById(user.getUsername()).get();
+					Cart cart = customer.getCart();
+					if (cart == null) {
+						cart = new Cart();
+						cart.setPerson(customer);
+						System.out.println(2);
+						cartService.save(cart);
+					}
+					System.out.println(3);
+					cartDetail.setCart(cart);
 				}
-				System.out.println(3);
-				cartDetail.setCart(cart);
+
+				cartDetailService.save(cartDetail);
+			} else {
+				idProductVariant = pvService.findIdProductVaVariantbySizeandColor(cloer, size, id);
+				ProductVariant pv2 = pvService.findById(idProductVariant).get();
+				CartDetail cartDetail = cartDetailService.findByIDProduct(pv2.getId());
+				if (cartDetail != null) {
+					cartDetail.setQuantity(cartDetail.getQuantity() + soLuong);
+				} else {
+					cartDetail = new CartDetail();
+					cartDetail.setProductCart(pv2);
+					cartDetail.setQuantity(soLuong);
+					User user = session.get("user");
+					Customer customer = customerService.findById(user.getUsername()).get();
+					Cart cart = customer.getCart();
+					if (cart == null) {
+						cart = new Cart();
+						cart.setPerson(customer);
+						System.out.println(2);
+						cartService.save(cart);
+					}
+					System.out.println(3);
+					cartDetail.setCart(cart);
+				}
+				;
+				addCartItem(idProductVariant, soLuong);
+
 			}
 			
-			cartDetailService.save(cartDetail);		
-		}else {
-			idProductVariant = 	pvService.findIdProductVaVariantbySizeandColor(cloer, size, id);
-			ProductVariant pv2 = pvService.findById(idProductVariant).get();
-			CartDetail cartDetail = cartDetailService.findByIDProduct(pv2.getId());
-			if(cartDetail != null) {
-				cartDetail.setQuantity(cartDetail.getQuantity() + soLuong);
-			}else {
-				cartDetail = new CartDetail();
-				cartDetail.setProductCart(pv2);
-				cartDetail.setQuantity(soLuong);
-				User user = session.get("user");
-				Customer customer = customerService.findById(user.getUsername()).get();
-				Cart cart = customer.getCart();
-				if(cart == null) {
-					cart = new Cart();
-					cart.setPerson(customer);
-					System.out.println(2);
-					cartService.save(cart);
-				}
-				System.out.println(3);
-				cartDetail.setCart(cart);
-			};
-			cartDetailService.save(cartDetail);
-			
 		}
-		return "redirect:/details/{idProduct}";
+		if ("order".equals(action)) {
+			return "redirect:/thanhtoanhoadon";
+		}
 		
+		return "redirect:/details/{idProduct}";
 	}
 
 //	@RequestMapping("/cartproduct/add/{idProduct}")
