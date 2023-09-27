@@ -60,24 +60,60 @@ public interface OrderRepository extends JpaRepository<Order, String>{
     	    "WHERE s.username = :username")
     int getCountOrderForSeller(@Param("username") String username);
     
-    @Query("SELECT SUM(o) FROM Order o " +
-		       "JOIN  OrderDetails od " +
+    @Query("SELECT COUNT(o) FROM Order o " +
+		       "JOIN  o.orderDetails od " +
 		       "JOIN  od.productVariant pv " +
 		       "JOIN  pv.product p " +
 		       "JOIN  p.sellerProduct s " +
 		       "WHERE s.username = :username " +
 		       "AND o.orderStatus.id = :statusid " +
-		       "AND od.status.id = :statusid1")
+		       "AND od.status.id = :statusid1 "+
+		       "AND FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month ")
 	int getTotalOrderByStatusIdAndSellerUsername(@Param("statusid") int statusid, @Param("statusid1") int statusid1, 
-			@Param("username") String username);
+			@Param("username") String username, @Param("year") int year, @Param("month") int month);
     
-    @Query("SELECT SUM(o) FROM Order o " +
-		       "JOIN  OrderDetails od " +
+    @Query("SELECT COUNT(o) FROM Order o " +
+		       "JOIN  o.orderDetails od " +
 		       "JOIN  od.productVariant pv " +
 		       "JOIN  pv.product p " +
 		       "JOIN  p.sellerProduct s " +
 		       "WHERE s.username = :username " +
-		       "AND od.status.id = :statusid")
-	int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(@Param("statusid") int statusid, @Param("username") String username);
+		       "AND od.status.id = :statusid " +
+		       "AND FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month ")
+	int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(@Param("statusid") int statusid, @Param("username") String username,
+			@Param("year") int year, @Param("month") int month);
+    
+    @Query("SELECT o FROM Order o " +
+		       "JOIN  o.orderDetails od " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE s.username = :username " +
+		       "AND o.orderStatus.id = :statusid " +
+		       "AND od.status.id = :statusid1 "+
+		       "AND FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month ")
+    List<Order> getAllOrderByUsernameAndStatusIdAndYearAndMonth(@Param("statusid") int statusid, @Param("statusid1") int statusid1, @Param("username") String username,
+			@Param("year") int year, @Param("month") int month);
+    
+    @Query("SELECT o FROM Order o " +
+		       "JOIN  o.orderDetails od " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE s.username = :username " +
+		       "AND od.status.id = :statusid " +
+		       "AND FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month ")
+	List<Order> getAllOrderFalseByUsernameAndStatusIdAndYearAndMonth(@Param("statusid") int statusid, @Param("username") String username,
+			@Param("year") int year, @Param("month") int month);
+    
+    @Query("SELECT SUM(o.total) FROM Order o " +
+		       "JOIN  o.orderDetails od " +
+		       "WHERE o.orderStatus.id = 1006 " +
+		       "AND od.status.id = 1009 ")
+	Double getTotalPriceOrder();
 
 }

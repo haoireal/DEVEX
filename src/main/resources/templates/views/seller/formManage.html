@@ -18,6 +18,9 @@
 	<link rel="stylesheet" href="/admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
 	<!-- BS Stepper -->
 	<link rel="stylesheet" href="/admin/plugins/bs-stepper/css/bs-stepper.min.css">
+	<style>
+		
+	</style>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="sellerproduct">
@@ -164,15 +167,32 @@
 											</tr>
 										</tbody>
 									</table>
-									<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()">Thêm chi tiết sản phẩm</button>
+									<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()">Thêm chi
+										tiết sản phẩm</button>
 								</div>
 
 							</div>
 							<!-- /.card -->
 							<!-- END TABLE SIZe -->
 							<div class="text-center">
-								<button class="btn btn-primary" ng-click="save()">Lưu</button>
-								<button class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
+								<button id="successbtn" class="btn btn-primary" ng-click="save()">Lưu</button>
+								<button id="failsebtn" class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
+							</div>
+
+							<div id="successModal" class="modal">
+								<div class="modal-content">
+									<span class="close">&times;</span>
+									<div class="circle-animation">
+										<i class="fas fa-check"></i>
+									</div>
+								</div>
+							</div>
+
+							<div id="failseModal" class="modal">
+								<div class="modal-content">
+									<span class="close">&times;</span>
+									<i class="fa-solid fa-x"></i> Dấu Tích Xanh
+								</div>
 							</div>
 						</div>
 						<!-- /.col -->
@@ -431,7 +451,7 @@
 			$scope.infoproduct = function () {
 				$http.get(url).then(resp => {
 					$scope.form = resp.data;
-					if($scope.form.name == 'Nhập tên sản phẩm tại đây'){
+					if ($scope.form.name == 'Nhập tên sản phẩm tại đây') {
 						$scope.form.name = '';
 					}
 				}).catch(error => {
@@ -450,7 +470,7 @@
 			$scope.getidcategoryDetails = function () {
 				$http.get('/idCategoryDetails').then(resp => {
 					$scope.id = resp.data;
-					$scope.selectedCategoryDetail = $scope.id; 
+					$scope.selectedCategoryDetail = $scope.id;
 				})
 			};
 
@@ -560,6 +580,37 @@
 	<!-- Script xử lý product -->
 
 	<!-- END Script xử lý product -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var successbtn = document.getElementById('successbtn');
+			var failsebtn = document.getElementById('failsebtn');
+			var successModal = document.getElementById('successModal');
+			var failseModal = document.getElementById('failseModal');
+			var closeButtons = document.getElementsByClassName('close');
+
+			successbtn.addEventListener('click', function () {
+				successModal.style.display = 'block';
+			});
+
+			failsebtn.addEventListener('click', function () {
+				failseModal.style.display = 'block';
+			});
+
+			for (var i = 0; i < closeButtons.length; i++) {
+				closeButtons[i].addEventListener('click', function () {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				});
+			}
+
+			window.addEventListener('click', function (event) {
+				if (event.target === greenModal || event.target === failseModal) {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				}
+			});
+		});
+	</script>
 </body>
 
 </html>
