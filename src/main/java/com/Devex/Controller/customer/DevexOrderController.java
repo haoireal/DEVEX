@@ -1,27 +1,18 @@
 package com.Devex.Controller.customer;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import com.Devex.DTO.KeyBillDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.Devex.Entity.Category;
-import com.Devex.Entity.CategoryDetails;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
-import com.Devex.Entity.Product;
-import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
-import com.Devex.Repository.OrderDetailRepository;
-import com.Devex.Repository.OrderRepository;
-import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
@@ -34,8 +25,6 @@ import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Utils.FileManagerService;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class DevexOrderController {
@@ -79,9 +68,35 @@ public class DevexOrderController {
 	@GetMapping("/order")
 	public String getOrderPage(Model model) {
 		User u = sessionService.get("user");
-		List<Order> listOrder = orderService.findOrdersByCustomerID(u.getUsername());
-		model.addAttribute("orders", listOrder);
-		System.out.println("co " + listOrder.size() + " don hang");
+		//Tìm toàn bộ hó đơn
+		List<Order> allOrder = orderService.findOrdersByCustomerID(u.getUsername());
+		HashMap<KeyBillDTO,List<OrderDetails>> allOrderByShop = new HashMap<>();
+		for (Order ao : allOrder){
+			Date keyDate = ao.getCreatedDay();
+			String keyOrderID = ao.getId();
+			for (OrderDetails od : ao.getOrderDetails()){
+				KeyBillDTO keyDTO= new KeyBillDTO();
+				keyDTO.setShopName(od.getProductVariant().getProduct().getSellerProduct().getShopName());
+				keyDTO.setCreatedDay(keyDate);
+				keyDTO.setOrderID(keyOrderID);
+				keyDTO.setAvt(od.getProductVariant().getProduct().getSellerProduct().getAvatar());
+				// Thêm một giá trị vào key
+				allOrderByShop.computeIfAbsent(keyDTO, k -> new ArrayList<>()).add(od);
+			}
+		}
+// Chuyển HashMap thành danh sách các cặp key-value
+		List<Map.Entry<KeyBillDTO, List<OrderDetails>>> entryList = new ArrayList<>(allOrderByShop.entrySet());
+// Sắp xếp danh sách dựa trên thuộc tính createdDay của KeyBillDTO
+		Collections.sort(entryList, Collections.reverseOrder(Comparator.comparing(entry -> entry.getKey().getCreatedDay())));
+// Tạo một HashMap mới từ danh sách đã sắp xếp
+		LinkedHashMap<KeyBillDTO, List<OrderDetails>> sortedOrderByShop = new LinkedHashMap<>();
+		for (Map.Entry<KeyBillDTO, List<OrderDetails>> entry : entryList) {
+			sortedOrderByShop.put(entry.getKey(), entry.getValue());
+		}
+		model.addAttribute("allOrder", sortedOrderByShop);
+		List<Order> payingOrder = orderService.findOrderByUsernameAndStatusID(u.getUsername(),1007);
+		model.addAttribute("payingOrder", payingOrder);
+		System.out.println("co " + allOrder.size() + " don hang");
 		return "user/userOrder";
 	}
 

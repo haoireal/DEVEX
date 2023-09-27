@@ -104,7 +104,6 @@ header a.nav-link:hover {
 
 * {
 	scrollbar-width: thin;
-	scrollbar-color: black;
 }
 
 /* Tùy chỉnh thanh cuộn trên Chrome, Edge, và Safari */
@@ -176,9 +175,10 @@ header a.nav-link:hover {
 
 
 											<div class="container_main_middle bg-white mb-4"
-												th:each="order: ${orders}" style="padding: 20px">
+												th:each="order: ${allOrder}" style="padding: 20px;">
 												<!-- Lặp qua các shop và sản phẩm -->
 												<div>
+												<div th:each="shop : ${order.key}" >
 													<div
 														class="d-flex justify-content-between gap-3 align-items-center px-3 pt-1">
 														<button
@@ -186,13 +186,13 @@ header a.nav-link:hover {
 															type="button">
 															<div class="">
 																<img alt="Avatar Shop"
-																	th:src="@{|/img/account/${order.orderDetails[0].productVariant.product.sellerProduct.avatar}}"
+															th:src="@{|/img/account/${shop.avt}}"
 																	class="rounded-circle img-fluid p-0"
 																	style="width: 2.5rem; height: auto;" />
+
 															</div>
 															<!-- Tên shop -->
-															<p class="d-flex align-items-center m-0 ng-binding"
-																th:text="${order.orderDetails[0].productVariant.product.sellerProduct.shopName}">
+															<p class="d-flex align-items-center m-0 ng-binding" th:text="${shop.shopName}">
 															</p>
 														</button>
 														<div
@@ -200,12 +200,21 @@ header a.nav-link:hover {
 															<p class="d-flex align-items-center m-0 ng-binding">Ngày
 																tạo:</p>
 															<p class="d-flex align-items-center m-0 ng-binding"
-																th:text="${#dates.format(order.createdDay, 'dd/MM/yyyy')}"></p>
+																th:text="${#dates.format(shop.createdDay, 'dd/MM/yyyy')}"></p>
 														</div>
+														<!--CART -->
+														<div class="border-top bg-light">
+															<a th:href="@{|/orderDetail/${shop.orderID}|}" class="text-white fw-bold">
+																<div class="text-white fw-bold"
+																	 style="background-color: #007bff80;">
+																	>>>> Chi tiết
+																</div>
+															</a>
+														</div>
+														<!--END CART -->
 													</div>
 													<!-- Lặp qua các sản phẩm trong cùng một shop -->
-													<a href="#">
-														<div class="row px-3 pb-3 pt-2">
+														<div class="row px-3 pb-3 pt-2"  th:each="orderDetail: ${order.value}">
 															<div class="col-md-12">
 																<!--CART -->
 																<div class="border-top bg-light">
@@ -215,16 +224,16 @@ header a.nav-link:hover {
 																			<div
 																				class="col-md-2 col-lg-2 col-xl-2 row d-flex justify-content-between align-items-center">
 																				<a class="p-0 col-12"
-																					th:href="@{|/details/${order.orderDetails[0].productVariant.product.id}}">
+																					th:href="@{|/details/${orderDetail.productVariant.product.id}}">
 																					<img style="height: auto"
-																					th:src="@{|/img/product/${order.orderDetails[0].productVariant.product.sellerProduct.username}/${order.orderDetails[0].productVariant.product.id}/${order.orderDetails[0].productVariant.product.imageProducts[0].name}}"
+																					th:src="@{|/img/product/${orderDetail.productVariant.product.sellerProduct.username}/${orderDetail.productVariant.product.id}/${orderDetail.productVariant.product.imageProducts[0].name}}"
 																					class="img-fluid rounded-3" alt="Cotton T-shirt" />
 																				</a>
 																			</div>
 																			<div class="col-md-3 col-lg-3 col-xl-4">
 																				<p
-																					th:text="${order.orderDetails[0].productVariant.product.name}"
-																					th:title="${order.orderDetails[0].productVariant.product.name}"
+																					th:text="${orderDetail.productVariant.product.name}"
+																					th:title="${orderDetail.productVariant.product.name}"
 																					class="fw-normal mb-2 card-title tensp ng-binding fs-6">
 																				</p>
 																				<div
@@ -241,14 +250,14 @@ header a.nav-link:hover {
 																					<div class="col-6 ">
 																						<span class="row-1" style="color: #3f3d3d">₫</span><s
 																							class="ng-binding row-10"
-																							th:text="${#numbers.formatDecimal(order.orderDetails[0].productVariant.price, 0 , 'POINT', 0, 'COMMA')}">giá
+																							th:text="${#numbers.formatDecimal(orderDetail.productVariant.price, 0 , 'POINT', 0, 'COMMA')}">giá
 																							gốc ₫</s>
 																					</div>
 																					<div class="col-6 ">
 																						<span class="row-1 text-danger"
 																							style="color: #3f3d3d">₫</span> <span
 																							class="text-danger ng-binding row-11"
-																							th:text="${#numbers.formatDecimal(order.orderDetails[0].productVariant.priceSale, 0 , 'POINT', 0, 'COMMA')}">
+																							th:text="${#numbers.formatDecimal(orderDetail.productVariant.priceSale, 0 , 'POINT', 0, 'COMMA')}">
 																							giá sale</span>
 																					</div>
 																				</div>
@@ -257,35 +266,26 @@ header a.nav-link:hover {
 																			<div class="col-md-4 col-lg-4 col-xl-2 d-flex fs-7">
 																				Số lượng: x
 																				<div class="fs-7"
-																					th:text="${order.orderDetails[0].quantity}">1</div>
+																					th:text="${orderDetail.quantity}">1</div>
 																			</div>
 																			<div
 																				class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 fs-6">
 																				<span class="row-1 text-danger fw-bold"
 																					style="color: #3f3d3d">₫</span>
 																				<span
-																					th:text="${#numbers.formatDecimal({order.orderDetails[0].quantity * order.orderDetails[0].productVariant.priceSale}, 0 , 'POINT', 0, 'COMMA')}"
+																					th:text="${#numbers.formatDecimal({orderDetail.quantity * orderDetail.productVariant.priceSale}, 0 , 'POINT', 0, 'COMMA')}"
 																					class="mb-0 text-danger fw-bold ng-binding">100.100 VNĐ</span>
 																			</div>
 																		</div>
 																	</div>
 																</div>
 																<!--END CART -->
-																<!--CART -->
-																<div class="border-top bg-light">
-																	<a th:href="@{|/orderDetail/${order.id}|}" class="text-white fw-bold">
-																		<div class="text-white fw-bold"
-																			style="background-color: #007bff80;">
-																			>>>> Bao gồm <span th:text="${order.orderDetails.size()}">3 </span> sản phẩm khác
-																		</div>
-																	</a>
-																</div>
-																<!--END CART -->
+
 															</div>
 															<div
 																class="row-12 d-flex justify-content-end align-items-between mt-3">
 																<div class="col-6 row">
-																	<p class="text-primary fw-italic col-5 fs-6 p-0" th:text="${order.orderStatus.name}">
+																	<p class="text-primary fw-italic col-5 fs-6 p-0" th:text="${orderDetail.status.name}">
 																		</p>
 																</div>
 																<div class="btn-group col-6">
@@ -301,7 +301,7 @@ header a.nav-link:hover {
 																</div>
 															</div>
 														</div>
-													</a>
+												</div>
 												</div>
 											</div>
 										</div>

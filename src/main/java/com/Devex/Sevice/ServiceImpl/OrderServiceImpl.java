@@ -161,7 +161,11 @@ public class OrderServiceImpl implements OrderService{
 	public Double getTotalPriceOrder() {
 		return orderRepository.getTotalPriceOrder();
 	}
-	
-	
+
+	@Override
+	public List<Order> findOrderByUsernameAndStatusID(String customerID, int statusID) {
+		return orderRepository.findOrderByUsernameAndStatusID(customerID,statusID);
+	}
+
 
 }
