@@ -5,16 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ColorDTO{
-
-	/**
-	 * 
-	 */
-	
-	private int id;
-	private String name;
-	
+public class KeyBillDTO {
+	private String shopName;
+	private Date createdDay;
+	private String orderID;
+	private String avt;
 }

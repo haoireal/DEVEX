@@ -143,7 +143,11 @@ public class OrderServiceImpl implements OrderService{
 	public int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(int statusid, String username) {
 		return orderRepository.getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(statusid, username);
 	}
-	
-	
+
+	@Override
+	public List<Order> findOrderByUsernameAndStatusID(String customerID, int statusID) {
+		return orderRepository.findOrderByUsernameAndStatusID(customerID,statusID);
+	}
+
 
 }
