@@ -37,6 +37,9 @@ app.controller("cart-ctrl", function ($scope, $http) {
     selectedProduct:[],
     // Mở Modal chọn size và màu
     openModal: function(product) {
+      //reset lại trạng thái của radio
+      $scope.cart.selectedSize = null;
+      $scope.cart.selectedColor = null;
       this.selectedProduct = product; // Sao chép sản phẩm để không ảnh hưởng đến sản phẩm gốc
       var url = `${host}/cart/color/${product.idProduct}`;
       $http.get(url).then((response) => {
@@ -57,33 +60,37 @@ app.controller("cart-ctrl", function ($scope, $http) {
           this.sizes = response.data;
         }
        this.selectedProduct.sizes = this.sizes;
-        console.log("độ dài mảng color là ",this.selectedProduct.sizes.length)
+        console.log("độ dài mảng size là ",this.selectedProduct.sizes.length)
       });
       console.log(product.idProduct)
+
       $('#myModal').modal('show');
     },
 
     saveSelection: function() {
-      let product = this.selectedProduct;
-      var item = this.items.find((item) => item.id == id);
+
+      let cartDetailPd = this.selectedProduct;
+
       if ($scope.cart.selectedSize === undefined || $scope.cart.selectedSize === null){
-        $scope.cart.selectedSize = product.size;
+        $scope.cart.selectedSize = cartDetailPd.size;
       }
-      if ($scope.cart.selectedColor === undefined || $scope.cart.selectedColor === null){
-        $scope.cart.selectedColor = product.color;
+      if ($scope.cart.selectedColor === undefined || $scope.cart.selectedColor === null || this.selectedProduct.colors.length === 1){
+        $scope.cart.selectedColor = cartDetailPd.color;
       }
-      console.log("Tên sp sau khi lưu: ",product.idProduct)
+      console.log("Tên sp sau khi lưu: ",cartDetailPd.idProduct)
       console.log("Size được chọn:", $scope.cart.selectedSize);
       console.log("Màu được chọn:", $scope.cart.selectedColor);
+      console.log(cartDetailPd);
       this.selectedSize =  $scope.cart.selectedSize;
       this.selectedColor = $scope.cart.selectedColor;
-      var url = `${host}/cart/changeSizenColor/${product.idProduct}`;
+      var url = `${host}/cart/changeSizenColor/${cartDetailPd.idProduct}?cartDetailId=${cartDetailPd.id}`;
       var data = {
         size: $scope.cart.selectedSize,
         color: $scope.cart.selectedColor
       };
       $http.put(url, data).then((response) => {
-
+        this.loadProductCart();
+        console.log("Success", response);
       });
       $('#myModal').modal('hide');
     },
@@ -104,10 +111,13 @@ app.controller("cart-ctrl", function ($scope, $http) {
 
     // Thay đổi số lượng sản phẩm trong giỏ hàng khi người dùng thay đổi giá trị số lượng
     changeQty(id, qty) {
+
       var item = this.items.find((item) => item.id == id);
       if (item) {
         item.quantity = qty;
       }
+      console.log(id)
+      console.log(item.id)
       // Gọi API để cập nhật  sản phẩm trong cơ sở dữ liệu
       var url = `${host}/cart/${id}`;
       $http
@@ -118,29 +128,6 @@ app.controller("cart-ctrl", function ($scope, $http) {
           // this.items[index] = resp.data;
           console.log("Success", resp);
           // this.loadProductCart();
-        })
-        .catch(function (error) {
-          // Xử lý lỗi nếu có
-          console.error("Lỗi khi cập nhật số lượng sản phẩm:", error);
-        });
-    },
-
-    // Thay đổi số lượng sản phẩm trong giỏ hàng khi người dùng thay đổi giá trị số lượng
-    changeSizeColor(id, size, color) {
-      var item = this.items[$scope.items.findIndex((item) => item.id == id)];
-      // cập nhập new quantity, size, and color
-      item.size = size;
-      item.color = color;
-      // Gọi API để cập nhật  sản phẩm trong cơ sở dữ liệu
-      var url = `${host}/cart/${id}`;
-      $http
-        .put(url, item)
-        .then((resp) => {
-          // Xử lý phản hồi từ server nếu cần thiết
-          var index = this.items.findIndex((item) => item.id == id);
-          this.items[index] = resp.data;
-          console.log("Success", resp);
-          this.loadProductCart();
         })
         .catch(function (error) {
           // Xử lý lỗi nếu có

@@ -250,20 +250,50 @@ public class CartAPIController {
 
     @PutMapping("/rest/cart/changeSizenColor/{id}")
     public ResponseEntity<ProductVariant> changeSizenColor(@PathVariable("id") String id,
+														   @RequestParam("cartDetailId") int cartDetailId,
                                                            @RequestBody SizeColorDTO sizeColorDTO) {
         List<ProductVariant> pvList = productVariantService.findAllProductVariantByProductId(id);
         ProductVariant item = null;
+		System.out.println(cartDetailId);
         System.out.println(sizeColorDTO.getSize());
         System.out.println(sizeColorDTO.getColor());
-        for (ProductVariant p: pvList) {
-            System.out.println("Tên: " + p.getProduct().getName());
-            System.out.println("Màu: " + p.getColor() );
-            System.out.println("Size: " + p.getSize());
-            System.out.println("--------------");
-            if(p.getColor().equalsIgnoreCase(sizeColorDTO.getColor()) && p.getSize().equalsIgnoreCase(sizeColorDTO.getSize())){
-                item = p;
-                break;
-            }
+		List<String> colors = new ArrayList<>();
+		List<String> sizes = new ArrayList<>();
+		for (ProductVariant p: pvList) {
+			if(!colors.contains(p.getColor())){
+				colors.add(p.getColor());
+			}
+			if(!sizes.contains(p.getSize())){
+				sizes.add(p.getSize());
+			}
+		}
+		for (ProductVariant p: pvList) {
+			if(colors.size() == 1){
+				if (p.getSize().equalsIgnoreCase(sizeColorDTO.getSize())){
+					item = p;
+					CartDetail cd = cart.findById(cartDetailId).get();
+					cd.setProductCart(item);
+					cart.save(cd);
+					break;
+				}
+			} else if(sizes.size() == 1){
+				if (p.getColor().equalsIgnoreCase(sizeColorDTO.getColor())){
+					item = p;
+					CartDetail cd = cart.findById(cartDetailId).get();
+					cd.setProductCart(item);
+					cart.save(cd);
+					break;
+				}
+			}else{
+				if(p.getColor().equalsIgnoreCase(sizeColorDTO.getColor()) && p.getSize().equalsIgnoreCase(sizeColorDTO.getSize()))
+				{
+					item = p;
+					CartDetail cd = cart.findById(cartDetailId).get();
+					cd.setProductCart(item);
+					cart.save(cd);
+					break;
+				}
+			}
         }
         if (item != null) {
             return ResponseEntity.ok(item); // Trả về 200 OK nếu tìm thấy

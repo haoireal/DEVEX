@@ -91,7 +91,9 @@
             width: 1px;
         }
 
-        .mydict input[type="radio"]:checked + span {
+        .mydict input[type="radio"]:checked + span,
+        .mydict input[type="radio"]:focus + span,
+        .mydict input[type="radio"]:hover + span{
             box-shadow: 0 0 0 0.0625em #0043ed;
             background-color: #dee7ff;
             z-index: 1;
@@ -264,33 +266,28 @@
 
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="modal-title" ng-if="cart.sizes.length === 1 && cart.colors.length === 1">Sản phẩm này không có loại khác</p>
+                                                    <p class="modal-title"  ng-if="cart.sizes.length === 1 && cart.colors.length === 1">Sản phẩm này không có loại khác</p>
                                                     <!-- Thêm các trường lựa chọn size và màu ở đây -->
-                                                    <div ng-if="cart.sizes && cart.sizes.length > 1">
+                                                    <div class="mydict mb-3"  ng-if="cart.sizes ">
                                                         <!-- Lặp qua danh sách sizes -->
-                                                        <label for="size">Size:</label>
-                                                        <div class="d-flex justify-content-center align-items-center gap-5">
-                                                            <div ng-repeat="size in cart.sizes">
+                                                        <label >Size:</label>
+                                                            <label  ng-repeat="size in cart.sizes">
                                                                 <input type="radio" class="btn-check" name="size" ng-model="cart.selectedSize"
                                                                        id="size-{{$index}}"
-                                                                       value="{{ size }}">
-                                                                <label class="btn btn-outline-success labelSizenColor" for="size-{{$index}}">{{
-                                                                    size }}</label>
-                                                            </div>
-                                                        </div>
+                                                                       ng-value="size"
+                                                                      >
+                                                                <span for="size-{{$index}}" style="user-select: none;" >{{
+                                                                    size }}</span>
+                                                            </label>
                                                     </div>
-                                                    <div class="mydict" ng-if="cart.colors && cart.colors.length > 1">
+                                                    <div class="mydict" ng-if="cart.colors">
                                                         <!-- Lặp qua danh sách colors -->
-                                                        <label for="color">Color:</label>
+                                                        <label >Màu sắc:</label>
                                                         <label ng-repeat="color in cart.colors">
-                                                            <input type="radio" ng-model="cart.selectedColor" value="{{ color }}" id="color-{{$index}}" name="radio">
-                                                            <span >{{
-                                                                    color }}</span>
+                                                            <input type="radio" ng-model="cart.selectedColor" ng-value="color" id="color-{{$index}}" name="color">
+                                                            <span  for="color-{{$index}}" style="user-select: none;">{{
+            color }}</span>
                                                         </label>
-
-
-                                                        <div class="d-flex justify-content-center align-items-center gap-5">
-                                                        </div>
                                                     </div>
 
 
@@ -298,7 +295,7 @@
                                                 <div class="modal-footer">
 
                                                     <button type="button" class="btn btn-primary" ng-if="cart.sizes.length > 1 || cart.colors.length > 1"
-                                                            ng-click="cart.saveSelection()">Lưu
+                                                            ng-disabled="!cart.selectedSize || !cart.selectedColor" ng-click="cart.saveSelection()">Lưu
                                                     </button>
                                                     <button type="button" class="btn btn-primary" ng-click="cart.hideModal()">Đóng</button>
                                                 </div>
@@ -538,7 +535,6 @@
       .setAttribute("data-total-price", totalPrice);
   }
 </script> -->
-
 <script th:src="@{/js/cart-ctrl.js}"></script>
 
 <script
