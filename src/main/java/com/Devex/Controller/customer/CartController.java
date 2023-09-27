@@ -122,54 +122,11 @@ public class CartController {
 			System.out.println("cloer" + cloer);
 			if (size == null) {
 				idProductVariant = pvService.findIdProductVaVariantbySize(cloer, id);
-				ProductVariant pv2 = pvService.findById(idProductVariant).get();
-				CartDetail cartDetail = cartDetailService.findByIDProduct(pv2.getId());
-				if (cartDetail != null) {
-					cartDetail.setQuantity(cartDetail.getQuantity() + soLuong);
-				} else {
-					cartDetail = new CartDetail();
-					cartDetail.setProductCart(pv2);
-					cartDetail.setQuantity(soLuong);
-					User user = session.get("user");
-					Customer customer = customerService.findById(user.getUsername()).get();
-					Cart cart = customer.getCart();
-					if (cart == null) {
-						cart = new Cart();
-						cart.setPerson(customer);
-						System.out.println(2);
-						cartService.save(cart);
-					}
-					System.out.println(3);
-					cartDetail.setCart(cart);
-				}
-
-				cartDetailService.save(cartDetail);
 			} else {
 				idProductVariant = pvService.findIdProductVaVariantbySizeandColor(cloer, size, id);
-				ProductVariant pv2 = pvService.findById(idProductVariant).get();
-				CartDetail cartDetail = cartDetailService.findByIDProduct(pv2.getId());
-				if (cartDetail != null) {
-					cartDetail.setQuantity(cartDetail.getQuantity() + soLuong);
-				} else {
-					cartDetail = new CartDetail();
-					cartDetail.setProductCart(pv2);
-					cartDetail.setQuantity(soLuong);
-					User user = session.get("user");
-					Customer customer = customerService.findById(user.getUsername()).get();
-					Cart cart = customer.getCart();
-					if (cart == null) {
-						cart = new Cart();
-						cart.setPerson(customer);
-						System.out.println(2);
-						cartService.save(cart);
-					}
-					System.out.println(3);
-					cartDetail.setCart(cart);
-				}
-				;
-				addCartItem(idProductVariant, soLuong);
-
 			}
+			
+			addCartItem(idProductVariant, soLuong);
 			
 		}
 		if ("order".equals(action)) {
