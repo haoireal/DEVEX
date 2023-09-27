@@ -124,7 +124,6 @@ public class CartController {
 			} else {
 				idProductVariant = pvService.findIdProductVaVariantbySizeandColor(cloer, size, id);
 			}
-
 			addCartItem(idProductVariant, soLuong);
 
 		}
