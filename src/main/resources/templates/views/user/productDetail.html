@@ -566,8 +566,8 @@
 										th:text="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
 									
 									</div>
-									<img
-									th:src="@{|/img/product/${shopProduct.sellerProduct.username}/${shopProduct.id}/${shopProduct.imageProducts[0].name}|}"
+									<img 
+ 									th:src="@{|/img/product/${shopProduct.sellerProduct.username}/${shopProduct.id}/${shopProduct.imageProducts[0].name}|}"
 									class="img-fluid w-100 p-0"
 									th:alt="${shopProduct.name}" />
 									<div class="card-body" style="padding: 5px">
@@ -631,7 +631,7 @@
 										th:text="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
 									
 									</div>
-									<img
+									<img onload="lazy"
 									th:src="@{|/img/product/${products.sellerProduct.username}/${products.id}/${products.imageProducts[0].name}|}"
 									class="img-fluid w-100 p-0"
 									th:alt="${products.name}" />
@@ -959,12 +959,12 @@
 	<script>
 
 
-			var setNumber =  document.getElementById('inputField');
-			var setLabel = document.getElementById('btn_quantity');
-			const quantity = document.getElementById('number_quantity');
-			const quantity_mobile = document.getElementById('number_quantity_mobile');
-			const size = document.getElementById('size');
-			const addCart = document.getElementById('addCart');
+		var setNumber =  document.getElementById('inputField');
+		var setLabel = document.getElementById('btn_quantity');
+		const quantity = document.getElementById('number_quantity');
+		const quantity_mobile = document.getElementById('number_quantity_mobile');
+		const size = document.getElementById('size');
+		const addCart = document.getElementById('addCart');
 
 		function sendRadioValue(value) {
 		// lấy giá trị của color

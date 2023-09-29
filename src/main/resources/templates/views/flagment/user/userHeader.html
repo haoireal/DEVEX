@@ -162,30 +162,10 @@
         <ul
           class="list-group list-group-flush text-center collapse navbar-collapse"
         >
-          <li class="list-group-item text-center">
-            <a class="list_type_product rounded" href="">Máy Tính</a>
+          <li class="list-group-item text-center" th:each="category : ${category}">
+            <a class="list_type_product rounded" th:href="@{|/category/${category.id}}" th:text="${category.name}"></a>
           </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Áo Quần</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Phụ Kiện</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Điện Thoại</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Giày Dép</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Bàn Ghế</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Bàn Ghế</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Bàn Ghế</a>
-          </li>
+          
         </ul>
       </div>
 
