@@ -312,9 +312,11 @@ public class DevexAdminRestController {
 		List<Object[]> liststatiscategoryob = detailService.getTop5CategoryDetailsAndAmountProductSell(year);
 		List<StatisticalCategoryDetailsPieDTO> liststatiscategory = new ArrayList<>();
 		for (Object[] result : liststatiscategoryob) {
-		    String categoryName = (String) result[0];
-		    long productCount = (long) result[1];
+			int id = (int) result[0];
+		    String categoryName = (String) result[1];
+		    long productCount = (long) result[2];
 		    StatisticalCategoryDetailsPieDTO entity = new StatisticalCategoryDetailsPieDTO();
+		    entity.setId(id);
 		    entity.setName(categoryName);
 		    entity.setCountProductSell(productCount);
 		    liststatiscategory.add(entity);

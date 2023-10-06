@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StatisticalCategoryDetailsPieDTO {
 	
+	private int id;
 	private String name;
 	private long countProductSell;
 

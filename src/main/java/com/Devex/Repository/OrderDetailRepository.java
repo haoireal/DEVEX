@@ -72,7 +72,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 		       "AND od.status.id = :statusid")
 	int getTotalOrderDetailsByStatusIdAndSellerUsername(@Param("statusid") int statusid, @Param("username") String username);
 	
-	@Query("SELECT cd.Name, COUNT(od.productVariant.id) AS productCount " +
+	@Query("SELECT cd.id, cd.Name, COUNT(od.productVariant.id) AS productCount " +
 		       "FROM OrderDetails od " +
 		       "JOIN od.order o " +
 		       "JOIN od.productVariant pv " +
