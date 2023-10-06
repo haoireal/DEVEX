@@ -604,19 +604,25 @@
 									th:if="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
 									Giảm
 									<span
-										th:text="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
-									%
+										th:text="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
+									
+									</div>
+									<img 
+ 									th:src="@{|/img/product/${shopProduct.sellerProduct.username}/${shopProduct.id}/${shopProduct.imageProducts[0].name}|}"
+									class="img-fluid w-100 p-0"
+									th:alt="${shopProduct.name}" />
+									<div class="card-body" style="padding: 5px">
+										<div
+											class="card-title tensp text-left"
+											style="height: 40px"
+											th:text="${shopProduct.name}"
+											th:title="${shopProduct.name}"></div>
 
-								</div>
-								<img th:src="@{|/img/product/${shopProduct.sellerProduct.username}/${shopProduct.id}/${shopProduct.imageProducts[0].name}|}"
-									class="img-fluid w-100 p-0" th:alt="${shopProduct.name}" />
-								<div class="card-body" style="padding: 5px">
-									<div class="card-title tensp text-left" style="height: 40px"
-										th:text="${shopProduct.name}" th:title="${shopProduct.name}"></div>
+										<div id="price-box" >
+											<div class="price_suggest col-6  m-0" >
+											<span style="color: #ff0821bb">₫</span><strong
+												class="fs-10"
 
-									<div id="price-box">
-										<div class="price_suggest col-6  m-0">
-											<span style="color: #ff0821bb">₫</span><strong class="fs-10"
 												th:text="${#numbers.formatDecimal(shopProduct.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
 												style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
 										</div>
@@ -660,19 +666,24 @@
 									th:if="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
 									Giảm
 									<span
-										th:text="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
-									%
+										th:text="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
+									</div>
+									<img onload="lazy"
+									th:src="@{|/img/product/${products.sellerProduct.username}/${products.id}/${products.imageProducts[0].name}|}"
+									class="img-fluid w-100 p-0"
+									th:alt="${products.name}" />
+									<div class="card-body" style="padding: 5px">
+										<div
+											class="card-title tensp text-left"
+											style="height: 40px"
+											th:text="${products.name}"
+											th:title="${products.name}"></div>
 
-								</div>
-								<img th:src="@{|/img/product/${products.sellerProduct.username}/${products.id}/${products.imageProducts[0].name}|}"
-									class="img-fluid w-100 p-0" th:alt="${products.name}" />
-								<div class="card-body" style="padding: 5px">
-									<div class="card-title tensp text-left" style="height: 40px"
-										th:text="${products.name}" th:title="${products.name}"></div>
+										<div id="price-box" >
+											<div class="price_suggest col-6  m-0" >
+											<span style="color: #ff0821bb">₫</span><strong
+												class="fs-10"
 
-									<div id="price-box">
-										<div class="price_suggest col-6  m-0">
-											<span style="color: #ff0821bb">₫</span><strong class="fs-10"
 												th:text="${#numbers.formatDecimal(products.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
 												style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
 										</div>
@@ -978,8 +989,7 @@
 		}
 
 
-
-		var setNumber = document.getElementById('inputField');
+		var setNumber =  document.getElementById('inputField');
 		var setLabel = document.getElementById('btn_quantity');
 		const quantity = document.getElementById('number_quantity');
 		const quantity_mobile = document.getElementById('number_quantity_mobile');

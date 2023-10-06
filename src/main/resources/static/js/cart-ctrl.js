@@ -342,4 +342,20 @@ app.controller("cart-ctrl", function ($scope, $http) {
         console.log(error);
       });
   };
+
+  // // Call API function Filter
+  // $scope.data = [];
+  //   $scope.filter = function () {			
+  //       $http.get('/api/filter').then(resp => {
+  //         $scope.data = resp.data;
+  //         console.log($scope.data)  
+  //         // alert("Filter")
+  //       }).catch(function(err ) {
+  //         console.error(err); // xử lý lỗi khi gọi API
+  //         alert('Có lỗi xảy ra khi gọi API'); // hiển thị thông báo lỗi cho người dùng
+  //       });
+          
+  //     };
+    
+  //   $scope.filter();// lấy dữ liệu 
 });

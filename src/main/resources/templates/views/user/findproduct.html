@@ -1,304 +1,391 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<div th:replace="~{flagment/user/userHead :: userHeadFragment}"></div>
-<!-- Theme style -->
-<!-- <link rel="stylesheet" href="../admin/dist/css/userIndex.css"> -->
+  <head>
+    <div th:replace="~{flagment/user/userHead :: userHeadFragment}"></div>
+    <!-- Theme style -->
+    <!-- <link rel="stylesheet" href="../admin/dist/css/userIndex.css"> -->
 
-<link rel="stylesheet" href="/admin/dist/css/findproduct.css">
-</head>
-<body>
-	<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
-	<main>
-		<form action="/filter/price">
-			<div class="container">
-				<div class="text-dark content_price" style="margin-top: 10px;">
-					<span class="container_main_middle-contten"
-						style="color: #2A62B9; margin-left: -25px; font-size: 20px;">Tìm
-						Kiếm "<i style="color: #2A62B9;"
-						th:text="${session.keywordsSearch}"></i>"
-					</span>
-				</div>
-			</div>
-			<div class="container container_main_middle pb-2 bg-white">
-				<div class="row">
-					<div class="col-md-2 col-3 filter-textprodcut"
-						style="height: 20px;">
-						<a href="" style="font-weight: bold; font-size: 20px;">Lọc </a>
-					</div>
-					<div class="col-md-3 col-3 filter-textprodcut row optionbox"
-						style="height: 20px; color: #2A62B9;">
-						<select class="form-select form-select-sm" name="sortprice"
-							onchange="this.form.submit()"
-							aria-label=".form-select-sm example">
-							<option class="text-dark" selected>Giá (Mặc định)</option>
-							<option class=" text-dark" value="ASC">Tăng dần</option>
-							<option class=" text-dark" value="DESC">Giảm dần</option>
-						</select>
-					</div>
-					<div class="col filter-textprodcut">
-						<input type="radio" class="btn-check" name="options-outlined"
-							id="danger-outlined" value="BAN_CHAY" autocomplete="off"
-							onchange="filterProducts()"> <label
-							class="btn btn-outline-danger" for="danger-outlined">BÁN
-							CHẠY</label>
-					</div>
-					<div class="col filter-textprodcut">
-						<input type="radio" class="btn-check" name="options-outlined"
-							id="success-outlined" value="DEVEX_MALL" autocomplete="off"
-							onchange="filterProducts()"> <label
-							class="btn btn-outline-success" for="success-outlined">DEVEX
-							MALL</label>
-					</div>
+    <link rel="stylesheet" href="/admin/dist/css/findproduct.css" />
+  </head>
+  <body>
+    <div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
+    <main ng-controller="myController">
+      <form action="/filter/price">
+        <div class="container">
+          <div class="text-dark content_price" style="margin-top: 10px">
+            <span
+              class="container_main_middle-contten"
+              style="color: #2a62b9; margin-left: -25px; font-size: 20px"
+              >Tìm Kiếm "<i
+                style="color: #2a62b9"
+                th:text="${session.keywordsSearch}"
+              ></i
+              >"
+            </span>
+          </div>
+        </div>
+        <div class="container container_main_middle pb-2 bg-white">
+          <div class="row">
+            <div class="col-md-2 col-3 filter-textprodcut" style="height: 20px">
+              <a href="" style="font-weight: bold; font-size: 20px">Lọc </a>
+            </div>
+            <div
+              class="col-md-3 col-3 filter-textprodcut row optionbox"
+              style="height: 20px; color: #2a62b9"
+            >
+              <select
+                class="form-select form-select-sm"
+                name="sortprice"
+                onchange="this.form.submit()"
+                aria-label=".form-select-sm example"
+              >
+                <option class="text-dark" selected>Giá (Mặc định)</option>
+                <option class="text-dark" value="ASC">Tăng dần</option>
+                <option class="text-dark" value="DESC">Giảm dần</option>
+              </select>
+            </div>
+            <div class="col filter-textprodcut">
+              <input
+                type="radio"
+                class="btn-check"
+                name="options-outlined"
+                id="danger-outlined"
+                value="BAN_CHAY"
+                autocomplete="off"
+                onchange="filterProducts()"
+              />
+              <label class="btn btn-outline-danger" for="danger-outlined"
+                >BÁN CHẠY</label
+              >
+            </div>
+            <div class="col filter-textprodcut">
+              <input
+                type="radio"
+                class="btn-check"
+                name="options-outlined"
+                id="success-outlined"
+                value="DEVEX_MALL"
+                autocomplete="off"
+                onchange="filterProducts()"
+              />
+              <label class="btn btn-outline-success" for="success-outlined"
+                >DEVEX MALL</label
+              >
+            </div>
+          </div>
+        </div>
+      </form>
+      <form th:action="@{/filter-product}" method="post">
+        <div class="container container_main_middle d-flex mt-3 pb-5 bg-white">
+          <!--left-->
+          <div class="col-2">
+            <div class="row mt-1">
+              <span>
+                <i class="fa-solid me-2 fa-filter"></i> BỘ LỌC TÌM KIẾM</span
+              >
+            </div>
+            <!-- Danh Mục Sản Phẩm-->
+            <div class="row mt-3">
+              <div class="filter-group_header">
+                <span>Theo Danh Mục</span>
+              </div>
+              <div
+                class="devex-checkbox_category mt-2"
+                th:each="category, iter : ${category}"
+              >
+                <div class="form-check mt-1">
+                  <input
+                    class="form-check-input devex-checkbox_category-value"
+                    type="checkbox"
+                    th:value="${category}"
+                    th:id="'category' + ${iter.count}"
+                    name="category"
+                  />
+                  <label
+                    class="form-check-label"
+                    th:for="'category'+${iter.count}"
+                    th:text="${category}"
+                  >
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- end danh mục-->
+            <hr />
+            <!-- Nơi Bán-->
+            <div class="row devex-checkbox_location">
+              <div class="filter-group_header">
+                <span>Nơi Bán</span>
+              </div>
+              <div class="devex-checkbox_location mt-2">
+                <div class="form-check mt-1">
+                  <input
+                    class="form-check-input devex-checkbox_location-value"
+                    type="checkbox"
+                    value="TP Hồ Chí Minh"
+                    id="location1"
+                    name="location"
+                  />
+                  <label class="form-check-label" for="location1">
+                    TP Hồ Chí Minh
+                  </label>
+                </div>
+                <div class="form-check mt-1">
+                  <input
+                    class="form-check-input devex-checkbox_location-value"
+                    type="checkbox"
+                    value="Hà Nội"
+                    id="location2"
+                    name="location"
+                  />
+                  <label class="form-check-label" for="location2">
+                    Hà Nội
+                  </label>
+                </div>
+                <div class="form-check mt-1">
+                  <input
+                    class="form-check-input devex-checkbox_location-value"
+                    type="checkbox"
+                    value="Đồng Nai"
+                    id="location3"
+                    name="location"
+                  />
+                  <label class="form-check-label" for="location3">
+                    Đồng Nai
+                  </label>
+                </div>
+                <div class="form-check mt-1">
+                  <input
+                    class="form-check-input devex-checkbox_location-value"
+                    type="checkbox"
+                    value="Vĩnh Phúc"
+                    id="location4"
+                    name="location"
+                  />
+                  <label class="form-check-label" for="location4">
+                    Vĩnh Phúc
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!--end Nơi bán-->
+            <hr />
+            <!-- Thương Hiệu-->
+            <div class="row brand-filter">
+              <div class="filter-group_header">
+                <span>Thương Hiệu</span>
+              </div>
+              <div
+                class="devex-checkbox_brand mt-2"
+                th:each="brand, iter : ${brand}"
+              >
+                <div class="form-check mt-1">
+                  <input
+                    class="form-check-input devex-checkbox_brand-value"
+                    type="checkbox"
+                    th:value="${brand}"
+                    th:id="'brand' + ${iter.count}"
+                    name="brand"
+                  />
+                  <label
+                    class="form-check-label"
+                    th:for="'brand'+${iter.count}"
+                    th:text="${brand}"
+                  >
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!--end thương hiệu-->
+            <hr />
+            <!--Giá-->
+            <div class="row brand-filter">
+              <div class="filter-group_header">
+                <span>Khoảng Giá</span>
+              </div>
+              <div class="devex-price mt-2">
+                <div class="input-group mb-3">
+                  <input
+                    name="priceForm" 
+                    type="text"
+                    class="form-control"
+                    placeholder="₫ Từ"
+                    aria-label="₫ Từ"
+                  />
+                  <span class="input-group-text">-</span>
+                  <input
+                    name="priceTo"
+                    type="text"
+                    class="form-control"
+                    placeholder="₫ Đến"
+                    aria-label="₫ Đến"
+                  />
+                </div>
+              </div>
+            </div>
+            <!--end thương hiệu-->
+            <div class="row">
+              <div class="div">
+                <button type="submit" class="btn btn_apply w-100 btn-primary">
+                  Áp Dụng
+                </button>
+              </div>
+            </div>
+          </div>
 
-				</div>
+          <!--right-->
+          <div class="col-10">
+            <div class="row d-flex px-3">
+              <div
+                class="col-6 col-md-4 col-lg-3 col-xl-3 pt-2"
+                th:each="product : ${products}"
+              >
+                <a
+                  th:href="@{|/details/${product.id}|}"
+                  class="text-decoration-none"
+                >
+                  <div class="card pb-2">
+                    <div class="icon-sale text-center pl-5 pr-5 p-1">
+                      HOT SALE
+                    </div>
+                    <div
+                      class="hot-sale text-center p-1"
+                      th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0"
+                    >
+                      Giảm
+                      <span
+                        th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"
+                      ></span>
+                      %
+                    </div>
+                    <img
+                      th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
+                      class="img-fluid w-100 p-0"
+                      th:alt="${product.name}"
+                    />
+                    <div class="card-body" style="padding: 5px">
+                      <div
+                        class="card-title tensp text-left"
+                        style="height: 40px"
+                        th:text="${product.name}"
+                        th:title="${product.name}"
+                      ></div>
+                      <div id="price-box text-left row">
+                        <div
+                          class="price col-6 m-0"
+                          style="text-decoration: none"
+                        >
+                          <span style="color: #ff0821bb">₫</span
+                          ><strong
+                            class="fs-10"
+                            th:text="${#numbers.formatDecimal(product.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
+                            style="color: #ff0821bb; font-weight: 600"
+                            >8,490,000</strong
+                          >
+                        </div>
+                        <div
+                          class="price col-6 m-0"
+                          style="text-decoration: none"
+                        >
+                          <strike
+                            class="fs-11"
+                            th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0 , 'POINT', 0, 'COMMA')}"
+                            style="color: #3f3d3d; font-weight: 100"
+                            ><span style="color: #3f3d3d">₫</span
+                            >8,490,000</strike
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="icon-star text-left"
+                        style="text-decoration: none"
+                      >
+                        <i class="icon-flash text-red"></i>
+                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <p class="text-info m-0">
+                          đã bán
+                          <i
+                            class="text-info m-0"
+                            th:text="${product.soldCount}"
+                          ></i>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="text-dark content_price text-center">
+              <span
+                class="container_main_middle-contten"
+                style="color: #2a62b9; margin-left: -25px; font-size: 18px"
+                >Xem Thêm ....</span
+              >
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+    <footer class="mt-3">
+      <!-- place footer here -->
+      <div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
+    </footer>
 
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
 
-			</div>
-			<div class="container container_main_middle d-flex mt-3 pb-5 bg-white">
-				<!--left-->
-				<div class="col-2">
-					<div class="row  mt-1">
-						 <span> <i class="fa-solid me-2 fa-filter"></i> BỘ LỌC TÌM KIẾM</span>
-					</div>
-					<!-- Danh Mục Sản Phẩm-->
-					<div class="row mt-3">
-						<div class="filter-group_header">
-							<span>Theo Danh Mục</span>
-						</div>
-						<div class="devex-checkbox_category mt-2">
-							<div class="form-check mt-1">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								 Thiết Bị Thể Thao
-								</label>
-							</div>
-							<div class="form-check mt-1">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								 Thiết Bị Thể Thao
-								</label>
-							</div>
-							<div class="form-check mt-1">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								 Thiết Bị Thể Thao
-								</label>
-							</div>
-							<div class="form-check mt-1">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								 Thiết Bị Thể Thao
-								</label>  
-							</div>
-							<div class="form-check mt-1">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								 Thiết Bị Thể Thao
-								</label>
-							</div>
-						</div>
-						
-					</div><!-- end danh mục-->
-					<hr>
-					<!-- Nơi Bán-->
-					<div class="row location-filter">
-						<div class="filter-group_header">
-							<span>Nơi Bán</span>
-						</div>
-						<div class="devex-checkbox_location mt-2">
-							<div class="form-check mt-1 ">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								 TP Hồ Chí Minh
-								</label>
-							</div>
-							<div class="form-check mt-1 ">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								Hà Nội
-								</label>
-							</div>
-							<div class="form-check mt-1 ">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								 Đồng Nai
-								</label>
-							</div>
-							<div class="form-check mt-1 ">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								Vĩnh Phúc
-								</label>
-							</div>
-						</div>
-					</div><!--end Nơi bán-->
-					<hr>
-					<!-- Thương Hiệu-->
-					<div class="row brand-filter">
-						<div class="filter-group_header">
-							<span>Thương Hiệu</span>
-						</div>
-						<div class="devex-checkbox_brand mt-2">
-							<div class="form-check mt-1 ">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								Nike
-								</label>
-							</div>
-							<div class="form-check mt-1 ">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								Adidas
-								</label>
-							</div>
-							<div class="form-check mt-1 ">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								Puma
-								</label>
-							</div>
-							<div class="form-check mt-1 ">
-								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-								<label class="form-check-label" for="defaultCheck1">
-								Jordan
-								</label>
-							</div>
-						</div>
-					</div> <!--end thương hiệu-->
-					<hr>
-					<!--Giá-->
-					<div class="row brand-filter">
-						<div class="filter-group_header">
-							<span>Khoảng Giá</span>
-						</div>
-						<div class="devex-checkbox_brand mt-2">
-							<div class="input-group mb-3">
-								<input type="text" class="form-control" placeholder="₫ Từ" aria-label="₫ Từ">
-								<span class="input-group-text">-</span>
-								<input type="text" class="form-control" placeholder="₫ Đến" aria-label="₫ Đến">
-							  </div>
-							
-						</div>
-					</div> <!--end thương hiệu-->
-					<div class="row">
-						<div class="div">
-							<button type="button" class="btn btn_apply w-100  btn-primary ">Á Dụng</button>
-						</div>
-					</div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"
+    ></script>
+    <!--slick slide-->
 
-				</div>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+    <script src="/admin/dist/js/user/userIndex.js"></script>
+    <!-- <script src="/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <!-- AdminLTE App -->
+    <script src="/admin/dist/js/adminlte.min.js"></script>
+    <script>
+      function filterProducts() {
+        var selectedValue = document.querySelector(
+          'input[name="options-outlined"]:checked'
+        ).value;
 
-				<!--right-->
-				<div class="col-10">
-					<div class="row d-flex px-3">
-						<div class="col-6 col-md-4 col-lg-3 col-xl-3 pt-2"
-							th:each="product : ${products}">
-							<a th:href="@{|/details/${product.id}|}"
-								class="text-decoration-none">
-								<div class="card pb-2" >
-									<div class="icon-sale text-center pl-5 pr-5 p-1">HOT SALE</div>
-									<div class=" hot-sale text-center p-1"
-										th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
-										Giảm <span
-											th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
-										%
-									</div>
-									<img
-										th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
-										class="img-fluid w-100 p-0" th:alt="${product.name}">
-									<div class="card-body" style="padding: 5px;">
-										<div class="card-title tensp text-left" style="height: 40px;"
-											th:text="${product.name}" th:title="${product.name}"></div>
-										<div id="price-box text-left row">
-											<div class="price col-6 m-0" style="text-decoration: none;">
-												<span style="color: #ff0821bb;">₫</span><strong class="fs-10"
-													th:text="${#numbers.formatDecimal(product.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
-													style="color: #ff0821bb; font-weight: 600;">8,490,000</strong>
-											</div>
-											<div class="price col-6 m-0" style="text-decoration: none;">
-												<strike class="fs-11"
-													th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0 , 'POINT', 0, 'COMMA')}"
-													style="color: #3f3d3d; font-weight: 100;"><span
-													style="color: #3f3d3d;">₫</span>8,490,000</strike>
-											</div>
-										</div>
-										<div class="icon-star text-left" style="text-decoration: none;">
-											<i class="icon-flash text-red"></i> <i class="bi bi-star"></i>
-											<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-												class="bi bi-star"></i> <i class="bi bi-star"></i>
-											<p class="text-info m-0">
-												đã bán <i class="text-info m-0"
-													th:text="${product.soldCount}"></i>
-											</p>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="text-dark content_price text-center">
-						<span class="container_main_middle-contten "
-							style="color: #2A62B9; margin-left: -25px; font-size: 18px;">Xem
-							Thêm ....</span>
-					</div>
+        // Gửi yêu cầu POST tới Spring Boot
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/filter/ban-chay";
 
-				</div>
-			
-				
-			
-				
-			</div>
-		</form>
-	</main>
-	<footer class="mt-3">
-		<!-- place footer here -->
-		<div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
-	</footer>
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "filterValue";
+        input.value = selectedValue;
 
+        form.appendChild(input);
+        document.body.appendChild(form);
 
+        form.submit();
+      }
+      function sendCheckBoxValue(value) {
+        const input = document.querySelectorAll(
+          "input[name='category']:checked"
+        ).value;
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-		crossorigin="anonymous">
-		
-	</script>
+        var selectedCategories = [];
+        var selectedLocations = [];
+        var selectedBrands = [];
+      }
+    </script>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-		crossorigin="anonymous">
-		
-	</script>
-	<!--slick slide-->
-
-	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-	<script src="/admin/dist/js/user/userIndex.js"></script>
-	<script src="/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- AdminLTE App -->
-	<script src="/admin/dist/js/adminlte.min.js"></script>
-	<script>
-		function filterProducts() {
-			var selectedValue = document
-					.querySelector('input[name="options-outlined"]:checked').value;
-
-			// Gửi yêu cầu POST tới Spring Boot
-			var form = document.createElement("form");
-			form.method = "POST";
-			form.action = "/filter/ban-chay";
-
-			var input = document.createElement("input");
-			input.type = "hidden";
-			input.name = "filterValue";
-			input.value = selectedValue;
-
-			form.appendChild(input);
-			document.body.appendChild(form);
-
-			form.submit();
-		}
-	</script>
-</body>
+    <!-- <script src="/js/Filter.js" th:src="@{/js/Filter.js}"></script> -->
+  </body>
 </html>

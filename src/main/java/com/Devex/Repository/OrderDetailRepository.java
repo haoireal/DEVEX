@@ -2,6 +2,7 @@ package com.Devex.Repository;
 
 import java.util.List;
 
+import com.Devex.Entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -86,4 +87,23 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 	List<Object[]> getTop5CategoryDetailsAndAmountProductSell(@Param("year") int year);
 
 	
+
+	@Query("SELECT DISTINCT od FROM OrderDetails od " +
+			"JOIN FETCH od.order o " +
+			"JOIN FETCH od.productVariant pv " +
+			"JOIN FETCH pv.product p " +
+			"JOIN FETCH p.sellerProduct s " +
+			"WHERE o.customerOrder.username = ?1 " +
+			"And od.status.id = ?2 " +
+			"Order BY o.createdDay DESC")
+	List<OrderDetails> findOrderByUsernameAndStatusID(String customerID, int statusID);
+
+	@Query("SELECT DISTINCT od FROM OrderDetails od " +
+			"JOIN FETCH od.order o " +
+			"JOIN FETCH od.productVariant pv " +
+			"JOIN FETCH pv.product p " +
+			"JOIN FETCH p.sellerProduct s " +
+			"WHERE o.customerOrder.username = ?1 " +
+			"Order BY o.createdDay DESC")
+	List<OrderDetails> findOrdersByCustomerID(String customerID);
 }

@@ -55,4 +55,7 @@ public interface OrderDetailService {
 
 	List<Object[]> getTop5CategoryDetailsAndAmountProductSell(int year);
 
+	List<OrderDetails> findOrderByUsernameAndStatusID(String customerID, int statusID);
+
+	List<OrderDetails> findOrdersByCustomerID(String customerID);
 }

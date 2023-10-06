@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.Devex.Entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -142,5 +143,14 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	}
 	
 	
+	public List<OrderDetails> findOrderByUsernameAndStatusID(String customerID, int statusID) {
+		return orderDetailRepository.findOrderByUsernameAndStatusID(customerID,statusID);
+	}
+
+	@Override
+	public List<OrderDetails> findOrdersByCustomerID(String customerID) {
+		return orderDetailRepository.findOrdersByCustomerID(customerID);
+	}
+
 
 }

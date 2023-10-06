@@ -30,7 +30,7 @@ public class RecommendationSystemImpl implements RecommendationSystem{
 	public List<Product> recomendProduct(String username) {
 		List<Product> recomendProductList = new ArrayList<>();
 		List<Integer> categogyRecomend = customerRepository.recomendationSystem(username);
-		System.out.println(categogyRecomend.toString());
+//		System.out.println(categogyRecomend.toString());
 		for (int categogy : categogyRecomend) {
 			List<Product> rcmForCate = productRepository.findProductsByCategoryId(categogy);
 			recomendProductList.addAll(rcmForCate);

@@ -50,7 +50,7 @@ public class Product implements Serializable{
     private Integer soldCount;
 	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Shop_ID")
 	private Seller sellerProduct;
 	

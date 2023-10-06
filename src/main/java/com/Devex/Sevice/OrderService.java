@@ -3,6 +3,7 @@ package com.Devex.Sevice;
 import java.util.List;
 import java.util.Optional;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -80,4 +81,5 @@ public interface OrderService {
 
 	int getCountOrderFalseByStatusIdAndYear(int statusid, int year);
 
+	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
 }

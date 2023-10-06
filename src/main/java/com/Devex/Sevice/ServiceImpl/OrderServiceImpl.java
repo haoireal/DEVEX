@@ -203,5 +203,9 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	
+	public List<Order> findOrderByUsernameAndStatusID(String customerID, int statusID) {
+		return orderRepository.findOrderByUsernameAndStatusID(customerID,statusID);
+	}
+
 
 }
