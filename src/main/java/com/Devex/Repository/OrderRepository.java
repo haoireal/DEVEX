@@ -121,8 +121,8 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 			"JOIN FETCH od.productVariant pv " +
 			"JOIN FETCH pv.product p " +
 			"JOIN FETCH p.sellerProduct s " +
-			"WHERE o.customerOrder.id = ?1 " +
-			"And o.orderStatus.id = ?2 " +
+			"WHERE o.customerOrder.username = ?1 " +
+			"And od.status.id = ?2 " +
 			"ORDER BY o.createdDay DESC")
 	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
 }
