@@ -81,7 +81,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 		       "JOIN p.categoryDetails cd " +
 		       "WHERE FUNCTION('YEAR', o.createdDay) = :year " +
 		       "AND od.status.id = 1009 AND o.orderStatus.id = 1006 " +
-		       "GROUP BY cd.Name " +
+		       "GROUP BY cd.Name, cd.id " +
 		       "ORDER BY productCount DESC " +
 		       "LIMIT 5")
 	List<Object[]> getTop5CategoryDetailsAndAmountProductSell(@Param("year") int year);

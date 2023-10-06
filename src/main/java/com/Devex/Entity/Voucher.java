@@ -7,11 +7,15 @@ import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -57,11 +61,17 @@ public class Voucher implements Serializable{
 	@Column(name = "Banner")
 	private String banner;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "voucher")
 	private List<VoucherDetails> voucherDetails;
 	
-	@OneToMany(mappedBy = "voucherOrder")
-	private List<Order> orders;
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "Category_Voucher_ID")
+	private CategoryVoucher categoryVoucher;
 	
-
+	@JsonIgnore
+	@OneToMany(mappedBy = "voucher")
+	private List<OrderDiscount> listOrderDiscount;
+	
 }
