@@ -30,6 +30,54 @@
 		integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script th:src="@{/js/cart-ctrl.js}"></script>
+	<style>
+		/* CSS cho modal container */
+		.modal {
+			display: none;
+			/* Ẩn modal ban đầu */
+			position: fixed;
+			top: 40%;
+			left: 59%;
+			transform: translate(-50%, -50%);
+			width: 25%;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			height: 190px;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			background-color: white;
+			border: 1px solid #ccc;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			text-align: center;
+			overflow: hidden;
+			animation: slideUp 0.5s ease-in-out;
+			/* Animation xuất hiện từ dưới lên */
+		}
+
+		/* CSS cho nút đóng modal */
+		.close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+		}
+
+		/* CSS cho iframe bên trong modal */
+		.modal iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+
+		/* Định nghĩa animation slideUp */
+		@keyframes slideUp {
+			0% {
+				transform: translate(-50%, 100%);
+			}
+
+			100% {
+				transform: translate(-50%, -50%);
+			}
+		}
+	</style>
 </head>
 
 <body lang="en" th:object="${product}">
@@ -241,7 +289,7 @@
 						<!--Purchase(mua)-->
 						<div id="addCart" class="row mt-3 d-none d-lg-flex pe-none ">
 							<div class="col-7 col-lg-5">
-								<button class="btn btn_buy" type="submit" name="action" value="addcart">Thêm Vào Giỏ
+								<button class="btn btn_buy" type="submit" name="action" value="addcart" onclick="show()">Thêm Vào Giỏ
 
 									Hàng</button>
 							</div>
@@ -254,7 +302,7 @@
 						</div>
 
 			</form>
-
+			
 		</div>
 <!--
 		<form th:action="@{/hihi}" method="get" style="position: absolute; margin-left: 300px;">
@@ -307,7 +355,28 @@
 		</div>
 
 	</main>
+	<div class="text-center">
+		<button id="successbtn" hidden>Lưu</button>
+		<button id="failsebtn" hidden>Xóa</button>
+	</div>
 
+	<div id="successModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<iframe
+				src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+			<span id="content" class="text-success fs-3">Thêm thành công</span>
+		</div>
+	</div>
+
+	<div id="failseModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<iframe
+				src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+			<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
+		</div>
+	</div>
 	<!--shop name-->
 	<div th:object="${seller}" class="container container-shop mt-3 ">
 		<!-- sài chung cho toàn bộ trang -->
@@ -793,6 +862,7 @@
 						</div>
 					</button>
 				</div>
+				
 			</div>
 		</div>
 		<!-- place footer here -->
@@ -1030,7 +1100,41 @@
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<script src="/admin/dist/js/user/productDetail.js"></script>
 
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var successbtn = document.getElementById('successbtn');
+			var failsebtn = document.getElementById('failsebtn');
+			var successModal = document.getElementById('successModal');
+			var failseModal = document.getElementById('failseModal');
+			var closeButtons = document.getElementsByClassName('close');
 
+			successbtn.addEventListener('click', function () {
+				successModal.style.display = 'block';
+			});
+
+			failsebtn.addEventListener('click', function () {
+				failseModal.style.display = 'block';
+			});
+
+			for (var i = 0; i < closeButtons.length; i++) {
+				closeButtons[i].addEventListener('click', function () {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				});
+			}
+
+			window.addEventListener('click', function (event) {
+				if (event.target === greenModal || event.target === failseModal) {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				}
+			});
+		});
+
+		function show() {
+			successbtn.click();
+		}
+	</script>
 
 </body>
 

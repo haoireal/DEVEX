@@ -255,7 +255,7 @@ public class DevexSellerRestController {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@GetMapping("/revenue/month")
+	@GetMapping("/seller/revenue/month")
 	public List<StatisticalRevenueMonthDTO> getRevenueByMonth(@RequestParam("year") int year, @RequestParam("month") int month){
 		User u = session.get("user");
 		int yearCompare;
@@ -326,7 +326,7 @@ public class DevexSellerRestController {
         return liststatis;
 	}
 	
-	@GetMapping("/revenue/year")
+	@GetMapping("/seller/revenue/year")
 	public List<StatisticalRevenueMonthDTO> getRevenueByYear(@RequestParam("year") int year){
 		User u = session.get("user");
 		List<StatisticalRevenueMonthDTO> liststatis = new ArrayList<>();

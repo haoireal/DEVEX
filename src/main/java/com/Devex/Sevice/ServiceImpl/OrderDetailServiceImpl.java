@@ -135,6 +135,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public int getTotalOrderDetailsByStatusIdAndSellerUsername(int statusid, String username) {
 		return orderDetailRepository.getTotalOrderDetailsByStatusIdAndSellerUsername(statusid, username);
 	}
+
+	@Override
+	public List<Object[]> getTop5CategoryDetailsAndAmountProductSell(int year) {
+		return orderDetailRepository.getTop5CategoryDetailsAndAmountProductSell(year);
+	}
 	
 	
 
