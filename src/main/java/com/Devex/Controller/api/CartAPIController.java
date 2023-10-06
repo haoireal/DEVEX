@@ -41,10 +41,9 @@ public class CartAPIController {
 
 	@Autowired
 	CustomerService customerService;
-	
+
 	@Autowired
 	OrderService orderService;
-
 
 	@Autowired
 	private OrderDetailService orderDetailService;
@@ -62,8 +61,8 @@ public class CartAPIController {
 	public List<CartDetailDTo> getAll(Model model) {
 		User user = sessionService.get("user");
 		Customer customer = null;
-		List<CartDetailDTo> cartDetails = new ArrayList<>(); 
-		if(user != null) {
+		List<CartDetailDTo> cartDetails = new ArrayList<>();
+		if (user != null) {
 			customer = customerService.findById(user.getUsername()).get();
 			cartDetails = cart.findAllCartDTO(customer.getUsername());
 		}
@@ -136,7 +135,7 @@ public class CartAPIController {
 
 		if (cartDetail != null) {
 			cartDetail.setQuantity(updatedCartDetail.getQuantity());
-
+			cartDetail.setCreatedDay(new Date());
 			cart.save(cartDetail);
 			return ResponseEntity.ok(updatedCartDetail);
 		} else {
@@ -145,11 +144,17 @@ public class CartAPIController {
 	}
 
 	@PostMapping("/rest/cart/order")
+	public ResponseEntity<Void> paymentOrder(@RequestBody List<CartDetailDTo> listOrder) {
+		sessionService.set("listItemOrder", listOrder);
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/rest/cart/order-true")
 	public ResponseEntity<Void> order(@RequestBody List<CartDetailDTo> listOrder) {
 //		Customer user = sessionService.get("user");
 		User user = sessionService.get("user");
 		Customer customer = null;
-		if(user != null) {
+		if (user != null) {
 			customer = customerService.findById(user.getUsername()).get();
 		}
 //		Customer customer = customerService.findById(user.getUsername()).get();
@@ -166,7 +171,7 @@ public class CartAPIController {
 		order.setPayment(paymentService.findById(1001).get());
 		order.setTotal(listOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum());
 		orderService.save(order);
-		
+
 		for (CartDetailDTo item : listOrder) {
 			OrderDetails orderDetails = new OrderDetails();
 			Order orders = orderService.findLatestOrder();
@@ -187,7 +192,6 @@ public class CartAPIController {
 
 		return ResponseEntity.ok().build();
 	}
-
 
 //	@PostMapping("/rest/cart")
 //	public ResponseEntity<String> createCartDetail(@RequestBody CartDetail cartDetail) {
@@ -213,92 +217,93 @@ public class CartAPIController {
 //	    }
 //	}
 
-    @GetMapping("/rest/cart/size/{id}")
-    public List<String> size(@PathVariable("id") String id) {
-        List<ProductVariant> pv = productVariantService.findAllProductVariantByProductId(id);
-        List<String> sizes = new ArrayList<>();
-        for (ProductVariant p : pv) {
-            String size = p.getSize();
-            if (!sizes.contains(size)) {
-                // Nếu chưa tồn tại, thêm phần tử vào danh sách
-                sizes.add(size);
-            }
-        }
-        if (sizes.size() < 0) {
-            return null;
-        }
-        return sizes;
-    }
+	@GetMapping("/rest/cart/size/{id}")
+	public List<String> size(@PathVariable("id") String id) {
+		List<ProductVariant> pv = productVariantService.findAllProductVariantByProductId(id);
+		List<String> sizes = new ArrayList<>();
+		for (ProductVariant p : pv) {
+			String size = p.getSize();
+			if (!sizes.contains(size)) {
+				// Nếu chưa tồn tại, thêm phần tử vào danh sách
+				sizes.add(size);
+			}
+		}
+		if (sizes.size() < 0) {
+			return null;
+		}
+		return sizes;
+	}
 
-    @GetMapping("/rest/cart/color/{id}")
-    public List<String> color(@PathVariable("id") String id) {
-        List<ProductVariant> pv = productVariantService.findAllProductVariantByProductId(id);
-        List<String> colors = new ArrayList<>();
-        for (ProductVariant p : pv) {
-            String color = p.getColor();
-            if (!colors.contains(color)) {
-                // Nếu chưa tồn tại, thêm phần tử vào danh sách
-                colors.add(color);
-            }
-        }
-        if (colors.isEmpty()) {
-            return null;
-        }
-        return colors;
-    }
+	@GetMapping("/rest/cart/color/{id}")
+	public List<String> color(@PathVariable("id") String id) {
+		List<ProductVariant> pv = productVariantService.findAllProductVariantByProductId(id);
+		List<String> colors = new ArrayList<>();
+		for (ProductVariant p : pv) {
+			String color = p.getColor();
+			if (!colors.contains(color)) {
+				// Nếu chưa tồn tại, thêm phần tử vào danh sách
+				colors.add(color);
+			}
+		}
+		if (colors.isEmpty()) {
+			return null;
+		}
+		return colors;
+	}
 
-
-    @PutMapping("/rest/cart/changeSizenColor/{id}")
-    public ResponseEntity<ProductVariant> changeSizenColor(@PathVariable("id") String id,
-														   @RequestParam("cartDetailId") int cartDetailId,
-                                                           @RequestBody SizeColorDTO sizeColorDTO) {
-        List<ProductVariant> pvList = productVariantService.findAllProductVariantByProductId(id);
-        ProductVariant item = null;
+	@PutMapping("/rest/cart/changeSizenColor/{id}")
+	public ResponseEntity<ProductVariant> changeSizenColor(@PathVariable("id") String id,
+			@RequestParam("cartDetailId") int cartDetailId, @RequestBody SizeColorDTO sizeColorDTO) {
+		List<ProductVariant> pvList = productVariantService.findAllProductVariantByProductId(id);
+		ProductVariant item = null;
 		System.out.println(cartDetailId);
-        System.out.println(sizeColorDTO.getSize());
-        System.out.println(sizeColorDTO.getColor());
+		System.out.println(sizeColorDTO.getSize());
+		System.out.println(sizeColorDTO.getColor());
 		List<String> colors = new ArrayList<>();
 		List<String> sizes = new ArrayList<>();
-		for (ProductVariant p: pvList) {
-			if(!colors.contains(p.getColor())){
+		for (ProductVariant p : pvList) {
+			if (!colors.contains(p.getColor())) {
 				colors.add(p.getColor());
 			}
-			if(!sizes.contains(p.getSize())){
+			if (!sizes.contains(p.getSize())) {
 				sizes.add(p.getSize());
 			}
 		}
-		for (ProductVariant p: pvList) {
-			if(colors.size() == 1){
-				if (p.getSize().equalsIgnoreCase(sizeColorDTO.getSize())){
+		for (ProductVariant p : pvList) {
+			if (colors.size() == 1) {
+				if (p.getSize().equalsIgnoreCase(sizeColorDTO.getSize())) {
 					item = p;
 					CartDetail cd = cart.findById(cartDetailId).get();
 					cd.setProductCart(item);
+					cd.setCreatedDay(new Date());
 					cart.save(cd);
 					break;
 				}
-			} else if(sizes.size() == 1){
-				if (p.getColor().equalsIgnoreCase(sizeColorDTO.getColor())){
+			} else if (sizes.size() == 1) {
+				if (p.getColor().equalsIgnoreCase(sizeColorDTO.getColor())) {
 					item = p;
 					CartDetail cd = cart.findById(cartDetailId).get();
 					cd.setProductCart(item);
+					cd.setCreatedDay(new Date());
 					cart.save(cd);
 					break;
 				}
-			}else{
-				if(p.getColor().equalsIgnoreCase(sizeColorDTO.getColor()) && p.getSize().equalsIgnoreCase(sizeColorDTO.getSize()))
-				{
+			} else {
+				if (p.getColor().equalsIgnoreCase(sizeColorDTO.getColor())
+						&& p.getSize().equalsIgnoreCase(sizeColorDTO.getSize())) {
 					item = p;
 					CartDetail cd = cart.findById(cartDetailId).get();
 					cd.setProductCart(item);
+					cd.setCreatedDay(new Date());
 					cart.save(cd);
 					break;
 				}
 			}
-        }
-        if (item != null) {
-            return ResponseEntity.ok(item); // Trả về 200 OK nếu tìm thấy
-        } else {
-            return ResponseEntity.notFound().build(); // Trả về 404 Not Found nếu không tìm thấy
-        }
-    }
+		}
+		if (item != null) {
+			return ResponseEntity.ok(item); // Trả về 200 OK nếu tìm thấy
+		} else {
+			return ResponseEntity.notFound().build(); // Trả về 404 Not Found nếu không tìm thấy
+		}
+	}
 }

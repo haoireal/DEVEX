@@ -18,11 +18,11 @@ public interface SellerRepository extends JpaRepository<Seller, String>{
 
 	@Modifying
 	@Transactional
-	@Query(value = "INSERT INTO Sellers (Username, Shopname, Address, Phoneaddress, Mall, Activeshop) VALUES (?,?,?,?,?,?)", nativeQuery = true)
-	void insertSeller(String Username,String Shopname,String Address,String Phoneaddress,Boolean Mall, Boolean Activeshop);
+	@Query(value = "INSERT INTO Sellers (Username, Shopname, Address, Phoneaddress, Mall, Activeshop, Description) VALUES (?,?,?,?,?,?,?)", nativeQuery = true)
+	void insertSeller(String Username,String Shopname,String Address,String Phoneaddress,Boolean Mall, Boolean Activeshop, String Description);
 	
 	@Modifying
 	@Transactional
-	@Query(value = "UPDATE Sellers SET Shopname = ?, Address = ?, Phoneaddress = ?, Mall = ?, Activeshop = ? WHERE Username = ?", nativeQuery = true)
-	void updateSeller(String Shopname, String Address, String Phoneaddress, Boolean Mall, Boolean Activeshop, String Username);
+	@Query(value = "UPDATE Sellers SET Shopname = ?, Address = ?, Phoneaddress = ?, Mall = ?, Activeshop = ?, Description = ? WHERE Username = ?", nativeQuery = true)
+	void updateSeller(String Shopname, String Address, String Phoneaddress, Boolean Mall, Boolean Activeshop, String Description, String Username);
 }

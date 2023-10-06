@@ -1,125 +1,90 @@
 <!-- Navbar -->
-<div
-  th:fragment="userHeaderHomePageFragment"
-  ng-app="app"
-  ng-controller="cart-ctrl"
->
-  <div class="container-fluid header-inf bg-white">
-    <div class="container">
-      <div class="row">
-        <div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
-          <nav
-            class="navbar float-end navbar-expand-lg navbar-light"
-            style="height: 35px"
-          >
-            <div
-              class="collapse navbar-collapse text-end"
-              id="navbarNavDropdown"
-            >
-              <ul class="text-end navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Hỗ trợ dịch vụ</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Bán hàng</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Sản phẩm đã xem</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Kiếu nại</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/order">Tra cứu đơn hàng</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Tuyển dụng</a>
-                </li>
+<div th:fragment="userHeaderHomePageFragment" ng-app="app" ng-controller="cart-ctrl">
+	<div class="container-fluid header-inf bg-white">
+		<div class="container">
+			<div class="row">
+				<div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
+					<nav class="navbar float-end navbar-expand-lg navbar-light" style="height: 35px">
+						<div class="collapse navbar-collapse text-end" id="navbarNavDropdown">
+							<ul class="text-end navbar-nav ml-auto">
+								<li class="nav-item">
+									<a class="nav-link" href="#">Hỗ trợ dịch vụ</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/seller/home">Bán hàng</a>
+								</li>
+								
+								<li class="nav-item">
+									<a class="nav-link" href="#">Sản phẩm đã xem</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">Kiếu nại</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/order">Tra cứu đơn hàng</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">Tuyển dụng</a>
+								</li>
 
-                <li class="nav-item">
-                  <a
-                    style="color: #fff"
-                    th:if="${session.user == null}"
-                    class="nav-link"
-                    href="/signin"
-                    >Đăng nhập</a
-                  >
-                  <a
-                    th:if="${session.user != null}"
-                    class="nav-link text-danger fw-bold"
-                    href="/logout"
-                    >Đăng xuất</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </nav>
-          <!-- hết thanh vav -->
-        </div>
-      </div>
-    </div>
-  </div>
+								<li class="nav-item">
+									<a style="color: #fff" th:if="${session.user == null}" class="nav-link"
+										href="/signin">Đăng nhập</a>
+									<a th:if="${session.user != null}" class="nav-link text-danger fw-bold"
+										href="/logout">Đăng xuất</a>
+								</li>
+							</ul>
+						</div>
+					</nav>
+					<!-- hết thanh vav -->
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <div class="container container_mid mt-3 bg-white" style="height: 500px">
-    <div class="row mt-2 mb-2 col-12">
-      <div class="col-md-2 col-3 text-center">
-        <a href="/home">
-          <img
-            class="img-fluid img_logo m-0 mt-1"
-            src=" /img/banner/logoDUAN.png"
-            alt
-          />
-        </a>
-      </div>
+	<div class="container container_mid mt-3 bg-white" style="height: 500px">
+		<div class="row mt-2 mb-2 col-12">
+			<div class="col-md-2 col-3 text-center">
+				<a href="/home">
+					<img class="img-fluid img_logo m-0 mt-1" src=" /img/banner/logoDUAN.png" alt />
+				</a>
+			</div>
 
-      <div class="col-md-9 col-7 mt-2">
-        <div class="search-box order-4 order-xl-3">
-          <form action="/product/search">
-            <div class="input-group no-shadow">
-              <input
-                type="text"
-                class="form-control"
-                th:name="search"
-                th:value="${session.keywordsSearch}"
-                placeholder="Bạn cần tìm gì hôm nay ?"
-                name="keyword"
-                style="
+			<div class="col-md-9 col-7 mt-2">
+				<div class="search-box order-4 order-xl-3">
+					<form action="/product/search">
+						<div class="input-group no-shadow">
+							<input type="text" class="form-control" th:name="search"
+								th:value="${session.keywordsSearch}" placeholder="Bạn cần tìm gì hôm nay ?"
+								name="keyword" style="
                   height: 40px;
                   border-radius: 15px;
                   font-weight: bold;
                   font-size: 13px;
                   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
                   border: 2px gray;
-                "
-              />
+                " />
 
-              <span
-                class="position-relative"
-                style="
+							<span class="position-relative" style="
                   right: 2.5rem;
                   z-index: 100;
                   margin-top: -2px;
                   width: 0px;
-                "
-              >
-                <a href="#" style="color: #fff; font-size: 12px" class="mt-1">
-                  <i
-                    class="fa-solid fa-magnifying-glass fs-4 mt-2 pt-1 text-dark"
-                  ></i>
-                </a>
-              </span>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="col-md-1 col-2 mt-2">
-        <div class="row">
-          <div class="col-6 pt-1">
-            <a href="/cart" style="position: relative">
-              <i class="bi bi-cart3 fs-4 text-dark fw-bold"></i>
-              <i
-                class="d-flex rounded-circle px-1"
-                style="
+                ">
+								<a href="#" style="color: #fff; font-size: 12px" class="mt-1">
+									<i class="fa-solid fa-magnifying-glass fs-4 mt-2 pt-1 text-dark"></i>
+								</a>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-md-1 col-2 mt-2">
+				<div class="row">
+					<div class="col-6 pt-1">
+						<a href="/cart" style="position: relative">
+							<i class="bi bi-cart3 fs-4 text-dark fw-bold"></i>
+							<i class="d-flex rounded-circle px-1" style="
                   font-size: 0.8rem;
                   background-color: #2550b9ab;
                   color: white;
@@ -127,247 +92,183 @@
                   top: -1rem;
                   right: -0.15rem;
                   text-decoration: none;
-                "
-                >{{cart.countItem}}</i
-              >
-            </a>
-          </div>
-          <div class="col-6 pt-1 col">
-            <a
-              href="/profile"
-              style="position: relative; display: flex; justify-content: center"
-            >
-              <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
-              <i
-                th:if="${session.user != null}"
-                style="
+                " ng-bind="cart.countItem"></i>
+						</a>
+					</div>
+					<div class="col-6 pt-1 col">
+						<a href="/profile" style="position: relative; display: flex; justify-content: center">
+							<i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
+							<i th:if="${session.user != null}" style="
                   font-size: 1rem;
                   background-color: #2550b9ab;
                   color: white;
                   position: absolute;
                   top: 2rem;
                   text-decoration: none;
-                "
-                th:text="${session.user.username}"
-              ></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row" style="height: 360px">
-      <div
-        class="col-md-2 d-md-none d-lg-flex list_type mt-4 text-center overflow-auto d-flex justify-content-center navbar navbar-expand-lg"
-      >
-        <ul
-          class="list-group list-group-flush text-center collapse navbar-collapse"
-        >
-          <li class="list-group-item text-center">
-            <a class="list_type_product rounded" href="">Máy Tính</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Áo Quần</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Phụ Kiện</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Điện Thoại</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Giày Dép</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Bàn Ghế</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Bàn Ghế</a>
-          </li>
-          <li class="list-group-item text-center">
-            <a class="list_type_product" href="">Bàn Ghế</a>
-          </li>
-        </ul>
-      </div>
+                " th:text="${session.user.username}"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="height: 360px">
+			<div
+				class="col-md-2 d-md-none d-lg-flex list_type mt-4 text-center overflow-auto d-flex justify-content-center navbar navbar-expand-lg">
+				<ul class="list-group list-group-flush text-center collapse navbar-collapse">
+					<li class="list-group-item text-center">
+						<a class="list_type_product rounded" href="">Máy Tính</a>
+					</li>
+					<li class="list-group-item text-center">
+						<a class="list_type_product" href="">Áo Quần</a>
+					</li>
+					<li class="list-group-item text-center">
+						<a class="list_type_product" href="">Phụ Kiện</a>
+					</li>
+					<li class="list-group-item text-center">
+						<a class="list_type_product" href="">Điện Thoại</a>
+					</li>
+					<li class="list-group-item text-center">
+						<a class="list_type_product" href="">Giày Dép</a>
+					</li>
+					<li class="list-group-item text-center">
+						<a class="list_type_product" href="">Bàn Ghế</a>
+					</li>
+					<li class="list-group-item text-center">
+						<a class="list_type_product" href="">Bàn Ghế</a>
+					</li>
+					<li class="list-group-item text-center">
+						<a class="list_type_product" href="">Bàn Ghế</a>
+					</li>
+				</ul>
+			</div>
 
-      <!--banners advertisement ( slide show)-->
-      <div class="col-12 col-lg-10 mt-4 slideShow">
-        <div class="image-slider">
-          <div class="image-item">
-            <div class="image">
-              <img class="img-fluid" 
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/25/1200x382-zfoldzflip5-250723.jpg"
-                alt
-              />
-            </div>
-          </div>
-          <div class="image-item">
-            <div class="image">
-              <img class="img-fluid" 
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/02/sua1reno-10-1200x375-26072023.jpg"
-                alt
-              />
-            </div>
-          </div>
-          <div class="image-item">
-            <div class="image">
-              <img class="img-fluid" 
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/01/web-1200x382.jpg"
-                alt
-              />
-            </div>
-          </div>
-          <div class="image-item">
-            <div class="image">
-              <img class="img-fluid" 
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/04/realme-11-1200-png.png"
-                alt
-              />
-            </div>
-          </div>
-          <div class="image-item">
-            <div class="image">
-              <img class="img-fluid" 
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/03/1200x382.jpg"
-                alt
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+			<!--banners advertisement ( slide show)-->
+			<div class="col-12 col-lg-10 mt-4 slideShow">
+				<div class="image-slider">
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/25/1200x382-zfoldzflip5-250723.jpg"
+								alt />
+						</div>
+					</div>
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/02/sua1reno-10-1200x375-26072023.jpg"
+								alt />
+						</div>
+					</div>
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/01/web-1200x382.jpg" alt />
+						</div>
+					</div>
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/04/realme-11-1200-png.png"
+								alt />
+						</div>
+					</div>
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/03/1200x382.jpg" alt />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- /.navbar -->
 <header th:fragment="userHeaderFragment" ng-app="app" ng-controller="cart-ctrl">
-  <div class="container-fluid header-inf">
-    <div class="container">
-      <div class="row-12">
-        <div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
-          <nav
-            class="navbar float-end navbar-expand-lg navbar-light"
-            style="height: 35px"
-          >
-            <div
-              class="collapse navbar-collapse text-end"
-              id="navbarNavDropdown"
-            >
-              <ul
-                class="text-end navbar-nav ml-auto"
-                style="display: flex; justify-content: center"
-              >
-                <li class="nav-item">
-                  <a style="color: #fff" class="nav-link" href="#"
-                    >Hỗ trợ dịch vụ</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a style="color: #fff" class="nav-link" href="#">Bán hàng</a>
-                </li>
-                <li class="nav-item">
-                  <a style="color: #fff" class="nav-link" href="#"
-                    >Sản phẩm đã xem</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a style="color: #fff" class="nav-link" href="#">Kiếu nại</a>
-                </li>
-                <li class="nav-item">
-                  <a style="color: #fff" class="nav-link" href="/order"
-                    >Tra cứu đơn hàng</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a style="color: #fff" class="nav-link" href="#"
-                    >Tuyển dụng</a
-                  >
-                </li>
+	<div class="container-fluid header-inf">
+		<div class="container">
+			<div class="row-12">
+				<div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
+					<nav class="navbar float-end navbar-expand-lg navbar-light" style="height: 35px">
+						<div class="collapse navbar-collapse text-end" id="navbarNavDropdown">
+							<ul class="text-end navbar-nav ml-auto" style="display: flex; justify-content: center">
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="#">Hỗ trợ dịch vụ</a>
+								</li>
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="/seller/home" >Bán hàng</a>
+								</li>
+								
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="#">Sản phẩm đã xem</a>
+								</li>
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="#">Kiếu nại</a>
+								</li>
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="/order">Tra cứu đơn hàng</a>
+								</li>
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="#">Tuyển dụng</a>
+								</li>
 
-                <li class="nav-item">
-                  <a
-                    style="color: #fff"
-                    th:if="${session.user == null}"
-                    class="nav-link"
-                    href="/signin"
-                    >Đăng nhập</a
-                  >
-                  <a
-                    th:if="${session.user != null}"
-                    class="nav-link text-danger fw-bold"
-                    href="/logout"
-                    >Đăng xuất</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </nav>
-          <!-- hết thanh vav -->
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    class="container container_mid mt-3 text-center bg-white pb-3"
-    style="background-color: white"
-  >
-    <div class="row mt-2 mb-2 col-12">
-      <div class="col-md-2 col-3 text-center">
-        <a href="/home">
-          <img
-            class="img-fluid img_logo m-0 mt-1"
-            src=" /img/banner/logoDUAN.png"
-            alt
-          />
-        </a>
-      </div>
+								<li class="nav-item">
+									<a style="color: #fff" th:if="${session.user == null}" class="nav-link"
+										href="/signin">Đăng nhập</a>
+									<a th:if="${session.user != null}" class="nav-link text-danger fw-bold"
+										href="/logout">Đăng xuất</a>
+								</li>
+							</ul>
+						</div>
+					</nav>
+					<!-- hết thanh vav -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container container_mid mt-3 text-center bg-white pb-3" style="background-color: white">
+		<div class="row mt-2 mb-2 col-12">
+			<div class="col-md-2 col-3 text-center">
+				<a href="/home">
+					<img class="img-fluid img_logo m-0 mt-1" src=" /img/banner/logoDUAN.png" alt />
+				</a>
+			</div>
 
-      <div class="col-md-9 col-7 mt-2">
-        <div class="search-box order-4 order-xl-3">
-          <form action="/product/search">
-            <div class="input-group no-shadow">
-              <input
-                type="text"
-                class="form-control"
-                th:name="search"
-                th:value="${session.keywordsSearch}"
-                placeholder="Bạn cần tìm gì hôm nay ?"
-                name="keyword"
-                style="
+			<div class="col-md-9 col-7 mt-2">
+				<div class="search-box order-4 order-xl-3">
+					<form action="/product/search">
+						<div class="input-group no-shadow">
+							<input type="text" class="form-control" th:name="search"
+								th:value="${session.keywordsSearch}" placeholder="Bạn cần tìm gì hôm nay ?"
+								name="keyword" style="
                   height: 40px;
                   border-radius: 15px;
                   font-weight: bold;
                   font-size: 13px;
                   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
                   border: 2px gray;
-                "
-              />
+                " />
 
-              <span
-                class="position-relative"
-                style="
+							<span class="position-relative" style="
                   right: 2.5rem;
                   z-index: 100;
                   margin-top: -2px;
                   width: 0px;
-                "
-              >
-                <a href="#" style="color: #fff; font-size: 12px" class="mt-1">
-                  <i
-                    class="fa-solid fa-magnifying-glass fs-4 mt-2 pt-1 text-dark"
-                  ></i>
-                </a>
-              </span>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="col-md-1 col-2 mt-2">
-        <div class="row">
-          <div class="col-6 pt-1">
-             <a href="/cart" style="position: relative">
-              <i class="bi bi-cart3 fs-4 text-dark fw-bold"></i>
-              <i
-                class="d-flex rounded-circle px-1"
-                style="
+                ">
+								<a href="#" style="color: #fff; font-size: 12px" class="mt-1">
+									<i class="fa-solid fa-magnifying-glass fs-4 mt-2 pt-1 text-dark"></i>
+								</a>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-md-1 col-2 mt-2">
+				<div class="row">
+					<div class="col-6 pt-1">
+						<a href="/cart" style="position: relative">
+							<i class="bi bi-cart3 fs-4 text-dark fw-bold"></i>
+							<i class="d-flex rounded-circle px-1" style="
                   font-size: 0.8rem;
                   background-color: #2550b9ab;
                   color: white;
@@ -375,33 +276,24 @@
                   top: -1rem;
                   right: -0.15rem;
                   text-decoration: none;
-                "
-                >{{cart.countItem}}</i
-              >
-            </a>
-          </div>
-          <div class="col-6 pt-1 col">
-            <a
-              href="/profile"
-              style="position: relative; display: flex; justify-content: center"
-            >
-              <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
-              <i
-                th:if="${session.user != null}"
-                style="
+                " ng-bind="cart.countItem"></i>
+						</a>
+					</div>
+					<div class="col-6 pt-1 col">
+						<a href="/profile" style="position: relative; display: flex; justify-content: center">
+							<i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
+							<i th:if="${session.user != null}" style="
                   font-size: 1rem;
                   background-color: #2550b9ab;
                   color: white;
                   position: absolute;
                   top: 2rem;
                   text-decoration: none;
-                "
-                th:text="${session.user.username}"
-              ></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                " th:text="${session.user.username}"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </header>

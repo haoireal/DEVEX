@@ -103,7 +103,7 @@ public class DevexAdminRestController {
 	                // tạo mới seller
 	                if("SELLER".equals(roleId)) {
 	                	if(seller == null) {
-	                		sellerService.insertSeller(user.getUsername(),"Default" ,"Default","Default", false, true);    
+	                		sellerService.insertSeller(user.getUsername(),"Default" ,"Default","Default", false, true, null);    
 	                	}
 	                }
 	              
@@ -138,7 +138,7 @@ public class DevexAdminRestController {
         String message = "Cập Nhập Thông Tin Thất Bại";   
         // Xử lý dữ liệu và lưu vào cơ sở dữ liệu
         if (selleru != null) {
-        	sellerService.updateSeller(ShopDTO.getShopName(), ShopDTO.getAddress(), ShopDTO.getPhoneAddress(), ShopDTO.getMall(), true, user.getUsername());
+        	sellerService.updateSeller(ShopDTO.getShopName(), ShopDTO.getAddress(), ShopDTO.getPhoneAddress(), ShopDTO.getMall(), true, ShopDTO.getDescription(), user.getUsername());
             message = "Cập Nhập Thông Tin Thành Công";
         } 
 

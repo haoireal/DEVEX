@@ -1,6 +1,7 @@
 package com.Devex.DTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class CartDetailDTo {
     private String idProduct;
     private String avatarShop;
     private String img;
-    
+    private Date createdDay;
    
     
 }
