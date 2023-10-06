@@ -2,25 +2,36 @@ package com.Devex.Controller.customer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.Devex.Entity.Category;
+import com.Devex.Entity.CategoryDetails;
 import com.Devex.Entity.Product;
+import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
 import com.Devex.Repository.ProductRepository;
+import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.ProductService;
@@ -52,14 +63,24 @@ public class DevexUserController {
 	@Autowired
 	ShoppingCartService cartService;
 
-	@GetMapping("/home")
+	@Autowired
+	CategoryService categoryService;
+
+	private List<Product> uniqueProductList = new ArrayList<>();
+	private List<String> listCategory = new ArrayList<>();
+	private List<String> listBrand = new ArrayList<>();
+
+	@GetMapping({ "/home", "/*" })
 	public String getHomePage(Model model) {
+//		uniqueProductList.clear();
 		User user = new User();
 		List<Product> listProducts = new ArrayList<>();
+
+		Set<Product> uniqueProducts = new HashSet<>();
 		user = sessionService.get("user");
 		// Giỏ hàng
 		if (sessionService.get("user") != null) {
-			
+
 			listProducts.addAll(recomendationService.recomendProduct(user.getUsername()));
 			// fix tạm
 			if (listProducts.size() <= 0) {
@@ -73,13 +94,19 @@ public class DevexUserController {
 			sessionService.set("cartCount", 0);
 		}
 		// Trộn ví trí sản phẩm
-		Collections.shuffle(listProducts);
-		listProducts = listProducts.subList(0, 30);
-		model.addAttribute("products", listProducts);
+		listProducts.forEach(pr -> {
+			uniqueProducts.add(pr);
+		});
+		// Chuyển đổi lại thành danh sách (List)
+		uniqueProductList = new ArrayList<>(uniqueProducts);
+		Collections.shuffle(uniqueProductList);
+		List<Category> listCategoryProducts = categoryService.findAll();
+
+		model.addAttribute("category", listCategoryProducts);
+		model.addAttribute("products", uniqueProductList);
 		return "user/index";
 	}
 
-	      
 	@GetMapping("/userProfile")
 	public String getUserProfile() {
 
@@ -94,33 +121,33 @@ public class DevexUserController {
 
 	@GetMapping("/product/search")
 	public String searchProduct(Model model, @RequestParam("search") Optional<String> kw) {
-		List<Product> list = new ArrayList<>();
-		Set<Product> uniqueProducts = new HashSet<>();
+//		uniqueProductList.clear();
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
 		sessionService.set("keywordsSearch", kwords);
+
+		List<Product> list = new ArrayList<>();
+		Set<Product> uniqueProducts = new HashSet<>();
 		// Tìm tên từ theo từ khóa
 		list.addAll(productService.findByKeywordName(kwords));
-		System.out.println("chan loi");
 		// Tìm theo shop bán
 		list.addAll(productService.findProductBySellerUsername("%" + kwords + "%"));
 		// FILLTER SẢN PHẨM TRÙNG NHAU
-//		List<Product> pByC = new ArrayList<>();//  hào
-//		if (list.size() > 0) {
-//			pByC = productService.findProductsByCategoryId(list.get(0).getCategoryDetails().getCategory().getId());
-//		} // hào
-//		list.addAll(productService.findProductsByCategoryId(list.get(0).getCategoryDetails().getCategory().getId()));
+		List<Product> pByC = new ArrayList<>();// hào
+		if (list.size() > 0) {
+			pByC = productService.findProductsByCategoryId(list.get(0).getCategoryDetails().getCategory().getId());
+		} // hào
+		list.addAll(pByC);
 
-		list.forEach(pr ->{
+		list.forEach(pr -> {
 			uniqueProducts.add(pr);
 		});
 		// Chuyển đổi lại thành danh sách (List)
-        List<Product> uniqueProductList = new ArrayList<>(uniqueProducts);
-		/*pByC.removeAll(list);
-		// FIll thêm sản phẩm theo loại dựa trên từ khóa tìm kiếm
-		list.addAll(pByC);*/ 
-//		List<Product> listFillter = productRepository.fillerProductBy(kwords, "price", "desc");//code hào
-
+		uniqueProductList = new ArrayList<>(uniqueProducts);
+		// Loại sản phẩm
+		getCategoryAndBrand();
 		model.addAttribute("products", uniqueProductList);
+		model.addAttribute("category", listCategory);
+		model.addAttribute("brand", listBrand);
 		return "user/findproduct";
 	}
 
@@ -129,34 +156,113 @@ public class DevexUserController {
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
 		sessionService.set("keywordsSearch", kwords);
 		String sortPrice = paramService.getString("sortprice", "");
-		List<Product> listFillter = new ArrayList<>();
-		System.out.println(sortPrice);
 		switch (sortPrice) {
 		case "ASC": {
-			listFillter.addAll( productRepository.fillerProductBy(kwords, "price", "ASC"));
+			Collections.sort(uniqueProductList, new Comparator<Product>() {
+				@Override
+				public int compare(Product product1, Product product2) {
+					// Lựa chọn giá thấp nhất hoặc giá cao nhất để sắp xếp
+					Double price1 = product1.getProductVariants().stream().mapToDouble(ProductVariant::getPrice).min()
+							.orElse(0.0);
+					Double price2 = product2.getProductVariants().stream().mapToDouble(ProductVariant::getPrice).min()
+							.orElse(0.0);
+
+					return Double.compare(price1, price2);
+				}
+			});
 			break;
 		}
 		case "DESC": {
-			listFillter.addAll( productRepository.fillerProductBy(kwords, "price", "DESC"));
+			Collections.sort(uniqueProductList, new Comparator<Product>() {
+				@Override
+				public int compare(Product product1, Product product2) {
+					// Lựa chọn giá thấp nhất hoặc giá cao nhất để sắp xếp
+					Double price1 = product1.getProductVariants().stream().mapToDouble(ProductVariant::getPrice).min()
+							.orElse(0.0);
+					Double price2 = product2.getProductVariants().stream().mapToDouble(ProductVariant::getPrice).min()
+							.orElse(0.0);
+
+					return Double.compare(price2, price1);
+				}
+			});
 			break;
 		}
 		default:
-			
+			model.addAttribute("products", uniqueProductList);
 		}
 		// Tìm tên từ theo từ khóa
-		model.addAttribute("products", listFillter);
+		model.addAttribute("products", uniqueProductList);
+		model.addAttribute("category", listCategory);
+		model.addAttribute("brand", listBrand);
+		return "user/findproduct";
+	}
+
+	@PostMapping("/filter/ban-chay")
+	public String filterProducts(Model model, @RequestParam("search") Optional<String> kw) {
+		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
+		sessionService.set("keywordsSearch", kwords);
+		Collections.sort(uniqueProductList, Comparator.comparing(Product::getSoldCount).reversed());
+		// Tìm tên từ theo từ khóa
+		model.addAttribute("products", uniqueProductList);
+		model.addAttribute("category", listCategory);
+		model.addAttribute("brand", listBrand);
+		return "user/findproduct";
+	}
+
+	@RequestMapping("/category/{id}")
+	public String filterCategory(@PathVariable("id") int id, ModelMap model) {
+		uniqueProductList = productService.findProductsByCategoryId(id);
+		sessionService.set("keywordsSearch", uniqueProductList.get(0).getCategoryDetails().getCategory().getName());
+		
+		model.addAttribute("products", uniqueProductList);
+
 		return "user/findproduct";
 	}
 	
-	@PostMapping("/filter/ban-chay")
-    public String filterProducts(Model model, @RequestParam("search") Optional<String> kw) {
-		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
-		sessionService.set("keywordsSearch", kwords);
-		List<Product> listFillter = new ArrayList<>();
-		System.out.println(listFillter.size());
-		listFillter.addAll( productRepository.fillerProductBy(kwords, "soldcount", "DESC"));
-		// Tìm tên từ theo từ khóa
-				model.addAttribute("products", listFillter);
-        return "user/findproduct";
-    }
-}
+	@PostMapping("/filter-product")
+	public String filterProducts(
+	        @RequestParam(value = "category", required = false) List<String> category,
+	        @RequestParam(value = "location", required = false) List<String> location,
+	        @RequestParam(value = "brand", required = false) List<String> brand,
+	        @RequestParam(value = "priceFrom", required = false) Double priceFrom,
+	        @RequestParam(value = "priceTo", required = false) Double priceTo,
+	        ModelMap model) {
+			
+
+//	        // Thực hiện việc lọc danh sách sản phẩm ở đây dựa trên các điều kiện đã nhận được từ giao diện web
+	        List<Product> filteredProducts = uniqueProductList.stream().filter
+	                (pr  -> {
+	                    // Áp dụng các điều kiện lọc ở đây
+	                    boolean categoryCondition = category == null || category.isEmpty() || category.contains(pr.getCategoryDetails().getCategory().getName());
+	                    boolean brandCondition = brand == null || brand.isEmpty() || brand.contains(pr.getProductbrand().getName());
+	                    boolean locationCondition = location == null || location.isEmpty() || location.contains(pr.getSellerProduct().getAddress());
+	                    boolean priceCondition = (priceFrom == null || priceFrom >= pr.getProductVariants().get(0).getPrice() ) &&
+	                            (priceTo == null || priceTo <= pr.getProductVariants().get(0).getPrice());
+	                    return categoryCondition && locationCondition && brandCondition && priceCondition;
+	                })
+	                .collect(Collectors.toList());
+
+	        // Trả về danh sách sản phẩm đã lọc cho giao diện web
+	        model.addAttribute("products", filteredProducts);
+			model.addAttribute("category", listCategory);
+			model.addAttribute("brand", listBrand);
+	        return "user/findproduct"; // Trả về trang kết quả
+	    }
+	
+
+	// function
+	void getCategoryAndBrand( ) {
+		uniqueProductList.forEach(category -> {
+			
+			if (!listCategory.contains(category.getCategoryDetails().getCategory().getName())) {
+				listCategory.add(category.getCategoryDetails().getCategory().getName());
+			}
+
+			if (!listBrand.contains(category.getProductbrand().getName())) {
+				listBrand.add(category.getProductbrand().getName());
+			}
+
+		});
+
+	}
+}// end class

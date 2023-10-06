@@ -135,15 +135,77 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public int getTotalOrderByStatusIdAndSellerUsername(int statusid, int statusid1, String username) {
-		return orderRepository.getTotalOrderByStatusIdAndSellerUsername(statusid, statusid1, username);
+	public int getTotalOrderByStatusIdAndSellerUsername(int statusid, int statusid1, String username, int year, int month) {
+		return orderRepository.getTotalOrderByStatusIdAndSellerUsername(statusid, statusid1, username, year, month);
 	}
 
 	@Override
-	public int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(int statusid, String username) {
-		return orderRepository.getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(statusid, username);
+	public int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(int statusid, String username, int year, int month) {
+		return orderRepository.getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(statusid, username, year, month);
+	}
+
+	@Override
+	public List<Order> getAllOrderByUsernameAndStatusIdAndYearAndMonth(int statusid, int statusid1, String username, int year,
+			int month) {
+		return orderRepository.getAllOrderByUsernameAndStatusIdAndYearAndMonth(statusid, statusid1, username, year,
+				month);
+	}
+
+	@Override
+	public List<Order> getAllOrderFalseByUsernameAndStatusIdAndYearAndMonth(int statusid, String username, int year,
+			int month) {
+		return orderRepository.getAllOrderFalseByUsernameAndStatusIdAndYearAndMonth(statusid, username, year, month);
+	}
+
+	@Override
+	public Double getTotalPriceOrder() {
+		return orderRepository.getTotalPriceOrder();
+	}
+
+	@Override
+	public List<Object[]> getTotalPriceOrderByMonthAndYear(int year, int month) {
+		return orderRepository.getTotalPriceOrderByMonthAndYear(year, month);
+	}
+
+	@Override
+	public int getCountOrderByStatusIdAndYearAndMonth(int statusid, int year, int month) {
+		return orderRepository.getCountOrderByStatusIdAndYearAndMonth(statusid, year, month);
+	}
+
+	@Override
+	public int getCountOrderFalseByStatusIdAndYearAndMonth(int statusid, int year, int month) {
+		return orderRepository.getCountOrderFalseByStatusIdAndYearAndMonth(statusid, year, month);
+	}
+
+	@Override
+	public int getCountOrderWaitingByStatusIdAndYearAndMonth(int year, int month) {
+		return orderRepository.getCountOrderWaitingByStatusIdAndYearAndMonth(year, month);
+	}
+
+	@Override
+	public List<Object[]> getTotalPriceOrderByYear(int year) {
+		return orderRepository.getTotalPriceOrderByYear(year);
+	}
+
+	@Override
+	public int getCountOrderByStatusIdAndYear(int statusid, int year) {
+		return orderRepository.getCountOrderByStatusIdAndYear(statusid, year);
+	}
+
+	@Override
+	public int getCountOrderWaitingByStatusIdAndYear(int year) {
+		return orderRepository.getCountOrderWaitingByStatusIdAndYear(year);
+	}
+
+	@Override
+	public int getCountOrderFalseByStatusIdAndYear(int statusid, int year) {
+		return orderRepository.getCountOrderFalseByStatusIdAndYear(statusid, year);
 	}
 	
 	
+	public List<Order> findOrderByUsernameAndStatusID(String customerID, int statusID) {
+		return orderRepository.findOrderByUsernameAndStatusID(customerID,statusID);
+	}
+
 
 }

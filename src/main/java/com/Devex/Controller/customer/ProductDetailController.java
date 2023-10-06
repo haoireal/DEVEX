@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Devex.Entity.Product;
+import com.Devex.Entity.ProductVariant;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
+import com.Devex.Sevice.SessionService;
 
 @Controller
 
@@ -32,11 +34,15 @@ public class ProductDetailController {
 	
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+    SessionService session;
 
 	
 
 	@RequestMapping("/details/{id}")
 	public String details(ModelMap model, @PathVariable("id") String id) {
+		session.set("url", "/details/" + id);
 		Product seller = productService.findProductById(id);
 		Product product = productService.findById(id).orElse(new Product());
 		List<String> listSize = new ArrayList<>();
@@ -92,6 +98,15 @@ public class ProductDetailController {
 			@RequestParam("size") String size) {
 			Double price =  productVariantService.findPriceByColorAndSize(id, color, size);
 			return price;
+	}
+	
+	@RequestMapping(value = ("/quantityproductvariant"), method = RequestMethod.POST)
+	@ResponseBody
+	public int quantityProductVariant(@RequestParam("id") String id, @RequestParam("color") String color,
+			@RequestParam("size") String size) {
+			ProductVariant p = productVariantService.findProductVariantByColorAndSizeAndIdProduct(id, color, size);
+			int quantity =  p.getQuantity();
+			return quantity;
 	}
 
 }

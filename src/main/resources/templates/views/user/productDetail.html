@@ -30,6 +30,54 @@
 		integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script th:src="@{/js/cart-ctrl.js}"></script>
+	<style>
+		/* CSS cho modal container */
+		.modal {
+			display: none;
+			/* Ẩn modal ban đầu */
+			position: fixed;
+			top: 40%;
+			left: 59%;
+			transform: translate(-50%, -50%);
+			width: 25%;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			height: 190px;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			background-color: white;
+			border: 1px solid #ccc;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			text-align: center;
+			overflow: hidden;
+			animation: slideUp 0.5s ease-in-out;
+			/* Animation xuất hiện từ dưới lên */
+		}
+
+		/* CSS cho nút đóng modal */
+		.close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+		}
+
+		/* CSS cho iframe bên trong modal */
+		.modal iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+
+		/* Định nghĩa animation slideUp */
+		@keyframes slideUp {
+			0% {
+				transform: translate(-50%, 100%);
+			}
+
+			100% {
+				transform: translate(-50%, -50%);
+			}
+		}
+	</style>
 </head>
 
 <body lang="en" th:object="${product}">
@@ -156,8 +204,8 @@
 							<div class=" col-10">
 								<span> <strong class="fs-3 fw-bold price totalPrice" id="amount" name="amount"
 										style="color: #ee4d2d;"
-										th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'POINT',0,'POINT')}+' ₫'"></strong></span>
 
+										th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'POINT',0,'POINT')}+' ₫'"></strong></span>
 								<del class="fs-5 ms-3 opacity-50"
 									th:text="*{#numbers.formatDecimal(productVariants[0].price, 0,'POINT',0,'POINT')}+' ₫'"></del>
 							</div>
@@ -227,10 +275,11 @@
 										<label id="btn_quantity" class="button btn_Add border-0 fs-4"
 											onclick="add(this)"> <i class="fa-solid fa-plus icon_Add"></i>
 										</label>
-
+										<span style="margin-left: 50px;" id="totalquantity"></span>
 									</div>
 								</div>
 							</div>
+							
 
 						</div>
 						<!--total money-->
@@ -240,7 +289,8 @@
 						<!--Purchase(mua)-->
 						<div id="addCart" class="row mt-3 d-none d-lg-flex pe-none ">
 							<div class="col-7 col-lg-5">
-								<button class="btn btn_buy" type="submit" name="action" value="addcart">Thêm Vào Giỏ
+								<button class="btn btn_buy" type="submit" name="action" value="addcart" onclick="show()">Thêm Vào Giỏ
+
 									Hàng</button>
 							</div>
 							<div class="col-5 col-lg-4 mb-3">
@@ -252,7 +302,7 @@
 						</div>
 
 			</form>
-
+			
 		</div>
 <!--
 		<form th:action="@{/hihi}" method="get" style="position: absolute; margin-left: 300px;">
@@ -305,7 +355,28 @@
 		</div>
 
 	</main>
+	<div class="text-center">
+		<button id="successbtn" hidden>Lưu</button>
+		<button id="failsebtn" hidden>Xóa</button>
+	</div>
 
+	<div id="successModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<iframe
+				src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+			<span id="content" class="text-success fs-3">Thêm thành công</span>
+		</div>
+	</div>
+
+	<div id="failseModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<iframe
+				src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+			<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
+		</div>
+	</div>
 	<!--shop name-->
 	<div th:object="${seller}" class="container container-shop mt-3 ">
 		<!-- sài chung cho toàn bộ trang -->
@@ -533,19 +604,25 @@
 									th:if="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
 									Giảm
 									<span
-										th:text="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
-									%
+										th:text="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
+									
+									</div>
+									<img 
+ 									th:src="@{|/img/product/${shopProduct.sellerProduct.username}/${shopProduct.id}/${shopProduct.imageProducts[0].name}|}"
+									class="img-fluid w-100 p-0"
+									th:alt="${shopProduct.name}" />
+									<div class="card-body" style="padding: 5px">
+										<div
+											class="card-title tensp text-left"
+											style="height: 40px"
+											th:text="${shopProduct.name}"
+											th:title="${shopProduct.name}"></div>
 
-								</div>
-								<img th:src="@{|/img/product/${shopProduct.sellerProduct.username}/${shopProduct.id}/${shopProduct.imageProducts[0].name}|}"
-									class="img-fluid w-100 p-0" th:alt="${shopProduct.name}" />
-								<div class="card-body" style="padding: 5px">
-									<div class="card-title tensp text-left" style="height: 40px"
-										th:text="${shopProduct.name}" th:title="${shopProduct.name}"></div>
+										<div id="price-box" >
+											<div class="price_suggest col-6  m-0" >
+											<span style="color: #ff0821bb">₫</span><strong
+												class="fs-10"
 
-									<div id="price-box">
-										<div class="price_suggest col-6  m-0">
-											<span style="color: #ff0821bb">₫</span><strong class="fs-10"
 												th:text="${#numbers.formatDecimal(shopProduct.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
 												style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
 										</div>
@@ -589,19 +666,24 @@
 									th:if="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
 									Giảm
 									<span
-										th:text="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span>
-									%
+										th:text="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
+									</div>
+									<img onload="lazy"
+									th:src="@{|/img/product/${products.sellerProduct.username}/${products.id}/${products.imageProducts[0].name}|}"
+									class="img-fluid w-100 p-0"
+									th:alt="${products.name}" />
+									<div class="card-body" style="padding: 5px">
+										<div
+											class="card-title tensp text-left"
+											style="height: 40px"
+											th:text="${products.name}"
+											th:title="${products.name}"></div>
 
-								</div>
-								<img th:src="@{|/img/product/${products.sellerProduct.username}/${products.id}/${products.imageProducts[0].name}|}"
-									class="img-fluid w-100 p-0" th:alt="${products.name}" />
-								<div class="card-body" style="padding: 5px">
-									<div class="card-title tensp text-left" style="height: 40px"
-										th:text="${products.name}" th:title="${products.name}"></div>
+										<div id="price-box" >
+											<div class="price_suggest col-6  m-0" >
+											<span style="color: #ff0821bb">₫</span><strong
+												class="fs-10"
 
-									<div id="price-box">
-										<div class="price_suggest col-6  m-0">
-											<span style="color: #ff0821bb">₫</span><strong class="fs-10"
 												th:text="${#numbers.formatDecimal(products.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
 												style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
 										</div>
@@ -713,7 +795,6 @@
 						</div>
 						<div class="col-6 ">
 							<div id="number_quantity_mobile" class=" pe-none  float-end ">
-
 								<div class="control d-flex align-items-center ">
 
 									<label class="button btn_Sub border-0 fs-3 " onclick="subtract(this)"> <i
@@ -729,6 +810,8 @@
 						</div>
 
 
+								<div class="control d-flex align-items-center ">
+
 					</div>
 				</div>
 				<!--model footer-->
@@ -736,6 +819,7 @@
 					<div class="row d-flex justify-content-center">
 						<!-- 					<a th:href="@{'/cart/add/' + *{id}}"> -->
 						<button id="btn_add_buy" class="product-bottom-mobile_add-cart"
+
 							style="background-color: #2550b9 !important;">
 							<div class="content_Add-cart " style="line-height: 50px;">
 								<span class="text-light" style="font-size: .875rem;">Thêm
@@ -789,6 +873,7 @@
 						</div>
 					</button>
 				</div>
+				
 			</div>
 		</div>
 		<!-- place footer here -->
@@ -808,46 +893,43 @@
 		</script>
 	<!--slick slide-->
 	<script>
+				// Khai báo một biến toàn cục để lưu giá bán đầu
+				var quantityproductvariant;
+				var originalPrice;
+				var isDesktop = window.matchMedia("(min-width: 768px)");
 
-
-
-		// Khai báo một biến toàn cục để lưu giá bán đầu
-		var originalPrice;
-		var isDesktop = window.matchMedia("(min-width: 768px)");
-
-		function updateTotalPrice(input) {
-			// Lấy phần tử span chứa giá tiền
-			var span = document.querySelector(".price");
-			// Kiểm tra nếu biến originalPrice chưa được gán
-			if (!originalPrice) {
-				// Lấy nội dung của span, đó chính là giá bán đầu của sản phẩm
-				var price = span.textContent;
-				// Xóa ký tự VNĐ và dấu phẩy khỏi nội dung
-				price = price.replace(/\.|\,|₫/g, "");
-				// Chuyển giá trị của nội dung thành số
-				price = parseInt(price);
-				// Gán giá trị cho biến originalPrice
-				originalPrice = price;
-			}
-			// Lấy input chứa số lượng
-			var quantity = parseInt(input.value);
-			console.log(quantity);
-			// Tính tổng tiền bằng cách nhân giá bán đầu với số lượng
-			var total = originalPrice * quantity;
-			// Định dạng tổng tiền theo định dạng VNĐ
-			var formatter = new Intl.NumberFormat("vi-VN", {
-				style: "currency",
-				currency: "VND",
-				currencyDisplay: "symbol",
-			});
-			if (isDesktop.matches) {
+				function updateTotalPrice (input) {
+				// Lấy phần tử span chứa giá tiền
+				var span = document.querySelector (".price");
+				// Kiểm tra nếu biến originalPrice chưa được gán
+				if (!originalPrice) {
+					// Lấy nội dung của span, đó chính là giá bán đầu của sản phẩm
+					var price = span.textContent;
+					// Xóa ký tự VNĐ và dấu phẩy khỏi nội dung
+					price = price.replace(/\.|\,|₫/g, "");
+					// Chuyển giá trị của nội dung thành số
+					price = parseInt(price);
+					// Gán giá trị cho biến originalPrice
+					originalPrice = price;
+				}
+				// Lấy input chứa số lượng
+				var quantity = parseInt (input.value);
+				console.log (quantity);
+				// Tính tổng tiền bằng cách nhân giá bán đầu với số lượng
+				var total = originalPrice * quantity;
+				// Định dạng tổng tiền theo định dạng VNĐ
+				var formatter = new Intl.NumberFormat ("vi-VN", {
+					style: "currency",
+					currency: "VND",
+					currencyDisplay: "symbol",
+				});
+				if(isDesktop.matches){
 				// Lấy phần tử span chứa tổng tiền
 				var span = document.querySelector(".totalPrice");
 				// Cập nhật nội dung của span bằng tổng tiền đã định dạng
-				span.textContent = formatter.format(total);
-			}
-
-		}
+				span.textContent = formatter.format(total);	
+				}
+				}
 
 		function subtract(button) {
 			var input = button.parentNode.querySelector(".product_quantity");
@@ -861,8 +943,10 @@
 		function add(button) {
 			var input = button.parentNode.querySelector(".product_quantity");
 			var currentValue = parseInt(input.value);
-			input.value = currentValue + 1;
-			input.dispatchEvent(new Event("input"));
+			if(currentValue < quantityproductvariant){
+				input.value = currentValue + 1;
+				input.dispatchEvent(new Event("input"));
+			}
 		}
 
 
@@ -895,9 +979,17 @@
 
 
 	<script>
+		// Sử dụng JavaScript để thay đổi lịch sử duyệt web và điều hướng về trang chủ
+		function addToCartAndNavigateHome() {
+			// Thực hiện thêm sản phẩm vào giỏ hàng
+
+			// Thay đổi lịch sử duyệt web để ghi đè trang hiện tại
+			// và điều hướng trình duyệt về trang chủ
+			history.replaceState({}, '', '/home'); // Điều hướng về trang chủ
+		}
 
 
-		var setNumber = document.getElementById('inputField');
+		var setNumber =  document.getElementById('inputField');
 		var setLabel = document.getElementById('btn_quantity');
 		const quantity = document.getElementById('number_quantity');
 		const quantity_mobile = document.getElementById('number_quantity_mobile');
@@ -934,40 +1026,61 @@
 				}
 			}
 
-			// check null color vs size
-
-
-			if (document.querySelector("input[name='flexRadioDefault']:checked") || document.querySelector("input[name='flexRadio']:checked")) {
-				// Lấy input chứa số lượng
-				setNumber.value = 1;
+		 // check null color vs size
+		 if(document.querySelector("input[name='flexRadioDefault']:checked") || document.querySelector("input[name='flexRadio']:checked")){
+			// Lấy input chứa số lượng
+			setNumber.value = 1;
+		 }
+		// var size =document.querySelector("input[name='flexRadio']:checked").value;
+		
+		var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
+		// hoặc tạo một chuỗi query chứa color và size
+		var data = "id="+ id +"&color=" + color + "&size=" + size;
+		var totalquantity = document.getElementById("totalquantity");
+		 console.log(id,color, size);
+		$.ajax({
+			url: "/data", // url của server
+			type: "POST", // phương thức gửi request
+			data: data, // dữ liệu gửi lên server 
+			success: function (price){
+				console.log(price);
+				let formatter = new Intl.NumberFormat('vi-VN', {
+				    style: 'currency',
+				    currency: 'VND',
+				  });
+				  // sử dụng phương thức format để định dạng giá tiền
+				  let formattedPrice = formatter.format(price); // "123.456.789 ₫"
+				  if(isDesktop.matches){
+					$(".price").text(formattedPrice); // giá bán mới
+				  }
+				  $(".price_real").text(formattedPrice); // giá bán mới
+				//   $("del").hide();
 			}
-			// var size =document.querySelector("input[name='flexRadio']:checked").value;
-
-			var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
-			// hoặc tạo một chuỗi query chứa color và size
-			var data = "id=" + id + "&color=" + color + "&size=" + size;
-			console.log(id, color, size);
-			$.ajax({
-				url: "/data", // url của server
-				type: "POST", // phương thức gửi request
-				data: data, // dữ liệu gửi lên server 
-				success: function (price) {
-					console.log(price);
-					let formatter = new Intl.NumberFormat('vi-VN', {
-						style: 'currency',
-						currency: 'VND',
-					});
-					// sử dụng phương thức format để định dạng giá tiền
-					let formattedPrice = formatter.format(price); // "123.456.789 ₫"
-					if (isDesktop.matches) {
-						$(".price").text(formattedPrice); // giá bán mới
-					}
-					$(".price_real").text(formattedPrice); // giá bán mới
-					//   $("del").hide();
+			
+			
+		});
+		$.ajax({
+			url: "/quantityproductvariant", // url của server
+			type: "POST", // phương thức gửi request
+			data: data, // dữ liệu gửi lên server 
+			success: function (quantity){
+				quantityproductvariant = quantity;
+				totalquantity.textContent = "Số lượng kho: " + quantityproductvariant;
+				totalquantity.className = "text-danger";
+				if(quantityproductvariant == 0){
+					addCart.classList.add("pe-none");
 				}
+			}
+		});
+		// console.log(color);
+		// fetch('/quantityproductvariant?id=' + id + '&color=' + color + '&size=' + size)
+		// 		.then(response => response.json())
+		// 		.then(quantity => {
+		// 			// Cập nhật dữ liệu cho biểu đồ
+		// 			quantityproductvariant = quantity;
+		// 			console.log(quantityproductvariant);
+		// 		});
 
-
-			});
 		}
 
 
@@ -991,12 +1104,47 @@
 			}
 		});
 	</script>
+
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<script src="/admin/dist/js/user/productDetail.js"></script>
 
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var successbtn = document.getElementById('successbtn');
+			var failsebtn = document.getElementById('failsebtn');
+			var successModal = document.getElementById('successModal');
+			var failseModal = document.getElementById('failseModal');
+			var closeButtons = document.getElementsByClassName('close');
 
+			successbtn.addEventListener('click', function () {
+				successModal.style.display = 'block';
+			});
+
+			failsebtn.addEventListener('click', function () {
+				failseModal.style.display = 'block';
+			});
+
+			for (var i = 0; i < closeButtons.length; i++) {
+				closeButtons[i].addEventListener('click', function () {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				});
+			}
+
+			window.addEventListener('click', function (event) {
+				if (event.target === greenModal || event.target === failseModal) {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				}
+			});
+		});
+
+		function show() {
+			successbtn.click();
+		}
+	</script>
 
 </body>
 
