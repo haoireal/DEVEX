@@ -15,11 +15,14 @@
 		<!-- Sidebar user panel (optional) -->
 		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 			<div class="image">
-				<img src="/img/banner/LogoDUAn.png" class="img-circle elevation-2"
+				<a href="/seller/profile">
+					<img src="/img/banner/LogoDUAn.png" class="img-circle elevation-2"
 					alt="User Image">
+				</a>
+				
 			</div>
 			<div class="info">
-				<a href="#" class="d-block"
+				<a href="/seller/profile" class="d-block"
 					th:text="${session.user == null ? '@Tên shop' : session.user.fullname}"}></a>
 			</div>
 		</div>

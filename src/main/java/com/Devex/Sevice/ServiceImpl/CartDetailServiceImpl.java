@@ -92,8 +92,8 @@ public class CartDetailServiceImpl implements CartDetailService{
 	}
 
 	@Override
-	public CartDetail findByIDProduct(int id) {
-		return cartDetail.findByIDProduct(id);
+	public CartDetail findByIDProductAndUser(int idProd, int idCart) {
+		return cartDetail.findByIDProductAndUser(idProd, idCart);
 
 	}
 	

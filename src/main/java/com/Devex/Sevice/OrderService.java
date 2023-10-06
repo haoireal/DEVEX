@@ -3,6 +3,7 @@ package com.Devex.Sevice;
 import java.util.List;
 import java.util.Optional;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,8 +54,16 @@ public interface OrderService {
 
 	int getCountOrderForSeller(String username);
 
-	int getTotalOrderByStatusIdAndSellerUsername(int statusid, int statusid1, String username);
+	int getTotalOrderByStatusIdAndSellerUsername(int statusid, int statusid1, String username, int year, int month);
 
-	int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(int statusid, String username);
+	int getTotalOrderFalseAndConfirmByStatusIdAndSellerUsername(int statusid, String username, int year, int month);
 
+	List<Order> getAllOrderByUsernameAndStatusIdAndYearAndMonth(int statusid, int statusid1, String username, int year,
+			int month);
+
+	List<Order> getAllOrderFalseByUsernameAndStatusIdAndYearAndMonth(int statusid, String username, int year, int month);
+
+	Double getTotalPriceOrder();
+
+	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
 }

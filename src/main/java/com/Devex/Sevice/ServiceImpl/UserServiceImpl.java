@@ -183,6 +183,11 @@ public class UserServiceImpl implements  UserService{
 		userRepository.updateUser(Fullname, Email, Password, Phone, Gender, Active, Username);
 	}
 
+	@Override
+	public int getAmountUserOfAdmin() {
+		return userRepository.getAmountUserOfAdmin();
+	}
+
 	
 	
 

@@ -53,4 +53,7 @@ public interface OrderDetailService {
 
 	int getTotalOrderDetailsByStatusIdAndSellerUsername(int statusid, String username);
 
+	List<OrderDetails> findOrderByUsernameAndStatusID(String customerID, int statusID);
+
+	List<OrderDetails> findOrdersByCustomerID(String customerID);
 }

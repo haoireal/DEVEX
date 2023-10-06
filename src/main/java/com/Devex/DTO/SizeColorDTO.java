@@ -8,14 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SizeDTO{
+public class SizeColorDTO {
+	private String size;
+	private String color;
 
-	/**
-	 * 
-	 */
-	
-	private int id;
-	private String name;
-	
-
+	// Getter và Setter cho size và color
 }
