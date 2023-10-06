@@ -2,50 +2,84 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
-<!-- daterange picker -->
-<link rel="stylesheet"
-	href="/admin/plugins/daterangepicker/daterangepicker.css">
-<!-- iCheck for checkboxes and radio inputs -->
-<link rel="stylesheet"
-	href="/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-<!-- Bootstrap Color Picker -->
-<link rel="stylesheet"
-	href="/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-<!-- Tempusdominus Bootstrap 4 -->
-<link rel="stylesheet"
-	href="/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-<!-- Select2 -->
-<link rel="stylesheet" href="/admin/plugins/select2/css/select2.min.css">
-<link rel="stylesheet"
-	href="/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-<!-- Bootstrap4 Duallistbox -->
-<link rel="stylesheet"
-	href="/admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-<!-- BS Stepper -->
-<link rel="stylesheet"
-	href="/admin/plugins/bs-stepper/css/bs-stepper.min.css">
-<!-- Bootstrap5 Duallistbox -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-	crossorigin="anonymous">
+	<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
+	<!-- daterange picker -->
+	<link rel="stylesheet" href="/admin/plugins/daterangepicker/daterangepicker.css">
+	<!-- iCheck for checkboxes and radio inputs -->
+	<link rel="stylesheet" href="/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+	<!-- Bootstrap Color Picker -->
+	<link rel="stylesheet" href="/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+	<!-- Tempusdominus Bootstrap 4 -->
+	<link rel="stylesheet" href="/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+	<!-- Select2 -->
+	<link rel="stylesheet" href="/admin/plugins/select2/css/select2.min.css">
+	<link rel="stylesheet" href="/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+	<!-- Bootstrap4 Duallistbox -->
+	<link rel="stylesheet" href="/admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+	<!-- BS Stepper -->
+	<link rel="stylesheet" href="/admin/plugins/bs-stepper/css/bs-stepper.min.css">
+	<!-- Bootstrap5 Duallistbox -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+	<style>
+		/* CSS cho modal container */
+		.modal {
+			display: none;
+			/* Ẩn modal ban đầu */
+			position: fixed;
+			top: 40%;
+			left: 59%;
+			transform: translate(-50%, -50%);
+			width: 25%;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			height: 190px;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			background-color: white;
+			border: 1px solid #ccc;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			text-align: center;
+			overflow: hidden;
+			animation: slideUp 0.5s ease-in-out;
+			/* Animation xuất hiện từ dưới lên */
+		}
+
+		/* CSS cho nút đóng modal */
+		.close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+		}
+
+		/* CSS cho iframe bên trong modal */
+		.modal iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+
+		/* Định nghĩa animation slideUp */
+		@keyframes slideUp {
+			0% {
+				transform: translate(-50%, 100%);
+			}
+
+			100% {
+				transform: translate(-50%, -50%);
+			}
+		}
+	</style>
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini" ng-app="app"
-	ng-controller="myController">
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="myController">
 	<div class="wrapper">
 		<!-- Preloader -->
-		<div
-			class="preloader flex-column justify-content-center align-items-center">
-			<img class="animation__wobble" src="/img/banner/logotitle.png"
-				alt="AdminLTELogo" height="60" width="60">
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__wobble" src="/img/banner/logotitle.png" alt="AdminLTELogo" height="60" width="60">
 		</div>
 
 		<div th:replace="~{flagment/admin/adminHeader :: adminHeaderFragment}"></div>
-		<div
-			th:replace="~{flagment/admin/adminMainSidebar :: adminMainSidebarFragment}"></div>
+		<div th:replace="~{flagment/admin/adminMainSidebar :: adminMainSidebarFragment}"></div>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -69,144 +103,155 @@
 				</div>
 				<!-- /.container-fluid -->
 			</div>
-				<!-- /.container-fluid -->
+			<!-- /.container-fluid -->
 
-					<div class="row">
-						<div class="col-12">
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title">User Manage</h3>
-								</div>
-								<!-- /.card-header -->
-								<div ng-if="data.userRoles[0].user" class="card-body"  >
-									<form  method="post" >
-										<div class="mb-3">
-											<label for="UserName" class="form-label">Username</label> 
-											<input ng-model="data.userRoles[0].user.username"
-											name="username"
-												type="text" class="form-control" id="UserName"
-												aria-describedby="UserName"   disabled>
-												
-										</div>
-										<div class="mb-3">
-											<label for="FullName" class="form-label">FullName</label> 
-											<input ng-model="data.userRoles[0].user.fullname"
-												name="fullName"
-												type="text" class="form-control" id="FullName"
-											aria-describedby="FullName"  >
-												
-
-										</div>
-										<div class="mb-3">
-											<label for="Email" class="form-label">Email</label> 
-											<input ng-model="data.userRoles[0].user.email"
-											name="email"
-												type="Email" class="form-control" id="Email"
-												aria-describedby="Email"  >
-
-										</div>
-										<div class="mb-3">
-											<label for="Password" class="form-label">Password</label> 
-											<input ng-model="data.userRoles[0].user.password" 
-											name="password"
-												type="password" class="form-control" id="Password"
-												aria-describedby="Password"  >
-
-										</div>
-										<div class="mb-3">
-											<label for="Phone" class="form-label">Phone</label> 
-											<input ng-model="data.userRoles[0].user.phone"
-											name="phone"
-												type="text" class="form-control" id="Phone"
-												aria-describedby="Phone"  >
-
-										</div>
-										<div class="mb-3 d-flex">
-											<label for="Role" class="form-label me-4">Gender</label> <br>
-											<div class="form-check pe-3">
-												<input class="form-check-input" type="radio" name="gender"
-													id="Nam" ng-model="data.userRoles[0].user.gender" ng-value="'Nam'" > <label
-													class="form-check-label" for="Nam"> Nam </label>
-											</div>
-											<div class="form-check" style="margin: 0px 20px;">
-												<input class="form-check-input" type="radio" name="gender"
-													id="Nữ"  ng-model="data.userRoles[0].user.gender" ng-value="'Nữ'"> <label
-													class="form-check-label" for="Nữ"> Nữ </label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="gender"
-													id="Orther"  ng-model="data.userRoles[0].user.gender" ng-value="'Other'"> <label
-													class="form-check-label" for="Other"> Khác </label>
-											</div>
-
-										</div>
-										<div class="mb-3 d-flex">
-											<label for="Role" class="form-label me-4">Active</label>
-											<div class="form-check pe-3">
-												<input class="form-check-input" type="radio" name="active"
-													id="true"  ng-model="data.userRoles[0].user.active" ng-value= "true"> <label
-													class="form-check-label" for="true"> Avtice </label>
-											</div>
-											<div class="form-check" style="margin: 0px 20px;">
-												<input class="form-check-input" type="radio" name="active"
-													id="false"  ng-model="data.userRoles[0].user.active" ng-value= "false"> <label
-													class="form-check-label" for="false"> Inactive </label>
-											</div>
-
-										</div>
-										<div class="mb-3 d-flex" >
-											<label for="Role" class="form-label me-4">Roles</label>
-											<div class="form-check pe-3" ng-repeat="role in data.roles" >
-												<input ng-checked="isRoleSelected(role.id)" ng-click="toggleRole(role.id)" class="form-check-input" type="checkbox" name="role" id="{{role.id}}">
-												<label class="form-check-label" for="{{role.id}}">{{ role.name }}</label>
-											</div>
-										</div>
-										
-
-
-										<button type="submit" class="btn btn-primary" ng-click="updateRoles()">Update</button>
-									</form>
-								</div>
-								<!-- /.card-body -->
-							</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">User Manage</h3>
 						</div>
+						<!-- /.card-header -->
+						<div ng-if="data.userRoles[0].user" class="card-body">
+							<form method="post">
+								<div class="mb-3">
+									<label for="UserName" class="form-label">Username</label>
+									<input ng-model="data.userRoles[0].user.username" name="username" type="text"
+										class="form-control" id="UserName" aria-describedby="UserName" disabled>
+
+								</div>
+								<div class="mb-3">
+									<label for="FullName" class="form-label">FullName</label>
+									<input ng-model="data.userRoles[0].user.fullname" name="fullName" type="text"
+										class="form-control" id="FullName" aria-describedby="FullName">
+
+
+								</div>
+								<div class="mb-3">
+									<label for="Email" class="form-label">Email</label>
+									<input ng-model="data.userRoles[0].user.email" name="email" type="Email"
+										class="form-control" id="Email" aria-describedby="Email">
+
+								</div>
+								<div class="mb-3">
+									<label for="Password" class="form-label">Password</label>
+									<input ng-model="data.userRoles[0].user.password" name="password" type="password"
+										class="form-control" id="Password" aria-describedby="Password">
+
+								</div>
+								<div class="mb-3">
+									<label for="Phone" class="form-label">Phone</label>
+									<input ng-model="data.userRoles[0].user.phone" name="phone" type="text"
+										class="form-control" id="Phone" aria-describedby="Phone">
+
+								</div>
+								<div class="mb-3 d-flex">
+									<label for="Role" class="form-label me-4">Gender</label> <br>
+									<div class="form-check pe-3">
+										<input class="form-check-input" type="radio" name="gender" id="Nam"
+											ng-model="data.userRoles[0].user.gender" ng-value="'Nam'"> <label
+											class="form-check-label" for="Nam"> Nam </label>
+									</div>
+									<div class="form-check" style="margin: 0px 20px;">
+										<input class="form-check-input" type="radio" name="gender" id="Nữ"
+											ng-model="data.userRoles[0].user.gender" ng-value="'Nữ'"> <label
+											class="form-check-label" for="Nữ"> Nữ </label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="gender" id="Orther"
+											ng-model="data.userRoles[0].user.gender" ng-value="'Other'"> <label
+											class="form-check-label" for="Other"> Khác </label>
+									</div>
+
+								</div>
+								<div class="mb-3 d-flex">
+									<label for="Role" class="form-label me-4">Active</label>
+									<div class="form-check pe-3">
+										<input class="form-check-input" type="radio" name="active" id="true"
+											ng-model="data.userRoles[0].user.active" ng-value="true"> <label
+											class="form-check-label" for="true"> Avtice </label>
+									</div>
+									<div class="form-check" style="margin: 0px 20px;">
+										<input class="form-check-input" type="radio" name="active" id="false"
+											ng-model="data.userRoles[0].user.active" ng-value="false"> <label
+											class="form-check-label" for="false"> Inactive </label>
+									</div>
+
+								</div>
+								<div class="mb-3 d-flex">
+									<label for="Role" class="form-label me-4">Roles</label>
+									<div class="form-check pe-3" ng-repeat="role in data.roles">
+										<input ng-checked="isRoleSelected(role.id)" ng-click="toggleRole(role.id)"
+											class="form-check-input" type="checkbox" name="role" id="{{role.id}}">
+										<label class="form-check-label" for="{{role.id}}">{{ role.name }}</label>
+									</div>
+								</div>
+
+
+
+								<button type="submit" class="btn btn-primary" ng-click="updateRoles()">Update</button>
+
+								
+
+							</form>
+						</div>
+						<!-- /.card-body -->
 					</div>
-
 				</div>
-				<!-- /.container-fluid -->
 			</div>
-			<!-- /.content-header -->
 
-			<!-- Main content -->
-			<section class="content">
-				<div class="container-fluid">
-					<div class="row"></div>
-					<!-- /.row -->
-				</div>
-				<!-- /.container-fluid -->
-			</section>
-			<!-- /.content -->
 		</div>
-		<!-- /.content-wrapper -->
+		<!-- /.container-fluid -->
+	</div>
+	<!-- /.content-header -->
 
-		<div
-			th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
-		<div
-			th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
-		<!-- Select2 -->
-		<script src="/admin/plugins/select2/js/select2.full.min.js"></script>
-		<!-- Bootstrap4 Duallistbox -->
-		<script
-			src="/admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
-		<!-- InputMask -->
-		<script src="/admin/plugins/moment/moment.min.js"></script>
-		<script src="/admin/plugins/inputmask/jquery.inputmask.min.js"></script>
-		<!-- dropzonejs -->
-		<script src="/admin/plugins/dropzone/min/dropzone.min.js"></script>
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row"></div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<div class="text-center">
+		<button id="successbtn" hidden>Lưu</button>
+		<button id="failsebtn" hidden>Xóa</button>
 	</div>
 
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+	<div id="successModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<iframe
+				src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+			<span id="content" class="text-success fs-3">Thêm thành công</span>
+		</div>
+	</div>
+
+	<div id="failseModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<iframe
+				src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+			<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
+		</div>
+	</div>
+	<div th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
+	<div th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
+	<!-- Select2 -->
+	<script src="/admin/plugins/select2/js/select2.full.min.js"></script>
+	<!-- Bootstrap4 Duallistbox -->
+	<script src="/admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+	<!-- InputMask -->
+	<script src="/admin/plugins/moment/moment.min.js"></script>
+	<script src="/admin/plugins/inputmask/jquery.inputmask.min.js"></script>
+	<!-- dropzonejs -->
+	<script src="/admin/plugins/dropzone/min/dropzone.min.js"></script>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
 
 	<script>
 		$(function () {
@@ -347,9 +392,8 @@
 		}
 		// DropzoneJS Demo Code End
 	</script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-	
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 	<!-- script click button thêm hình ảnh -->
 	<script>
 		function openFilePicker() {
@@ -362,12 +406,13 @@
 	<script>
 		app = angular.module("app", []);
 
-		app.controller('myController', function($scope, $http, $window) {	
-			
-			
+		app.controller('myController', function ($scope, $http, $window) {
+			const content = document.getElementById('content');
+			var contentfalse = document.getElementById('contentfalse');
+
 			$scope.hasSellerRole = true; // khởi tạo biến chứa roles true ? false
 			$scope.data = []; // khởi tạo biến $scope.fill với một mảng rỗng
-			$scope.fillAll = function () {			
+			$scope.fillAll = function () {
 				$http.get('/api/userDetail').then(resp => {
 					$scope.data = resp.data;
 					// alert('oc cho');
@@ -375,35 +420,35 @@
 					$scope.selectedRoles = $scope.data.userRoles.map(userRole => userRole.role.id);
 
 					console.log($scope.data)
-					
-				}).catch(function(err) {
+
+				}).catch(function (err) {
 					console.error(err); // xử lý lỗi khi gọi API
 					alert('Có lỗi xảy ra khi gọi API'); // hiển thị thông báo lỗi cho người dùng
 				});
 			};
-			
+
 			$scope.fillAll();
 
 
-			$scope.isRoleSelected = function(roleId) {
+			$scope.isRoleSelected = function (roleId) {
 				return $scope.selectedRoles.includes(roleId);
 			};
 
-			$scope.toggleRole = function(roleId) {
+			$scope.toggleRole = function (roleId) {
 				var index = $scope.selectedRoles.indexOf(roleId);
 				if (index === -1) {
-					$scope.selectedRoles.push(roleId);  // Nếu role chưa được chọn, thêm vào mảng
+					$scope.selectedRoles.push(roleId); // Nếu role chưa được chọn, thêm vào mảng
 				} else {
-					$scope.selectedRoles.splice(index, 1);  // Nếu role đã được chọn, loại bỏ khỏi mảng
+					$scope.selectedRoles.splice(index, 1); // Nếu role đã được chọn, loại bỏ khỏi mảng
 				}
 			};
 
-		
-			$scope.updateRoles = function() {
+
+			$scope.updateRoles = function () {
 
 				$scope.isUpdateClicked = true; // cập nhập disable
 
-			// Tạo đối tượng chứa dữ liệu cần cập nhật
+				// Tạo đối tượng chứa dữ liệu cần cập nhật
 				var updatedRoles = {
 					userId: $scope.data.userRoles[0].user.username, // ID của người dùng
 					fullname: $scope.data.userRoles[0].user.fullname,
@@ -418,41 +463,76 @@
 				// Gửi yêu cầu cập nhật lên server
 				$http.post('/api/updateUserRoles', updatedRoles).then(response => {
 					if (response.data.message) {
-						alert(response.data.message);
+						console.log(response.data.message);
+						content.textContent = "Cập nhật thành công";
+						successbtn.click();
 					} else if (response.data.error) {
-						alert(response.data.error);
+						contentfalse.textContent = "Cập nhật thất bại";
+						failsebtn.click();
 					}
 				}).catch(error => {
 					console.error(error);
+					contentfalse.textContent = "Cập nhật thất bại";
+						failsebtn.click();
 					alert('Có lỗi xảy ra khi cập nhật roles');
 				});
 
 			};
 
 			// disable input roles 
-			$scope.isSellerRole = function(userRoles) {
+			$scope.isSellerRole = function (userRoles) {
 				// Duyệt qua mảng userRoles và kiểm tra xem có roleId là 'SELLER' hay không
-				
-						for (var i = 0; i < userRoles.length; i++) {
-							// console.log(userRoles[i].role.id);
-							if (userRoles[i].role.id === 'SELLER') {
-								return true; // Trả về true nếu có roleId 'SELLER'
-								
-							}
-							
-						}
-						
-						return false; // Không có roleId 'SELLER'
-				
-				
+
+				for (var i = 0; i < userRoles.length; i++) {
+					// console.log(userRoles[i].role.id);
+					if (userRoles[i].role.id === 'SELLER') {
+						return true; // Trả về true nếu có roleId 'SELLER'
+
+					}
+
+				}
+
+				return false; // Không có roleId 'SELLER'
+
+
 			};
 
 		});
 	</script>
 	<!-- END script xử lý hình ảnh -->
-	<!-- Script xử lý product -->
+	<!-- Script thêm sự kiện model -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var successbtn = document.getElementById('successbtn');
+			var failsebtn = document.getElementById('failsebtn');
+			var successModal = document.getElementById('successModal');
+			var failseModal = document.getElementById('failseModal');
+			var closeButtons = document.getElementsByClassName('close');
 
-	<!-- END Script xử lý product -->
+			successbtn.addEventListener('click', function () {
+				successModal.style.display = 'block';
+			});
+
+			failsebtn.addEventListener('click', function () {
+				failseModal.style.display = 'block';
+			});
+
+			for (var i = 0; i < closeButtons.length; i++) {
+				closeButtons[i].addEventListener('click', function () {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				});
+			}
+
+			window.addEventListener('click', function (event) {
+				if (event.target === greenModal || event.target === failseModal) {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				}
+			});
+		});
+	</script>
+	<!-- END Script thêm sự kiện model -->
 </body>
 
 </html>

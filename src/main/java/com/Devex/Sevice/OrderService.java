@@ -65,5 +65,21 @@ public interface OrderService {
 
 	Double getTotalPriceOrder();
 
+	List<Object[]> getTotalPriceOrderByMonthAndYear(int year, int month);
+
+	int getCountOrderByStatusIdAndYearAndMonth(int statusid, int year, int month);
+
+	int getCountOrderFalseByStatusIdAndYearAndMonth(int statusid, int year, int month);
+
+	int getCountOrderWaitingByStatusIdAndYearAndMonth(int year, int month);
+
+	List<Object[]> getTotalPriceOrderByYear(int year);
+
+	int getCountOrderByStatusIdAndYear(int statusid, int year);
+
+	int getCountOrderWaitingByStatusIdAndYear(int year);
+
+	int getCountOrderFalseByStatusIdAndYear(int statusid, int year);
+
 	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
 }

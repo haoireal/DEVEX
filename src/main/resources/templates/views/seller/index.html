@@ -271,7 +271,7 @@
 
 		// Hàm cập nhật biểu đồ
 		function updateChartrevenuemonthline(year, month) {
-			fetch('/revenue/month?year=' + year + '&month=' + month)
+			fetch('/seller/revenue/month?year=' + year + '&month=' + month)
 				.then(response => response.json())
 				.then(data => {
 					// Cập nhật dữ liệu cho biểu đồ
@@ -322,7 +322,7 @@
 		}
 
 		function updateChartrevenueyearline(year) {
-			fetch('/revenue/year?year=' + year)
+			fetch('/seller/revenue/year?year=' + year)
 				.then(response => response.json())
 				.then(data => {
 					// Cập nhật dữ liệu cho biểu đồ

@@ -138,6 +138,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	}
 
 	@Override
+	public List<Object[]> getTop5CategoryDetailsAndAmountProductSell(int year) {
+		return orderDetailRepository.getTop5CategoryDetailsAndAmountProductSell(year);
+	}
+	
+	
 	public List<OrderDetails> findOrderByUsernameAndStatusID(String customerID, int statusID) {
 		return orderDetailRepository.findOrderByUsernameAndStatusID(customerID,statusID);
 	}
