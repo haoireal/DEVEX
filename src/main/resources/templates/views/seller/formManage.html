@@ -19,7 +19,52 @@
 	<!-- BS Stepper -->
 	<link rel="stylesheet" href="/admin/plugins/bs-stepper/css/bs-stepper.min.css">
 	<style>
-		
+		/* CSS cho modal container */
+		.modal {
+			display: none;
+			/* Ẩn modal ban đầu */
+			position: fixed;
+			top: 40%;
+			left: 59%;
+			transform: translate(-50%, -50%);
+			width: 25%;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			height: 190px;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			background-color: white;
+			border: 1px solid #ccc;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			text-align: center;
+			overflow: hidden;
+			animation: slideUp 0.5s ease-in-out;
+			/* Animation xuất hiện từ dưới lên */
+		}
+
+		/* CSS cho nút đóng modal */
+		.close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+		}
+
+		/* CSS cho iframe bên trong modal */
+		.modal iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+
+		/* Định nghĩa animation slideUp */
+		@keyframes slideUp {
+			0% {
+				transform: translate(-50%, 100%);
+			}
+
+			100% {
+				transform: translate(-50%, -50%);
+			}
+		}
 	</style>
 </head>
 
@@ -175,23 +220,30 @@
 							<!-- /.card -->
 							<!-- END TABLE SIZe -->
 							<div class="text-center">
-								<button id="successbtn" class="btn btn-primary" ng-click="save()">Lưu</button>
-								<button id="failsebtn" class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
+								<button class="btn btn-primary" ng-click="save()">Lưu</button>
+								<button class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
+							</div>
+
+							<div class="text-center">
+								<button id="successbtn" hidden>Lưu</button>
+								<button id="failsebtn" hidden>Xóa</button>
 							</div>
 
 							<div id="successModal" class="modal">
 								<div class="modal-content">
 									<span class="close">&times;</span>
-									<div class="circle-animation">
-										<i class="fas fa-check"></i>
-									</div>
+									<iframe
+										src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+									<span id="content" class="text-success fs-3">Thêm thành công</span>
 								</div>
 							</div>
 
 							<div id="failseModal" class="modal">
 								<div class="modal-content">
 									<span class="close">&times;</span>
-									<i class="fa-solid fa-x"></i> Dấu Tích Xanh
+									<iframe
+										src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+									<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
 								</div>
 							</div>
 						</div>
@@ -401,6 +453,8 @@
 		app = angular.module("app", []);
 		app.controller("sellerproduct", function ($scope, $http, $window) {
 			var urlimg = 'http://localhost:8888/img/product';
+			var content = document.getElementById('content');
+			var contentfalse = document.getElementById('contentfalse');
 			/* $scope.url = function(filename) {
 				console.log(filename);
 			};  */
@@ -529,7 +583,7 @@
 					console.log("errors", error);
 				})
 			};
-
+			
 			$scope.save = function () {
 
 				$scope.form.idCategoryDetails = $scope.selectedCategoryDetail;
@@ -537,9 +591,12 @@
 				$scope.form.brand = $scope.selectedbrand;
 				console.log($scope.form);
 				$http.put("/info/product", $scope.form).then(resp => {
-
+				content.textContent = "Lưu thành công";
+				successbtn.click();
 				}).catch(error => {
 					console.log("errors", error);
+					contentfalse.textContent = "Lưu thất bại";
+					failsebtn.click();
 				})
 			};
 
@@ -548,11 +605,19 @@
 				$http.delete('/delete/product/' + $scope.form.id)
 					.then(function (response) {
 						// Xử lý kết quả trả về từ REST controller
+						content.textContent = "Xóa thành công";
+						successbtn.click();
+						alert('Xóa thành công!');
+						$window.location.href = '/seller/list/products';
+					}).catch(error => {
+						console.log("errors", error);
+						contentfalse.textContent = "Xóa thất bại";
+						failsebtn.click();
 					});
 
 				// Chuyển hướng đến URL mới
 				// console.log('/delete/product/'+$scope.form.id);
-				$window.location.href = '/seller/list/products';
+				
 			};
 
 			$scope.lista();
@@ -569,8 +634,12 @@
 				$http.delete('/productvariant/delete/' + id).then(resp => {
 					let i = $scope.filenames.findIndex(item => item == id);
 					$scope.variant.splice(i, 1);
+					content.textContent = "Xóa thành công";
+					successbtn.click();
 				}).catch(error => {
 					console.log("errors", error);
+					contentfalse.textContent = "Xóa thất bại";
+					failsebtn.click();
 				});
 			}
 

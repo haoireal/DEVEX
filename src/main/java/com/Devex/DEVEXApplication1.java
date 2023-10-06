@@ -1,9 +1,12 @@
 package com.Devex;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-
+import com.Devex.Config.TwilioConfig;
+import com.twilio.Twilio;
+import jakarta.annotation.PostConstruct;
 @SpringBootApplication
 @EnableConfigurationProperties
 public class DEVEXApplication1 {

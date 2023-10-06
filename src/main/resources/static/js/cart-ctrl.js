@@ -299,7 +299,6 @@ app.controller("cart-ctrl", function($scope, $http, $location, $window) {
 			}
 
 
-
 			console.log(this.items.length);
 			console.log(this.itemsOrder.length);
 			console.log(this.items);
@@ -461,4 +460,5 @@ app.controller("cart-ctrl", function($scope, $http, $location, $window) {
 				console.log(error);
 			});
 	};
+
 });

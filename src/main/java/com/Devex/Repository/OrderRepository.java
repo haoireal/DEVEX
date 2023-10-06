@@ -115,5 +115,102 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 		       "WHERE o.orderStatus.id = 1006 " +
 		       "AND od.status.id = 1009 ")
 	Double getTotalPriceOrder();
+    
+    @Query("SELECT FUNCTION('DAY', o.createdDay), SUM(od.price) AS totalPrice " +
+		       "FROM OrderDetails od " +
+		       "JOIN  od.order o " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month " +
+		       "AND od.status.id = 1009 AND o.orderStatus.id = 1006 " +
+		       "GROUP BY FUNCTION('DAY', o.createdDay)")
+	List<Object[]> getTotalPriceOrderByMonthAndYear(@Param("year") int year, @Param("month") int month);
+	
+	@Query("SELECT COUNT(o) FROM Order o " +
+		       "JOIN  o.orderDetails od " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE o.orderStatus.id = :statusid " +
+		       "AND FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month ")
+	int getCountOrderByStatusIdAndYearAndMonth(@Param("statusid") int statusid, @Param("year") int year, @Param("month") int month);
+ 
+	@Query("SELECT COUNT(o) FROM Order o " +
+		       "JOIN  o.orderDetails od " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE od.status.id = :statusid " +
+		       "AND FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month ")
+	int getCountOrderFalseByStatusIdAndYearAndMonth(@Param("statusid") int statusid, @Param("year") int year, @Param("month") int month);
+ 
+	@Query("SELECT COUNT(o) FROM Order o " +
+	       "JOIN  o.orderDetails od " +
+	       "JOIN  od.productVariant pv " +
+	       "JOIN  pv.product p " +
+	       "JOIN  p.sellerProduct s " +
+	       "WHERE o.orderStatus.id = 1001 " +
+	       "OR o.orderStatus.id = 1002 " +
+	       "OR o.orderStatus.id = 1003 " +
+	       "OR o.orderStatus.id = 1004 " +
+	       "OR o.orderStatus.id = 1005 " +
+	       "AND FUNCTION('YEAR', o.createdDay) = :year " +
+	       "AND FUNCTION('MONTH', o.createdDay) = :month ")
+	int getCountOrderWaitingByStatusIdAndYearAndMonth(@Param("year") int year, @Param("month") int month);
+	
+	@Query("SELECT FUNCTION('MONTH', o.createdDay), SUM(od.price) AS totalPrice " +
+		       "FROM OrderDetails od " +
+		       "JOIN  od.order o " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND od.status.id = 1009 AND o.orderStatus.id = 1006 " +
+		       "GROUP BY FUNCTION('MONTH', o.createdDay)")
+	List<Object[]> getTotalPriceOrderByYear(@Param("year") int year);
+	
+	@Query("SELECT COUNT(o) FROM Order o " +
+		       "JOIN  o.orderDetails od " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE o.orderStatus.id = :statusid " +
+		       "AND FUNCTION('YEAR', o.createdDay) = :year ")
+	int getCountOrderByStatusIdAndYear(@Param("statusid") int statusid, @Param("year") int year);
 
+	@Query("SELECT COUNT(o) FROM Order o " +
+		       "JOIN  o.orderDetails od " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+		       "WHERE od.status.id = :statusid " +
+		       "AND FUNCTION('YEAR', o.createdDay) = :year ")
+	int getCountOrderFalseByStatusIdAndYear(@Param("statusid") int statusid, @Param("year") int year);
+
+	@Query("SELECT COUNT(o) FROM Order o " +
+	       "JOIN  o.orderDetails od " +
+	       "JOIN  od.productVariant pv " +
+	       "JOIN  pv.product p " +
+	       "JOIN  p.sellerProduct s " +
+	       "WHERE o.orderStatus.id = 1001 " +
+	       "OR o.orderStatus.id = 1002 " +
+	       "OR o.orderStatus.id = 1003 " +
+	       "OR o.orderStatus.id = 1004 " +
+	       "OR o.orderStatus.id = 1005 " +
+	       "AND FUNCTION('YEAR', o.createdDay) = :year ")
+	int getCountOrderWaitingByStatusIdAndYear(@Param("year") int year);
+
+	@Query("SELECT DISTINCT o FROM Order o " +
+			"JOIN FETCH o.orderDetails od " +
+			"JOIN FETCH od.productVariant pv " +
+			"JOIN FETCH pv.product p " +
+			"JOIN FETCH p.sellerProduct s " +
+			"WHERE o.customerOrder.username = ?1 " +
+			"And od.status.id = ?2 " +
+			"ORDER BY o.createdDay DESC")
+	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
 }
