@@ -1,121 +1,127 @@
-<!-- @format -->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 
 <head>
-<div th:replace="~{flagment/account/head :: headFragment}"></div>
-</script>
+	<div th:replace="~{flagment/account/head :: headFragment}"></div>
+	</script>
 	<script th:src="@{/js/cart-ctrl.js}"></script>
 
 </head>
 <style>
-.fixed-picture {
-	position: relative;
-	width: 100px; /* Đặt kích thước khung theo ý muốn */
-	height: 100px; /* Đặt kích thước khung theo ý muốn */
-	overflow: hidden;
-	left: 50%; /* Di chuyển container sang trái 50% */
-	transform: translateX(-50%); /* Di chuyển lại 50% theo chiều X */
-}
+	.fixed-picture {
+		position: relative;
+		width: 100px;
+		/* Đặt kích thước khung theo ý muốn */
+		height: 100px;
+		/* Đặt kích thước khung theo ý muốn */
+		overflow: hidden;
+		left: 50%;
+		/* Di chuyển container sang trái 50% */
+		transform: translateX(-50%);
+		/* Di chuyển lại 50% theo chiều X */
+	}
 
-.fixed-picture img {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
+	.fixed-picture img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 </style>
 
 <style>
-body {
-	font-family: "Poppins", sans-serif;
-	 background-color: #f5f5f5;
-}
+	body {
+		font-family: "Poppins", sans-serif;
+		background-color: #f5f5f5;
+	}
 
-/*header top*/
-header a.nav-link {
-	color: white;
-	font-weight: 270;
-	padding: 0 0 0 20px !important;
-	font-size: 13px;
-}
+	/*header top*/
+	header a.nav-link {
+		color: white;
+		font-weight: 270;
+		padding: 0 0 0 20px !important;
+		font-size: 13px;
+	}
 
-header a.nav-link:hover {
-	color: white;
-	font-weight: 600 !important;
-}
+	header a.nav-link:hover {
+		color: white;
+		font-weight: 600 !important;
+	}
 
-.header-inf:hover {
-	transition: 10s all;
-	height: 35px;
-	background: linear-gradient(90deg, rgba(0, 212, 255, 1) 0%,
-		rgba(57, 151, 184, 1) 36%, rgba(25, 38, 186, 1) 62%);
-}
+	.header-inf:hover {
+		transition: 10s all;
+		height: 35px;
+		background: linear-gradient(90deg, rgba(0, 212, 255, 1) 0%,
+				rgba(57, 151, 184, 1) 36%, rgba(25, 38, 186, 1) 62%);
+	}
 
-.header-inf {
-	height: 35px;
-	background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%,
-		rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);
-}
-.header-inf * {
-	background-color: transparent;
-	color: white;
-	font-weight: 400 !important;
-}
-.header-inf a{
-	color: white;
-}
-/* header>.container-fluid:hover {} */
-/*header mid*/
-.container_mid {
-	border-radius: 10px;
-	overflow: hidden;
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
+	.header-inf {
+		height: 35px;
+		background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%,
+				rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);
+	}
 
-.img_logo {
-	width: 7.5rem;
-	height: 3.4375rem;
-	margin-left: 40px;
-	margin-top: 5px;
-}
+	.header-inf * {
+		background-color: transparent;
+		color: white;
+		font-weight: 400 !important;
+	}
 
-.list_type ul{
-	max-height: 360px;
-	min-height: 360px;
-	overflow-y: scroll;
-	position: relative;
-	top: -2rem;
-}
+	.header-inf a {
+		color: white;
+	}
 
-.list_type ul li {
-	max-width: 7.5rem;
-}
+	/* header>.container-fluid:hover {} */
+	/*header mid*/
+	.container_mid {
+		border-radius: 10px;
+		overflow: hidden;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	}
 
-* {
-	scrollbar-width: thin;
-	scrollbar-color: black;
-}
-/* Tùy chỉnh thanh cuộn trên Chrome, Edge, và Safari */
-*::-webkit-scrollbar {
-	width: 12px;
-}
+	.img_logo {
+		width: 7.5rem;
+		height: 3.4375rem;
+		margin-left: 40px;
+		margin-top: 5px;
+	}
 
-*::-webkit-scrollbar-track {
-	background: white;
-}
+	.list_type ul {
+		max-height: 360px;
+		min-height: 360px;
+		overflow-y: scroll;
+		position: relative;
+		top: -2rem;
+	}
 
-*::-webkit-scrollbar-thumb {
-	background-color: rgb(90, 89, 89);
-	border-radius: 20px;
-	border: 3px solid white;
-}
+	.list_type ul li {
+		max-width: 7.5rem;
+	}
 
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: black;
+	}
+
+	/* Tùy chỉnh thanh cuộn trên Chrome, Edge, và Safari */
+	*::-webkit-scrollbar {
+		width: 12px;
+	}
+
+	*::-webkit-scrollbar-track {
+		background: white;
+	}
+
+	*::-webkit-scrollbar-thumb {
+		background-color: rgb(90, 89, 89);
+		border-radius: 20px;
+		border: 3px solid white;
+	}
 </style>
+
 <body>
 	<header>
 		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
@@ -155,16 +161,99 @@ header a.nav-link:hover {
 									</h3>
 
 									<div class="w-100 text-center">
-										<label class="btn btn-secondary mb-2 font-weight-normal"
-											style="font-size: 15px" for="avatarInput"> Chọn Ảnh </label>
+										<label class="btn btn-secondary mb-2 font-weight-normal" style="font-size: 15px"
+											for="avatarInput"> Chọn Ảnh </label>
 
 									</div>
 
 									<ul class="list-group list-group-unbordered mb-3">
 										<li class="list-group-item"><b class="text-secondary">Tổng
 												hoá đơn đã đặt</b> <a class="float-right">1,322</a></li>
-										<li class="list-group-item"><b class="text-secondary">Đang theo dõi</b> <a class="float-right">543</a></li>
+										<li class="list-group-item"><b class="text-secondary">Đang theo dõi</b> <a
+												class="float-right">543</a></li>
 									</ul>
+									<div class="w-100 text-center">
+										<button class="btn btn-danger" th:disabled="${role}" style="font-size: 15px"
+											data-toggle="modal" data-target="#ModalUpgradeSeller"> Nâng cấp người bán
+										</button>
+
+									</div>
+
+									<!-- The Modal -->
+									<div class="modal" id="ModalSuccessUpgrade" role="dialog">
+										<div class="modal-dialog">
+											<div class="modal-content" style="margin-top: 20%;">
+
+												<!-- Modal body -->
+												<div class="modal-body">
+													<div class="text-left mt-2" style="margin-bottom: 60px;">
+														<h5 th:text="${message}"></h5>
+													</div>
+													<div class="text-center mb-2">
+														<a href="/signin" class="btn btn-success w-100" data-bs-dismiss="modal">
+															OK</a>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<!-- The Modal -->
+									<div class="modal fade" id="ModalUpgradeSeller">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<!-- Modal Header -->
+												<div class="modal-header">
+													<h3 class="modal-title font-weight-bold">Chuyển thành nhà bán</h3>
+													<button type="button" class="close" data-dismiss="modal">
+														&times;</button>
+												</div>
+												<!-- Modal body -->
+												<div class="modal-body">
+													<form class="mt-4 form-horizontal" method="post"
+														action="/upgrade-seller">
+														<div class="mb-3 bg-white rounded px-2">
+															<input type="text" id="inputNameShop" placeholder="Tên shop"
+																maxlength="30" required
+																class="form-control border-1 p-0 pl-2"
+																name="shopName" />
+														</div>
+
+														<div class="mb-3 bg-white rounded px-2">
+															<textarea class="form-control" rows="5"
+																placeholder="Mô tả shop..."
+																name="description"></textarea>
+														</div>
+														<div class="mb-3 bg-white rounded px-2">
+															<input type="text" id="inputPhone"
+																th:value="${session.user.phone == null ? 'Vui lòng đăng kí số điện thoại!' : session.user.phone}"
+																placeholder="Phone Number" pattern="[0-9()+-]*"
+																maxlength="15" minlength="5" required
+																class="form-control border-1 p-0 pl-2" name="phone"
+																disabled />
+
+														</div>
+														<div class="mb-3 bg-white rounded px-2">
+															<input type="email" id="inputEmail"
+																th:value="${session.user.email == null ? 'Vui lòng đăng kí Email' : session.user.email}"
+																placeholder="Email address"
+																pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+																maxlength="50" minlength="5" required
+																class="form-control border-1 p-0 pl-2" name="email"
+																disabled />
+														</div>
+														<hr style="border: 1px solid gray">
+
+														<button type="submit"
+															th:disabled="${session.user.phone == null || session.user.email == null }"
+															class="btn btn-success mt-3"
+															style="width: 100%">Gửi</button>
+													</form>
+												</div>
+											</div>
+										</div>
+
+									</div>
 
 									<!-- <a href="#" class="btn btn-primary btn-block"
                     ><b>Follow</b></a -->
@@ -177,33 +266,30 @@ header a.nav-link:hover {
 							<div class="card">
 								<div class="card-header p-2">
 									<ul class="nav nav-pills">
-										<li class="nav-item"><a class="nav-link active"
-											href="#info-account" data-toggle="tab">Hồ sơ</a></li>
-										<li class="nav-item"><a class="nav-link" href="#address"
-											data-toggle="tab">Địa chỉ</a></li>
-										<li class="nav-item"><a class="nav-link" href="#voucher"
-											data-toggle="tab">Kho voucher</a></li>
-										<li class="nav-item"><a class="nav-link"
-											href="#order-status" data-toggle="tab">Đơn mua</a></li>
+										<li class="nav-item"><a class="nav-link active" href="#info-account"
+												data-toggle="tab">Hồ sơ</a></li>
+										<li class="nav-item"><a class="nav-link" href="#address" data-toggle="tab">Địa
+												chỉ</a></li>
+										<li class="nav-item"><a class="nav-link" href="#voucher" data-toggle="tab">Kho
+												voucher</a></li>
+										<li class="nav-item"><a class="nav-link" href="#order-status"
+												data-toggle="tab">Đơn mua</a></li>
 									</ul>
 								</div>
 								<!-- /.card-header -->
 								<div class="card-body">
 									<div class="tab-content">
 										<div class="tab-pane" id="address">
-											<form class="mt-4 form-horizontal" method="post"
-												action="/profile/address">
+											<form class="mt-4 form-horizontal" method="post" action="/profile/address">
 												<div class="mb-3 bg-white rounded px-2">
 													<textarea class="form-control" rows="5"
-														placeholder="Địa chỉ giao hàng ..."
-														name="address"
+														placeholder="Địa chỉ giao hàng ..." name="address"
 														th:text="${session.user.address == null ? 'Địa chỉ giao hàng...' : session.user.address}"></textarea>
 												</div>
 
 												<div class="mb-3 bg-white rounded px-2">
-													<input type="text" id="inputPhone"
-														placeholder="Số điện thoại" pattern="[0-9()+-]*"
-														maxlength="15" minlength="10" required
+													<input type="text" id="inputPhone" placeholder="Số điện thoại"
+														pattern="[0-9()+-]*" maxlength="15" minlength="10" required
 														class="form-control border-1 p-0 pl-2" name="phone"
 														th:value="${session.user.phoneAddress == null ? 'Số điện thoại liên hệ...' : session.user.phoneAddress}" />
 												</div>
@@ -221,7 +307,7 @@ header a.nav-link:hover {
 														src="../../dist/img/user1-128x128.jpg" alt="user image" />
 													<span class="username"> <a href="#">Jonathan
 															Burke Jr.</a> <a href="#" class="float-right btn-tool"><i
-															class="fas fa-times"></i></a>
+																class="fas fa-times"></i></a>
 													</span> <span class="description">Shared publicly - 7:30 PM
 														today</span>
 												</div>
@@ -234,13 +320,12 @@ header a.nav-link:hover {
 
 												<p>
 													<a href="#" class="link-black text-sm mr-2"><i
-														class="fas fa-share mr-1"></i> Share</a> <a href="#"
-														class="link-black text-sm"><i
-														class="far fa-thumbs-up mr-1"></i> Like</a> <span
-														class="float-right"> <a href="#"
-														class="link-black text-sm"> <i
-															class="far fa-comments mr-1"></i> Comments (5)
-													</a>
+															class="fas fa-share mr-1"></i> Share</a> <a href="#"
+														class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i>
+														Like</a> <span class="float-right"> <a href="#"
+															class="link-black text-sm"> <i
+																class="far fa-comments mr-1"></i> Comments (5)
+														</a>
 													</span>
 												</p>
 
@@ -254,9 +339,9 @@ header a.nav-link:hover {
 												<div class="user-block">
 													<img class="img-circle img-bordered-sm"
 														src="../../dist/img/user7-128x128.jpg" alt="User Image" />
-													<span class="username"> <a href="#">Sarah Ross</a> <a
-														href="#" class="float-right btn-tool"><i
-															class="fas fa-times"></i></a>
+													<span class="username"> <a href="#">Sarah Ross</a> <a href="#"
+															class="float-right btn-tool"><i
+																class="fas fa-times"></i></a>
 													</span> <span class="description">Sent you a message - 3
 														days ago</span>
 												</div>
@@ -285,9 +370,9 @@ header a.nav-link:hover {
 												<div class="user-block">
 													<img class="img-circle img-bordered-sm"
 														src="../../dist/img/user6-128x128.jpg" alt="User Image" />
-													<span class="username"> <a href="#">Adam Jones</a> <a
-														href="#" class="float-right btn-tool"><i
-															class="fas fa-times"></i></a>
+													<span class="username"> <a href="#">Adam Jones</a> <a href="#"
+															class="float-right btn-tool"><i
+																class="fas fa-times"></i></a>
 													</span> <span class="description">Posted 5 photos - 5 days
 														ago</span>
 												</div>
@@ -323,13 +408,12 @@ header a.nav-link:hover {
 
 												<p>
 													<a href="#" class="link-black text-sm mr-2"><i
-														class="fas fa-share mr-1"></i> Share</a> <a href="#"
-														class="link-black text-sm"><i
-														class="far fa-thumbs-up mr-1"></i> Like</a> <span
-														class="float-right"> <a href="#"
-														class="link-black text-sm"> <i
-															class="far fa-comments mr-1"></i> Comments (5)
-													</a>
+															class="fas fa-share mr-1"></i> Share</a> <a href="#"
+														class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i>
+														Like</a> <span class="float-right"> <a href="#"
+															class="link-black text-sm"> <i
+																class="far fa-comments mr-1"></i> Comments (5)
+														</a>
 													</span>
 												</p>
 
@@ -444,10 +528,9 @@ header a.nav-link:hover {
 											<form class="mt-4 form-horizontal" method="post"
 												enctype="multipart/form-data">
 												<div class="mb-3 bg-white rounded px-2">
-													<input type="text" id="inputFullname"
-														placeholder="Fullname" pattern="[a-zA-ZÀ-ỹ ]+"
-														title="Name does not contain number" required
-														class="form-control border-1 p-0 pl-2" name="fullname"
+													<input type="text" id="inputFullname" placeholder="Fullname"
+														pattern="[a-zA-ZÀ-ỹ ]+" title="Name does not contain number"
+														required class="form-control border-1 p-0 pl-2" name="fullname"
 														th:value="${session.user.fullname}" />
 												</div>
 
@@ -455,12 +538,11 @@ header a.nav-link:hover {
 													<input type="email" id="inputEmail"
 														th:value="${session.user.email == null ? 'Email chưa được đăng ký...' : session.user.email}"
 														placeholder="Email address"
-														pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-														maxlength="50" minlength="5" required
-														class="form-control border-1 p-0 pl-2" name="email"
-														disabled /> <span class="input-group-append">
-														<button type="button" class="btn btn-info"
-															data-toggle="modal" data-target="#ModalVerifyEmail">
+														pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="50"
+														minlength="5" required class="form-control border-1 p-0 pl-2"
+														name="email" disabled /> <span class="input-group-append">
+														<button type="button" class="btn btn-info" data-toggle="modal"
+															data-target="#ModalVerifyEmail">
 															<i class="fas fa-edit"></i>
 														</button>
 													</span>
@@ -472,7 +554,8 @@ header a.nav-link:hover {
 															<!-- Modal Header -->
 															<div class="modal-header">
 																<h4 class="modal-title">Verify</h4>
-																<button type="button" class="close" data-dismiss="modal">
+																<button type="button" class="close"
+																	data-dismiss="modal">
 																	&times;</button>
 															</div>
 
@@ -486,7 +569,8 @@ header a.nav-link:hover {
 																<div class="by-verify text-center mb-4">
 																	<a
 																		th:href="${session.user.email != null} ? @{/profile/verify/email} : @{/profile/change-email}"><label
-																		class="btn btn-danger font-weight-normal"> Xác
+																			class="btn btn-danger font-weight-normal">
+																			Xác
 																			minh bằng mã OTP gửi qua Email </label> </a>
 																</div>
 															</div>
@@ -498,12 +582,11 @@ header a.nav-link:hover {
 												<div class="input-group mb-3 bg-white rounded px-2">
 													<input type="text" id="inputPhone"
 														th:value="${session.user.phone == null ? 'Số điện thoại chưa được đăng ký...' : session.user.phone}"
-														placeholder="Phone Number" pattern="[0-9()+-]*"
-														maxlength="15" minlength="5" required
-														class="form-control border-1 p-0 pl-2" name="phone"
-														disabled /> <span class="input-group-append">
-														<button type="button" class="btn btn-info"
-															data-toggle="modal" data-target="#ModalVerifyPhone">
+														placeholder="Phone Number" pattern="[0-9()+-]*" maxlength="15"
+														minlength="5" required class="form-control border-1 p-0 pl-2"
+														name="phone" disabled /> <span class="input-group-append">
+														<button type="button" class="btn btn-info" data-toggle="modal"
+															data-target="#ModalVerifyPhone">
 															<i class="fas fa-edit"></i>
 														</button>
 													</span>
@@ -516,7 +599,8 @@ header a.nav-link:hover {
 															<!-- Modal Header -->
 															<div class="modal-header">
 																<h4 class="modal-title">Verify</h4>
-																<button type="button" class="close" data-dismiss="modal">
+																<button type="button" class="close"
+																	data-dismiss="modal">
 																	&times;</button>
 															</div>
 
@@ -530,8 +614,10 @@ header a.nav-link:hover {
 																<div class="by-verify text-center mb-4">
 																	<a
 																		th:href="${session.user.phone != null} ? @{/profile/verify/phone} : @{/profile/change-phone}"><label
-																		class="btn btn-danger font-weight-normal"> Xác
-																			minh bằng mã OTP gửi qua số điện thoại </label> </a>
+																			class="btn btn-danger font-weight-normal">
+																			Xác
+																			minh bằng mã OTP gửi qua số điện thoại
+																		</label> </a>
 																</div>
 															</div>
 
@@ -549,11 +635,13 @@ header a.nav-link:hover {
 															<option selected="selected" disabled="disabled"
 																value="null">Giới tính</option>
 															<option value="Nam"
-																th:selected="${session.user.gender == 'Nam'}">Nam</option>
+																th:selected="${session.user.gender == 'Nam'}">Nam
+															</option>
 															<option value="Nữ"
 																th:selected="${session.user.gender == 'Nữ'}">Nữ</option>
 															<option value="Other"
-																th:selected="${session.user.gender == 'Other'}">Khác</option>
+																th:selected="${session.user.gender == 'Other'}">Khác
+															</option>
 														</select>
 													</div>
 													<!--SOME INPUT RIGHT HERE -->
@@ -607,32 +695,30 @@ header a.nav-link:hover {
 	<script>
 		// Khi người dùng chọn ảnh, xử lý sự kiện change của input file
 		document.getElementById("avatarInput").addEventListener(
-				"change",
-				function(event) {
-					const file = event.target.files[0]; // Lấy file ảnh từ input
+			"change",
+			function (event) {
+				const file = event.target.files[0]; // Lấy file ảnh từ input
 
-					if (file) {
-						// Gắn tên tệp vào input ẩn có id="avatar-hide"
-						document.getElementById("avatar-hide").setAttribute(
-								"value", file.name);
+				if (file) {
+					// Gắn tên tệp vào input ẩn có id="avatar-hide"
+					document.getElementById("avatar-hide").setAttribute(
+						"value", file.name);
 
-						// (Tùy chọn) Hiển thị ảnh đã chọn lên trang web (nếu muốn)
-						const reader = new FileReader();
-						reader.onload = function() {
-							const imageDataURL = reader.result;
-							document.getElementById("avatar").setAttribute(
-									"src", imageDataURL);
-						};
-						reader.readAsDataURL(file);
-					}
-				});
+					// (Tùy chọn) Hiển thị ảnh đã chọn lên trang web (nếu muốn)
+					const reader = new FileReader();
+					reader.onload = function () {
+						const imageDataURL = reader.result;
+						document.getElementById("avatar").setAttribute(
+							"src", imageDataURL);
+					};
+					reader.readAsDataURL(file);
+				}
+			});
 	</script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
 		crossorigin="anonymous"></script>
 	<!-- 	<div th:replace="~{flagment/account/footLink :: footLinkFragment}"></div> -->

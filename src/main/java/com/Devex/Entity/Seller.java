@@ -48,5 +48,7 @@ public class Seller extends User implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "sellerProduct")
 	private List<Product> products;
-
+	
+	@Column(name = "Description")
+	private String description;
 }

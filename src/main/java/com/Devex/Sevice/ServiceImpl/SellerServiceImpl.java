@@ -96,14 +96,14 @@ public class SellerServiceImpl implements SellerService{
 	@Override
 	@Transactional
 	public void insertSeller(String Username, String Shopname, String Address, String Phoneaddress, Boolean Mall,
-			Boolean Activeshop) {
-		sellerRepository.insertSeller(Username, Shopname, Address, Phoneaddress, Mall, Activeshop);
+			Boolean Activeshop, String Description) {
+		sellerRepository.insertSeller(Username, Shopname, Address, Phoneaddress, Mall, Activeshop, Description);
 	}
 
 	@Override
-	public void updateSeller(String Shopname, String Address, String Phoneaddress, Boolean Mall, Boolean Activeshop,
+	public void updateSeller(String Shopname, String Address, String Phoneaddress, Boolean Mall, Boolean Activeshop, String Description,
 			String Username) {
-		sellerRepository.updateSeller(Shopname, Address, Phoneaddress, Mall, Activeshop, Username);
+		sellerRepository.updateSeller(Shopname, Address, Phoneaddress, Mall, Activeshop, Description, Username);
 	}
 	
 	

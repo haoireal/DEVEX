@@ -1,6 +1,7 @@
 package com.Devex.Entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,4 +39,7 @@ public class CartDetail implements Serializable{
 	
 	@Column(name = "Quantity")
 	private int quantity;
+	
+	@Column(name = "Createdday")
+	private Date createdDay;
 }

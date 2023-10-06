@@ -25,8 +25,7 @@ public class OrderController {
 	CustomerService customerService;
 	@Autowired
 	SessionService session;
-	@Autowired
-	ProductService daop;
+
 	@Autowired
 	HttpServletResponse resp;
 	@Autowired
@@ -34,9 +33,11 @@ public class OrderController {
 	@Autowired
 	ShoppingCartService shoppingCartService;
 	
-	@GetMapping("/detail-order")
+	@GetMapping("/cart/detail-order")
 	public String showDetailOrder(Model model) {
 		return "user/cartproductFake";
 	}
+	
+	
 	
 }

@@ -15,5 +15,6 @@ public class ShopDTO {
 	String address;
 	String phoneAddress;
 	Boolean mall;
+	String description;
 	
 }

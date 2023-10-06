@@ -3,6 +3,7 @@ package com.Devex.Controller.customer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -100,6 +101,7 @@ public class CartController {
 			cartDetail = new CartDetail();
 			cartDetail.setProductCart(pv2);
 			cartDetail.setQuantity(soLuong);
+			cartDetail.setCreatedDay(new Date());
 			System.out.println(3);
 			cartDetail.setCart(cart);
 		}
