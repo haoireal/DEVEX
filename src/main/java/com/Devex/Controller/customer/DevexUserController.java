@@ -69,7 +69,8 @@ public class DevexUserController {
 	private List<Product> uniqueProductList = new ArrayList<>();
 	private List<String> listCategory = new ArrayList<>();
 	private List<String> listBrand = new ArrayList<>();
-
+	private List<Product> temPoraryList = new ArrayList<>();
+	
 	@GetMapping({ "/home", "/*" })
 	public String getHomePage(Model model) {
 //		uniqueProductList.clear();
@@ -143,6 +144,7 @@ public class DevexUserController {
 		});
 		// Chuyển đổi lại thành danh sách (List)
 		uniqueProductList = new ArrayList<>(uniqueProducts);
+		temPoraryList = uniqueProductList; // lưu list vào 1 list tam thời
 		// Loại sản phẩm
 		getCategoryAndBrand();
 		model.addAttribute("products", uniqueProductList);
@@ -158,7 +160,7 @@ public class DevexUserController {
 		String sortPrice = paramService.getString("sortprice", "");
 		switch (sortPrice) {
 		case "ASC": {
-			Collections.sort(uniqueProductList, new Comparator<Product>() {
+			Collections.sort(temPoraryList, new Comparator<Product>() {
 				@Override
 				public int compare(Product product1, Product product2) {
 					// Lựa chọn giá thấp nhất hoặc giá cao nhất để sắp xếp
@@ -173,7 +175,7 @@ public class DevexUserController {
 			break;
 		}
 		case "DESC": {
-			Collections.sort(uniqueProductList, new Comparator<Product>() {
+			Collections.sort(temPoraryList, new Comparator<Product>() {
 				@Override
 				public int compare(Product product1, Product product2) {
 					// Lựa chọn giá thấp nhất hoặc giá cao nhất để sắp xếp
@@ -188,10 +190,10 @@ public class DevexUserController {
 			break;
 		}
 		default:
-			model.addAttribute("products", uniqueProductList);
+			model.addAttribute("products", temPoraryList);
 		}
 		// Tìm tên từ theo từ khóa
-		model.addAttribute("products", uniqueProductList);
+		model.addAttribute("products", temPoraryList);
 		model.addAttribute("category", listCategory);
 		model.addAttribute("brand", listBrand);
 		return "user/findproduct";
@@ -201,9 +203,9 @@ public class DevexUserController {
 	public String filterProducts(Model model, @RequestParam("search") Optional<String> kw) {
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
 		sessionService.set("keywordsSearch", kwords);
-		Collections.sort(uniqueProductList, Comparator.comparing(Product::getSoldCount).reversed());
+		Collections.sort(temPoraryList, Comparator.comparing(Product::getSoldCount).reversed());
 		// Tìm tên từ theo từ khóa
-		model.addAttribute("products", uniqueProductList);
+		model.addAttribute("products", temPoraryList);
 		model.addAttribute("category", listCategory);
 		model.addAttribute("brand", listBrand);
 		return "user/findproduct";
@@ -213,9 +215,11 @@ public class DevexUserController {
 	public String filterCategory(@PathVariable("id") int id, ModelMap model) {
 		uniqueProductList = productService.findProductsByCategoryId(id);
 		sessionService.set("keywordsSearch", uniqueProductList.get(0).getCategoryDetails().getCategory().getName());
-		
+		getCategoryAndBrand();
+		temPoraryList = uniqueProductList;
 		model.addAttribute("products", uniqueProductList);
-
+		model.addAttribute("category", listCategory);
+		model.addAttribute("brand", listBrand);
 		return "user/findproduct";
 	}
 	
@@ -224,26 +228,24 @@ public class DevexUserController {
 	        @RequestParam(value = "category", required = false) List<String> category,
 	        @RequestParam(value = "location", required = false) List<String> location,
 	        @RequestParam(value = "brand", required = false) List<String> brand,
-	        @RequestParam(value = "priceFrom", required = false) Double priceFrom,
+	        @RequestParam(value = "priceForm", required = false) Double priceFrom,
 	        @RequestParam(value = "priceTo", required = false) Double priceTo,
 	        ModelMap model) {
-			
-
-//	        // Thực hiện việc lọc danh sách sản phẩm ở đây dựa trên các điều kiện đã nhận được từ giao diện web
-	        List<Product> filteredProducts = uniqueProductList.stream().filter
+	        // Thực hiện việc lọc danh sách sản phẩm ở đây dựa trên các điều kiện đã nhận được từ giao diện web
+			temPoraryList = uniqueProductList.stream().filter
 	                (pr  -> {
 	                    // Áp dụng các điều kiện lọc ở đây
 	                    boolean categoryCondition = category == null || category.isEmpty() || category.contains(pr.getCategoryDetails().getCategory().getName());
 	                    boolean brandCondition = brand == null || brand.isEmpty() || brand.contains(pr.getProductbrand().getName());
 	                    boolean locationCondition = location == null || location.isEmpty() || location.contains(pr.getSellerProduct().getAddress());
-	                    boolean priceCondition = (priceFrom == null || priceFrom >= pr.getProductVariants().get(0).getPrice() ) &&
-	                            (priceTo == null || priceTo <= pr.getProductVariants().get(0).getPrice());
+	                    boolean priceCondition = (priceFrom == null ||  pr.getProductVariants().get(0).getPriceSale() >= priceFrom  ) &&
+	                            (priceTo == null ||  pr.getProductVariants().get(0).getPriceSale() <= priceTo );
 	                    return categoryCondition && locationCondition && brandCondition && priceCondition;
 	                })
 	                .collect(Collectors.toList());
 
 	        // Trả về danh sách sản phẩm đã lọc cho giao diện web
-	        model.addAttribute("products", filteredProducts);
+	        model.addAttribute("products", temPoraryList);
 			model.addAttribute("category", listCategory);
 			model.addAttribute("brand", listBrand);
 	        return "user/findproduct"; // Trả về trang kết quả
