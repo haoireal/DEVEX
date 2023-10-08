@@ -1,5 +1,6 @@
 package com.Devex.Sevice.ServiceImpl;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -123,7 +124,7 @@ public class PaypalServiceImpl implements PaypalService {
 
 		ItemList itemList = new ItemList();
 		List<Item> items = new ArrayList<>();
-
+		DecimalFormat decimalFormat = new DecimalFormat("#.##");
 		double vndAmount = 0;
 //         
 		for (CartDetailDTo itemOrder : listItemOrder) {
@@ -132,7 +133,7 @@ public class PaypalServiceImpl implements PaypalService {
 			item.setName(itemOrder.getNameProduct());
 			item.setPrice(convertUSD(itemOrder.getPrice()));
 			System.out.println(item.getPrice());
-			vndAmount += Double.parseDouble(convertUSD(itemOrder.getPrice())) * itemOrder.getQuantity();
+			vndAmount += Double.parseDouble(item.getPrice()) * itemOrder.getQuantity();
 			// item.setTax(orderDetail.getTax());
 			item.setQuantity(String.valueOf(itemOrder.getQuantity()));
 
@@ -141,7 +142,7 @@ public class PaypalServiceImpl implements PaypalService {
 
 //        Details details = new Details();
 //      details.setShipping(orderDetail.getShipping());
-//      details.setSubtotal(String.valueOf(vndAmount));
+//        details.setSubtotal(String.valueOf(vndAmount));
 //      details.setTax(orderDetail.getTax());
 
 		Amount amount = new Amount();
@@ -150,7 +151,8 @@ public class PaypalServiceImpl implements PaypalService {
 		System.out.println(vndAmount);
 //        double normalNumber = Double.parseDouble(formattedTotalAmount);
 		amount.setCurrency("USD");
-		amount.setTotal(String.valueOf(vndAmount));
+//		String formattedAmount = decimalFormat.format(vndAmount);
+		amount.setTotal(decimalFormat.format(vndAmount));
 		System.out.println(amount.getTotal());
 //        amount.setDetails(details);
 
