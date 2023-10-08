@@ -1,6 +1,5 @@
 package com.Devex.Sevice.ServiceImpl;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +15,7 @@ import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.PaypalService;
 import com.Devex.Sevice.SessionService;
 import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.Details;
 import com.paypal.api.payments.Item;
 import com.paypal.api.payments.ItemList;
 import com.paypal.api.payments.Links;
@@ -74,8 +74,7 @@ public class PaypalServiceImpl implements PaypalService {
 		Customer customer = customerService.findById(user.getUsername()).get();
 
 		PayerInfo payerInfo = new PayerInfo();
-		payerInfo.setFirstName(customer.getFullname())
-				.setEmail("sb-h0j5e27353747@personal.example.com");
+		payerInfo.setFirstName(customer.getFullname()).setEmail("sb-h0j5e27353747@personal.example.com");
 
 		payer.setPayerInfo(payerInfo);
 
@@ -108,53 +107,64 @@ public class PaypalServiceImpl implements PaypalService {
 		return payment.execute(apiContext, paymentExecution);
 	}
 
+	private String convertUSD(double vndAmount) {
+		double exchangeRate = 22000.0; // Tỷ giá hối đoái USD/VND
+
+		// Chuyển đổi sang USD
+		double usdAmount = vndAmount / exchangeRate;
+
+		// Làm tròn đến 2 chữ số thập phân gần nhất
+		double truncatedAmount = Math.floor(usdAmount * 100) / 100;
+		String amount = String.valueOf(truncatedAmount);
+		return amount;
+	}
+
 	private List<Transaction> getTransactionInformation(List<CartDetailDTo> listItemOrder) {
+
+		ItemList itemList = new ItemList();
+		List<Item> items = new ArrayList<>();
+
+		double vndAmount = 0;
+//         
+		for (CartDetailDTo itemOrder : listItemOrder) {
+			Item item = new Item();
+			item.setCurrency("USD");
+			item.setName(itemOrder.getNameProduct());
+			item.setPrice(convertUSD(itemOrder.getPrice()));
+			System.out.println(item.getPrice());
+			vndAmount += Double.parseDouble(convertUSD(itemOrder.getPrice())) * itemOrder.getQuantity();
+			// item.setTax(orderDetail.getTax());
+			item.setQuantity(String.valueOf(itemOrder.getQuantity()));
+
+			items.add(item);
+		}
+
 //        Details details = new Details();
-//        details.setShipping(orderDetail.getShipping());
-//        details.setSubtotal(orderDetail.getSubtotal());
-//        details.setTax(orderDetail.getTax());
-//     	
-        Amount amount = new Amount();
-        // Định dạng số tiền sử dụng DecimalFormat
-        DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
-        String formattedTotalAmount = decimalFormat.format(listItemOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum());
-//        Double exponentialNumber = listItemOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum();
-        System.out.println(formattedTotalAmount);
+//      details.setShipping(orderDetail.getShipping());
+//      details.setSubtotal(String.valueOf(vndAmount));
+//      details.setTax(orderDetail.getTax());
+
+		Amount amount = new Amount();
+//        double formattedTotalAmount = listItemOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum();
+//        double vndAmount = listItemOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum();
+		System.out.println(vndAmount);
 //        double normalNumber = Double.parseDouble(formattedTotalAmount);
-        amount.setCurrency("USD");
-        System.out.println(formattedTotalAmount);
-        amount.setTotal(formattedTotalAmount);
+		amount.setCurrency("USD");
+		amount.setTotal(String.valueOf(vndAmount));
+		System.out.println(amount.getTotal());
 //        amount.setDetails(details);
-        
-        Transaction transaction = new Transaction();
-        transaction.setAmount(amount);
-        transaction.setDescription(listItemOrder.stream()
-        	    .map(item -> item.getNameProduct()) // Lấy tên của từng mục
-        	    .collect(Collectors.joining(", ")));
+
+		Transaction transaction = new Transaction();
+		transaction.setAmount(amount);
+		transaction.setDescription(listItemOrder.stream().map(item -> item.getNameProduct()) // Lấy tên của từng mục
+				.collect(Collectors.joining(", ")));
 //         
-        ItemList itemList = new ItemList();
-        List<Item> items = new ArrayList<>();
-//         
-        for (CartDetailDTo itemOrder : listItemOrder) {
-	        Item item = new Item();
-	        item.setCurrency("USD");
-	        item.setName(itemOrder.getNameProduct());
-	        System.out.println(decimalFormat.format(itemOrder.getPrice()));
-	        String formattedPriceItem = decimalFormat.format(itemOrder.getPrice());
-	        item.setPrice(formattedPriceItem);
-	        System.out.println(item.getPrice());
-	        
-	//        item.setTax(orderDetail.getTax());
-	        item.setQuantity(String.valueOf(itemOrder.getQuantity()));
-	         
-	        items.add(item);
-        }
-        
-        itemList.setItems(items);
-        transaction.setItemList(itemList);
+
+		itemList.setItems(items);
+		transaction.setItemList(itemList);
 //     
 		List<Transaction> listTransaction = new ArrayList<>();
-        listTransaction.add(transaction);  
+		listTransaction.add(transaction);
 
 		return listTransaction;
 	}
