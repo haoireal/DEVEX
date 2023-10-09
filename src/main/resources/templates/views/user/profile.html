@@ -178,9 +178,9 @@
 										</button>
 
 									</div>
-
+									<input type="hidden" id="message-hidden" th:value="${message}" />
 									<!-- The Modal -->
-									<div class="modal" id="ModalSuccessUpgrade" role="dialog">
+									<div class="modal fade" id="ModalSuccessUpgrade" role="dialog">
 										<div class="modal-dialog">
 											<div class="modal-content" style="margin-top: 20%;">
 
@@ -190,7 +190,7 @@
 														<h5 th:text="${message}"></h5>
 													</div>
 													<div class="text-center mb-2">
-														<a href="/signin" class="btn btn-success w-100" data-bs-dismiss="modal">
+														<a href="/signin" class="btn btn-success w-100">
 															OK</a>
 													</div>
 												</div>
@@ -691,6 +691,20 @@
 		<div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
 	</footer>
 
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			// Lấy giá trị của message từ input hidden
+			var message = document.getElementById("message-hidden").value;
+
+			// Kiểm tra nếu message khác null và khác chuỗi rỗng
+			if (message !== null && message.trim() !== "") {
+				// Hiển thị modal
+				$('#ModalSuccessUpgrade').modal('show');
+			}
+
+
+		});
+	</script>
 
 	<script>
 		// Khi người dùng chọn ảnh, xử lý sự kiện change của input file
@@ -715,6 +729,8 @@
 				}
 			});
 	</script>
+	<!-- JQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
