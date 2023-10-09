@@ -28,5 +28,10 @@ public class HistorySevviceImpl implements HistoryService {
 	public List<History> findByIdUser(User user) {
 		String username = user.getUsername();
 		return historyResprository.findByIdUser(username);
+	}
+	@Override
+	public String findByIDProduct(String idProduct) {
+		
+		return  historyResprository.findbyIDProduct(idProduct);
 	}	
 }

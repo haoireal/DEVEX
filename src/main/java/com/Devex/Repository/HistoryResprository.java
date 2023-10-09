@@ -16,7 +16,9 @@ import com.Devex.Entity.History;
 @Repository("")
 public interface HistoryResprository extends JpaRepository<History, Integer> {
 	
-	@Query("SELECT p FROM History p where p.user.username = ?1 ")
+	@Query("SELECT p FROM History p where p.user.username = ?1 ORDER BY p.id DESC")
 	List<History> findByIdUser(String user);
 	
+	@Query("SELECT p.productId FROM History p where p.productId LIKE ?1")
+	String findbyIDProduct(String idProdduct);
 }
