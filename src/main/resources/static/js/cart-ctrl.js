@@ -446,7 +446,7 @@ app.controller("cart-ctrl", function($scope, $http, $location, $window) {
 	            if ($scope.payment === "paypal") {
 	                form.action = "/paypal-payment"; // Thay thế bằng URL tương ứng
 	            } else if ($scope.payment === "vnpay") {
-	                form.action = "/vnpay-payment"; // Thay thế bằng URL tương ứng
+	                form.action = "/submitOrder"; // Thay thế bằng URL tương ứng
 	            } else {
 	                form.action = "/cash-payment"; // Thay thế bằng URL tương ứng
 	            }

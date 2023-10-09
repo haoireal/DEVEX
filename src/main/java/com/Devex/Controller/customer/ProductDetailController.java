@@ -15,17 +15,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.Devex.Entity.History;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
+import com.Devex.Entity.User;
 import com.Devex.Repository.ProductRepository;
+import com.Devex.Repository.UserRepository;
+import com.Devex.Sevice.HistoryService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 
 public class ProductDetailController {
 
+	@Autowired
+	UserService userService;
+	@Autowired
+	HistoryService historyService;
 	@Autowired
 	ProductService productService;
 
@@ -37,12 +49,22 @@ public class ProductDetailController {
 	
 	@Autowired
     SessionService session;
-
 	
 
 	@RequestMapping("/details/{id}")
-	public String details(ModelMap model, @PathVariable("id") String id) {
+	public String details(ModelMap model, @PathVariable("id") String id , HttpServletRequest request) {
+	
 		session.set("url", "/details/" + id);
+		//Lưu Lịch Sử Sản phẩm
+		User user = session.get("user");
+		if(user!=null) {
+			History history = new History();
+			history.setProductId(id);
+			history.setUser(user);
+			historyService.save(history);
+		}
+		
+		//end.
 		Product seller = productService.findProductById(id);
 		Product product = productService.findById(id).orElse(new Product());
 		List<String> listSize = new ArrayList<>();
@@ -87,7 +109,7 @@ public class ProductDetailController {
 		model.addAttribute("listSize", listSize);
 		model.addAttribute("product", product);
 		model.addAttribute("seller", seller);
-
+		
 		return "user/productDetail";
 	}
 
