@@ -99,7 +99,7 @@ public class DevexOrderController {
         allOrderRefundByShop = setHashMapBillDetail(allOrderRefundByShop,refundOrder);
         model.addAttribute("refundOrder", allOrderRefundByShop);
 
-        System.out.println("co tong cong " + allOrderByShop.values().size() + " don hang");
+        System.out.println("co tong cong " + allOrderSuccessByShop.size() + " don hang");
         return "user/userOrder";
     }
 
