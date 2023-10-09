@@ -120,9 +120,9 @@
 	<main>
 	<div class="container container_main_middle mt-3 pb-5 bg-white">
         <div class="row d-flex align-items-center px-3">
-          <th:block th:each="product, state : ${products}" th:with="limit = 30">
+          <th:block th:each="product, state: ${products}" th:with="limit = 30">
             <div
-              th:if="${state.index < limit}"
+             
               class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
             >
               <a
@@ -184,95 +184,17 @@
                 </div>
               </a>
             </div>
-          </th:block>
+          </th>
           
         </div>
         <!--show more-->
-        <div class="lider row d-flex align-items-center px-3 d-none " id="showMore">
-          <th:block
-            th:each="product, state : ${products}"
-            th:with="limit = 30"
-          >
-            <div
-              th:if="${state.count >= limit}"
-              class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
-              
-            >
-              <a
-                th:href="@{|/details/${product.id}|}"
-                class="text-decoration-none"
-              >
-                <div class="card pb-2">
-                  <div class="icon-sale text-center pl-5 pr-5 p-1">
-                    HOT SALE
-                  </div>
-                  <div
-                    class="hot-sale text-center p-1"
-                    th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0"
-                  >
-                    Giảm
-                    <span
-                      th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"
-                    ></span>
-                    %
-                  </div>
-                  <img
-                    th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
-                    class="img-fluid w-100 p-0"
-                    th:alt="${product.name}"
-                  />
-                  <div class="card-body" style="padding: 5px">
-                    <div
-                      class="card-title tensp text-left"
-                      style="height: 40px"
-                      th:text="${product.name}"
-                      th:title="${product.name}"
-                    ></div>
-
-                    <div id="price-box  row">
-                      <div
-                        class="price col-6 m-0"
-                        style="text-decoration: none"
-                      >
-                        <span style="color: #ff0821bb">₫</span
-                        ><strong
-                          class="fs-10"
-                          th:text="${#numbers.formatDecimal(product.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
-                          style="color: #ff0821bb; font-weight: 600"
-                          >8,490,000</strong
-                        >
-                      </div>
-
-                      <div class="col-6">
-                        <p class="text-info buy m-0">
-                          đã bán
-                          <i
-                            class="text-info m-0"
-                            th:text="${product.soldCount}"
-                          ></i>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </th:block>
-        </div>
-        <div class="row d-flex align-items-center justify-content-center mt-2">
-          <div class="col-2">
-            <button id="more" class="animated-scroll border-0 bg-transparent" onclick="showMore()">
-              <i class="fas fa-caret-down me-2" id="arrow"> </i><span id="text_showmore">  Xem thêm...</span>
-            </button>
-          </div>
-        </div>
-      </div>
-		
+        
+	</div>
 		
 	</main>
 	<div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
 
-	<script th:src="@{/js/cart-ctrl.js}"></script>
+<!--	<script th:src="@{/js/cart-ctrl.js}"></script>-->
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

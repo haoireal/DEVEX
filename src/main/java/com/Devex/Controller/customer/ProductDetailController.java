@@ -59,9 +59,10 @@ public class ProductDetailController {
 		User user = session.get("user");
 		if(user!=null) {
 			History history = new History();
-			history.setProductId(id);
-			history.setUser(user);
-			historyService.save(history);
+				history.setProductId(id);
+				history.setUser(user);
+				historyService.save(history);
+			
 		}
 		
 		//end.
