@@ -11,7 +11,7 @@
 
   $(document).ready(function () {
     $('.image-slider').slick({
-        slidesToShow: 4,
+        slidesToShow: 6,
         slidesToScroll: 1,
         asNavFor: '.slider-for',
         prevArrow: `<button type='button' class='slick-prev slick-arrow'><i class="fa-solid fa-chevron-left"></i></button>`,
@@ -25,7 +25,7 @@
 
     $(document).ready(function () {
       $(".card-slider").slick({
-        slidesToShow: 5,
+        slidesToShow: 6,
         slidesToScroll: 2,
         // autoplay: true,
         // autoplaySpeed: 3000,
