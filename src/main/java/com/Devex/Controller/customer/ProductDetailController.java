@@ -111,6 +111,7 @@ public class ProductDetailController {
 		model.addAttribute("seller", seller);
 		
 		return "user/productDetail";
+
 	}
 
 	// Phương thức nhận dữ liệu từ request

@@ -38,4 +38,5 @@ public interface CommentService {
 
 	Comment save(Comment entity);
 
+    List<Comment> findByProductID(String productId);
 }
