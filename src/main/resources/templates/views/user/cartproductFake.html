@@ -94,8 +94,11 @@
 			<div id="location-body" style=" font-size:1rem;" class="ps-3 row pb-2">
 				<div class=" col-12 col-xl-3"><span class="fw-bold" th:text="${session.user.fullname}"></span>
 					<span class="fw-bold" th:text="${session.user.phoneAddress}"></span>
+					
+
 				</div>
 				<span class="col-9 col-xl-8" th:text="${session.user.address}"></span>
+				<input type="hidden" th:value="${session.user.address}" name="address">
 				<div class="col-3 col-xl-1"><a href="">Thay đổi</a></div>
 			</div>
 		</div>
