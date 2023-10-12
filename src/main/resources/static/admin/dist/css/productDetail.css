@@ -192,7 +192,7 @@ img.slider_nav-img {
 .text_name-product {
   color: black;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 .evaluate {
   /* padding: 1px; */
@@ -505,32 +505,6 @@ label#btn-close {
 	font-size: .85rem;
 	font-weight: 600;
 	color: #000000;
-}
-.icon-sale {
-  width: auto;
-  background-color: #00BFFF;
-  position: absolute;
-  border-radius: 20px;
-  margin-top: 150px;
-  font-size: 0.75rem;
-}
-
-.icon-sale > a {
-  color: rgb(8, 8, 8);
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 10px;
-}
-
-.hot-sale {
-  background-color: #359bbc;
-  position: absolute;
-  border-radius: 10px;
-  margin-top: 10px;
-  left: -1;
-  font-size: 0.7rem;
-  color: rgb(0, 0, 0);
 }
 /*Gia sp*/
 #price-box{

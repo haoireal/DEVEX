@@ -9,4 +9,5 @@ public interface HistoryService {
 	void save(History history);
 	List<History> fillAll();
 	List<History> findByIdUser(User user);
+	String findByIDProduct(String idProduct);
 }

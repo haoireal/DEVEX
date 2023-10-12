@@ -1,8 +1,10 @@
 package com.Devex.Controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,22 +30,60 @@ public class HistoryProductControler {
 	@RequestMapping("/history")
 	public String home(Model model) {
 		User user = session.get("user");
-		String username =user.getUsername();
-		if(user!=null) {
-			List<Product> sp = new ArrayList<>();
-			List<History> history = historyService.findByIdUser(user);
-			for (History history2 : history) {
-				Optional<Product> product = productService.findById(history2.getProductId());
-				if (product.isPresent()) {
-					Product product2 = product.get();
-					sp.add(product2);
-				}
-			}
-			model.addAttribute("products", sp);
+		if (user != null) {
+		    List<Product> sp = new ArrayList<>();
+		    List<History> history = historyService.findByIdUser(user);
+
+		    for (History history2 : history) {
+		        Optional<Product> product = productService.findById(history2.getProductId());
+		        if (product.isPresent()) {
+		            Product product2 = product.get();
+		            
+		            // Kiểm tra xem sản phẩm đã tồn tại trong danh sách sp hay chưa
+		            boolean isProductInList = false;
+		            for (Product existingProduct : sp) {
+		                if (existingProduct.getId() == product2.getId()) {
+		                    isProductInList = true;
+		                    break;
+		                }
+		            }
+		            
+		            // Nếu sản phẩm chưa tồn tại trong danh sách, thêm nó vào danh sách
+		            if (!isProductInList) {
+		                sp.add(product2);
+		            }
+		        }
+		    }
+		    
+		    // Thêm danh sách sản phẩm vào thuộc tính "products" của model
+		    model.addAttribute("products", sp);
 		}
-		
+
+		 
 
 		return "user/historyProduct";
+		
+		
+	///Để đây khánh nghiên cứu lại
+		
+//		User user = session.get("user");
+//		if (user != null) {
+//		    Set<Product> uniqueProducts = new HashSet<>();
+//		    List<History> history = historyService.findByIdUser(user);
+//
+//		    for (History history2 : history) {
+//		        Optional<Product> productOptional = productService.findById(history2.getProductId());
+//		        productOptional.ifPresent(uniqueProducts::add);
+//		    }
+//
+//		    List<Product> sp = new ArrayList<>(uniqueProducts);
+//		    model.addAttribute("product1", sp);
+//		}
+//
+//	    
+//	    
+//
+//	    return "user/historyProduct";
 	}
 
 }

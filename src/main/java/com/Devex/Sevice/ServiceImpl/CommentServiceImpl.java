@@ -26,6 +26,8 @@ public class CommentServiceImpl implements CommentService{
 		return commentRepository.save(entity);
 	}
 
+
+
 	@Override
 	public List<Comment> saveAll(List<Comment> entities) {
 		return commentRepository.saveAll(entities);
@@ -85,6 +87,9 @@ public class CommentServiceImpl implements CommentService{
 	public void deleteAll() {
 		commentRepository.deleteAll();
 	}
-	
-	
+
+	@Override
+	public List<Comment> findByProductID(String productId) {
+		return commentRepository.findByProductID(productId);
+	}
 }
