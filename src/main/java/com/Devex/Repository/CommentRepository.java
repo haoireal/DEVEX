@@ -16,4 +16,22 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>{
             "WHERE cmt.productComment.id = ?1 " +
             "Order BY cmt.createdAt DESC")
     List<Comment> findByProductID(String productId);
+
+    @Query("SELECT DISTINCT cmt FROM Comment cmt " +
+            "WHERE cmt.productComment.id = ?1 " +
+            "And cmt.rating = ?2 " +
+            "Order BY cmt.createdAt DESC")
+    List<Comment> findByProductIDAndStar(String productId,int ratting);
+
+    @Query("SELECT DISTINCT cmt FROM Comment cmt " +
+            "WHERE cmt.orderDetails.id = ?1 " +
+            "and cmt.isSellerReply = false " +
+            "Order BY cmt.createdAt DESC")
+    Comment findByOrOrderDetailsID(String orderDetailsID);
+
+    @Query("SELECT DISTINCT cmt FROM Comment cmt " +
+            "WHERE cmt.orderDetails.id = ?1 " +
+            "and cmt.isSellerReply = true " +
+            "Order BY cmt.createdAt DESC")
+    Comment findByOrOrderDetailsIDSeller(String orderDetailsID);
 }

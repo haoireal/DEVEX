@@ -1,6 +1,7 @@
 package com.Devex.Controller.customer;
 
 import com.Devex.DTO.KeyBillDTO;
+import com.Devex.Entity.Comment;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.User;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
@@ -56,6 +58,9 @@ public class DevexOrderController {
 
     @Autowired
     OrderDetailService orderDetailService;
+
+    @Autowired
+    CommentService commentService ;
 
     @GetMapping("/order")
     public String getOrderPage(Model model) {
@@ -145,21 +150,23 @@ public class DevexOrderController {
         }
         return "redirect:/orderDetail/" + id;
     }
-
-    private HashMap<KeyBillDTO,List<OrderDetails>> setHashMapBill(HashMap<KeyBillDTO,List<OrderDetails>> allOrderByShop,List<Order> allOrder){
-        for (Order ao : allOrder) {
-            Date keyDate = ao.getCreatedDay();
-            String keyOrderID = ao.getId();
-            for (OrderDetails od : ao.getOrderDetails()) {
+    private HashMap<KeyBillDTO,List<OrderDetails>> setHashMapBillDetail(HashMap<KeyBillDTO,List<OrderDetails>> allOrderByShop,List<OrderDetails> allOrder){
+            for (OrderDetails od : allOrder) {
                 KeyBillDTO keyDTO = new KeyBillDTO();
+                Date keyDate = orderService.findOrderById(od.getOrder().getId()).getCreatedDay();
+                String keyOrderID = od.getOrder().getId();
                 keyDTO.setShopName(od.getProductVariant().getProduct().getSellerProduct().getShopName());
                 keyDTO.setCreatedDay(keyDate);
                 keyDTO.setOrderID(keyOrderID);
                 keyDTO.setAvt(od.getProductVariant().getProduct().getSellerProduct().getAvatar());
+                if(commentService.findByOrOrderDetailsID(od.getId()) == null){
+                    od.setIsComment(true);
+                } else {
+                    od.setIsComment(false);
+                }
                 // Thêm một giá trị vào key
                 allOrderByShop.computeIfAbsent(keyDTO, k -> new ArrayList<>()).add(od);
             }
-        }
         // Chuyển HashMap thành danh sách các cặp key-value
         List<Map.Entry<KeyBillDTO, List<OrderDetails>>> entryList = new ArrayList<>(allOrderByShop.entrySet());
         // Sắp xếp danh sách dựa trên thuộc tính createdDay của KeyBillDTO
@@ -171,27 +178,22 @@ public class DevexOrderController {
         }
         return sortedOrderByShop;
     }
-    private HashMap<KeyBillDTO,List<OrderDetails>> setHashMapBillDetail(HashMap<KeyBillDTO,List<OrderDetails>> allOrderByShop,List<OrderDetails> allOrder){
-            for (OrderDetails od : allOrder) {
-                KeyBillDTO keyDTO = new KeyBillDTO();
-                Date keyDate = orderService.findOrderById(od.getOrder().getId()).getCreatedDay();
-                String keyOrderID = od.getOrder().getId();
-                keyDTO.setShopName(od.getProductVariant().getProduct().getSellerProduct().getShopName());
-                keyDTO.setCreatedDay(keyDate);
-                keyDTO.setOrderID(keyOrderID);
-                keyDTO.setAvt(od.getProductVariant().getProduct().getSellerProduct().getAvatar());
-                // Thêm một giá trị vào key
-                allOrderByShop.computeIfAbsent(keyDTO, k -> new ArrayList<>()).add(od);
-            }
-        // Chuyển HashMap thành danh sách các cặp key-value
-        List<Map.Entry<KeyBillDTO, List<OrderDetails>>> entryList = new ArrayList<>(allOrderByShop.entrySet());
-        // Sắp xếp danh sách dựa trên thuộc tính createdDay của KeyBillDTO
-        Collections.sort(entryList, Collections.reverseOrder(Comparator.comparing(entry -> entry.getKey().getCreatedDay())));
-        // Tạo một HashMap mới từ danh sách đã sắp xếp
-        LinkedHashMap<KeyBillDTO, List<OrderDetails>> sortedOrderByShop = new LinkedHashMap<>();
-        for (Map.Entry<KeyBillDTO, List<OrderDetails>> entry : entryList) {
-            sortedOrderByShop.put(entry.getKey(), entry.getValue());
-        }
-        return sortedOrderByShop;
+
+    @PostMapping("/order/addcomment/{orderDetailID}")
+    public String addComment(@PathVariable("orderDetailID") String orderDetailID,
+                             @RequestParam("rating") int rating,
+                             @RequestParam("content") String content) {
+        User u = sessionService.get("user");
+        OrderDetails od = orderDetailService.findById(orderDetailID).get();
+        Comment comment = new Comment();
+        comment.setIsSellerReply(false);
+        comment.setContent(content);
+        comment.setRating(rating);
+        comment.setProductComment(od.getProductVariant().getProduct());
+        comment.setUser(u);
+        comment.setOrderDetails(od);
+        commentService.save(comment);
+
+        return "redirect:/details/"+od.getProductVariant().getProduct().getId()+"#comment";
     }
 }

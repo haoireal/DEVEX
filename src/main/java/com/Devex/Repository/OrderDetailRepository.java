@@ -1,8 +1,8 @@
 package com.Devex.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-import com.Devex.Entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.Entity.OrderDetails;
 
 @EnableJpaRepositories
@@ -106,4 +105,8 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 			"WHERE o.customerOrder.username = ?1 " +
 			"Order BY o.createdDay DESC")
 	List<OrderDetails> findOrdersByCustomerID(String customerID);
+
+	@Query("SELECT DISTINCT o FROM OrderDetails o " +
+			"WHERE o.id = ?1")
+	Optional<OrderDetails> findById(String id);
 }
