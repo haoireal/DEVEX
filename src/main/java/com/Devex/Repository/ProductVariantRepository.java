@@ -57,5 +57,8 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 	
 	@Query("SELECT pv FROM ProductVariant pv WHERE pv.product.id = ?1 AND pv.color = ?2 AND pv.size = ?3")
 	ProductVariant findProductVariantByColorAndSizeAndIdProduct(String productId, String color, String size);
+	
+	@Query("SELECT pv FROM ProductVariant pv WHERE pv.product.id = ?1 ORDER BY pv.id ASC LIMIT 1")
+	ProductVariant findProductVariantByProductId(String id);
 
 }

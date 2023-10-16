@@ -111,6 +111,11 @@ public class ImageProductServiceImpl implements ImageProductService{
 	public void deleteImageProductByProductId(String productId) {
 		imageProductRepository.deleteImageProductByProductId(productId);
 	}
+
+	@Override
+	public String findFirstImageProduct(String id) {
+		return imageProductRepository.findFirstImageProduct(id);
+	}
 	
 	
 	

@@ -46,4 +46,6 @@ public interface ImageProductService {
 
 	void deleteImageProductByProductId(String productId);
 
+	String findFirstImageProduct(String id);
+
 }
