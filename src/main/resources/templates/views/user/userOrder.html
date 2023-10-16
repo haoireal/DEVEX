@@ -7,6 +7,7 @@
     <div th:replace="~{flagment/account/head :: headFragment}"></div>
     <!-- Theme style -->
     <link rel="stylesheet" href="/css/user/userIndex.css"/>
+    <title>Tra cứu đơn hàng</title>
     </script>
     <script th:src="@{/js/cart-ctrl.js}"></script>
 </head>
@@ -134,7 +135,73 @@
     .error-actions .btn {
         margin-right: 10px;
     }
+    .comment-box {
+        padding: 5px
+    }
 
+    .comment-area textarea {
+        resize: none;
+        border: 1px solid #ff0000
+    }
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #ffffff;
+        outline: 0;
+        box-shadow: 0 0 0 1px rgb(255, 0, 0) !important
+    }
+
+    .send {
+        color: #fff;
+        background-color: #ff0000;
+        border-color: #ff0000
+    }
+
+    .send:hover {
+        color: #fff;
+        background-color: #f50202;
+        border-color: #f50202
+    }
+
+    .rating {
+        display: inline-flex;
+        margin-top: -10px;
+        flex-direction: row-reverse;
+
+
+    }
+
+    .rating>input {
+        display: none
+    }
+
+    .rating>label {
+        position: relative;
+        width: 28px;
+        font-size: 35px;
+        color: #ff0000;
+        cursor: pointer;
+    }
+
+    .rating>label::before {
+        content: "\2605";
+        position: absolute;
+        opacity: 0
+    }
+
+    .rating>label:hover:before,
+    .rating>label:hover~label:before {
+        opacity: 1 !important
+    }
+
+    .rating>input:checked~label:before {
+        opacity: 1
+    }
+
+    .rating:hover>input:checked~label:before {
+        opacity: 0.4
+    }
 </style>
 
 <body style="display: flex; flex-direction: column; min-height: 100vh;">
@@ -819,14 +886,38 @@
                                                                 </p>
                                                             </div>
                                                             <div class="btn-group col-6">
-                                                                <button class="btn btn-primary start">
-                                                                    <span>Đã nhận hàng</span>
+                                                                <button th:if="${orderDetail.status.id == 1006 && orderDetail.isComment}" class="btn btn-primary start" data-toggle="modal" th:data-target="'#form-' + ${orderDetail.id}" type="button">
+                                                                    <span>Đánh giá sản phẩm</span>
                                                                 </button>
+
+                                                                <form method="post" th:action="@{/order/addcomment/__${orderDetail.id}__}" class="modal fade" th:id="'form-' + ${orderDetail.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="card-body text-center">
+                                                                                <div class="comment-box text-center">
+                                                                                    <h4>Đánh giá sản phẩm</h4>
+                                                                                    <div class="rating">
+                                                                                        <input type="radio" name="rating" value="5"  th:id="'5-' + ${orderDetail.id}" checked><label  th:for="'5-' + ${orderDetail.id}" >☆</label>
+                                                                                        <input type="radio" name="rating" value="4"  th:id="'4-' + ${orderDetail.id}"><label  th:for="'4-' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="3"  th:id="'3-' + ${orderDetail.id}"><label  th:for="'3-' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="2"  th:id="'2-' + ${orderDetail.id}"><label  th:for="'2-' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="1"  th:id="'1-' + ${orderDetail.id}"><label  th:for="'1-' + ${orderDetail.id}">☆</label>
+                                                                                    </div>
+                                                                                    <div class="comment-area">
+                                                                                        <textarea class="form-control" name="content" placeholder="what is your view?" rows="4"></textarea>
+                                                                                    </div>
+
+                                                                                    <div class="text-center mt-4">
+                                                                                        <button class="btn btn-success send px-5">Đánh giá<i class="fa fa-long-arrow-right ml-1"></i></button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+
                                                                 <button data-dz-remove class="btn btn-warning cancel">
                                                                     <span>Đặt lại</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-danger delete">
-                                                                    <span>Hủy đơn</span>
                                                                 </button>
                                                             </div>
                                                         </div>

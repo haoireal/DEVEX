@@ -41,9 +41,7 @@ public class Customer extends User implements Serializable{
 	@OneToMany(mappedBy = "customer")
 	private List<Follow> follow;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "customerComment")
-	private List<Comment> comments;
+
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "customerVoucherDetails")

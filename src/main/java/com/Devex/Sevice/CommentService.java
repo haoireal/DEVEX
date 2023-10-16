@@ -39,4 +39,10 @@ public interface CommentService {
 	Comment save(Comment entity);
 
     List<Comment> findByProductID(String productId);
+
+	List<Comment> findByProductIDAndStar(String productId,int ratting);
+
+	Comment findByOrOrderDetailsID(String orderDetailsID);
+
+	Comment findByOrOrderDetailsIDSeller(String orderDetailsID);
 }

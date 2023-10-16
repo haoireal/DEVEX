@@ -110,7 +110,7 @@ public class ProductDetailController {
 		model.addAttribute("listSize", listSize);
 		model.addAttribute("product", product);
 		model.addAttribute("seller", seller);
-		
+		model.addAttribute("id",product.getId());
 		return "user/productDetail";
 
 	}
