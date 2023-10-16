@@ -38,4 +38,6 @@ public interface VoucherDetailService {
 
 	VoucherDetails save(VoucherDetails entity);
 
+	List<VoucherDetails> findAllByUsername(String username);
+
 }

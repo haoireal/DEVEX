@@ -23,6 +23,11 @@ public class VoucherProductServiceImpl implements VoucherProductService{
 	VoucherProductRepository voucherProductRepository;
 
 	@Override
+	public List<VoucherProduct> findAllByVoucher(Integer id) {
+		return voucherProductRepository.findAllByVoucher(id);
+	}
+
+	@Override
 	public VoucherProduct save(VoucherProduct entity) {
 		return voucherProductRepository.save(entity);
 	}

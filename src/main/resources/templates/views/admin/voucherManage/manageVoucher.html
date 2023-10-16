@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-	<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
+	<div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
 	<!-- Thêm thư viện Angular -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
 		integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
@@ -27,8 +27,8 @@
 		<div class="preloader flex-column justify-content-center align-items-center">
 			<img class="animation__wobble" src="/img/banner/logotitle.png" alt="AdminLTELogo" height="60" width="60">
 		</div>
-		<div th:replace="~{flagment/seller/sellerHeader :: sellerHeaderFragment}"></div>
-		<div th:replace="~{flagment/seller/sellerMainSidebar :: sellerMainSidebarFragment}"></div>
+		<div th:replace="~{flagment/admin/adminHeader :: adminHeaderFragment}"></div>
+		<div th:replace="~{flagment/admin/adminMainSidebar :: adminMainSidebarFragment}"></div>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -369,10 +369,10 @@
 	</div>
 	<!-- /.content-wrapper -->
 
-	<div th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
-	<div th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
+	<div th:replace="~{flagment/admin/adminFooter :: adminFooterFragment}"></div>
+	<div th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
 	</div>
-	<script th:src="@{/js/seller/voucher.js}"></script>
+	<script th:src="@{/js/admin/voucher.js}"></script>
 </body>
 
 <script src="/admin/dist/js/handMade.js"></script>

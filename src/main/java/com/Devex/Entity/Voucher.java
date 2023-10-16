@@ -46,8 +46,6 @@ public class Voucher implements Serializable{
 	private Double discount;
 	@Column(name = "Description")
 	private String description;
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	@Temporal(TemporalType.DATE)
 	@Column(name = "Createddate")
 	private Date createdDay;
 	@Column(name = "Startdate")
@@ -67,12 +65,12 @@ public class Voucher implements Serializable{
 	@OneToMany(mappedBy = "voucher")
 	private List<VoucherDetails> voucherDetails;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Category_Voucher_ID")
 	private CategoryVoucher categoryVoucher;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Creator")
 	private User creator;
@@ -80,6 +78,10 @@ public class Voucher implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "voucher")
 	private List<OrderDiscount> listOrderDiscount;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "voucher")
+	private List<VoucherProduct> listVoucherProduct;
 	
 }
 	

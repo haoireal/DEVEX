@@ -173,7 +173,7 @@ public class VnpayapiController {
 
 	    	  String emailContent = emailContentBuilder.toString();
 	    	  
-			mailer.send("trank1793@gmail.com", "DEVEX - THÔNG BÁO XÁC NHẬN ĐƠN HÀNG CỦA BẠN", emailContent);
+			mailer.send(user.getEmail(), "DEVEX - THÔNG BÁO XÁC NHẬN ĐƠN HÀNG CỦA BẠN", emailContent);
 		} catch (Exception e) {
 			System.out.println("Lỗi");
 			System.out.println(e);

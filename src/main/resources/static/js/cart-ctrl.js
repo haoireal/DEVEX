@@ -15,6 +15,24 @@ app.controller("cart-ctrl", function($scope, $http, $location, $window) {
 		return money;
 	};
 
+	$scope.formatDateToDDMMYYYY = function(dateString) {
+		const date = new Date(dateString); // Chuyển chuỗi thời gian thành đối tượng Date
+		const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
+		return date.toLocaleDateString('vi-VN', options); // Chuyển đổi sang "dd/MM/yyyy"
+	};
+
+	$scope.formatDateTimeToDDMMYYYYHHMM = function(dateString) {
+		const date = new Date(dateString);
+		const options = {
+			day: 'numeric',
+			month: 'numeric',
+			year: 'numeric',
+			hour: 'numeric',
+			minute: 'numeric',
+		};
+		return date.toLocaleDateString('vi-VN', options);
+	};
+
 	// tăng giảm số lượng
 	$scope.changeQuantity = function(item, action) {
 		if (action === "increase") {
@@ -41,6 +59,127 @@ app.controller("cart-ctrl", function($scope, $http, $location, $window) {
 		sizes: [],
 		colors: [],
 		selectedProduct: [],
+
+		//	Voucher
+		voucherAll: [],
+		voucherShop: [],
+		voucherDevex: [],
+		voucherShipping: [],
+		voucherApply: [],
+		myVoucher: [],
+		myVoucherManage: [],
+
+		// voucher trong kho quản lý khách hàng
+		
+
+		// lưu voucher
+		saveVoucher(item) {
+			var url = `${host}/voucher/save`;
+			$http.post(url, item).then((response) => {
+				console.log(this.voucherAll);
+				this.loadVoucherOfUser(); 
+			});
+		},
+
+		// áp dụng voucher
+		applyVoucher(item) {
+			this.voucherApply.push[item];
+		},
+
+		// mở modal voucher của shop
+		openModalVoucherShop: function(idShop) {
+			this.groupVoucherShop(idShop);
+			console.log(idShop);
+			$('#voucherOfShop').modal('show');
+		},
+
+		// mở modal voucher của devex
+		openModalVoucherDevex: function() {
+			this.groupVoucherDevex();
+			$('#voucherOfDevex').modal('show');
+		},
+
+		// load voucher
+		loadVoucherOfUser() {
+			var url = `${host}/voucher/saved/list`;
+			$http.get(url).then((response) => {
+				this.myVoucher = response.data;
+				console.log(this.myVoucher);
+				// console.log(this.myVoucher[0].voucher);
+			});
+		},
+
+		// check voucher có sở hữu hay chưa
+		isItemInMyVoucher(item) {
+			//Kiểm tra xem item.id có tồn tại trong myVoucher hay không
+			return this.myVoucher.some(voucher => voucher.voucher.id === item.id);
+		},
+
+		isItemInMyVoucherApplied(item) {
+			// Kiểm tra xem item.id có tồn tại trong myVoucher và voucher.id có applied hay không
+			return this.myVoucher.some(voucher => voucher.voucher.id === item.id && !voucher.applied === true);
+		},
+
+		// load voucher
+		loadVoucher() {
+			var url = `${host}/voucher/list`;
+			$http.get(url).then((response) => {
+				this.voucherAll = response.data;
+				console.log(this.voucherAll);
+			});
+		},
+
+		sortCreatedDateAllItem(array) {
+			// Sắp xếp danh sách theo ngày tạo mới nhất (giảm dần)
+			return array.sort((a, b) => {
+				const dateA = new Date(a.createdDay);
+				const dateB = new Date(b.createdDay);
+				return dateB - dateA;
+			});
+		},
+
+		// group voucher của shop đang diễn ra
+		groupVoucherShop(idShop) {
+			const currentDate = new Date(); // Lấy ngày hiện tại
+
+			// Lọc danh sách các voucher đang diễn ra
+			this.voucherShop = this.voucherAll.filter(item => {
+				const startDate = new Date(item.startDate);
+				const endDate = new Date(item.endDate);
+				return startDate <= currentDate && currentDate <= endDate && item.active === true && item.creator.username === idShop;
+			});
+
+			this.sortCreatedDateAllItem(this.voucherShop);
+
+			console.log(this.voucherShop);
+		},
+
+		// group voucher của devex
+		groupVoucherDevex() {
+			const currentDate = new Date(); // Lấy ngày hiện tại
+
+			// Lọc danh sách các voucher devex đang diễn ra
+			this.voucherDevex = this.voucherAll.filter(item => {
+				const startDate = new Date(item.startDate);
+				const endDate = new Date(item.endDate);
+				return startDate <= currentDate && currentDate <= endDate && item.active === true && item.categoryVoucher.id === 100001;
+			});
+
+			this.sortCreatedDateAllItem(this.voucherDevex);
+
+			// Lọc danh sách các voucher ship đang diễn ra
+			this.voucherShipping = this.voucherAll.filter(item => {
+				const startDate = new Date(item.startDate);
+				const endDate = new Date(item.endDate);
+				return startDate <= currentDate && currentDate <= endDate && item.active === true && item.categoryVoucher.id === 100002;
+			});
+
+			this.sortCreatedDateAllItem(this.voucherShipping);
+
+			console.log(this.voucherDevex);
+		},
+
+
 		// Mở Modal chọn size và màu
 		openModal: function(product) {
 			//reset lại trạng thái của radio
@@ -392,7 +531,8 @@ app.controller("cart-ctrl", function($scope, $http, $location, $window) {
 	});
 
 	$cart.loadProductCart();
-
+	$cart.loadVoucher();
+	$cart.loadVoucherOfUser();
 	// Đặt hàng
 	$scope.message = "";
 
@@ -428,9 +568,13 @@ app.controller("cart-ctrl", function($scope, $http, $location, $window) {
 
 	$scope.purchase = function() {
 		// Thực hiện đặt hàng
+		const requestDataDTO = {
+			itemsOrderSession: $cart.itemsOrderSession,
+			items: $cart.voucherApply
+		};
 		var url = `${host}/cart/order`;
 		$http
-			.post(url, $cart.itemsOrderSession)
+			.post(url, requestDataDTO)
 			.then((resp) => {
 				//				alert("Đặt hàng thành công!");
 				this.message = "Đặt hàng thành công!";
