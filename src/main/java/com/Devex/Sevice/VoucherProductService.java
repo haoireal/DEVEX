@@ -40,6 +40,8 @@ public interface VoucherProductService {
 
 	VoucherProduct getById(Integer id);
 
+	List<VoucherProduct> findAllByVoucher(Integer id);
+
 
 
 }

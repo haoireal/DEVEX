@@ -1,9 +1,8 @@
-package com.Devex.Controller.seller;
+package com.Devex.Controller.admin;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,14 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Devex.Entity.CategoryVoucher;
-import com.Devex.Entity.Product;
-import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Entity.Voucher;
-import com.Devex.Entity.VoucherProduct;
 import com.Devex.Sevice.CategoryVoucherService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.ProductService;
@@ -29,8 +24,8 @@ import com.Devex.Sevice.VoucherProductService;
 import com.Devex.Sevice.VoucherService;
 
 @Controller
-@RequestMapping("/seller")
-public class VoucherController {
+@RequestMapping("/ad")
+public class VoucherAdminController {
 	@Autowired
 	ProductService productService;
 
@@ -57,39 +52,25 @@ public class VoucherController {
 
 	@GetMapping("/voucher/form")
 	public String showFormVoucher(Model model) {
-		User user = sessionService.get("user");
-		List<Product> listProd = productService.findProductBySellerUsernameAndIsdeleteProduct(user.getUsername());
-//		Seller shop = sellerService.findById(user.getUsername()).get();
-		String code = user.getUsername().substring(0, 4).toUpperCase();
-		System.out.println(code);
-		System.out.println(listProd.get(0).getName());
 
-		model.addAttribute("listProd", listProd);
-		model.addAttribute("code", code);
+		return "admin/voucherManage/formVoucher";
+	}
+	
+	@GetMapping("/voucher/formShip")
+	public String showFormVoucherShip(Model model) {
 
-		return "seller/voucher/formVoucher";
+		return "admin/voucherManage/formVoucherShip";
 	}
 	
 	@GetMapping("/voucher/manage")
 	public String showManageVoucher(Model model) {
-//		User user = sessionService.get("user");
-//		List<Product> listProd = productService.findProductBySellerUsernameAndIsdeleteProduct(user.getUsername());
-////		Seller shop = sellerService.findById(user.getUsername()).get();
-//		String code = user.getUsername().substring(0, 4).toUpperCase();
-//		System.out.println(code);
-//		System.out.println(listProd.get(0).getName());
-//
-//		model.addAttribute("listProd", listProd);
-//		model.addAttribute("code", code);
 
-		return "seller/voucher/manageVoucher";
+		return "admin/voucherManage/manageVoucher";
 	}
 
 	@PostMapping("/voucher/create")
-	public String createVoucher(Model model, @RequestParam("products") List<String> selectedProducts) {
+	public String createVoucher(Model model) {
 		User user = sessionService.get("user");
-		List<Product> listProd = productService.findProductBySellerUsernameAndIsdeleteProduct(user.getUsername());
-		Seller shop = sellerService.findById(user.getUsername()).get();
 		Voucher voucher = new Voucher();
 
 		String name = param.getString("name", "Dùng thử");
@@ -99,6 +80,7 @@ public class VoucherController {
 		String minPrice = param.getString("minPriceSale", "1000");
 		String rangePrice = param.getString("rangePriceSale", "");
 		String description = param.getString("description", "");
+		String type = param.getString("type", "devex");
 
 		voucher.setName(name);
 		voucher.setCode(code);
@@ -110,11 +92,11 @@ public class VoucherController {
 		voucher.setBanner("abc.webp");
 
 		// Sử lí loại giảm giá
-		if (listProd.size() == selectedProducts.size()) {
-			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100004).get();
+		if (type.equals("devex")) {
+			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100001).get();
 			voucher.setCategoryVoucher(categoryVoucher);
-		} else {
-			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100003).get();
+		} else if (type.equals("ship")){
+			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100002).get();
 			voucher.setCategoryVoucher(categoryVoucher);
 		}
 
@@ -150,18 +132,8 @@ public class VoucherController {
 		}
 
 		voucherService.save(voucher);
-		System.out.println(voucher.getId());
-		// Sử lí sản phẩm được áp voucher
-		for (String str : selectedProducts) {
-			VoucherProduct voucherProduct = new VoucherProduct();
-			Product prod = productService.findByIdProduct(str);
-			voucherProduct.setProduct(prod);
-			voucherProduct.setVoucher(voucher);
-			voucherProductService.save(voucherProduct);
-		}
-
 //		model.addAttribute("listProd", listProd);
 
-		return "redirect:/seller/voucher/form";
+		return "redirect:/ad/voucher/manage";
 	}
 }

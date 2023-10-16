@@ -2,6 +2,8 @@ package com.Devex.Entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +33,7 @@ public class VoucherDetails implements Serializable{
 	@Column(name = "ID", updatable = false)
 	private int id;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Customer_ID")
 	private Customer customerVoucherDetails;
@@ -38,5 +41,8 @@ public class VoucherDetails implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "Voucher_ID")
 	private Voucher voucher;
+	
+	@Column(name = "Applied")
+	private Boolean applied;
 
 }

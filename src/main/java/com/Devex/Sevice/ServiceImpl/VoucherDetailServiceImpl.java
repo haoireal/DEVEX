@@ -27,6 +27,11 @@ public class VoucherDetailServiceImpl implements VoucherDetailService{
 	}
 
 	@Override
+	public List<VoucherDetails> findAllByUsername(String username) {
+		return voucherDetailRepository.findAllByUsername(username);
+	}
+
+	@Override
 	public List<VoucherDetails> saveAll(List<VoucherDetails>entities) {
 		return voucherDetailRepository.saveAll(entities);
 	}
