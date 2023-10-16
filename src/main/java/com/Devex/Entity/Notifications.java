@@ -31,9 +31,9 @@ public class Notifications implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", updatable = false)
 	private int id;
-	@Column(name = "UserFrom")
+	@Column(name = "Userfrom")
 	private String userFrom;
-	@Column(name = "UserTo")
+	@Column(name = "Userto")
 	private String userTo;
 	@Column(name = "Content")
 	private String content;

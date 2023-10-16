@@ -1,9 +1,15 @@
 package com.Devex.Controller.seller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,7 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +32,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Devex.DTO.ShopDTO;
 import com.Devex.DTO.StatisticalOrderMonthPieDTO;
 import com.Devex.DTO.StatisticalRevenueMonthDTO;
+import com.Devex.DTO.infoProductDTO;
 import com.Devex.Entity.Category;
 import com.Devex.Entity.CategoryDetails;
 import com.Devex.Entity.ImageProduct;
+import com.Devex.Entity.Notifications;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductBrand;
@@ -38,6 +50,7 @@ import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.ImageProductService;
+import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ProductBrandService;
@@ -91,6 +104,12 @@ public class DevexSellerRestController {
 	
 	@Autowired
 	private OrderDetailService detailService;
+	
+	@Autowired
+	private NotificationsService notificationsService;
+	
+	@Value("${myapp.file-storage-path}")
+    private String fileStoragePath;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -434,6 +453,121 @@ public class DevexSellerRestController {
 			listOrder = orderService.getAllOrderFalseByUsernameAndStatusIdAndYearAndMonth(1008, u.getUsername(), year, month);
 		}
 		return listOrder;
+	}
+	
+	@PostMapping("/seller/delete/product/{id}")
+	public void deleteproductout(@PathVariable("id") String id) {
+		System.out.println("Em choi bede");
+		productVariantService.deleteProductVariantByProductId(id);
+		imageProductService.deleteImageProductByProductId(id);
+		productService.deleteById(id);
+	}
+	
+	//admin rest seller API
+	@GetMapping("/api/shop")
+	public Map<String, Object> getSeller(){
+		User u =   session.get("user");
+		int amountOrder = orderService.getCountOrderForSeller(u.getUsername());
+		int amountFollow = followService.getCountFollowBySellerUsername(u.getUsername());
+		int amountProduct = productService.getCountProductBySellerUsername(u.getUsername());
+		int amountProductSell = productService.getCountProductSellBySellerUsername(u.getUsername(), 1005, 1009);
+		Map<String , Object> sellerDetails = new HashMap<>();
+		sellerDetails.put("seller", sellerService.findFirstByUsername(u.getUsername()));
+		sellerDetails.put("amountOrder", amountOrder);
+		sellerDetails.put("amountFollow", amountFollow);
+		sellerDetails.put("amountProduct", amountProduct);
+		sellerDetails.put("amountProductSell", amountProductSell);
+		sellerDetails.put("imageuser", "/img/account/" + u.getUsername() + ".webp");
+		return sellerDetails;
+	}
+		
+	@PutMapping("/api/updateShop")
+	public void saveSellerProfile(@RequestBody ShopDTO ShopDTO) {
+	    // Lấy thông tin người dùng từ session hoặc nguồn dữ liệu khác
+	    User user = session.get("user");
+	    Seller selleru = sellerService.findFirstByUsername(user.getUsername());
+	    sellerService.updateSeller(ShopDTO.getShopName(), ShopDTO.getAddress(), ShopDTO.getPhoneAddress(), ShopDTO.getMall(), true, ShopDTO.getDescription(), user.getUsername());
+	}
+	
+	@PostMapping("/api/updateimageprofile")
+    public void uploadImage(@RequestParam("file") MultipartFile file) {
+        User u = session.get("user");
+        if (u != null) {
+            File dir = Paths.get(fileStoragePath, "/account").toFile();
+            if (!dir.exists()) {
+                dir.mkdirs(); // Tạo thư mục nếu nó không tồn tại
+            }
+
+            // Tạo đường dẫn cho tệp mới
+            Path path = Paths.get(dir.getAbsolutePath(), u.getUsername() + ".webp");
+            System.out.println(path);
+            try {
+                // Xóa tệp cũ nếu tồn tại
+                File oldFile = path.toFile();
+                if (oldFile.exists()) {
+                    oldFile.delete();
+                }
+
+                file.transferTo(path.toFile());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+	
+	@GetMapping("/api/seller/product")
+	public List<infoProductDTO> getAllProductFillBox() {
+		User u = session.get("user");
+		List<infoProductDTO> listInfoProduct = new ArrayList<>();
+		List<Product> listProduct = productService.findProductBySellerUsernameAndIsdeleteProduct(u.getUsername());
+		for (Product product : listProduct) {
+			infoProductDTO dto = new infoProductDTO();
+			ProductVariant pv = productVariantService.findProductVariantByProductId(product.getId());
+			dto.setId(product.getId());
+			dto.setName(product.getName());
+			dto.setActive(product.getActive());
+			dto.setSoldCount(product.getSoldCount());
+			dto.setPrice(pv.getPrice());
+			dto.setPriceSale(pv.getPriceSale());
+			dto.setQuantity(pv.getQuantity());
+			dto.setNameImageProduct("/img/product/" + u.getUsername() + "/" + product.getId() + "/" + imageProductService.findFirstImageProduct(product.getId()));
+			listInfoProduct.add(dto);
+		}
+		return listInfoProduct;
+	}
+	
+	@GetMapping("/api/seller/notifications")
+	public Map<String, Object> getTop10Notifications(){
+		User u = session.get("user");
+		Map<String, Object> mapNotifications = new HashMap<>();
+		List<Notifications> listNotifications = notificationsService.getTop10NotificationsByUserto(u.getUsername());
+		long amountNotifications = notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
+		long acountNotifications = notificationsService.getCountNotificationsByUserto(u.getUsername());
+		mapNotifications.put("listNotifications", listNotifications);
+		mapNotifications.put("amountNotifications", amountNotifications);
+		mapNotifications.put("acountNotifications", acountNotifications);
+		System.out.println(acountNotifications);
+		return mapNotifications;
+	}
+	
+	@GetMapping("/api/seller/history")
+	public List<Notifications> getAllHistory(){
+		User u = session.get("user");
+		List<Notifications> listNotifications = notificationsService.getAllNotificationsByUserfrom(u.getUsername());
+		return listNotifications;
+	}
+	
+	@PutMapping("/api/seller/updatenotification/{id}")
+    public long handlePostRequest(@PathVariable("id") int id) {
+		User u = session.get("user");
+        notificationsService.updateNotificationsById(id);
+        return notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
+    }
+	
+	@GetMapping("/api/seller/allnotifications")
+	public List<Notifications> getAllNotifications(){
+		User u = session.get("user");
+		return notificationsService.getAllNotificationsByUserto(u.getUsername());
 	}
 
 }

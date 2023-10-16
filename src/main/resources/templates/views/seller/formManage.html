@@ -222,6 +222,7 @@
 							<div class="text-center">
 								<button class="btn btn-primary" ng-click="save()">Lưu</button>
 								<button class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
+								<button class="btn btn-primary" ng-click="check()">check</button>
 							</div>
 
 							<div class="text-center">
@@ -455,6 +456,11 @@
 			var urlimg = 'http://localhost:8888/img/product';
 			var content = document.getElementById('content');
 			var contentfalse = document.getElementById('contentfalse');
+			var active = false;
+			var description = null;
+			var isdelete = false;
+			var name = "";
+			$scope.checkvalue = 0;
 			/* $scope.url = function(filename) {
 				console.log(filename);
 			};  */
@@ -507,6 +513,15 @@
 					$scope.form = resp.data;
 					if ($scope.form.name == 'Nhập tên sản phẩm tại đây') {
 						$scope.form.name = '';
+						active = $scope.form.active;
+						description = $scope.form.description;
+						isdelete = $scope.form.isdelete;
+						name = $scope.form.name;
+						console.log(active);
+						console.log(description);
+						console.log(isdelete);
+						console.log(name);
+						console.log("info");
 					}
 				}).catch(error => {
 					console.log("errors", error);
@@ -593,6 +608,16 @@
 				$http.put("/info/product", $scope.form).then(resp => {
 				content.textContent = "Lưu thành công";
 				successbtn.click();
+				$scope.checkvalue = 1;
+				active = $scope.form.active;
+				description = $scope.form.description;
+				isdelete = $scope.form.isdelete;
+				name = $scope.form.name;
+				console.log(active);
+				console.log(description);
+				console.log(isdelete);
+				console.log(name);
+				console.log("save");
 				}).catch(error => {
 					console.log("errors", error);
 					contentfalse.textContent = "Lưu thất bại";
@@ -623,10 +648,13 @@
 			$scope.lista();
 
 			window.onbeforeunload = function (event) {
+				
+				var data = $scope.form.id;
 				if ($scope.filenames.length === 0) {
-					var data = $scope.form.id;
 					navigator.sendBeacon('/addimageproduct/' + $scope.form.id, JSON.stringify(data));
-					alert('Vì không có hình ảnh nên hệ thống sẽ thêm 1 ảnh mặc định');
+				}
+				if(active == false && description == null && isdelete == false && name == "" && $scope.checkvalue == 0) {
+					navigator.sendBeacon('/seller/delete/product/' + $scope.form.id, JSON.stringify(data));
 				}
 			}
 
@@ -641,6 +669,16 @@
 					contentfalse.textContent = "Xóa thất bại";
 					failsebtn.click();
 				});
+			}
+
+			$scope.check = function (){
+				console.log($scope.checkvalue);
+				console.log($scope.form);
+				console.log(active);
+				console.log(description);
+				console.log(isdelete);
+				console.log(name);
+				console.log("check");
 			}
 
 		});
