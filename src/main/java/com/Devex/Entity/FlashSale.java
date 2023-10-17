@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "FlashSale_Time")
+@Table(name = "Flashsale")
 public class FlashSale implements Serializable{
 
 	/**
@@ -34,7 +34,7 @@ public class FlashSale implements Serializable{
 	@Column(name = "ID", updatable = false)
 	private int id;
 	@Column(name = "Discount")
-	private int discount;
+	private Double discount;
 	@Column(name = "Amountsell")
 	private int amountSell;
 	@Column(name = "Amountorder")

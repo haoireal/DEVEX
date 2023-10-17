@@ -3,396 +3,123 @@
 <head>
     <div th:replace="~{flagment/user/userHead :: userHeadFragment}"></div>
 </head>
-
-<body>
-<header>
-    <div
-            th:replace="~{flagment/user/userHeader :: userHeaderHomePageFragment}"
-    ></div>
-</header>
-<main>
-    <div class="container container_main mt-3 pb-3 bg-white">
-        <div class="row">
-            <div class="col-12 col-md-6">
-                <div class="row d-flex justify-content-start content_price">
-                    <div
-                            class="col-5 col-md-5 col-xl-3 text-dark p-0"
-                            style="color: red !important"
-                    >
-                        Flash Sale
-                    </div>
-                    <div class="col-6 col-md-4 col-xl-3 p-0 d-flex">
-                        <button
-                                class="btn_time"
-                                id="countdown-btn"
-                                style="color: red !important"
-                        >
-                            24:00:00
-                        </button>
-                        <span
-                                class="text-dark fw-bolder text_dots"
-                                style="color: red !important"
-                        >:</span
-                        >
-                        <button
-                                class="btn_time"
-                                id="minute-btn"
-                                style="color: red !important"
-                        ></button>
-                        <span
-                                class="text-dark fw-bolder text_dots"
-                                style="color: red !important"
-                        >:</span
-                        >
-                        <button
-                                class="btn_time"
-                                id="second-btn"
-                                style="color: red !important"
-                        ></button>
-                    </div>
-                </div>
+  <body>
+    <header>
+      <div
+        th:replace="~{flagment/user/userHeader :: userHeaderHomePageFragment}"
+      ></div>
+    </header>
+    <main>
+      <div class="container container_main mt-3 pb-3 bg-white">
+        <div class="row" th:if="${#lists.size(listProductFlashSale) >= 1}">
+          <div class="col-12 col-md-6">
+            <div class="row d-flex justify-content-start content_price">
+              <div
+                class="col-5 col-md-5 col-xl-3 text-dark p-0"
+                style="color: red !important"
+              >
+                Flash Sale
+              </div>
+              <div class="col-6 col-md-4 col-xl-3 p-0 d-flex">
+                <button
+                  class="btn_time"
+                  id="countdown-btn"
+                  style="color: red !important"
+                >
+                  24:00:00
+                </button>
+                <span
+                  class="text-dark fw-bolder text_dots"
+                  style="color: red !important"
+                  >:</span
+                >
+                <button
+                  class="btn_time"
+                  id="minute-btn"
+                  style="color: red !important"
+                ></button>
+                <span
+                  class="text-dark fw-bolder text_dots"
+                  style="color: red !important"
+                  >:</span
+                >
+                <button
+                  class="btn_time"
+                  id="second-btn"
+                  style="color: red !important"
+                ></button>
+              </div>
             </div>
+          </div>
         </div>
         <div class="row mt-2">
-            <div class="col-12">
-                <div class="card-slider d-flex justify-content-start">
-                    <div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
-                        <a href="#a" class="text-decoration-none">
-                            <div class="card pb-2 m-0" style="width: 11rem">
-                                <div class="hot-sale text-center pl-5 pr-5 p-1">
-                                    HOT SALE
-                                </div>
-                                <div class="icon-sale text-center p-1">
-                                    Giảm 100.000.000 VND
-                                    <i class="bi bi-lightning-charge-fill"></i>
-                                </div>
-                                <img
-                                        src="https://lzd-img-global.slatic.net/g/p/2427b3d5c450fed4d029fb2e68b93bf9.jpg_720x720q80.jpg_.webp"
-                                        class="img-fluid w-100 p-0"
-                                        alt="..."
-                                />
-                                <div class="card-body" style="padding: 5px">
-                                    <div class="card-title tensp text-left">
-                                        Áo ba lỗ nam unisex TINOFUN áo thun nam nữ 3 lỗ sát nách
-                                        tanktop CL A thể thao vải co dãn tập gym ôm body 10 màu
-                                    </div>
-                                    <div id="price-box text-left row">
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <strong
-                                                    class="fs-10"
-                                                    style="color: #ff0821bb; font-weight: 600"
-                                            ><span style="color: #ff0821bb">₫</span
-                                            >8,490,000</strong
-                                            >
-                                        </div>
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <s
-                                                    class="fs-11"
-                                                    style="color: #3f3d3d; font-weight: 100"
-                                            ><span style="color: #3f3d3d">₫</span>8,490,000</s
-                                            >
-                                        </div>
-                                    </div>
-                                    <div
-                                            class="icon-star text-left"
-                                            style="text-decoration: none"
-                                    >
-                                        <i class="icon-flash text-red"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class>đã bán 999k</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+          <div class="col-12">
+            <div class="card-slider d-flex justify-content-start">
+              <div
+                th:each="product : ${listProductFlashSale}"
+                class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2"
+              >
+                <a
+                  th:href="@{|/details/${product.id}|}"
+                  class="text-decoration-none"
+                >
+                  <div class="card pb-2">
+                    <div class="icon-sale text-center pl-5 pr-5 p-1">
+                      HOT SALE
                     </div>
-                    <div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
-                        <a href="#a" class="text-decoration-none">
-                            <div class="card pb-2 m-0" style="width: 11rem">
-                                <div class="hot-sale text-center pl-5 pr-5 p-1">
-                                    HOT SALE
-                                </div>
-                                <div class="icon-sale text-center p-1">
-                                    Giảm 100.000.000 VND
-                                    <i class="bi bi-lightning-charge-fill"></i>
-                                </div>
-                                <img
-                                        src="https://lzd-img-global.slatic.net/g/p/885aef2273bcc2a808c6a94b20dcbb8d.jpg_720x720q80.jpg_.webp"
-                                        class="img-fluid w-100 p-0"
-                                        alt="..."
-                                />
-                                <div class="card-body" style="padding: 5px">
-                                    <div class="card-title tensp text-left">
-                                        Áo ba lỗ nam unisex TINOFUN áo thun nam nữ 3 lỗ sát nách
-                                        tanktop CL A thể thao vải co dãn tập gym ôm body 10 màu
-                                    </div>
-                                    <div class="price-box text-left row">
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <strong
-                                                    class="fs-10"
-                                                    style="color: #ff0821bb; font-weight: 600"
-                                            ><span style="color: #ff0821bb">₫</span
-                                            >8,490,000</strong
-                                            >
-                                        </div>
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <s
-                                                    class="fs-11"
-                                                    style="color: #3f3d3d; font-weight: 100"
-                                            ><span style="color: #3f3d3d">₫</span>8,490,000</s
-                                            >
-                                        </div>
-                                    </div>
-                                    <div
-                                            class="icon-star text-left"
-                                            style="text-decoration: none"
-                                    >
-                                        <i class="icon-flash text-red"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class>đã bán 999k</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                    <div
+                      class="hot-sale text-center p-1"
+                      th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0"
+                    >
+                      Giảm
+                      <span
+                        th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].price / product.productVariants[0].listFlashSale[0].discount) * 100),0,'POINT', 0, 'COMMA')}"
+                      ></span>
+                      %
                     </div>
-                    <div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
-                        <a href="#a" class="text-decoration-none">
-                            <div class="card pb-2 m-0" style="width: 11rem">
-                                <div class="hot-sale text-center pl-5 pr-5 p-1">
-                                    HOT SALE
-                                </div>
-                                <div class="icon-sale text-center p-1">
-                                    Giảm 100.000.000 VND
-                                    <i class="bi bi-lightning-charge-fill"></i>
-                                </div>
-                                <img
-                                        src="https://lzd-img-global.slatic.net/g/p/aebd6a6180dfcc30ca94295c32d97f26.jpg_720x720q80.jpg_.webp"
-                                        class="img-fluid w-100 p-0"
-                                        alt="..."
-                                />
-                                <div class="card-body" style="padding: 5px">
-                                    <div class="card-title tensp text-left">
-                                        Áo ba lỗ nam unisex TINOFUN áo thun nam nữ 3 lỗ sát nách
-                                        tanktop CL A thể thao vải co dãn tập gym ôm body 10 màu
-                                    </div>
-                                    <div class="price-box text-left row">
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <strong
-                                                    class="fs-10"
-                                                    style="color: #ff0821bb; font-weight: 600"
-                                            ><span style="color: #ff0821bb">₫</span
-                                            >8,490,000</strong
-                                            >
-                                        </div>
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <s
-                                                    class="fs-11"
-                                                    style="color: #3f3d3d; font-weight: 100"
-                                            ><span style="color: #3f3d3d">₫</span>8,490,000</s
-                                            >
-                                        </div>
-                                    </div>
-                                    <div
-                                            class="icon-star text-left"
-                                            style="text-decoration: none"
-                                    >
-                                        <i class="icon-flash text-red"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class>đã bán 999k</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                    <img
+                      th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
+                      class="img-fluid w-100 p-0"
+                      th:alt="${product.name}"
+                    />
+                    <div class="card-body" style="padding: 5px">
+                      <div
+                        class="card-title tensp text-left"
+                        style="height: 40px"
+                        th:text="${product.name}"
+                        th:title="${product.name}"
+                      ></div>
+
+                      <div id="price-box  row">
+                        <div
+                          class="price col-12 m-0"
+                          style="text-decoration: none"
+                        >
+                          <span style="color: #ff0821bb">₫</span
+                          ><strong
+                            class="fs-10"
+                            th:text="${#numbers.formatDecimal(product.productVariants[0].listFlashSale[0].discount, 0 , 'POINT', 0, 'COMMA')}"
+                            style="color: #ff0821bb; font-weight: 600"
+                          ></strong>
+                          <del
+                            th:text="${#numbers.formatDecimal(product.productVariants[0].price, 0 , 'POINT', 0, 'COMMA')}"
+                          ></del>
+                        </div>
+
+                        <div class="col-6">
+                          <p class="text-info buy m-0">
+                            đã bán
+                            <i
+                              class="text-info m-0"
+                              th:text="${product.soldCount}"
+                            ></i>
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
-                        <a href="#a" class="text-decoration-none">
-                            <div class="card pb-2 m-0" style="width: 11rem">
-                                <div class="hot-sale text-center pl-5 pr-5 p-1">
-                                    HOT SALE
-                                </div>
-                                <div class="icon-sale text-center p-1">
-                                    Giảm 100.000.000 VND
-                                    <i class="bi bi-lightning-charge-fill"></i>
-                                </div>
-                                <img
-                                        src="https://lzd-img-global.slatic.net/g/p/ec9770dc06f50da89fccc00b0faf7aaa.jpg_720x720q80.jpg_.webpbp"
-                                        class="img-fluid w-100 p-0"
-                                        alt="..."
-                                />
-                                <div class="card-body" style="padding: 5px">
-                                    <div class="card-title tensp text-left">
-                                        Áo ba lỗ nam unisex TINOFUN áo thun nam nữ 3 lỗ sát nách
-                                        tanktop CL A thể thao vải co dãn tập gym ôm body 10 màu
-                                    </div>
-                                    <div class="price-box text-left row">
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <strong
-                                                    class="fs-10"
-                                                    style="color: #ff0821bb; font-weight: 600"
-                                            ><span style="color: #ff0821bb">₫</span
-                                            >8,490,000</strong
-                                            >
-                                        </div>
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <s
-                                                    class="fs-11"
-                                                    style="color: #3f3d3d; font-weight: 100"
-                                            ><span style="color: #3f3d3d">₫</span>8,490,000</s
-                                            >
-                                        </div>
-                                    </div>
-                                    <div
-                                            class="icon-star text-left"
-                                            style="text-decoration: none"
-                                    >
-                                        <i class="icon-flash text-red"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class>đã bán 999k</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
-                        <a href="#a" class="text-decoration-none">
-                            <div class="card pb-2 m-0" style="width: 11rem">
-                                <div class="hot-sale text-center pl-5 pr-5 p-1">
-                                    HOT SALE
-                                </div>
-                                <div class="icon-sale text-center p-1">
-                                    Giảm 100.000.000 VND
-                                    <i class="bi bi-lightning-charge-fill"></i>
-                                </div>
-                                <img
-                                        src="https://lzd-img-global.slatic.net/g/p/3787e8347d0b5d0259583a55751ada97.jpg_720x720q80.jpg_.webp"
-                                        class="img-fluid w-100 p-0"
-                                        alt="..."
-                                />
-                                <div class="card-body" style="padding: 5px">
-                                    <div class="card-title tensp text-left">
-                                        Áo ba lỗ nam unisex TINOFUN áo thun nam nữ 3 lỗ sát nách
-                                        tanktop CL A thể thao vải co dãn tập gym ôm body 10 màu
-                                    </div>
-                                    <div class="price-box text-left row">
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <strong
-                                                    class="fs-10"
-                                                    style="color: #ff0821bb; font-weight: 600"
-                                            ><span style="color: #ff0821bb">₫</span
-                                            >8,490,000</strong
-                                            >
-                                        </div>
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <s
-                                                    class="fs-11"
-                                                    style="color: #3f3d3d; font-weight: 100"
-                                            ><span style="color: #3f3d3d">₫</span>8,490,000</s
-                                            >
-                                        </div>
-                                    </div>
-                                    <div
-                                            class="icon-star text-left"
-                                            style="text-decoration: none"
-                                    >
-                                        <i class="icon-flash text-red"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class>đã bán 999k</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-3 col-lg-2 col-xl-2 pt-2">
-                        <a href="#a" class="text-decoration-none">
-                            <div class="card pb-2 m-0" style="width: 11rem">
-                                <div class="hot-sale text-center pl-5 pr-5 p-1">
-                                    HOT SALE
-                                </div>
-                                <div class="icon-sale text-center p-1">
-                                    Giảm 100.000.000 VND
-                                    <i class="bi bi-lightning-charge-fill"></i>
-                                </div>
-                                <img
-                                        src="https://lzd-img-global.slatic.net/g/p/33cca728384454faec2f0318390fb1c7.jpg_720x720q80.jpg_.webp"
-                                        class="img-fluid w-100 p-0"
-                                        alt="..."
-                                />
-                                <div class="card-body" style="padding: 5px">
-                                    <div class="card-title tensp text-left">
-                                        Áo ba lỗ nam unisex TINOFUN áo thun nam nữ 3 lỗ sát nách
-                                        tanktop CL A thể thao vải co dãn tập gym ôm body 10 màu
-                                    </div>
-                                    <div class="price-box text-left row">
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <strong
-                                                    class="fs-10"
-                                                    style="color: #ff0821bb; font-weight: 600"
-                                            ><span style="color: #ff0821bb">₫</span
-                                            >8,490,000</strong
-                                            >
-                                        </div>
-                                        <div
-                                                class="price col-6 m-0"
-                                                style="text-decoration: none"
-                                        >
-                                            <s
-                                                    class="fs-11"
-                                                    style="color: #3f3d3d; font-weight: 100"
-                                            ><span style="color: #3f3d3d">₫</span>8,490,000</s
-                                            >
-                                        </div>
-                                    </div>
-                                    <div
-                                            class="icon-star text-left"
-                                            style="text-decoration: none"
-                                    >
-                                        <i class="icon-flash text-red"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i> <i class>đã bán 999k</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                  </div>
+                </a>
+              </div>
             </div>
         </div>
     </div>
@@ -490,14 +217,20 @@
                         </div>
                     </a>
                 </div>
-            </th:block>
-
+              </a>
+            </div>
+          </th:block>
         </div>
         <!--show more-->
-        <div class="lider row d-flex align-items-center px-3 d-none " id="showMore">
-            <th:block
-                    th:each="product, state : ${products}"
-                    th:with="limit = 30"
+        <div
+          class="lider row d-flex align-items-center px-3 d-none"
+          id="showMore"
+        >
+          <th:block th:each="product, state : ${products}" th:with="limit = 30">
+            <div
+              th:if="${state.count >= limit}"
+              class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
+
             >
                 <div
                         th:if="${state.count >= limit}"
@@ -566,11 +299,17 @@
             </th:block>
         </div>
         <div class="row d-flex align-items-center justify-content-center mt-2">
-            <div class="col-2">
-                <button id="more" class="animated-scroll border-0 bg-transparent" onclick="showMore()">
-                    <i class="fas fa-caret-down me-2" id="arrow"> </i><span id="text_showmore">  Xem thêm...</span>
-                </button>
-            </div>
+          <div class="col-2">
+            <button
+              id="more"
+              class="animated-scroll border-0 bg-transparent"
+              onclick="showMore()"
+            >
+              <i class="fas fa-caret-down me-2" id="arrow"> </i
+              ><span id="text_showmore"> Xem thêm...</span>
+            </button>
+          </div>
+
         </div>
     </div>
     <!--Danh Mục sản Phẩm-->
@@ -992,12 +731,14 @@
     <div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
 </footer>
 
-<script>
-    var countdownButton = document.getElementById("countdown-btn");
-    var minuteButton = document.getElementById("minute-btn");
-    var secondButton = document.getElementById("second-btn");
+    <script>
+      var countdownButton = document.getElementById("countdown-btn");
+      var minuteButton = document.getElementById("minute-btn");
+      var secondButton = document.getElementById("second-btn");
 
-    function updateCountdown() {
+      // var tiímtar = minuteButton.ariaValueNow;
+      function updateCountdown() {
+
         var currentTime = new Date();
 
         // Lấy giờ, phút, giây từ thời gian hiện tại
@@ -1043,17 +784,16 @@
         var elementBtn = document.getElementById("arrow");
         var text_showmore = document.getElementById("text_showmore");
         if (element.classList.contains("d-none")) {
-            element.classList.remove("d-none");
-            elementBtn.classList.remove("fa-caret-down");
-            elementBtn.classList.add("fa-caret-up");
-            text_showmore.innerHTML = 'Ẩn bớt';
-
+          element.classList.remove("d-none");
+          elementBtn.classList.remove("fa-caret-down");
+          elementBtn.classList.add("fa-caret-up");
+          text_showmore.innerHTML = "Ẩn bớt";
         } else {
-            element.classList.add("d-none");
-            elementBtn.classList.remove("fa-caret-up");
-            elementBtn.classList.add("fa-caret-down");
-            text_showmore.innerHTML = 'Xem thêm...'
-            scrollToElement("header");
+          element.classList.add("d-none");
+          elementBtn.classList.remove("fa-caret-up");
+          elementBtn.classList.add("fa-caret-down");
+          text_showmore.innerHTML = "Xem thêm...";
+          scrollToElement("header");
         }
     }
 </script>

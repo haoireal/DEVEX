@@ -173,6 +173,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public List<Product> findProductsByFlashSaleTimeAndStatus(int flashSaleTimeId, Boolean flashSaleStatus) {
+		return productRepository.findProductsByFlashSaleTimeAndStatus(flashSaleTimeId, flashSaleStatus);
+	}
+
 	public int getCountProductSellBySellerUsername(String username, int statusorderid, int statusorderdetailsid) {
 		return productRepository.getCountProductSellBySellerUsername(username, statusorderid, statusorderdetailsid);
 	}

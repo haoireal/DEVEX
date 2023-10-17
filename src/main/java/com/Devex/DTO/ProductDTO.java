@@ -23,7 +23,6 @@ public class ProductDTO {
 	 	private String id;
 	    private String name;
 	    private String description;
-	    private Date createdDay;
 	    private Boolean active;
 	    private Boolean isdelete;
 	    private Integer soldCount;

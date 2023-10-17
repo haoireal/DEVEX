@@ -1,13 +1,21 @@
 package com.Devex.Controller.admin;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.bytecode.internal.bytebuddy.PrivateAccessorException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,17 +24,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Devex.DTO.FlashSaleTimeDTO;
 import com.Devex.DTO.ShopDTO;
 import com.Devex.DTO.StatisticalCategoryDetailsPieDTO;
 import com.Devex.DTO.StatisticalOrderMonthPieDTO;
 import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.DTO.UpdatedRolesDTO;
+import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Role;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
 import com.Devex.Sevice.CartService;
 import com.Devex.Sevice.CookieService;
+import com.Devex.Sevice.FlashSalesService;
+import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
@@ -76,6 +88,8 @@ public class DevexAdminRestController {
 	@Autowired
 	private CartService cartService;
 	
+	@Autowired 
+	private FlashSalesTimeService flashSalesTimeService;
 	@Autowired
 	private FollowService followService;
 
@@ -89,6 +103,33 @@ public class DevexAdminRestController {
 		return userDetails;
 		
 	}
+	
+	@GetMapping("/flashSales")
+	public List<FlashSaleTime> getFlashSaleTime(ModelMap model){
+		
+		List<FlashSaleTime> listFlashSaleTime = flashSalesTimeService.findAll(Sort.by(Sort.Direction.DESC, "id"));
+		
+		return listFlashSaleTime;
+		
+	}
+	
+	@PostMapping("/saveFlashSales")
+	public List<FlashSaleTime> saveFlashSaleTime(@RequestBody FlashSaleTimeDTO flashSaleTimeDTO, ModelMap model ){
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm aMM/dd/yyyy");
+
+        // Chuyển đổi chuỗi thành LocalDateTime
+		LocalDateTime firstTime =  LocalDateTime.parse(flashSaleTimeDTO.getFirstTime(),formatter);
+		LocalDateTime lastTime =  LocalDateTime.parse(flashSaleTimeDTO.getLastTime(),formatter);
+		flashSalesTimeService.insertFlashSaleTime(firstTime, lastTime);
+		
+		List<FlashSaleTime> listFlashSaleTime = flashSalesTimeService.findAll(Sort.by(Sort.Direction.DESC, "id"));
+		
+		return listFlashSaleTime;
+		
+		
+	}
+	
 	
 	
 

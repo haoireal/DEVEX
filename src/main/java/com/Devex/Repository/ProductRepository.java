@@ -72,6 +72,20 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 	@Query("SELECT COUNT(p) FROM Product p WHERE p.sellerProduct.username like ?1")
 	int getCountProductBySellerUsername(String username);
+//
+//	@Query(" SELECT p FROM Product p JOIN p.seller s WHERE p.name LIKE %:productName% AND s.address LIKE %:sellerAddress%")
+//    List<Product> findByPlaceOfSale(String keyWordName ,String keyWordAddress);
+//	@Quẻy 
+	
+	@Query("SELECT p FROM Product p " +
+	           "JOIN p.productVariants pv " +
+	           "JOIN pv.listFlashSale fs " +
+	           "JOIN fs.flashSaleTime fst " +
+	           "WHERE fst.ID = :flashSaleTimeId AND fs.status = :flashSaleStatus")
+	    List<Product> findProductsByFlashSaleTimeAndStatus(
+	        @Param("flashSaleTimeId") int flashSaleTimeId,
+	        @Param("flashSaleStatus") Boolean flashSaleStatus
+	    );
 
 	@Query("SELECT COUNT(p) FROM Product p " + 
 			"JOIN p.productVariants pv " + 

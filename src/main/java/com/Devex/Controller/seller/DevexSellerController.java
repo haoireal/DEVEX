@@ -270,4 +270,12 @@ public class DevexSellerController {
 		productService.updateProductIsDeleteById(true, id);
 		return "redirect:/seller/list/" + "products";
 	}
+	
+	@GetMapping("/flashSale")
+	public String getFlashSale() {
+		User user =  session.get("user");
+		session.set("userSeller", user.getUsername());
+		
+		return "seller/FlashSale";
+	}
 }
