@@ -49,11 +49,30 @@
             <p class="h3">Thanh Toán Thành Công</p>
         </div>
         <div class="text-center mt-3">
-            <button class="btn btn-primary mr-3">Về Trang Chủ</button>
+             <button id="homeButton" class="btn btn-primary mr-3" onclick="redirectToHome(5)">Về Trang Chủ (5 giây)</button>
             <button class="btn btn-secondary">Xem Đơn Hàng</button>
         </div>
     </main>
-    
+     <script>
+        // Hàm tự động chuyển hướng về trang chủ
+        function redirectToHome() {
+            window.location.href = "http://localhost:8888/home";
+        }
+
+        // Gọi hàm redirectToHome() sau 5 giây tự động
+        setTimeout(function () {
+            redirectToHome();
+        }, 5000);
+
+        // Bắt sự kiện click vào nút "Về Trang Chủ" để chuyển hướng
+        var homeButton = document.getElementById("homeButton");
+        homeButton.addEventListener("click", redirectToHome);
+
+        // Cập nhật nội dung của nút sau 1 giây
+        setTimeout(function () {
+            homeButton.innerText = "Về Trang Chủ";
+        }, 1000);
+    </script>
     
 
 
@@ -71,6 +90,6 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-	<script src="/admin/dist/js/user/productDetail.js"></script>
+	<script src="/js/productDetail.js"></script>
 </body>
 </html>

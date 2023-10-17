@@ -73,6 +73,15 @@ public class DevexSellerController {
 	@Autowired
 	private ProductVariantService productVariantService;
 
+	@ModelAttribute("isMall")
+	public Boolean getUserAndIsMall() {
+		User u = session.get("user");
+		if (u != null) {
+			return sellerService.findFirstByUsername(u.getUsername()).getMall();
+		}
+		return false; // hoặc giá trị mặc định của bạn nếu không có user
+	}
+
 	@GetMapping("/home")
 	public String getHomePage() {
 		return "seller/index";

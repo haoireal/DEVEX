@@ -25,6 +25,22 @@ public class VoucherServiceImpl implements VoucherService{
 	public Voucher save(Voucher entity) {
 		return voucherRepository.save(entity);
 	}
+	
+	
+
+	@Override
+	public void disabledVoucher(Integer id) {
+		 voucherRepository.disabledVoucher(id);
+	}
+
+
+
+	@Override
+	public List<Voucher> findVoucherOfUser(String username) {
+		return voucherRepository.findVoucherOfUser(username);
+	}
+
+
 
 	@Override
 	public List<Voucher> saveAll(List<Voucher> entities) {
@@ -85,6 +101,13 @@ public class VoucherServiceImpl implements VoucherService{
 	public void deleteAll() {
 		voucherRepository.deleteAll();
 	}
+
+	@Override
+	public List<Voucher> findAllByShop(String shopId) {
+		return voucherRepository.findAllByShop(shopId);
+	}
+	
+	
 	
 	
 

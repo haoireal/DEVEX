@@ -39,6 +39,7 @@ import com.Devex.Sevice.CartService;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.FlashSalesService;
 import com.Devex.Sevice.FlashSalesTimeService;
+import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ProductService;
@@ -89,6 +90,8 @@ public class DevexAdminRestController {
 	
 	@Autowired 
 	private FlashSalesTimeService flashSalesTimeService;
+	@Autowired
+	private FollowService followService;
 
 	@GetMapping("/userDetail")
 	public Map<String, Object> updateUser() {
@@ -177,35 +180,7 @@ public class DevexAdminRestController {
 	    }
 	}
 
-	//admin rest seller API
-	@GetMapping("/shop")
-	public Map<String, Object> getSeller(){
-		String userSeller =   session.get("userSeller");
-//		System.out.println("sssss"+userSeller);
-		Map<String , Object> sellerDetails = new HashMap<>();
-		sellerDetails.put("seller", sellerService.findFirstByUsername(userSeller));
-		
-		return sellerDetails;
-	}
 	
-	@PostMapping("/updateShop")
-    public ResponseEntity<Map<String, String>> saveSellerProfile(@RequestBody ShopDTO ShopDTO) {
-        // Lấy thông tin người dùng từ session hoặc nguồn dữ liệu khác
-        User user = session.get("user");
-        Seller selleru = sellerService.findFirstByUsername(user.getUsername());
-        String message = "Cập Nhập Thông Tin Thất Bại";   
-        // Xử lý dữ liệu và lưu vào cơ sở dữ liệu
-        if (selleru != null) {
-        	sellerService.updateSeller(ShopDTO.getShopName(), ShopDTO.getAddress(), ShopDTO.getPhoneAddress(), ShopDTO.getMall(), true, ShopDTO.getDescription(), user.getUsername());
-            message = "Cập Nhập Thông Tin Thành Công";
-        } 
-
-        // Chuẩn bị kết quả trả về dưới dạng JSON
-        Map<String, String> response = new HashMap<>();
-        response.put("message", message);
-
-        return ResponseEntity.ok(response);
-    }
 	
 	@GetMapping("/admin/revenue")
 	public Map<String, Object> getRevenueAdmin(){

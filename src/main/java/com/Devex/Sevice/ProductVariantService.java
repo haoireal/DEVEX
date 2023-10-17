@@ -60,4 +60,6 @@ public interface ProductVariantService {
 
 	ProductVariant findProductVariantByColorAndSizeAndIdProduct(String productId, String color, String size);
 
+	ProductVariant findProductVariantByProductId(String id);
+
 }

@@ -1,44 +1,187 @@
-
 const app = angular.module("app", []);
-app.controller("myController", function ($scope, $http, $window) { 
-  $scope.data = []; // khởi tạo biến $scope.fill với một mảng rỗng
+app.controller("myController", function ($scope, $http, $window) {
+  $scope.data = []; 
+  $scope.products = [];
+  var content = document.getElementById('content');
+	var contentfalse = document.getElementById('contentfalse');
 
-  $scope.fillSeller = function () {			
+  $scope.fillSeller = function () {
     $http.get('/api/shop').then(resp => {
       $scope.data = resp.data;
-      console.log($scope.data)  
-    }).catch(function(err ) {
-      console.error(err); // xử lý lỗi khi gọi API
-      // alert('Có lỗi xảy ra khi gọi API'); // hiển thị thông báo lỗi cho người dùng
+      document.querySelector('.profile-user-img').src = $scope.data.imageuser;
+    }).catch(function (err) {
+      console.error(err);
     });
-      
   };
 
-  $scope.fillSeller();// lấy dữ liệu shop
+  // info product
+  $scope.fillProducts = function () {
+    $http.get('/api/seller/product').then(resp => {
+      $scope.products = resp.data;
+    }).catch(function (err) {
+      console.error(err); 
+    });
+  };
 
+  $scope.fillSeller(); 
+  $scope.fillProducts();
 
   $scope.updateShop = function () {
-
     var data = {
       shopName: $scope.data.seller.shopName,
       address: $scope.data.seller.address,
       phoneAddress: $scope.data.seller.phoneAddress,
-      mall: $scope.data.seller.mall
-  };
-  console.log(data);
-    $http.post('/api/updateShop', data).then(response => {
-        // Xử lý kết quả sau khi cập nhật thành công
-        alert(response.data.message);
+      mall: $scope.data.seller.mall,
+      description: $scope.data.seller.description
+    };
+    console.log(data);
+    $http.put('/api/updateShop', data).then(response => {
+      // Xử lý kết quả sau khi cập nhật thành công
+        content.textContent = "Lưu thành công";
+				successbtn.click();
     }).catch(error => {
-        console.error('Có lỗi xảy ra khi cập nhật', error);
-        // Xử lý lỗi nếu có
+      console.error('Có lỗi xảy ra khi cập nhật', error);
+      // Xử lý lỗi nếu có
+      contentfalse.textContent = "Lưu thất bại";
+			failsebtn.click();
     });
   };
 
+  // chuyển trang
+  $scope.productDetail = function (id) {
+    $window.location.href = '/details/' + id;
+  };
+
+  // chuyển trang
+  $scope.editProduct = function (id) {
+    $window.location.href = '/seller/product/edit/' + id;
+  };
+
+  $scope.openImageUploader = function () {
+    // Tạo một input[type="file"] ẩn để người dùng chọn tệp hình ảnh.
+    var fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+
+    fileInput.addEventListener('change', function (event) {
+        var file = event.target.files[0];
+        if (file) {
+            var formData = new FormData();
+            formData.append('file', file);
+
+            $http.post('/api/updateimageprofile', formData, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).then(function (response) {
+                // Xử lý thành công nếu cần
+                document.getElementById('profile-image').src = URL.createObjectURL(file);
+                console.log('Hình ảnh đã được tải lên thành công');
+            }, function (error) {
+                // Xử lý lỗi nếu cần
+                console.error('Lỗi khi tải lên hình ảnh: ' + error.status);
+            });
+        }
+    });
+
+    // Tự động kích hoạt sự kiện click cho input[type="file"] ẩn.
+    fileInput.click();
+};
 
 });
+// END ANGULARJS
 
+// History
+function fillHistory() {
+  fetch('/api/seller/history')
+    .then(response => response.json())
+    .then(data => {
+      var listHistory = data;
+      var historiesHTML = '';
+      listHistory.forEach(history => {
+        var nowHistory = new Date();
+        var createdDate = new Date(history.createdDay);
+        var minutesHistory = Math.floor(((nowHistory.getTime() - new Date(history.createdDay).getTime()) / 1000) / 60);
+        var hoursHistory = Math.floor(minutesHistory / 60);
+        var daysHistory = Math.floor(hoursHistory / 24);
+        var day = createdDate.getDate();
+        var month = createdDate.getMonth() + 1;
+        var year = createdDate.getFullYear();
+        var hours = createdDate.getHours();
+        var minutes = createdDate.getMinutes();
+        var historyHTML = '';
+        if (minutesHistory <= 60) {
+          historyHTML = `
+            <div class="time-label">
+              <span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+            </div>
+            <div>
+              <div class="timeline-item">
+                <span class="time"><i class="far fa-clock"></i> ${minutesHistory} minutes ago</span>
+                <h3 class="timeline-header border-0">${history.content}</h3>
+              </div>
+            </div>
+          `;
+        } else if (hoursHistory <= 24) {
+          historyHTML = `
+            <div class="time-label">
+              <span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+            </div>
+            <div>
+              <div class="timeline-item">
+                <span class="time"><i class="far fa-clock"></i> ${hoursHistory} hours ago</span>
+                <h3 class="timeline-header border-0">${history.content}</h3>
+              </div>
+            </div>
+          `;
+        } else {
+          historyHTML = `
+            <div class="time-label">
+              <span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+            </div>
+            <div>
+              <div class="timeline-item">
+                <span class="time"><i class="far fa-clock"></i> ${daysHistory} days ago</span>
+                <h3 class="timeline-header border-0">${history.content}</h3>
+              </div>
+            </div>
+          `;
+        }
+        historiesHTML += historyHTML;
+      });
+      historiesHTML += '<div><i class="far fa-clock bg-gray"></i></div>';
+      document.getElementById('history').innerHTML = historiesHTML;
+    });
+}
 
+fillHistory();
 
+// model
+document.addEventListener('DOMContentLoaded', function () {
+  var successbtn = document.getElementById('successbtn');
+  var failsebtn = document.getElementById('failsebtn');
+  var successModal = document.getElementById('successModal');
+  var failseModal = document.getElementById('failseModal');
+  var closeButtons = document.getElementsByClassName('close');
 
+  successbtn.addEventListener('click', function () {
+    successModal.style.display = 'block';
+  });
 
+  failsebtn.addEventListener('click', function () {
+    failseModal.style.display = 'block';
+  });
+
+  for (var i = 0; i < closeButtons.length; i++) {
+    closeButtons[i].addEventListener('click', function () {
+      successModal.style.display = 'none';
+      failseModal.style.display = 'none';
+    });
+  }
+
+  window.addEventListener('click', function (event) {
+    if (event.target === successModal || event.target === failseModal) {
+      successModal.style.display = 'none';
+      failseModal.style.display = 'none';
+    }
+  });
+});

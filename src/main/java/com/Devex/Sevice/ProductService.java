@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 
+import com.Devex.DTO.infoProductDTO;
 import com.Devex.Entity.Product;
 
 import jakarta.transaction.Transactional;
@@ -79,5 +80,6 @@ public interface ProductService {
 //	List<Product> findByPlaceOfSale(String keyWordName, String keyWordAddress);
 
 	
+	int getCountProductSellBySellerUsername(String username, int statusorderid, int statusorderdetailsid);
 
 }

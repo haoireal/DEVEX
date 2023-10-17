@@ -38,4 +38,10 @@ public interface VoucherService {
 
 	Voucher save(Voucher entity);
 
+	List<Voucher> findAllByShop(String shopId);
+
+	void disabledVoucher(Integer id);
+
+	List<Voucher> findVoucherOfUser(String username);
+
 }

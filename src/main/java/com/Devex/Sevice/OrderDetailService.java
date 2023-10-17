@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.Entity.OrderDetails;
 
 public interface OrderDetailService {
@@ -22,8 +21,6 @@ public interface OrderDetailService {
 	void deleteById(String id);
 
 	long count();
-
-	Optional<OrderDetails> findById(String id);
 
 	List<OrderDetails> findAllById(Iterable<String> ids);
 
@@ -58,4 +55,6 @@ public interface OrderDetailService {
 	List<OrderDetails> findOrderByUsernameAndStatusID(String customerID, int statusID);
 
 	List<OrderDetails> findOrdersByCustomerID(String customerID);
+
+	Optional<OrderDetails> findById(String id);
 }

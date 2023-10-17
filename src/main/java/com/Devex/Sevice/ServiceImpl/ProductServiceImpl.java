@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.Devex.DTO.infoProductDTO;
 import com.Devex.Entity.Product;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.ProductService;
@@ -176,9 +177,8 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findProductsByFlashSaleTimeAndStatus(flashSaleTimeId, flashSaleStatus);
 	}
 
-	
-
-
-	
+	public int getCountProductSellBySellerUsername(String username, int statusorderid, int statusorderdetailsid) {
+		return productRepository.getCountProductSellBySellerUsername(username, statusorderid, statusorderdetailsid);
+	}
 
 }

@@ -1,29 +1,31 @@
 <!-- Navbar -->
-<div
-  th:fragment="userHeaderHomePageFragment"
-  ng-app="app"
-  ng-controller="cart-ctrl"
->
-  <div class="container-fluid header-inf bg-white">
-    <div class="container">
-      <div class="row">
-        <div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
-          <nav
-            class="navbar float-end navbar-expand-lg navbar-light"
-            style="height: 35px"
-          >
-            <div
-              class="collapse navbar-collapse text-end"
-              id="navbarNavDropdown"
-            >
-              <ul class="text-end navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Hỗ trợ dịch vụ</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/seller/home">Bán hàng</a>
-                </li>
-
+<div th:fragment="userHeaderHomePageFragment" ng-app="app" ng-controller="cart-ctrl">
+	<div class="container-fluid header-inf bg-white">
+		<div class="container">
+			<div class="row">
+				<div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
+					<nav class="navbar float-end navbar-expand-lg navbar-light" style="height: 35px">
+						<div class="collapse navbar-collapse text-end" id="navbarNavDropdown">
+							<ul class="text-end navbar-nav ml-auto">
+								<li class="nav-item">
+									<a class="nav-link" href="#">Hỗ trợ dịch vụ</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/seller/home">Bán hàng</a>
+								</li>
+								
+								<li class="nav-item">
+									<a class="nav-link" href="/history">Sản phẩm đã xem</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">Kiếu nại</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/order">Tra cứu đơn hàng</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">Tuyển dụng</a>
+								</li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Sản phẩm đã xem</a>
                 </li>
@@ -175,88 +177,132 @@
           </li>
         </ul>
       </div>
-
-      <!--banners advertisement ( slide show)-->
-      <div class="col-12 col-lg-10 mt-4 slideShow">
-        <div class="image-slider">
-          <div class="image-item">
-            <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/25/1200x382-zfoldzflip5-250723.jpg"
-                alt
-              />
-            </div>
-          </div>
-          <div class="image-item">
-            <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/02/sua1reno-10-1200x375-26072023.jpg"
-                alt
-              />
-            </div>
-          </div>
-          <div class="image-item">
-            <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/01/web-1200x382.jpg"
-                alt
-              />
-            </div>
-          </div>
-          <div class="image-item">
-            <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/04/realme-11-1200-png.png"
-                alt
-              />
-            </div>
-          </div>
-          <div class="image-item">
-            <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/03/1200x382.jpg"
-                alt
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+			<!--banners advertisement ( slide show)-->
+			<div class="col-12 col-lg-10 mt-4 slideShow">
+				<div class="image-slider">
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/25/1200x382-zfoldzflip5-250723.jpg"
+								alt />
+						</div>
+					</div>
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/02/sua1reno-10-1200x375-26072023.jpg"
+								alt />
+						</div>
+					</div>
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/01/web-1200x382.jpg" alt />
+						</div>
+					</div>
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/04/realme-11-1200-png.png"
+								alt />
+						</div>
+					</div>
+					<div class="image-item">
+						<div class="image">
+							<img class="img-fluid"
+								src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/03/1200x382.jpg" alt />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<style>
+		.lds-ellipsis {
+			display: inline-block;
+			position: relative;
+			width: 80px;
+			height: 80px;
+		}
+		.lds-ellipsis div {
+			position: absolute;
+			top: 33px;
+			width: 13px;
+			height: 13px;
+			border-radius: 50%;
+			background: #fff;
+			animation-timing-function: cubic-bezier(0, 1, 1, 0);
+		}
+		.lds-ellipsis div:nth-child(1) {
+			left: 8px;
+			animation: lds-ellipsis1 0.6s infinite;
+		}
+		.lds-ellipsis div:nth-child(2) {
+			left: 8px;
+			animation: lds-ellipsis2 0.6s infinite;
+		}
+		.lds-ellipsis div:nth-child(3) {
+			left: 32px;
+			animation: lds-ellipsis2 0.6s infinite;
+		}
+		.lds-ellipsis div:nth-child(4) {
+			left: 56px;
+			animation: lds-ellipsis3 0.6s infinite;
+		}
+		@keyframes lds-ellipsis1 {
+			0% {
+				transform: scale(0);
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+		@keyframes lds-ellipsis3 {
+			0% {
+				transform: scale(1);
+			}
+			100% {
+				transform: scale(0);
+			}
+		}
+		@keyframes lds-ellipsis2 {
+			0% {
+				transform: translate(0, 0);
+			}
+			100% {
+				transform: translate(24px, 0);
+			}
+		}
+	</style>
 </div>
 <!-- /.navbar -->
 <header th:fragment="userHeaderFragment" ng-app="app" ng-controller="cart-ctrl">
-  <div class="container-fluid header-inf">
-    <div class="container">
-      <div class="row-12">
-        <div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
-          <nav
-            class="navbar float-end navbar-expand-lg navbar-light"
-            style="height: 35px"
-          >
-            <div
-              class="collapse navbar-collapse text-end"
-              id="navbarNavDropdown"
-            >
-              <ul
-                class="text-end navbar-nav ml-auto"
-                style="display: flex; justify-content: center"
-              >
-                <li class="nav-item">
-                  <a style="color: #fff" class="nav-link" href="#"
-                    >Hỗ trợ dịch vụ</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a style="color: #fff" class="nav-link" href="/seller/home"
-                    >Bán hàng</a
-                  >
-                </li>
+	<div class="container-fluid header-inf">
+		<div class="container">
+			<div class="row-12">
+				<div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
+					<nav class="navbar float-end navbar-expand-lg navbar-light" style="height: 35px">
+						<div class="collapse navbar-collapse text-end" id="navbarNavDropdown">
+							<ul class="text-end navbar-nav ml-auto" style="display: flex; justify-content: center">
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="#">Hỗ trợ dịch vụ</a>
+								</li>
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="/seller/home" >Bán hàng</a>
+								</li>
+								
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="/history">Sản phẩm đã xem</a>
+								</li>
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="#">Kiếu nại</a>
+								</li>
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="/order">Tra cứu đơn hàng</a>
+								</li>
+								<li class="nav-item">
+									<a style="color: #fff" class="nav-link" href="#">Tuyển dụng</a>
+								</li>
 
                 <li class="nav-item">
                   <a style="color: #fff" class="nav-link" href="#"
@@ -389,14 +435,68 @@
                   color: white;
                   position: absolute;
                   top: 2rem;
-                  text-decoration: none;
-                "
-                th:text="${session.user.username}"
-              ></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                  text-decoration: none;" th:text="${session.user.username}"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<style>
+		.lds-ellipsis {
+			display: inline-block;
+			position: relative;
+			width: 80px;
+			height: 80px;
+		}
+		.lds-ellipsis div {
+			position: absolute;
+			top: 33px;
+			width: 13px;
+			height: 13px;
+			border-radius: 50%;
+			background: #2550b9ab;
+			animation-timing-function: cubic-bezier(0, 1, 1, 0);
+		}
+		.lds-ellipsis div:nth-child(1) {
+			left: 8px;
+			animation: lds-ellipsis1 0.6s infinite;
+		}
+		.lds-ellipsis div:nth-child(2) {
+			left: 8px;
+			animation: lds-ellipsis2 0.6s infinite;
+		}
+		.lds-ellipsis div:nth-child(3) {
+			left: 32px;
+			animation: lds-ellipsis2 0.6s infinite;
+		}
+		.lds-ellipsis div:nth-child(4) {
+			left: 56px;
+			animation: lds-ellipsis3 0.6s infinite;
+		}
+		@keyframes lds-ellipsis1 {
+			0% {
+				transform: scale(0);
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+		@keyframes lds-ellipsis3 {
+			0% {
+				transform: scale(1);
+			}
+			100% {
+				transform: scale(0);
+			}
+		}
+		@keyframes lds-ellipsis2 {
+			0% {
+				transform: translate(0, 0);
+			}
+			100% {
+				transform: translate(24px, 0);
+			}
+		}
+	</style>
 </header>

@@ -2,25 +2,32 @@ package com.Devex.Controller.api;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import com.Devex.DTO.SizeColorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.Devex.DTO.CartDetailDTo;
+import com.Devex.DTO.RequestDataDTO;
+import com.Devex.DTO.SizeColorDTO;
 import com.Devex.Entity.CartDetail;
 import com.Devex.Entity.Customer;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
-import com.Devex.Repository.CartDetailRespository;
+import com.Devex.Entity.Voucher;
 import com.Devex.Sevice.CartDetailService;
 import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.OrderDetailService;
@@ -144,8 +151,12 @@ public class CartAPIController {
 	}
 
 	@PostMapping("/rest/cart/order")
-	public ResponseEntity<Void> paymentOrder(@RequestBody List<CartDetailDTo> listOrder) {
+	public ResponseEntity<Void> paymentOrder(@RequestBody RequestDataDTO requestData) {
+		
+		List<CartDetailDTo> listOrder = requestData.getItemsOrderSession();
+		List<Voucher> listVoucher = requestData.getVoucherApply();
 		sessionService.set("listItemOrder", listOrder);
+		sessionService.set("listVoucherApply", listVoucher);
 		return ResponseEntity.ok().build();
 	}
 

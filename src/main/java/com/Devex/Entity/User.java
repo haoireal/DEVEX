@@ -65,4 +65,8 @@ public class User implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<History> listHistory;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private List<Comment> comments;
 }

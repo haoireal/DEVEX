@@ -7,6 +7,7 @@
     <div th:replace="~{flagment/account/head :: headFragment}"></div>
     <!-- Theme style -->
     <link rel="stylesheet" href="/css/user/userIndex.css"/>
+    <title>Tra cứu đơn hàng</title>
     </script>
     <script th:src="@{/js/cart-ctrl.js}"></script>
 </head>
@@ -134,7 +135,73 @@
     .error-actions .btn {
         margin-right: 10px;
     }
+    .comment-box {
+        padding: 5px
+    }
 
+    .comment-area textarea {
+        resize: none;
+        border: 1px solid #ff0000
+    }
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #ffffff;
+        outline: 0;
+        box-shadow: 0 0 0 1px rgb(255, 0, 0) !important
+    }
+
+    .send {
+        color: #fff;
+        background-color: #ff0000;
+        border-color: #ff0000
+    }
+
+    .send:hover {
+        color: #fff;
+        background-color: #f50202;
+        border-color: #f50202
+    }
+
+    .rating {
+        display: inline-flex;
+        margin-top: -10px;
+        flex-direction: row-reverse;
+
+
+    }
+
+    .rating>input {
+        display: none
+    }
+
+    .rating>label {
+        position: relative;
+        width: 28px;
+        font-size: 35px;
+        color: #ff0000;
+        cursor: pointer;
+    }
+
+    .rating>label::before {
+        content: "\2605";
+        position: absolute;
+        opacity: 0
+    }
+
+    .rating>label:hover:before,
+    .rating>label:hover~label:before {
+        opacity: 1 !important
+    }
+
+    .rating>input:checked~label:before {
+        opacity: 1
+    }
+
+    .rating:hover>input:checked~label:before {
+        opacity: 0.4
+    }
 </style>
 
 <body style="display: flex; flex-direction: column; min-height: 100vh;">
@@ -167,17 +234,17 @@
                              style="box-shadow: none;">
                             <div class="card-header p-2 bg-white  ">
                                 <ul class="nav nav-pills d-flex justify-content-between">
-                                    <li class="nav-item"><a class="nav-link active"
+                                    <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" aria-controls="all-order" aria-selected="true"
                                                             href="#all-order" data-toggle="tab">Tất cả</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#paying"
+                                    <li class="nav-item" role="presentation"><a class="nav-link" href="#paying" role="tab" aria-controls="paying" aria-selected="true"
                                                             data-toggle="tab">Chờ thanh toán/Xác nhận</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#shiping"
+                                    <li class="nav-item" role="presentation"><a class="nav-link" href="#shiping" role="tab" aria-controls="shiping" aria-selected="true"
                                                             data-toggle="tab">Vận chuyển/Đang giao</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#success"
+                                    <li class="nav-item" role="presentation"><a class="nav-link" href="#success" role="tab" aria-controls="success" aria-selected="true"
                                                             data-toggle="tab">Hoàn thành</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#cancel"
+                                    <li class="nav-item" role="presentation"><a class="nav-link" href="#cancel" role="tab" aria-controls="cancel" aria-selected="true"
                                                             data-toggle="tab">Đã hủy</a></li>
-                                    <li class="nav-item"><a class="nav-link"
+                                    <li class="nav-item" role="presentation"><a class="nav-link" role="tab" aria-controls="return-refund" aria-selected="true"
                                                             href="#return-refund" data-toggle="tab">Trả hàng/Hoàn
                                         tiền</a></li>
                                 </ul>
@@ -187,7 +254,7 @@
                                  style="background-color: transparent;">
                                 <div class="tab-content ">
                                     <!-- /.Toàn bộ order -->
-                                    <div class="tab-pane active bg-transparent" id="all-order">
+                                    <div class="tab-pane active bg-transparent" role="tabpanel" aria-labelledby="all-order" id="all-order">
                                         <div th:if="${allOrder == null or allOrder.size() == 0}">
                                             <div class="col-md-12" style="min-height: 47vh;">
                                                 <div class="error-template">
@@ -274,15 +341,16 @@
                                                                             </p>
                                                                             <div
                                                                                     class="bg-secondary p-1 mb-2 w-100 d-flex justify-content-center">
-                                                                                <div class="m-0 px-3"
-                                                                                     ng-if="item.size != ''">
+                                                                                <div class="m-0 px-3"  th:if="${orderDetail.productVariant.size != ''}"
+                                                                                    >
                                                                                     Size: <span
-                                                                                        class="text-white ng-binding">XL
+                                                                                        class="text-white ng-binding"   th:text="${orderDetail.productVariant.size}">XL
 																						</span>
                                                                                 </div>
-                                                                                <div class="m-0 px-3">
+                                                                                <div class="m-0 px-3" th:if="${orderDetail.productVariant.color != ''}"
+                                                                                >
                                                                                     Color: <span
-                                                                                        class="text-white ng-binding">Hồng</span>
+                                                                                        class="text-white ng-binding" th:text="${orderDetail.productVariant.color}">Hồng</span>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
@@ -332,14 +400,17 @@
                                                                 </p>
                                                             </div>
                                                             <div class="btn-group col-6">
-                                                                <button class="btn btn-primary start">
+                                                                <button class="btn btn-primary start" th:if="${orderDetail.status.id == 1004 or orderDetail.status.id == 1003}">
                                                                     <span>Đã nhận hàng</span>
                                                                 </button>
-                                                                <button data-dz-remove class="btn btn-warning cancel">
+                                                                <button data-dz-remove class="btn btn-warning cancel" th:if="${orderDetail.status.id == 1005 or orderDetail.status.id == 1006 or orderDetail.status.id == 1009}">
                                                                     <span>Đặt lại</span>
                                                                 </button>
-                                                                <button data-dz-remove class="btn btn-danger delete">
+                                                                <button data-dz-remove class="btn btn-danger delete" th:if="${orderDetail.status.id == 1001 or orderDetail.status.id == 1002 or orderDetail.status.id == 1009}">
                                                                     <span>Hủy đơn</span>
+                                                                </button>
+                                                                <button data-dz-remove class="btn btn-danger delete" th:if="${orderDetail.status.id == 1005 or orderDetail.status.id == 1006}">
+                                                                    <span>Trả hàng/Hoàn tiền</span>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -349,7 +420,7 @@
                                         </div>
                                     </div>
                                     <!-- /.Đơn hàng chờ thanh toán -->
-                                    <div class="tab-pane active bg-transparent" id="paying">
+                                    <div class="tab-pane bg-transparent" role="tabpanel" aria-labelledby="paying" id="paying">
                                         <div th:if="${payingOrder == null or payingOrder.size() == 0}">
                                             <div class="col-md-12" style="min-height: 47vh;">
                                                 <div class="error-template">
@@ -510,7 +581,7 @@
                                         </div>
                                     </div>
                                     <!-- /.Đơn hàng đang vận chuyển -->
-                                    <div class="tab-pane" id="shiping">
+                                    <div class="tab-pane" role="tabpanel" aria-labelledby="shiping" id="shiping">
                                         <div th:if="${shipingOrder == null or shipingOrder.size() == 0}">
                                             <div class="col-md-12" style="min-height: 47vh;">
                                                 <div class="error-template">
@@ -671,7 +742,7 @@
                                         </div>
                                     </div>
                                     <!-- /.Đơn hàng thành công -->
-                                    <div class="tab-pane" id="success">
+                                    <div class="tab-pane" role="tabpanel" aria-labelledby="success" id="success">
                                         <div th:if="${successOrder == null or successOrder.size() == 0}">
                                             <div class="col-md-12" style="min-height: 47vh;">
                                                 <div class="error-template">
@@ -815,14 +886,38 @@
                                                                 </p>
                                                             </div>
                                                             <div class="btn-group col-6">
-                                                                <button class="btn btn-primary start">
-                                                                    <span>Đã nhận hàng</span>
+                                                                <button th:if="${orderDetail.status.id == 1006 && orderDetail.isComment}" class="btn btn-primary start" data-toggle="modal" th:data-target="'#form-' + ${orderDetail.id}" type="button">
+                                                                    <span>Đánh giá sản phẩm</span>
                                                                 </button>
+
+                                                                <form method="post" th:action="@{/order/addcomment/__${orderDetail.id}__}" class="modal fade" th:id="'form-' + ${orderDetail.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="card-body text-center">
+                                                                                <div class="comment-box text-center">
+                                                                                    <h4>Đánh giá sản phẩm</h4>
+                                                                                    <div class="rating">
+                                                                                        <input type="radio" name="rating" value="5"  th:id="'5-' + ${orderDetail.id}" checked><label  th:for="'5-' + ${orderDetail.id}" >☆</label>
+                                                                                        <input type="radio" name="rating" value="4"  th:id="'4-' + ${orderDetail.id}"><label  th:for="'4-' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="3"  th:id="'3-' + ${orderDetail.id}"><label  th:for="'3-' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="2"  th:id="'2-' + ${orderDetail.id}"><label  th:for="'2-' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="1"  th:id="'1-' + ${orderDetail.id}"><label  th:for="'1-' + ${orderDetail.id}">☆</label>
+                                                                                    </div>
+                                                                                    <div class="comment-area">
+                                                                                        <textarea class="form-control" name="content" placeholder="what is your view?" rows="4"></textarea>
+                                                                                    </div>
+
+                                                                                    <div class="text-center mt-4">
+                                                                                        <button class="btn btn-success send px-5">Đánh giá<i class="fa fa-long-arrow-right ml-1"></i></button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+
                                                                 <button data-dz-remove class="btn btn-warning cancel">
                                                                     <span>Đặt lại</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-danger delete">
-                                                                    <span>Hủy đơn</span>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -832,7 +927,7 @@
                                         </div>
                                     </div>
                                     <!-- /.Đơn hàng đã huỷ -->
-                                    <div class="tab-pane" id="cancel">
+                                    <div class="tab-pane" role="tabpanel" aria-labelledby="cancel" id="cancel">
                                         <div th:if="${cancelOrder == null or cancelOrder.size() == 0}">
                                             <div class="col-md-12" style="min-height: 47vh;">
                                                 <div class="error-template">
@@ -993,7 +1088,7 @@
                                         </div>
                                     </div>
                                     <!-- /.Đơn hàng trả hàng / hoàn tiền -->
-                                    <div class="tab-pane" id="return-refund">
+                                    <div class="tab-pane" role="tabpanel" aria-labelledby="return-refund" id="return-refund">
                                         <div th:if="${refundOrder == null or refundOrder.size() == 0}">
                                             <div class="col-md-12" style="min-height: 47vh;">
                                                 <div class="error-template">
@@ -1213,7 +1308,7 @@
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
         crossorigin="anonymous"></script>
 <!-- 	<div th:replace="~{flagment/account/footLink :: footLinkFragment}"></div> -->
-<script src=" /admin/dist/js/user/userIndex.js"></script>
+<script src="/js/userIndex.js"></script>
 </body>
 
 </html>
