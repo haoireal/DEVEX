@@ -120,6 +120,8 @@ public class DevexSellerRestController {
 
     @Autowired
     private FlashSalesService flashSalesService;
+    
+    @Autowired
     private NotificationsService notificationsService;
 
     @Value("${myapp.file-storage-path}")
