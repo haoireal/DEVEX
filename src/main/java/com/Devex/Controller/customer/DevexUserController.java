@@ -1,5 +1,8 @@
 package com.Devex.Controller.customer;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,12 +30,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Devex.Entity.Category;
 import com.Devex.Entity.CategoryDetails;
+import com.Devex.Entity.FlashSale;
+import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
+import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.RecommendationSystem;
@@ -65,6 +71,9 @@ public class DevexUserController {
 
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	FlashSalesTimeService flashSalesTimeService;
 
 	private List<Product> uniqueProductList = new ArrayList<>();
 	private List<String> listCategory = new ArrayList<>();
@@ -72,13 +81,33 @@ public class DevexUserController {
 	private List<Product> temPoraryList = new ArrayList<>();
 	
 	@GetMapping({ "/home", "/*" })
-	public String getHomePage(Model model) {
+	public String getHomePage(Model model) throws Exception{
 //		uniqueProductList.clear();
 		User user = new User();
 		List<Product> listProducts = new ArrayList<>();
 
 		Set<Product> uniqueProducts = new HashSet<>();
 		user = sessionService.get("user");
+		
+		// Đối tượng LocalDate
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+	        // Chuyển LocalDate thành chuỗi	          
+		int idFlashSaleTime = 0;
+		try {
+			FlashSaleTime flashSaleTime = flashSalesTimeService.findFlashSaleTimesByTimeNow();
+			 idFlashSaleTime = flashSaleTime.getId();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			
+		}
+		List<Product> listProductFlashSale = productService.findProductsByFlashSaleTimeAndStatus(idFlashSaleTime, true);
+//		listProductFlashSale.forEach(fls ->{
+//			System.out.println("name " + fls.getProductVariants().get(0).getListFlashSale().get(0).getDiscount());
+//		});
+		
 		// Giỏ hàng
 		if (sessionService.get("user") != null) {
 
@@ -102,7 +131,10 @@ public class DevexUserController {
 		uniqueProductList = new ArrayList<>(uniqueProducts);
 		Collections.shuffle(uniqueProductList);
 		List<Category> listCategoryProducts = categoryService.findAll();
+		
+		
 
+		model.addAttribute("listProductFlashSale", listProductFlashSale);
 		model.addAttribute("category", listCategoryProducts);
 		model.addAttribute("products", uniqueProductList);
 		return "user/index";

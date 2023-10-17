@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -19,14 +20,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Devex.DTO.DateDTO;
+import com.Devex.DTO.FlashSaleDTO;
+import com.Devex.DTO.FlashSaleTimeDTO;
+import com.Devex.DTO.ProductDTO;
 import com.Devex.DTO.StatisticalOrderMonthPieDTO;
 import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.Entity.Category;
 import com.Devex.Entity.CategoryDetails;
+import com.Devex.Entity.FlashSale;
+import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.ImageProduct;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.Product;
@@ -36,6 +44,8 @@ import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
+import com.Devex.Sevice.FlashSalesService;
+import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.ImageProductService;
 import com.Devex.Sevice.OrderDetailService;
@@ -91,6 +101,12 @@ public class DevexSellerRestController {
 	
 	@Autowired
 	private OrderDetailService detailService;
+	
+	@Autowired
+	private FlashSalesTimeService flashSalesTimeService;
+	
+	@Autowired
+	private FlashSalesService flashSalesService;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -435,5 +451,73 @@ public class DevexSellerRestController {
 		}
 		return listOrder;
 	}
+	
+	@PostMapping("/api/flashTime")
+	public List<FlashSaleTime> getTime (@RequestBody DateDTO dateDTO){
+		List<FlashSaleTime> list =  flashSalesTimeService.findFlashSaleTimesByDate(dateDTO.getYear(), dateDTO.getMonth(), dateDTO.getDay());
+		return list;
+	}
+	
+	@GetMapping("/api/sellerProduct")
+	public List<ProductDTO> getSellerProduct(){
+		User u = session.get("user");
+		String user = session.get("userSeller");
+//		System.out.println("ngu"+user);
+//		ProductDTO dto = new ProductDTO();
+		List<ProductDTO> productDTOList = new ArrayList<>();
+		List<Product> list = productService.findProductBySellerUsername(user);
+		list.forEach(prDTO -> {
+			 	ProductDTO productDTO = new ProductDTO();
+			    
+			    // Map the attributes from the Product to ProductDTO
+			    productDTO.setId(prDTO.getId());
+			    productDTO.setName(prDTO.getName());
+			    productDTO.setDescription(prDTO.getDescription());
+			    productDTO.setActive(prDTO.getActive());
+			    productDTO.setIsdelete(prDTO.getIsdelete());
+			    productDTO.setSoldCount(prDTO.getSoldCount());
+			    // Map other attributes
+			    
+			    // For related entities, you can map them similarly
+			    productDTO.setSellerProduct(prDTO.getSellerProduct());
+			    productDTO.setCategoryDetails(prDTO.getCategoryDetails());
+			    productDTO.setProductbrand(prDTO.getProductbrand());
+			    productDTO.setImageProducts(prDTO.getImageProducts());
+			    productDTO.setProductVariants(prDTO.getProductVariants());
+			    // Map other related entities
+			    
+			    productDTOList.add(productDTO);
+			});
+	
+		return productDTOList;
+	}
+	
+	
+	@PostMapping("/api/setFlashSale")
+	public void setFlashSale (@RequestBody List<FlashSaleDTO> flashSaleDTO ) throws Exception{
+//		System.out.println("11 " + flashSaleDTO);
+		List<FlashSaleDTO> list = flashSaleDTO;// 3
+		System.out.println("size" + list.size());
+		
+		list.forEach(fl -> {
+				int idProduct = 0;
+				try {
+					FlashSale flashSale = flashSalesService.findByProductVariantId(fl.getProductVariantId());
+					idProduct = flashSale.getProductVariant().getId();
+				} catch (Exception e) {
+					// TODO: handle exception
+					idProduct = 0;
+				}
 
+				if( fl.getProductVariantId() != idProduct) {
+					flashSalesService.insertFlashSale(Double.parseDouble(fl.getDiscount()), Integer.parseInt(fl.getAmountSell()) , Integer.parseInt(fl.getAmountOrder()), fl.getStatus(), fl.getFashSaleTimeId(),fl.getProductVariantId());
+				
+				}else {
+					flashSalesService.updatetFlashSale(Double.parseDouble(fl.getDiscount()), Integer.parseInt(fl.getAmountSell()) , Integer.parseInt(fl.getAmountOrder()), fl.getStatus(), fl.getFashSaleTimeId(),fl.getProductVariantId());
+				}			
+		 });
+		
+		
+		
+	}
 }

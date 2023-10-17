@@ -74,6 +74,8 @@ public interface ProductService {
 
 	int getCountProductBySellerUsername(String username);
 
+	List<Product> findProductsByFlashSaleTimeAndStatus(int flashSaleTimeId, Boolean flashSaleStatus);
+
 //	List<Product> findByPlaceOfSale(String keyWordName, String keyWordAddress);
 
 	

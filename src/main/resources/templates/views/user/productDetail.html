@@ -604,10 +604,9 @@
 								<div class="hot-sale text-center p-1"
 									th:if="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
 									Giảm
-									<span
-										th:text="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
+									<span th:text="${#numbers.formatDecimal(100 - ((shopProduct.productVariants[0].priceSale / shopProduct.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
 									
-									</div>
+								</div>
 									<img 
  									th:src="@{|/img/product/${shopProduct.sellerProduct.username}/${shopProduct.id}/${shopProduct.imageProducts[0].name}|}"
 									class="img-fluid w-100 p-0"
@@ -621,21 +620,21 @@
 
 										<div id="price-box" >
 											<div class="price_suggest col-6  m-0" >
-											<span style="color: #ff0821bb">₫</span><strong
-												class="fs-10"
+												<span style="color: #ff0821bb">₫</span><strong
+													class="fs-10"
 
-												th:text="${#numbers.formatDecimal(shopProduct.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
-												style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
+													th:text="${#numbers.formatDecimal(shopProduct.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
+													style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
+											</div>
+
+											<div class=" col-6 ">
+												<p class="text-info text-end buy m-0">
+													đã bán <i class="text-info m-0"
+														th:text="${shopProduct.soldCount}"></i>
+
+												</p>
+											</div>
 										</div>
-
-										<div class=" col-6 ">
-											<p class="text-info text-end buy m-0">
-												đã bán <i class="text-info m-0"
-													th:text="${shopProduct.soldCount}"></i>
-
-											</p>
-										</div>
-
 									</div>
 
 								</div>
@@ -668,25 +667,26 @@
 									Giảm
 									<span
 										th:text="${#numbers.formatDecimal(100 - ((products.productVariants[0].priceSale / products.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')}"></span> %
+								</div>
+								<img onload="lazy"
+								th:src="@{|/img/product/${products.sellerProduct.username}/${products.id}/${products.imageProducts[0].name}|}"
+								class="img-fluid w-100 p-0"
+								th:alt="${products.name}" />
+								<div class="card-body" style="padding: 5px">
+									<div
+										class="card-title tensp text-left"
+										style="height: 40px"
+										th:text="${products.name}"
+										th:title="${products.name}">
 									</div>
-									<img onload="lazy"
-									th:src="@{|/img/product/${products.sellerProduct.username}/${products.id}/${products.imageProducts[0].name}|}"
-									class="img-fluid w-100 p-0"
-									th:alt="${products.name}" />
-									<div class="card-body" style="padding: 5px">
-										<div
-											class="card-title tensp text-left"
-											style="height: 40px"
-											th:text="${products.name}"
-											th:title="${products.name}"></div>
 
-										<div id="price-box" >
-											<div class="price_suggest col-6  m-0" >
-											<span style="color: #ff0821bb">₫</span><strong
-												class="fs-10"
+									<div id="price-box" >
+										<div class="price_suggest col-6  m-0" >
+										<span style="color: #ff0821bb">₫</span><strong
+											class="fs-10"
 
-												th:text="${#numbers.formatDecimal(products.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
-												style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
+											th:text="${#numbers.formatDecimal(products.productVariants[0].priceSale, 0 , 'POINT', 0, 'COMMA')}"
+											style="color: #ff0821bb; font-weight: 600">8,490,000</strong>
 										</div>
 
 										<div class=" col-6 ">
@@ -697,8 +697,8 @@
 										</div>
 
 									</div>
-
 								</div>
+								
 							</div>
 
 						</a>

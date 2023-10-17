@@ -1,6 +1,7 @@
 package com.Devex.Entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "FlashSale_Time")
+@Table(name = "Flashsale_Time")
 public class FlashSaleTime implements Serializable{
 
 	/**
@@ -34,9 +35,9 @@ public class FlashSaleTime implements Serializable{
 	@Column(name = "ID", updatable = false)
 	private int id;
 	@Column(name = "Firsttime")
-	private Date firstTime;
+	private LocalDateTime  firstTime;
 	@Column(name = "Lasttime")
-	private Date lastTime;
+	private LocalDateTime  lastTime;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "flashSaleTime")
