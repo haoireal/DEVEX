@@ -90,6 +90,7 @@ public class VoucherAdminController {
 		voucher.setActive(true);
 		voucher.setCreator(user);
 		voucher.setBanner("abc.webp");
+		voucher.setMinPrice(Double.parseDouble(minPrice));
 
 		// Sử lí loại giảm giá
 		if (type.equals("devex")) {
