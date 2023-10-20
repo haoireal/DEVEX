@@ -78,6 +78,16 @@ public class VoucherAPIController {
 		}
 	}
 	
+	@GetMapping("/my-saved")
+	public ResponseEntity<List<Voucher>> getMyVoucher() {
+		User user = session.get("user");
+		List<Voucher> list = voucherService.findVoucherOfUser(user.getUsername());
+		if (list != null) {
+			return ResponseEntity.ok(list);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 	
 	
 	@PostMapping("/save")

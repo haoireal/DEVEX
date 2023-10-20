@@ -177,7 +177,12 @@
       <div id="voucher" class="row pb-2">
         <div class="col-4">Chọn Voucher Shop <i class="bi bi-ticket-perforated"></i></div>
         <div class="col-4 text-secondary">Chưa có Voucher</div>
-        <a class="col-4 ">Chọn Voucher</a>
+        <a
+                href="#"
+                class="col-4"
+                ng-click="cart.openModalVoucherShop(cart.shopGroupsOrder[idShop][0].idShop)"
+                >Chọn Voucher</a
+              >
       </div>
       <div id="deli" class="py-2 row">
         <div class="col-4 ">Đơn vị vận chuyển:</div>
@@ -198,6 +203,303 @@
       </div>
     </div>
   </div>
+  <!-- The Modal -->
+  <div class="modal fade" id="voucherOfShop" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header" style="background: bisque">
+          <h4 class="modal-title" style="margin: 0 auto">
+            Voucher của Shop
+          </h4>
+        </div>
+
+        <!-- Modal body -->
+        <div
+          class="modal-body"
+          style="max-height: 450px; overflow-y: scroll"
+        >
+          <div class="w-100 d-flex align-items-stretch flex-column">
+            <div
+              class="card bg-light d-flex flex-fill mb-1"
+              ng-repeat="item in cart.voucherShop"
+              ng-if="!cart.isItemInMyVoucherApplied(item)"
+            >
+              <div class="card-body pt-0 pb-0">
+                <div class="row">
+                  <div class="col-3 text-center d-flex flex-row">
+                    <img
+                      ng-src="/img/account/{{item.creator.avatar}}"
+                      alt="user-avatar"
+                      class="rounded-circle img-fluid"
+                      style="height: auto; margin: auto 0"
+                    />
+                  </div>
+                  <div class="col-6 mt-2">
+                    <h4 class="lead">
+                      <b
+                        >Giảm
+                        <span ng-if="item.discount < 1">
+                          {{ item.discount * 100 }}%</span
+                        >
+                        <span ng-if="item.discount >= 1">
+                          {{ formatMoney(item.discount) }}<sup
+                            style="font-size: 12px"
+                            >đ</sup
+                          ></span
+                        ></b
+                      >
+                    </h4>
+                    <span
+                      class="text-muted text-sm"
+                      style="font-size: 12px"
+                      >Đơn hàng tối thiểu:
+                      <span style="font-size: 14px">100000đ</span></span
+                    >
+                    <br />
+                    <span
+                      class="text-muted text-sm"
+                      style="font-size: 14px"
+                      ><b>HSD: </b> {{ formatDateToDDMMYYYY(item.endDate)
+                      }}</span
+                    >
+                  </div>
+
+                  <div class="col-3 text-center">
+                    <div
+                      class="d-flex flex-column h-100"
+                      style="justify-content: space-evenly"
+                    >
+                      <button
+                        class="btn btn-sm btn-warning"
+                        ng-disabled="!cart.isItemInMyVoucher(item)"
+                        ng-click="cart.applyVoucher(item)"
+                      >
+                        Áp dụng
+                      </button>
+                      <button
+                        class="btn btn-sm btn-primary"
+                        ng-disabled="cart.isItemInMyVoucher(item)"
+                        ng-click="cart.saveVoucher(item)"
+                      >
+                        <i class="fas fa-save"></i> Lưu
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="text-center">
+            <button
+              class="btn btn-sm btn-light"
+              style="padding-left: 20px; padding-right: 20px"
+            >
+              Huỷ
+            </button>
+            <button
+              class="btn btn-sm btn-success"
+              style="padding-left: 20px; padding-right: 20px"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Modal -->
+  <div class="modal modal-xl fade" id="voucherOfDevex" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header" style="background: bisque">
+          <h4 class="modal-title" style="margin: 0 auto">
+            Devex Voucher
+          </h4>
+        </div>
+
+        <!-- Modal body -->
+        <div
+          class="modal-body d-flex flex-row justify-content-around"
+          style="max-height: 450px; overflow-y: scroll"
+        >
+          <div
+            class="d-flex align-items-stretch flex-column flex-grow-1 me-4 w-100"
+          >
+            <div class="text-muted border-bottom-0">Voucher Ship</div>
+            <div
+              class="card bg-light d-flex mb-1"
+              ng-repeat="item in cart.voucherShipping"
+              ng-if="!cart.isItemInMyVoucherApplied(item)"
+            >
+              <div class="card-body pt-0 pb-0">
+                <div class="row">
+                  <div class="col-3 text-center d-flex flex-row">
+                    <img
+                      src="/img/banner/LogoDUAn.png"
+                      alt="user-avatar"
+                      class="img-fluid"
+                      style="height: auto; margin: auto 0"
+                    />
+                  </div>
+                  <div class="col-6 mt-2">
+                    <h4 class="lead">
+                      <b
+                        >Giảm
+                        <span ng-if="item.discount < 1">
+                          {{ item.discount * 100 }}%</span
+                        >
+                        <span ng-if="item.discount >= 1">
+                          {{ formatMoney(item.discount) }}<sup
+                            style="font-size: 12px"
+                            >đ</sup
+                          ></span
+                        ></b
+                      >
+                    </h4>
+                    <span
+                      class="text-muted text-sm"
+                      style="font-size: 12px"
+                      >Đơn hàng tối thiểu:
+                      <span style="font-size: 14px">100000đ</span></span
+                    >
+                    <br />
+                    <span
+                      class="text-muted text-sm"
+                      style="font-size: 14px"
+                      ><b>HSD: </b> {{ formatDateToDDMMYYYY(item.endDate)
+                      }}</span
+                    >
+                  </div>
+
+                  <div class="col-3 text-center">
+                    <div
+                      class="d-flex flex-column h-100"
+                      style="justify-content: space-evenly"
+                    >
+                      <button
+                        class="btn btn-sm btn-warning"
+                        ng-disabled="!cart.isItemInMyVoucher(item)"
+                        ng-click="cart.applyVoucher(item)"
+                      >
+                        Áp dụng
+                      </button>
+                      <button
+                        class="btn btn-sm btn-primary"
+                        ng-disabled="cart.isItemInMyVoucher(item)"
+                        ng-click="cart.saveVoucher(item)"
+                      >
+                        <i class="fas fa-save"></i> Lưu
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="d-flex align-items-stretch flex-column flex-grow-1 ms-4 w-100"
+          >
+            <div class="text-muted border-bottom-0 text-end">
+              Voucher Devex
+            </div>
+            <div
+              class="card bg-light d-flex mb-1"
+              ng-repeat="item in cart.voucherDevex"
+              ng-if="!cart.isItemInMyVoucherApplied(item)"
+            >
+              <div class="card-body pt-0 pb-0">
+                <div class="row">
+                  <div class="col-3 text-center d-flex flex-row">
+                    <img
+                      src="/img/banner/LogoDUAn.png"
+                      alt="user-avatar"
+                      class="img-fluid"
+                      style="height: auto; margin: auto 0"
+                    />
+                  </div>
+                  <div class="col-6 mt-2">
+                    <h4 class="lead">
+                      <b
+                        >Giảm
+                        <span ng-if="item.discount < 1">
+                          {{ item.discount * 100 }}%</span
+                        >
+                        <span ng-if="item.discount >= 1">
+                          {{ formatMoney(item.discount) }}<sup
+                            style="font-size: 12px"
+                            >đ</sup
+                          ></span
+                        ></b
+                      >
+                    </h4>
+                    <span
+                      class="text-muted text-sm"
+                      style="font-size: 12px"
+                      >Đơn hàng tối thiểu:
+                      <span style="font-size: 14px">100000đ</span></span
+                    >
+                    <br />
+                    <span
+                      class="text-muted text-sm"
+                      style="font-size: 14px"
+                      ><b>HSD: </b> {{ formatDateToDDMMYYYY(item.endDate)
+                      }}</span
+                    >
+                  </div>
+
+                  <div class="col-3 text-center">
+                    <div
+                      class="d-flex flex-column h-100"
+                      style="justify-content: space-evenly"
+                    >
+                      <button
+                        class="btn btn-sm btn-warning"
+                        ng-disabled="!cart.isItemInMyVoucher(item)"
+                        ng-click="cart.applyVoucher(item)"
+                      >
+                        Áp dụng
+                      </button>
+                      <button
+                        class="btn btn-sm btn-primary"
+                        ng-disabled="cart.isItemInMyVoucher(item)"
+                        ng-click="cart.saveVoucher(item)"
+                      >
+                        <i class="fas fa-save"></i> Lưu
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="text-center">
+            <button
+              class="btn btn-sm btn-light"
+              style="padding-left: 20px; padding-right: 20px"
+            >
+              Huỷ
+            </button>
+            <button
+              class="btn btn-sm btn-success"
+              style="padding-left: 20px; padding-right: 20px"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="container shadow" id="cartOrderForm" style="
           background-color: white;
@@ -209,7 +511,9 @@
     <div id="total-voucher" class="row pb-2 text-center mb-2">
       <div class="col-2">Chọn Voucher <span class=""><i class="bi bi-ticket-perforated"></i></span></div>
       <div class="col-8 text-secondary">Chưa có Voucher</div>
-      <a class="col-2 ">Chọn Voucher</a>
+      <a href="#" class="col-2" ng-click="cart.openModalVoucherDevex()"
+              >Chọn Voucher</a
+            >
     </div>
     <div class="row">
       <div class="col-5 chose-all d-flex justify-content-between h-100">
