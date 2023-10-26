@@ -14,4 +14,6 @@ public interface FollowRepository extends JpaRepository<Follow, Integer>{
 	@Query("SELECT COUNT(f) FROM Follow f WHERE f.seller.username like ?1")
 	int getCountFollowBySellerUsername(String username);
 	
+	@Query("SELECT COUNT(f) FROM Follow f WHERE f.customer.username like ?1")
+	int getCountFollowByCustomerUsername(String username);
 }

@@ -12,34 +12,6 @@
             text-overflow: ellipsis;
         }
 		
-		/* CSS cho modal container */
-		.modal {
-			display: none;
-			/* Ẩn modal ban đầu */
-			position: fixed;
-			top: 40%;
-			left: 59%;
-			transform: translate(-50%, -50%);
-			width: 25%;
-			/* Điều chỉnh kích thước modal theo nhu cầu */
-			height: 190px;
-			/* Điều chỉnh kích thước modal theo nhu cầu */
-			background-color: white;
-			border: 1px solid #ccc;
-			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-			text-align: center;
-			overflow: hidden;
-			animation: slideUp 0.5s ease-in-out;
-			/* Animation xuất hiện từ dưới lên */
-		}
-
-		/* CSS cho nút đóng modal */
-		.close {
-			position: absolute;
-			top: 10px;
-			right: 10px;
-			cursor: pointer;
-		}
 	</style>
 </head>
 
@@ -118,6 +90,8 @@
 												data-toggle="tab">Nhật ký</a></li>
 										<li class="nav-item"><a class="nav-link" href="#infomation"
 												data-toggle="tab">Thông tin</a></li>
+										<li class="nav-item"><a class="nav-link" href="#noti"
+												data-toggle="tab">Thông báo</a></li>
 									</ul>
 								</div>
 								<!-- /.card-header -->
@@ -211,6 +185,17 @@
 											</div>
 										</div>
 										<!-- /.tab-pane -->
+
+										<div class="tab-pane" id="noti">
+											<div class="timeline timeline-inverse" id="allnotifications">
+												<!-- timeline time label -->
+												<div class="time-label">
+													<span class="bg-danger"> Đây sẽ là dòng thời gian tb</span>
+												</div>
+												<!-- /.timeline-label -->
+												
+											</div>
+										</div>
 
 										<div class="tab-pane" id="infomation">
 												<div class="mb-3">

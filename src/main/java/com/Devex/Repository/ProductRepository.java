@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.Devex.DTO.ProductDTO;
 import com.Devex.DTO.infoProductDTO;
 import com.Devex.Entity.Product;
 
@@ -97,4 +98,15 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 			"AND od.status.id = :statusorderdetailsid ")
 	int getCountProductSellBySellerUsername(@Param("username") String username, @Param("statusorderid") int statusorderid, @Param("statusorderdetailsid") int statusorderdetailsid);
 
+	@Query("SELECT p FROM Product p " + 
+			"JOIN p.productVariants pv " + 
+			"JOIN pv.orderDetails od " +
+			"JOIN od.order o " + 
+			"JOIN p.sellerProduct s " +
+			"JOIN p.categoryDetails cd " +
+			"WHERE cd.id = :cateid " +
+			"AND FUNCTION('YEAR', o.createdDay) = :year " +
+			"ORDER BY p.soldCount")
+	List<Product> getListProductByCategoryDetailsIdAndYear(@Param("cateid") int cateid, @Param("year") int year);
+	
 }

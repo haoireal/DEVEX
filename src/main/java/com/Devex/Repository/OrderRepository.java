@@ -213,4 +213,7 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 			"And od.status.id = ?2 " +
 			"ORDER BY o.createdDay DESC")
 	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
+	
+	@Query("SELECT count(o) FROM Order o WHERE o.customerOrder.username = :username")
+    int getCountOrderByCustomerUsername(@Param("username") String username);
 }
