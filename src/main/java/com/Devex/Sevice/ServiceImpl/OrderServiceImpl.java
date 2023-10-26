@@ -207,5 +207,10 @@ public class OrderServiceImpl implements OrderService{
 		return orderRepository.findOrderByUsernameAndStatusID(customerID,statusID);
 	}
 
+	@Override
+	public int getCountOrderByCustomerUsername(String username) {
+		return orderRepository.getCountOrderByCustomerUsername(username);
+	}
+
 
 }

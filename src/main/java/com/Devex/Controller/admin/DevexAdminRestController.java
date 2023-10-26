@@ -14,23 +14,29 @@ import java.util.Map;
 import org.hibernate.bytecode.internal.bytebuddy.PrivateAccessorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Devex.DTO.FlashSaleTimeDTO;
+import com.Devex.DTO.ProductDTO;
 import com.Devex.DTO.ShopDTO;
 import com.Devex.DTO.StatisticalCategoryDetailsPieDTO;
 import com.Devex.DTO.StatisticalOrderMonthPieDTO;
 import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.DTO.UpdatedRolesDTO;
 import com.Devex.Entity.FlashSaleTime;
+import com.Devex.Entity.Notifications;
+import com.Devex.Entity.Product;
 import com.Devex.Entity.Role;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
@@ -40,6 +46,7 @@ import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.FlashSalesService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
+import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ProductService;
@@ -90,8 +97,12 @@ public class DevexAdminRestController {
 	
 	@Autowired 
 	private FlashSalesTimeService flashSalesTimeService;
+	
 	@Autowired
 	private FollowService followService;
+	
+	@Autowired
+	private NotificationsService notificationsService;
 
 	@GetMapping("/userDetail")
 	public Map<String, Object> updateUser() {
@@ -340,5 +351,54 @@ public class DevexAdminRestController {
 		}
 		return liststatiscategory;
 	}
+	
+	 @GetMapping("/admin/notifications")
+	    public Map<String, Object> getTop10Notifications() {
+	        User u = session.get("user");
+	        Map<String, Object> mapNotifications = new HashMap<>();
+	        List<Notifications> listNotifications = notificationsService.getTop10NotificationsByUserto(u.getUsername());
+	        long amountNotifications = notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
+	        long acountNotifications = notificationsService.getCountNotificationsByUserto(u.getUsername());
+	        mapNotifications.put("listNotifications", listNotifications);
+	        mapNotifications.put("amountNotifications", amountNotifications);
+	        mapNotifications.put("acountNotifications", acountNotifications);
+	        System.out.println(acountNotifications);
+	        return mapNotifications;
+	    }
+
+	    @GetMapping("/admin/history")
+	    public List<Notifications> getAllHistory() {
+	        User u = session.get("user");
+	        List<Notifications> listNotifications = notificationsService.getAllNotificationsByUserfrom(u.getUsername());
+	        return listNotifications;
+	    }
+
+	    @PutMapping("/admin/updatenotification/{id}")
+	    public long handlePostRequest(@PathVariable("id") int id) {
+	        User u = session.get("user");
+	        notificationsService.updateNotificationsById(id);
+	        return notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
+	    }
+
+	    @GetMapping("/admin/allnotifications")
+	    public List<Notifications> getAllNotifications() {
+	        User u = session.get("user");
+	        return notificationsService.getAllNotificationsByUserto(u.getUsername());
+	    }
+	    
+	    @GetMapping("/admin/listproductcate")
+	    public List<ProductDTO> getListProductByCategory(@Param("year") int year, @Param("id") int id){
+	    	List<ProductDTO> listProductDTO = new ArrayList<>();
+	    	List<Product> listProduct = productService.getListProductByCategoryDetailsIdAndYear(id, year);
+	    	for (Product product : listProduct) {
+				ProductDTO p = new ProductDTO();
+				p.setId(product.getId());
+				p.setName(product.getName());
+				p.setSoldCount(product.getSoldCount());
+				p.setSellerProduct(product.getSellerProduct());
+				listProductDTO.add(p);
+			}
+	    	return listProductDTO;
+	    }
 	
 }	 

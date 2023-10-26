@@ -41,8 +41,6 @@ public class Notifications implements Serializable{
 	private Date createdDay;
 	@Column(name = "Status")
 	private Boolean status;
-	@Column(name = "Role")
-	private Boolean role;
 	@Column(name = "Link")
 	private String link;
 

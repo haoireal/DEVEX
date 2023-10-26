@@ -46,45 +46,6 @@
             overflow-x: hidden;
             text-overflow: ellipsis;
         }
-		.modalNotifications{
-			display: none;
-			/* Ẩn modal ban đầu */
-			position: fixed;
-			top: 40%;
-			left: 55%;
-			transform: translate(-50%, -50%);
-			width: 40%;
-			/* Điều chỉnh kích thước modal theo nhu cầu */
-			height: 400px;
-			/* Điều chỉnh kích thước modal theo nhu cầu */
-			background-color: white;
-			border: 1px solid #ccc;
-			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-			text-align: center;
-			overflow: hidden;
-			animation: slideUp 0.5s ease-in-out;
-			/* Animation xuất hiện từ dưới lên */
-		}
-		.close {
-			position: absolute;
-			top: 10px;
-			right: 10px;
-			cursor: pointer;
-		}
-		/* Định nghĩa animation slideUp */
-		@keyframes slideUp {
-			0% {
-				transform: translate(-50%, 100%);
-			}
-
-			100% {
-				transform: translate(-50%, -50%);
-			}
-		}
-		.dropdown-item .dropdown-footer {
-			white-space: normal;
-		}
-
 	</style>
 	<script>
 		var mapNotifications;
@@ -111,49 +72,67 @@
 				var notificationHTML = ''; // Tạo một biến để chứa HTML của từng thông báo
 				
 				
-				if (check > 1) {
-				notificationsHTML += '<div class="dropdown-divider mt-2"></div>';
-				}
+				// if (check > 1) {
+				// notificationsHTML += '<div class="dropdown-divider mt-2"></div>';
+				// }
 				check++;
 				if (notification.link == null) {
 				if (notification.status == false) {
 					if (minutes <= 60) {
 					notificationHTML = `
-						<span onmouseover="updateNotifications(${notification.id})" style="background-color: #ECECEC;" class="id notifications-name dropdown-item dropdown-header" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${minutes} minutes ago</span>
-						</span>
+						<div style="background-color: #ECECEC;" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<span onmouseover="updateNotifications(${notification.id})" class="id notifications-name dropdown-item dropdown-header">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${minutes} minutes ago</span>
+							</span>
+						</div>
 					`;
 					} else if (hours <= 24) {
 					notificationHTML = `
-						<span onmouseover="updateNotifications(${notification.id})" style="background-color: #ECECEC;" class="id notifications-name dropdown-item dropdown-header" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${hours} hours ago</span>
-						</span>
+						<div style="background-color: #ECECEC;" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<span onmouseover="updateNotifications(${notification.id})" class="id notifications-name dropdown-item dropdown-header">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${hours} hours ago</span>
+							</span>
+						</div>
 					`;
 					} else {
 					notificationHTML = `
-						<span onmouseover="updateNotifications(${notification.id})" style="background-color: #ECECEC;" class="id notifications-name dropdown-item dropdown-header" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${days} days ago</span>
-						</span>
+						<div style="background-color: #ECECEC;" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<span onmouseover="updateNotifications(${notification.id})" class="id notifications-name dropdown-item dropdown-header">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${days} days ago</span>
+							</span>
+						</div>
 					`;
 					}
 				} else {
 					if (minutes <= 60) {
 					notificationHTML = `
-						<span onmouseover="updateNotifications(${notification.id})" class="id notifications-name dropdown-item dropdown-header bg-white" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${minutes} minutes</span>
-						</span>
+						<div class="bg-white" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<span onmouseover="updateNotifications(${notification.id})" class="id notifications-name dropdown-item dropdown-header">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${minutes} minutes</span>
+							</span>
+						</div>
 					`;
 					} else if (hours <= 24) {
 					notificationHTML = `
-						<span onmouseover="updateNotifications(${notification.id})" class="id notifications-name dropdown-item dropdown-header bg-white" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${hours} hours</span>
-						</span>
+						<div class="bg-white" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<span onmouseover="updateNotifications(${notification.id})" class="id notifications-name dropdown-item dropdown-header">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${hours} hours</span>
+							</span>
+						</div>
 					`;
 					} else {
 					notificationHTML = `
-						<span onmouseover="updateNotifications(${notification.id})" class="id notifications-name dropdown-item dropdown-header bg-white" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${days} days</span>
-						</span>
+						<div class="bg-white" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<span onmouseover="updateNotifications(${notification.id})" class="id notifications-name dropdown-item dropdown-header">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${days} days</span>
+							</span>
+						</div>
 					`;
 					}
 				}
@@ -161,41 +140,59 @@
 				if (notification.status == false) {
 					if (minutes <= 60) {
 					notificationHTML = `
-						<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" style="background-color: #ECECEC;" class="id notifications-name dropdown-item dropdown-footer" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${minutes} minutes</span>
-						</a>
+						<div style="background-color: #ECECEC;" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" class="id notifications-name dropdown-item dropdown-footer">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${minutes} minutes</span>
+							</a>
+						</div>
 					`;
 					} else if (hours <= 24) {
 					notificationHTML = `
-						<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" style="background-color: #ECECEC;" class="id notifications-name dropdown-item dropdown-footer" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${hours} hours</span>
-						</a>
+						<div style="background-color: #ECECEC;" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" class="id notifications-name dropdown-item dropdown-footer">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${hours} hours</span>
+							</a>
+						</div>
 					`;
 					} else {
 					notificationHTML = `
-						<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" style="background-color: #ECECEC;" class="id notifications-name dropdown-item dropdown-footer" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${days} days</span>
-						</a>
+						<div style="background-color: #ECECEC;" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" class="id notifications-name dropdown-item dropdown-footer">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${days} days</span>
+							</a>
+						</div>
 					`;
 					}
 				} else {
 					if (minutes <= 60) {
 					notificationHTML = `
-						<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" class="id notifications-name dropdown-item dropdown-footer bg-white" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${minutes} minutes</span>
-						</a>
+						<div class=" bg-white" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" class="id notifications-name dropdown-item dropdown-footer">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${minutes} minutes</span>
+							</a>
+						</div>
 					`;
 					} else if (hours <= 24) {
 					notificationHTML = `
-						<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" class="id notifications-name dropdown-item dropdown-footer bg-white" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${hours} hours</span>
-						</a>
+						<div class=" bg-white" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" class="id notifications-name dropdown-item dropdown-footer">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${hours} hours</span>
+							</a>
+						</div>
 					`;
 					} else {
 					notificationHTML = `
-						<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" class="id notifications-name dropdown-item dropdown-footer bg-white" id="${notification.id}">${notification.content}
-							<span class="float-right text-muted text-sm mt-1">${days} days</span>
-						</a>
+						<div class=" bg-white" id="${notification.id}">
+							<div class="dropdown-divider mt-2"></div>
+							<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" class="id notifications-name dropdown-item dropdown-footer">${notification.content}
+								<span class="float-right text-muted text-sm mt-1">${days} days</span>
+							</a>
+						</div>
 					`;
 					}
 				}
@@ -208,13 +205,13 @@
 			var notificationsHTMLLast;
 				if (check == mapNotifications.listNotifications.length + 1) {
 					notificationsHTMLLast = `
-						<a href="#" onclick="fillAllNotifications()" class="dropdown-item dropdown-footer text-center">See All Notifications</a>
+						<a href="/seller/profile" class="dropdown-item dropdown-footer text-center">See All Notifications</a>
 					`;
 					notificationsHTML += '<div class="dropdown-divider"></div>';
 					notificationsHTML += notificationsHTMLLast;
 				} else if(check == 1){
 					notificationsHTMLLast = `
-						<a href="#" onclick="fillAllNotifications()" class="dropdown-item dropdown-footer text-center">See All Notifications</a>
+						<a href="/seller/profile" class="dropdown-item dropdown-footer text-center">See All Notifications</a>
 					`;
 					notificationsHTML += '<div class="dropdown-divider"></div>';
 					notificationsHTML += notificationsHTMLLast;
@@ -243,198 +240,6 @@
 			console.error(error);
 			});
 		}
-
-
-		// fill all notifications
-		function fillAllNotifications() {
-			fetch('/api/seller/allnotifications')
-			.then(response => response.json())
-			.then(data => {
-			var listAllNotifications = data;
-			var check = 1;
-			modelNotifications.style.display = 'block';
-			var notificationsHTML = ''; // Tạo một biến để chứa HTML của tất cả thông báo
-			listAllNotifications.forEach(notification => {
-				var now = new Date();
-				var minutes = Math.floor(((now.getTime() - new Date(notification.createdDay).getTime()) / 1000) / 60);
-				var hours = Math.floor(minutes / 60);
-				var days = Math.floor(hours / 24);
-				var notificationHTML = ''; // Tạo một biến để chứa HTML của từng thông báo
-				if(check > 1) {
-					notificationsHTML += '<div class="dropdown-divider mt-2" style="width: 100%;"></div>';
-				}
-				check++;
-				if (notification.link == null) {
-					if (notification.status == false) {
-						if (minutes <= 60) {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<span onmouseover="updateNotifications(${notification.id})" style="background-color: #ECECEC; overflow-wrap: break-word;" class="text-wrap text-left dropdown-item dropdown-header">${notification.content}</span>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${minutes} minutes ago</span>	
-								</div>	
-							</div>
-						`;
-						} else if (hours <= 24) {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<span onmouseover="updateNotifications(${notification.id})" style="background-color: #ECECEC; overflow-wrap: break-word;" class="text-wrap text-left dropdown-item dropdown-header">${notification.content}</span>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${hours} hours ago</span>	
-								</div>	
-							</div>
-						`;
-						} else {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<span onmouseover="updateNotifications(${notification.id})" style="background-color: #ECECEC; overflow-wrap: break-word;" class="text-wrap text-left dropdown-item dropdown-header">${notification.content}</span>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${days} days ago</span>	
-								</div>
-							</div>
-						`;
-						}
-					} else {
-						if (minutes <= 60) {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<span onmouseover="updateNotifications(${notification.id})" style=" overflow-wrap: break-word;" class="text-wrap text-left dropdown-item dropdown-header bg-white">${notification.content}</span>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${minutes} minutes ago</span>	
-								</div>	
-							</div>
-						`;
-						} else if (hours <= 24) {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<span onmouseover="updateNotifications(${notification.id})" style=" overflow-wrap: break-word;" class="text-wrap text-left dropdown-item dropdown-header bg-white">${notification.content}</span>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${hours} hours ago</span>	
-								</div>	
-							</div>
-						`;
-						} else {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<span onmouseover="updateNotifications(${notification.id})" style=" overflow-wrap: break-word;" class="text-wrap text-left dropdown-item dropdown-header bg-white">${notification.content}</span>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${days} days ago</span>	
-								</div>	
-							</div>
-						`;
-						}
-					}
-				} else {
-					if (notification.status == false) {
-						if (minutes <= 60) {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" style="background-color: #ECECEC; overflow-wrap: break-word;" class="text-wrap text-left dropdown-item dropdown-footer">${notification.content}</a>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${minutes} minutes ago</span>	
-								</div>
-									
-							</div>
-						`;
-						} else if (hours <= 24) {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" style="background-color: #ECECEC; overflow-wrap: break-word;" class="text-wrap text-left dropdown-item dropdown-footer">${notification.content}</a>		
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${hours} hours ago</span>	
-								</div>
-							</div>
-						`;
-						} else {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<a onmouseover="updateNotifications(${notification.id})" href="${notification.link}" style="background-color: #ECECEC; overflow-wrap: break-word;" class="text-wrap text-left dropdown-item dropdown-footer">${notification.content}</a>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${days} days ago</span>	
-								</div>	
-							</div>
-						`;
-						}
-					} else {
-						if (minutes <= 60) {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<a onmouseover="updateNotifications(${notification.id})" style=" overflow-wrap: break-word;" href="${notification.link}" class="text-wrap text-left dropdown-item dropdown-footer bg-white">${notification.content}</a>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${minutes} minutes ago</span>	
-								</div>	
-							</div>
-						`;
-						} else if (hours <= 24) {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<a onmouseover="updateNotifications(${notification.id})" style=" overflow-wrap: break-word;" href="${notification.link}" class="text-wrap text-left dropdown-item dropdown-footer bg-white">${notification.content}</a>	
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${hours} hours ago</span>	
-								</div>	
-							</div>
-						`;
-						} else {
-						notificationHTML = `
-							<div class="row">
-								<div class="col-9">
-									<a onmouseover="updateNotifications(${notification.id})" style=" overflow-wrap: break-word;" href="${notification.link}" class="text-wrap text-left dropdown-item dropdown-footer bg-white">${notification.content}</a>		
-								</div>
-								<div class="col-3">
-									<span class="float-right text-muted text-sm mt-1 me-2" style="right: 0%">${days} days ago</span>	
-								</div>
-							</div>
-						`;
-						}
-					}
-				}
-				
-				notificationsHTML += notificationHTML; // Thêm HTML của thông báo vào biến chứa tất cả thông báo
-			});
-			
-			document.getElementById('AllNotifications').innerHTML = notificationsHTML; // Gán HTML của tất cả thông báo vào thành phần Notifications
-			});
-		}
-
-		// model
-		document.addEventListener('DOMContentLoaded', function () {
-		var modelNotifications = document.getElementById('modelNotifications');
-		var closeButtons = document.getElementsByClassName('close');
-
-		for (var i = 0; i < closeButtons.length; i++) {
-			closeButtons[i].addEventListener('click', function () {
-				modelNotifications.style.display = 'none';
-			});
-		}
-
-		window.addEventListener('click', function (event) {
-			if (event.target === modelNotifications) {
-				modelNotifications.style.display = 'none';
-			}
-		});
-		});
 
 		fillNotifications();
 	</script>

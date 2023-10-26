@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 
+import com.Devex.DTO.ProductDTO;
 import com.Devex.DTO.infoProductDTO;
 import com.Devex.Entity.Product;
 
@@ -81,5 +82,7 @@ public interface ProductService {
 
 	
 	int getCountProductSellBySellerUsername(String username, int statusorderid, int statusorderdetailsid);
+
+	List<Product> getListProductByCategoryDetailsIdAndYear(int cateid, int year);
 
 }
