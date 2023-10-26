@@ -4,9 +4,6 @@
 
 <head>
 	<div th:replace="~{flagment/account/head :: headFragment}"></div>
-	</script>
-	<script th:src="@{/js/cart-ctrl.js}"></script>
-
 </head>
 <style>
 	.fixed-picture {
@@ -126,7 +123,7 @@
 	<header>
 		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
 	</header>
-	<div class="container">
+	<div class="container" >
 		<div class="wall-header-offset p-1"></div>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper m-0">
@@ -275,6 +272,8 @@
 										<li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Nhật 
 												ký</a></li>
 										<li class="nav-item"><a class="nav-link" href="#noti" data-toggle="tab">Thông báo</a></li>
+										<li class="nav-item"><a class="nav-link" href="#voucherApplied" data-toggle="tab">Kho
+											voucher đã dùng</a></li>		
 									</ul>
 								</div>
 								<!-- /.card-header -->
@@ -323,127 +322,140 @@
 										</div>
 
 										<div class="tab-pane" id="voucher">
-											<!-- Post -->
-											<div class="post">
-												<div class="user-block">
-													<img class="img-circle img-bordered-sm"
-														src="../../dist/img/user1-128x128.jpg" alt="user image" />
-													<span class="username"> <a href="#">Jonathan
-															Burke Jr.</a> <a href="#" class="float-right btn-tool"><i
-																class="fas fa-times"></i></a>
-													</span> <span class="description">Shared publicly - 7:30 PM
-														today</span>
-												</div>
-												<!-- /.user-block -->
-												<p>Lorem ipsum represents a long-held tradition for
-													designers, typographers and the like. Some people hate it
-													and argue for its demise, but others ignore the hate as
-													they create awesome tools to help create filler text for
-													everyone from bacon lovers to Charlie Sheen fans.</p>
-
-												<p>
-													<a href="#" class="link-black text-sm mr-2"><i
-															class="fas fa-share mr-1"></i> Share</a> <a href="#"
-														class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i>
-														Like</a> <span class="float-right"> <a href="#"
-															class="link-black text-sm"> <i
-																class="far fa-comments mr-1"></i> Comments (5)
-														</a>
-													</span>
-												</p>
-
-												<input class="form-control form-control-sm" type="text"
-													placeholder="Type a comment" />
-											</div>
-											<!-- /.post -->
-
-											<!-- Post -->
-											<div class="post clearfix">
-												<div class="user-block">
-													<img class="img-circle img-bordered-sm"
-														src="../../dist/img/user7-128x128.jpg" alt="User Image" />
-													<span class="username"> <a href="#">Sarah Ross</a> <a href="#"
-															class="float-right btn-tool"><i
-																class="fas fa-times"></i></a>
-													</span> <span class="description">Sent you a message - 3
-														days ago</span>
-												</div>
-												<!-- /.user-block -->
-												<p>Lorem ipsum represents a long-held tradition for
-													designers, typographers and the like. Some people hate it
-													and argue for its demise, but others ignore the hate as
-													they create awesome tools to help create filler text for
-													everyone from bacon lovers to Charlie Sheen fans.</p>
-
-												<form class="form-horizontal">
-													<div class="input-group input-group-sm mb-0">
-														<input class="form-control form-control-sm"
-															placeholder="Response" />
-														<div class="input-group-append">
-															<button type="submit" class="btn btn-danger">
-																Send</button>
+											<div class="row">
+												<!-- ./col -->
+												<div class="col-lg-4 col-6" ng-repeat="item in voucher.itemsAvailability">
+													<!-- small card -->
+													<div class="small-box bg-warning">
+														<div class="inner">
+															<h4 class="name-prod" ng-bind="item.name"></h4>
+															<span style="font-size: 14px; font-weight: 500;">Giảm
+																<span ng-if="item.discount < 1">{{ item.discount *
+																	100 }}%</span>
+																<span ng-if="item.discount >= 1">{{
+																	formatMoney(item.discount) }}<sup
+																		style="font-size: 10px;">đ</sup></span></span><br>
+																	
+															<span style="font-size: 12px; font-weight: 500;">HSD:
+																<span>{{ formatDateToDDMMYYYY(item.endDate) }}</span></span>
 														</div>
-													</div>
-												</form>
-											</div>
-											<!-- /.post -->
-
-											<!-- Post -->
-											<div class="post">
-												<div class="user-block">
-													<img class="img-circle img-bordered-sm"
-														src="../../dist/img/user6-128x128.jpg" alt="User Image" />
-													<span class="username"> <a href="#">Adam Jones</a> <a href="#"
-															class="float-right btn-tool"><i
-																class="fas fa-times"></i></a>
-													</span> <span class="description">Posted 5 photos - 5 days
-														ago</span>
-												</div>
-												<!-- /.user-block -->
-												<div class="row mb-3">
-													<div class="col-sm-6">
-														<img class="img-fluid" src="../../dist/img/photo1.png"
-															alt="Photo" />
-													</div>
-													<!-- /.col -->
-													<div class="col-sm-6">
-														<div class="row">
-															<div class="col-sm-6">
-																<img class="img-fluid mb-3"
-																	src="../../dist/img/photo2.png" alt="Photo" /> <img
-																	class="img-fluid" src="../../dist/img/photo3.jpg"
-																	alt="Photo" />
-															</div>
-															<!-- /.col -->
-															<div class="col-sm-6">
-																<img class="img-fluid mb-3"
-																	src="../../dist/img/photo4.jpg" alt="Photo" /> <img
-																	class="img-fluid" src="../../dist/img/photo1.png"
-																	alt="Photo" />
-															</div>
-															<!-- /.col -->
+														<div class="icon">
+															<i class="fas fa-gift"></i>
 														</div>
-														<!-- /.row -->
-													</div>
-													<!-- /.col -->
-												</div>
-												<!-- /.row -->
-
-												<p>
-													<a href="#" class="link-black text-sm mr-2"><i
-															class="fas fa-share mr-1"></i> Share</a> <a href="#"
-														class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i>
-														Like</a> <span class="float-right"> <a href="#"
-															class="link-black text-sm"> <i
-																class="far fa-comments mr-1"></i> Comments (5)
+														<a href="#" class="small-box-footer"
+															ng-click="voucher.openModalDetail(item)">
+															Chi tiết <i class="fas fa-arrow-circle-right"></i>
 														</a>
-													</span>
-												</p>
 
-												<input class="form-control form-control-sm" type="text"
-													placeholder="Type a comment" />
+													</div>
+												</div>
+												<!-- ./col -->
+
 											</div>
-											<!-- /.post -->
+										</div>
+										<div class="tab-pane" id="voucherApplied">
+											<div class="row">
+												<!-- ./col -->
+												<div class="col-lg-4 col-6" ng-repeat="item in voucher.itemsApplied">
+													<!-- small card -->
+													<div class="small-box bg-warning">
+														<div class="inner">
+															<h4 class="name-prod" ng-bind="item.name"></h4>
+															<span style="font-size: 14px; font-weight: 500;">Giảm
+																<span ng-if="item.discount < 1">{{ item.discount *
+																	100 }}%</span>
+																<span ng-if="item.discount >= 1">{{
+																	formatMoney(item.discount) }}<sup
+																		style="font-size: 10px;">đ</sup></span></span><br>
+																	
+															<span style="font-size: 12px; font-weight: 500;">HSD:
+																<span>{{ formatDateToDDMMYYYY(item.endDate) }}</span></span>
+														</div>
+														<div class="icon">
+															<i class="fas fa-gift"></i>
+														</div>
+														<a href="#" class="small-box-footer"
+															ng-click="voucher.openModalDetail(item)">
+															Chi tiết <i class="fas fa-arrow-circle-right"></i>
+														</a>
+
+													</div>
+												</div>
+												<!-- ./col -->
+
+											</div>
+										</div>
+										<!-- The Modal -->
+										<div class="modal fade" id="showDetail" style="max-height: 90vh;">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<!-- Modal Header -->
+												<div class="modal-header" style="background: bisque;">
+													<h4 class="modal-title" style="margin: 0 auto;">Thông tin
+														Voucher</h4>
+												</div>	
+
+												<!-- Modal body -->
+												<div class="modal-body" style="max-height: 400px; overflow-y: scroll;">
+													<div class="info-voucher">
+														<div class="form-group">
+															<label for="name">Tên
+																Voucher</label>
+															<p>{{ voucher.itemDetail.name }}</p>
+														</div>
+														<div class="form-group">
+															<label for="code">Code:</label>
+															<span> {{ voucher.itemDetail.code }}</span>
+														</div>
+														<div class="form-group">
+															<label for="time">Thời gian sử dụng
+																mã</label>
+															<p>{{ formatDateTimeToDDMMYYYYHHMM(voucher.itemDetail.startDate) }} - {{
+																formatDateTimeToDDMMYYYYHHMM(voucher.itemDetail.endDate) }}
+															</p>
+														</div>
+														<div class="form-group">
+															<label for="discount">Ưu đãi:</label>
+															<span> Giảm
+																<span ng-if="voucher.itemDetail.discount < 1"> {{
+																	voucher.itemDetail.discount * 100 }}%</span>
+																<span ng-if="voucher.itemDetail.discount >= 1"> {{
+																	formatMoney(voucher.itemDetail.discount) }}<sup
+																		style="font-size: 10px;">đ</sup></span></span>
+														</div>
+														<div class="form-group">
+															<label for="quantity">Số lượng Voucher:</label><span> {{
+																voucher.itemDetail.quantity }}</span>
+														</div>
+														<div class="form-group">
+															<label for="description">Mô tả chi
+																tiết</label>
+															<p>{{ voucher.itemDetail.description }}</p>
+														</div>
+														<div class="form-group" ng-if="voucher.itemDetail.categoryVoucher.id !== 100004">
+															<label for="description">Phân loại: </label>
+															<span>{{ voucher.itemDetail.categoryVoucher.name }}</span>
+														</div>
+											
+														<div class="form-group" ng-if="voucher.itemDetail.categoryVoucher.id === 100004">
+															<label>Các sản phẩm áp dụng</label>
+															<select multiple class="custom-select">
+																<option ng-repeat="prod in voucher.prodVoucher">{{
+																	prod.product.name }}</option>
+															</select>
+														</div>
+
+													</div>
+													<hr>
+													
+												</div>
+												<div class="text-center modal-footer">
+													<button class="btn btn-success pl-5 pr-5" data-dismiss="modal">
+														OK
+													</button>
+											</div>
+											</div>
+										</div>
 										</div>
 										<!-- /.tab-pane -->
 
@@ -921,6 +933,8 @@
 		<div th:replace="~{flagment/user/userFootLink :: sellerFootLinkFragment}"></div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
+	<!-- 	<div th:replace="~{flagment/account/footLink :: footLinkFragment}"></div> -->
+	<script th:src="@{/js/cart-ctrl.js}"></script>
 </body>
 
 </html>

@@ -3,22 +3,20 @@ package com.Devex.Controller.seller;
 import java.util.Date;
 import java.util.List;
 
+import com.Devex.Sevice.ServiceImpl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.Product;
-import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
@@ -31,7 +29,6 @@ import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
-import com.Devex.Utils.FileManagerService;
 
 @Controller
 @RequestMapping("/seller")
@@ -65,7 +62,7 @@ public class DevexSellerController {
 	private CategoryDetailService categoryDetailService;
 	
 	@Autowired
-	private FileManagerService fileManagerService;
+	private CustomerServiceImpl.FileManagerService fileManagerService;
 	
 	@Autowired
 	private ImageProductService imageProductService;

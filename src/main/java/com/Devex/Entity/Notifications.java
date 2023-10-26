@@ -38,9 +38,10 @@ public class Notifications implements Serializable{
 	@Column(name = "Content")
 	private String content;
 	@Column(name = "Createdday")
-	private Date createdDay;
+	private Date createdDay = new Date();
 	@Column(name = "Status")
-	private Boolean status;
+	private Boolean status = false;
+
 	@Column(name = "Link")
 	private String link;
 
