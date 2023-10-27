@@ -214,8 +214,13 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 			"ORDER BY o.createdDay DESC")
 	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
 	
+
 	@Transactional
 	@Modifying
 	@Query("UPDATE Order o SET o.total = :total WHERE o.id like :id")
 	void updatePriceOrder(@Param("total") double total, @Param("id")  String id);
+
+	@Query("SELECT count(o) FROM Order o WHERE o.customerOrder.username = :username")
+    int getCountOrderByCustomerUsername(@Param("username") String username);
+
 }

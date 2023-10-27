@@ -1,48 +1,66 @@
-//package com.Devex.Controller.api;
-//
-//import java.util.ArrayList;
-//import java.util.HashSet;
-//import java.util.List;
-//import java.util.Set;
-//import java.util.stream.Collectors;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.CrossOrigin;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import com.Devex.DTO.ProductDTO;
-//import com.Devex.Entity.Product;
-//import com.Devex.Repository.ProductRepository;
-//import com.Devex.Sevice.CookieService;
-//import com.Devex.Sevice.ParamService;
-//import com.Devex.Sevice.ProductService;
-//import com.Devex.Sevice.RecommendationSystem;
-//import com.Devex.Sevice.SessionService;
-//
-//@CrossOrigin("*")
-//@RestController
-//@RequestMapping("/api")
-//public class FillAPIController {
-//	@Autowired
-//	SessionService sessionService;
-//
-//	@Autowired
-//	CookieService cookieService;
-//
-//	@Autowired
-//	ParamService paramService;
-//
-//	@Autowired
-//	ProductService productService;
-//
-//	@Autowired
-//	RecommendationSystem recomendationService;
-//
-//	@Autowired
-//	ProductRepository productRepository;
-//	
+package com.Devex.Controller.api;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.Devex.DTO.ProductDTO;
+import com.Devex.Entity.Notifications;
+import com.Devex.Entity.Product;
+import com.Devex.Entity.User;
+import com.Devex.Repository.ProductRepository;
+import com.Devex.Sevice.CookieService;
+import com.Devex.Sevice.FollowService;
+import com.Devex.Sevice.NotificationsService;
+import com.Devex.Sevice.OrderService;
+import com.Devex.Sevice.ParamService;
+import com.Devex.Sevice.ProductService;
+import com.Devex.Sevice.RecommendationSystem;
+import com.Devex.Sevice.SessionService;
+
+@CrossOrigin("*")
+@RestController
+@RequestMapping("/api")
+public class FillAPIController {
+	@Autowired
+	private SessionService sessionService;
+
+	@Autowired
+	private CookieService cookieService;
+
+	@Autowired
+	private ParamService paramService;
+
+	@Autowired
+	private ProductService productService;
+
+	@Autowired
+	private RecommendationSystem recomendationService;
+
+	@Autowired
+	private ProductRepository productRepository;
+	
+	@Autowired
+	private NotificationsService notificationsService;
+	
+	@Autowired
+	private FollowService followService;
+	
+	@Autowired
+	private OrderService orderService;
+	
 //	@GetMapping("/filter")
 //	public List<ProductDTO> getProductDTO(){
 //		List<Product> products = productService.findAll();
@@ -71,4 +89,48 @@
 //
 //		return productsList;
 //	}
-//}
+	
+	@GetMapping("/user/notifications")
+    public Map<String, Object> getTop10Notifications() {
+        User u = sessionService.get("user");
+        Map<String, Object> mapNotifications = new HashMap<>();
+        List<Notifications> listNotifications = notificationsService.getTop10NotificationsByUserto(u.getUsername());
+        long amountNotifications = notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
+        long acountNotifications = notificationsService.getCountNotificationsByUserto(u.getUsername());
+        mapNotifications.put("listNotifications", listNotifications);
+        mapNotifications.put("amountNotifications", amountNotifications);
+        mapNotifications.put("acountNotifications", acountNotifications);
+        return mapNotifications;
+    }
+	
+	@PutMapping("/user/updatenotification/{id}")
+    public long handlePostRequest(@PathVariable("id") int id) {
+        User u = sessionService.get("user");
+        notificationsService.updateNotificationsById(id);
+        return notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
+    }
+
+    @GetMapping("/user/allnotifications")
+    public List<Notifications> getAllNotifications() {
+        User u = sessionService.get("user");
+        return notificationsService.getAllNotificationsByUserto(u.getUsername());
+    }
+    
+    @GetMapping("/user/history")
+    public List<Notifications> getAllHistory() {
+        User u = sessionService.get("user");
+        List<Notifications> listNotifications = notificationsService.getAllNotificationsByUserfrom(u.getUsername());
+        return listNotifications;
+    }
+    
+    @GetMapping("/user/info")
+    public Map<String, Object> getInfoUserProfile() {
+        User u = sessionService.get("user");
+        Map<String, Object> mapInfoUser = new HashMap<>();
+        int amountOrder = orderService.getCountOrderByCustomerUsername(u.getUsername());
+        int amountFollow = followService.getCountFollowByCustomerUsername(u.getUsername());
+        mapInfoUser.put("amountOrder", amountOrder);
+        mapInfoUser.put("amountFollow", amountFollow);
+        return mapInfoUser;
+    }
+}
