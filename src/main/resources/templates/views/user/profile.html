@@ -119,7 +119,7 @@
 	}
 </style>
 
-<body ng-controller="cart-ctrl" ng-app="app">
+<body ng-app="app" ng-controller="profile">
 	<header>
 		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
 	</header>
@@ -165,9 +165,9 @@
 
 									<ul class="list-group list-group-unbordered mb-3">
 										<li class="list-group-item"><b class="text-secondary">Tổng
-												hoá đơn đã đặt</b> <a class="float-right">1,322</a></li>
+												hoá đơn đã đặt</b> <a class="float-right">{{ info.amountOrder }}</a></li>
 										<li class="list-group-item"><b class="text-secondary">Đang theo dõi</b> <a
-												class="float-right">543</a></li>
+												class="float-right">{{info.amountFollow}}</a></li>
 									</ul>
 									<div class="w-100 text-center">
 										<button class="btn btn-danger" th:disabled="${role}" style="font-size: 15px"
@@ -269,6 +269,9 @@
 												chỉ</a></li>
 										<li class="nav-item"><a class="nav-link" href="#voucher" data-toggle="tab">Kho
 												voucher</a></li>
+										<li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Nhật 
+												ký</a></li>
+										<li class="nav-item"><a class="nav-link" href="#noti" data-toggle="tab">Thông báo</a></li>
 										<li class="nav-item"><a class="nav-link" href="#voucherApplied" data-toggle="tab">Kho
 											voucher đã dùng</a></li>		
 									</ul>
@@ -294,6 +297,28 @@
 												<button type="submit" class="btn btn-success mt-3"
 													style="width: 100%">Lưu</button>
 											</form>
+										</div>
+
+										<div class="tab-pane" id="timeline">
+											<div class="timeline timeline-inverse" id="history">
+												<!-- timeline time label -->
+												<div class="time-label">
+													<span class="bg-danger"> Đây sẽ là dòng thời gian nk</span>
+												</div>
+												<!-- /.timeline-label -->
+												
+											</div>
+										</div>
+
+										<div class="tab-pane" id="noti">
+											<div class="timeline timeline-inverse" id="allnotifications">
+												<!-- timeline time label -->
+												<div class="time-label">
+													<span class="bg-danger"> Đây sẽ là dòng thời gian tb</span>
+												</div>
+												<!-- /.timeline-label -->
+												
+											</div>
 										</div>
 
 										<div class="tab-pane" id="voucher">
@@ -639,6 +664,263 @@
 					reader.readAsDataURL(file);
 				}
 			});
+
+		// History
+		function fillHistory() {
+		fetch('/api/seller/history')
+			.then(response => response.json())
+			.then(data => {
+			var listHistory = data;
+			var historiesHTML = '';
+			listHistory.forEach(history => {
+				var nowHistory = new Date();
+				var createdDate = new Date(history.createdDay);
+				var minutesHistory = Math.floor(((nowHistory.getTime() - new Date(history.createdDay).getTime()) / 1000) / 60);
+				var hoursHistory = Math.floor(minutesHistory / 60);
+				var daysHistory = Math.floor(hoursHistory / 24);
+				var day = createdDate.getDate();
+				var month = createdDate.getMonth() + 1;
+				var year = createdDate.getFullYear();
+				var hours = createdDate.getHours();
+				var minutes = createdDate.getMinutes();
+				var historyHTML = '';
+				if (minutesHistory <= 60) {
+				historyHTML = `
+					<div class="time-label">
+					<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+					</div>
+					<div>
+					<div class="timeline-item">
+						<span class="time"><i class="far fa-clock"></i> ${minutesHistory} minutes ago</span>
+						<h3 class="timeline-header border-0">${history.content}</h3>
+					</div>
+					</div>
+				`;
+				} else if (hoursHistory <= 24) {
+				historyHTML = `
+					<div class="time-label">
+					<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+					</div>
+					<div>
+					<div class="timeline-item">
+						<span class="time"><i class="far fa-clock"></i> ${hoursHistory} hours ago</span>
+						<h3 class="timeline-header border-0">${history.content}</h3>
+					</div>
+					</div>
+				`;
+				} else {
+				historyHTML = `
+					<div class="time-label">
+					<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+					</div>
+					<div>
+					<div class="timeline-item">
+						<span class="time"><i class="far fa-clock"></i> ${daysHistory} days ago</span>
+						<h3 class="timeline-header border-0">${history.content}</h3>
+					</div>
+					</div>
+				`;
+				}
+				historiesHTML += historyHTML;
+			});
+			historiesHTML += '<div><i class="far fa-clock bg-gray"></i></div>';
+			document.getElementById('history').innerHTML = historiesHTML;
+			});
+		}
+
+		fillHistory();
+
+		// fillAllNotifications
+		function fillAllNotifications() {
+		fetch('/api/user/allnotifications')
+			.then(response => response.json())
+			.then(data => {
+			var listNotifications = data;
+			var notificationsHTML = '';
+			listNotifications.forEach(notification => {
+				var nowNotification = new Date();
+				var createdDate = new Date(notification.createdDay);
+				var minutesNotification = Math.floor(((nowNotification.getTime() - new Date(notification.createdDay).getTime()) / 1000) / 60);
+				var hoursNotification = Math.floor(minutesNotification / 60);
+				var daysNotification = Math.floor(hoursNotification / 24);
+				var day = createdDate.getDate();
+				var month = createdDate.getMonth() + 1;
+				var year = createdDate.getFullYear();
+				var hours = createdDate.getHours();
+				var minutes = createdDate.getMinutes();
+				var notificationHTML = '';
+				if(notification.link == null) {
+					if (notification.status == false) {
+						if (minutesNotification <= 60) {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item" id="${notification.id}" style="background-color: #ECECEC;">
+										<span class="time"><i class="far fa-clock"></i> ${minutesNotification} minutes ago</span>
+										<h3 class="timeline-header border-0">${notification.content}</h3>
+									</div>
+								</div>
+							`;
+						} else if (hoursNotification <= 24) {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item" id="${notification.id}" style="background-color: #ECECEC;">
+										<span class="time"><i class="far fa-clock"></i> ${hoursNotification} hours ago</span>
+										<h3 class="timeline-header border-0">${notification.content}</h3>
+									</div>
+								</div>
+							`;
+						} else {
+							notificationHTML = `
+								<div class="time-label">
+								<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item" id="${notification.id}" style="background-color: #ECECEC;">
+										<span class="time"><i class="far fa-clock"></i> ${daysNotification} days ago</span>
+										<h3 class="timeline-header border-0">${notification.content}</h3>
+									</div>	
+								</div>
+							`;
+						}
+					} else {
+						if (minutesNotification <= 60) {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item bg-white" id="${notification.id}">
+										<span class="time"><i class="far fa-clock"></i> ${minutesNotification} minutes ago</span>
+										<h3 class="timeline-header border-0">${notification.content}</h3>
+									</div>
+								</div>
+							`;
+						} else if (hoursNotification <= 24) {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item bg-white" id="${notification.id}">
+										<span class="time"><i class="far fa-clock"></i> ${hoursNotification} hours ago</span>
+										<h3 class="timeline-header border-0">${notification.content}</h3>
+									</div>
+								</div>
+							`;
+						} else {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item bg-white" id="${notification.id}">
+										<span class="time"><i class="far fa-clock"></i> ${daysNotification} days ago</span>
+										<h3 class="timeline-header border-0">${notification.content}</h3>
+									</div>
+								</div>
+							`;
+						}
+					}
+				}else {
+					if (notification.status == false) {
+						if (minutesNotification <= 60) {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item" id="${notification.id}" style="background-color: #ECECEC;">
+										<span class="time"><i class="far fa-clock"></i> ${minutesNotification} minutes ago</span>
+										<h3 class="timeline-header border-0">${notification.content}
+											<button class="btn btn-primary">Xem chi tiết</button></h3>
+									</div>
+								</div>
+							`;
+						} else if (hoursNotification <= 24) {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item" id="${notification.id}" style="background-color: #ECECEC;">
+										<span class="time"><i class="far fa-clock"></i> ${hoursNotification} hours ago</span>
+										<h3 class="timeline-header border-0">${notification.content}
+											<button class="btn btn-primary">Xem chi tiết</button></h3>
+									</div>
+								</div>
+							`;
+						} else {
+							notificationHTML = `
+								<div class="time-label">
+								<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item" id="${notification.id}" style="background-color: #ECECEC;">
+										<span class="time"><i class="far fa-clock"></i> ${daysNotification} days ago</span>
+										<h3 class="timeline-header border-0">${notification.content}
+											<button class="btn btn-primary">Xem chi tiết</button></h3>
+									</div>
+								</div>
+							`;
+						}
+					} else {
+						if (minutesNotification <= 60) {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item bg-white" id="${notification.id}">
+										<span class="time"><i class="far fa-clock"></i> ${minutesNotification} minutes ago</span>
+										<h3 class="timeline-header border-0">${notification.content}
+											<button class="btn btn-primary">Xem chi tiết</button></h3>
+									</div>
+								</div>
+							`;
+						} else if (hoursNotification <= 24) {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item bg-white" id="${notification.id}">
+										<span class="time"><i class="far fa-clock"></i> ${hoursNotification} hours ago</span>
+										<h3 class="timeline-header border-0">${notification.content}
+											<button class="btn btn-primary">Xem chi tiết</button></h3>
+									</div>
+								</div>
+							`;
+						} else {
+							notificationHTML = `
+								<div class="time-label">
+									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
+								</div>
+								<div>
+									<div class="timeline-item bg-white" id="${notification.id}">
+										<span class="time"><i class="far fa-clock"></i> ${daysNotification} days ago</span>
+										<h3 class="timeline-header border-0">${notification.content}
+											<button class="btn btn-primary">Xem chi tiết</button></h3>
+									</div>
+								</div>
+							`;
+						}
+					}
+				}
+				
+				notificationsHTML += notificationHTML;
+			});
+			notificationsHTML += '<div><i class="far fa-clock bg-gray"></i></div>';
+			document.getElementById('allnotifications').innerHTML = notificationsHTML;
+			});
+		}
+
+		fillAllNotifications();
 	</script>
 	<!-- JQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -648,6 +930,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
 		crossorigin="anonymous"></script>
+		<div th:replace="~{flagment/user/userFootLink :: sellerFootLinkFragment}"></div>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
 	<!-- 	<div th:replace="~{flagment/account/footLink :: footLinkFragment}"></div> -->
 	<script th:src="@{/js/cart-ctrl.js}"></script>
 </body>

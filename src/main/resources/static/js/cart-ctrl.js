@@ -933,4 +933,18 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
         console.log(error);
       });
   };
+
+});
+
+app.controller("profile", function($scope, $http, $location, $window) {
+	$scope.info = [];
+	$scope.fillAmountOrderAndFollow = function(){
+		$http.get('/api/user/info').then(resp => {
+			$scope.info = resp.data;
+		  }).catch(function (err) {
+			console.error(err); 
+		  });
+	};
+	
+	$scope.fillAmountOrderAndFollow();
 });

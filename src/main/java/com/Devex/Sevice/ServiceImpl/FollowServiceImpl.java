@@ -90,6 +90,11 @@ public class FollowServiceImpl implements FollowService{
 	public int getCountFollowBySellerUsername(String username) {
 		return followRepository.getCountFollowBySellerUsername(username);
 	}
+
+	@Override
+	public int getCountFollowByCustomerUsername(String username) {
+		return followRepository.getCountFollowByCustomerUsername(username);
+	}
 	
 	
 }

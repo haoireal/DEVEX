@@ -40,4 +40,6 @@ public interface FollowService {
 
 	int getCountFollowBySellerUsername(String username);
 
+	int getCountFollowByCustomerUsername(String username);
+
 }
