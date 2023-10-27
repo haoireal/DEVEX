@@ -3,277 +3,294 @@
 <html lang="en">
 
 <head>
-	<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
-	<style>
-		.product-name {
+    <div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
+    <style>
+        .product-name {
             max-width: 180px; /* Đặt giới hạn chiều rộng, ví dụ 200px */
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-		
-	</style>
+
+    </style>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="myController">
-	<div class="wrapper">
-		<!-- Preloader -->
-		<div class="preloader flex-column justify-content-center align-items-center">
-			<img class="animation__wobble" src="/img/banner/logotitle.png" alt="AdminLTELogo" height="60" width="60">
-		</div>
+<div class="wrapper">
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__wobble" src="/img/banner/logotitle.png" alt="AdminLTELogo" height="60" width="60">
+    </div>
 
-		<div th:replace="~{flagment/seller/sellerHeader :: sellerHeaderFragment}"></div>
-		<div th:replace="~{flagment/seller/sellerMainSidebar :: sellerMainSidebarFragment}"></div>
-		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-			<section class="content-header">
-				<div class="container-fluid">
-					<div class="row mb-2">
-						<div class="col-sm-6">
-							<h1>Thông tin người dùng</h1>
-						</div>
-						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-								<li class="breadcrumb-item active">Người dùng</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-				<!-- /.container-fluid -->
-			</section>
+    <div th:replace="~{flagment/seller/sellerHeader :: sellerHeaderFragment}"></div>
+    <div th:replace="~{flagment/seller/sellerMainSidebar :: sellerMainSidebarFragment}"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Thông tin người dùng</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Người dùng</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </section>
 
-			<!-- Main content -->
-			<section class="content">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-3">
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
 
-							<!-- Profile Image -->
-							<div class="card card-primary card-outline">
-								<div class="card-body box-profile">
-									<div class="text-center">
-										<img id="profile-image" style="height: 80px;"
-											class="profile-user-img img-fluid img-circle"
-											src="https://i.stack.imgur.com/bl1g5.png?s=192&g=1"
-											alt="User profile picture" ng-click="openImageUploader()">
-									</div>
+                        <!-- Profile Image -->
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center"
+                                     style="position: relative; width: 100px;height: 100px;overflow: hidden;left: 50%;transform: translateX(-50%);">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                         style="border: 3px solid #adb5bd;margin: 0 auto;padding: 3px;object-fit: cover;position: absolute;top: 0;left: 0;width: 100%;height: 100%;"
+                                         src="/img/account/{{data.seller.avatar}}"
+                                         alt="User profile picture" ng-click="openImageUploader()">
+                                </div>
 
-									<h3 class="profile-username text-center">{{ data.seller.fullname }}</h3>
+                                <h3 class="profile-username text-center">{{ data.seller.fullname }}</h3>
 
-									<p class="text-muted text-center">{{ data.seller.username }}</p>
+                                <p class="text-muted text-center">{{ data.seller.username }}</p>
 
-									<ul class="list-group list-group-unbordered mb-3">
-										<li class="list-group-item"><b>Số lượng hóa đơn</b> <a
-												class="float-right">{{ data.amountOrder }}</a></li>
-										<li class="list-group-item"><b>Người theo dõi</b> <a
-												class="float-right">{{ data.amountFollow }}</a></li>
-										<li class="list-group-item"><b>Tổng số sản phẩm</b> <a
-												class="float-right">{{ data.amountProduct }}</a></li>
-										<li class="list-group-item"><b>Sản phẩm đã bán</b> <a
-												class="float-right">{{ data.amountProductSell }}</a></li>
-									</ul>
-								</div>
-								<!-- /.card-body -->
-							</div>
-							<!-- /.card -->
-						</div>
-						<!-- /.col -->
-						<div class="col-md-9">
-							<div class="card">
-								<div class="card-header p-2">
-									<ul class="nav nav-pills">
-										<li class="nav-item"><a class="nav-link active" href="#product"
-												data-toggle="tab">Sản phẩm</a></li>
-										<li class="nav-item"><a class="nav-link" href="#timeline"
-												data-toggle="tab">Nhật ký</a></li>
-										<li class="nav-item"><a class="nav-link" href="#infomation"
-												data-toggle="tab">Thông tin</a></li>
-										<li class="nav-item"><a class="nav-link" href="#noti"
-												data-toggle="tab">Thông báo</a></li>
-									</ul>
-								</div>
-								<!-- /.card-header -->
-								<div class="card-body">
-									<div class="tab-content">
-										<div class="active tab-pane" id="product">
-											<!-- Post -->
-											<div class="row">
-												<div class="col-3" ng-repeat="product in products">
-													<div class="card">
-														<div class="card-body">
-															<img ng-src="{{ product.nameImageProduct }}"
-																alt="Product Image" class="img-fluid rounded mx-auto d-block" style="height: 200px;">
-														</div>
-														<div class="card-footer bg-white">
-															<h5 class="card-title product-name fs-5">{{ product.name }}</h5><br>
-															<div class="text-center">
-																<b class="text-danger" ng-if="product.price == product.priceSale">{{ product.price }}<u class="text-danger">đ</u></b>
-																<del class="text-secondary" ng-if="product.price !== product.priceSale">{{ product.price }}<u class="text-secondary">đ</u></del>
-																<b class="text-danger" ng-if="product.price !== product.priceSale">{{ product.priceSale }}<u class="text-danger">đ</u></b>
-															</div>
-															<div class="text-center">
-																<b class="text-info">Đã bán {{ product.soldCount }}</b> 
-																<span>|</span>
-																<span>Còn lại {{ product.quantity }}</span>
-															</div>
-															<h5 class="text-center text-success" ng-if="product.active">Đang được bán</h5>
-															<h5 class="text-center text-danger" ng-if="!product.active">Chưa được bán</h5>
-															<div class="text-center">
-																<button class="btn btn-primary" ng-click="productDetail(product.id)">Xem</button>
-																<button class="btn btn-primary" ng-click="editProduct(product.id)">Sửa</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- /.post -->
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item"><b>Số lượng hóa đơn</b> <a
+                                            class="float-right">{{ data.amountOrder }}</a></li>
+                                    <li class="list-group-item"><b>Người theo dõi</b> <a
+                                            class="float-right">{{ data.amountFollow }}</a></li>
+                                    <li class="list-group-item"><b>Tổng số sản phẩm</b> <a
+                                            class="float-right">{{ data.amountProduct }}</a></li>
+                                    <li class="list-group-item"><b>Sản phẩm đã bán</b> <a
+                                            class="float-right">{{ data.amountProductSell }}</a></li>
+                                </ul>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header p-2">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item"><a class="nav-link active" href="#product"
+                                                            data-toggle="tab">Sản phẩm</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#timeline"
+                                                            data-toggle="tab">Nhật ký</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#infomation"
+                                                            data-toggle="tab">Thông tin</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#noti"
+                                                            data-toggle="tab">Thông báo</a></li>
+                                </ul>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="product">
+                                        <!-- Post -->
+                                        <div class="row">
+                                            <div class="col-3" ng-repeat="product in products">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <img ng-src="{{ product.nameImageProduct }}"
+                                                             alt="Product Image"
+                                                             class="img-fluid rounded mx-auto d-block"
+                                                             style="height: 200px;">
+                                                    </div>
+                                                    <div class="card-footer bg-white">
+                                                        <h5 class="card-title product-name fs-5">{{ product.name }}</h5>
+                                                        <br>
+                                                        <div class="text-center">
+                                                            <b class="text-danger"
+                                                               ng-if="product.price == product.priceSale">{{
+                                                                product.price }}<u class="text-danger">đ</u></b>
+                                                            <del class="text-secondary"
+                                                                 ng-if="product.price !== product.priceSale">{{
+                                                                product.price }}<u class="text-secondary">đ</u></del>
+                                                            <b class="text-danger"
+                                                               ng-if="product.price !== product.priceSale">{{
+                                                                product.priceSale }}<u class="text-danger">đ</u></b>
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <b class="text-info">Đã bán {{ product.soldCount }}</b>
+                                                            <span>|</span>
+                                                            <span>Còn lại {{ product.quantity }}</span>
+                                                        </div>
+                                                        <h5 class="text-center text-success" ng-if="product.active">Đang
+                                                            được bán</h5>
+                                                        <h5 class="text-center text-danger" ng-if="!product.active">Chưa
+                                                            được bán</h5>
+                                                        <div class="text-center">
+                                                            <button class="btn btn-primary"
+                                                                    ng-click="productDetail(product.id)">Xem
+                                                            </button>
+                                                            <button class="btn btn-primary"
+                                                                    ng-click="editProduct(product.id)">Sửa
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.post -->
 
-										</div>
-										<!-- /.tab-pane -->
-										<div class="tab-pane" id="timeline">
-											<!-- The timeline -->
-											<div class="timeline timeline-inverse" id="history">
-												<!-- timeline time label -->
-												<div class="time-label">
-													<span class="bg-danger"> Đây sẽ là dòng thời gian </span>
-												</div>
-												<!-- /.timeline-label -->
-												<!-- timeline item -->
-												<div>
-													<i class="fas fa-user bg-info"></i>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="timeline">
+                                        <!-- The timeline -->
+                                        <div class="timeline timeline-inverse" id="history">
+                                            <!-- timeline time label -->
+                                            <div class="time-label">
+                                                <span class="bg-danger"> Đây sẽ là dòng thời gian </span>
+                                            </div>
+                                            <!-- /.timeline-label -->
+                                            <!-- timeline item -->
+                                            <div>
+                                                <i class="fas fa-user bg-info"></i>
 
-													<div class="timeline-item">
+                                                <div class="timeline-item">
 														<span class="time"><i class="far fa-clock"></i> 5
 															mins ago</span>
 
-														<h3 class="timeline-header border-0">
-															<a href="#">Sarah Young</a> accepted your friend request
-														</h3>
-													</div>
-												</div>
-												<!-- END timeline item -->
-												<!-- timeline time label -->
-												<div class="time-label">
-													<span class="bg-success"> 1/1/1111 </span>
-												</div>
-												<!-- /.timeline-label -->
-												<!-- timeline item -->
-												<div>
-													<i class="fas fa-camera bg-purple"></i>
-													
-													<div class="timeline-item">
-														<span class="time"><i class="far fa-clock"></i> 2 days ago</span>
+                                                    <h3 class="timeline-header border-0">
+                                                        <a href="#">Sarah Young</a> accepted your friend request
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <!-- END timeline item -->
+                                            <!-- timeline time label -->
+                                            <div class="time-label">
+                                                <span class="bg-success"> 1/1/1111 </span>
+                                            </div>
+                                            <!-- /.timeline-label -->
+                                            <!-- timeline item -->
+                                            <div>
+                                                <i class="fas fa-camera bg-purple"></i>
 
-														<h3 class="timeline-header">
-															<a href="#">Mina Lee</a> uploaded new photos
-														</h3>
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
 
-														<div class="timeline-body">
-															<img src="https://placehold.it/150x100" alt="...">
-															<img src="https://placehold.it/150x100" alt="...">
-															<img src="https://placehold.it/150x100" alt="...">
-															<img src="https://placehold.it/150x100" alt="...">
-														</div>
-													</div>
-												</div>
-												<!-- END timeline item -->
-												<div>
-													<i class="far fa-clock bg-gray"></i>
-												</div>
-											</div>
-										</div>
-										<!-- /.tab-pane -->
+                                                    <h3 class="timeline-header">
+                                                        <a href="#">Mina Lee</a> uploaded new photos
+                                                    </h3>
 
-										<div class="tab-pane" id="noti">
-											<div class="timeline timeline-inverse" id="allnotifications">
-												<!-- timeline time label -->
-												<div class="time-label">
-													<span class="bg-danger"> Đây sẽ là dòng thời gian tb</span>
-												</div>
-												<!-- /.timeline-label -->
-												
-											</div>
-										</div>
+                                                    <div class="timeline-body">
+                                                        <img src="https://placehold.it/150x100" alt="...">
+                                                        <img src="https://placehold.it/150x100" alt="...">
+                                                        <img src="https://placehold.it/150x100" alt="...">
+                                                        <img src="https://placehold.it/150x100" alt="...">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END timeline item -->
+                                            <div>
+                                                <i class="far fa-clock bg-gray"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.tab-pane -->
 
-										<div class="tab-pane" id="infomation">
-												<div class="mb-3">
-													<label for="shopName" class="form-label">Shop Name</label>
-													<input ng-model="data.seller.shopName" placeholder="Shop name"
-														type="text" class="form-control" id="shopName" name="shopName"
-														required>
-												</div>
-												<div class="mb-3">
-													<label for="address" class="form-label">Address</label>
-													<input ng-model="data.seller.address" placeholder="Address"
-														type="text" class="form-control" id="address" name="address"
-														required>
-												</div>
-												<div class="mb-3">
-													<label for="phoneAddress" class="form-label">Phone Address</label>
-													<input ng-model="data.seller.phoneAddress"
-														placeholder="Phone Address" type="tel" class="form-control"
-														id="phoneAddress" name="phoneAddress" required>
-												</div>
-												<div class="mb-3">
-													<label for="description" class="form-label">Description</label>
-													<textarea ng-model="data.seller.description"
-														placeholder="Description" class="form-control" rows="3"
-														id="description" name="description" required></textarea>
-												</div>
-												<div class="mb-3">
-													<label for="mall" class="form-check-label me-4">In a Mall</label>
-													<input ng-model="data.seller.mall" type="checkbox"
-														class="form-check-input" id="mall" name="mall" disabled>
-												</div>
+                                    <div class="tab-pane" id="noti">
+                                        <div class="timeline timeline-inverse" id="allnotifications">
+                                            <!-- timeline time label -->
+                                            <div class="time-label">
+                                                <span class="bg-danger"> Đây sẽ là dòng thời gian tb</span>
+                                            </div>
+                                            <!-- /.timeline-label -->
 
-												<button id="submitButton" type="submit" ng-click="updateShop()"
-													class="btn btn-primary">Lưu</button>
+                                        </div>
+                                    </div>
 
-													<div class="text-center">
-														<button id="successbtn" hidden>Lưu</button>
-														<button id="failsebtn" hidden>Xóa</button>
-													</div>
-						
-													<div id="successModal" class="modal">
-														<div class="modal-content">
-															<span class="close">&times;</span>
-															<iframe
-																src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
-															<span id="content" class="text-success fs-3">Thêm thành công</span>
-														</div>
-													</div>
-						
-													<div id="failseModal" class="modal">
-														<div class="modal-content">
-															<span class="close">&times;</span>
-															<iframe
-																src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
-															<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
-														</div>
-													</div>
-										</div>
-										<!-- /.tab-pane -->
-									</div>
-									<!-- /.tab-content -->
-								</div>
-								<!-- /.card-body -->
-							</div>
-							<!-- /.card -->
-						</div>
-						<!-- /.col -->
-					</div>
-					<!-- /.row -->
-				</div>
-				<!-- /.container-fluid -->
-			</section>
-			<!-- /.content -->
-		</div>
-		<!-- /.content-wrapper -->
-		<div th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
-		<div th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
-	</div>
+                                    <div class="tab-pane" id="infomation">
+                                        <div class="mb-3">
+                                            <label for="shopName" class="form-label">Shop Name</label>
+                                            <input ng-model="data.seller.shopName" placeholder="Shop name"
+                                                   type="text" class="form-control" id="shopName" name="shopName"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="address" class="form-label">Address</label>
+                                            <input ng-model="data.seller.address" placeholder="Address"
+                                                   type="text" class="form-control" id="address" name="address"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="phoneAddress" class="form-label">Phone Address</label>
+                                            <input ng-model="data.seller.phoneAddress"
+                                                   placeholder="Phone Address" type="tel" class="form-control"
+                                                   id="phoneAddress" name="phoneAddress" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="description" class="form-label">Description</label>
+                                            <textarea ng-model="data.seller.description"
+                                                      placeholder="Description" class="form-control" rows="3"
+                                                      id="description" name="description" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="mall" class="form-check-label me-4">In a Mall</label>
+                                            <input ng-model="data.seller.mall" type="checkbox"
+                                                   class="form-check-input" id="mall" name="mall" disabled>
+                                        </div>
+
+                                        <button id="submitButton" type="submit" ng-click="updateShop()"
+                                                class="btn btn-primary">Lưu
+                                        </button>
+
+                                        <div class="text-center">
+                                            <button id="successbtn" hidden>Lưu</button>
+                                            <button id="failsebtn" hidden>Xóa</button>
+                                        </div>
+
+                                        <div id="successModal" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close">&times;</span>
+                                                <iframe
+                                                        src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+                                                <span id="content" class="text-success fs-3">Thêm thành công</span>
+                                            </div>
+                                        </div>
+
+                                        <div id="failseModal" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close">&times;</span>
+                                                <iframe
+                                                        src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+                                                <span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                </div>
+                                <!-- /.tab-content -->
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <div th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
+    <div th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
+</div>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
