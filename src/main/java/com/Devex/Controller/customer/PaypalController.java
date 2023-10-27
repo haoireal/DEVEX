@@ -27,6 +27,7 @@ public class PaypalController {
         System.out.println(list);
         try {
             String approvalLink = paypalService.authorizePayment(list);
+            session.set("payment", "paypal");
             
             return "redirect:" + approvalLink;
              

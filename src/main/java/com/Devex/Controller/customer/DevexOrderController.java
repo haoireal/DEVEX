@@ -44,8 +44,8 @@ public class DevexOrderController {
     @Autowired
     CategoryDetailService categoryDetailService;
 
-    @Autowired
-    CustomerServiceImpl.FileManagerService fileManagerService;
+//    @Autowired
+//    CustomerServiceImpl.FileManagerService fileManagerService;
 
     @Autowired
     ImageProductService imageProductService;

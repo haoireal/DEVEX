@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import com.Devex.Entity.Order;
+
+import jakarta.transaction.Transactional;
 
 
 public interface OrderRepository extends JpaRepository<Order, String>{
@@ -213,4 +213,9 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 			"And od.status.id = ?2 " +
 			"ORDER BY o.createdDay DESC")
 	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Order o SET o.total = :total WHERE o.id like :id")
+	void updatePriceOrder(@Param("total") double total, @Param("id")  String id);
 }
