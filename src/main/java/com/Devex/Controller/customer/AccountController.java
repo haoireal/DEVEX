@@ -1,19 +1,15 @@
 package com.Devex.Controller.customer;
 
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.Devex.DTO.MailOtpDTO;
 import com.Devex.DTO.OtpRequestDTO;
@@ -32,13 +28,7 @@ import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.UserRoleService;
 import com.Devex.Sevice.UserService;
 
-import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
-
-import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 @Controller
 @Slf4j
@@ -103,7 +93,7 @@ public class AccountController {
             System.out.println(3);
             type = "phone";
         }
-		System.out.println(user);
+//		System.out.println(user);
 		System.out.println(4);
 		if(user != null) {
 			model.addAttribute("message", "Email hoặc số điện thoại này đã tồn tại!");
