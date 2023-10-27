@@ -67,6 +67,18 @@ public class VoucherAPIController {
 		}
 	}
 	
+	@GetMapping("/prod-voucher/all")
+	public ResponseEntity<List<VoucherProduct>> getProdVoucherAll() {
+		
+		List<VoucherProduct> list = voucherProductService.findAll();
+
+		if (list != null) {
+			return ResponseEntity.ok(list);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
 	@GetMapping("/saved/list")
 	public ResponseEntity<List<VoucherDetails>> getAllVoucherOfUser() {
 		User user = session.get("user");

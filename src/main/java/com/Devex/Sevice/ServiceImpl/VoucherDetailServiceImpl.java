@@ -90,6 +90,11 @@ public class VoucherDetailServiceImpl implements VoucherDetailService{
 	public void deleteAll() {
 		voucherDetailRepository.deleteAll();
 	}
+
+	@Override
+	public void appliedVoucher(String username, Integer voucher) {
+		voucherDetailRepository.appliedVoucher(username, voucher);
+	}
 	
 	
 	

@@ -40,4 +40,6 @@ public interface VoucherDetailService {
 
 	List<VoucherDetails> findAllByUsername(String username);
 
+	void appliedVoucher(String username, Integer voucher);
+
 }

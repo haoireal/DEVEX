@@ -176,7 +176,8 @@
     <div id="foot-shop-bill" class="col p-3">
       <div id="voucher" class="row pb-2">
         <div class="col-4">Chọn Voucher Shop <i class="bi bi-ticket-perforated"></i></div>
-        <div class="col-4 text-secondary">Chưa có Voucher</div>
+        <div class="col-4 text-secondary" ng-if="!cart.isShopVoucherApplied(cart.shopGroupsOrder[idShop][0].idShop)">Chưa có Voucher</div>
+        <div class="col-4 text-secondary" ng-if="cart.isShopVoucherApplied(cart.shopGroupsOrder[idShop][0].idShop)">Đã có Voucher</div>
         <a
                 href="#"
                 class="col-4"
@@ -194,9 +195,9 @@
         <div class="col-4 "></div>
         <div class="col-4 ">
           <p class="mb-0">
-            Tổng tiền (<span>x</span> sản phẩm):
+            Tổng tiền (<span >{{ cart.countItemShop(cart.shopGroupsOrder[idShop][0].idShop) }}</span> sản phẩm):
             <span class="text-danger" style="font-weight: 700; font-size: 20px"
-                  id="total-product-price">1.000.000</span>
+                  id="total-product-price" ng-bind="formatMoney(cart.amountItemShop(cart.shopGroupsOrder[idShop][0].idShop))"></span>
             VNĐ
           </p>
         </div>
@@ -210,7 +211,7 @@
         <!-- Modal Header -->
         <div class="modal-header" style="background: bisque">
           <h4 class="modal-title" style="margin: 0 auto">
-            Voucher của Shop
+            Voucher của <span ng-bind="cart.shopSelectedOpenVoucher"></span>
           </h4>
         </div>
 
@@ -254,7 +255,7 @@
                       class="text-muted text-sm"
                       style="font-size: 12px"
                       >Đơn hàng tối thiểu:
-                      <span style="font-size: 14px">100000đ</span></span
+                      <span style="font-size: 14px">{{ formatMoney(item.minPrice) }}đ</span></span
                     >
                     <br />
                     <span
@@ -272,17 +273,26 @@
                     >
                       <button
                         class="btn btn-sm btn-warning"
-                        ng-disabled="!cart.isItemInMyVoucher(item)"
+                        ng-disabled="cart.isShowApplyButtonShop(item)"
                         ng-click="cart.applyVoucher(item)"
                       >
                         Áp dụng
                       </button>
                       <button
                         class="btn btn-sm btn-primary"
+                        ng-if="!cart.isItemInMyVoucher(item)"
                         ng-disabled="cart.isItemInMyVoucher(item)"
                         ng-click="cart.saveVoucher(item)"
                       >
                         <i class="fas fa-save"></i> Lưu
+                      </button>
+                      <button
+                        class="btn btn-sm btn-primary"
+                        ng-if="cart.isItemInMyVoucher(item)"
+                        ng-disabled="cart.isItemInMyVoucher(item)"
+                        ng-click="cart.saveVoucher(item)"
+                      >
+                        <i class="fas fa-save"></i> Đã Lưu
                       </button>
                     </div>
                   </div>
@@ -297,12 +307,14 @@
             <button
               class="btn btn-sm btn-light"
               style="padding-left: 20px; padding-right: 20px"
+              ng-click="cart.cancelVoucherShop()"
             >
               Huỷ
             </button>
             <button
               class="btn btn-sm btn-success"
               style="padding-left: 20px; padding-right: 20px"
+              data-bs-dismiss="modal"
             >
               OK
             </button>
@@ -366,7 +378,7 @@
                       class="text-muted text-sm"
                       style="font-size: 12px"
                       >Đơn hàng tối thiểu:
-                      <span style="font-size: 14px">100000đ</span></span
+                      <span style="font-size: 14px">{{ formatMoney(item.minPrice) }}đ</span></span
                     >
                     <br />
                     <span
@@ -384,17 +396,26 @@
                     >
                       <button
                         class="btn btn-sm btn-warning"
-                        ng-disabled="!cart.isItemInMyVoucher(item)"
+                        ng-disabled="cart.isShowApplyButtonShip(item)"
                         ng-click="cart.applyVoucher(item)"
                       >
                         Áp dụng
                       </button>
                       <button
                         class="btn btn-sm btn-primary"
+                        ng-if="!cart.isItemInMyVoucher(item)"
                         ng-disabled="cart.isItemInMyVoucher(item)"
                         ng-click="cart.saveVoucher(item)"
                       >
                         <i class="fas fa-save"></i> Lưu
+                      </button>
+                      <button
+                        class="btn btn-sm btn-primary"
+                        ng-if="cart.isItemInMyVoucher(item)"
+                        ng-disabled="cart.isItemInMyVoucher(item)"
+                        ng-click="cart.saveVoucher(item)"
+                      >
+                        <i class="fas fa-save"></i> Đã Lưu
                       </button>
                     </div>
                   </div>
@@ -443,7 +464,7 @@
                       class="text-muted text-sm"
                       style="font-size: 12px"
                       >Đơn hàng tối thiểu:
-                      <span style="font-size: 14px">100000đ</span></span
+                      <span style="font-size: 14px">{{ formatMoney(item.minPrice) }}đ</span></span
                     >
                     <br />
                     <span
@@ -461,17 +482,26 @@
                     >
                       <button
                         class="btn btn-sm btn-warning"
-                        ng-disabled="!cart.isItemInMyVoucher(item)"
+                        ng-disabled="cart.isShowApplyButtonDevex(item)"
                         ng-click="cart.applyVoucher(item)"
                       >
                         Áp dụng
                       </button>
                       <button
                         class="btn btn-sm btn-primary"
+                        ng-if="!cart.isItemInMyVoucher(item)"
                         ng-disabled="cart.isItemInMyVoucher(item)"
                         ng-click="cart.saveVoucher(item)"
                       >
                         <i class="fas fa-save"></i> Lưu
+                      </button>
+                      <button
+                        class="btn btn-sm btn-primary"
+                        ng-if="cart.isItemInMyVoucher(item)"
+                        ng-disabled="cart.isItemInMyVoucher(item)"
+                        ng-click="cart.saveVoucher(item)"
+                      >
+                        <i class="fas fa-save"></i> Đã Lưu
                       </button>
                     </div>
                   </div>
@@ -486,12 +516,14 @@
             <button
               class="btn btn-sm btn-light"
               style="padding-left: 20px; padding-right: 20px"
+              ng-click="cart.cancelVoucherDevex()"
             >
               Huỷ
             </button>
             <button
               class="btn btn-sm btn-success"
               style="padding-left: 20px; padding-right: 20px"
+              data-bs-dismiss="modal"
             >
               OK
             </button>
@@ -510,7 +542,8 @@
         ">
     <div id="total-voucher" class="row pb-2 text-center mb-2">
       <div class="col-2">Chọn Voucher <span class=""><i class="bi bi-ticket-perforated"></i></span></div>
-      <div class="col-8 text-secondary">Chưa có Voucher</div>
+      <div class="col-8 text-secondary" ng-if="!cart.isShipVoucherApplied() && !cart.isDevexVoucherApplied()">Chưa có Voucher</div>
+      <div class="col-8 text-secondary" ng-if="cart.isShipVoucherApplied() || cart.isDevexVoucherApplied()">Đã có Voucher</div>
       <a href="#" class="col-2" ng-click="cart.openModalVoucherDevex()"
               >Chọn Voucher</a
             >
@@ -546,13 +579,19 @@
         <p class="mb-0" style="float: right">
           Phí vận chuyển:
           <span class="text-danger" style="font-weight: 700; font-size: 16px"
-                id="total-deli">100.000</span>
+                id="total-deli" ng-bind="formatMoney(cart.amountShip)"></span>
+          VNĐ
+        </p>
+        <p class="mb-0" style="float: right">
+          Tổng tiền tính luôn ship:
+          <span class="text-danger" style="font-weight: 700; font-size: 16px"
+                id="total-sub" ng-bind="formatMoney(cart.amountShip + cart.amountDetail)"></span>
           VNĐ
         </p>
         <p class="mb-0" style="float: right">
           Tổng thanh toán:
           <span class="text-danger" style="font-weight: 700; font-size: 24px"
-                id="total-price">1.000.000</span>
+                id="total-price" ng-bind="formatMoney(cart.amountPay)"></span>
           VNĐ
         </p>
       </div>
