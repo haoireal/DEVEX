@@ -7,6 +7,9 @@
                     <nav class="navbar float-end navbar-expand-lg navbar-light" style="height: 35px">
                         <div class="collapse navbar-collapse text-end" id="navbarNavDropdown">
                             <ul class="text-end navbar-nav ml-auto">
+								<li class="nav-item">
+                                    <a class="nav-link" href="/ad/home" th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}">Admin Page</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/seller/home">Bán hàng</a>
                                 </li>
@@ -282,6 +285,9 @@
                     <nav class="navbar float-end navbar-expand-lg " style="height: 35px">
                         <div class="collapse navbar-collapse text-end text-white" id="navbarNavDropdown">
                             <ul class="text-end navbar-nav ml-auto">
+								<li class="nav-item">
+                                    <a class="nav-link text-white" href="/ad/home" th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}">Admin Page</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="/seller/home">Bán hàng</a>
                                 </li>
