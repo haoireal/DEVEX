@@ -65,6 +65,8 @@ public class ProductDetailController {
 			
 		}
 		
+		
+		
 		//end.
 		Product seller = productService.findProductById(id);
 		Product product = productService.findById(id).orElse(new Product());
@@ -103,7 +105,13 @@ public class ProductDetailController {
 		// Tìm theo shop bán
         uniqueProductList.removeAll(productService.findProductBySellerUsername("%" + seller.getSellerProduct().getUsername() + "%"));
 //		Collections.shuffle(uniqueProductList);
-		
+		boolean shop= true;
+		if(user!=null) {
+			if(user.getUsername().equals(seller.getSellerProduct().getUsername())) {
+	        	shop=false;
+	        }
+		}
+        
 		model.addAttribute("shopProduct", listPrS); // sản phẩm khác của shop
 		model.addAttribute("products", uniqueProductList);// gợi ý sản phẩm theo keyword
 		model.addAttribute("listColor", listColor);
@@ -111,6 +119,7 @@ public class ProductDetailController {
 		model.addAttribute("product", product);
 		model.addAttribute("seller", seller);
 		model.addAttribute("id",product.getId());
+		model.addAttribute("shop", shop);
 		return "user/productDetail";
 
 	}
