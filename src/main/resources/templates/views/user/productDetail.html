@@ -461,8 +461,9 @@
 
                                 </button>
                             </div>
+                            <input hidden th:value="*{sellerProduct.username}" id="username">
                             <div class="col-6 d-flex">
-                                <button class="float-end btn_seeShop">
+                                <button class="float-end btn_seeShop" id="showpage" onclick="showpageseller()">
                                     <div class="content_seeShop ">
                                         <i class="fs-6 fa-solid fa-shop"></i> <span style="font-size: .875rem;">Xem
 												Shop</span>
@@ -1241,6 +1242,12 @@
             console.error(error);
         }
     });
+</script>
+<script>
+    function showpageseller(){
+        var sellerUsername = document.getElementById('username');
+        window.location.href = "/pageseller?username=" + sellerUsername.value;
+    }
 </script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>

@@ -147,10 +147,16 @@ public class DevexOrderController {
     @GetMapping("/order/huy")
     public String huyDonHang(@RequestParam("id") String id) {
         User u = sessionService.get("user");
+        String userfrom = u.getUsername();
+        String userto = "";
+        String link = "http://localhost:8888/details/";
         List<OrderDetails> listOrderDetails = sessionService.get("listIdOrderDetails");
         for (OrderDetails orderDetails : listOrderDetails) {
             detailService.updateIdOrderDetailsStatus(1007, orderDetails.getId());
+            userto = orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername();
         }
+        System.out.println(userto);
+//        notiService.sendNotification(id, id, id, id, id);
         return "redirect:/orderDetail/" + id;
     }
     private HashMap<KeyBillDTO,List<OrderDetails>> setHashMapBillDetail(HashMap<KeyBillDTO,List<OrderDetails>> allOrderByShop,List<OrderDetails> allOrder){
@@ -200,8 +206,10 @@ public class DevexOrderController {
         String userfrom = u.getUsername();
         String userto = od.getProductVariant().getProduct().getSellerProduct().getUsername();
         String link = "http://localhost:8888/details/"+od.getProductVariant().getProduct().getId();
-        notiService.send(userfrom,userto,link,"comment");
-
+        String object = od.getProductVariant().getProduct().getName();
+        notiService.sendNotification(userfrom,userto,link,"comment", object);
+        notiService.sendHistory(userfrom, userto, link, "comment", object);
+        
         return "redirect:/details/"+od.getProductVariant().getProduct().getId()+"#comment";
     }
 }

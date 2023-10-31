@@ -934,9 +934,59 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       });
   };
 
-});
+	$scope.payment = "cash";
 
-app.controller("profile", function($scope, $http, $location, $window) {
+	//	$scope.checkPayment = function() {
+	//		var payment = document.getElementsByName("pay").value;
+	//		if(payment === "paypal") {
+	//			$scope.payment = "paypal";
+	//		}else if(payment === "vnpay") {
+	//			$scope.payment = "vnpay";
+	//		}else {
+	//			$scope.payment = "cash";
+	//		}
+	//	}
+
+	$scope.purchase = function() {
+		// Thực hiện đặt hàng
+		const requestDataDTO = {
+			itemsOrderSession: $cart.itemsOrderSession,
+			items: $cart.voucherApply
+		};
+		var url = `${host}/cart/order`;
+		$http
+			.post(url, requestDataDTO)
+			.then((resp) => {
+				//				alert("Đặt hàng thành công!");
+				this.message = "Đặt hàng thành công!";
+				$('#ModalOrderMessage').modal('show');
+				console.log(resp);
+				$cart.selectAll = true;
+				$cart.toggleSelectAll();
+				$cart.loadProductCart();
+//				sessionStorage.removeItem('itemsOrder');
+				var form = document.createElement("form");
+	            form.method = "POST";
+				console.log($scope.payment);
+	            if ($scope.payment === "paypal") {
+	                form.action = "/paypal-payment"; // Thay thế bằng URL tương ứng
+	            } else if ($scope.payment === "vnpay") {
+	                form.action = "/submitOrder"; // Thay thế bằng URL tương ứng
+	            } else {
+	                form.action = "/cash-payment"; // Thay thế bằng URL tương ứng
+	            }
+	            // Thêm form vào trang web và gửi POST request
+         	    document.body.appendChild(form);
+        	    form.submit();
+			})
+			.catch((error) => {
+				this.message = "Lỗi khi đặt hàng!";
+				$('#ModalOrderMessage').modal('show');
+				console.log(error);
+			});
+	};
+
+
 	$scope.info = [];
 	$scope.fillAmountOrderAndFollow = function(){
 		$http.get('/api/user/info').then(resp => {
@@ -947,4 +997,5 @@ app.controller("profile", function($scope, $http, $location, $window) {
 	};
 	
 	$scope.fillAmountOrderAndFollow();
+	
 });

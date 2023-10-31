@@ -5,5 +5,7 @@ import jakarta.mail.MessagingException;
 
 public interface NotiService {
 		
-	void send(String userFrom,String userTo,String link, String type);
+	void sendNotification(String userFrom,String userTo,String link, String type, String object);
+	
+	void sendHistory(String userFrom,String userTo,String link, String type, String object);
 }
