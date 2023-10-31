@@ -6,11 +6,15 @@
 	<div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
 	<style>
 		.product-name {
-            max-width: 200px; /* Đặt giới hạn chiều rộng, ví dụ 200px */
+            max-width: 100px; /* Đặt giới hạn chiều rộng, ví dụ 200px */
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+		#productTableBody{
+			height: 200px;
+			
+		}
 	</style>
 </head>
 
@@ -354,7 +358,7 @@
 														<th></th>
 													</tr>
 												</thead>
-												<tbody id="productTableBody" style="overflow-y: scroll; height: 200px;">
+												<tbody id="productTableBody">
 												</tbody>
 											</table>
 										</div>

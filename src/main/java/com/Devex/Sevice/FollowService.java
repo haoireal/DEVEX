@@ -1,5 +1,6 @@
 package com.Devex.Sevice;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +42,7 @@ public interface FollowService {
 	int getCountFollowBySellerUsername(String username);
 
 	int getCountFollowByCustomerUsername(String username);
+
+	void insertFollow(String userId, String sellerId, Date creadtedday);
 
 }

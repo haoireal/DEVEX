@@ -658,10 +658,7 @@ app.controller("cart-ctrl", function($scope, $http, $location, $window) {
 				console.log(error);
 			});
 	};
-	
-});
 
-app.controller("profile", function($scope, $http, $location, $window) {
 	$scope.info = [];
 	$scope.fillAmountOrderAndFollow = function(){
 		$http.get('/api/user/info').then(resp => {
@@ -672,4 +669,5 @@ app.controller("profile", function($scope, $http, $location, $window) {
 	};
 	
 	$scope.fillAmountOrderAndFollow();
+	
 });

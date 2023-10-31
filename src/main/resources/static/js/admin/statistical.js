@@ -300,6 +300,8 @@
 						`;
 						tableBody.appendChild(row);
 					});
+					tableBody.style.height = 200;
+					tableBody.style.overflowY = scroll;
 				});
 		}
 
