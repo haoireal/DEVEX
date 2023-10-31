@@ -48,6 +48,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     $scope.cart.changeQty(item.id, item.quantity);
   };
 
+
   var $voucher = ($scope.voucher = {
     items: [],
     itemsApplied: [],
@@ -118,7 +119,6 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     colors: [],
     selectedProduct: [],
     moneyShip: 0,
-
     //	Voucher
     voucherAll: [],
     voucherShop: [],
@@ -172,6 +172,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     // mở modal voucher của shop
     openModalVoucherShop: function (idShop) {
       this.groupVoucherShop(idShop);
+
       this.shopSelectedOpenVoucher = idShop;
 
       console.log(this.shopSelectedOpenVoucher);
@@ -194,6 +195,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
         // console.log(this.myVoucher[0].voucher);
       });
     },
+
 
     loadProdVoucher() {
       this.prodVoucher = {};
@@ -220,6 +222,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       //Kiểm tra xem item.id có tồn tại trong myVoucher hay không
       return this.myVoucher.some((voucher) => voucher.voucher.id === item.id);
     },
+
 
     // check voucher có đang được apply không
     isItemInVoucherClicked(item) {
@@ -616,7 +619,6 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     },
 
 
-
     get amount() {
       // tổng thành tiền các mặt hàng trong giỏ
       return this.itemsOrder
@@ -723,6 +725,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     isItemChecked(id) {
       return this.itemsOrder.some((item) => item.id === id);
     },
+
 
     checkQtyToBuy() {
       
@@ -899,6 +902,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     // Thực hiện đặt hàng
     const requestDataDTO = {
       itemsOrderSession: $cart.itemsOrderSession,
+
       voucherApply: $cart.voucherApply,
     };
     var url = `${host}/cart/order`;
@@ -908,6 +912,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
         //				alert("Đặt hàng thành công!");
         this.message = "Đặt hàng thành công!";
         $("#ModalOrderMessage").modal("show");
+
         console.log(requestDataDTO);
         $cart.selectAll = true;
         $cart.toggleSelectAll();
@@ -934,7 +939,67 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       });
   };
 
-	$scope.payment = "cash";
+  //*BEGIN FLASHSALE
+  $scope.dataTime = [];
+  $scope.getTimeFlashSale = function () {
+    var countdownButton = document.getElementById("countdown-btn");
+    var minuteButton = document.getElementById("minute-btn");
+    var secondButton = document.getElementById("second-btn");
+
+    $http
+      .get("/rest/getTimeFlashSale")
+      .then(function (response) {
+        var data = response.data;
+
+        var firstTime = new Date(data.firstTime);
+        var lastTime = new Date(data.lastTime);
+        var currentTime = new Date();
+
+        var remainingMilliseconds = lastTime - currentTime;
+        var remainingHours = Math.floor(remainingMilliseconds / 3600000);
+        if (remainingHours < 10) {
+          remainingHours = "0" + remainingHours;
+        }
+
+        var remainingMinutes = Math.floor(
+          (remainingMilliseconds % 3600000) / 60000
+        );
+        if (remainingMinutes < 10) {
+          remainingMinutes = "0" + remainingMinutes;
+        }
+        var remainingSeconds = Math.floor(
+          (remainingMilliseconds % 60000) / 1000
+        );
+        if (remainingSeconds < 10) {
+          remainingSeconds = "0" + remainingSeconds;
+        }
+
+        $scope.countdownString =
+          padNumber(remainingHours) +
+          ":" +
+          padNumber(remainingMinutes) +
+          ":" +
+          padNumber(remainingSeconds);
+
+        countdownButton.innerHTML = remainingHours;
+        minuteButton.innerHTML = remainingMinutes;
+        secondButton.innerHTML = remainingSeconds;
+
+        // Gọi lại hàm sau mỗi giây
+        setTimeout($scope.getTimeFlashSale, 1000);
+      })
+      .catch(function (err) {
+        console.error(err); // Xử lý lỗi khi gọi API
+        // alert('Có lỗi xảy ra khi gọi API');
+      });
+
+    function padNumber(number) {
+      return number.toString().padStart(2, "0");
+    }
+  };
+
+  $scope.getTimeFlashSale();
+  //!END FLASHSALE
 
 	//	$scope.checkPayment = function() {
 	//		var payment = document.getElementsByName("pay").value;
@@ -946,7 +1011,8 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 	//			$scope.payment = "cash";
 	//		}
 	//	}
-
+  //*BEGIN THANH TOAN
+	$scope.payment = "cash";
 	$scope.purchase = function() {
 		// Thực hiện đặt hàng
 		const requestDataDTO = {
@@ -985,7 +1051,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 				console.log(error);
 			});
 	};
-
+//!END THANH TOAN
 
 	$scope.info = [];
 	$scope.fillAmountOrderAndFollow = function(){

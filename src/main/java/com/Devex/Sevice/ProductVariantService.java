@@ -62,4 +62,8 @@ public interface ProductVariantService {
 
 	ProductVariant findProductVariantByProductId(String id);
 
+	void newProductVariant(Integer quantity, Double price, Double priceSale, String size, String color, String productId);
+
+	void updatePriceSale(double priceSale, int id);
+
 }

@@ -53,7 +53,7 @@ public class ProductDetailController {
 
 	@RequestMapping("/details/{id}")
 	public String details(ModelMap model, @PathVariable("id") String id , HttpServletRequest request) {
-	
+		System.out.println("SSS"+ id);
 		session.set("url", "/details/" + id);
 		//Lưu Lịch Sử Sản phẩm
 		User user = session.get("user");
@@ -70,6 +70,8 @@ public class ProductDetailController {
 		//end.
 		Product seller = productService.findProductById(id);
 		Product product = productService.findById(id).orElse(new Product());
+		
+//		System.out.println("SSSS" + product.getProductVariants().get(0).getPriceSale());
 		List<String> listSize = new ArrayList<>();
 		product.getProductVariants().forEach(sv -> {
 			if (!listSize.contains(sv.getSize())) {
@@ -105,6 +107,7 @@ public class ProductDetailController {
 		// Tìm theo shop bán
         uniqueProductList.removeAll(productService.findProductBySellerUsername("%" + seller.getSellerProduct().getUsername() + "%"));
 //		Collections.shuffle(uniqueProductList);
+
 		boolean shop= true;
 		if(user!=null) {
 			if(user.getUsername().equals(seller.getSellerProduct().getUsername())) {

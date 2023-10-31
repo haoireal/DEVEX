@@ -36,6 +36,10 @@ public interface FlashSalesTimeService {
 
 	FlashSaleTime findFlashSaleTimesByTimeNow();
 
+	FlashSaleTime findFlashSaleTimesByTimeFuture();
+
+
+
 	
 
 
