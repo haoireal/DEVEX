@@ -50,30 +50,30 @@ public class Product implements Serializable{
     private Integer soldCount;
 	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne()
 	@JoinColumn(name = "Shop_ID")
 	private Seller sellerProduct;
 	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne()
 	@JoinColumn(name = "Category_ID")
 	private CategoryDetails categoryDetails;
 	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne()
 	@JoinColumn(name = "Brand_ID")
 	private ProductBrand productbrand;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "product")
 	private List<ImageProduct> imageProducts;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "product")
 	private List<ProductVariant> productVariants;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "productComment",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "productComment")
 	private List<Comment> comments;
 
 }

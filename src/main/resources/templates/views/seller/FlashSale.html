@@ -435,7 +435,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat=" item in dataProductFlashSales ">
+                      <tr ng-repeat=" item  in dataProductFlashSales ">
                         <td>
                           <div class="d-flex align-items-center">
                             <div class="me-3">
@@ -452,15 +452,13 @@
                         </td>
                         <td class="align-middle">
                           <div>
-                            <span class="price" [(ngModel)]="price"
+                            <span class="price {{$index}}" [(ngModel)]="price"
                               >{{item.productVariants[0].price | currency : "₫"
                               : 0}}</span
                             >
-                            <br /><span
-                              class="discount"
-                              ng-bind="'Giảm: ' + discount + '%'"
-                              ng-if="discount"
-                            ></span>
+                            <br /><span class="text-danger" id="discount"
+                              >100%</span
+                            >
                           </div>
                         </td>
                         <td class="align-middle">
@@ -472,8 +470,9 @@
                               max="{{item.productVariants[0].price}}"
                               id="priceSale"
                               class="form-control priceSale"
+                              name="priceSale"
                               ng-model="priceSale"
-                              ng-change="handlePriceChange(this)"
+                              ng-change="handlePriceChange(this,{{item.productVariants[0].price}},{{$index}})"
                               placeholder="{{item.productVariants[0].price | currency : '₫' : 0}}"
                             />
                           </div>
@@ -481,15 +480,19 @@
                         <td class="align-middle">
                           <div class="input-group">
                             <input
+                              min="1"
                               type="number"
                               class="form-control"
                               id="amountSell"
+                              max="{{item.productVariants[0].quantity}}"
                             />
                           </div>
                         </td>
                         <td class="align-middle">
                           <div class="input-group">
                             <input
+                              min="1"
+                              max="{{item.productVariants[0].quantity}}"
                               type="number"
                               class="form-control"
                               id="amountOrder"
@@ -549,6 +552,9 @@
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
       <script th:src="@{/js/SellerFlashSale.js}"></script>
+      <script>
+        let discount = 0;
+      </script>
     </body>
   </html>
 </html>

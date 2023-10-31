@@ -30,10 +30,14 @@ public interface FlashSalesTimeRespository extends JpaRepository<FlashSaleTime, 
 	List<FlashSaleTime> findFlashSaleTimesByDate(@Param("year") int year, @Param("month") int month, @Param("day") int day);
 	
 	
-//	@Modifying
+
 	@Transactional
 	@Query(value = "SELECT * FROM Flashsale_Time t WHERE t.Firsttime <= GETDATE() AND t.Lasttime > GETDATE()", nativeQuery = true)
 	FlashSaleTime findFlashSaleTimesByTimeNow();
+	
+	@Transactional
+	@Query(value = "SELECT * FROM Flashsale_Time t WHERE t.Firsttime > GETDATE()", nativeQuery = true)
+	FlashSaleTime findFlashSaleTimesByTimeFuture();
 
 
 

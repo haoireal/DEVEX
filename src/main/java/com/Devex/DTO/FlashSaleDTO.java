@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FlashSaleDTO {
-	String discount;
-	String amountSell;
-	String amountOrder;
+	Double discount;
+	int amountSell;
+	int amountOrder;
 	Boolean status;
 	int fashSaleTimeId;
 	int productVariantId;

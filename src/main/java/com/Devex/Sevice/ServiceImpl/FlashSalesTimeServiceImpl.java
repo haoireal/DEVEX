@@ -74,6 +74,13 @@ public class FlashSalesTimeServiceImpl implements FlashSalesTimeService{
 		return flashSalesTimeRespository.findFlashSaleTimesByTimeNow();
 	}
 
+	@Override
+	public FlashSaleTime findFlashSaleTimesByTimeFuture() {
+		return flashSalesTimeRespository.findFlashSaleTimesByTimeFuture();
+	}
+
+
+
 	
 
 

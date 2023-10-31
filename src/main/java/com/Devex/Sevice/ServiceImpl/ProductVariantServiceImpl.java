@@ -148,6 +148,18 @@ public class ProductVariantServiceImpl implements ProductVariantService{
 	public ProductVariant findProductVariantByProductId(String id) {
 		return productVariantRepository.findProductVariantByProductId(id);
 	}
+
+	@Override
+	public void newProductVariant(Integer quantity, Double price, Double priceSale, String size, String color,
+			String productId) {
+		productVariantRepository.newProductVariant(quantity, price, priceSale, size, color, productId);
+	}
+
+	@Transactional
+	@Override
+	public void updatePriceSale(double priceSale, int id) {
+		productVariantRepository.updatePriceSale(priceSale, id);
+	}
 	
 	
 }

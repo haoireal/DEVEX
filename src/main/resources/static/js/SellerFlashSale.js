@@ -215,21 +215,18 @@ app.controller("myController", function ($scope, $http) {
     console.log($scope.dataProductFlashSales);
     $scope.closeModel1();
   };
-  // $scope.discount  = 0; // Ban đầu, giá trị priceSale là 0 hoặc giá trị mặc định của bạn
-  // // $scope.priceSale = 0;
-  // $scope.price = null;
-  // $scope.handlePriceChange = function() {
-  //   // Lấy giá trị từ ô input priceSale và chuyển đổi sang số
-  //   var inputValue = document.getElementById("priceSale").value;
 
-  //   // var priceSaleValue = $scope.priceSale;
-  //   console.log(inputValue); // In ra giá trị trong console  // console.log( $scope.priceSale);
-  //   const originalPrice = $scope.dataProductFlashSales.productVariants.price;
-  //   console.log(originalPrice); // In ra giá tr
-  //   // const priceSale = $scope.priceSale;
-  //   // $scope.discount = ((originalPrice - priceSale) / originalPrice) * 100;
+  $scope.handlePriceChange = function (element, price, index) {
+    var inputValue = document.querySelectorAll("#priceSale");
+    var discountText = document.querySelectorAll("#discount");
+    var originalPrice = price;
+    var priceSale = inputValue[index].value;
 
-  // };
+    console.log(inputValue[index].value);
+
+    var discount = ((originalPrice - priceSale) / originalPrice) * 100; // tính giảm giá
+    discountText[index].innerHTML = "Giảm: " + discount.toFixed(2) + "%";
+  };
 
   $scope.getDataTable = function () {
     // Khai báo mảng để chứa các đối tượng dataFlashSale
@@ -241,7 +238,6 @@ app.controller("myController", function ($scope, $http) {
     var amountOrderElements = document.querySelectorAll("#amountOrder");
     var statusElements = document.querySelectorAll("#status");
 
-    // Ví dụ: Sử dụng vòng lặp để tạo các đối tượng và thêm vào mảng dataFlashSales
     for (var i = 0; i < priceSaleElements.length; i++) {
       var dataFlashSale = {
         discount: priceSaleElements[i].value,
@@ -250,14 +246,9 @@ app.controller("myController", function ($scope, $http) {
         status: statusElements[i].checked,
         fashSaleTimeId: parseInt(lastSelectedValue),
         productVariantId: selectedCheckBoxValues[i],
-        // Các trường khác của dataFlashSale
       };
-      // console.log("id" + selectedCheckBoxValues[i]);
       dataFlashSales.push(dataFlashSale);
     }
-
-    // Gửi mảng dataFlashSales về máy chủ để xử lý logic
-    // Ví dụ: Sử dụng AJAX hoặc fetch để gửi dữ liệu về máy chủ
 
     console.log(dataFlashSales);
     // console.log(dataFlashSale);
