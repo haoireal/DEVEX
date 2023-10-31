@@ -7,6 +7,9 @@
                     <nav class="navbar float-end navbar-expand-lg navbar-light" style="height: 35px">
                         <div class="collapse navbar-collapse text-end" id="navbarNavDropdown">
                             <ul class="text-end navbar-nav ml-auto">
+								<li class="nav-item">
+                                    <a class="nav-link" href="/ad/home" th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}">Admin Page</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/seller/home">Bán hàng</a>
                                 </li>
@@ -279,9 +282,12 @@
         <div class="container">
             <div class="row-12">
                 <div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
-                    <nav class="navbar float-end navbar-expand-lg navbar-light" style="height: 35px">
+                    <nav class="navbar float-end navbar-expand-lg " style="height: 35px">
                         <div class="collapse navbar-collapse text-end text-white" id="navbarNavDropdown">
                             <ul class="text-end navbar-nav ml-auto">
+								<li class="nav-item">
+                                    <a class="nav-link text-white" href="/ad/home" th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}">Admin Page</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="/seller/home">Bán hàng</a>
                                 </li>
@@ -292,16 +298,32 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="/order">Tra cứu đơn hàng</a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown"
-                                       aria-expanded="false">
-                                        <i class="far fa-bell fs-5"></i>
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                              id="amountNotifications"></span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
-                                         style="overflow-y: scroll; height: 400px;" id="Notifications">
-
+                                <li class="nav-item "><a class="nav-link"
+                                    data-toggle="dropdown" href="#" data-target="#Notifications1"> <i class="far fa-bell fs-4"></i>
+                                    <span class="badge badge-warning position-absolute top-0 translate-middle rounded-pill mt-2 ms-1"
+                                            id="amountNotifications1"></span>
+                                </a>
+                                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="overflow-y: scroll; height: 400px;"
+                                            id="Notifications1">
+                                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item"> <i
+                                                class="fas fa-envelope mr-2"></i> 4 new messages <span
+                                                class="float-right text-muted text-sm">3 mins</span>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item"> <i class="fas fa-users mr-2"></i>
+                                            8 friend requests <span class="float-right text-muted text-sm">12
+                                                hours</span>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item"> <i class="fas fa-file mr-2"></i>
+                                            3 new reports <span class="float-right text-muted text-sm">2
+                                                days</span>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item dropdown-footer">See All
+                                            Notifications</a>
                                     </div>
                                 </li>
                                 <li class="nav-item">

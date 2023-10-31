@@ -61,11 +61,11 @@
 				rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);
 	}
 
-	.header-inf * {
+	/* .header-inf * {
 		background-color: transparent;
 		color: white;
 		font-weight: 400 !important;
-	}
+	} */
 
 	.header-inf a {
 		color: white;
@@ -119,7 +119,7 @@
 	}
 </style>
 
-<body ng-app="app" ng-controller="profile">
+<body ng-app="app" ng-controller="cart-ctrl">
 	<header>
 		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
 	</header>
@@ -267,13 +267,13 @@
 												data-toggle="tab">Hồ sơ</a></li>
 										<li class="nav-item"><a class="nav-link" href="#address" data-toggle="tab">Địa
 												chỉ</a></li>
-										<li class="nav-item"><a class="nav-link" href="#voucher" data-toggle="tab">Kho
-												voucher</a></li>
 										<li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Nhật 
 												ký</a></li>
 										<li class="nav-item"><a class="nav-link" href="#noti" data-toggle="tab">Thông báo</a></li>
+										<li class="nav-item"><a class="nav-link" href="#voucher" data-toggle="tab">Kho
+											voucher</a></li>	
 										<li class="nav-item"><a class="nav-link" href="#voucherApplied" data-toggle="tab">Kho
-											voucher đã dùng</a></li>		
+											voucher đã dùng</a></li>	
 									</ul>
 								</div>
 								<!-- /.card-header -->

@@ -371,96 +371,99 @@
 
                 </div>
             </form>-->
-		<div class="col-3"></div>
-		<hr>
-		<!-- hết thẻ đặt hàng -->
-		<!--List-favourite-->
-		<div class="row mt-4">
-			<div>
-				<a href="#" class="btn border-0  list-favourite " aria-disabled="true" role="button">Thêm vào danh sách
-					yêu tích</a>
-			</div>
+    <div class="col-3"></div>
+    <hr>
+    <!-- hết thẻ đặt hàng -->
+    <!--List-favourite-->
+    <div class="row mt-4">
+        <div>
+            <a href="#" class="btn border-0  list-favourite " aria-disabled="true" role="button">Thêm vào danh sách
+                yêu tích</a>
+        </div>
 
-		</div>
-		<!--share-->
-		<div class="row mt-3 d-flex align-items-center" style="height: 40px;">
-			<div class="col-12 col-lg-2">Chia sẻ:</div>
-			<div class="col-12 col-lg-10 d-flex ">
-				<div class="jssocials-share jssocials-share-email text-center   "
-					style="width: 35px; height: 35px; background: #6594db;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo  fa-regular fa-envelope"></i></a>
-				</div>
-				<div class="jssocials-share jssocials-share-twitter text-center  "
-					style="width: 35px; height: 35px; background-color: #1DA1F2;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-twitter"></i></a>
-				</div>
-				<div class="jssocials-share jssocials-share-facebook text-center  "
-					style="width: 35px; height: 35px; background-color: #3B5998;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-facebook-f "></i></a>
-				</div>
-				<div class="jssocials-share jssocials-share-instagram text-center  "
-					style="width: 35px; height: 35px; background-color: #a0ade2;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-instagram"></i></a>
-				</div>
-				<div class="jssocials-share jssocials-share-whatsapp text-center  "
-					style="width: 35px; height: 35px; background-color: #25D366;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-whatsapp"></i></a>
-				</div>
+    </div>
+    <!--share-->
+    <div class="row mt-3 d-flex align-items-center" style="height: 40px;">
+        <div class="col-12 col-lg-2">Chia sẻ:</div>
+        <div class="col-12 col-lg-10 d-flex ">
+            <div class="jssocials-share jssocials-share-email text-center   "
+                 style="width: 35px; height: 35px; background: #6594db;">
+                <a class="link_share" href="#"><i class="jssocials-share-logo  fa-regular fa-envelope"></i></a>
+            </div>
+            <div class="jssocials-share jssocials-share-twitter text-center  "
+                 style="width: 35px; height: 35px; background-color: #1DA1F2;">
+                <a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-twitter"></i></a>
+            </div>
+            <div class="jssocials-share jssocials-share-facebook text-center  "
+                 style="width: 35px; height: 35px; background-color: #3B5998;">
+                <a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-facebook-f "></i></a>
+            </div>
+            <div class="jssocials-share jssocials-share-instagram text-center  "
+                 style="width: 35px; height: 35px; background-color: #a0ade2;">
+                <a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-instagram"></i></a>
+            </div>
+            <div class="jssocials-share jssocials-share-whatsapp text-center  "
+                 style="width: 35px; height: 35px; background-color: #25D366;">
+                <a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-whatsapp"></i></a>
+            </div>
 
-			</div>
-		</div>
+        </div>
+    </div>
 
-	</main>
-	<div class="text-center">
-		<button id="successbtn" hidden>Lưu</button>
-		<button id="failsebtn" hidden>Xóa</button>
-	</div>
+</main>
+<div class="text-center">
+    <button id="successbtn" hidden>Lưu</button>
+    <button id="failsebtn" hidden>Xóa</button>
+</div>
 
-	<div id="successModal" class="modal">
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
-			<span id="content" class="text-success fs-3">Thêm thành công</span>
-		</div>
-	</div>
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe
+                src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+        <span id="content" class="text-success fs-3">Thêm thành công</span>
+    </div>
+</div>
 
-	<div id="failseModal" class="modal">
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
-			<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
-		</div>
-	</div>
-	<!--shop name-->
-	<div th:object="${seller}" class="container container-shop mt-3 ">
-		<!-- sài chung cho toàn bộ trang -->
-		<div class="row">
-			<div class="col-12 col-lg-4">
-				<div class="row d-flex justify-content-between ">
-					<div class="col-3" style="padding: 0;">
-						<div class="img_salles">
-							<img class="img_salles-logo" th:src="@{|/img/account/*{sellerProduct.avatar}}" alt="">
-						</div>
-					</div>
-					<div class="col-9 contact ">
-						<div class="shop_name" th:text="*{sellerProduct.shopName}">
+<div id="failseModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe
+                src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+        <span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
+    </div>
+</div>
+<!--shop name-->
+<div th:object="${seller}" class="container container-shop mt-3 ">
+    <!-- sài chung cho toàn bộ trang -->
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            <div class="row d-flex justify-content-between ">
+                <div class="col-3" style="padding: 0;">
+                    <div class="img_salles">
+                        <img class="img_salles-logo" th:src="@{|/img/account/*{sellerProduct.avatar}}" alt="">
+                    </div>
+                </div>
+                <div class="col-9 contact ">
+                    <div class="shop_name" th:text="*{sellerProduct.shopName}">
 
-						</div>
-						<div class="contact-content mt-2">
-							<div class="row">
-								<div class="col-6 d-none d-lg-flex">
-									<button class="btn_chat">
-										<div class="content_chat ">
-											<i class="fs-6 fa-solid fa-message"></i> <span
-												style="font-size: .875rem;">Chat ngay</span>
-										</div>
+                    </div>
+                    <div class="contact-content mt-2">
+                        <div class="row">
+                            <div class="col-6 d-none d-lg-flex">
+                                <button class="btn_chat">
+                                    <div class="content_chat ">
+                                        <i class="fs-6 fa-solid fa-message"></i> <span
+                                            style="font-size: .875rem;">Chat ngay</span>
+                                    </div>
 
-									</button>
-								</div>
-								<div class="col-6 d-flex">
-									<button class="float-end btn_seeShop">
-										<div class="content_seeShop ">
-											<i class="fs-6 fa-solid fa-shop"></i> <span style="font-size: .875rem;">Xem
+                                </button>
+                            </div>
+                            <input hidden th:value="*{sellerProduct.username}" id="username">
+                            <div class="col-6 d-flex">
+                                <button class="float-end btn_seeShop" id="showpage" onclick="showpageseller()">
+                                    <div class="content_seeShop ">
+                                        <i class="fs-6 fa-solid fa-shop"></i> <span style="font-size: .875rem;">Xem
 												Shop</span>
 										</div>
 
@@ -1258,13 +1261,17 @@
 			}
 		});
 	</script>
-
+<script>
+    function showpageseller(){
+        var sellerUsername = document.getElementById('username');
+        window.location.href = "/pageseller?username=" + sellerUsername.value;
+    }
+</script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<script src="/js/productDetail.js"></script>
 	<script src="/js/commentAPI.js"></script>
-
 </body>
 
 </html>
