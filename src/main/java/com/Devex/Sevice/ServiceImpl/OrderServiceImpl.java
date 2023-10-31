@@ -43,6 +43,11 @@ public class OrderServiceImpl implements OrderService{
 
 
 	@Override
+	public void updatePriceOrder(double total, String id) {
+		orderRepository.updatePriceOrder(total, id);
+	}
+
+	@Override
 	public List<Order> saveAll(List<Order> entities) {
 		return orderRepository.saveAll(entities);
 	}

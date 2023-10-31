@@ -144,13 +144,25 @@
 																tiết</label>
 															<p>{{ voucher.itemDetail.description }}</p>
 														</div>
-														<div class="form-group">
+														<div class="form-group" ng-if="voucher.itemDetail.categoryVoucher.id !== 100004">
+															<label for="description">Phân loại: </label>
+															<span>{{ voucher.itemDetail.categoryVoucher.name }}</span>
+														</div>
+											
+														<div class="form-group" ng-if="voucher.itemDetail.categoryVoucher.id === 100004">
 															<label>Các sản phẩm áp dụng</label>
 															<select multiple class="custom-select">
 																<option ng-repeat="prod in voucher.prodVoucher">{{
 																	prod.product.name }}</option>
 															</select>
 														</div>
+														<!-- <div class="form-group">
+															<label>Các sản phẩm áp dụng</label>
+															<select multiple class="custom-select">
+																<option ng-repeat="prod in voucher.prodVoucher">{{
+																	prod.product.name }}</option>
+															</select>
+														</div> -->
 
 													</div>
 													<hr>
