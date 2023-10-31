@@ -58,7 +58,7 @@ public class User implements Serializable{
 	@Column(name = "Active")
 	private Boolean active;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	@JsonIgnore
 	private List<UserRole> roles;
 	
