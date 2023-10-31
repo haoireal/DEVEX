@@ -258,8 +258,9 @@
 								<span> <strong class="fs-3 fw-bold price totalPrice" id="amount" name="amount"
 										style="color: #ee4d2d;"
 										th:text="*{#numbers.formatDecimal(productVariants[0].priceSale, 0,'POINT',0,'POINT')}+' ₫'"></strong></span>
-								<del class="fs-5 ms-3 opacity-50"
+								<del class="fs-5 ms-3 opacity-50 price2"
 									th:text="*{#numbers.formatDecimal(productVariants[0].price, 0,'POINT',0,'POINT')}+' ₫'"></del>
+
 							</div>
 							<!--GIÁ TRƯỚC KHI GIẢM-->
 							<div class="col-4"></div>
@@ -341,8 +342,8 @@
 						<!--Purchase(mua)-->
 						<div id="addCart" class="row mt-3 d-none d-lg-flex pe-none" th:if="${shop}">
 							<div class="col-7 col-lg-5">
-								<button class="btn btn_buy" id="btn_buy_isDesktop" type="submit" name="action" value="addcart"
-									onclick="show()">
+								<button class="btn btn_buy" id="btn_buy_isDesktop" type="submit" name="action"
+									value="addcart" onclick="show()">
 									Thêm Vào Giỏ
 
 									Hàng
@@ -1186,16 +1187,27 @@
 						currency: 'VND',
 					});
 					// sử dụng phương thức format để định dạng giá tiền
-					let formattedPrice = formatter.format(price); // "123.456.789 ₫"
+					let formattedPrice = formatter.format(price);
+					// "123.456.789 ₫"
+
 					if (price === null || price === "") {
-						 btn_buy_isDesktop.classList.add("pe-none");
+						btn_buy_isDesktop.classList.add("pe-none");
+
+						totalquantity.textContent = "Số lượng kho: " + 0;
+						if (isDesktop.matches) {
+							$(".price").text("Hết Hàng");
+							$(".price2").text("");
+						}
+
+					} else {
+						btn_buy_isDesktop.classList.remove("pe-none");
+						if (isDesktop.matches) {
+							$(".price").text(formattedPrice); // giá bán mới
+						}
+						$(".price_real").text(formattedPrice);
 					}
 
-					if (isDesktop.matches) {
-						$(".price").text(formattedPrice); // giá bán mới
-					}
-					$(".price_real").text(formattedPrice); // giá bán mới
-					//   $("del").hide();
+
 				}
 
 
@@ -1207,11 +1219,15 @@
 				success: function (quantity) {
 					quantityproductvariant = quantity;
 					totalquantity.textContent = "Số lượng kho: " + quantityproductvariant;
+
 					totalquantity.className = "text-danger";
+
 					if (quantityproductvariant == 0) {
 						addCart.classList.add("pe-none");
+						totalquantity.textContent = "Số lượng kho:" + 0;
 					}
 				}
+
 			});
 			// console.log(color);
 			// fetch('/quantityproductvariant?id=' + id + '&color=' + color + '&size=' + size)
