@@ -48,6 +48,64 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     $scope.cart.changeQty(item.id, item.quantity);
   };
 
+
+  var $voucher = ($scope.voucher = {
+    items: [],
+    itemsApplied: [],
+    itemsAvailability: [],
+    itemDetail: {},
+    prodVoucher: [],
+
+    loadMyVoucher() {
+      var url = `${host}/voucher/my-saved`;
+      $http.get(url).then((response) => {
+        this.items = response.data;
+        console.log(this.items);
+        this.groupVoucherApplied();
+        this.groupVoucherAvailability();
+        console.log(this.itemsApplied);
+        console.log(this.itemsAvailability);
+        // console.log(this.myVoucher[0].voucher);
+      });
+    },
+
+    openModalDetail: function (item) {
+      this.itemDetail = item;
+      this.prodVoucher = [];
+      var url = `${host}/voucher/prod-voucher/${item.id}`;
+      $http.get(url).then((response) => {
+        if (response.data === null) {
+          this.prodVoucher = null;
+        } else {
+          this.prodVoucher = response.data;
+        }
+        console.log(this.prodVoucher);
+      });
+      console.log(this.itemDetail);
+      $("#showDetail").modal("show");
+    },
+
+    groupVoucherApplied() {
+      this.itemsApplied = this.items.filter((voucher) =>
+        $cart.isItemInMyVoucherApplied(voucher)
+      );
+    },
+
+    groupVoucherAvailability() {
+      this.itemsAvailability = this.items.filter((voucher) => {
+        // Kiểm tra các điều kiện
+        return (
+          !$cart.isItemInMyVoucherApplied(voucher) &&
+          new Date(voucher.endDate) > new Date() && // Kiểm tra endDate > hiện tại
+          voucher.active === true &&
+          voucher.quantity > 0
+        );
+      });
+    },
+  });
+
+  $voucher.loadMyVoucher();
+
   // quản lý giỏ hàng
   var $cart = ($scope.cart = {
     items: [],
@@ -60,7 +118,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     sizes: [],
     colors: [],
     selectedProduct: [],
-
+    moneyShip: 0,
     //	Voucher
     voucherAll: [],
     voucherShop: [],
@@ -69,6 +127,8 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     voucherApply: [],
     myVoucher: [],
     myVoucherManage: [],
+    prodVoucher: {},
+    shopSelectedOpenVoucher: "",
 
     // voucher trong kho quản lý khách hàng
 
@@ -83,12 +143,39 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 
     // áp dụng voucher
     applyVoucher(item) {
-      this.voucherApply.push[item];
+      this.voucherApply.push(item);
+      console.log(this.voucherApply);
+    },
+
+    // cancel voucher shop
+    cancelVoucherShop() {
+      // Sử dụng hàm filter để tạo một mảng mới chứa các voucher không có item.creator giống với item
+      this.voucherApply = this.voucherApply.filter(
+        (voucher) => voucher.creator.username !== this.shopSelectedOpenVoucher
+      );
+      console.log(this.voucherApply);
+      $("#voucherOfShop").modal("hide");
+    },
+
+    // cancel voucher devex
+    cancelVoucherDevex() {
+      // Sử dụng hàm filter để tạo một mảng mới chứa các voucher devex không
+      this.voucherApply = this.voucherApply.filter(
+        (voucher) =>
+          voucher.categoryVoucher.id !== 100001 &&
+          voucher.categoryVoucher.id !== 100002
+      );
+      console.log(this.voucherApply);
+      $("#voucherOfDevex").modal("hide");
     },
 
     // mở modal voucher của shop
     openModalVoucherShop: function (idShop) {
       this.groupVoucherShop(idShop);
+
+      this.shopSelectedOpenVoucher = idShop;
+
+      console.log(this.shopSelectedOpenVoucher);
       console.log(idShop);
       $("#voucherOfShop").modal("show");
     },
@@ -109,18 +196,146 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       });
     },
 
+
+    loadProdVoucher() {
+      this.prodVoucher = {};
+      var dataProdVoucher = [];
+      var url = `${host}/voucher/prod-voucher/all`;
+      $http.get(url).then((response) => {
+        if (response.data === null) {
+          dataProdVoucher = null;
+        } else {
+          dataProdVoucher = response.data;
+          dataProdVoucher.forEach((item) => {
+            if (!this.prodVoucher[item.voucher.creator.username]) {
+              this.prodVoucher[item.voucher.creator.username] = [];
+            }
+            this.prodVoucher[item.voucher.creator.username].push(item);
+          });
+        }
+        console.log(this.prodVoucher);
+      });
+    },
+
     // check voucher có sở hữu hay chưa
     isItemInMyVoucher(item) {
       //Kiểm tra xem item.id có tồn tại trong myVoucher hay không
       return this.myVoucher.some((voucher) => voucher.voucher.id === item.id);
     },
 
+
+    // check voucher có đang được apply không
+    isItemInVoucherClicked(item) {
+      //Kiểm tra xem item.id có tồn tại trong myVoucher hay không
+      if (this.voucherApply.indexOf(item) !== -1) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    //	check hiển thị nút sử dụng voucher Ship
+    isShowApplyButtonShip(item) {
+      if (!this.isItemInMyVoucher(item)) {
+        return true;
+      }
+      if(this.moneyShip < item.minPrice) {
+        return true  
+      }
+	    if (this.isShipVoucherApplied()) {
+        return true;
+      }
+      if (this.isItemInVoucherClicked(item)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+	//	check hiển thị nút sử dụng voucher Devex
+    isShowApplyButtonDevex(item) {
+		if (!this.isItemInMyVoucher(item)) {
+		  return true;
+		}
+    if(this.amountDetail < item.minPrice) {
+      return true  
+    }
+		if (this.isDevexVoucherApplied()) {
+			return true;
+		}
+		if (this.isItemInVoucherClicked(item)) {
+		  return true;
+		} else {
+		  return false;
+		}
+	  },
+
+    //	check hiển thị nút sử dụng voucher
+    isShowApplyButtonShop(item) {
+      //kiểm tra người đang sở hữu voucher chưa
+      if (!this.isItemInMyVoucher(item)) {
+        return true;
+      }
+      //kiểm tra sản phẩm đó có được áp dụng mã ko
+      if (!this.isItemInProdVoucher(item)) {
+        return true;
+      }
+      //kiểm tra shop đó có voucher đc app mã chưa
+      if (this.isShopVoucherApplied(item.creator.username)) {
+        return true;
+      }
+      //kiểm tra voucher có click hay chưa
+      if (this.isItemInVoucherClicked(item)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    //check sản phẩm đó có được áp dụng voucher hay không
+    isItemInProdVoucher(item) {
+		let flag = false; // Tạo một biến để lưu trạng thái kiểm tra
+      this.prodVoucher[item.creator.username].forEach(function (i) {
+        $cart.shopGroupsOrder[item.creator.username].forEach(function (prod) {
+          if (i.voucher.id === item.id && prod.idProduct === i.product.id && prod.price >= item.minPrice ) {
+            flag = true;
+          }
+        });
+      });
+      return flag;
+    },
+
+    //check voucher đã được sử dụng hay chưa
     isItemInMyVoucherApplied(item) {
       // Kiểm tra xem item.id có tồn tại trong myVoucher và voucher.id có applied hay không
       return this.myVoucher.some(
         (voucher) => voucher.voucher.id === item.id && !voucher.applied === true
       );
     },
+
+    //check mỗi shop chỉ đc app 1 voucher
+    isShopVoucherApplied(idShop) {
+      // Kiểm tra xem item.id có tồn tại trong myVoucher và voucher.id có applied hay không
+      return this.voucherApply.some(
+        (voucher) => voucher.creator.username === idShop
+      );
+    },
+
+	//check mỗi shop chỉ đc app 1 voucher
+    isDevexVoucherApplied() {
+		// Kiểm tra xem item.id có tồn tại trong myVoucher và voucher.id có applied hay không
+		return this.voucherApply.some(
+		  (voucher) => voucher.categoryVoucher.id === 100001
+		);
+	  },
+
+	  //check mỗi shop chỉ đc app 1 voucher
+	  isShipVoucherApplied() {
+		// Kiểm tra xem item.id có tồn tại trong myVoucher và voucher.id có applied hay không
+		return this.voucherApply.some(
+		  (voucher) => voucher.categoryVoucher.id === 100002
+		);
+	  },
 
     // load voucher
     loadVoucher() {
@@ -403,6 +618,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
         .reduce((total, qty) => (total += qty), 0);
     },
 
+
     get amount() {
       // tổng thành tiền các mặt hàng trong giỏ
       return this.itemsOrder
@@ -414,13 +630,105 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       // lấy sản phẩm từ session
       //			this.itemsOrderSession = JSON.parse(sessionStorage.getItem('itemsOrder')) || [];
       // tổng thành tiền các mặt hàng trong giỏ
-      return this.itemsOrderSession
-        .map((item) => this.amt_of(item))
-        .reduce((total, amt) => (total += amt), 0);
+      const idShops = Object.keys($cart.shopGroupsOrder);
+      let total = 0;
+      idShops.forEach((id) => {
+        total += $cart.amountItemShop(id);
+      });
+      return total;
+      // return this.itemsOrderSession
+      //   .map((item) => this.amt_of(item))
+      //   .reduce((total, amt) => (total += amt), 0);
+    },
+
+    countItemShop(idShop) {
+      // tính tổng số lượng các mặt hàng trong shop
+      return this.shopGroupsOrder[idShop].length;
+    },
+
+    amountItemShop(idShop) {
+      // tính tiền shop
+      let totalShop = this.shopGroupsOrder[idShop].map((item) => this.amt_of(item)).reduce((total, amt) => (total += amt), 0);
+      if(this.isShopVoucherApplied(idShop)) {
+        var voucherProd = this.voucherApply.find((item) => item.categoryVoucher.id == 100004);
+        if(voucherProd != nulll) {
+          let price = 0;
+          this.prodVoucher[idShop].forEach(function (i) {
+            $cart.shopGroupsOrder[idShop].forEach(function (prod) {
+              if (i.voucher.id === voucherProd.id && prod.idProduct === i.product.id) {
+                price += prod.price;
+              }
+            });
+          });
+          //xử lí giá giảm
+          if(voucherProd.discount < 1) {
+            totalShop -= (price * voucherProd.discount);
+            
+          }else {
+            price -= voucherProd.discount;
+            if(price <= 0) {
+              price = 0;
+            }
+            totalShop -= price;
+          }
+        }
+
+        var voucherShop = this.voucherApply.find((item) => item.categoryVoucher.id == 100003);
+        if(voucherShop != null) {
+          if(voucherShop.discount < 1) {
+            totalShop -= (totalShop * voucherShop.discount);
+          }else {
+            totalShop -= voucherShop.discount;
+            if(totalShop <= 0) {
+              totalShop = 0;
+            }
+          }
+        }
+        
+      }
+      
+      return totalShop;
+    },
+    
+
+    get amountShip() {
+      // tính tiền ship
+      const numberOfShops = Object.keys($cart.shopGroupsOrder).length;
+      this.moneyShip = 15000 * numberOfShops;
+      if(this.isShipVoucherApplied()) {
+        var voucher = this.voucherApply.find((item) => item.categoryVoucher.id == 100002);
+        if(voucher.discount < 1) {
+          this.moneyShip -= (this.moneyShip * voucher.discount);
+        }else {
+          this.moneyShip -= voucher.discount;
+        }
+      }
+      
+      return this.moneyShip;
+    },
+
+    get amountPay() {
+      // tính tiền phải thanh toán
+      let total = this.amountShip + this.amountDetail;
+      if(this.isDevexVoucherApplied()) {
+        var voucher = this.voucherApply.find((item) => item.categoryVoucher.id == 100001);
+        if(voucher.discount < 1) {
+          total -= (total * voucher.discount);
+        }else {
+          total -= voucher.discount;
+        }
+      }
+      
+      return total;
     },
 
     isItemChecked(id) {
       return this.itemsOrder.some((item) => item.id === id);
+    },
+
+
+    checkQtyToBuy() {
+      
     },
 
     getCountItemsByShopId(shopId) {
@@ -554,6 +862,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
   $cart.loadProductCart();
   $cart.loadVoucher();
   $cart.loadVoucherOfUser();
+  $cart.loadProdVoucher();
   // Đặt hàng
   $scope.message = "";
 
@@ -563,6 +872,9 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     if ($cart.itemsOrder.length === 0) {
       this.message = "Vui lòng chọn sản phẩm muốn mua!";
       $("#ModalOrderMessage").modal("show");
+    // } else if ($cart.checkQtyToBuy()) {
+    //   this.message = "Số lượng tồn kho không đủ để đặt hàng!";
+    //   $("#ModalOrderMessage").modal("show");
     } else if (userAddress === "" || userPhoneAddress === "") {
       this.message = "Vui lòng cung cấp thông tin địa chỉ của bạn!";
       $("#ModalOrderMessage").modal("show");
@@ -590,7 +902,8 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     // Thực hiện đặt hàng
     const requestDataDTO = {
       itemsOrderSession: $cart.itemsOrderSession,
-      items: $cart.voucherApply,
+
+      voucherApply: $cart.voucherApply,
     };
     var url = `${host}/cart/order`;
     $http
@@ -599,7 +912,8 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
         //				alert("Đặt hàng thành công!");
         this.message = "Đặt hàng thành công!";
         $("#ModalOrderMessage").modal("show");
-        console.log(resp);
+
+        console.log(requestDataDTO);
         $cart.selectAll = true;
         $cart.toggleSelectAll();
         $cart.loadProductCart();
@@ -625,6 +939,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       });
   };
 
+  //*BEGIN FLASHSALE
   $scope.dataTime = [];
   $scope.getTimeFlashSale = function () {
     var countdownButton = document.getElementById("countdown-btn");
@@ -684,4 +999,69 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
   };
 
   $scope.getTimeFlashSale();
+  //!END FLASHSALE
+
+	//	$scope.checkPayment = function() {
+	//		var payment = document.getElementsByName("pay").value;
+	//		if(payment === "paypal") {
+	//			$scope.payment = "paypal";
+	//		}else if(payment === "vnpay") {
+	//			$scope.payment = "vnpay";
+	//		}else {
+	//			$scope.payment = "cash";
+	//		}
+	//	}
+  //*BEGIN THANH TOAN
+	$scope.payment = "cash";
+	$scope.purchase = function() {
+		// Thực hiện đặt hàng
+		const requestDataDTO = {
+			itemsOrderSession: $cart.itemsOrderSession,
+			items: $cart.voucherApply
+		};
+		var url = `${host}/cart/order`;
+		$http
+			.post(url, requestDataDTO)
+			.then((resp) => {
+				//				alert("Đặt hàng thành công!");
+				this.message = "Đặt hàng thành công!";
+				$('#ModalOrderMessage').modal('show');
+				console.log(resp);
+				$cart.selectAll = true;
+				$cart.toggleSelectAll();
+				$cart.loadProductCart();
+//				sessionStorage.removeItem('itemsOrder');
+				var form = document.createElement("form");
+	            form.method = "POST";
+				console.log($scope.payment);
+	            if ($scope.payment === "paypal") {
+	                form.action = "/paypal-payment"; // Thay thế bằng URL tương ứng
+	            } else if ($scope.payment === "vnpay") {
+	                form.action = "/submitOrder"; // Thay thế bằng URL tương ứng
+	            } else {
+	                form.action = "/cash-payment"; // Thay thế bằng URL tương ứng
+	            }
+	            // Thêm form vào trang web và gửi POST request
+         	    document.body.appendChild(form);
+        	    form.submit();
+			})
+			.catch((error) => {
+				this.message = "Lỗi khi đặt hàng!";
+				$('#ModalOrderMessage').modal('show');
+				console.log(error);
+			});
+	};
+//!END THANH TOAN
+
+	$scope.info = [];
+	$scope.fillAmountOrderAndFollow = function(){
+		$http.get('/api/user/info').then(resp => {
+			$scope.info = resp.data;
+		  }).catch(function (err) {
+			console.error(err); 
+		  });
+	};
+	
+	$scope.fillAmountOrderAndFollow();
+	
 });

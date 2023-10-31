@@ -1,5 +1,6 @@
 package com.Devex.Sevice.ServiceImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.Devex.Entity.Follow;
 import com.Devex.Repository.FollowRepository;
 import com.Devex.Sevice.FollowService;
+
+import jakarta.transaction.Transactional;
 
 @SessionScope
 @Service("followService")
@@ -89,6 +92,17 @@ public class FollowServiceImpl implements FollowService{
 	@Override
 	public int getCountFollowBySellerUsername(String username) {
 		return followRepository.getCountFollowBySellerUsername(username);
+	}
+
+	@Override
+	public int getCountFollowByCustomerUsername(String username) {
+		return followRepository.getCountFollowByCustomerUsername(username);
+	}
+
+	@Override
+	@Transactional
+	public void insertFollow(String userId, String sellerId, Date creadtedday) {
+		followRepository.insertFollow(userId, sellerId, creadtedday);
 	}
 	
 	

@@ -60,6 +60,8 @@ public class Voucher implements Serializable{
 	private String banner;
 	@Column(name = "Quantity")
 	private Integer quantity;
+	@Column(name = "Minprice")
+	private Double minPrice;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "voucher")

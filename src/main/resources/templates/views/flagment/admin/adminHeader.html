@@ -19,10 +19,10 @@
 	<ul class="navbar-nav ml-auto">
 		<!-- Notifications Dropdown Menu -->
 		<li class="nav-item dropdown"><a class="nav-link"
-			data-toggle="dropdown" href="#"> <i class="far fa-bell"></i> <span
-				class="badge badge-warning navbar-badge">15</span>
+			data-toggle="dropdown" href="#"> <i class="far fa-bell fs-4"></i> 
+			<span class="badge badge-warning position-absolute top-0 translate-middle rounded-pill mt-2 ms-1" id="amountNotifications"></span>
 		</a>
-			<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+			<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="overflow-y: scroll; height: 400px;" id="Notifications">
 				<span class="dropdown-item dropdown-header">15 Notifications</span>
 				<div class="dropdown-divider"></div>
 				<a href="#" class="dropdown-item"> <i
@@ -49,5 +49,18 @@
 		<li class="nav-item"><a href="/logout"><button type="button" class="btn btn-block btn-danger btn-sm">Đăng xuất</button></a>
 		</li>
 	</ul>
+	<div id="modelNotifications" class="modalNotifications">
+		<div class="model-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Tất cả thông báo</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="model-body">
+				<div class="modal-content" id="AllNotifications" style="overflow-y: scroll; height: 370px;"></div>
+			</div>
+		</div>
+	</div>
 </nav>
 <!-- /.navbar -->

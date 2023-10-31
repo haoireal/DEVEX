@@ -41,6 +41,7 @@ app.controller("voucher-ctrl", function($scope, $http, $location, $window) {
 		itemsDisabled: [],
 		prodVoucher: [],
 		itemDelete: {},
+		
 
 		// load voucher
 		loadVoucher() {

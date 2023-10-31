@@ -77,7 +77,7 @@ public class ProfileController {
 	@GetMapping("/profile")
 	public String showProfile(Model model) {
 		User user = session.get("user");
-		List<UserRole> role = user.getRoles();
+		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
 		boolean flag = false;
 		for(UserRole u : role) {
 			if(u.getRole().getId().equals("SELLER")) {

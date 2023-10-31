@@ -82,4 +82,8 @@ public interface OrderService {
 	int getCountOrderFalseByStatusIdAndYear(int statusid, int year);
 
 	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
+
+	void updatePriceOrder(double total, String id);
+  
+	int getCountOrderByCustomerUsername(String username);
 }

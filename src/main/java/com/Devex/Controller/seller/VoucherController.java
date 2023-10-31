@@ -108,13 +108,14 @@ public class VoucherController {
 		voucher.setActive(true);
 		voucher.setCreator(user);
 		voucher.setBanner("abc.webp");
+		voucher.setMinPrice(Double.parseDouble(minPrice));
 
 		// Sử lí loại giảm giá
 		if (listProd.size() == selectedProducts.size()) {
-			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100004).get();
+			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100003).get();
 			voucher.setCategoryVoucher(categoryVoucher);
 		} else {
-			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100003).get();
+			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100004).get();
 			voucher.setCategoryVoucher(categoryVoucher);
 		}
 

@@ -301,4 +301,10 @@ public class DevexUserController {
 		});
 
 	}
+	
+	@GetMapping("/pageseller")
+	public String showPageSeller(@RequestParam("username") String username) {
+		sessionService.set("userSeller", username);
+		return "user/sellerPage";
+	}
 }// end class

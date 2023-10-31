@@ -1,12 +1,9 @@
 package com.Devex.Controller.customer;
 
 import com.Devex.DTO.KeyBillDTO;
-import com.Devex.Entity.Comment;
-import com.Devex.Entity.Order;
-import com.Devex.Entity.OrderDetails;
-import com.Devex.Entity.User;
+import com.Devex.Entity.*;
 import com.Devex.Sevice.*;
-import com.Devex.Utils.FileManagerService;
+import com.Devex.Sevice.ServiceImpl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,8 +44,8 @@ public class DevexOrderController {
     @Autowired
     CategoryDetailService categoryDetailService;
 
-    @Autowired
-    FileManagerService fileManagerService;
+//    @Autowired
+//    CustomerServiceImpl.FileManagerService fileManagerService;
 
     @Autowired
     ImageProductService imageProductService;
@@ -61,6 +58,12 @@ public class DevexOrderController {
 
     @Autowired
     CommentService commentService ;
+
+    @Autowired
+    NotificationsService notificationsService ;
+
+    @Autowired
+    NotiService notiService ;
 
     @GetMapping("/order")
     public String getOrderPage(Model model) {
@@ -144,10 +147,16 @@ public class DevexOrderController {
     @GetMapping("/order/huy")
     public String huyDonHang(@RequestParam("id") String id) {
         User u = sessionService.get("user");
+        String userfrom = u.getUsername();
+        String userto = "";
+        String link = "http://localhost:8888/details/";
         List<OrderDetails> listOrderDetails = sessionService.get("listIdOrderDetails");
         for (OrderDetails orderDetails : listOrderDetails) {
             detailService.updateIdOrderDetailsStatus(1007, orderDetails.getId());
+            userto = orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername();
         }
+        System.out.println(userto);
+//        notiService.sendNotification(id, id, id, id, id);
         return "redirect:/orderDetail/" + id;
     }
     private HashMap<KeyBillDTO,List<OrderDetails>> setHashMapBillDetail(HashMap<KeyBillDTO,List<OrderDetails>> allOrderByShop,List<OrderDetails> allOrder){
@@ -194,6 +203,13 @@ public class DevexOrderController {
         comment.setOrderDetails(od);
         commentService.save(comment);
 
+        String userfrom = u.getUsername();
+        String userto = od.getProductVariant().getProduct().getSellerProduct().getUsername();
+        String link = "http://localhost:8888/details/"+od.getProductVariant().getProduct().getId();
+        String object = od.getProductVariant().getProduct().getName();
+        notiService.sendNotification(userfrom,userto,link,"comment", object);
+        notiService.sendHistory(userfrom, userto, link, "comment", object);
+        
         return "redirect:/details/"+od.getProductVariant().getProduct().getId()+"#comment";
     }
 }
