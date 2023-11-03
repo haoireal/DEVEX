@@ -76,8 +76,11 @@ public class CartAPIController {
 		Customer customer = null;
 		List<CartDetailDTo> cartDetails = new ArrayList<>();
 		if (user != null) {
-			customer = customerService.findById(user.getUsername()).get();
-			cartDetails = cart.findAllCartDTO(customer.getUsername());
+			customer = customerService.findById("baolh").get();
+			cartDetails = cart.findAllCartDTO("baolh");
+		}
+		for (CartDetailDTo cartDetailDTo : cartDetails) {
+			System.out.println(cartDetailDTo.getNameProduct());
 		}
 //		Customer customer = customerService.findById(user.getUsername()).get();
 //		List<CartDetailDTo> cartDetails = cart.findAllCartDTO(customer.getUsername());

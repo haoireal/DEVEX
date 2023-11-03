@@ -18,8 +18,12 @@ import lombok.NoArgsConstructor;
 public class CartDetailDTo {
 	private int id;
 	private Double price;
-	private int idcart;
-    private int quantity;
+	private Double priceSale;///pridce Giảm Giá
+	private Integer idcart;
+    private Integer quantity; ///SL Đặt
+    private Integer quantityInventory; //SL Tồn KHo
+    private Integer quantitySale; ///SL được đặt ở trong FlashSaLe
+    private Integer quantitySaleLimit; ///SL được đặt ở trong FlashSaLe
     private String nameProduct;
     private String color;
     private String size;
@@ -29,6 +33,7 @@ public class CartDetailDTo {
     private String avatarShop;
     private String img;
     private Date createdDay;
+    private Boolean status;
    
     
 }
