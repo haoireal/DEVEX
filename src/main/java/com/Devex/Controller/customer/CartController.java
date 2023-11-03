@@ -53,6 +53,8 @@ public class CartController {
 	@Autowired
 	CustomerService customerService;
 	@Autowired
+	
+	
 	SessionService session;
 	@Autowired
 	ProductService daop;
@@ -102,7 +104,6 @@ public class CartController {
 			cartDetail.setProductCart(pv2);
 			cartDetail.setQuantity(soLuong);
 			cartDetail.setCreatedDay(new Date());
-			System.out.println(3);
 			cartDetail.setCart(cart);
 		}
 		
@@ -119,8 +120,6 @@ public class CartController {
 			throws JsonProcessingException {
 		if ("addcart".equals(action)) {
 			int idProductVariant = 0;
-			System.out.println("size:" + size);
-			System.out.println("cloer" + cloer);
 			if (size == null) {
 				idProductVariant = pvService.findIdProductVaVariantbySize(cloer, id);
 			} else {
