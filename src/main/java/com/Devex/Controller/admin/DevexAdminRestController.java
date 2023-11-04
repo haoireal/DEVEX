@@ -78,7 +78,7 @@ public class DevexAdminRestController {
 	private SellerService sellerService;
 	
 	@Autowired
-	private SessionService session;
+	private SessionService sessionService;
 	
 	@Autowired
 	private ProductService productService;
@@ -103,11 +103,13 @@ public class DevexAdminRestController {
 	
 	@Autowired
 	private NotificationsService notificationsService;
-
+	
+	@Autowired
+private SessionService session;
 	@GetMapping("/userDetail")
 	public Map<String, Object> updateUser() {
 	
-		String username = session.get("username");
+		String username = sessionService.get("username");
 		Map<String , Object> userDetails = new HashMap<>();
 		userDetails.put("userRoles", userRoleService.findAllByUserName(username));
 		userDetails.put("roles", roleService.findAll());
@@ -127,7 +129,7 @@ public class DevexAdminRestController {
 	@PostMapping("/saveFlashSales")
 	public List<FlashSaleTime> saveFlashSaleTime(@RequestBody FlashSaleTimeDTO flashSaleTimeDTO, ModelMap model ){
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm aMM/dd/yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm aM/d/yyyy");
 
         // Chuyển đổi chuỗi thành LocalDateTime
 		LocalDateTime firstTime =  LocalDateTime.parse(flashSaleTimeDTO.getFirstTime(),formatter);
@@ -211,7 +213,7 @@ public class DevexAdminRestController {
 	@GetMapping("/ad/revenue/line/month")
 	public Map<String, Object> getRevenueByMonth(@RequestParam("year") int year, @RequestParam("month") int month){
 		Map<String, Object> RevenueByMonth = new HashMap<>();
-		User u = session.get("user");
+		User u = sessionService.get("user");
 		int yearCompare;
 		int monthCompare;
 		if(month == 1) {
@@ -293,7 +295,7 @@ public class DevexAdminRestController {
 	
 	@GetMapping("/ad/revenue/line/year")
 	public Map<String, Object> getRevenueByYear(@RequestParam("year") int year){
-		User u = session.get("user");
+		User u = sessionService.get("user");
 		List<StatisticalRevenueMonthDTO> liststatis = new ArrayList<>();
 		Map<String, Object> RevenueByMonth = new HashMap<>();
 		List<Object[]> listt = orderService.getTotalPriceOrderByYear(year);

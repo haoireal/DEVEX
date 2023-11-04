@@ -23,6 +23,7 @@ import com.Devex.DTO.RequestDataDTO;
 import com.Devex.DTO.SizeColorDTO;
 import com.Devex.Entity.CartDetail;
 import com.Devex.Entity.Customer;
+import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.ProductVariant;
@@ -30,6 +31,8 @@ import com.Devex.Entity.User;
 import com.Devex.Entity.Voucher;
 import com.Devex.Sevice.CartDetailService;
 import com.Devex.Sevice.CustomerService;
+import com.Devex.Sevice.FlashSalesService;
+import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.OrderStatusService;
@@ -63,6 +66,9 @@ public class CartAPIController {
 
 	@Autowired
 	private ProductVariantService productVariantService;
+	
+	@Autowired
+	private FlashSalesTimeService flashSalesTimeService;
 
 	@GetMapping("/rest/cart")
 	public List<CartDetailDTo> getAll(Model model) {
@@ -70,8 +76,11 @@ public class CartAPIController {
 		Customer customer = null;
 		List<CartDetailDTo> cartDetails = new ArrayList<>();
 		if (user != null) {
-			customer = customerService.findById(user.getUsername()).get();
-			cartDetails = cart.findAllCartDTO(customer.getUsername());
+			customer = customerService.findById("baolh").get();
+			cartDetails = cart.findAllCartDTO("baolh");
+		}
+		for (CartDetailDTo cartDetailDTo : cartDetails) {
+			System.out.println(cartDetailDTo.getNameProduct());
 		}
 //		Customer customer = customerService.findById(user.getUsername()).get();
 //		List<CartDetailDTo> cartDetails = cart.findAllCartDTO(customer.getUsername());
@@ -315,5 +324,13 @@ public class CartAPIController {
 		} else {
 			return ResponseEntity.notFound().build(); // Trả về 404 Not Found nếu không tìm thấy
 		}
+	}
+	
+	@GetMapping("/rest/getTimeFlashSale")
+	public FlashSaleTime getTimeFlashSale() {
+		FlashSaleTime flashSaleTime = flashSalesTimeService.findFlashSaleTimesByTimeNow();
+		
+		return flashSaleTime;
+		
 	}
 }

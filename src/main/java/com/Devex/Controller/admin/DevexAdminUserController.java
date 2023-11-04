@@ -30,7 +30,7 @@ public class DevexAdminUserController {
 	UserRoleService userRoleService;
 	
 	@Autowired
-	SessionService session;
+	SessionService sessionService;
 	
 	@GetMapping("/userManage")
 	public String getUserManage(ModelMap model) {
@@ -44,7 +44,7 @@ public class DevexAdminUserController {
 
 	@GetMapping("/edit/{username}")
 	public String editUser(@PathVariable("username") String username) {	
-		session.set("username", username);
+		sessionService.set("username", username);
 	return "admin/userManage/formUserManage";
 	}
 

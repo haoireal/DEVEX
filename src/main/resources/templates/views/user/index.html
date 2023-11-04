@@ -736,48 +736,48 @@
       var minuteButton = document.getElementById("minute-btn");
       var secondButton = document.getElementById("second-btn");
 
-      // var tiímtar = minuteButton.ariaValueNow;
-      function updateCountdown() {
+    //   // var tiímtar = minuteButton.ariaValueNow;
+    //   function updateCountdown() {
 
-        var currentTime = new Date();
+    //     var currentTime = new Date();
 
-        // Lấy giờ, phút, giây từ thời gian hiện tại
-        var hours = currentTime.getHours();
-        var minutes = currentTime.getMinutes();
-        var seconds = currentTime.getSeconds();
+    //     // Lấy giờ, phút, giây từ thời gian hiện tại
+    //     var hours = currentTime.getHours();
+    //     var minutes = currentTime.getMinutes();
+    //     var seconds = currentTime.getSeconds();
 
-        // Đổi thành giá trị đếm ngược
-        var remainingHours = 24 - hours;
-        var remainingMinutes = 59 - minutes;
-        var remainingSeconds = 60 - seconds;
-        if (remainingMinutes < 10) {
-            remainingMinutes = "0" + remainingMinutes;
-        }
-        if (remainingSeconds < 10) {
-            remainingSeconds = "0" + remainingSeconds;
-        }
-        // Định dạng thời gian thành chuỗi
-        var countdownString =
-            padNumber(remainingHours) +
-            ":" +
-            padNumber(remainingMinutes) +
-            ":" +
-            padNumber(remainingSeconds);
+    //     // Đổi thành giá trị đếm ngược
+    //     var remainingHours = 24 - hours;
+    //     var remainingMinutes = 59 - minutes;
+    //     var remainingSeconds = 60 - seconds;
+    //     if (remainingMinutes < 10) {
+    //         remainingMinutes = "0" + remainingMinutes;
+    //     }
+    //     if (remainingSeconds < 10) {
+    //         remainingSeconds = "0" + remainingSeconds;
+    //     }
+    //     // Định dạng thời gian thành chuỗi
+    //     var countdownString =
+    //         padNumber(remainingHours) +
+    //         ":" +
+    //         padNumber(remainingMinutes) +
+    //         ":" +
+    //         padNumber(remainingSeconds);
 
-        countdownButton.innerHTML = remainingHours;
-        minuteButton.innerHTML = remainingMinutes;
-        secondButton.innerHTML = remainingSeconds;
-    }
+    //     countdownButton.innerHTML = remainingHours;
+    //     minuteButton.innerHTML = remainingMinutes;
+    //     secondButton.innerHTML = remainingSeconds;
+    // }
 
-    function padNumber(number) {
-        return number.toString().padStart(2, "0");
-    }
+    // function padNumber(number) {
+    //     return number.toString().padStart(2, "0");
+    // }
 
-    // Gọi hàm updateCountdown để cập nhật giá trị ban đầu
-    updateCountdown();
+    // // Gọi hàm updateCountdown để cập nhật giá trị ban đầu
+    // updateCountdown();
 
-    // Sử dụng setInterval để cập nhật giá trị của button mỗi giây
-    setInterval(updateCountdown, 1000);
+    // // Sử dụng setInterval để cập nhật giá trị của button mỗi giây
+    // setInterval(updateCountdown, 1000);
 
     function showMore() {
         var element = document.getElementById("showMore");
