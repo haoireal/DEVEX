@@ -42,4 +42,6 @@ public interface CategoryDetailService {
 
 	CategoryDetails findCategoryDetailsById(int id);
 
+	List<CategoryDetails> findAllCategoryDetailsBySellerUsername(String username);
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.Devex.Entity.CategoryDetails;
@@ -19,4 +20,7 @@ public interface CategoryDetailRepository extends JpaRepository<CategoryDetails,
 	@Query("SELECT cad FROM CategoryDetails cad WHERE cad.id = ?1")
 	CategoryDetails findCategoryDetailsById(int id);
 	
+	@Query("SELECT cad FROM CategoryDetails cad JOIN cad.products p WHERE p.sellerProduct.username = :username")
+	List<CategoryDetails> findAllCategoryDetailsBySellerUsername(@Param("username") String username);
+
 }

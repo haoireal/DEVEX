@@ -95,6 +95,11 @@ public class CategoryDetailServiceImpl implements CategoryDetailService{
 	public CategoryDetails findCategoryDetailsById(int id) {
 		return categoryDetailRepository.findCategoryDetailsById(id);
 	}
+
+	@Override
+	public List<CategoryDetails> findAllCategoryDetailsBySellerUsername(String username) {
+		return categoryDetailRepository.findAllCategoryDetailsBySellerUsername(username);
+	}
 	
 	
 }

@@ -1,6 +1,7 @@
 package com.Devex.Controller.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -9,26 +10,45 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Devex.DTO.ProductDTO;
+import com.Devex.DTO.infoProductDTO;
+import com.Devex.Entity.CategoryDetails;
+import com.Devex.Entity.Comment;
+import com.Devex.Entity.Follow;
 import com.Devex.Entity.Notifications;
 import com.Devex.Entity.Product;
+import com.Devex.Entity.ProductVariant;
+import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
+import com.Devex.Entity.Voucher;
+import com.Devex.Entity.VoucherProduct;
 import com.Devex.Repository.ProductRepository;
+import com.Devex.Sevice.CategoryDetailService;
+import com.Devex.Sevice.CommentService;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.FollowService;
+import com.Devex.Sevice.ImageProductService;
 import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.ProductService;
+import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.RecommendationSystem;
+import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.VoucherProductService;
+import com.Devex.Sevice.VoucherService;
 
 @CrossOrigin("*")
 @RestController
@@ -48,9 +68,6 @@ public class FillAPIController {
 
 	@Autowired
 	private RecommendationSystem recomendationService;
-
-	@Autowired
-	private ProductRepository productRepository;
 	
 	@Autowired
 	private NotificationsService notificationsService;
@@ -60,6 +77,27 @@ public class FillAPIController {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+    private VoucherService voucherService;
+	
+	@Autowired
+    private VoucherProductService voucherProductService;
+	
+	@Autowired
+	private CategoryDetailService categoryDetailService;
+	
+	@Autowired
+	private SellerService sellerService;
+	
+	@Autowired
+	private CommentService commentService;
+	
+	@Autowired
+	private ProductVariantService productVariantService;
+	
+	@Autowired
+	private ImageProductService imageProductService;
 	
 //	@GetMapping("/filter")
 //	public List<ProductDTO> getProductDTO(){
@@ -133,4 +171,106 @@ public class FillAPIController {
         mapInfoUser.put("amountFollow", amountFollow);
         return mapInfoUser;
     }
+    
+    @GetMapping("/shoppage/voucher/list")
+	public ResponseEntity<List<Voucher>> getAllVoucher(@RequestParam("username") String username) {
+		User user = sessionService.get("user");
+		List<Voucher> list = voucherService.findAllByShop(username);
+
+		if (list != null) {
+			return ResponseEntity.ok(list);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@GetMapping("/shoppage/voucher/prod-voucher/{id}")
+	public ResponseEntity<List<VoucherProduct>> getProdVoucher(@PathVariable("id") Integer id) {
+		
+		List<VoucherProduct> list = voucherProductService.findAllByVoucher(id);
+
+		if (list != null) {
+			return ResponseEntity.ok(list);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@PutMapping("/shoppage/voucher/disabled/{id}")
+	public ResponseEntity<Void> disabledCartDetail(@PathVariable("id") Integer id) {
+		Voucher voucher = voucherService.getById(id);
+
+		if (voucher != null) {
+			voucherService.disabledVoucher(id);
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@GetMapping("/user/shoppage")
+	public Map<String, Object> getInfoShopPage(@RequestParam("username") String username){
+		User u = sessionService.get("user");
+		Map<String, Object> mapInfoShopPage = new HashMap<>();
+		Seller seller = sellerService.findFirstByUsername(username);
+		int amountProduct = productService.getCountProductBySellerUsername(username);
+		int amountSellerFollow = followService.getCountFollowByCustomerUsername(username);
+		int amountUserFollow = followService.getCountFollowBySellerUsername(username);
+		double totalRating = 0;
+		double rating = 0;
+		int amountComment = 0;
+		boolean checkFollow = false;
+		List<CategoryDetails> listCategoryDetails = categoryDetailService.findAllCategoryDetailsBySellerUsername(username);
+		List<Comment> listComment = commentService.getAllCommentBySellerUsername(username);
+		for (Comment comment : listComment) {
+			rating += comment.getRating();
+		}
+		if(rating != 0) {
+			totalRating = rating / listComment.size();
+		}
+		amountComment = listComment.size();
+		List<infoProductDTO> listInfoProduct = new ArrayList<>();
+        List<Product> listProduct = productService.findProductBySellerUsernameAndIsdeleteProduct(username);
+        for (Product product : listProduct) {
+            infoProductDTO dto = new infoProductDTO();
+            ProductVariant pv = productVariantService.findProductVariantByProductId(product.getId());
+            dto.setId(product.getId());
+            dto.setName(product.getName());
+            dto.setActive(product.getActive());
+            dto.setSoldCount(product.getSoldCount());
+            dto.setPrice(pv.getPrice());
+            dto.setPriceSale(pv.getPriceSale());
+            dto.setQuantity(pv.getQuantity());
+            dto.setNameImageProduct("/img/product/" + username + "/" + product.getId() + "/" + imageProductService.findFirstImageProduct(product.getId()));
+            dto.setCateId(product.getCategoryDetails().getId());
+            listInfoProduct.add(dto);
+        }
+        Follow f = followService.getFollowByUsernameCustomerAndSeller(u.getUsername(), username);
+        if(f != null) {
+        	checkFollow = true;
+        }
+		mapInfoShopPage.put("seller", seller);
+		mapInfoShopPage.put("amountProduct", amountProduct);
+		mapInfoShopPage.put("amountSellerFollow", amountSellerFollow);
+		mapInfoShopPage.put("amountUserFollow", amountUserFollow);
+		mapInfoShopPage.put("totalRating", totalRating);
+		mapInfoShopPage.put("amountComment", amountComment);
+		mapInfoShopPage.put("listInfoProduct", listInfoProduct);
+		mapInfoShopPage.put("listCategoryDetails", listCategoryDetails);
+		mapInfoShopPage.put("imageuser", "/img/account/" + username + ".webp");
+		mapInfoShopPage.put("checkFollow", checkFollow);
+		return mapInfoShopPage;
+	}
+	
+	@PostMapping("/user/follow")
+	public void insertFollow(@RequestParam("username") String username) {
+		User u = sessionService.get("user");
+		followService.insertFollow(u.getUsername(), username, new Date());
+	}
+	
+	@DeleteMapping("/user/unfollow")
+	public void deleteFollow(@RequestParam("username") String username) {
+		User u = sessionService.get("user");
+		followService.deleteByCustomerAndSeller(u.getUsername(), username);
+	}
 }

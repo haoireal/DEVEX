@@ -104,6 +104,17 @@ public class FollowServiceImpl implements FollowService{
 	public void insertFollow(String userId, String sellerId, Date creadtedday) {
 		followRepository.insertFollow(userId, sellerId, creadtedday);
 	}
+
+	@Override
+	public Follow getFollowByUsernameCustomerAndSeller(String userId, String shopId) {
+		return followRepository.getFollowByUsernameCustomerAndSeller(userId, shopId);
+	}
+
+	@Transactional
+	@Override
+	public void deleteByCustomerAndSeller(String userId, String shopId) {
+		followRepository.deleteByCustomerAndSeller(userId, shopId);
+	}
 	
 	
 }

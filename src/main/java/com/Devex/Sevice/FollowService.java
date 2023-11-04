@@ -45,4 +45,8 @@ public interface FollowService {
 
 	void insertFollow(String userId, String sellerId, Date creadtedday);
 
+	Follow getFollowByUsernameCustomerAndSeller(String userId, String shopId);
+
+	void deleteByCustomerAndSeller(String userId, String shopId);
+
 }

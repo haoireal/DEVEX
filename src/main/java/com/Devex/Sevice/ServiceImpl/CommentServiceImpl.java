@@ -107,4 +107,10 @@ public class CommentServiceImpl implements CommentService{
     public Comment findByOrOrderDetailsIDSeller(String orderDetailsID) {
 		return commentRepository.findByOrOrderDetailsIDSeller(orderDetailsID);
     }
+
+	@Override
+	public List<Comment> getAllCommentBySellerUsername(String username) {
+		return commentRepository.getAllCommentBySellerUsername(username);
+	}
+    
 }

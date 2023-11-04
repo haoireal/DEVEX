@@ -300,9 +300,10 @@ public class DevexUserController {
 
 	}
 	
-	@GetMapping("/pageseller")
-	public String showPageSeller(@RequestParam("username") String username) {
+	@GetMapping("/pageseller/{username}")
+	public String showPageSeller(@PathVariable("username") String username, ModelMap model) {
 		sessionService.set("userSeller", username);
+		model.addAttribute("username", username);
 		return "user/sellerPage";
 	}
 }// end class
