@@ -62,6 +62,11 @@ public class FlashSalesServiceImpl implements FlashSalesService{
 		return flashSalesRespository.findByProductVariantId(productVariantId);
 	}
 
+	@Override
+	public List<FlashSale> findAllFlashSaleNowByIdProdVariant(int productVariantId) {
+		return flashSalesRespository.findAllFlashSaleNowByIdProdVariant(productVariantId);
+	}
+
 	
 
 	

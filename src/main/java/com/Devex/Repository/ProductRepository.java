@@ -109,4 +109,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 			"ORDER BY p.soldCount")
 	List<Product> getListProductByCategoryDetailsIdAndYear(@Param("cateid") int cateid, @Param("year") int year);
 	
+	@Query("SELECT p.id FROM Product p JOIN p.productVariants pv WHERE pv.id = :productVariantId")
+    String findProductIdByProductVariantId(@Param("productVariantId") int productVariantId);
+	
 }

@@ -17,8 +17,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartDetailDTo {
 	private int id;
-	private Double price;
-	private Double priceSale;///pridce Giảm Giá
+	private Double cost;///pridce gốc
+	private Double price;// giá giảm hiện tại
+	private Double priceSale;// giá giảm hiện tại không liên để xử lí
 	private Integer idcart;
     private Integer quantity; ///SL Đặt
     private Integer quantityInventory; //SL Tồn KHo
@@ -30,6 +31,7 @@ public class CartDetailDTo {
     private String nameShop;
     private String idShop;
     private String idProduct;
+    private Integer idProductVariant;
     private String avatarShop;
     private String img;
     private Date createdDay;
