@@ -85,4 +85,5 @@ public interface ProductService {
 
 	List<Product> getListProductByCategoryDetailsIdAndYear(int cateid, int year);
 
+	String findByidProductproductVariants(int id);
 }

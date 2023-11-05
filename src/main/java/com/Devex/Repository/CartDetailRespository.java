@@ -15,10 +15,11 @@ import com.Devex.Entity.CartDetail;
 @Repository("cartDetailRepository")
 public interface CartDetailRespository extends JpaRepository<CartDetail, Integer> {
 
-	@Query("SELECT new com.Devex.DTO.CartDetailDTo(cd.id, cd.productCart.price,cd.productCart.priceSale, cd.cart.id, cd.quantity ,cd.productCart.quantity ,(CASE WHEN fs.amountSell IS NULL THEN 0 ELSE fs.amountSell END) AS quantitySale ,fs.amountOrder AS quantitySaleLimit, cd.productCart.product.name,"
+	@Query("SELECT new com.Devex.DTO.CartDetailDTo(cd.id, cd.productCart.price, cd.productCart.priceSale, cd.productCart.priceSale, cd.cart.id, cd.quantity ,cd.productCart.quantity ,(CASE WHEN fs.amountSell IS NULL THEN 0 ELSE fs.amountSell END) AS quantitySale ,fs.amountOrder AS quantitySaleLimit, cd.productCart.product.name,"
 			+ "cd.productCart.color ,cd.productCart.size,cd.productCart.product.sellerProduct.shopName ,"
 			+ "cd.productCart.product.sellerProduct.username,"
 			+ "cd.productCart.product.id,"
+			+ "cd.productCart.id,"
 			+ "cd.productCart.product.sellerProduct.avatar,"
 			+ "(SELECT ip.name FROM ImageProduct ip WHERE ip.product = cd.productCart.product ORDER BY ip.id ASC LIMIT 1) AS img, cd.createdDay,fs.status) FROM CartDetail cd LEFT JOIN cd.productCart.listFlashSale fs "
 			+ "WHERE cd.cart.person.username = ?1 ")

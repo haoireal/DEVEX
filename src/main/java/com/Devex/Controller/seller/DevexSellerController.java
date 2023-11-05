@@ -3,7 +3,6 @@ package com.Devex.Controller.seller;
 import java.util.Date;
 import java.util.List;
 
-import com.Devex.Sevice.ServiceImpl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +28,7 @@ import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.ServiceImpl.CustomerServiceImpl;
 
 @Controller
 @RequestMapping("/seller")
