@@ -101,12 +101,14 @@ public class  OrderController {
 		List<CartDetailDTo> listOrder = session.get("listItemOrder", null);
 		List<Voucher> listVoucher = session.get("listVoucherApply", null);
 		// Sử dụng Collections.sort() với một trình tự Comparator để sắp xếp danh sách
-		Collections.sort(listVoucher, new Comparator<Voucher>() {
-		    @Override
-		    public int compare(Voucher voucher1, Voucher voucher2) {
-		        return Integer.compare(voucher2.getCategoryVoucher().getId(), voucher1.getCategoryVoucher().getId());
-		    }
-		});
+		if(listVoucher != null) {
+			Collections.sort(listVoucher, new Comparator<Voucher>() {
+			    @Override
+			    public int compare(Voucher voucher1, Voucher voucher2) {
+			        return Integer.compare(voucher2.getCategoryVoucher().getId(), voucher1.getCategoryVoucher().getId());
+			    }
+			});
+		}
 //		Customer user = sessionService.get("user");
 		User user = session.get("user");
 		Customer customer = null;
