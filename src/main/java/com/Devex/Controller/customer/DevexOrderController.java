@@ -1,9 +1,14 @@
 package com.Devex.Controller.customer;
 
-import com.Devex.DTO.KeyBillDTO;
-import com.Devex.Entity.*;
-import com.Devex.Sevice.*;
-import com.Devex.Sevice.ServiceImpl.CustomerServiceImpl;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +17,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.*;
+import com.Devex.DTO.KeyBillDTO;
+import com.Devex.Entity.Comment;
+import com.Devex.Entity.Order;
+import com.Devex.Entity.OrderDetails;
+import com.Devex.Entity.User;
+import com.Devex.Sevice.CategoryDetailService;
+import com.Devex.Sevice.CategoryService;
+import com.Devex.Sevice.CommentService;
+import com.Devex.Sevice.CookieService;
+import com.Devex.Sevice.ImageProductService;
+import com.Devex.Sevice.NotiService;
+import com.Devex.Sevice.NotificationsService;
+import com.Devex.Sevice.OrderDetailService;
+import com.Devex.Sevice.OrderService;
+import com.Devex.Sevice.ParamService;
+import com.Devex.Sevice.ProductService;
+import com.Devex.Sevice.ProductVariantService;
+import com.Devex.Sevice.SellerService;
+import com.Devex.Sevice.SessionService;
 
 @Controller
 public class DevexOrderController {
