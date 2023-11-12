@@ -15,6 +15,8 @@ import com.Devex.Entity.Category;
 import com.Devex.Repository.CategoryRepository;
 import com.Devex.Sevice.CategoryService;
 
+import jakarta.transaction.Transactional;
+
 @SessionScope
 @Service("categoryService")
 public class CategoryServiceImpl implements CategoryService{
@@ -89,6 +91,28 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public Category findByProductId(String productId) {
 		return categoryRepository.findByProductId(productId);
+	}
+
+	@Override
+	public Category getCategoryNew() {
+		return categoryRepository.getCategoryNew();
+	}
+
+	@Transactional
+	@Override
+	public void insertCategory(String name) {
+		categoryRepository.insertCategory(name);
+	}
+
+	@Override
+	public List<Category> findAllCategoryNotNameLikeUnknown() {
+		return categoryRepository.findAllCategoryNotNameLikeUnknown();
+	}
+
+	@Transactional
+	@Override
+	public void updateCategory(String name, int id) {
+		categoryRepository.updateCategory(name, id);
 	}
 	
 	

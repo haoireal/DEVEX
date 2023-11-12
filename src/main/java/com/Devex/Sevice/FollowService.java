@@ -49,4 +49,6 @@ public interface FollowService {
 
 	void deleteByCustomerAndSeller(String userId, String shopId);
 
+	List<String> getAllUserFollowShop(String username);
+
 }

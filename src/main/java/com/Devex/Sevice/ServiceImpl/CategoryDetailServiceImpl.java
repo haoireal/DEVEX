@@ -15,6 +15,8 @@ import com.Devex.Entity.CategoryDetails;
 import com.Devex.Repository.CategoryDetailRepository;
 import com.Devex.Sevice.CategoryDetailService;
 
+import jakarta.transaction.Transactional;
+
 @SessionScope
 @Service("categoryDetailService")
 public class CategoryDetailServiceImpl implements CategoryDetailService{
@@ -99,6 +101,38 @@ public class CategoryDetailServiceImpl implements CategoryDetailService{
 	@Override
 	public List<CategoryDetails> findAllCategoryDetailsBySellerUsername(String username) {
 		return categoryDetailRepository.findAllCategoryDetailsBySellerUsername(username);
+	}
+
+	@Override
+	public CategoryDetails getCategoryDetailsNew() {
+		return categoryDetailRepository.getCategoryDetailsNew();
+	}
+
+	@Transactional
+	@Override
+	public void insertCategoryDetails(String name, int categoryId) {
+		categoryDetailRepository.insertCategoryDetails(name, categoryId);
+	}
+
+	@Override
+	public List<CategoryDetails> findAllCategoryDetailsNotNameLikeUnknown() {
+		return categoryDetailRepository.findAllCategoryDetailsNotNameLikeUnknown();
+	}
+
+	@Override
+	public List<CategoryDetails> findAllCategoryDetailsNotNameLikeUnknownAndCateId(int id) {
+		return categoryDetailRepository.findAllCategoryDetailsNotNameLikeUnknownAndCateId(id);
+	}
+
+	@Override
+	public int getCountCategoryDetailsByCategoryId(int id) {
+		return categoryDetailRepository.getCountCategoryDetailsByCategoryId(id);
+	}
+
+	@Transactional
+	@Override
+	public void updateCategoryDetails(String name, int id) {
+		categoryDetailRepository.updateCategoryDetails(name, id);
 	}
 	
 	

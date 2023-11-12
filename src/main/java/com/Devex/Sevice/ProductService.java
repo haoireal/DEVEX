@@ -85,4 +85,16 @@ public interface ProductService {
 
 	List<Product> getListProductByCategoryDetailsIdAndYear(int cateid, int year);
 
+	void updateProductCategoryByIdCategory(int cateid, String id);
+
+	int getCountProductByCategoryId(int id);
+
+	List<Product> findProductsByCategoryDetailsId(int categoryId);
+
+	int getCountProductByProductBrandId(int id);
+
+	List<Product> findAllProductByProductBrandId(int id);
+
+	void updateProductProductBrandByIdProductBrand(int cateid, String id);
+
 }

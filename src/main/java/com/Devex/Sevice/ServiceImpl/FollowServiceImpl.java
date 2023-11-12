@@ -115,6 +115,11 @@ public class FollowServiceImpl implements FollowService{
 	public void deleteByCustomerAndSeller(String userId, String shopId) {
 		followRepository.deleteByCustomerAndSeller(userId, shopId);
 	}
+
+	@Override
+	public List<String> getAllUserFollowShop(String username) {
+		return followRepository.getAllUserFollowShop(username);
+	}
 	
 	
 }
