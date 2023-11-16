@@ -109,6 +109,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 			"ORDER BY p.soldCount")
 	List<Product> getListProductByCategoryDetailsIdAndYear(@Param("cateid") int cateid, @Param("year") int year);
 	
+
 	@Modifying
 	@Query(value = "UPDATE Product SET Category_ID = :CategoryID WHERE ID = :id", nativeQuery = true)
 	void updateProductCategoryByIdCategory(@Param("CategoryID") int cateid, @Param("id") String id);
@@ -128,4 +129,9 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	@Modifying
 	@Query(value = "UPDATE Product SET Brand_ID = :BrandID WHERE ID = :id", nativeQuery = true)
 	void updateProductProductBrandByIdProductBrand(@Param("BrandID") int cateid, @Param("id") String id);
+
+	@Query("SELECT p.id FROM Product p JOIN p.productVariants pv WHERE pv.id = :productVariantId")
+    String findProductIdByProductVariantId(@Param("productVariantId") int productVariantId);
+	
+
 }

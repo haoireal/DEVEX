@@ -29,6 +29,8 @@ public interface FlashSalesService {
 
 	FlashSale findByProductVariantId(int productVariantId);
 
+	List<FlashSale> findAllFlashSaleNowByIdProdVariant(int productVariantId);
+
 
 
 

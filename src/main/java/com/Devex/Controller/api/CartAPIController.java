@@ -1,5 +1,6 @@
 package com.Devex.Controller.api;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,9 +24,11 @@ import com.Devex.DTO.RequestDataDTO;
 import com.Devex.DTO.SizeColorDTO;
 import com.Devex.Entity.CartDetail;
 import com.Devex.Entity.Customer;
+import com.Devex.Entity.FlashSale;
 import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
+import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
 import com.Devex.Entity.Voucher;
@@ -37,6 +40,7 @@ import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.OrderStatusService;
 import com.Devex.Sevice.PaymentService;
+import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SessionService;
 
@@ -48,6 +52,13 @@ public class CartAPIController {
 
 	@Autowired
 	private SessionService sessionService;
+	
+	@Autowired
+	private ProductService productService;
+	
+	
+	@Autowired
+	private FlashSalesService flashSalesService;
 
 	@Autowired
 	CustomerService customerService;
@@ -76,39 +87,26 @@ public class CartAPIController {
 		Customer customer = null;
 		List<CartDetailDTo> cartDetails = new ArrayList<>();
 		if (user != null) {
-			customer = customerService.findById("baolh").get();
-			cartDetails = cart.findAllCartDTO("baolh");
+			customer = customerService.findById(user.getUsername()).get();
+			cartDetails = cart.findAllCartDTO(customer.getUsername());
 		}
+		LocalDateTime currentTime = LocalDateTime.now();
 		for (CartDetailDTo cartDetailDTo : cartDetails) {
-			System.out.println(cartDetailDTo.getNameProduct());
+			List<FlashSale> listFsNow = flashSalesService.findAllFlashSaleNowByIdProdVariant(cartDetailDTo.getIdProductVariant());
+			if (listFsNow != null) {
+				for (FlashSale flashSale : listFsNow) {
+					LocalDateTime firstTime = flashSale.getFlashSaleTime().getFirstTime();
+					LocalDateTime lastTime = flashSale.getFlashSaleTime().getLastTime();
+					if (currentTime.isAfter(firstTime) && currentTime.isBefore(lastTime)) {
+						cartDetailDTo.setStatus(true);
+					} else {
+						cartDetailDTo.setStatus(false);
+					}
+				}
+			}
+
 		}
-//		Customer customer = customerService.findById(user.getUsername()).get();
-//		List<CartDetailDTo> cartDetails = cart.findAllCartDTO(customer.getUsername());
-//		Map<String, CartDetailDTo> cartDetailMap = new HashMap<>();
-//
-//		for (CartDetailDTo cartDetail : cartDetails) {
-//			String uniqueKey = cartDetail.getImg() + "-" + cartDetail.getColor() + "-" + cartDetail.getSize();
-//			if (cartDetailMap.containsKey(uniqueKey)) {
-//				CartDetailDTo existingCartDetail = cartDetailMap.get(uniqueKey);
-//				existingCartDetail.setQuantity((existingCartDetail.getQuantity() + cartDetail.getQuantity()));
-//			} else {
-//				cartDetailMap.put(uniqueKey, cartDetail);
-//			}
-//		}
-//		for (CartDetailDTo cartDetail : cartDetailMap.values()) {
-//			int totalQuantity = cartDetail.getQuantity();
-//			if (totalQuantity == 2 ||totalQuantity == 3||totalQuantity == 4 ||totalQuantity == 5  ) {
-//				int newQuantity = 1;
-//				cartDetail.setQuantity(newQuantity);
-//
-//			} else {
-//				int newQuantity = (int) Math.sqrt(totalQuantity);
-//				cartDetail.setQuantity(newQuantity);
-//			}
-//			// Lấy căn bậc hai của tổng số lượng
-//
-//		}
-//		return new ArrayList<>(cartDetailMap.values());
+
 		return cartDetails;
 	}
 

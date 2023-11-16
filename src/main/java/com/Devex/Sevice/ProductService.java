@@ -97,4 +97,5 @@ public interface ProductService {
 
 	void updateProductProductBrandByIdProductBrand(int cateid, String id);
 
+	String findByidProductproductVariants(int id);
 }

@@ -186,6 +186,12 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getListProductByCategoryDetailsIdAndYear(int cateid, int year) {
 		return productRepository.getListProductByCategoryDetailsIdAndYear(cateid, year);
 	}
+	
+	@Override
+	public String findByidProductproductVariants(int id) {
+	
+		return productRepository.findProductIdByProductVariantId(id);
+	}
 
 	@Transactional
 	@Override
