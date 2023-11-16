@@ -1,6 +1,7 @@
 package com.Devex.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -31,4 +32,7 @@ public interface FollowRepository extends JpaRepository<Follow, Integer>{
 	@Modifying
 	@Query("DELETE FROM Follow f WHERE f.customer.username = :userId AND f.seller.username = :shopId")
     void deleteByCustomerAndSeller(@Param("userId") String userId, @Param("shopId") String shopId);
+	
+	@Query("SELECT f.customer.username FROM Follow f WHERE f.seller.username like ?1")
+	List<String> getAllUserFollowShop(String username);
 }

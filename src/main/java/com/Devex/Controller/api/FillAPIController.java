@@ -45,6 +45,7 @@ import com.Devex.Sevice.CommentService;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.ImageProductService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ParamService;
@@ -105,6 +106,9 @@ public class FillAPIController {
 	
 	@Autowired
 	private ImageProductService imageProductService;
+	
+	@Autowired
+	private NotiService notiService;
 	
 //	@GetMapping("/filter")
 //	public List<ProductDTO> getProductDTO(){
@@ -368,11 +372,15 @@ public class FillAPIController {
 	public void insertFollow(@RequestParam("username") String username) {
 		User u = sessionService.get("user");
 		followService.insertFollow(u.getUsername(), username, new Date());
+		notiService.sendNotification(u.getUsername(), username, "", "follow", "");
+		notiService.sendHistory(u.getUsername(), username, "", "follow", "");
 	}
 	
 	@DeleteMapping("/user/unfollow")
 	public void deleteFollow(@RequestParam("username") String username) {
 		User u = sessionService.get("user");
 		followService.deleteByCustomerAndSeller(u.getUsername(), username);
+		notiService.sendNotification(u.getUsername(), username, "", "unfollow", "");
+		notiService.sendHistory(u.getUsername(), username, "", "unfollow", "");
 	}
 }

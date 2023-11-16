@@ -44,4 +44,6 @@ public interface VoucherService {
 
 	List<Voucher> findVoucherOfUser(String username);
 
+	Voucher getVoucherNew();
+
 }
