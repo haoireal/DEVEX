@@ -84,5 +84,6 @@ public interface ProductService {
 	int getCountProductSellBySellerUsername(String username, int statusorderid, int statusorderdetailsid);
 
 	List<Product> getListProductByCategoryDetailsIdAndYear(int cateid, int year);
+	String findByidProductproductVariants(int id);
 
 }

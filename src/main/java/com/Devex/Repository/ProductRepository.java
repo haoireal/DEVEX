@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 	@Query("SELECT p FROM Product p WHERE p.id = ?1")
 	Product findByIdProduct(String id);
-
+	
 	@Query("SELECT DISTINCT p FROM Product p " + "JOIN FETCH p.sellerProduct s "
 			+ "WHERE s.username like ?1 OR s.shopName Like ?1")
 	List<Product> findProductBySellerUsername(String sellerUsername);
@@ -108,5 +108,9 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 			"AND FUNCTION('YEAR', o.createdDay) = :year " +
 			"ORDER BY p.soldCount")
 	List<Product> getListProductByCategoryDetailsIdAndYear(@Param("cateid") int cateid, @Param("year") int year);
+	
+	
+	 @Query("SELECT p.id FROM Product p JOIN p.productVariants pv WHERE pv.id = :productVariantId")
+	    String findProductIdByProductVariantId(@Param("productVariantId") int productVariantId);
 	
 }
