@@ -36,8 +36,8 @@ public interface FlashSalesTimeRespository extends JpaRepository<FlashSaleTime, 
 	FlashSaleTime findFlashSaleTimesByTimeNow();
 	
 	@Transactional
-	@Query(value = "SELECT * FROM Flashsale_Time t WHERE t.Firsttime > GETDATE()", nativeQuery = true)
-	FlashSaleTime findFlashSaleTimesByTimeFuture();
+	@Query(value = "SELECT * FROM Flashsale_Time t WHERE t.Lasttime < GETDATE()", nativeQuery = true)
+	List<FlashSaleTime> findFlashSaleTimesByTimePast();
 
 
 

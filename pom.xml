@@ -19,6 +19,7 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+
 		<!-- Websocket -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -34,11 +34,49 @@
         /* justify-content: baseline; */
         align-items: baseline;
       }
+      #provinces {
+        /* border: none; */
+        border-radius: 2px;
+        height: 1.875rem;
+        width: 100%;
+      }
+      /* Ẩn viền chọn mặc định */
+      select,
+      select::-moz-focus-inner,
+      select::-webkit-select-on-focus {
+        border: 0;
+        outline: none;
+        /* Đặt màu nền trong suốt */
+        background-color: transparent;
+      }
+
+      /* Loại bỏ viền khi tương tác */
+      select:focus {
+        border: none;
+        outline: none;
+      }
+      #content_right {
+        position: relative;
+      }
+      #pageItem {
+        position: absolute;
+        bottom: 0;
+        right: 2%;
+      }
+      .view_product {
+        padding-bottom: 55px;
+      }
     </style>
   </head>
   <body ng-app="app">
     <div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
     <main>
+      <!-- <img
+        src="path-to-your-loading-gif.gif"
+        ng-show="search.isLoading"
+        alt="Loading..."
+      /> -->
+
       <div class="container-fluid">
         <div class="filter-head">
           <div class="container">
@@ -68,8 +106,9 @@
               >
                 <select
                   class="form-select form-select-sm"
-                  name="sortprice"
-                  onchange="filterProducts()"
+                  id="sortPrice"
+                  name="sortPrice"
+                  ng-click="search.SortProductByPrice(this)"
                   aria-label=".form-select-sm example"
                 >
                   <option class="text-dark" selected>Giá (Mặc định)</option>
@@ -82,12 +121,12 @@
                   type="radio"
                   class="btn-check"
                   name="options-outlined"
-                  id="danger-outlined"
+                  id="ASC_soldCount"
                   ng-model="selectedSoldCount"
                   value="BAN_CHAY"
-                  ng-change="search.filterProductBySoldCount(selectedSoldCount)"
+                  ng-click="search.SortProductBySoldCount(selectedSoldCount)"
                 />
-                <label class="btn btn-outline-danger" for="danger-outlined"
+                <label class="btn btn-outline-danger" for="ASC_soldCount"
                   >BÁN CHẠY</label
                 >
               </div>
@@ -96,11 +135,13 @@
                   type="radio"
                   class="btn-check"
                   name="options-outlined"
-                  id="success-outlined"
+                  id="Mall"
                   value="DEVEX_MALL"
+                  ng-model="selectedMall"
+                  ng-change="search.filterProductByMall(selectedMall)"
                   autocomplete="off"
                 />
-                <label class="btn btn-outline-success" for="success-outlined"
+                <label class="btn btn-outline-success" for="Mall"
                   >DEVEX MALL</label
                 >
               </div>
@@ -122,13 +163,20 @@
                 <span>Theo Danh Mục</span>
               </div>
               <div class="devex-checkbox_category mt-2">
-                <div class="form-check mt-1">
+                <div
+                  class="form-check mt-1"
+                  ng-repeat="item in search.loadCategory"
+                >
                   <input
                     class="form-check-input devex-checkbox_category-value"
                     type="checkbox"
                     name="category"
+                    id="{{item}}"
+                    value="{{item}}"
                   />
-                  <label class="form-check-label"> </label>
+                  <label class="form-check-label" for="{{item}}"
+                    >{{item}}
+                  </label>
                 </div>
               </div>
             </div>
@@ -140,53 +188,16 @@
                 <span>Nơi Bán</span>
               </div>
               <div class="devex-checkbox_location mt-2">
-                <div class="form-check mt-1">
-                  <input
-                    class="form-check-input devex-checkbox_location-value"
-                    type="checkbox"
-                    value="TP Hồ Chí Minh"
-                    id="location1"
-                    name="location"
-                  />
-                  <label class="form-check-label" for="location1">
-                    TP Hồ Chí Minh
-                  </label>
-                </div>
-                <div class="form-check mt-1">
-                  <input
-                    class="form-check-input devex-checkbox_location-value"
-                    type="checkbox"
-                    value="Hà Nội"
-                    id="location2"
-                    name="location"
-                  />
-                  <label class="form-check-label" for="location2">
-                    Hà Nội
-                  </label>
-                </div>
-                <div class="form-check mt-1">
-                  <input
-                    class="form-check-input devex-checkbox_location-value"
-                    type="checkbox"
-                    value="Đồng Nai"
-                    id="location3"
-                    name="location"
-                  />
-                  <label class="form-check-label" for="location3">
-                    Đồng Nai
-                  </label>
-                </div>
-                <div class="form-check mt-1">
-                  <input
-                    class="form-check-input devex-checkbox_location-value"
-                    type="checkbox"
-                    value="Vĩnh Phúc"
-                    id="location4"
-                    name="location"
-                  />
-                  <label class="form-check-label" for="location4">
-                    Vĩnh Phúc
-                  </label>
+                <div class="form-check mt-1 p-0">
+                  <select name="" id="provinces">
+                    <option selected value="">Tỉnh Thành</option>
+                    <option
+                      ng-repeat="item in search.loadProvinces"
+                      value="{{item}}"
+                    >
+                      {{item}}
+                    </option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -199,21 +210,18 @@
               </div>
               <div
                 class="devex-checkbox_brand mt-2"
-                th:each="brand, iter : ${brand}"
+                ng-repeat="item in search.loadBrand"
               >
                 <div class="form-check mt-1">
                   <input
                     class="form-check-input devex-checkbox_brand-value"
                     type="checkbox"
-                    th:value="${brand}"
-                    th:id="'brand' + ${iter.count}"
+                    id="{{item}}"
                     name="brand"
+                    value="{{item}}"
                   />
-                  <label
-                    class="form-check-label"
-                    th:for="'brand'+${iter.count}"
-                    th:text="${brand}"
-                  >
+                  <label class="form-check-label" for="{{item}}">
+                    {{item}}
                   </label>
                 </div>
               </div>
@@ -229,7 +237,7 @@
                 <div class="input-group mb-3">
                   <input
                     min="1"
-                    name="priceForm"
+                    name="priceFrom"
                     type="number"
                     class="form-control"
                     placeholder="₫ Từ"
@@ -250,16 +258,33 @@
             <!--end thương hiệu-->
             <div class="row">
               <div class="div">
-                <button type="submit" class="btn btn_apply w-100 btn-primary">
+                <button
+                  ng-click="search.searchFilter()"
+                  type="submit"
+                  class="btn btn_apply w-100 btn-primary"
+                >
                   Áp Dụng
+                </button>
+              </div>
+            </div>
+            <hr />
+            <!--removeFilter-->
+            <div class="row mt-3">
+              <div class="div">
+                <button
+                  ng-click="search.removeFilter()"
+                  type="submit"
+                  class="btn btn_apply w-100 btn-primary"
+                >
+                  XOÁ TẤT CẢ
                 </button>
               </div>
             </div>
           </div>
 
           <!--right-->
-          <div class="col-9 bg-white">
-            <div class="row d-flex px-3">
+          <div class="col-9 bg-white" id="content_right">
+            <div class="row d-flex px-3 view_product">
               <div
                 class="col-6 col-md-4 col-lg-3 col-xl-3 pt-2"
                 ng-repeat="item in search.pagedItems"
@@ -373,7 +398,7 @@
                 </a>
               </div>
             </div>
-            <div class="text-end">
+            <div class="text-end" id="pageItem">
               <button
                 class="button-pagination"
                 ng-click="search.firstPage()"

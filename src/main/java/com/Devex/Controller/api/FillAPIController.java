@@ -1,6 +1,7 @@
 package com.Devex.Controller.api;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,11 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -146,7 +145,7 @@ public class FillAPIController {
 	// tạo list chứa đối tượng DTO 
 	private List<ProductDTO> listProductDTO = new ArrayList<>();
 	private List<ProductDTO> temPoraryList = new ArrayList<>();
-
+	private List<String> historySearch = new ArrayList<>();
 	@GetMapping("/filter")
 	public List<ProductDTO> getProductDTO() {
 		List<Product> products = productService.findAll();
@@ -176,8 +175,8 @@ public class FillAPIController {
 
 	@GetMapping("/search")
 	public List<ProductDTO> getProductSearch() {
-//		String kwords = sessionService.get("keywordsSearch");
-		String kwords = "laptop";
+		String kwords = sessionService.get("keywordsSearch");
+//		String kwords = "laptop";
 
 		List<Product> list = new ArrayList<>();
 		Set<Product> uniqueProducts = new LinkedHashSet<>();

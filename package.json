@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@solana/web3.js": "^1.87.6"
+  },
+  "name": "devex",
+  "version": "1.0.0",
+  "main": "Test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
