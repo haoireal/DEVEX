@@ -229,6 +229,8 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findProductByShopUsername(String sellerUsername) {
 		return productRepository.findProductByShopUsername(sellerUsername);
+	}
+	
 	@Override
 	public String findByidProductproductVariants(int id) {
 	
