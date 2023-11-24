@@ -132,6 +132,9 @@
                 [(ngModel)]="keyword"
                 ng-keyup=""
                 id="search"
+                onkeyup="getanswer()"
+                onkeydown="getanswer()"
+                list="output"
                 style="
                   height: 40px;
                   border-radius: 15px;
@@ -158,19 +161,7 @@
                 </a>
               </span>
             </div>
-            <div
-              class="history_search mt-1"
-              ng-model="hidethis"
-              ng-hide="hidethis"
-            >
-              <h5 class="history_search-tital">Lịch sử tìm kiếm</h5>
-              <ul class="list-history_search">
-                <li class="list-group-item">Test1</li>
-                <li class="list-group-item">Test2</li>
-                <li class="list-group-item">Test3</li>
-                <li class="list-group-item">Test4</li>
-              </ul>
-            </div>
+            <datalist id="output"></datalist>
           </form>
         </div>
       </div>

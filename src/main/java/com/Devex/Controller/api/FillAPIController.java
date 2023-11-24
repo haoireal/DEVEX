@@ -67,7 +67,7 @@ public class FillAPIController {
 	// tạo list chứa đối tượng DTO 
 	private List<ProductDTO> listProductDTO = new ArrayList<>();
 	private List<ProductDTO> temPoraryList = new ArrayList<>();
-
+	private List<String> historySearch = new ArrayList<>();
 	@GetMapping("/filter")
 	public List<ProductDTO> getProductDTO() {
 		List<Product> products = productService.findAll();

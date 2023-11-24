@@ -179,9 +179,11 @@ public class DevexUserController {
 
 	@GetMapping("/product/search")
 	public String searchProduct(Model model, @RequestParam("search") Optional<String> kw) {
+		List<String> historySearch = new ArrayList<>();// thu thập từ khoá tìm kiếm của người dùng cần tạo bảng trong data
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
 		sessionService.set("keywordsSearch", kwords);
-
+		historySearch.add(kwords);
+		
 		return "user/findproduct";
 	}
 
@@ -202,4 +204,11 @@ public class DevexUserController {
 		sessionService.set("userSeller", username);
 		return "user/sellerPage";
 	}
+	
+	@GetMapping("/sol")
+	public String getTestSOL() {
+
+		return "user/tetsSol";
+	}
+	
 }// end class
