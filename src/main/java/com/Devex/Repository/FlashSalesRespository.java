@@ -1,23 +1,20 @@
 package com.Devex.Repository;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.Devex.Entity.FlashSale;
-import com.Devex.Entity.FlashSaleTime;
 
 import jakarta.transaction.Transactional;
 
 @EnableJpaRepositories
 @Repository("flashSalesRepository")
-public interface FlashSalesRespository extends JpaRepository<FlashSale, String>{
+public interface FlashSalesRespository extends JpaRepository<FlashSale, Integer>{
 	
 	@Modifying
 	@Transactional
@@ -31,6 +28,9 @@ public interface FlashSalesRespository extends JpaRepository<FlashSale, String>{
 
 	@Query("SELECT fs FROM FlashSale fs WHERE fs.productVariant.id = ?1")
     FlashSale findByProductVariantId( int productVariantId);
+	
+	@Query("SELECT fs FROM FlashSale fs WHERE fs.amountSell > 0 AND fs.status = true AND fs.productVariant.id = ?1")
+    List<FlashSale> findAllFlashSaleNowByIdProdVariant(int productVariantId);
 	
 	
 }

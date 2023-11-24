@@ -37,11 +37,37 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
   // tăng giảm số lượng
   $scope.changeQuantity = function (item, action) {
     if (action === "increase") {
-      item.quantity++;
+      if (item.quantity == item.quantityInventory) {
+        $scope.message = "Số lượng tồn kho không khả dụng!";
+				$('#ModalOrderMessage').modal('show');
+        return;
+      }
+      if (item.idFlashSale !== null) {
+        if(item.quantity == item.quantitySale) {
+          $scope.message = "Số lượng khả dụng Flash Sale không đủ!";
+		  		$('#ModalOrderMessage').modal('show');
+          item.price = item.cost;
+        }else if(item.quantity == item.quantitySaleLimit) {
+          $scope.message = "Sản phẩm Flash Sale này chỉ được đặt giới hạn " + item.quantitySaleLimit + "!";
+		  		$('#ModalOrderMessage').modal('show');
+          item.price = item.cost;
+        }
+      }
+      if (item.quantity < 15) {
+        item.quantity++;
+      }
     } else if (action === "decrease") {
       if (item.quantity > 1) {
         item.quantity--;
       }
+      if (item.idFlashSale !== null) {
+        if(item.quantity == item.quantitySale) {
+          item.price = item.priceSale;
+        }else if(item.quantity == item.quantitySaleLimit) {
+          item.price = item.priceSale;
+        }
+      }
+      
     }
 
     // Gọi hàm changeQty để cập nhật giá trị trong giỏ hàng và cơ sở dữ liệu
@@ -219,14 +245,12 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 
     // check voucher có sở hữu hay chưa
     isItemInMyVoucher(item) {
-      //Kiểm tra xem item.id có tồn tại trong myVoucher hay không
       return this.myVoucher.some((voucher) => voucher.voucher.id === item.id);
     },
 
 
     // check voucher có đang được apply không
     isItemInVoucherClicked(item) {
-      //Kiểm tra xem item.id có tồn tại trong myVoucher hay không
       if (this.voucherApply.indexOf(item) !== -1) {
         return true;
       } else {
@@ -307,7 +331,6 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 
     //check voucher đã được sử dụng hay chưa
     isItemInMyVoucherApplied(item) {
-      // Kiểm tra xem item.id có tồn tại trong myVoucher và voucher.id có applied hay không
       return this.myVoucher.some(
         (voucher) => voucher.voucher.id === item.id && !voucher.applied === true
       );
@@ -315,7 +338,6 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 
     //check mỗi shop chỉ đc app 1 voucher
     isShopVoucherApplied(idShop) {
-      // Kiểm tra xem item.id có tồn tại trong myVoucher và voucher.id có applied hay không
       return this.voucherApply.some(
         (voucher) => voucher.creator.username === idShop
       );
@@ -323,7 +345,6 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 
 	//check mỗi shop chỉ đc app 1 voucher
     isDevexVoucherApplied() {
-		// Kiểm tra xem item.id có tồn tại trong myVoucher và voucher.id có applied hay không
 		return this.voucherApply.some(
 		  (voucher) => voucher.categoryVoucher.id === 100001
 		);
@@ -331,7 +352,6 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 
 	  //check mỗi shop chỉ đc app 1 voucher
 	  isShipVoucherApplied() {
-		// Kiểm tra xem item.id có tồn tại trong myVoucher và voucher.id có applied hay không
 		return this.voucherApply.some(
 		  (voucher) => voucher.categoryVoucher.id === 100002
 		);
@@ -367,6 +387,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
           startDate <= currentDate &&
           currentDate <= endDate &&
           item.active === true &&
+          item.quantity > 0 &&
           item.creator.username === idShop
         );
       });
@@ -388,6 +409,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
           startDate <= currentDate &&
           currentDate <= endDate &&
           item.active === true &&
+          item.quantity > 0 &&
           item.categoryVoucher.id === 100001
         );
       });
@@ -402,6 +424,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
           startDate <= currentDate &&
           currentDate <= endDate &&
           item.active === true &&
+          item.quantity > 0 &&
           item.categoryVoucher.id === 100002
         );
       });
@@ -591,6 +614,16 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       // tính thành tiền của 1 sản phẩm
       return item.price * item.quantity;
     },
+
+    checkPrice(item) {
+      if(item.idFlashSale !== null && item.quantity <= item.quantitySale && item.quantity <= item.quantitySaleLimit) {
+        return item.price;
+      }else {
+        item.price = item.cost;
+        return item.cost;
+      }
+    },
+
     get count() {
       // tính tổng số lượng các mặt hàng trong giỏ
       return this.items
@@ -724,11 +757,6 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 
     isItemChecked(id) {
       return this.itemsOrder.some((item) => item.id === id);
-    },
-
-
-    checkQtyToBuy() {
-      
     },
 
     getCountItemsByShopId(shopId) {

@@ -239,9 +239,9 @@
 											</div>
 										</div>
 										<div class="row">
-											<s class="col-4 ng-binding">{{formatMoney(item.price)}} ₫</s>
+											<s class="col-4 ng-binding">{{formatMoney(item.cost)}} ₫</s>
 											<p class="text-danger fw-bold col-4 ng-binding">
-												{{formatMoney(item.price)}} ₫
+												{{formatMoney(cart.checkPrice(item))}} ₫
 											</p>
 										</div>
 									</div>
@@ -251,8 +251,8 @@
 											<i class="fas fa-minus"></i>
 										</button>
 
-										<input id="form1" min="1" name="quantity" type="number"
-											class="form-control form-control-sm ng-binding" style="width: 2rem"
+										<input id="form1" min="1" max="15" name="quantity" type="number"
+											class="form-control form-control-sm ng-binding pe-none" style="width: 2rem"
 											inputmode="numeric" ng-model="item.quantity" />
 
 										<button class="btn btn-link px-2 p-0"

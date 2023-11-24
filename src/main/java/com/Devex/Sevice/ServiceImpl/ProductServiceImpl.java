@@ -186,6 +186,7 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getListProductByCategoryDetailsIdAndYear(int cateid, int year) {
 		return productRepository.getListProductByCategoryDetailsIdAndYear(cateid, year);
 	}
+	
 
 	@Transactional
 	@Override
@@ -228,6 +229,10 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findProductByShopUsername(String sellerUsername) {
 		return productRepository.findProductByShopUsername(sellerUsername);
+	@Override
+	public String findByidProductproductVariants(int id) {
+	
+		return productRepository.findProductIdByProductVariantId(id);
 	}
 
 }

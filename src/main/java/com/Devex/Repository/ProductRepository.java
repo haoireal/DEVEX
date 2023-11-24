@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 	@Query("SELECT p FROM Product p WHERE p.id = ?1")
 	Product findByIdProduct(String id);
-
+	
 	@Query("SELECT DISTINCT p FROM Product p " + "JOIN FETCH p.sellerProduct s "
 			+ "WHERE s.username like ?1 OR s.shopName Like ?1")
 	List<Product> findProductBySellerUsername(String sellerUsername);
@@ -135,4 +135,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 	@Query("SELECT DISTINCT p FROM Product p WHERE p.sellerProduct.username like ?1")
 	List<Product> findProductByShopUsername(String sellerUsername);
+	@Query("SELECT p.id FROM Product p JOIN p.productVariants pv WHERE pv.id = :productVariantId")
+    String findProductIdByProductVariantId(@Param("productVariantId") int productVariantId);
+	
+
 }
