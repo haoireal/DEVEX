@@ -35,7 +35,7 @@ public class CartDetailDTo {
     private String avatarShop;
     private String img;
     private Date createdDay;
-    private Boolean status;
+    private Integer idFlashSale;
    
     
 }

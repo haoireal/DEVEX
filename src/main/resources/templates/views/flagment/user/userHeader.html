@@ -10,6 +10,10 @@
 								<li class="nav-item">
                                     <a class="nav-link" href="/ad/home" th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}">Admin Page</a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/message">Tin nhắn</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/seller/home">Bán hàng</a>
                                 </li>
@@ -287,6 +291,9 @@
                             <ul class="text-end navbar-nav ml-auto">
 								<li class="nav-item">
                                     <a class="nav-link text-white" href="/ad/home" th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}">Admin Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/message">Tin nhắn</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="/seller/home">Bán hàng</a>

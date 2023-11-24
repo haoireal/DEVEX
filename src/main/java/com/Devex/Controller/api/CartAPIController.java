@@ -97,11 +97,9 @@ public class CartAPIController {
 				for (FlashSale flashSale : listFsNow) {
 					LocalDateTime firstTime = flashSale.getFlashSaleTime().getFirstTime();
 					LocalDateTime lastTime = flashSale.getFlashSaleTime().getLastTime();
-					if (currentTime.isAfter(firstTime) && currentTime.isBefore(lastTime)) {
-						cartDetailDTo.setStatus(true);
-					} else {
-						cartDetailDTo.setStatus(false);
-					}
+					if (!(currentTime.isAfter(firstTime) && currentTime.isBefore(lastTime))) {
+						cartDetailDTo.setIdFlashSale(null);
+					} 
 				}
 			}
 

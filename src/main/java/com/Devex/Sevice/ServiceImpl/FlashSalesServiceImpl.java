@@ -36,7 +36,12 @@ public class FlashSalesServiceImpl implements FlashSalesService{
 	}
 
 	@Override
-	public void deleteById(String id) {
+	public Optional<FlashSale> findById(Integer id) {
+		return flashSalesRespository.findById(id);
+	}
+
+	@Override
+	public void deleteById(Integer id) {
 		flashSalesRespository.deleteById(id);
 	}
 

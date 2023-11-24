@@ -21,7 +21,7 @@ public interface CartDetailRespository extends JpaRepository<CartDetail, Integer
 			+ "cd.productCart.product.id,"
 			+ "cd.productCart.id,"
 			+ "cd.productCart.product.sellerProduct.avatar,"
-			+ "(SELECT ip.name FROM ImageProduct ip WHERE ip.product = cd.productCart.product ORDER BY ip.id ASC LIMIT 1) AS img, cd.createdDay,fs.status) FROM CartDetail cd LEFT JOIN cd.productCart.listFlashSale fs "
+			+ "(SELECT ip.name FROM ImageProduct ip WHERE ip.product = cd.productCart.product ORDER BY ip.id ASC LIMIT 1) AS img, cd.createdDay,fs.id) FROM CartDetail cd LEFT JOIN cd.productCart.listFlashSale fs "
 			+ "WHERE cd.cart.person.username = ?1 ")
 List<CartDetailDTo> findAllCartDTO(String username);
 

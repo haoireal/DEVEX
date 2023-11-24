@@ -42,7 +42,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 				$('#ModalOrderMessage').modal('show');
         return;
       }
-      if (item.status) {
+      if (item.idFlashSale !== null) {
         if(item.quantity == item.quantitySale) {
           $scope.message = "Số lượng khả dụng Flash Sale không đủ!";
 		  		$('#ModalOrderMessage').modal('show');
@@ -60,7 +60,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       if (item.quantity > 1) {
         item.quantity--;
       }
-      if (item.status) {
+      if (item.idFlashSale !== null) {
         if(item.quantity == item.quantitySale) {
           item.price = item.priceSale;
         }else if(item.quantity == item.quantitySaleLimit) {
@@ -616,7 +616,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     },
 
     checkPrice(item) {
-      if(item.status && item.quantity <= item.quantitySale && item.quantity <= item.quantitySaleLimit) {
+      if(item.idFlashSale !== null && item.quantity <= item.quantitySale && item.quantity <= item.quantitySaleLimit) {
         return item.price;
       }else {
         item.price = item.cost;
