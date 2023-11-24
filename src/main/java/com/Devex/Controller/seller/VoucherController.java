@@ -20,6 +20,7 @@ import com.Devex.Entity.User;
 import com.Devex.Entity.Voucher;
 import com.Devex.Entity.VoucherProduct;
 import com.Devex.Sevice.CategoryVoucherService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.SellerService;
@@ -32,28 +33,31 @@ import com.Devex.Sevice.VoucherService;
 @RequestMapping("/seller")
 public class VoucherController {
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	SessionService sessionService;
+	private SessionService sessionService;
 
 	@Autowired
-	ParamService param;
+	private ParamService param;
 
 	@Autowired
-	CategoryVoucherService categoryVoucherService;
+	private CategoryVoucherService categoryVoucherService;
 
 	@Autowired
-	VoucherService voucherService;
+	private VoucherService voucherService;
 
 	@Autowired
-	VoucherProductService voucherProductService;
+	private VoucherProductService voucherProductService;
 
 	@Autowired
-	SellerService sellerService;
+	private SellerService sellerService;
+	
+	@Autowired
+	private NotiService notiService;
 
 	@GetMapping("/voucher/form")
 	public String showFormVoucher(Model model) {
@@ -138,8 +142,6 @@ public class VoucherController {
 		try {
 			Date startDate = sdf.parse(startTime);
 			Date endDate = sdf.parse(endTime);
-			System.out.println("Start time: " + startDate);
-			System.out.println("End time: " + endDate);
 			// Chuyển đổi Date thành java.sql.Timestamp trước khi lưu vào cơ sở dữ liệu
 			Timestamp sqlTimestampStart = new Timestamp(startDate.getTime());
 			Timestamp sqlTimestampEnd = new Timestamp(endDate.getTime());
@@ -151,7 +153,6 @@ public class VoucherController {
 		}
 
 		voucherService.save(voucher);
-		System.out.println(voucher.getId());
 		// Sử lí sản phẩm được áp voucher
 		for (String str : selectedProducts) {
 			VoucherProduct voucherProduct = new VoucherProduct();
@@ -162,7 +163,8 @@ public class VoucherController {
 		}
 
 //		model.addAttribute("listProd", listProd);
-
+		Voucher v = voucherService.getVoucherNew();
+		notiService.sendHistory(user.getUsername(), "", "/seller/voucher/manage", "createvoucher", String.valueOf(v.getId()));
 		return "redirect:/seller/voucher/form";
 	}
 }

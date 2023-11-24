@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+<div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
+<style>
+    .category {
+        background: linear-gradient(to right, #808080 50%, transparent 50%);
+        background-size: 200% 100%;
+        background-position: right bottom;
+        transition: all .5s ease-out;
+    }
+
+    .category:hover {
+        background-position: left bottom;
+        color: white;
+    }
+</style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app">
+	<div class="wrapper">
+		<!-- Preloader -->
+		<div
+			class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__wobble" src="/img/banner/logotitle.png"
+				alt="AdminLTELogo" height="60" width="60">
+		</div>
+
+		<div th:replace="~{flagment/admin/adminHeader :: adminHeaderFragment}"></div>
+		<div
+			th:replace="~{flagment/admin/adminMainSidebar :: adminMainSidebarFragment}"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0">Quản lý danh mục</h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="/devex/home">Trang chủ</a></li>
+								<li class="breadcrumb-item active">Tổng quan</li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<section class="content" ng-controller="category">
+				<div class="container-fluid">
+                    <!-- Loại sản phẩm -->
+					<div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Quản lý loại sản phẩm</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="text-center">Category</h5>
+                                                </div>
+                                                <div class="input-group mt-2 mb-1 mr-2">
+                                                    <input ng-model="namecategory" type="text" class="form-control" placeholder="Nhập loại sản phẩm" aria-label="Nhập loại sản phẩm" aria-describedby="basic-addon2">
+                                                    <div class="input-group-append">
+                                                        <button ng-click="addCategory()" class="input-group-text btn btn-success" id="basic-addon2">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <hr style="margin-top: 5px; margin-bottom: 5px;">
+                                                <div class="card-body" style="overflow-y: scroll; height: 400px;">
+                                                    <div ng-repeat="category in listCategory">
+                                                        <div ng-hide="editca[category.id]" class="btn-group w-100" role="group" aria-label="Basic example">
+                                                            <button id="{{category.id}}" class="btn btn-white w-100 category text-left" ng-click="showCategoryDetails(category.id)">{{category.name}}</button>
+                                                            <button ng-click="editCategory(category.id)" class="btn btn-primary text-right">
+                                                                <i class="fa-regular fa-pen-to-square"></i>
+                                                            </button>
+                                                            <button ng-click="deleteCategory(category.id)" class="btn btn-danger text-right">
+                                                                <i class="fa-solid fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div ng-show="editca[category.id]" class="btn-group w-100" role="group" aria-label="Basic example">
+                                                            <input ng-model="categoryNames[category.id]" type="text" class="form-control" placeholder="Nhập loại sản phẩm">
+                                                            <button ng-click="cancelCategory(category.id)" class="btn btn-secondary text-right">Cancel</button>
+                                                            <button ng-click="saveCategory(category.id)" class="btn btn-danger text-right">Save</button>
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="text-center">Category Details</h5>
+                                                </div>
+                                                <div class="input-group mt-2 mb-1 mr-2">
+                                                    <input ng-model="namecategorydetails" type="text" class="form-control" placeholder="Nhập loại chi tiết sản phẩm" aria-label="Nhập loại chi tiết sản phẩm" aria-describedby="basic-addon2">
+                                                    <div class="input-group-append">
+                                                        <button ng-click="addCategoryDetails()" class="input-group-text btn btn-success" id="basic-addon2">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <hr style="margin-top: 5px; margin-bottom: 5px;">
+                                                <div class="card-body" style="overflow-y: scroll; height: 400px;">
+                                                    <div ng-repeat="categorydetails in listCategoryDetails">
+                                                        <div ng-hide="editcad[categorydetails.id]" class="btn-group w-100" role="group" aria-label="Basic example">
+                                                            <button class="btn btn-white w-100 category text-left">{{categorydetails.name}}</button>
+                                                            <button ng-click="editCategoryDetails(categorydetails.id)" class="btn btn-primary text-right">
+                                                                <i class="fa-regular fa-pen-to-square"></i>
+                                                            </button>
+                                                            <button ng-click="deleteCategoryDetails(categorydetails.id)" class="btn btn-danger text-right">
+                                                                <i class="fa-solid fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div ng-show="editcad[categorydetails.id]" class="btn-group w-100" role="group" aria-label="Basic example">
+                                                            <input ng-model="categoryDetailsNames[categorydetails.id]" type="text" class="form-control" placeholder="Nhập loại chi tiết sản phẩm">
+                                                            <button ng-click="cancelCategoryDetails(categorydetails.id)" class="btn btn-secondary text-right">Cancel</button>
+                                                            <button ng-click="saveCategoryDetails(categorydetails.id)" class="btn btn-danger text-right">Save</button>
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Thương hiệu sản phẩm -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Quản lý thương hiệu sản phẩm</h4>
+                                </div>
+                                <div class="input-group mt-2 mb-1 mr-2">
+                                    <input ng-model="nameProductBrand" type="text" class="form-control" placeholder="Nhập thương hiệu sản phẩm" aria-label="Nhập thương hiệu sản phẩm" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button ng-click="addProductBrand()" class="input-group-text btn btn-success" id="basic-addon2">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr style="margin-top: 5px; margin-bottom: 5px;">
+                                <div class="card-body" style="overflow-y: scroll; height: 400px;">
+                                    <div ng-repeat="ProductBrand in listProductBrand">
+                                        <div ng-hide="editpb[ProductBrand.id]" class="btn-group w-100" role="group" aria-label="Basic example">
+                                            <button id="pb{{ProductBrand.id}}" class="btn btn-white w-100 category text-left">{{ProductBrand.name}}</button>
+                                            <button ng-click="editProductBrand(ProductBrand.id)" class="btn btn-primary text-right">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+                                            <button ng-click="deleteProductBrand(ProductBrand.id)" class="btn btn-danger text-right">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        <div ng-show="editpb[ProductBrand.id]" class="btn-group w-100" role="group" aria-label="Basic example">
+                                            <input ng-model="productBrandNames[ProductBrand.id]" type="text" class="form-control" placeholder="Nhập thương hiệu sản phẩm">
+                                            <button ng-click="cancelProductBrand(ProductBrand.id)" class="btn btn-secondary text-right">Cancel</button>
+                                            <button ng-click="saveProductBrand(ProductBrand.id)" class="btn btn-danger text-right">Save</button>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+                <!-- Model delete category -->
+                <button id="ca" type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteCategory" hidden>
+                    Xóa category
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="deleteCategory" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="">
+                                    <i class="fa-solid fa-triangle-exclamation text-warning"></i> Cảnh báo
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><span class="fw-bold">Lưu ý:</span> khi xóa Category sẽ xóa tất cả CategoryDetails, tất cả sản phẩm tồn tại CategoryDetails này khi bạn xóa hệ thống sẽ đặt lại loại sản phẩm là Unknoun!</p>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                <button ng-click="updateCategory()" type="button" class="btn btn-primary" data-dismiss="modal">Chấp nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Model delete categorydetails -->
+                <button id="cad" type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteCategoryDetails" hidden>
+                    Xóa categorydetails
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="deleteCategoryDetails" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="">
+                                    <i class="fa-solid fa-triangle-exclamation text-warning"></i> Cảnh báo
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><span class="fw-bold">Lưu ý:</span> hiện tại đã có sản phẩm tồn tại trong CategoryDetails này nếu bạn xóa hệ thống sẽ đặt lại loại sản phẩm là Unknoun!</p>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                <button ng-click="updateCategoryDetails()" type="button" class="btn btn-primary" data-dismiss="modal">Chấp nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Model delete product brand -->
+                <button id="pb" type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteBrand" hidden>
+                    Xóa ProductBrand
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="deleteBrand" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="">
+                                    <i class="fa-solid fa-triangle-exclamation text-warning"></i> Cảnh báo
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><span class="fw-bold">Lưu ý:</span> hiện tại đã có sản phẩm tồn tại trong Thương hiệu này nếu bạn xóa hệ thống sẽ đặt lại thương hiệu sản phẩm là Unknoun!</p>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                <button ng-click="updateProductBrand()" type="button" class="btn btn-primary" data-dismiss="modal">Chấp nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+        
+
+		<div th:replace="~{flagment/admin/adminFooter :: adminFooterFragment}"></div>
+		<div
+			th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
+	</div>
+
+</body>
+<script src="/admin/dist/js/handMade.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="/js/admin/category.js"></script>
+</html>

@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 	@Query("SELECT p FROM Product p WHERE p.id = ?1")
 	Product findByIdProduct(String id);
-
+	
 	@Query("SELECT DISTINCT p FROM Product p " + "JOIN FETCH p.sellerProduct s "
 			+ "WHERE s.username like ?1 OR s.shopName Like ?1")
 	List<Product> findProductBySellerUsername(String sellerUsername);
@@ -109,7 +109,28 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 			"ORDER BY p.soldCount")
 	List<Product> getListProductByCategoryDetailsIdAndYear(@Param("cateid") int cateid, @Param("year") int year);
 	
+	@Modifying
+	@Query(value = "UPDATE Product SET Category_ID = :CategoryID WHERE ID = :id", nativeQuery = true)
+	void updateProductCategoryByIdCategory(@Param("CategoryID") int cateid, @Param("id") String id);
+	
+	@Query("SELECT COUNT(p) FROM Product p WHERE p.categoryDetails.id = ?1")
+	int getCountProductByCategoryId(int id);
+	
+	@Query("SELECT p FROM Product p WHERE p.categoryDetails.id = :categoryId")
+	List<Product> findProductsByCategoryDetailsId(@Param("categoryId") int categoryId);
+	
+	@Query("SELECT COUNT(p) FROM Product p WHERE p.productbrand.id = ?1")
+	int getCountProductByProductBrandId(int id);
+	
+	@Query("SELECT p FROM Product p WHERE p.productbrand.id = ?1")
+	List<Product> findAllProductByProductBrandId(int id);
+	
+	@Modifying
+	@Query(value = "UPDATE Product SET Brand_ID = :BrandID WHERE ID = :id", nativeQuery = true)
+	void updateProductProductBrandByIdProductBrand(@Param("BrandID") int cateid, @Param("id") String id);
+
 	@Query("SELECT p.id FROM Product p JOIN p.productVariants pv WHERE pv.id = :productVariantId")
     String findProductIdByProductVariantId(@Param("productVariantId") int productVariantId);
 	
+
 }
