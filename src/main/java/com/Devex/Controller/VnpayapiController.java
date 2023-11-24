@@ -45,7 +45,7 @@ public class VnpayapiController {
 		List<CartDetailDTo> list = session.get("listItemOrder", null);
 		double hihi1 = 0;
 		for (CartDetailDTo cartDetailDTo : list) {
-			hihi1 += cartDetailDTo.getPrice();
+			hihi1 += (cartDetailDTo.getPrice() * cartDetailDTo.getQuantity());
 		}
 		int orderTotalInt = (int) hihi1;  
 		
@@ -223,7 +223,7 @@ public class VnpayapiController {
 	        model.addAttribute("paymentTime", paymentTime);
 	        model.addAttribute("transactionId", transactionId);
 
-	        return paymentStatus == 1 ? "user/paymentSuccess" : "orderfail";
+	        return paymentStatus == 1 ? "redirect:order/success" : "orderfail";
 	    }
 	 
 	 

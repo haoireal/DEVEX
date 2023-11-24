@@ -80,10 +80,7 @@ public class CartAPIController {
 
 	@Autowired
 	private FlashSalesTimeService flashSalesTimeService;
-	@Autowired
-	private FlashSalesService flashSalesService;
-	@Autowired
-	private ProductService productService;
+
 	@GetMapping("/rest/cart")
 	public List<CartDetailDTo> getAll(Model model) {
 		User user = sessionService.get("user");
@@ -103,20 +100,10 @@ public class CartAPIController {
 					if (!(currentTime.isAfter(firstTime) && currentTime.isBefore(lastTime))) {
 						cartDetailDTo.setIdFlashSale(null);
 					} 
-					String idproduct = productService.findByidProductproductVariants(flashSale.getProductVariant().getId());
-					if (cartDetailDTo.getIdProduct().equals(idproduct)) {
-						if (currentTime.isAfter(firstTime) && currentTime.isBefore(lastTime)) {
-							cartDetailDTo.setStatus(true);
-						} else {
-							cartDetailDTo.setStatus(false);
-						}
-					}else {
-
-						cartDetailDTo.setStatus(false);
-					}
+					
 				}
 			}
-			cartDetailDTo.setStatus(false);
+			
 			
 		}
 
