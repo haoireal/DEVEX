@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional;
 
 @EnableJpaRepositories
 @Repository("flashSalesRepository")
-public interface FlashSalesRespository extends JpaRepository<FlashSale, String>{
+public interface FlashSalesRespository extends JpaRepository<FlashSale, Integer>{
 	
 	@Modifying
 	@Transactional
