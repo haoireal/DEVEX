@@ -225,4 +225,10 @@ public class ProductServiceImpl implements ProductService {
 		productRepository.updateProductProductBrandByIdProductBrand(cateid, id);
 	}
 
+	@Override
+	public String findByidProductproductVariants(int id) {
+	
+		return productRepository.findProductIdByProductVariantId(id);
+	}
+
 }

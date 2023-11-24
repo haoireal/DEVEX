@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 	@Query("SELECT p FROM Product p WHERE p.id = ?1")
 	Product findByIdProduct(String id);
-
+	
 	@Query("SELECT DISTINCT p FROM Product p " + "JOIN FETCH p.sellerProduct s "
 			+ "WHERE s.username like ?1 OR s.shopName Like ?1")
 	List<Product> findProductBySellerUsername(String sellerUsername);
@@ -109,7 +109,6 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 			"ORDER BY p.soldCount")
 	List<Product> getListProductByCategoryDetailsIdAndYear(@Param("cateid") int cateid, @Param("year") int year);
 	
-
 	@Modifying
 	@Query(value = "UPDATE Product SET Category_ID = :CategoryID WHERE ID = :id", nativeQuery = true)
 	void updateProductCategoryByIdCategory(@Param("CategoryID") int cateid, @Param("id") String id);
