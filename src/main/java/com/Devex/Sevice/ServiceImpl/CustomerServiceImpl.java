@@ -155,6 +155,7 @@ public class CustomerServiceImpl implements CustomerService{
 
         public List<String> list(String id, String shopname) {
             List<ImageProduct> listImageProduct = imageProductService.findAllImageProductByProductId(id);
+            System.out.println(listImageProduct.size());
             List<String> filenames = new ArrayList<String>();
             File dir = Paths.get(fileStoragePath + "/product", shopname, id).toFile();
             File shop = Paths.get(fileStoragePath + "/product", shopname).toFile();

@@ -44,4 +44,6 @@ public interface SellerService {
 
 	void updateSeller(String Shopname, String Address, String Phoneaddress, Boolean Mall, Boolean Activeshop, String Description, String Username);
 
+	List<Seller> findByShopNameContainingKeyword(String keyword);
+
 }

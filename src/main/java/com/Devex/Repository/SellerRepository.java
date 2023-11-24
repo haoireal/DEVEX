@@ -1,9 +1,12 @@
 package com.Devex.Repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.Devex.Entity.Seller;
@@ -25,4 +28,7 @@ public interface SellerRepository extends JpaRepository<Seller, String>{
 	@Transactional
 	@Query(value = "UPDATE Sellers SET Shopname = ?, Address = ?, Phoneaddress = ?, Mall = ?, Activeshop = ?, Description = ? WHERE Username = ?", nativeQuery = true)
 	void updateSeller(String Shopname, String Address, String Phoneaddress, Boolean Mall, Boolean Activeshop, String Description, String Username);
+	
+	@Query("SELECT s FROM Seller s WHERE LOWER(s.shopName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Seller> findByShopNameContainingKeyword(@Param("keyword") String keyword);
 }

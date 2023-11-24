@@ -39,5 +39,7 @@ public interface ProductBrandService {
 	void updateProductBrand(String name, int id);
 
 	ProductBrand getProductBrandNew();
+
+	String findNameProductBrandById(int id);
 	
 }

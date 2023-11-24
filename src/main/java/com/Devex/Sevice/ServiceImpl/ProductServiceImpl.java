@@ -220,6 +220,15 @@ public class ProductServiceImpl implements ProductService {
 		productRepository.updateProductProductBrandByIdProductBrand(cateid, id);
 	}
 
+	@Transactional
+	@Override
+	public void updateProductActiveById(boolean active, String id) {
+		productRepository.updateProductActiveById(active, id);
+	}
+
+	@Override
+	public List<Product> findProductByShopUsername(String sellerUsername) {
+		return productRepository.findProductByShopUsername(sellerUsername);
 	@Override
 	public String findByidProductproductVariants(int id) {
 	
