@@ -42,6 +42,7 @@ import com.Devex.Entity.Notifications;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductBrand;
+import com.Devex.Entity.ProductRequest;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
@@ -56,6 +57,7 @@ import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ProductBrandService;
+import com.Devex.Sevice.ProductRequestService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
@@ -118,6 +120,9 @@ public class DevexSellerRestController {
 	
 	@Autowired
 	private NotiService notiService;
+	
+	@Autowired
+	private ProductRequestService productRequestService;
 
 	@Value("${myapp.file-storage-path}")
 	private String fileStoragePath;
@@ -132,35 +137,45 @@ public class DevexSellerRestController {
 		User u = session.get("user");
 		String id = session.get("idproduct");
 		List<String> imageUrls = fileManagerService.list(id, u.getUsername());
+		
 		return imageUrls;
 	}
 
 	@GetMapping("/img/product/{filename}")
 	public byte[] download(@PathVariable("filename") String filename) {
-		User u = session.get("user");
-		String id = session.get("idproduct");
-		return fileManagerService.read(u.getUsername(), id, filename);
+		String username = session.get("usernameseller");
+		String idproduct = session.get("idproduct");
+		return fileManagerService.read(username, idproduct, filename);
 	}
 
 	@DeleteMapping("/img/product/{filename}")
 	public void delete(@PathVariable("filename") String filename) {
-		User u = session.get("user");
-		String id = session.get("idproduct");
-		fileManagerService.delete(u.getUsername(), id, filename);
-		imageProductService.deleteImageProductByNameAndProductId(filename, id);
+		String username = session.get("usernameseller");
+		String idproduct = session.get("idproduct");
+		fileManagerService.delete(username, idproduct, filename);
+		imageProductService.deleteImageProductByNameAndProductId(filename, idproduct);
 	}
 
 	@PostMapping("/img/product")
 	public List<String> upload(@PathParam("files") MultipartFile[] files) {
-		User u = session.get("user");
-		String id = session.get("idproduct");
-		return fileManagerService.save(u.getUsername(), id, files);
+		String username = session.get("usernameseller");
+		String idproduct = session.get("idproduct");
+		return fileManagerService.save(username, idproduct, files);
 	}
 
 	@GetMapping("/api/product")
-	public Product getProduct() {
+	public Map<String, Object> getProduct() {
+		Map<String, Object> mapInfoProduct = new HashMap<>();
 		String id = session.get("idproduct");
-		return productService.findByIdProduct(id);
+		boolean checkRequest = false;
+		Product product = productService.findByIdProduct(id);
+		ProductRequest productRequest = productRequestService.findProductRequestByProductId(id);
+		mapInfoProduct.put("product", product);
+		if(productRequest != null) {
+			checkRequest = true;
+		}
+		mapInfoProduct.put("checkRequest", checkRequest);
+		return mapInfoProduct;
 	}
 
 	@GetMapping("/categoryDetails/{idca}")
@@ -697,6 +712,17 @@ public class DevexSellerRestController {
 	public List<Notifications> getAllNotifications() {
 		User u = session.get("user");
 		return notificationsService.getAllNotificationsByUserto(u.getUsername());
+	}
+	
+	@PostMapping("/seller/sendRequest")
+	public void sendRequest(@RequestParam("id") String id) {
+		productRequestService.insertProductRequest(new Date(), id);
+	}
+	
+	@DeleteMapping("/seller/cancelRequest")
+	public void cancelRequest(@RequestParam("id") String id) {
+		ProductRequest pr = productRequestService.findProductRequestByProductId(id);
+		productRequestService.deleteById(pr.getId());
 	}
 
 }

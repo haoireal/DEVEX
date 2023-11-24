@@ -96,4 +96,9 @@ public class ProductBrandServiceImpl implements ProductBrandService{
 		return brandRespository.getProductBrandNew();
 	}
 
+	@Override
+	public String findNameProductBrandById(int id) {
+		return brandRespository.findNameProductBrandById(id);
+	}
+
 }

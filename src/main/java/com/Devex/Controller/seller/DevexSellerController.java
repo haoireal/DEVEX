@@ -140,8 +140,8 @@ public class DevexSellerController {
 	@GetMapping("/product/edit/{idproduct}")
 	public String editProduct(@PathVariable("idproduct") String idproduct, Model model) {
 		Product product = productService.findByIdProduct(idproduct);
-		String id = product.getId();
-		session.set("idproduct", id);
+		session.set("usernameseller", product.getSellerProduct().getUsername());
+		session.set("idproduct", idproduct);
 		return "seller/formManage";
 	}
 	

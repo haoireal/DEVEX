@@ -128,4 +128,11 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	@Modifying
 	@Query(value = "UPDATE Product SET Brand_ID = :BrandID WHERE ID = :id", nativeQuery = true)
 	void updateProductProductBrandByIdProductBrand(@Param("BrandID") int cateid, @Param("id") String id);
+	
+	@Modifying
+	@Query(value = "UPDATE Product SET Active = :active WHERE ID = :id", nativeQuery = true)
+	void updateProductActiveById(@Param("active") boolean active, @Param("id") String id);
+	
+	@Query("SELECT DISTINCT p FROM Product p WHERE p.sellerProduct.username like ?1")
+	List<Product> findProductByShopUsername(String sellerUsername);
 }
