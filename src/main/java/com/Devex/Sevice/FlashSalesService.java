@@ -17,7 +17,7 @@ public interface FlashSalesService {
 
 	void deleteAll();
 
-	void deleteById(String id);
+	void deleteById(Integer id);
 
 	List<FlashSale> findAll();
 
@@ -28,6 +28,10 @@ public interface FlashSalesService {
 	void updatetFlashSale(Double discount, int amountsell, int amountorder, Boolean status, int time, int product_ID);
 
 	FlashSale findByProductVariantId(int productVariantId);
+
+	List<FlashSale> findAllFlashSaleNowByIdProdVariant(int productVariantId);
+
+	Optional<FlashSale> findById(Integer id);
 
 
 

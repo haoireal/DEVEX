@@ -51,7 +51,7 @@ public class AuthConfig {
             .requestMatchers("/css/**", "/admin/**", "/img/**").permitAll()
             .requestMatchers("/ad/**").hasAuthority("ADMIN")
             .requestMatchers("/manager/**").hasAnyAuthority("MANAGER", "ADMIN")
-            .requestMatchers("/seller/**","/profile/**", "/cart/**").hasAnyAuthority("SELLER")
+            .requestMatchers("/seller/**").hasAnyAuthority("SELLER")
             .requestMatchers("/profile", "/profile/**", "/cart/**","/order/**").hasAnyAuthority("CUSTOMER")
             .anyRequest().permitAll()
             .and()

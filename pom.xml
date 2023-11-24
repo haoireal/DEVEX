@@ -20,11 +20,11 @@
 	</properties>
 	<dependencies>
 
+		<!-- Websocket -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.paypal.sdk/rest-api-sdk -->
 		<dependency>
 			<groupId>com.paypal.sdk</groupId>

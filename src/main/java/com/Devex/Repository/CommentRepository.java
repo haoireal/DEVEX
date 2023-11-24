@@ -34,4 +34,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>{
             "and cmt.isSellerReply = true " +
             "Order BY cmt.createdAt DESC")
     Comment findByOrOrderDetailsIDSeller(String orderDetailsID);
+    
+    @Query("SELECT c FROM Comment c WHERE c.productComment.sellerProduct.username like ?1")
+    List<Comment> getAllCommentBySellerUsername(String username);
 }

@@ -213,6 +213,15 @@ public class NotiServiceImpl implements NotiService {
                     notificationsService.save(noti);
                     break;
                 }
+                case "unfollow": {
+                	content = "Người dùng " + userFrom + " đã hủy follow bạn!";
+                    noti.setContent(content);
+                    noti.setUserTo(userTo);
+                    noti.setUserFrom(null);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
                 case "tangvoucher": {
                 	content = "Chúng tôi xin chân thành cảm ơn bạn đã đến với sản thương mại điện tử DEVEX! đây là món quà của chúng tôi gửi đến bạn " + object;
                     noti.setContent(content);
@@ -317,6 +326,15 @@ public class NotiServiceImpl implements NotiService {
                     notificationsService.save(noti);
                     break;
                 }
+                case "unfollow": {
+                	content = "Bạn đã hủy follow shop " + userTo + "!";
+                    noti.setContent(content);
+                    noti.setUserTo(null);
+                    noti.setUserFrom(userFrom);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
                 case "newproduct": {
                     content = "Bạn đã thêm sản phẩm mới có id là " + object + "!";
                     noti.setContent(content);
@@ -372,7 +390,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "huydonhangcuacustomer": {
-                    content = "Bạn đã hủy đơn hàng có id là " + object + "!";
+                    content = "Bạn đã hủy đơn hàng có id là " + object + " của shop " + userTo + "!";
                     noti.setContent(content);
                     noti.setUserTo(null);
                     noti.setUserFrom(userFrom);
@@ -465,6 +483,24 @@ public class NotiServiceImpl implements NotiService {
                     content = "Bạn đã bình luận cho sản phẩm " + object + ".";
                     noti.setContent(content);
                     noti.setUserTo(null);
+                    noti.setUserFrom(userFrom);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
+                case "khoiphucsanpham": {
+                    content = "Bạn đã khôi phục sản phẩm có id là " + object + ".";
+                    noti.setContent(content);
+                    noti.setUserTo(null);
+                    noti.setUserFrom(userFrom);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
+                case "orderReport": {
+                    content = "Bạn đã gửi feedback cho quản trị viên với nội dung là " + object + ".";
+                    noti.setContent(content);
+                    noti.setUserTo(userTo);
                     noti.setUserFrom(userFrom);
                     noti.setLink(link);
                     notificationsService.save(noti);

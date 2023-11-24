@@ -45,4 +45,6 @@ public interface CommentService {
 	Comment findByOrOrderDetailsID(String orderDetailsID);
 
 	Comment findByOrOrderDetailsIDSeller(String orderDetailsID);
+
+	List<Comment> getAllCommentBySellerUsername(String username);
 }

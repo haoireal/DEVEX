@@ -42,6 +42,7 @@ import com.Devex.Entity.Notifications;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductBrand;
+import com.Devex.Entity.ProductRequest;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
@@ -51,10 +52,12 @@ import com.Devex.Sevice.FlashSalesService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.ImageProductService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ProductBrandService;
+import com.Devex.Sevice.ProductRequestService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
@@ -114,6 +117,12 @@ public class DevexSellerRestController {
 
 	@Autowired
 	private NotificationsService notificationsService;
+	
+	@Autowired
+	private NotiService notiService;
+	
+	@Autowired
+	private ProductRequestService productRequestService;
 
 	@Value("${myapp.file-storage-path}")
 	private String fileStoragePath;
@@ -128,35 +137,45 @@ public class DevexSellerRestController {
 		User u = session.get("user");
 		String id = session.get("idproduct");
 		List<String> imageUrls = fileManagerService.list(id, u.getUsername());
+		
 		return imageUrls;
 	}
 
 	@GetMapping("/img/product/{filename}")
 	public byte[] download(@PathVariable("filename") String filename) {
-		User u = session.get("user");
-		String id = session.get("idproduct");
-		return fileManagerService.read(u.getUsername(), id, filename);
+		String username = session.get("usernameseller");
+		String idproduct = session.get("idproduct");
+		return fileManagerService.read(username, idproduct, filename);
 	}
 
 	@DeleteMapping("/img/product/{filename}")
 	public void delete(@PathVariable("filename") String filename) {
-		User u = session.get("user");
-		String id = session.get("idproduct");
-		fileManagerService.delete(u.getUsername(), id, filename);
-		imageProductService.deleteImageProductByNameAndProductId(filename, id);
+		String username = session.get("usernameseller");
+		String idproduct = session.get("idproduct");
+		fileManagerService.delete(username, idproduct, filename);
+		imageProductService.deleteImageProductByNameAndProductId(filename, idproduct);
 	}
 
 	@PostMapping("/img/product")
 	public List<String> upload(@PathParam("files") MultipartFile[] files) {
-		User u = session.get("user");
-		String id = session.get("idproduct");
-		return fileManagerService.save(u.getUsername(), id, files);
+		String username = session.get("usernameseller");
+		String idproduct = session.get("idproduct");
+		return fileManagerService.save(username, idproduct, files);
 	}
 
 	@GetMapping("/api/product")
-	public Product getProduct() {
+	public Map<String, Object> getProduct() {
+		Map<String, Object> mapInfoProduct = new HashMap<>();
 		String id = session.get("idproduct");
-		return productService.findByIdProduct(id);
+		boolean checkRequest = false;
+		Product product = productService.findByIdProduct(id);
+		ProductRequest productRequest = productRequestService.findProductRequestByProductId(id);
+		mapInfoProduct.put("product", product);
+		if(productRequest != null) {
+			checkRequest = true;
+		}
+		mapInfoProduct.put("checkRequest", checkRequest);
+		return mapInfoProduct;
 	}
 
 	@GetMapping("/categoryDetails/{idca}")
@@ -213,6 +232,7 @@ public class DevexSellerRestController {
 	@PutMapping("/info/product")
 	public void updateProduct(@RequestBody Object object) throws ParseException {
 		User u = session.get("user");
+		boolean checkInsert = false;
 		// Chuyển object sang json sau đó đọc ra
 		JsonNode jsonNode = objectMapper.valueToTree(object);
 		JsonNode listNode = jsonNode.get("listvariant");
@@ -228,6 +248,12 @@ public class DevexSellerRestController {
 		String name = jsonNode.get("name").asText();
 		CategoryDetails categoryDetails = categoryDetailService.findCategoryDetailsById(idCategoryDetails);
 		Seller seller = sellerService.findFirstByUsername(u.getUsername());
+		Product p = productService.findByIdProduct(id);
+		if(p.getActive() == false && p.getDescription() == null && p.getIsdelete() == false && p.getName() == "Nhập tên sản phẩm tại đây") {
+			notiService.sendHistory(u.getUsername(), "", "/seller/product/edit/" + id, "newproduct", id);
+		}else {
+			notiService.sendHistory(u.getUsername(), "", "/seller/product/edit/" + id, "updateproduct", id);
+		}
 		// Update product
 		productService.updateProduct(id, name, brand, description, daycreated, active, seller.getUsername(),
 				categoryDetails.getId());
@@ -245,11 +271,14 @@ public class DevexSellerRestController {
 						productVariant.getPriceSale(), productVariant.getSize(), productVariant.getColor(), id);
 			}
 		}
+		
 	}
 
 	@DeleteMapping("/delete/product/{idproduct}")
 	public void deleteproduct(@PathVariable("idproduct") String idproduct) {
+		User u = session.get("user");
 		productService.updateProductIsDeleteById(true, idproduct);
+		notiService.sendHistory(u.getUsername(), "", "", "deleteproduct", idproduct);
 	}
 
 	@PostMapping("/addimageproduct/{id}")
@@ -580,9 +609,27 @@ public class DevexSellerRestController {
 	public void saveSellerProfile(@RequestBody ShopDTO ShopDTO) {
 		// Lấy thông tin người dùng từ session hoặc nguồn dữ liệu khác
 		User user = session.get("user");
+		List<String> listChange = new ArrayList<>();
 		Seller selleru = sellerService.findFirstByUsername(user.getUsername());
 		sellerService.updateSeller(ShopDTO.getShopName(), ShopDTO.getAddress(), ShopDTO.getPhoneAddress(),
 				ShopDTO.getMall(), true, ShopDTO.getDescription(), user.getUsername());
+		if(!selleru.getShopName().equalsIgnoreCase(ShopDTO.getShopName())) {
+			listChange.add(ShopDTO.getShopName());
+		}
+		if(!selleru.getAddress().equalsIgnoreCase(ShopDTO.getAddress())) {
+			listChange.add(ShopDTO.getAddress());
+		}
+		if(!selleru.getPhoneAddress().equalsIgnoreCase(ShopDTO.getPhoneAddress())) {
+			listChange.add(ShopDTO.getPhoneAddress());
+		}
+		if(!selleru.getDescription().equalsIgnoreCase(ShopDTO.getDescription())) {
+			listChange.add(ShopDTO.getDescription());
+		}
+		notiService.sendHistory(user.getUsername(), "", "", "updateprofile", listChange.toString());
+		List<String> listf = followService.getAllUserFollowShop(user.getUsername());
+		for (String username : listf) {
+			notiService.sendNotification(user.getUsername(), username, "/pageseller/" + user.getUsername(), "changeprofileshop", user.getUsername());
+		}
 	}
 
 	@PostMapping("/api/updateimageprofile")
@@ -665,6 +712,17 @@ public class DevexSellerRestController {
 	public List<Notifications> getAllNotifications() {
 		User u = session.get("user");
 		return notificationsService.getAllNotificationsByUserto(u.getUsername());
+	}
+	
+	@PostMapping("/seller/sendRequest")
+	public void sendRequest(@RequestParam("id") String id) {
+		productRequestService.insertProductRequest(new Date(), id);
+	}
+	
+	@DeleteMapping("/seller/cancelRequest")
+	public void cancelRequest(@RequestParam("id") String id) {
+		ProductRequest pr = productRequestService.findProductRequestByProductId(id);
+		productRequestService.deleteById(pr.getId());
 	}
 
 }

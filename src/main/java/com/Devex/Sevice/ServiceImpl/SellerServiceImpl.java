@@ -105,6 +105,11 @@ public class SellerServiceImpl implements SellerService{
 			String Username) {
 		sellerRepository.updateSeller(Shopname, Address, Phoneaddress, Mall, Activeshop, Description, Username);
 	}
+
+	@Override
+	public List<Seller> findByShopNameContainingKeyword(String keyword) {
+		return sellerRepository.findByShopNameContainingKeyword(keyword);
+	}
 	
 	
 	

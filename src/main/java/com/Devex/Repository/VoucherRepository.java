@@ -28,4 +28,7 @@ public interface VoucherRepository extends JpaRepository<Voucher, Integer>{
 	
 	@Query("Select v From Voucher v join FETCH v.voucherDetails vd join FETCH vd.customerVoucherDetails cus where cus.username like :username")
 	List<Voucher> findVoucherOfUser(@Param("username") String username);
+	
+	@Query("SELECT v FROM Voucher v ORDER BY v.id DESC LIMIT 1")
+	Voucher getVoucherNew();
 }

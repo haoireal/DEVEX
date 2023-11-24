@@ -36,7 +36,12 @@ public class FlashSalesServiceImpl implements FlashSalesService{
 	}
 
 	@Override
-	public void deleteById(String id) {
+	public Optional<FlashSale> findById(Integer id) {
+		return flashSalesRespository.findById(id);
+	}
+
+	@Override
+	public void deleteById(Integer id) {
 		flashSalesRespository.deleteById(id);
 	}
 
@@ -60,6 +65,11 @@ public class FlashSalesServiceImpl implements FlashSalesService{
 	@Override
 	public FlashSale findByProductVariantId(int productVariantId) {
 		return flashSalesRespository.findByProductVariantId(productVariantId);
+	}
+
+	@Override
+	public List<FlashSale> findAllFlashSaleNowByIdProdVariant(int productVariantId) {
+		return flashSalesRespository.findAllFlashSaleNowByIdProdVariant(productVariantId);
 	}
 
 	

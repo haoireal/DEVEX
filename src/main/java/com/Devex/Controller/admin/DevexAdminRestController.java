@@ -103,7 +103,9 @@ public class DevexAdminRestController {
 	
 	@Autowired
 	private NotificationsService notificationsService;
-
+	
+	@Autowired
+private SessionService session;
 	@GetMapping("/userDetail")
 	public Map<String, Object> updateUser() {
 	

@@ -19,10 +19,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Devex.DTO.FlashSaleTimeDTO;
 import com.Devex.Entity.FlashSaleTime;
+import com.Devex.Entity.Product;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.ParamService;
+import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.UserService;
 
@@ -33,23 +35,26 @@ import io.jsonwebtoken.lang.Collections;
 public class DevexAdminController {
 
 	@Autowired
-	SessionService session;
+	private SessionService sessionService;
 
 	@Autowired
-	CookieService cookie;
+	private CookieService cookie;
 
 	@Autowired
-	ParamService param;
+	private ParamService param;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	FlashSalesTimeService flashSalesTimeService;
+	private FlashSalesTimeService flashSalesTimeService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@GetMapping("/home")
 	public String getHomePage() {
-
+		sessionService.set("request", false);
 		return "admin/index";
 	}
 
@@ -86,6 +91,32 @@ public class DevexAdminController {
 		return "admin/FlashSalesManage";
 	}
 	
+	@GetMapping("/categorymanage")
+	public String getCategoryManage() {
+		
+		return "admin/productManage/formCategoryManage";
+	}
 	
+	@GetMapping("/productmanage")
+	public String getProductManage() {
+		
+		return "admin/productManage/listProduct";
+	}
+	
+	@GetMapping("/requestproduct")
+	public String getRequestProduct() {
+		
+		return "admin/productManage/requestProduct";
+	}
+	
+	@GetMapping("/showproduct/{id}")
+	public String showInfoProduct(@PathVariable("id") String id, Model model) {
+		Product p = productService.findByIdProduct(id);
+		model.addAttribute("username", p.getSellerProduct().getUsername());
+		model.addAttribute("idproduct", id);
+		sessionService.set("usernameseller", p.getSellerProduct().getUsername());
+		sessionService.set("idproduct", id);
+		return "admin/productManage/formProduct";
+	}
 
 }

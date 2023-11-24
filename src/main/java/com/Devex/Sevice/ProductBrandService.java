@@ -31,5 +31,15 @@ public interface ProductBrandService {
 	List<ProductBrand> findAll(Sort sort);
 
 	ProductBrand save(ProductBrand entity);
+
+	List<ProductBrand> getProductBrandNotUnknown();
+
+	void insertProductBrand(String name);
+
+	void updateProductBrand(String name, int id);
+
+	ProductBrand getProductBrandNew();
+
+	String findNameProductBrandById(int id);
 	
 }

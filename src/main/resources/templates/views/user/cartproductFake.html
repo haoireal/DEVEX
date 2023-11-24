@@ -150,9 +150,9 @@
                     </div>
                   </button>
                   <div class="row">
-                    <s class="col-4 ng-binding">{{formatMoney(item.price)}} ₫</s>
+                    <s class="col-4 ng-binding">{{formatMoney(item.cost)}} ₫</s>
                     <p class="text-danger fw-bold col-4 ng-binding">
-                      {{formatMoney(item.price)}} ₫
+                      {{formatMoney(cart.checkPrice(item))}} ₫
                     </p>
                   </div>
                 </div>

@@ -14,6 +14,8 @@ import com.Devex.Entity.ProductBrand;
 import com.Devex.Repository.ProductBrandRespository;
 import com.Devex.Sevice.ProductBrandService;
 
+import jakarta.transaction.Transactional;
+
 @SessionScope
 @Service("productbrandservice")
 public class ProductBrandServiceImpl implements ProductBrandService{
@@ -70,6 +72,33 @@ public class ProductBrandServiceImpl implements ProductBrandService{
 	@Override
 	public ProductBrand save(ProductBrand entity) {
 		return brandRespository.save(entity);
+	}
+
+	@Override
+	public List<ProductBrand> getProductBrandNotUnknown() {
+		return brandRespository.getProductBrandNotUnknown();
+	}
+
+	@Transactional
+	@Override
+	public void insertProductBrand(String name) {
+		brandRespository.insertProductBrand(name);
+	}
+
+	@Transactional
+	@Override
+	public void updateProductBrand(String name, int id) {
+		brandRespository.updateProductBrand(name, id);
+	}
+
+	@Override
+	public ProductBrand getProductBrandNew() {
+		return brandRespository.getProductBrandNew();
+	}
+
+	@Override
+	public String findNameProductBrandById(int id) {
+		return brandRespository.findNameProductBrandById(id);
 	}
 
 }
