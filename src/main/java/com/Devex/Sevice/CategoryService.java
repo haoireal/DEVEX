@@ -40,4 +40,12 @@ public interface CategoryService {
 
 	Category findByProductId(String productId);
 
+	Category getCategoryNew();
+
+	void insertCategory(String name);
+
+	List<Category> findAllCategoryNotNameLikeUnknown();
+
+	void updateCategory(String name, int id);
+
 }

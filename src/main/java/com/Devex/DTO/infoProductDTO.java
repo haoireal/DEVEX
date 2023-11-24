@@ -17,5 +17,6 @@ public class infoProductDTO {
 	private Double price;
 	private Double priceSale;
 	private String nameImageProduct;
-
+	private int cateId;
+	
 }

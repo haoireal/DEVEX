@@ -86,6 +86,22 @@ public class DevexAdminController {
 		return "admin/FlashSalesManage";
 	}
 	
+	@GetMapping("/categorymanage")
+	public String getCategoryManage() {
+		
+		return "admin/productManage/formCategoryManage";
+	}
 	
+	@GetMapping("/productmanage")
+	public String getProductManage() {
+		
+		return "admin/productManage/formProductManage";
+	}
+	
+	@GetMapping("/requestproduct")
+	public String getRequestProduct() {
+		
+		return "admin/productManage/requestProduct";
+	}
 
 }

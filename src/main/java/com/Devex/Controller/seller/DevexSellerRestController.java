@@ -51,6 +51,7 @@ import com.Devex.Sevice.FlashSalesService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.ImageProductService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
@@ -114,6 +115,9 @@ public class DevexSellerRestController {
 
 	@Autowired
 	private NotificationsService notificationsService;
+	
+	@Autowired
+	private NotiService notiService;
 
 	@Value("${myapp.file-storage-path}")
 	private String fileStoragePath;
@@ -213,6 +217,7 @@ public class DevexSellerRestController {
 	@PutMapping("/info/product")
 	public void updateProduct(@RequestBody Object object) throws ParseException {
 		User u = session.get("user");
+		boolean checkInsert = false;
 		// Chuyển object sang json sau đó đọc ra
 		JsonNode jsonNode = objectMapper.valueToTree(object);
 		JsonNode listNode = jsonNode.get("listvariant");
@@ -228,6 +233,12 @@ public class DevexSellerRestController {
 		String name = jsonNode.get("name").asText();
 		CategoryDetails categoryDetails = categoryDetailService.findCategoryDetailsById(idCategoryDetails);
 		Seller seller = sellerService.findFirstByUsername(u.getUsername());
+		Product p = productService.findByIdProduct(id);
+		if(p.getActive() == false && p.getDescription() == null && p.getIsdelete() == false && p.getName() == "Nhập tên sản phẩm tại đây") {
+			notiService.sendHistory(u.getUsername(), "", "/seller/product/edit/" + id, "newproduct", id);
+		}else {
+			notiService.sendHistory(u.getUsername(), "", "/seller/product/edit/" + id, "updateproduct", id);
+		}
 		// Update product
 		productService.updateProduct(id, name, brand, description, daycreated, active, seller.getUsername(),
 				categoryDetails.getId());
@@ -245,11 +256,14 @@ public class DevexSellerRestController {
 						productVariant.getPriceSale(), productVariant.getSize(), productVariant.getColor(), id);
 			}
 		}
+		
 	}
 
 	@DeleteMapping("/delete/product/{idproduct}")
 	public void deleteproduct(@PathVariable("idproduct") String idproduct) {
+		User u = session.get("user");
 		productService.updateProductIsDeleteById(true, idproduct);
+		notiService.sendHistory(u.getUsername(), "", "", "deleteproduct", idproduct);
 	}
 
 	@PostMapping("/addimageproduct/{id}")
@@ -580,9 +594,27 @@ public class DevexSellerRestController {
 	public void saveSellerProfile(@RequestBody ShopDTO ShopDTO) {
 		// Lấy thông tin người dùng từ session hoặc nguồn dữ liệu khác
 		User user = session.get("user");
+		List<String> listChange = new ArrayList<>();
 		Seller selleru = sellerService.findFirstByUsername(user.getUsername());
 		sellerService.updateSeller(ShopDTO.getShopName(), ShopDTO.getAddress(), ShopDTO.getPhoneAddress(),
 				ShopDTO.getMall(), true, ShopDTO.getDescription(), user.getUsername());
+		if(!selleru.getShopName().equalsIgnoreCase(ShopDTO.getShopName())) {
+			listChange.add(ShopDTO.getShopName());
+		}
+		if(!selleru.getAddress().equalsIgnoreCase(ShopDTO.getAddress())) {
+			listChange.add(ShopDTO.getAddress());
+		}
+		if(!selleru.getPhoneAddress().equalsIgnoreCase(ShopDTO.getPhoneAddress())) {
+			listChange.add(ShopDTO.getPhoneAddress());
+		}
+		if(!selleru.getDescription().equalsIgnoreCase(ShopDTO.getDescription())) {
+			listChange.add(ShopDTO.getDescription());
+		}
+		notiService.sendHistory(user.getUsername(), "", "", "updateprofile", listChange.toString());
+		List<String> listf = followService.getAllUserFollowShop(user.getUsername());
+		for (String username : listf) {
+			notiService.sendNotification(user.getUsername(), username, "/pageseller/" + user.getUsername(), "changeprofileshop", user.getUsername());
+		}
 	}
 
 	@PostMapping("/api/updateimageprofile")

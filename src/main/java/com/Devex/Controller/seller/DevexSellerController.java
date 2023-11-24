@@ -3,7 +3,6 @@ package com.Devex.Controller.seller;
 import java.util.Date;
 import java.util.List;
 
-import com.Devex.Sevice.ServiceImpl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +21,7 @@ import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.ImageProductService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ParamService;
@@ -29,6 +29,7 @@ import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.ServiceImpl.CustomerServiceImpl;
 
 @Controller
 @RequestMapping("/seller")
@@ -69,6 +70,9 @@ public class DevexSellerController {
 	
 	@Autowired
 	private ProductVariantService productVariantService;
+	
+	@Autowired
+	private NotiService notiService;
 
 	@ModelAttribute("isMall")
 	public Boolean getUserAndIsMall() {
@@ -121,7 +125,9 @@ public class DevexSellerController {
 	
 	@GetMapping("/product/restore/{idproduct}")
 	public String restore(@PathVariable("idproduct") String idproduct) {
+		User u = session.get("user");
 		productService.updateProductIsDeleteById(false, idproduct);
+		notiService.sendHistory(u.getUsername(), "", "/seller/product/edit/" + idproduct, "khoiphucsanpham", idproduct);
 		return "redirect:/seller/list/restore";
 	}
 	
@@ -148,6 +154,10 @@ public class DevexSellerController {
 					detailService.updateIdOrderDetailsStatus(1009, orderDetails.getId());
 			}
 		}
+		String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
+		String maHoaDon = listOrderDetails.get(0).getOrder().getId();
+		notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "xacnhandonhang", maHoaDon);
+		notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "donhangdaxacnhan", maHoaDon);
 		return "redirect:/seller/orderDetail/" + id;
 	}
 	
@@ -160,12 +170,20 @@ public class DevexSellerController {
 					detailService.updateIdOrderDetailsStatus(1007, orderDetails.getId());
 			}
 		}
+		String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
+		String maHoaDon = listOrderDetails.get(0).getOrder().getId();
+		notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "huydonhangcuashop", maHoaDon);
+		notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "dahuycuanguoidung", maHoaDon);
 		return "redirect:/seller/orderDetail/" + id;
 	}
 	
 	@GetMapping("/order/hoanthanh")
 	public String hoanthanh(@RequestParam("id") String id) {
+		User u = session.get("user");
 		orderService.updateIdOrderStatus(1006, id);
+		Order o = orderService.findOrderById(id);
+		notiService.sendNotification(u.getUsername(), o.getCustomerOrder().getUsername(), "/seller/orderDetail/" + id, "hoanthanhcuanguoidung", id);
+		notiService.sendNotification(u.getUsername(), o.getCustomerOrder().getUsername(), "/seller/orderDetail/" + id, "hoanthanhcuanshop", id);
 		return "redirect:/seller/orderDetail/" + id;
 	}
 	
@@ -246,6 +264,10 @@ public class DevexSellerController {
 	
 	@GetMapping("/orderReport")
 	public String getOrderReport(Model model) {
+		User u = session.get("user");
+		String feedback = "";
+		notiService.sendNotification(u.getUsername(), "admin", "", "hoanthanhcuanguoidung", feedback);
+		notiService.sendNotification(u.getUsername(), "admin", "", "hoanthanhcuanshop", feedback);
 		return "seller/order/orderReport";
 	}
 	
@@ -264,7 +286,9 @@ public class DevexSellerController {
 	
 	@GetMapping("/product/delete/{idproduct}")
 	public String Deleteproduct(@PathVariable("idproduct") String id) {
+		User u = session.get("user");
 		productService.updateProductIsDeleteById(true, id);
+		notiService.sendHistory(u.getUsername(), "", "", "deleteproduct", id);
 		return "redirect:/seller/list/" + "products";
 	}
 	

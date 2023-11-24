@@ -42,4 +42,18 @@ public interface CategoryDetailService {
 
 	CategoryDetails findCategoryDetailsById(int id);
 
+	List<CategoryDetails> findAllCategoryDetailsBySellerUsername(String username);
+
+	CategoryDetails getCategoryDetailsNew();
+
+	void insertCategoryDetails(String name, int categoryId);
+
+	List<CategoryDetails> findAllCategoryDetailsNotNameLikeUnknown();
+
+	List<CategoryDetails> findAllCategoryDetailsNotNameLikeUnknownAndCateId(int id);
+
+	int getCountCategoryDetailsByCategoryId(int id);
+
+	void updateCategoryDetails(String name, int id);
+
 }

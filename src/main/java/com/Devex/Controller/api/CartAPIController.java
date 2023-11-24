@@ -52,6 +52,13 @@ public class CartAPIController {
 
 	@Autowired
 	private SessionService sessionService;
+	
+	@Autowired
+	private ProductService productService;
+	
+	
+	@Autowired
+	private FlashSalesService flashSalesService;
 
 	@Autowired
 	CustomerService customerService;
@@ -83,10 +90,9 @@ public class CartAPIController {
 		Customer customer = null;
 		List<CartDetailDTo> cartDetails = new ArrayList<>();
 		if (user != null) {
-			customer = customerService.findById("baolh").get();
-			cartDetails = cart.findAllCartDTO("baolh");
+			customer = customerService.findById(user.getUsername()).get();
+			cartDetails = cart.findAllCartDTO(customer.getUsername());
 		}
-		
 		List<FlashSale> fs = flashSalesService.findAll();
 		LocalDateTime currentTime = LocalDateTime.now();
 		for (CartDetailDTo cartDetailDTo : cartDetails) {	
@@ -102,6 +108,7 @@ public class CartAPIController {
 							cartDetailDTo.setStatus(false);
 						}
 					}else {
+
 						cartDetailDTo.setStatus(false);
 					}
 				}
@@ -137,6 +144,7 @@ public class CartAPIController {
 //
 //		}
 //		return new ArrayList<>(cartDetailMap.values());
+
 		return cartDetails;
 	}
 

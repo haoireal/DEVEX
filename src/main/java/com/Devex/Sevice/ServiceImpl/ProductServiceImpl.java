@@ -186,6 +186,44 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getListProductByCategoryDetailsIdAndYear(int cateid, int year) {
 		return productRepository.getListProductByCategoryDetailsIdAndYear(cateid, year);
 	}
+	
+	@Override
+	public String findByidProductproductVariants(int id) {
+	
+		return productRepository.findProductIdByProductVariantId(id);
+	}
+
+	@Transactional
+	@Override
+	public void updateProductCategoryByIdCategory(int cateid, String id) {
+		productRepository.updateProductCategoryByIdCategory(cateid, id);
+	}
+
+	@Override
+	public int getCountProductByCategoryId(int id) {
+		return productRepository.getCountProductByCategoryId(id);
+	}
+
+	@Override
+	public List<Product> findProductsByCategoryDetailsId(int categoryId) {
+		return productRepository.findProductsByCategoryDetailsId(categoryId);
+	}
+
+	@Override
+	public int getCountProductByProductBrandId(int id) {
+		return productRepository.getCountProductByProductBrandId(id);
+	}
+
+	@Override
+	public List<Product> findAllProductByProductBrandId(int id) {
+		return productRepository.findAllProductByProductBrandId(id);
+	}
+
+	@Transactional
+	@Override
+	public void updateProductProductBrandByIdProductBrand(int cateid, String id) {
+		productRepository.updateProductProductBrandByIdProductBrand(cateid, id);
+	}
 
 	@Override
 	public String findByidProductproductVariants(int id) {
