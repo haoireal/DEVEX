@@ -86,4 +86,6 @@ public interface OrderService {
 	void updatePriceOrder(double total, String id);
   
 	int getCountOrderByCustomerUsername(String username);
+
+	List<Order> findAllOrderByIdAndUsernameContainingKeyword(String username, String keyword);
 }

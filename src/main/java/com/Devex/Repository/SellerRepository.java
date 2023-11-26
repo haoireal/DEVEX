@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Devex.Entity.Seller;
 
@@ -31,4 +32,11 @@ public interface SellerRepository extends JpaRepository<Seller, String>{
 	
 	@Query("SELECT s FROM Seller s WHERE LOWER(s.shopName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Seller> findByShopNameContainingKeyword(@Param("keyword") String keyword);
+	
+	@Query("SELECT s FROM Seller s WHERE LOWER(s.username) LIKE LOWER(CONCAT('%', :keyword, '%')) or LOWER(s.shopName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Seller> findByShopNameAndUsernameContainingKeyword(@Param("keyword") String keyword);
+	
+	@Modifying
+	@Query(value = "UPDATE Sellers SET Activeshop = :active WHERE Username = :username", nativeQuery = true)
+	void updateActiveSellerByUsername(@RequestParam("active") boolean active, @RequestParam("username") String username);
 }

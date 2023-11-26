@@ -217,5 +217,10 @@ public class OrderServiceImpl implements OrderService{
 		return orderRepository.getCountOrderByCustomerUsername(username);
 	}
 
+	@Override
+	public List<Order> findAllOrderByIdAndUsernameContainingKeyword(String username, String keyword) {
+		return orderRepository.findAllOrderByIdAndUsernameContainingKeyword(username, keyword);
+	}
+
 
 }

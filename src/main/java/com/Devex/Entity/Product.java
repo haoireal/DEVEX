@@ -47,7 +47,7 @@ public class Product implements Serializable{
 	@Column(name = "Isdelete")
 	private Boolean isdelete;
 	
-	@Formula("(SELECT COUNT(od.ID) FROM Order_Details od INNER JOIN Product_Variant pv ON od.Product_ID = pv.ID WHERE pv.Product_ID = ID)")
+	@Formula("(SELECT COUNT(od.ID) FROM Order_Details od INNER JOIN Product_Variant pv ON od.Product_ID = pv.ID INNER JOIN Orders o ON o.ID = od.Order_ID WHERE pv.Product_ID = ID AND o.Status_ID = 1006)")
     private Integer soldCount;
 	
 	@JsonIgnore

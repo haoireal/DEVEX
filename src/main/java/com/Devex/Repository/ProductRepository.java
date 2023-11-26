@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.Devex.DTO.ProductDTO;
 import com.Devex.DTO.infoProductDTO;
 import com.Devex.Entity.Product;
+import com.Devex.Entity.Seller;
 
 @EnableJpaRepositories
 @Repository("productRepository")
@@ -135,8 +136,11 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 	@Query("SELECT DISTINCT p FROM Product p WHERE p.sellerProduct.username like ?1")
 	List<Product> findProductByShopUsername(String sellerUsername);
+	
 	@Query("SELECT p.id FROM Product p JOIN p.productVariants pv WHERE pv.id = :productVariantId")
     String findProductIdByProductVariantId(@Param("productVariantId") int productVariantId);
 	
+	@Query("SELECT p FROM Product p WHERE p.sellerProduct.username = :username AND (LOWER(p.id) LIKE LOWER(CONCAT('%', :keyword, '%')) or LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')))")
+	List<Product> findAllProductByUsernameContainingKeyword(@Param("keyword") String keyword, @Param("username") String username);
 
 }
