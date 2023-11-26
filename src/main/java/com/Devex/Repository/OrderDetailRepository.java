@@ -29,8 +29,8 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 	           "JOIN FETCH o.productVariant pv " +
 	           "JOIN FETCH pv.product p " +
 	           "JOIN FETCH p.sellerProduct s " +
-	           "WHERE od.id like ?1 AND sellerProduct.username like ?2")
-	List<OrderDetails> findOrderDetailsByOrderID(String id, String username);
+	           "WHERE od.id like ?1")
+	List<OrderDetails> findOrderDetailsByOrderID(String id);
 	
 	@Modifying
 	@Query(value = "UPDATE Order_Details SET Status_ID = :statusId WHERE ID = :id", nativeQuery = true)

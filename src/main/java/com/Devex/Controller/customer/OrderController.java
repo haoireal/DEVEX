@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import com.Devex.Sevice.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,21 +25,6 @@ import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
 import com.Devex.Entity.Voucher;
 import com.Devex.Entity.VoucherProduct;
-import com.Devex.Sevice.CartDetailService;
-import com.Devex.Sevice.CartService;
-import com.Devex.Sevice.CustomerService;
-import com.Devex.Sevice.FlashSalesService;
-import com.Devex.Sevice.OrderDetailService;
-import com.Devex.Sevice.OrderDiscountService;
-import com.Devex.Sevice.OrderService;
-import com.Devex.Sevice.OrderStatusService;
-import com.Devex.Sevice.PaymentService;
-import com.Devex.Sevice.ProductVariantService;
-import com.Devex.Sevice.SessionService;
-import com.Devex.Sevice.ShoppingCartService;
-import com.Devex.Sevice.VoucherDetailService;
-import com.Devex.Sevice.VoucherProductService;
-import com.Devex.Sevice.VoucherService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -89,6 +75,8 @@ public class OrderController {
 	private HttpServletRequest req;
 	@Autowired
 	private ShoppingCartService shoppingCartService;
+	@Autowired
+	private TransactionService transactionService;
 
 	@PostMapping("/cash-payment")
 	public String paymentCash(Model model) {
@@ -307,6 +295,9 @@ public class OrderController {
 			orderDetailService.save(orderDetails);
 			cartDetailService.deleteById(item.getId());
 		}
+
+		//Xử lí dòng tiền
+		transactionService.transactionDwallet(user.getUsername(),"",order.getTotal(),payment);
 
 		return "user/paymentSuccess";
 	}

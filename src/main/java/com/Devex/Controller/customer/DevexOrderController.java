@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.Devex.Sevice.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,20 +23,6 @@ import com.Devex.Entity.Comment;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.User;
-import com.Devex.Sevice.CategoryDetailService;
-import com.Devex.Sevice.CategoryService;
-import com.Devex.Sevice.CommentService;
-import com.Devex.Sevice.CookieService;
-import com.Devex.Sevice.ImageProductService;
-import com.Devex.Sevice.NotiService;
-import com.Devex.Sevice.NotificationsService;
-import com.Devex.Sevice.OrderDetailService;
-import com.Devex.Sevice.OrderService;
-import com.Devex.Sevice.ParamService;
-import com.Devex.Sevice.ProductService;
-import com.Devex.Sevice.ProductVariantService;
-import com.Devex.Sevice.SellerService;
-import com.Devex.Sevice.SessionService;
 
 @Controller
 public class DevexOrderController {
@@ -88,6 +75,9 @@ public class DevexOrderController {
     @Autowired
     NotiService notiService ;
 
+    @Autowired
+    TransactionService transactionService;
+
     @GetMapping("/order")
     public String getOrderPage(Model model) {
         User u = sessionService.get("user");
@@ -138,7 +128,7 @@ public class DevexOrderController {
     public String getOrderDetail(@PathVariable("id") String id, Model model) {
         User u = sessionService.get("user");
         String check = "";
-        List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id, "%%");
+        List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id);
         List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, "%%");
         for (OrderDetails orderDetails : listcheckbutton) {
             if (orderDetails.getStatus().getId() == 1009) {
@@ -172,10 +162,13 @@ public class DevexOrderController {
         String userfrom = u.getUsername();
         String userto = "";
         String link = "http://localhost:8888/details/";
-        OrderDetails listOrderDetails = detailService.findById(id).get();
-        detailService.updateIdOrderDetailsStatus(1007, listOrderDetails.getId());
-        userto = listOrderDetails.getProductVariant().getProduct().getSellerProduct().getUsername();
-        System.out.println(userto);
+        OrderDetails od = detailService.findAllById(Collections.singleton(id)).get(0);
+        id = od.getOrder().getId();
+        List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id);
+        for (OrderDetails odL: listOrderDetails) {
+            detailService.updateIdOrderDetailsStatus(1007, odL.getId());
+        }
+
         return "redirect:/order#/cancel";
     }
     private HashMap<KeyBillDTO,List<OrderDetails>> setHashMapBillDetail(HashMap<KeyBillDTO,List<OrderDetails>> allOrderByShop,List<OrderDetails> allOrder){
@@ -242,6 +235,8 @@ public class DevexOrderController {
             detailService.updateIdOrderDetailsStatus(1006, listOrderDetails.getId());
             userto = listOrderDetails.getProductVariant().getProduct().getSellerProduct().getUsername();
         System.out.println(userto);
+        //Chuyển tiền về cho người bán khi đơn hàng thành công
+        transactionService.transactionBackToSeller(listOrderDetails);
         return "redirect:/order#/success";
     }
 }

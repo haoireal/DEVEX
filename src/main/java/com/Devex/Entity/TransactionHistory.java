@@ -34,6 +34,6 @@ public class TransactionHistory implements Serializable{/**
 	@Column(name = "Value")
 	private Double value;
 	@Column(name = "Create_Day")
-	private Date createDay;
+	private Date createDay = new Date();
 	
 }

@@ -29,4 +29,6 @@ public interface DwalletService {
 
 	Dwallet save(Dwallet entity);
 
+	String findDwalletIDbyUsername(String username);
+
 }

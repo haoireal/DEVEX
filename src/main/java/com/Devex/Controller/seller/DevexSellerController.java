@@ -188,8 +188,8 @@ public class DevexSellerController {
         }
         String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
         String maHoaDon = listOrderDetails.get(0).getOrder().getId();
-        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "huydonhangcuashop", maHoaDon);
-        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "dahuycuanguoidung", maHoaDon);
+        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "danggiaocuashop", maHoaDon);
+        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "danggiaocuanguoidung", maHoaDon);
         return "redirect:/seller/orderDetail/" + id;
     }
 
@@ -204,8 +204,8 @@ public class DevexSellerController {
         }
         String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
         String maHoaDon = listOrderDetails.get(0).getOrder().getId();
-        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "huydonhangcuashop", maHoaDon);
-        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "dahuycuanguoidung", maHoaDon);
+        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "hoanthanhcuanshop", maHoaDon);
+        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "hoanthanhcuanguoidung", maHoaDon);
         return "redirect:/seller/orderDetail/" + id;
     }
 
@@ -223,7 +223,7 @@ public class DevexSellerController {
         User u = session.get("user");
         String check = "";
         double totalPrice = 0;
-        List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id, u.getUsername());
+        List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, u.getUsername());
         List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, u.getUsername());
         for (OrderDetails orderDetails : listcheckbutton) {
             if (orderDetails.getStatus().getId() == 1009) {
@@ -261,7 +261,7 @@ public class DevexSellerController {
         User u = session.get("user");
         String check = "";
         double totalPrice = 0;
-        List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id, u.getUsername());
+        List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id);
         List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, u.getUsername());
         for (OrderDetails orderDetails : listcheckbutton) {
             if (orderDetails.getStatus().getId() == 1009) {
