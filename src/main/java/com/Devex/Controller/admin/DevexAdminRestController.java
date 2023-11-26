@@ -356,7 +356,7 @@ private SessionService session;
 	
 	 @GetMapping("/admin/notifications")
 	    public Map<String, Object> getTop10Notifications() {
-	        User u = session.get("user");
+	        User u = sessionService.get("user");
 	        Map<String, Object> mapNotifications = new HashMap<>();
 	        List<Notifications> listNotifications = notificationsService.getTop10NotificationsByUserto(u.getUsername());
 	        long amountNotifications = notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
@@ -370,21 +370,21 @@ private SessionService session;
 
 	    @GetMapping("/admin/history")
 	    public List<Notifications> getAllHistory() {
-	        User u = session.get("user");
+	        User u = sessionService.get("user");
 	        List<Notifications> listNotifications = notificationsService.getAllNotificationsByUserfrom(u.getUsername());
 	        return listNotifications;
 	    }
 
 	    @PutMapping("/admin/updatenotification/{id}")
 	    public long handlePostRequest(@PathVariable("id") int id) {
-	        User u = session.get("user");
+	        User u = sessionService.get("user");
 	        notificationsService.updateNotificationsById(id);
 	        return notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
 	    }
 
 	    @GetMapping("/admin/allnotifications")
 	    public List<Notifications> getAllNotifications() {
-	        User u = session.get("user");
+	        User u = sessionService.get("user");
 	        return notificationsService.getAllNotificationsByUserto(u.getUsername());
 	    }
 	    

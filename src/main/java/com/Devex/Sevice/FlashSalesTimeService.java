@@ -36,7 +36,7 @@ public interface FlashSalesTimeService {
 
 	FlashSaleTime findFlashSaleTimesByTimeNow();
 
-	FlashSaleTime findFlashSaleTimesByTimeFuture();
+	List<FlashSaleTime> findFlashSaleTimesByTimePast();
 
 
 

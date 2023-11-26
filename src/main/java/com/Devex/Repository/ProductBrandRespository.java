@@ -24,4 +24,7 @@ public interface ProductBrandRespository extends JpaRepository<ProductBrand, Int
 	
 	@Query("SELECT pb FROM ProductBrand pb ORDER BY pb.id DESC LIMIT 1")
 	ProductBrand getProductBrandNew();
+	
+	@Query("SELECT pb.name FROM ProductBrand pb WHERE pb.id = ?1")
+	String findNameProductBrandById(int id);
 }

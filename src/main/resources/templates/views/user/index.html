@@ -10,7 +10,7 @@
         th:replace="~{flagment/user/userHeader :: userHeaderHomePageFragment}"
       ></div>
     </header>
-    <main>
+<main>
       <div class="container container_main mt-3 pb-3 bg-white">
         <div class="row" th:if="${#lists.size(listProductFlashSale) >= 1}">
           <div class="col-12 col-md-6">
@@ -91,7 +91,7 @@
                         th:title="${product.name}"
                       ></div>
 
-                      <div id="price-box  row">
+                      <div id="price-box" >
                         <div
                           class="price col-12 m-0"
                           style="text-decoration: none"
@@ -186,7 +186,7 @@
                                         th:title="${product.name}"
                                 ></div>
 
-                                <div id="price-box row">
+                                <div id="price-box " >
                                     <div
                                             class="price col-6 m-0"
                                             style="text-decoration: none"
@@ -214,6 +214,8 @@
                         </div>
                     </a>
                 </div>
+
+              </a>
           </th:block>
         </div>
         <!--show more-->
@@ -222,11 +224,7 @@
           id="showMore"
         >
           <th:block th:each="product, state : ${products}" th:with="limit = 30">
-            <div
-              th:if="${state.count >= limit}"
-              class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
 
-            >
                 <div
                         th:if="${state.count >= limit}"
                         class="col-6 col-md-4 col-lg-3 col-xl-2 pt-2"
@@ -263,7 +261,7 @@
                                         th:title="${product.name}"
                                 ></div>
 
-                                <div id="price-box  row">
+                                <div id="price-box  " >
                                     <div
                                             class="price col-6 m-0"
                                             style="text-decoration: none"
@@ -291,6 +289,7 @@
                         </div>
                     </a>
                 </div>
+
             </th:block>
         </div>
         <div class="row d-flex align-items-center justify-content-center mt-2">

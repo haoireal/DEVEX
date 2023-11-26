@@ -4,8 +4,16 @@
 
 <head>
 <div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
+<style>
+	.product-name {
+        max-width: 600px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app">
 	<div class="wrapper">
 		<!-- Preloader -->
 		<div
@@ -42,11 +50,55 @@
 			<!-- /.content-header -->
 
 			<!-- Main content -->
-			<section class="content">
+			<section class="content" ng-controller="requestproduct">
 				<div class="container-fluid">
 					<div class="row">
                         <div class="col-12">
-                            list sản phẩm
+                            <div class="card">
+								<div class="card-header">
+									<h3 class="card-title">Danh sách sản phẩm cần duyệt</h3>
+								</div>
+								<div class="card-body">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>Id</th>
+												<th>Name</th>
+												<th>Price</th>
+												<th>Category</th>
+												<th>Brand</th>
+												<th>Shop</th>
+												<th>Time Request</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="ProductRequest in listProductRequest.listProductRequest">
+												<td>{{listProductRequest.listInfoProduct[$index].id}}</td>
+												<td class="product-name">{{listProductRequest.listInfoProduct[$index].name}}</td>
+												<td>{{listProductRequest.listInfoProduct[$index].price}}</td>
+												<td>{{listProductRequest.listNameCategory[$index]}}</td>
+												<td>{{listProductRequest.listNameProductBrand[$index]}}</td>
+												<td>{{listProductRequest.listShopName[$index]}}</td>
+												<td>{{listProductRequest.listProductRequest[$index].createdDay | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+												<td>
+													<div class="btn-group w-100" role="group" aria-label="Basic example">
+														<button ng-click="cancelRequest(listProductRequest.listProductRequest[$index].id)" class="btn btn-danger text-center">
+															<i class="fa-solid fa-xmark"></i>
+														</button>
+														<button ng-click="confirmRequest(listProductRequest.listProductRequest[$index].id)" class="btn btn-success text-center">
+															<i class="fa-solid fa-check"></i>
+														</button>
+														<button ng-click="focusURL(listProductRequest.listInfoProduct[$index].id)" class="btn btn-primary text-center">
+															<i class="fa-regular fa-eye"></i>
+														</button>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
                         </div>
                     </div>
 				</div>
@@ -63,4 +115,6 @@
 
 </body>
 <script src="/admin/dist/js/handMade.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="/js/admin/RequestProduct.js"></script>
 </html>

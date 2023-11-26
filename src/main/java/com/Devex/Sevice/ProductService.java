@@ -98,5 +98,9 @@ public interface ProductService {
 
 	void updateProductProductBrandByIdProductBrand(int cateid, String id);
 
+	void updateProductActiveById(boolean active, String id);
+
+	List<Product> findProductByShopUsername(String sellerUsername);
+
 	String findByidProductproductVariants(int id);
 }

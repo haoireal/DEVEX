@@ -222,6 +222,8 @@
 							<div class="text-center">
 								<button class="btn btn-primary" ng-click="save()">Lưu</button>
 								<button class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
+								<button class="btn btn-danger" ng-if="checkRequest === true" ng-click="cancelRequest()">Cancel Request</button>
+								<button class="btn btn-success" ng-if="checkRequest === false" ng-click="sendRequest()">Send Request</button>
 							</div>
 
 							<div class="text-center">
@@ -452,7 +454,7 @@
 	<script>
 		app = angular.module("app", []);
 		app.controller("sellerproduct", function ($scope, $http, $window) {
-			var urlimg = 'http://localhost:8888/img/product';
+			var urlimg = '/img/product';
 			var content = document.getElementById('content');
 			var contentfalse = document.getElementById('contentfalse');
 			var active = false;
@@ -503,13 +505,15 @@
 
 			$scope.listimg();
 
-			var url = 'http://localhost:8888/api/product';
+			var url = '/api/product';
 			$scope.id = '';
 			$scope.selectedCategoryId = '';
+			$scope.checkRequest = false;
 
 			$scope.infoproduct = function () {
 				$http.get(url).then(resp => {
-					$scope.form = resp.data;
+					$scope.form = resp.data.product;
+					$scope.checkRequest = resp.data.checkRequest;
 					if ($scope.form.name == 'Nhập tên sản phẩm tại đây') {
 						$scope.form.name = '';
 						active = $scope.form.active;
@@ -521,6 +525,8 @@
 						console.log(isdelete);
 						console.log(name);
 						console.log("info");
+					}else {
+						$scope.checkvalue = 1;
 					}
 				}).catch(error => {
 					console.log("errors", error);
@@ -680,6 +686,22 @@
 				console.log("check");
 			}
 
+			$scope.sendRequest = function () {
+				$http.post('/seller/sendRequest?id=' + $scope.form.id).then(resp => {
+					$scope.checkRequest = true;
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+
+			$scope.cancelRequest = function () {
+				$http.delete('/seller/cancelRequest?id=' + $scope.form.id).then(resp => {
+					$scope.checkRequest = false;
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+			
 		});
 	</script>
 	<!-- END script xử lý hình ảnh -->
