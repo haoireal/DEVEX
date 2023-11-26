@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
+	<!-- daterange picker -->
+	<link rel="stylesheet" href="/admin/plugins/daterangepicker/daterangepicker.css">
+	<!-- iCheck for checkboxes and radio inputs -->
+	<link rel="stylesheet" href="/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+	<!-- Bootstrap Color Picker -->
+	<link rel="stylesheet" href="/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+	<!-- Tempusdominus Bootstrap 4 -->
+	<link rel="stylesheet" href="/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+	<!-- Select2 -->
+	<link rel="stylesheet" href="/admin/plugins/select2/css/select2.min.css">
+	<link rel="stylesheet" href="/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+	<!-- Bootstrap4 Duallistbox -->
+	<link rel="stylesheet" href="/admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+	<!-- BS Stepper -->
+	<link rel="stylesheet" href="/admin/plugins/bs-stepper/css/bs-stepper.min.css">
+	<style>
+		/* CSS cho modal container */
+		.modal {
+			display: none;
+			/* Ẩn modal ban đầu */
+			position: fixed;
+			top: 40%;
+			left: 59%;
+			transform: translate(-50%, -50%);
+			width: 25%;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			height: 190px;
+			/* Điều chỉnh kích thước modal theo nhu cầu */
+			background-color: white;
+			border: 1px solid #ccc;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+			text-align: center;
+			overflow: hidden;
+			animation: slideUp 0.5s ease-in-out;
+			/* Animation xuất hiện từ dưới lên */
+		}
+
+		/* CSS cho nút đóng modal */
+		.close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+		}
+
+		/* CSS cho iframe bên trong modal */
+		.modal iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+
+		/* Định nghĩa animation slideUp */
+		@keyframes slideUp {
+			0% {
+				transform: translate(-50%, 100%);
+			}
+
+			100% {
+				transform: translate(-50%, -50%);
+			}
+		}
+	</style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="sellerproduct">
+	<div class="wrapper">
+		<!-- Preloader -->
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__wobble" src="/img/banner/logotitle.png" alt="AdminLTELogo" height="60" width="60">
+		</div>
+		<div th:replace="~{flagment/seller/sellerHeader :: sellerHeaderFragment}"></div>
+		<div th:replace="~{flagment/seller/sellerMainSidebar :: sellerMainSidebarFragment}"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0" th:text="${titleType}"></h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="/devex/home">Trang
+										chủ</a></li>
+								<li class="breadcrumb-item active" th:text="${titleType}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<h1>Thông tin sản phẩm</h1>
+							<!-- Thông tin sản phẩm -->
+
+							<!-- Hình ảnh -->
+							<div class="card form-group px-3">
+								<label class="p-0">Hình ảnh</label>
+								<!-- Hiển thị hình ảnh -->
+								<div class="row">
+									<label class="col-1" title="Click vào hình ảnh 2 lần để xóa"
+										ng-repeat="filename in filenames">
+										<img alt="" class="img-fluid" ng-src="{{filename}}"
+											ng-dblclick="deleteimg(filename)">
+									</label>
+									<div class="col-2">
+										<!-- Chọn file -->
+										<input id="fileInput" style="display: none;" type="file" multiple="multiple"
+											onchange="angular.element(this).scope().uploadimg(this.files)">
+										<button class="btn btn-primary mb-2" onclick="openFilePicker()">Thêm</button>
+										<!-- END chọn file -->
+									</div>
+									<!-- END Hiển thị hình ảnh -->
+
+								</div>
+							</div>
+							<!-- END Hình ảnh -->
+							<!-- Thông tin sản phẩm -->
+							<div>
+								<form action="" method="post">
+									<div class="card p-3">
+										<!-- Tên sản phẩm -->
+										<div class="form-group">
+											<label>Tên sản phẩm</label>
+											<input class="form-control" ng-model="form.name"
+												placeholder="Nhập tên sản phẩm">
+										</div>
+										<!-- END Tên sản phẩm -->
+
+										<!-- COMBOBOX AND SEARCH -->
+										<div class="row">
+											<div class="form-group col-6">
+												<label>Loại sản phẩm</label>
+												<select id="brands" class="form-control select2" style="width: 100%;"
+													ng-change="getbrand()" ng-model="selectedbrand"
+													ng-options="brand.id as brand.name for brand in brands">
+												</select>
+											</div>
+										</div>
+										<!-- END COMBOBOX SEARCH -->
+										<!-- Loại sản phẩm -->
+										<div class="row">
+											<div class="form-group col-6">
+												<label>Loại sản phẩm</label>
+												<select id="categorys" class="form-control select2" style="width: 100%;"
+													ng-change="getCategoryDetails()" ng-model="selectedCategory"
+													ng-options="category.id as category.name for category in categorys">
+												</select>
+											</div>
+											<div class="form-group col-6">
+												<label>Loại chi tiết</label>
+												<select id="categorydt" class="form-control select2"
+													style="width: 100%;" ng-model="selectedCategoryDetail"
+													ng-options="catedt.id as catedt.name for catedt in categorydetail">
+												</select>
+											</div>
+										</div>
+										<!-- END Loại sản phẩm -->
+										<div class="form-group">
+											<label for="exampleFormControlTextarea1">Mô tả sản phẩm</label>
+											<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+												ng-model="form.description"></textarea>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- END Thông tin sản phẩm -->
+							<!--Table size -->
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title font-weight-bold">Chi tiết sản phẩm</h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<table class="table table-bordered text-center" id="data-table">
+										<thead>
+											<tr>
+												<th style="width: 10px">Kích cỡ</th>
+												<th>Màu sắc</th>
+												<th>Giá tiền</th>
+												<th style="width: 40px">Số lượng hàng</th>
+											</tr>
+										</thead>
+										<tbody id="table-body" ng-repeat="item in variant">
+											<tr>
+												<td><input type="text" ng-model="item.size"></td>
+												<td><input type="text" ng-model="item.color"></td>
+												<td><input type="text" ng-model="item.price"></td>
+												<td><input type="text" ng-model="item.quantity"></td>
+												<td>
+													<button class="btn btn-danger"
+														ng-click="deleteproductvariant(item.id)">
+														<i class="fa-regular fa-trash-can"></i>
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()">Thêm chi
+										tiết sản phẩm</button>
+								</div>
+
+							</div>
+							<!-- /.card -->
+							<!-- END TABLE SIZe -->
+							<div class="text-center">
+								<button class="btn btn-primary" ng-click="save()">Lưu</button>
+								<button class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
+								<button class="btn btn-danger" ng-if="checkRequest === true" ng-click="cancelRequest()">Cancel Request</button>
+								<button class="btn btn-success" ng-if="checkRequest === false" ng-click="sendRequest()">Send Request</button>
+							</div>
+
+							<div class="text-center">
+								<button id="successbtn" hidden>Lưu</button>
+								<button id="failsebtn" hidden>Xóa</button>
+							</div>
+
+							<div id="successModal" class="modal">
+								<div class="modal-content">
+									<span class="close">&times;</span>
+									<iframe
+										src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+									<span id="content" class="text-success fs-3">Thêm thành công</span>
+								</div>
+							</div>
+
+							<div id="failseModal" class="modal">
+								<div class="modal-content">
+									<span class="close">&times;</span>
+									<iframe
+										src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+									<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
+								</div>
+							</div>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<div th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
+		<div th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
+		<!-- Select2 -->
+		<script src="/admin/plugins/select2/js/select2.full.min.js"></script>
+		<!-- Bootstrap4 Duallistbox -->
+		<script src="/admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+		<!-- InputMask -->
+		<script src="/admin/plugins/moment/moment.min.js"></script>
+		<script src="/admin/plugins/inputmask/jquery.inputmask.min.js"></script>
+		<!-- dropzonejs -->
+		<script src="/admin/plugins/dropzone/min/dropzone.min.js"></script>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+	<!-- <script src="app.js"></script> -->
+	<script>
+		$(function () {
+			//Initialize Select2 Elements
+			$('.select2').select2()
+
+			//Initialize Select2 Elements
+			$('.select2bs4').select2({
+				theme: 'bootstrap4'
+			})
+
+			//Datemask dd/mm/yyyy
+			$('#datemask').inputmask('dd/mm/yyyy', {
+				'placeholder': 'dd/mm/yyyy'
+			})
+			//Datemask2 mm/dd/yyyy
+			$('#datemask2').inputmask('mm/dd/yyyy', {
+				'placeholder': 'mm/dd/yyyy'
+			})
+			//Money Euro
+			$('[data-mask]').inputmask()
+
+			//Date picker
+			$('#reservationdate').datetimepicker({
+				format: 'L'
+			});
+
+			//Date and time picker
+			$('#reservationdatetime').datetimepicker({
+				icons: {
+					time: 'far fa-clock'
+				}
+			});
+
+			//Date range picker
+			$('#reservation').daterangepicker()
+			//Date range picker with time picker
+			$('#reservationtime').daterangepicker({
+				timePicker: true,
+				timePickerIncrement: 30,
+				locale: {
+					format: 'MM/DD/YYYY hh:mm A'
+				}
+			})
+			//Date range as a button
+			$('#daterange-btn').daterangepicker({
+					ranges: {
+						'Today': [moment(), moment()],
+						'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+						'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+						'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+						'This Month': [moment().startOf('month'), moment().endOf('month')],
+						'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
+							'month').endOf('month')]
+					},
+					startDate: moment().subtract(29, 'days'),
+					endDate: moment()
+				},
+				function (start, end) {
+					$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+				}
+			)
+
+			//Timepicker
+			$('#timepicker').datetimepicker({
+				format: 'LT'
+			})
+
+			//Bootstrap Duallistbox
+			$('.duallistbox').bootstrapDualListbox()
+
+			//Colorpicker
+			$('.my-colorpicker1').colorpicker()
+			//color picker with addon
+			$('.my-colorpicker2').colorpicker()
+
+			$('.my-colorpicker2').on('colorpickerChange', function (event) {
+				$('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+			})
+		})
+		// BS-Stepper Init
+		document.addEventListener('DOMContentLoaded', function () {
+			window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+		})
+
+		// DropzoneJS Demo Code Start
+		Dropzone.autoDiscover = false
+
+		// Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+		var previewNode = document.querySelector("#template")
+		previewNode.id = ""
+		var previewTemplate = previewNode.parentNode.innerHTML
+		previewNode.parentNode.removeChild(previewNode)
+
+		var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+			url: "/target-url", // Set the url
+			thumbnailWidth: 80,
+			thumbnailHeight: 80,
+			parallelUploads: 20,
+			previewTemplate: previewTemplate,
+			autoQueue: false, // Make sure the files aren't queued until manually added
+			previewsContainer: "#previews", // Define the container to display the previews
+			clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+		})
+
+		myDropzone.on("addedfile", function (file) {
+			// Hookup the start button
+			file.previewElement.querySelector(".start").onclick = function () {
+				myDropzone.enqueueFile(file)
+			}
+		})
+
+		// Update the total progress bar
+		myDropzone.on("totaluploadprogress", function (progress) {
+			document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+		})
+
+		myDropzone.on("sending", function (file) {
+			// Show the total progress bar when upload starts
+			document.querySelector("#total-progress").style.opacity = "1"
+			// And disable the start button
+			file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+		})
+
+		// Hide the total progress bar when nothing's uploading anymore
+		myDropzone.on("queuecomplete", function (progress) {
+			document.querySelector("#total-progress").style.opacity = "0"
+		})
+
+		// Setup the buttons for all transfers
+		// The "add files" button doesn't need to be setup because the config
+		// `clickable` has already been specified.
+		document.querySelector("#actions .start").onclick = function () {
+			myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+		}
+		document.querySelector("#actions .cancel").onclick = function () {
+			myDropzone.removeAllFiles(true)
+		}
+		// DropzoneJS Demo Code End
+	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<!-- <script>
+		var addRowButton = document.getElementById('add-row-btn');
+		var tableBody = document.getElementById('table-body');
+		var rowCount = 1;
+
+		addRowButton.addEventListener('click', function () {
+			var newRow = document.createElement('tr');
+
+			// Tạo các cột mới và input tương ứng
+			var columns = ['Size', 'Color', 'Price', 'Quantity'];
+			for (var column of columns) {
+				var columnName = column.toLowerCase();
+				var dataCell = document.createElement('td');
+				var dataInput = document.createElement('input');
+				var inputClassName = columnName + rowCount;
+
+				dataInput.type = 'text';
+				dataInput.className = inputClassName;
+				dataInput.name = inputClassName;
+
+				dataCell.appendChild(dataInput);
+				newRow.appendChild(dataCell);
+			}
+
+			tableBody.appendChild(newRow);
+			rowCount++;
+		});
+	</script> -->
+	<!-- script click button thêm hình ảnh -->
+	<script>
+		function openFilePicker() {
+			// Khi người dùng nhấp vào button, ta kích hoạt sự kiện nhấn vào thẻ input type="file".
+			document.getElementById('fileInput').click();
+		}
+	</script>
+	<!-- END script click button thêm hình ảnh -->
+	<!-- script xử lý hình ảnh -->
+	<script>
+		app = angular.module("app", []);
+		app.controller("sellerproduct", function ($scope, $http, $window) {
+			var urlimg = '/img/product';
+			var content = document.getElementById('content');
+			var contentfalse = document.getElementById('contentfalse');
+			var active = false;
+			var description = null;
+			var isdelete = false;
+			var name = "";
+			$scope.checkvalue = 0;
+			/* $scope.url = function(filename) {
+				console.log(filename);
+			};  */
+
+			$scope.listimg = function () {
+				$http.get(urlimg).then(resp => {
+					$scope.filenames = resp.data;
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+
+			$scope.deleteimg = function (filename) {
+				$http.delete(filename).then(resp => {
+					// $scope.listimg();
+					let i = $scope.filenames.findIndex(name => name == filename);
+					$scope.filenames.splice(i, 1);
+					console.log(filename);
+				}).catch(error => {
+					console.log("errors", error);
+				});
+			};
+
+			$scope.uploadimg = function (files) {
+				var form = new FormData();
+				for (var i = 0; i < files.length; i++) {
+					form.append('files', files[i]);
+				}
+				$http.post(urlimg, form, {
+					transformRequest: angular.identity,
+					headers: {
+						'Content-Type': undefined
+					}
+				}).then(resp => {
+					$scope.filenames.push(...resp.data);
+					$scope.listimg();
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+
+			$scope.listimg();
+
+			var url = '/api/product';
+			$scope.id = '';
+			$scope.selectedCategoryId = '';
+			$scope.checkRequest = false;
+
+			$scope.infoproduct = function () {
+				$http.get(url).then(resp => {
+					$scope.form = resp.data.product;
+					$scope.checkRequest = resp.data.checkRequest;
+					if ($scope.form.name == 'Nhập tên sản phẩm tại đây') {
+						$scope.form.name = '';
+						active = $scope.form.active;
+						description = $scope.form.description;
+						isdelete = $scope.form.isdelete;
+						name = $scope.form.name;
+						console.log(active);
+						console.log(description);
+						console.log(isdelete);
+						console.log(name);
+						console.log("info");
+					}else {
+						$scope.checkvalue = 1;
+					}
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+
+			$scope.getCategoryDetails = function () {
+				$http.get('/categoryDetails/' + $scope.selectedCategory)
+					.then(function (resp) {
+						$scope.categorydetail = resp.data;
+						$scope.selectedCategoryDetail = $scope.categorydetail[0].id;
+					});
+			};
+
+			$scope.getidcategoryDetails = function () {
+				$http.get('/idCategoryDetails').then(resp => {
+					$scope.id = resp.data;
+					$scope.selectedCategoryDetail = $scope.id;
+				})
+			};
+
+			$scope.getidcategory = function () {
+				$http.get('/idcategory').then(resp => {
+					$scope.id = resp.data;
+					$scope.selectedCategory = $scope.id;
+					$scope.getCategoryDetails();
+					$scope.getidcategoryDetails();
+				})
+			};
+
+			$scope.getcategory = function () {
+				$http.get('/category').then(resp => {
+					$scope.categorys = resp.data;
+				})
+			}
+
+			$scope.getbrand = function () {
+				$http.get('/brand').then(resp => {
+					$scope.brands = resp.data;
+				})
+			}
+
+			$scope.getidbrand = function () {
+				$http.get('/idbrand').then(resp => {
+					$scope.id = resp.data;
+					$scope.selectedbrand = $scope.id;
+				})
+			}
+
+			$scope.getcategory();
+			$scope.getidcategory();
+			$scope.infoproduct();
+			$scope.getbrand();
+			$scope.getidbrand();
+
+			var url = 'http://localhost:8888/api/productvariant';
+			var id = 0;
+			$scope.addRow = function () {
+				id++;
+				$scope.variant.push({
+					id,
+					size: '',
+					color: '',
+					price: '',
+					quantity: ''
+				});
+				console.log(id);
+			}
+
+			$scope.lista = function () {
+				$http.get(url).then(resp => {
+					$scope.variant = resp.data;
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+			
+			$scope.save = function () {
+
+				$scope.form.idCategoryDetails = $scope.selectedCategoryDetail;
+				$scope.form.listvariant = $scope.variant;
+				$scope.form.brand = $scope.selectedbrand;
+				console.log($scope.form);
+				$http.put("/info/product", $scope.form).then(resp => {
+				content.textContent = "Lưu thành công";
+				successbtn.click();
+				$scope.checkvalue = 1;
+				active = $scope.form.active;
+				description = $scope.form.description;
+				isdelete = $scope.form.isdelete;
+				name = $scope.form.name;
+				console.log(active);
+				console.log(description);
+				console.log(isdelete);
+				console.log(name);
+				console.log("save");
+				}).catch(error => {
+					console.log("errors", error);
+					contentfalse.textContent = "Lưu thất bại";
+					failsebtn.click();
+				})
+			};
+
+			$scope.deleteProduc = function () {
+				// Gửi dữ liệu đến REST controller
+				$http.delete('/delete/product/' + $scope.form.id)
+					.then(function (response) {
+						// Xử lý kết quả trả về từ REST controller
+						content.textContent = "Xóa thành công";
+						successbtn.click();
+						alert('Xóa thành công!');
+						$window.location.href = '/seller/list/products';
+					}).catch(error => {
+						console.log("errors", error);
+						contentfalse.textContent = "Xóa thất bại";
+						failsebtn.click();
+					});
+
+				// Chuyển hướng đến URL mới
+				// console.log('/delete/product/'+$scope.form.id);
+				
+			};
+
+			$scope.lista();
+
+			window.onbeforeunload = function (event) {
+				
+				var data = $scope.form.id;
+				if ($scope.filenames.length === 0) {
+					navigator.sendBeacon('/addimageproduct/' + $scope.form.id, JSON.stringify(data));
+				}
+				if(active == false && description == null && isdelete == false && name == "" && $scope.checkvalue == 0) {
+					navigator.sendBeacon('/seller/delete/product/' + $scope.form.id, JSON.stringify(data));
+				}
+			}
+
+			$scope.deleteproductvariant = function (id) {
+				$http.delete('/productvariant/delete/' + id).then(resp => {
+					let i = $scope.filenames.findIndex(item => item == id);
+					$scope.variant.splice(i, 1);
+					content.textContent = "Xóa thành công";
+					successbtn.click();
+				}).catch(error => {
+					console.log("errors", error);
+					contentfalse.textContent = "Xóa thất bại";
+					failsebtn.click();
+				});
+			}
+
+			$scope.check = function (){
+				console.log($scope.checkvalue);
+				console.log($scope.form);
+				console.log(active);
+				console.log(description);
+				console.log(isdelete);
+				console.log(name);
+				console.log("check");
+			}
+
+			$scope.sendRequest = function () {
+				$http.post('/seller/sendRequest?id=' + $scope.form.id).then(resp => {
+					$scope.checkRequest = true;
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+
+			$scope.cancelRequest = function () {
+				$http.delete('/seller/cancelRequest?id=' + $scope.form.id).then(resp => {
+					$scope.checkRequest = false;
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+			
+		});
+	</script>
+	<!-- END script xử lý hình ảnh -->
+	<!-- Script xử lý product -->
+
+	<!-- END Script xử lý product -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var successbtn = document.getElementById('successbtn');
+			var failsebtn = document.getElementById('failsebtn');
+			var successModal = document.getElementById('successModal');
+			var failseModal = document.getElementById('failseModal');
+			var closeButtons = document.getElementsByClassName('close');
+
+			successbtn.addEventListener('click', function () {
+				successModal.style.display = 'block';
+			});
+
+			failsebtn.addEventListener('click', function () {
+				failseModal.style.display = 'block';
+			});
+
+			for (var i = 0; i < closeButtons.length; i++) {
+				closeButtons[i].addEventListener('click', function () {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				});
+			}
+
+			window.addEventListener('click', function (event) {
+				if (event.target === greenModal || event.target === failseModal) {
+					successModal.style.display = 'none';
+					failseModal.style.display = 'none';
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+	<div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
+	<style>
+		.product-name {
+            max-width: 100px; /* Đặt giới hạn chiều rộng, ví dụ 200px */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+		#productTableBody{
+			height: 200px;
+			
+		}
+	</style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="adminrevenue">
+	<div class="wrapper">
+		<!-- Preloader -->
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__wobble" src="/img/banner/logotitle.png" alt="AdminLTELogo" height="60" width="60">
+		</div>
+
+		<div th:replace="~{flagment/admin/adminHeader :: adminHeaderFragment}"></div>
+		<div th:replace="~{flagment/admin/adminMainSidebar :: adminMainSidebarFragment}"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0">TỔNG QUAN</h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="/devex/home">Trang chủ</a></li>
+								<li class="breadcrumb-item active">Tổng quan</li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<!-- Small boxes (Stat box) -->
+					<div class="row">
+						<div class="col-lg-3 col-6">
+							<!-- small box -->
+							<div class="small-box bg-info">
+								<div class="inner">
+									<h3>{{statistical.amountorder}}</h3>
+
+									<p>Đơn hàng</p>
+								</div>
+								<div class="icon">
+									<i class="ion ion-bag"></i>
+								</div>
+								<a href="#" class="small-box-footer">Thông tin chi tiết <i
+										class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-3 col-6">
+							<!-- small box -->
+							<div class="small-box bg-success">
+								<div class="inner">
+									<h3>
+										{{statistical.amountRevenue.toLocaleString('vi-VN')}} <sup
+											style="font-size: 20px">vnđ</sup>
+									</h3>
+
+									<p>Doanh thu</p>
+								</div>
+								<div class="icon">
+									<i class="ion ion-stats-bars"></i>
+								</div>
+								<a href="#" class="small-box-footer">Thông tin chi tiết <i
+										class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-3 col-6">
+							<!-- small box -->
+							<div class="small-box bg-warning">
+								<div class="inner">
+									<h3>{{statistical.amountUser}}</h3>
+
+									<p>Người dùng</p>
+								</div>
+								<div class="icon">
+									<i class="ion ion-person-add"></i>
+								</div>
+								<a href="#" class="small-box-footer">Thông tin chi tiết <i
+										class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-3 col-6">
+							<!-- small box -->
+							<div class="small-box bg-danger">
+								<div class="inner">
+									<h3>{{statistical.amountProduct}}</h3>
+
+									<p>Sản phẩm</p>
+								</div>
+								<div class="icon">
+									<i class="ion ion-pie-graph"></i>
+								</div>
+								<a href="#" class="small-box-footer">Thông tin chi tiết <i
+										class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+					</div>
+					<!-- /.row -->
+					<!-- /.row -->
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">Thống kê doanh thu tháng này</h5>
+
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-8">
+											<p class="text-center">
+												<strong class="fw-1">Doanh thu Tháng </strong>
+												<select id="monthSelectrevenuemonthline" class="form-control"
+													style="display: inline-block; width: auto;"></select>
+												<strong>Năm</strong>
+												<select id="yearSelectrevenuemonthline" class="form-control"
+													style="display: inline-block; width: auto;"></select>
+											</p>
+											<div class="chart">
+												<!-- Sales Chart Canvas -->
+												<canvas id="statisticalrevenuemonthline" height="150"
+													style="height: 180px;"></canvas>
+											</div>
+											<!-- /.chart-responsive -->
+
+										</div>
+										<!-- /.col -->
+										<div class="col-md-4">
+											<p class="text-center">
+												<h3 class="text-center">Thống kê chi tiết</h3>
+											</p>
+											<div class="mb-3">
+												<label for="monthlyGoalByMonthLine" class="form-label">Chỉ tiêu</label>
+												<input type="number" min="200" class="form-control"
+													id="monthlyGoalByMonthLine" placeholder="Nhập chỉ tiêu tháng">
+											</div>
+											<div class="progress-group addcartprogressmonthline">
+												Thêm sản phẩm vào giỏ
+												<span class="float-right "><b>160</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-primary" style="width: 80%"></div>
+												</div>
+											</div>
+											<!-- /.progress-group -->
+
+											<div class="progress-group ordersuccessprogressmonthline">
+												Đơn hàng thành công
+												<span class="float-right "><b>310</b>/400</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-success" style="width: 60%"></div>
+												</div>
+											</div>
+
+											<!-- /.progress-group -->
+											<div class="progress-group orderwaitingprogressmonthline">
+												Đơn hàng đang xử lí
+												<span class="float-right "><b>480</b>/800</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-warning" style="width: 50%"></div>
+												</div>
+											</div>
+
+											<!-- /.progress-group -->
+											<div class="progress-group orderfalseprogressmonthline">
+												Đơn hàng thất bại
+												<span class="float-right "><b>250</b>/500</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-danger" style="width: 75%"></div>
+												</div>
+											</div>
+											<!-- /.progress-group -->
+										</div>
+										<!-- /.col -->
+									</div>
+									<!-- /.row -->
+								</div>
+								<!-- ./card-body -->
+								<div class="description-block border-right" style="background-color: #f4f2f2;">
+									<span class="iconrevenuemonthline text-success">
+										<i class="fas fa-caret-up"></i>
+										<span class="numberrevenuemonthline">17%</span>
+									</span>
+									<h5 class="totalrevenuemonthline">$345.980.000</h5>
+									<span class="description-text">Tổng doanh thu tháng</span>
+								</div>
+								<!-- ./card-footer -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">Thống kê doanh thu năm nay</h5>
+
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-8">
+											<p class="text-center">
+												<strong class="fw-1">Doanh thu năm </strong>
+												<select id="yearSelectrevenueyearline" class="form-control"
+													style="display: inline-block; width: auto;"></select>
+											</p>
+											<div class="chart">
+												<!-- Sales Chart Canvas -->
+												<canvas id="statisticalrevenueyearline" height="150"
+													style="height: 180px;"></canvas>
+											</div>
+											<!-- /.chart-responsive -->
+
+										</div>
+										<!-- /.col -->
+										<div class="col-md-4">
+											<p class="text-center">
+												<h3 class="text-center">Thống kê chi tiết</h3>
+											</p>
+											<div class="mb-3">
+												<label for="monthlyGoalByYearLine" class="form-label">Chỉ tiêu</label>
+												<input type="number" min="200" class="form-control"
+													id="monthlyGoalByYearLine" placeholder="Nhập chỉ tiêu tháng">
+											</div>
+											<div class="progress-group addcartprogressmonthyearline">
+												Thêm sản phẩm vào giỏ
+												<span class="float-right "><b>160</b>/200</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-primary" style="width: 80%"></div>
+												</div>
+											</div>
+											<!-- /.progress-group -->
+
+											<div class="progress-group ordersuccessprogressmonthyearline">
+												Đơn hàng thành công
+												<span class="float-right "><b>310</b>/400</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-success" style="width: 60%"></div>
+												</div>
+											</div>
+
+											<!-- /.progress-group -->
+											<div class="progress-group orderwaitingprogressmonthyearline">
+												Đơn hàng đang xử lí
+												<span class="float-right "><b>480</b>/800</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-warning" style="width: 50%"></div>
+												</div>
+											</div>
+
+											<!-- /.progress-group -->
+											<div class="progress-group orderfalseprogressmonthyearline">
+												Đơn hàng thất bại
+												<span class="float-right "><b>250</b>/500</span>
+												<div class="progress progress-sm">
+													<div class="progress-bar bg-danger" style="width: 75%"></div>
+												</div>
+											</div>
+											<!-- /.progress-group -->
+										</div>
+										<!-- /.col -->
+									</div>
+									<!-- /.row -->
+								</div>
+								<!-- ./card-body -->
+								<div class="description-block border-right" style="background-color: #f4f2f2;">
+									<span class="iconrevenueyearline text-success">
+										<i class="fas fa-caret-up"></i>
+										<span class="numberrevenueyearline">17%</span>
+									</span>
+									<h5 class="totalrevenueyearline">$345.980.000</h5>
+									<span class="description-text">Tổng doanh thu năm</span>
+								</div>
+								<!-- ./card-footer -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">Thống kê loại sản phẩm đã bán năm nay</h5>
+
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-7">
+											<p class="text-center">
+												<strong class="fw-1">Doanh thu năm </strong>
+												<select id="yearSelectcategoryyearpie" class="form-control"
+													style="display: inline-block; width: auto;"></select>
+											</p>
+											<div class="chart" style="margin-left: 100px;">
+												<!-- Sales Chart Canvas -->
+												<canvas id="statisticalcategoryyearpie"
+												style="width: 100%;"></canvas>
+											</div>
+											<!-- /.chart-responsive -->
+										</div>
+										<div class="col-md-5">
+											<p class="text-center">
+												<h3 class="text-center">Danh sách sản phẩm theo loại</h3>
+											</p>
+											<select id="categorySelect" class="form-control"
+												aria-label="Default select example">
+												<option value="choxacnhan" selected>Chờ xác nhận</option>
+												<option value="daxacnhan">Đã xác nhận</option>
+												<option value="dangvanchuyen">Đang vận chuyển</option>
+												<option value="danggiao">Đang giao</option>
+												<option value="danhanhang">Đã nhận hàng</option>
+												<option value="chothanhtoan">Chờ thanh toán</option>
+												<option value="dahoanthanh">Đã hoàn thành</option>
+												<option value="dahuy">Đã hủy</option>
+												<option value="trahang">Trả hàng/hoàn tiền</option>
+											</select>
+											<table class="table table-hover">
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th>Name</th>
+														<th>AcountSell</th>
+														<th>Shop</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody id="productTableBody">
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<!-- /.row -->
+								</div>
+								<!-- ./card-body -->
+								<div class="description-block border-right" style="background-color: #f4f2f2;">
+
+								</div>
+								<!-- ./card-footer -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<div th:replace="~{flagment/admin/adminFooter :: adminFooterFragment}"></div>
+		<div th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="/js/admin/statistical.js"></script>
+
+	<script>
+		app = angular.module("app", []);
+		app.controller("adminrevenue", function ($scope, $http, $window) {
+
+			$scope.a = function () {
+				$http.get('/api/admin/revenue').then(resp => {
+					$scope.statistical = resp.data;
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+
+			$scope.a();
+			// $scope.b = function () {
+			// 	$http.get('/api/ad/statistical/pie/year?year=2021').then(resp => {
+			// 		$scope.statistical1 = resp.data;
+			// 		console.log($scope.statistical1);
+			// 	}).catch(error => {
+			// 		console.log("errors", error);
+			// 	})
+			// };
+
+			// $scope.b();
+		});
+	</script>
+</body>
+
+</html>

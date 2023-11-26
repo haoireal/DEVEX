@@ -1,0 +1,297 @@
+<!-- Main Sidebar Container -->
+<aside
+	class="main-sidebar sidebar-light-primary bg-light elevation-4 text-sm"
+	th:fragment="adminMainSidebarFragment">
+	<!-- Brand Logo -->
+	<a href="/devex/admin/home" class="brand-link font-weight-bold"> <img
+		src="/img/banner/LogoDUAn.png" alt="AdminLTE Logo"
+		class="brand-image ml-0"> <span
+		class="brand-text font-weight-bold ml-2">DEVELOP EXPRESS</span>
+	</a>
+
+	<!-- Sidebar -->
+	<div class="sidebar">
+		<!-- Sidebar user panel (optional) -->
+		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+			<div class="image">
+				<img src="/img/banner/LogoDUAn.png" class="img-circle elevation-2"
+					alt="User Image">
+			</div>
+			<div class="info">
+				<a href="#" class="d-block"
+					th:text="${session.user == null ? 'Sign In' : session.user.fullname}"}></a>
+			</div>
+		</div>
+
+		<!-- SidebarSearch Form -->
+		<div class="form-inline">
+			<div class="input-group" data-widget="sidebar-search">
+				<input class="form-control form-control-sidebar" type="search"
+					placeholder="Tìm kiếm" aria-label="Search">
+				<div class="input-group-append">
+					<button class="btn btn-sidebar">
+						<i class="fas fa-search fa-fw"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<!-- Sidebar Menu -->
+		<nav class="mt-2">
+			<ul class="nav nav-pills nav-sidebar flex-column"
+				data-widget="treeview" role="menu" data-accordion="false">
+				<!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+				<!--TIÊU ĐỀ MANAGER-->
+				<li class="nav-header">
+					<h5 class=" brand-text">Quản lí</h5>
+				</li>
+				<!--END TIÊU ĐỀ MANAGER -->
+				<!-- Menu-1 -->
+				<li class="nav-item"><a href="/devex/user"
+					class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+						<i class="nav-icon fa-solid fa-user"></i>
+						<p>
+							Người dùng <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+						<li class="nav-item border-bottom"><a
+							href="/ad/userManage" class="nav-link">
+
+								<p>Danh sách người dùng</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a
+							href="/devex/admin/userProfile" class="nav-link">
+								<p>Hiệu chỉnh nhân viên</p>
+						</a></li>
+
+					</ul></li>
+				<!--END Menu-1 -->
+				<!-- Menu-2 -->
+				<li class="nav-item"><a href="#" class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+						<i class="nav-icon fa-solid fa-user-tie"></i>
+						<p>
+							Nhà phân phối <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+						<li class="nav-item border-bottom"><a
+							href="/devex/admin/list/seller" class="nav-link">
+
+								<p>Danh sách nhà phân phối</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a
+							href="/devex/userProfile" class="nav-link">
+								<p>Hiệu chỉnh nhân viên</p>
+						</a></li>
+
+					</ul></li>
+				<!--END Menu-2 -->
+				<!-- Menu-3 -->
+				<li class="nav-item"><a href="#" class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+						<i class="nav-icon fa-sharp fa-solid fa-users"></i>
+						<p>
+							Nhân viên <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+						<li class="nav-item border-bottom"><a href="./index.html"
+							class="nav-link">
+
+								<p>Dashboard v1</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index2.html"
+							class="nav-link">
+								<p>Dashboard v2</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index3.html"
+							class="nav-link">
+								<p>Dashboard v3</p>
+						</a></li>
+					</ul></li>
+				<!--END Menu-3 -->
+				<!-- Menu-4 -->
+				<li class="nav-item"><a href="#" class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+
+						<i class="nav-icon fas fa-solid fa-hourglass-half"></i>
+						<p>
+							Chương Trình <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+						<li class="nav-item border-bottom"><a href="/ad/flashSales"
+							class="nav-link">
+
+								<p>Flash Sales </p>
+						</a></li>
+						
+					</ul></li>
+				<!--END Menu-4 -->
+				<!-- Menu-4 -->
+				<li class="nav-item"><a href="#" class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+						<i class="nav-icon fas fa-tachometer-alt"></i>
+						<p>
+							Sản phẩm <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+						<li class="nav-item border-bottom"><a href="/ad/categorymanage"
+							class="nav-link">
+
+								<p>Quản lý danh mục</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="/ad/productmanage"
+							class="nav-link">
+								<p>Quản lý sản phẩm</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="/ad/requestproduct"
+							class="nav-link">
+								<p>Danh sách duyệt bán</p>
+						</a></li>
+					</ul></li>
+				<!--END Menu-4 -->
+				<!-- Menu-5 -->
+				<li class="nav-item"><a href="#" class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+						<i class="nav-icon fa-solid fa-cart-flatbed"></i>
+						<p>
+							Đơn hàng <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+						<li class="nav-item border-bottom"><a href="./index.html"
+							class="nav-link">
+
+								<p>Dashboard v1</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index2.html"
+							class="nav-link">
+								<p>Dashboard v2</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index3.html"
+							class="nav-link">
+								<p>Dashboard v3</p>
+						</a></li>
+					</ul></li>
+				<!--END Menu-5 -->
+				<!-- Menu-6 -->
+				<li class="nav-item"><a href="#" class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+						<i class="nav-icon fa-solid fa-star-half-stroke"></i>
+						<p>
+							Đánh giá <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+						<li class="nav-item border-bottom"><a href="./index.html"
+							class="nav-link">
+
+								<p>Dashboard v1</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index2.html"
+							class="nav-link">
+								<p>Dashboard v2</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index3.html"
+							class="nav-link">
+								<p>Dashboard v3</p>
+						</a></li>
+					</ul></li>
+				<!--END Menu-6 -->
+				<!-- Menu-7 -->
+				<li class="nav-item"><a href="#" class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+						<i class="nav-icon fa-solid fa-comment"></i>
+						<p>
+							Bình luận <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+						<li class="nav-item border-bottom"><a href="./index.html"
+							class="nav-link">
+
+								<p>Dashboard v1</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index2.html"
+							class="nav-link">
+								<p>Dashboard v2</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index3.html"
+							class="nav-link">
+								<p>Dashboard v3</p>
+						</a></li>
+					</ul></li>
+				<!--END Menu-7 -->
+				<!-- Menu-8 -->
+				<li class="nav-item"><a href="#" class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+						<i class="nav-icon fa-solid fa-tags"></i>
+						<p>
+							Chương trình <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+
+						<li class="nav-item border-bottom"><a href="/ad/voucher/form"
+							class="nav-link">
+
+								<p>Khuyến mãi Devex</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="/ad/voucher/formShip"
+							class="nav-link">
+
+								<p>Khuyến mãi Ship</p>
+						</a></li>
+						
+						<li class="nav-item border-bottom"><a href="/ad/voucher/manage"
+							class="nav-link">
+								<p>Kho mã khuyến mãi</p>
+						</a></li>
+
+					</ul></li>
+				<!--END Menu-8 -->
+				<!-- Menu-9 -->
+				<li class="nav-item"><a href="#" class="nav-link text-white"
+					style="background: linear-gradient(90deg, rgba(25, 38, 186, 1) 0%, rgba(57, 151, 184, 1) 54%, rgba(0, 212, 255, 1) 100%);">
+						<i class="nav-icon fa-solid fa-hashtag"></i>
+						<p>
+							Khác <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview bg-light"
+						style="background-color: rgba(57, 151, 184, 0.2) !important;">
+						<li class="nav-item border-bottom"><a href="./index.html"
+							class="nav-link">
+
+								<p>Dashboard v1</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index2.html"
+							class="nav-link">
+								<p>Dashboard v2</p>
+						</a></li>
+						<li class="nav-item border-bottom"><a href="./index3.html"
+							class="nav-link">
+								<p>Dashboard v3</p>
+						</a></li>
+					</ul></li>
+				<!--END Menu-9 -->
+			</ul>
+		</nav>
+		<!-- /.sidebar-menu -->
+	</div>
+	<!-- /.sidebar -->
+</aside>
