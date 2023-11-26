@@ -3,12 +3,11 @@ package com.Devex;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 
 @SpringBootApplication
 @EnableConfigurationProperties
-public class DEVEXApplication1 {
+public class DEVEXApplication {
 	/*
 	@Autowired
 	private TwilioConfig twilioConfig;
@@ -19,7 +18,7 @@ public class DEVEXApplication1 {
 	}
 	*/
 	public static void main(String[] args) {
-		SpringApplication.run(DEVEXApplication1.class, args);
+		SpringApplication.run(DEVEXApplication.class, args);
 	}
 
 }

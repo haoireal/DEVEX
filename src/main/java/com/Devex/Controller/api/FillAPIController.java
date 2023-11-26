@@ -177,7 +177,7 @@ public class FillAPIController {
 	public List<ProductDTO> getProductSearch() {
 		String kwords = sessionService.get("keywordsSearch");
 //		String kwords = "laptop";
-
+		System.out.println("............................................................................."+kwords);
 		List<Product> list = new ArrayList<>();
 		Set<Product> uniqueProducts = new LinkedHashSet<>();
 		

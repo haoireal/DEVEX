@@ -400,18 +400,12 @@
                                                                 </p>
                                                             </div>
                                                             <div class="btn-group col-6">
-                                                                <button class="btn btn-primary start" th:if="${orderDetail.status.id == 1004 or orderDetail.status.id == 1003}">
-                                                                    <span>Đã nhận hàng</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-warning cancel" th:if="${orderDetail.status.id == 1005 or orderDetail.status.id == 1006 or orderDetail.status.id == 1009}">
-                                                                    <span>Đặt lại</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-danger delete" th:if="${orderDetail.status.id == 1001 or orderDetail.status.id == 1002 or orderDetail.status.id == 1009}">
+                                                                    <a th:href="@{/order/thanhcong(id=${orderDetail.id})}" class="btn btn-success start" th:if="${orderDetail.status.id == 1004 or orderDetail.status.id == 1003}" >
+                                                                        Xác nhận đã nhận hàng
+                                                                    </a>
+                                                                <a th:href="@{/order/huy(id=${orderDetail.id})}" data-dz-remove class="btn btn-danger delete" th:if="${orderDetail.status.id == 1001 or orderDetail.status.id == 1002 or orderDetail.status.id == 1009}">
                                                                     <span>Hủy đơn</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-danger delete" th:if="${orderDetail.status.id == 1005 or orderDetail.status.id == 1006}">
-                                                                    <span>Trả hàng/Hoàn tiền</span>
-                                                                </button>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -564,14 +558,8 @@
                                                                 </p>
                                                             </div>
                                                             <div class="btn-group col-6">
-                                                                <button class="btn btn-primary start">
-                                                                    <span>Đã nhận hàng</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-warning cancel">
-                                                                    <span>Đặt lại</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-danger delete">
-                                                                    <span>Hủy đơn</span>
+                                                                <button class="btn btn-secondary start" disabled="disabled">
+                                                                    <span>Shop đang chuẩn bị hàng</span>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -725,15 +713,9 @@
                                                                 </p>
                                                             </div>
                                                             <div class="btn-group col-6">
-                                                                <button class="btn btn-primary start">
-                                                                    <span>Đã nhận hàng</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-warning cancel">
-                                                                    <span>Đặt lại</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-danger delete">
-                                                                    <span>Hủy đơn</span>
-                                                                </button>
+                                                                <a th:href="@{/order/thanhcong(id=${orderDetail.id})}" class="btn btn-success start" >
+                                                                   Xác nhận đã nhận hàng
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -915,10 +897,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </form>
-
-                                                                <button data-dz-remove class="btn btn-warning cancel">
-                                                                    <span>Đặt lại</span>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1070,17 +1048,7 @@
                                                                    th:text="${orderDetail.status.name}">
                                                                 </p>
                                                             </div>
-                                                            <div class="btn-group col-6">
-                                                                <button class="btn btn-primary start">
-                                                                    <span>Đã nhận hàng</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-warning cancel">
-                                                                    <span>Đặt lại</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-danger delete">
-                                                                    <span>Hủy đơn</span>
-                                                                </button>
-                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>

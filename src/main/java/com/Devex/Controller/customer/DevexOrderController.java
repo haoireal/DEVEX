@@ -155,7 +155,6 @@ public class DevexOrderController {
         model.addAttribute("idPrint", id);
         model.addAttribute("check", check);
         Order order = orderService.findOrderById(id);
-        System.out.println(order.getOrderStatus().getName());
         model.addAttribute("order", order);
         model.addAttribute("u", u.getUsername());
         model.addAttribute("user", u);
@@ -173,14 +172,11 @@ public class DevexOrderController {
         String userfrom = u.getUsername();
         String userto = "";
         String link = "http://localhost:8888/details/";
-        List<OrderDetails> listOrderDetails = sessionService.get("listIdOrderDetails");
-        for (OrderDetails orderDetails : listOrderDetails) {
-            detailService.updateIdOrderDetailsStatus(1007, orderDetails.getId());
-            userto = orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername();
-        }
+        OrderDetails listOrderDetails = detailService.findById(id).get();
+        detailService.updateIdOrderDetailsStatus(1007, listOrderDetails.getId());
+        userto = listOrderDetails.getProductVariant().getProduct().getSellerProduct().getUsername();
         System.out.println(userto);
-//        notiService.sendNotification(id, id, id, id, id);
-        return "redirect:/orderDetail/" + id;
+        return "redirect:/order#/cancel";
     }
     private HashMap<KeyBillDTO,List<OrderDetails>> setHashMapBillDetail(HashMap<KeyBillDTO,List<OrderDetails>> allOrderByShop,List<OrderDetails> allOrder){
             for (OrderDetails od : allOrder) {
@@ -234,5 +230,18 @@ public class DevexOrderController {
         notiService.sendHistory(userfrom, userto, link, "comment", object);
         
         return "redirect:/details/"+od.getProductVariant().getProduct().getId()+"#comment";
+    }
+
+    @GetMapping("/order/thanhcong")
+    public String xacNhanThanhCong(@RequestParam("id") String id) {
+        User u = sessionService.get("user");
+        String userfrom = u.getUsername();
+        String userto = "";
+        String link = "http://localhost:8888/details/";
+        OrderDetails listOrderDetails = detailService.findById(id).get();
+            detailService.updateIdOrderDetailsStatus(1006, listOrderDetails.getId());
+            userto = listOrderDetails.getProductVariant().getProduct().getSellerProduct().getUsername();
+        System.out.println(userto);
+        return "redirect:/order#/success";
     }
 }
