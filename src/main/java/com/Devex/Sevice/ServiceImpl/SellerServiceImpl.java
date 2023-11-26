@@ -110,6 +110,17 @@ public class SellerServiceImpl implements SellerService{
 	public List<Seller> findByShopNameContainingKeyword(String keyword) {
 		return sellerRepository.findByShopNameContainingKeyword(keyword);
 	}
+
+	@Override
+	public List<Seller> findByShopNameAndUsernameContainingKeyword(String keyword) {
+		return sellerRepository.findByShopNameAndUsernameContainingKeyword(keyword);
+	}
+
+	@Transactional
+	@Override
+	public void updateActiveSellerByUsername(boolean active, String username) {
+		sellerRepository.updateActiveSellerByUsername(active, username);
+	}
 	
 	
 	

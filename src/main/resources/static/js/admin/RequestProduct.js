@@ -33,7 +33,6 @@ const app = angular.module("app", []);
         $scope.focusURL = function(id) {
             $http.get('/api/idproductrequest')
             .then(function(response) {
-                console.log(response.data);
                 if(response.data == 0){
                     $window.location.href = '/ad/showproduct/'+id;
                 }

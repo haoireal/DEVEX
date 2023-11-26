@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.Devex.Entity.Order;
+import com.Devex.Entity.Seller;
 
 import jakarta.transaction.Transactional;
 
@@ -57,7 +58,7 @@ public interface OrderRepository extends JpaRepository<Order, String>{
     	    "JOIN od.productVariant pv " +
     	    "JOIN pv.product p " +
     	    "JOIN p.sellerProduct s " +
-    	    "WHERE s.username = :username")
+    	    "WHERE s.username = :username AND o.orderStatus.id = 1006")
     int getCountOrderForSeller(@Param("username") String username);
     
     @Query("SELECT COUNT(o) FROM Order o " +
@@ -223,4 +224,11 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	@Query("SELECT count(o) FROM Order o WHERE o.customerOrder.username = :username")
     int getCountOrderByCustomerUsername(@Param("username") String username);
 
+	@Query("SELECT o FROM Order o " +
+		       "JOIN  o.orderDetails od " +
+		       "JOIN  od.productVariant pv " +
+		       "JOIN  pv.product p " +
+		       "JOIN  p.sellerProduct s " +
+			   "WHERE s.username = :username AND LOWER(o.id) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Order> findAllOrderByIdAndUsernameContainingKeyword(@Param("username") String username, @Param("keyword") String keyword);
 }

@@ -109,4 +109,26 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 	@Query("SELECT DISTINCT o FROM OrderDetails o " +
 			"WHERE o.id = ?1")
 	Optional<OrderDetails> findById(String id);
+	
+	@Query("SELECT DISTINCT o FROM OrderDetails o " +
+	           "JOIN FETCH o.order od " +
+	           "JOIN FETCH o.productVariant pv " +
+	           "JOIN FETCH pv.product p " +
+	           "JOIN FETCH p.sellerProduct s " +
+	           "WHERE s.username = ?1")
+	List<OrderDetails> findOrderDetailsBySellerUsername(String username);
+	
+	@Query("SELECT SUM(o.price) FROM OrderDetails o " +
+	           "JOIN o.order od " +
+	           "JOIN o.productVariant pv " +
+	           "JOIN pv.product p " +
+	           "JOIN p.sellerProduct s " +
+	           "WHERE s.username = ?1 AND od.orderStatus.id = 1006")
+	Double getTotalRevenueSeller(String username);
+	
+	@Query("SELECT SUM(od.price) FROM OrderDetails od WHERE od.productVariant.product.id = ?1 AND od.order.orderStatus.id = 1006")
+	Double getTotalPriceByProductId(String id);
+	
+	@Query("SELECT COUNT(od.price) FROM OrderDetails od WHERE od.productVariant.product.id = ?1 AND od.order.orderStatus.id = 1006")
+	int getCountProductSellByProductId(String id);
 }

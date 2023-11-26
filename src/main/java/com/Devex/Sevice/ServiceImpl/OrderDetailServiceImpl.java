@@ -150,4 +150,24 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		return orderDetailRepository.findOrdersByCustomerID(customerID);
 	}
 
+	@Override
+	public List<OrderDetails> findOrderDetailsBySellerUsername(String username) {
+		return orderDetailRepository.findOrderDetailsBySellerUsername(username);
+	}
+
+	@Override
+	public Double getTotalRevenueSeller(String username) {
+		return orderDetailRepository.getTotalRevenueSeller(username);
+	}
+
+	@Override
+	public Double getTotalPriceByProductId(String id) {
+		return orderDetailRepository.getTotalPriceByProductId(id);
+	}
+
+	@Override
+	public int getCountProductSellByProductId(String id) {
+		return orderDetailRepository.getCountProductSellByProductId(id);
+	}
+
 }
