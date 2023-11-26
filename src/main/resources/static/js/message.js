@@ -3,6 +3,7 @@ let host_mess = "http://localhost:8888/rest/message";
 const socket = new SockJS('http://localhost:8888/ws');
 const stompClient = Stomp.over(socket);
 
+
 app.controller("message-ctrl", function ($scope, $http) {
   $scope.formatDateToDDMMYYYY = function (dateString) {
     const date = new Date(dateString); // Chuyển chuỗi thời gian thành đối tượng Date
@@ -75,16 +76,19 @@ app.controller("message-ctrl", function ($scope, $http) {
       });
     },
 
+
+
     //hiện thị đoạn chat mình chọn
     showMessageChatOne(idUser) {
       let arr = this.groupMessageChat[idUser]
-      this.showMessageChecked = arr;
+      this.showMessageChecked = [...arr];
 	   // Sắp xếp các sản phẩm trong từng cụm theo CreatedAt tăng dần
 	   this.showMessageChecked.sort((a, b) => {
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
         return dateA - dateB;
       });
+      
       this.selectedIdReceiver = idUser;
     },
 
@@ -169,9 +173,36 @@ app.controller("message-ctrl", function ($scope, $http) {
         
     },
 
+    // scrollBoxChat() {
+    //   boxChat.scrollTop = boxChat.scrollHeight;
+    //   alert(boxChat.scrollHeight);
+    // },
+
+
   });
 
   $message.loadMessage();
   $message.connectSocket();
 });
 
+let boxChat = document.getElementById("box-chat-detail");
+// Hàm để cuộn xuống
+function scrollBoxChat() {
+  boxChat.scrollTop = boxChat.scrollHeight;
+}
+
+// Hàm callback của MutationObserver
+function handleMutation(mutationsList, observer) {
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'childList' || mutation.type === 'attributes') {
+      // Nếu có sự thay đổi trong childList hoặc attributes, thực hiện cuộn xuống
+      scrollBoxChat();
+    }
+  }
+}
+
+// Tạo một MutationObserver với hàm callback là handleMutation
+const observer = new MutationObserver(handleMutation);
+
+// Theo dõi sự thay đổi trong childList và attributes của boxChat
+observer.observe(boxChat, { childList: true, attributes: true });

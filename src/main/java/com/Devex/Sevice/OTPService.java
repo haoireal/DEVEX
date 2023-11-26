@@ -50,6 +50,7 @@ public class OTPService {
 	
 	public void sendMailOtp(String email) {
 		String otp = generateOtp();
+		System.out.println(otp);
 		try {
 			emailService.sendMailOtpSignUp(email, otp);
 			otpMap.put(email, otp);
