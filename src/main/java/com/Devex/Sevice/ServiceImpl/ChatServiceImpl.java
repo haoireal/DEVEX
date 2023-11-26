@@ -30,33 +30,23 @@ public class ChatServiceImpl implements ChatService{
     
     @Override
 	public MessageDTO sendMessage(MessageDTO message, String userID) {
-    	System.out.println(2);
-    	System.out.println(3);
     	//Xử lí dữ liệu tin nhắn
     	ChatMessage messToSave = new ChatMessage();
-    	System.out.println(4);
     	messToSave.setContent(message.getContent());
-    	System.out.println(5);
     	messToSave.setCreatedAt(new Date());
-    	System.out.println(6);
     	User userFrom = userRepository.findById(userID).get();
     	messToSave.setSender(userFrom);
-    	System.out.println(7);
     	User userTo = userRepository.findById(message.getReceiverID()).get();
-    	System.out.println(8);
     	messToSave.setReceiver(userTo);
-    	System.out.println(9);
     	
         // Lưu tin nhắn vào cơ sở dữ liệu
     	chatMessageRespository.save(messToSave);
-    	System.out.println(10);
 //        // Gửi tin nhắn đến người nhận thông qua WebSocket
 //        messagingTemplate.convertAndSendToUser(
 //        		message.getReceiverID(),
 //                "/topic/message",
 //                message
 //        );
-        System.out.println(12);
         return chatMessageRespository.findNewest(userID);
     }
 

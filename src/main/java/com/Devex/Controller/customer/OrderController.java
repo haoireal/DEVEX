@@ -127,7 +127,7 @@ public class OrderController {
 		order.setNote("Đóng gói kĩ và giao vào giờ hành chính");
 		order.setAddress(customer.getAddress());
 		order.setPhone(customer.getPhoneAddress());
-		order.setTotalShip(0.0);
+//		order.setTotalShip(0.0);
 		order.setCustomerOrder(customer);
 		order.setOrderStatus(orderStatusService.findById(1001).get());
 		// Xử lí phương thức thanh toán

@@ -32,7 +32,7 @@
         display: -webkit-box;
         text-overflow: ellipsis;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 1;
       }
     </style>
 
@@ -174,8 +174,7 @@
                     ng-repeat="(idReceiver, items) in message.groupMessageChat"
                     class="list-group-item list-group-item-action rounded-0"
                     ng-click="message.showMessageChatOne(idReceiver)"
-                    
-					ng-class="{ 'active': message.selectedIdReceiver === idReceiver, 'text-white': message.selectedIdReceiver === idReceiver }"
+				          	ng-class="{ 'active': message.selectedIdReceiver === idReceiver, 'text-white': message.selectedIdReceiver === idReceiver }"
                   >
                     <div class="media">
                       <img
@@ -224,29 +223,30 @@
           </div>
           <!-- Chat Box-->
           <div class="col-8 px-0">
-            <div class="px-4 py-5 chat-box bg-white">
+            <div class=" px-4 py-5 chat-box bg-white" id="box-chat-detail">
               <!-- Sender Message-->
               <div
                 class="media w-50 mb-3"
                 ng-repeat="item in message.showMessageChecked"
-                ng-class="{ 'ml-auto': item.senderID === item.userID}"
+                ng-class="{ 'ml-auto': item.senderID !== message.selectedIdReceiver}"
+                ng-if="message.selectedIdReceiver !== '' && (item.receiverID === message.selectedIdReceiver || item.senderID === message.selectedIdReceiver)"
 
               >
                 <img
-                  ng-if="item.senderID !== item.userID"
+                  ng-if="item.senderID === message.selectedIdReceiver"
                   src="/img/account/{{ item.senderAvatar }}"
                   alt="user"
                   style="width: 50px; height: 50px;"
                   class="rounded-circle"
                 />
                 <div class="media-body"
-                ng-class="{ 'ml-auto': item.senderID !== item.userID}"
+                ng-class="{ 'ml-auto': item.senderID === message.selectedIdReceiver}"
                 >
                   <div class="rounded py-2 px-3 mb-2"
-                  ng-class="{ 'bg-primary': item.senderID === item.userID, 'bg-light': item.senderID !== item.userID}"
+                  ng-class="{ 'bg-primary': item.senderID !== message.selectedIdReceiver, 'bg-light': item.senderID === message.selectedIdReceiver}"
                   >
                     <p class="content-message text-small mb-0 text-muted"
-                     ng-class="{ 'text-white': item.senderID === item.userID}"
+                     ng-class="{ 'text-white': item.senderID !== message.selectedIdReceiver}"
                     >
                       {{ item.content }}
                     </p>
@@ -319,7 +319,6 @@
        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
       <script th:src="@{/js/message.js}"></script>
-      <!-- <script th:src="@{/js/chat.js}"></script> -->
       <!-- 	<div th:replace="~{flagment/account/footLink :: footLinkFragment}"></div> -->
     </body>
   </html>
