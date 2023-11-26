@@ -195,48 +195,48 @@ public class CartAPIController {
 		return ResponseEntity.ok().build();
 	}
 
-	@PostMapping("/rest/cart/order-true")
-	public ResponseEntity<Void> order(@RequestBody List<CartDetailDTo> listOrder) {
-//		Customer user = sessionService.get("user");
-		User user = sessionService.get("user");
-		Customer customer = null;
-		if (user != null) {
-			customer = customerService.findById(user.getUsername()).get();
-		}
-//		Customer customer = customerService.findById(user.getUsername()).get();
-		Order order = new Order();
-		order.setCreatedDay(new Date());
-		System.out.println(new Date());
-		order.setNote("Đóng gói kĩ và giao vào giờ hành chính");
-		order.setAddress(customer.getAddress());
-		order.setPhone(customer.getPhoneAddress());
-		order.setPriceDiscount(0.0);
-		order.setCustomerOrder(customer);
-		order.setOrderStatus(orderStatusService.findById(1001).get());
-		order.setPayment(paymentService.findById(1001).get());
-		order.setTotal(listOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum());
-		orderService.save(order);
-
-		for (CartDetailDTo item : listOrder) {
-			OrderDetails orderDetails = new OrderDetails();
-			Order orders = orderService.findLatestOrder();
-			orderDetails.setOrder(orders);
-			orderDetails.setPrice(item.getPrice());
-			CartDetail cartDetail = cart.getById(item.getId());
-			int id = cartDetail.getProductCart().getId();
-			ProductVariant prod = productVariantService.findById(id).get();
-			orderDetails.setProductVariant(prod);
-			orderDetails.setQuantity(item.getQuantity());
-			int totalquantity = prod.getQuantity();
-			int countquantity = totalquantity - item.getQuantity();
-			productVariantService.updateQuantity(countquantity, prod.getId());
-			orderDetails.setStatus(orderStatusService.findById(1001).get());
-			orderDetailService.save(orderDetails);
-			cart.deleteById(item.getId());
-		}
-
-		return ResponseEntity.ok().build();
-	}
+//	@PostMapping("/rest/cart/order-true")
+//	public ResponseEntity<Void> order(@RequestBody List<CartDetailDTo> listOrder) {
+////		Customer user = sessionService.get("user");
+//		User user = sessionService.get("user");
+//		Customer customer = null;
+//		if (user != null) {
+//			customer = customerService.findById(user.getUsername()).get();
+//		}
+////		Customer customer = customerService.findById(user.getUsername()).get();
+//		Order order = new Order();
+//		order.setCreatedDay(new Date());
+//		System.out.println(new Date());
+//		order.setNote("Đóng gói kĩ và giao vào giờ hành chính");
+//		order.setAddress(customer.getAddress());
+//		order.setPhone(customer.getPhoneAddress());
+//		order.setPriceDiscount(0.0);
+//		order.setCustomerOrder(customer);
+//		order.setOrderStatus(orderStatusService.findById(1001).get());
+//		order.setPayment(paymentService.findById(1001).get());
+//		order.setTotal(listOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum());
+//		orderService.save(order);
+//
+//		for (CartDetailDTo item : listOrder) {
+//			OrderDetails orderDetails = new OrderDetails();
+//			Order orders = orderService.findLatestOrder();
+//			orderDetails.setOrder(orders);
+//			orderDetails.setPrice(item.getPrice());
+//			CartDetail cartDetail = cart.getById(item.getId());
+//			int id = cartDetail.getProductCart().getId();
+//			ProductVariant prod = productVariantService.findById(id).get();
+//			orderDetails.setProductVariant(prod);
+//			orderDetails.setQuantity(item.getQuantity());
+//			int totalquantity = prod.getQuantity();
+//			int countquantity = totalquantity - item.getQuantity();
+//			productVariantService.updateQuantity(countquantity, prod.getId());
+//			orderDetails.setStatus(orderStatusService.findById(1001).get());
+//			orderDetailService.save(orderDetails);
+//			cart.deleteById(item.getId());
+//		}
+//
+//		return ResponseEntity.ok().build();
+//	}
 
 //	@PostMapping("/rest/cart")
 //	public ResponseEntity<String> createCartDetail(@RequestBody CartDetail cartDetail) {

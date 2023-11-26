@@ -1,4 +1,7 @@
 let host_mess = "http://localhost:8888/rest/message";
+//Socket
+const socket = new SockJS('http://localhost:8888/ws');
+const stompClient = Stomp.over(socket);
 
 app.controller("message-ctrl", function ($scope, $http) {
   $scope.formatDateToDDMMYYYY = function (dateString) {
@@ -59,6 +62,7 @@ app.controller("message-ctrl", function ($scope, $http) {
     showMessageChecked: [],
     groupMessageChat: {},
     selectedIdReceiver: "",
+    newMessage : "",
 
     // load tin nhắn
     loadMessage() {
@@ -73,9 +77,8 @@ app.controller("message-ctrl", function ($scope, $http) {
 
     //hiện thị đoạn chat mình chọn
     showMessageChatOne(idUser) {
-      let arrTo = this.groupMessageChat[idUser];
-	  let arrFrom = this.list.filter((item) => item.senderID !== item.userID && item.senderID === arrTo[0].receiverID);
-      this.showMessageChecked = [...arrTo, ...arrFrom];
+      let arr = this.groupMessageChat[idUser]
+      this.showMessageChecked = arr;
 	   // Sắp xếp các sản phẩm trong từng cụm theo CreatedAt tăng dần
 	   this.showMessageChecked.sort((a, b) => {
         const dateA = new Date(a.createdAt);
@@ -84,9 +87,6 @@ app.controller("message-ctrl", function ($scope, $http) {
       });
       this.selectedIdReceiver = idUser;
     },
-
-    //check xem tin nhắn đó là của bên nào
-    checkPersonChat(idUser) {},
 
     //hiện thị đối tượng chat sidepart
     showGroupChat() {
@@ -97,6 +97,13 @@ app.controller("message-ctrl", function ($scope, $http) {
 				this.groupMessageChat[item.receiverID] = [];
 			  }
 			  this.groupMessageChat[item.receiverID].push(item);
+		}
+
+    if(item.receiverID === item.userID) {
+			if (!this.groupMessageChat[item.senderID]) {
+				this.groupMessageChat[item.senderID] = [];
+			  }
+			  this.groupMessageChat[item.senderID].push(item);
 		}
           
       });
@@ -112,7 +119,59 @@ app.controller("message-ctrl", function ($scope, $http) {
       // Chuyển lại thành đối tượng từ mảng objArray đã sắp xếp
       this.groupMessageChat = Object.fromEntries(objArray);
     },
+
+    //Socket
+    // Connect to WebSocket
+    connectSocket() {
+      stompClient.connect({}, function () {
+          // Subscribe to incoming messages
+
+          stompClient.subscribe('/topic/message', function (response) {
+              const message  = JSON.parse(response.body);
+                  // Add the received message to the chat history
+                  $message.showMessageChecked.push(message);
+                  // $message.showGroupChat();
+
+              console.log($message.showMessageChecked);
+              $message.loadMessage();
+              // $message.showMessageChatOne($message.selectedIdReceiver);
+          });
+
+          
+      }, function (error) {
+          console.error('Error connecting to WebSocket:', error);
+      });
+    },
+    
+
+    // Function to send a message
+    sendMessage(receiver) {
+      if(this.newMessage.trim() !== '') {
+        const message = {
+            id: 123,
+            content: $message.newMessage,
+            createdAt: new Date(),
+            senderID: null,
+            senderAvatar: null,
+            senderName: null,
+            receiverID: receiver,
+            receiverAvatar: null,
+            receiverName: null,
+            userID: null,
+        };
+
+        // Send the message to the server via WebSocket
+        stompClient.send('/app/message', {}, JSON.stringify(message));
+
+        // Clear the input field
+        this.newMessage = '';
+      }
+        
+    },
+
   });
 
   $message.loadMessage();
+  $message.connectSocket();
 });
+
