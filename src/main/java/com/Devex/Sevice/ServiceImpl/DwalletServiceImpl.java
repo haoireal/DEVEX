@@ -27,6 +27,11 @@ public class DwalletServiceImpl implements DwalletService{
 	}
 
 	@Override
+	public String findDwalletIDbyUsername(String username) {
+		return dwalletRepository.findDwalletIDbyUsername(username);
+	}
+
+	@Override
 	public List<Dwallet> findAll(Sort sort) {
 		return dwalletRepository.findAll(sort);
 	}
@@ -65,5 +70,5 @@ public class DwalletServiceImpl implements DwalletService{
 	public void deleteAll() {
 		dwalletRepository.deleteAll();
 	}
-	
+
 }
