@@ -119,20 +119,19 @@
       }
 
       ::-webkit-scrollbar {
-        width: 5px;
-      }
-
-      ::-webkit-scrollbar-track {
-        width: 5px;
-        background: #f5f5f5;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        width: 1em;
-        background-color: #ddd;
-        outline: 1px solid slategrey;
-        border-radius: 1rem;
-      }
+		  width: 10px;
+		}
+  
+		::-webkit-scrollbar-track {
+		  width: 5px;
+		  background: #f5f5f5;
+		}
+  
+		::-webkit-scrollbar-thumb {
+		  width: 1em;
+		  background-color: #acacac;
+		  /* outline: 1px solid slategrey; */
+		}
 
       .text-small {
         font-size: 0.9rem;
@@ -163,7 +162,7 @@
       <div class="container py-5" ng-controller="message-ctrl">
         <div class="row rounded-lg overflow-hidden shadow">
           <!-- Users box-->
-          <div class="col-5 px-0">
+          <div class="col-4 px-0">
             <div class="bg-white">
               <div class="bg-gray px-4 py-2 bg-light">
                 <p class="h5 mb-0 py-1">Cuộc trò chuyện</p>
@@ -180,7 +179,15 @@
                   >
                     <div class="media">
                       <img
+                        ng-if="message.groupMessageChat[idReceiver][0].receiverID !== message.groupMessageChat[idReceiver][0].userID"
                         src="/img/account/{{ message.groupMessageChat[idReceiver][0].receiverAvatar }}"
+                        alt="user"
+                        style="width: 50px; height: 50px;"
+                        class="rounded-circle"
+                      />
+                      <img
+                        ng-if="message.groupMessageChat[idReceiver][0].receiverID === message.groupMessageChat[idReceiver][0].userID"
+                        src="/img/account/{{ message.groupMessageChat[idReceiver][0].senderAvatar }}"
                         alt="user"
                         style="width: 50px; height: 50px;"
                         class="rounded-circle"
@@ -189,9 +196,14 @@
                         <div
                           class="d-flex align-items-center justify-content-between mb-1"
                         >
-                          <h6 class="mb-0">
+                          <h6 class="mb-0" ng-if="message.groupMessageChat[idReceiver][0].receiverID !== message.groupMessageChat[idReceiver][0].userID">
                             {{
                             message.groupMessageChat[idReceiver][0].receiverName
+                            }}
+                          </h6>
+                          <h6 class="mb-0" ng-if="message.groupMessageChat[idReceiver][0].receiverID === message.groupMessageChat[idReceiver][0].userID">
+                            {{
+                            message.groupMessageChat[idReceiver][0].senderName
                             }}
                           </h6>
                           <small class="small font-weight-bold"
@@ -211,30 +223,30 @@
             </div>
           </div>
           <!-- Chat Box-->
-          <div class="col-7 px-0">
+          <div class="col-8 px-0">
             <div class="px-4 py-5 chat-box bg-white">
               <!-- Sender Message-->
               <div
                 class="media w-50 mb-3"
                 ng-repeat="item in message.showMessageChecked"
-                ng-class="{ 'ml-auto': item.receiverID === item.userID}"
+                ng-class="{ 'ml-auto': item.senderID === item.userID}"
 
               >
                 <img
-                  ng-if="item.receiverID !== item.userID"
-                  src="/img/account/{{ item.receiverAvatar }}"
+                  ng-if="item.senderID !== item.userID"
+                  src="/img/account/{{ item.senderAvatar }}"
                   alt="user"
                   style="width: 50px; height: 50px;"
                   class="rounded-circle"
                 />
                 <div class="media-body"
-                ng-class="{ 'ml-auto': item.receiverID !== item.userID}"
+                ng-class="{ 'ml-auto': item.senderID !== item.userID}"
                 >
                   <div class="rounded py-2 px-3 mb-2"
-                  ng-class="{ 'bg-primary': item.receiverID === item.userID, 'bg-light': item.receiverID !== item.userID}"
+                  ng-class="{ 'bg-primary': item.senderID === item.userID, 'bg-light': item.senderID !== item.userID}"
                   >
                     <p class="content-message text-small mb-0 text-muted"
-                     ng-class="{ 'text-white': item.receiverID === item.userID}"
+                     ng-class="{ 'text-white': item.senderID === item.userID}"
                     >
                       {{ item.content }}
                     </p>
@@ -257,16 +269,17 @@
             </div>
 
             <!-- Typing area -->
-            <form action="#" class="bg-light">
+            <form class="bg-light">
               <div class="input-group">
                 <input
+                   ng-model="message.newMessage"
                   type="text"
                   placeholder="Type a message"
                   aria-describedby="button-addon2"
                   class="form-control rounded-0 border-0 py-4 bg-light"
                 />
                 <div class="input-group-append">
-                  <button id="button-addon2" type="submit" class="btn btn-link">
+                  <button id="button-addon2" type="submit" ng-click="message.sendMessage(message.selectedIdReceiver)" class="btn btn-link">
                     <i class="fa fa-paper-plane"></i>
                   </button>
                 </div>
@@ -301,7 +314,12 @@
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
       <script th:src="@{/js/cart-ctrl.js}"></script>
+      
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
       <script th:src="@{/js/message.js}"></script>
+      <!-- <script th:src="@{/js/chat.js}"></script> -->
       <!-- 	<div th:replace="~{flagment/account/footLink :: footLinkFragment}"></div> -->
     </body>
   </html>

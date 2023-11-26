@@ -45,8 +45,8 @@ public class Order implements Serializable{
 	private Date createdDay;
 	@Column(name = "Total")
 	private Double total;
-	@Column(name = "Pricediscount")
-	private Double priceDiscount;
+	@Column(name = "Totalship")
+	private Double totalShip;
 	@Column(name = "Address")
 	private String address;
 	@Column(name = "Phone")

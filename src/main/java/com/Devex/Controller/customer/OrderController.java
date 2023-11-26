@@ -127,7 +127,7 @@ public class OrderController {
 		order.setNote("Đóng gói kĩ và giao vào giờ hành chính");
 		order.setAddress(customer.getAddress());
 		order.setPhone(customer.getPhoneAddress());
-		order.setPriceDiscount(0.0);
+		order.setTotalShip(0.0);
 		order.setCustomerOrder(customer);
 		order.setOrderStatus(orderStatusService.findById(1001).get());
 		// Xử lí phương thức thanh toán
@@ -150,11 +150,14 @@ public class OrderController {
 			}
 		}
 		Double ship = (double) (15000 * listShop.size());
-		order.setTotal(listOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum() + ship);
+		order.setTotalShip(ship);
+		// Tổng tiền sản phẩm
+		order.setTotal(listOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum());
 		orderService.save(order);
 
 		// biến tổng tiền để tính voucher
 		Double total = order.getTotal();
+		Double totalShip = order.getTotalShip();
 		// Xử lí voucher
 		if (listVoucher != null) {
 
@@ -219,47 +222,48 @@ public class OrderController {
 					}
 					System.out.println(total);
 				} else if (item.getCategoryVoucher().getId() == 100002) { // Voucher ship
-					Double price = 0.0;
+//					Double price = 0.0;
 					// Xử lí giá giảm
 					if (item.getDiscount() < 1) {
-						total -= ship;
-						sale = ship * item.getDiscount();
-						price = ship - sale;
-						if (price < 0)
-							price = 0.0;
-						total += price;
+//						total -= ship;
+						sale = totalShip * item.getDiscount();
+						totalShip -= sale;
+						if (totalShip < 0)
+							totalShip = 0.0;
+//						total += price;
 					} else {
-						total -= ship;
+//						total -= ship;
 						sale = item.getDiscount();
-						price = ship - sale;
-						if (price < 0)
-							price = 0.0;
-						total += price;
+						totalShip -= sale;
+						if (totalShip < 0)
+							totalShip = 0.0;
+//						total += price;
 					}
 					System.out.println(total);
 				} else if (item.getCategoryVoucher().getId() == 100001) { // Voucher Devex
-					Double price = listOrder.stream().mapToDouble(i -> item.getQuantity() * i.getPrice()).sum();
+//					Double price = listOrder.stream().mapToDouble(i -> item.getQuantity() * i.getPrice()).sum();
 
 					// Xử lí giá giảm
 					if (item.getDiscount() < 1) {
-						sale = price * item.getDiscount();
-						price -= sale;
-						if (price < 0)
-							price = 0.0;
-						total = price + ship;
+						sale = total * item.getDiscount();
+						total -= sale;
+						if (total < 0)
+							total = 0.0;
+//						total = price + ship;
 					} else {
 						sale = item.getDiscount();
-						price -= sale;
-						if (price < 0)
-							price = 0.0;
-						total = price + ship;
+						total -= sale;
+						if (total < 0)
+							total = 0.0;
+//						total = price + ship;
 					}
 					System.out.println(total);
 				}
 
 				System.out.println(total);
+				System.out.println(totalShip);
 				System.out.println(1);
-				orderService.updatePriceOrder(total, orders.getId());
+				orderService.updatePriceOrder(total, totalShip, orders.getId());
 				System.out.println(2);
 				od.setPriceDiscount(sale);
 				od.setOrder(orders);

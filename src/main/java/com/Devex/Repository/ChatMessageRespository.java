@@ -19,5 +19,8 @@ public interface ChatMessageRespository extends JpaRepository<ChatMessage, Integ
 	
 	@Query("SELECT new com.Devex.DTO.MessageDTO(m.id, m.content, m.createdAt, m.sender.username, m.sender.avatar, m.sender.fullname, m.receiver.username, m.receiver.avatar, m.receiver.fullname, :username) FROM ChatMessage m WHERE m.sender.username = :username or m.receiver.username = :username Order By createdAt desc")
 	List<MessageDTO> findAllByUser(@Param("username") String username);
+	
+	@Query("SELECT new com.Devex.DTO.MessageDTO(m.id, m.content, m.createdAt, m.sender.username, m.sender.avatar, m.sender.fullname, m.receiver.username, m.receiver.avatar, m.receiver.fullname, :username) FROM ChatMessage m WHERE m.createdAt = (SELECT MAX(m2.createdAt) FROM ChatMessage m2)")
+	MessageDTO findNewest(@Param("username") String username);
 
 }
