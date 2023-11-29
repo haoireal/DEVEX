@@ -118,5 +118,10 @@ public class DevexAdminController {
 		sessionService.set("idproduct", id);
 		return "admin/productManage/formProduct";
 	}
+	
+	@GetMapping("/list/distributor")
+	public String showDistributor() {
+		return "admin/sellerManage/sellerManage";
+	}
 
 }

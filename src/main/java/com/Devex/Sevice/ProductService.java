@@ -103,4 +103,6 @@ public interface ProductService {
 	List<Product> findProductByShopUsername(String sellerUsername);
 
 	String findByidProductproductVariants(int id);
+
+	List<Product> findAllProductByUsernameContainingKeyword(String keyword, String username);
 }

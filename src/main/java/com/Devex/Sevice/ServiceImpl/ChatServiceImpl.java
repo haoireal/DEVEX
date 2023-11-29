@@ -1,22 +1,73 @@
 package com.Devex.Sevice.ServiceImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 
 import com.Devex.DTO.MessageDTO;
 import com.Devex.Entity.ChatMessage;
+import com.Devex.Entity.User;
 import com.Devex.Repository.ChatMessageRespository;
+import com.Devex.Repository.UserRepository;
 import com.Devex.Sevice.ChatService;
 
-@SessionScope
+
 @Service("chatService")
 public class ChatServiceImpl implements ChatService{
 	@Autowired
 	private ChatMessageRespository chatMessageRespository;
+	
+	@Autowired
+    private UserRepository userRepository;
+	
+	
+	@Autowired
+    private SimpMessagingTemplate messagingTemplate;
+    
+    @Override
+	public MessageDTO sendMessage(MessageDTO message, String userID) {
+    	//Xử lí dữ liệu tin nhắn
+    	ChatMessage messToSave = new ChatMessage();
+    	messToSave.setContent(message.getContent());
+    	messToSave.setCreatedAt(new Date());
+    	User userFrom = userRepository.findById(userID).get();
+    	messToSave.setSender(userFrom);
+    	User userTo = userRepository.findById(message.getReceiverID()).get();
+    	messToSave.setReceiver(userTo);
+    	
+        // Lưu tin nhắn vào cơ sở dữ liệu
+    	chatMessageRespository.save(messToSave);
+//        // Gửi tin nhắn đến người nhận thông qua WebSocket
+//        messagingTemplate.convertAndSendToUser(
+//        		message.getReceiverID(),
+//                "/topic/message",
+//                message
+//        );
+        return chatMessageRespository.findNewest(userID);
+    }
+    
+    @Override
+	public MessageDTO sendMessageAuto(MessageDTO message, String userID) {
+    	
+    	//Xử lí dữ liệu tin nhắn
+    	ChatMessage messToSave = new ChatMessage();
+    	messToSave.setCreatedAt(new Date());
+    	User userFrom = userRepository.findById(message.getSenderID()).get();
+    	messToSave.setSender(userFrom);
+    	User userTo = userRepository.findById(userID).get();
+    	messToSave.setReceiver(userTo);
+    	String content = "Xin chào " + userTo.getFullname() + ", chúng tôi có thể giúp gì cho bạn?";
+    	messToSave.setContent(content);
+    	
+        // Lưu tin nhắn vào cơ sở dữ liệu
+    	chatMessageRespository.save(messToSave);
+
+        return chatMessageRespository.findNewest(userID);
+    }
 
 	
 	@Override

@@ -44,7 +44,7 @@ app.controller("sellerpage", function($scope, $http, $location, $window) {
 
 		// load voucher
 		loadVoucher() {
-			var url = '/api/shoppage/voucher/list?username=' + username.innerText;
+			var url = '/api/shoppage/voucher/list?username=' + username.value;
 			$http.get(url).then((response) => {
 				this.items = response.data;
 				console.log(this.items);
@@ -164,7 +164,7 @@ app.controller("sellerpage", function($scope, $http, $location, $window) {
     var username = document.getElementById('username');
     // Thông tin shop
     $scope.fillInfoShopPage = function () {
-        $http.get('/api/user/shoppage?username=' + username.innerText).then(resp => {
+        $http.get('/api/user/shoppage?username=' + username.value).then(resp => {
           $scope.infoShopPage = resp.data;
           $scope.checkFollow = resp.data.checkFollow;
           $scope.listProducts = resp.data.listInfoProduct;
@@ -196,7 +196,7 @@ app.controller("sellerpage", function($scope, $http, $location, $window) {
     };
     
     $scope.follow = function() {
-        $http.post('/api/user/follow?username=' + username.innerText)
+        $http.post('/api/user/follow?username=' + username.value)
             .then(function(response) {
                 $scope.checkFollow = true;
             }, function(error) {
@@ -206,7 +206,7 @@ app.controller("sellerpage", function($scope, $http, $location, $window) {
     }; 
 
     $scope.unFollow = function() {
-        $http.delete('/api/user/unfollow?username=' + username.innerText)
+        $http.delete('/api/user/unfollow?username=' + username.value)
             .then(function(response) {
                 $scope.checkFollow = false;
             }, function(error) {

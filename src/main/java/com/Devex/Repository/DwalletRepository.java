@@ -13,6 +13,8 @@ import com.Devex.Entity.TransactionHistory;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @EnableJpaRepositories
 @Repository("dwalletRepository")
 public interface DwalletRepository extends JpaRepository<Dwallet, String> {
@@ -24,5 +26,7 @@ public interface DwalletRepository extends JpaRepository<Dwallet, String> {
     @Transactional
     @Query(value = "SELECT d.* FROM Dwallet d JOIN User_Roles ur ON d.Username = ur.Username WHERE ur.Role_ID LIKE 'ADMIN' AND d.Username LIKE :username", nativeQuery = true)
     Dwallet getDwalletAdminByUsername(@Param("username") String username);
-
+    
+    @Query("SELECT dw.id FROM Dwallet dw WHERE dw.user.username like ?1")
+    String findDwalletIDbyUsername(String username);
 }

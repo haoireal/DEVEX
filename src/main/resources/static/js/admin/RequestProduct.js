@@ -45,6 +45,19 @@ app.controller("requestproduct", function ($scope, $http, $location, $window) {
         // Xử lý lỗi nếu cần thiết
       });
   };
+        // focus URL
+        $scope.focusURL = function(id) {
+            $http.get('/api/idproductrequest')
+            .then(function(response) {
+                if(response.data == 0){
+                    $window.location.href = '/ad/showproduct/'+id;
+                }
+            }).catch(function(error) {
+                console.error('Error making API request:', error);
+                // Xử lý lỗi nếu cần thiết
+            });
+        };
 
-  $scope.getAllProductRequest();
-});
+        $scope.getAllProductRequest();
+
+    });

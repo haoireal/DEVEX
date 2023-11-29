@@ -237,4 +237,9 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findProductIdByProductVariantId(id);
 	}
 
+	@Override
+	public List<Product> findAllProductByUsernameContainingKeyword(String keyword, String username) {
+		return productRepository.findAllProductByUsernameContainingKeyword(keyword, username);
+	}
+
 }

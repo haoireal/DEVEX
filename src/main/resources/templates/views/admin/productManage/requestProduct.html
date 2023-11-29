@@ -26,47 +26,84 @@
             width="60"
           />
         </div>
+		<div th:replace="~{flagment/admin/adminHeader :: adminHeaderFragment}"></div>
+		<div
+			th:replace="~{flagment/admin/adminMainSidebar :: adminMainSidebarFragment}"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0">Quản lý yêu cầu bán sản phẩm</h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="/devex/home">Trang chủ</a></li>
+								<li class="breadcrumb-item active">Tổng quan</li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
 
-        <div
-          th:replace="~{flagment/admin/adminHeader :: adminHeaderFragment}"
-        ></div>
-        <div
-          th:replace="~{flagment/admin/adminMainSidebar :: adminMainSidebarFragment}"
-        ></div>
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-          <!-- Content Header (Page header) -->
-          <div class="content-header">
-            <div class="container-fluid">
-              <div class="row mb-2">
-                <div class="col-sm-6">
-                  <h1 class="m-0">Quản lý yêu cầu bán sản phẩm</h1>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-6">
-                  <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                      <a href="/devex/home">Trang chủ</a>
-                    </li>
-                    <li class="breadcrumb-item active">Tổng quan</li>
-                  </ol>
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-          </div>
-          <!-- /.content-header -->
-
-          <!-- Main content -->
-          <section class="content" ng-controller="requestproduct">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-header">
-                      <h3 class="card-title">Danh sách sản phẩm cần duyệt</h3>
+			<!-- Main content -->
+			<section class="content" ng-controller="requestproduct">
+				<div class="container-fluid">
+					<div class="row">
+                        <div class="col-12">
+                            <div class="card">
+								<div class="card-header">
+									<h3 class="card-title">Danh sách sản phẩm cần duyệt</h3>
+								</div>
+								<div class="card-body">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>Tên sản phẩm</th>
+												<th>Giá</th>
+												<th>Loại</th>
+												<th>Thương hiệu</th>
+												<th>Shop</th>
+												<th>Thời gian yêu cầu</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="ProductRequest in listProductRequest.listProductRequest">
+												<td>{{listProductRequest.listInfoProduct[$index].id}}</td>
+												<td class="product-name">{{listProductRequest.listInfoProduct[$index].name}}</td>
+												<td>{{listProductRequest.listInfoProduct[$index].price}}</td>
+												<td>{{listProductRequest.listNameCategory[$index]}}</td>
+												<td>{{listProductRequest.listNameProductBrand[$index]}}</td>
+												<td>{{listProductRequest.listShopName[$index]}}</td>
+												<td>{{listProductRequest.listProductRequest[$index].createdDay | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+												<td>
+													<div class="btn-group w-100" role="group" aria-label="Basic example">
+														<button ng-click="cancelRequest(listProductRequest.listProductRequest[$index].id)" class="btn btn-danger text-center">
+															<i class="fa-solid fa-xmark"></i>
+														</button>
+														<button ng-click="confirmRequest(listProductRequest.listProductRequest[$index].id)" class="btn btn-success text-center">
+															<i class="fa-solid fa-check"></i>
+														</button>
+														<button ng-click="focusURL(listProductRequest.listInfoProduct[$index].id)" class="btn btn-primary text-center">
+															<i class="fa-regular fa-eye"></i>
+														</button>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+                        </div>
                     </div>
                     <div class="card-body">
                       <table class="table table-hover">

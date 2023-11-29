@@ -1,5 +1,6 @@
 package com.Devex.Controller.customer;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -75,8 +76,10 @@ public class ProfileController {
 	ParamService param;
 
 	@GetMapping("/profile")
-	public String showProfile(Model model) {
+	public String showProfile(Model model, Principal principal) {
 		User user = session.get("user");
+		String id = principal.getName();
+		System.out.println(id);
 		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
 		boolean flag = false;
 		for (UserRole u : role) {

@@ -83,7 +83,9 @@ public interface OrderService {
 
 	List<Order> findOrderByUsernameAndStatusID(String customerID,int statusID);
 
-	void updatePriceOrder(double total, String id);
+	void updatePriceOrder(double total, double totalShip, String id);
   
 	int getCountOrderByCustomerUsername(String username);
+
+	List<Order> findAllOrderByIdAndUsernameContainingKeyword(String username, String keyword);
 }

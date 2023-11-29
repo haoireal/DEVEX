@@ -40,7 +40,7 @@ public interface OrderDetailService {
 
 	void updateIdOrderDetailsStatus(int ido, String id);
 
-	List<OrderDetails> findOrderDetailsByOrderID(String id, String username);
+	List<OrderDetails> findOrderDetailsByOrderID(String id);
 
 	OrderDetails saveAndFlush(OrderDetails entity);
 
@@ -57,4 +57,12 @@ public interface OrderDetailService {
 	List<OrderDetails> findOrdersByCustomerID(String customerID);
 
 	Optional<OrderDetails> findById(String id);
+
+	List<OrderDetails> findOrderDetailsBySellerUsername(String username);
+
+	Double getTotalRevenueSeller(String username);
+
+	Double getTotalPriceByProductId(String id);
+
+	int getCountProductSellByProductId(String id);
 }

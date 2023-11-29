@@ -46,4 +46,8 @@ public interface SellerService {
 
 	List<Seller> findByShopNameContainingKeyword(String keyword);
 
+	List<Seller> findByShopNameAndUsernameContainingKeyword(String keyword);
+
+	void updateActiveSellerByUsername(boolean active, String username);
+
 }

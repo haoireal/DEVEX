@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Devex.DTO.MessageDTO;
-import com.Devex.Entity.ChatMessage;
+import com.Devex.Entity.Seller;
+import com.Devex.Entity.User;
 import com.Devex.Sevice.ChatService;
+import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.UserService;
 
 @CrossOrigin("*")
 @RestController
@@ -25,10 +28,17 @@ public class ChatAPIController {
 	@Autowired
 	private ChatService chatService;
 	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private SellerService sellerService;
+	
+	
 	@GetMapping("/list")
 	public ResponseEntity<List<MessageDTO>> getAllMessage() {
-//		User user = sessionService.get("user");
-		List<MessageDTO> list = chatService.findAllByUser("baolh");
+		User user = sessionService.get("user", null);
+		List<MessageDTO> list = chatService.findAllByUser(user.getUsername());
 		if(list != null) {
 			return ResponseEntity.ok(list);
 		}else {
@@ -36,4 +46,34 @@ public class ChatAPIController {
 		}
 		
 	}
+	
+	@GetMapping("/list-shop")
+	public ResponseEntity<List<Seller>> getAllShop() {
+		List<Seller> list = sellerService.findAll();
+		if(list != null) {
+			return ResponseEntity.ok(list);
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+		
+	}
+	
+	
+//	@PostMapping("/send")
+//	@MessageMapping("/message")
+//	@SendTo("/user/topic/message")
+//	public void sendMessage(@RequestBody MessageDTO message) {
+//	    // Lưu tin nhắn vào cơ sở dữ liệu
+//		System.out.println(0);
+//		System.out.println(1);
+//		User user = userService.getById("baolh");
+//		System.out.println(111);
+//		System.out.println(user.getFullname());
+////		chatService.sendMessage(message);
+//		System.out.println(11);
+//
+//	}
+
+	
+	
 }

@@ -134,7 +134,7 @@
 	</header>
     <!-- body -->
     <main ng-controller="sellerpage">
-        <span hidden th:text="${username}" id="username"></span>
+        <input hidden th:value="${username}" id="username"></input>
         <div class="container">
             <!-- info shop -->
             <div class="row mt-4">
@@ -159,8 +159,8 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <button class="btn border border-white w-100  text-white" style="background-color: #303671;">
+                        <div class="col-6" ng-controller="message-ctrl">
+                            <button class="btn border border-white w-100  text-white" style="background-color: #303671;" ng-click="message.sendMessageAuto()">
                                 <i class="fa-regular fa-comment"></i> Chat
                             </button>
                         </div>
@@ -369,9 +369,11 @@
 		crossorigin="anonymous"></script>
 		<div th:replace="~{flagment/user/userFootLink :: sellerFootLinkFragment}"></div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 	<!-- 	<div th:replace="~{flagment/account/footLink :: footLinkFragment}"></div> -->
 	<script th:src="@{/js/cart-ctrl.js}"></script>
     <script th:src="@{/js/pageSeller.js}"></script>
-    
+    <script th:src="@{/js/message.js}"></script>
 </html>
