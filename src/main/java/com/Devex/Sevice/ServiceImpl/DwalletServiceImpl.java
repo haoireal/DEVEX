@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.Devex.Entity.Dwallet;
+import com.Devex.Entity.TransactionHistory;
 import com.Devex.Repository.DwalletRepository;
 import com.Devex.Sevice.DwalletService;
 
 @SessionScope
 @Service("dwalletServiceImpl")
-public class DwalletServiceImpl implements DwalletService{
+public class DwalletServiceImpl implements DwalletService {
 
 	@Autowired
 	private DwalletRepository dwalletRepository;
@@ -65,5 +66,13 @@ public class DwalletServiceImpl implements DwalletService{
 	public void deleteAll() {
 		dwalletRepository.deleteAll();
 	}
-	
+
+	public Dwallet getDwalletByUsername(String username) {
+		return dwalletRepository.getDwalletByUsername(username);
+	}
+
+	public Dwallet getDwalletAdminByUsername(String username) {
+		return dwalletRepository.getDwalletAdminByUsername(username);
+	}
+
 }

@@ -55,7 +55,7 @@ public class ProfileController {
 
 	@Autowired
 	CustomerService customerService;
-	
+
 	@Autowired
 	NotificationService notificationService;
 
@@ -79,8 +79,8 @@ public class ProfileController {
 		User user = session.get("user");
 		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
 		boolean flag = false;
-		for(UserRole u : role) {
-			if(u.getRole().getId().equals("SELLER")) {
+		for (UserRole u : role) {
+			if (u.getRole().getId().equals("SELLER")) {
 				flag = true;
 			}
 		}
@@ -106,7 +106,7 @@ public class ProfileController {
 	public String doEdiAddress() {
 		User user = session.get("user");
 		Customer customer = customerService.findById(user.getUsername()).get();
-//		Customer customer = session.get("user");
+		// Customer customer = session.get("user");
 		String address = param.getString("address", null);
 		String phone = param.getString("phone", null);
 		customer.setAddress(address);
@@ -277,17 +277,17 @@ public class ProfileController {
 		userRole.setRole(role);
 		userRole.setUser(user);
 		userRoleService.save(userRole);
-		//Thông báo cho admin
+		// Thông báo cho admin
 		Notification noti = new Notification();
 		noti.setName("Nâng cấp lên nhà bán hàng");
 		noti.setCreatedDay(new Date());
 		noti.setContent("Tài khoản người dùng " + user.getUsername() + " vừa trở thành nhà bán.\n"
-				  + "Thông tin tên shop: " + shopName + "\n"
-				  + "Mô tả: " + description);
+				+ "Thông tin tên shop: " + shopName + "\n"
+				+ "Mô tả: " + description);
 		User admin = userService.findById("haopg").get();
 		noti.setUser(admin);
 		notificationService.save(noti);
-		
+
 		String message = "Nâng cấp nhà bán thành công";
 		model.addAttribute("message", message);
 		return "user/profile";

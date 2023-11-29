@@ -94,7 +94,8 @@ public class DevexSellerController {
         switch (listName) {
             case "products": {
                 model.addAttribute("titleType", "Sản phẩm");
-                List<Product> listProducts = productService.findProductBySellerUsernameAndIsdeleteProduct(u.getUsername());
+                List<Product> listProducts = productService
+                        .findProductBySellerUsernameAndIsdeleteProduct(u.getUsername());
                 model.addAttribute("products", listProducts);
                 break;
             }
@@ -112,7 +113,8 @@ public class DevexSellerController {
             }
             case "restore": {
                 model.addAttribute("titleType", "Khôi phục sản phẩm đã xóa");
-                List<Product> listproduct = productService.findProductBySellerUsernameAndIsdeleteTrueAndActiveTrueProduct(u.getUsername());
+                List<Product> listproduct = productService
+                        .findProductBySellerUsernameAndIsdeleteTrueAndActiveTrueProduct(u.getUsername());
                 model.addAttribute("restore", listproduct);
                 break;
             }
@@ -150,14 +152,16 @@ public class DevexSellerController {
         User u = session.get("user");
         List<OrderDetails> listOrderDetails = session.get("listIdOrderDetails");
         for (OrderDetails orderDetails : listOrderDetails) {
-            if (orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername().equalsIgnoreCase(u.getUsername())) {
+            if (orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername()
+                    .equalsIgnoreCase(u.getUsername())) {
                 detailService.updateIdOrderDetailsStatus(1009, orderDetails.getId());
             }
         }
         String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
         String maHoaDon = listOrderDetails.get(0).getOrder().getId();
         notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "xacnhandonhang", maHoaDon);
-        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "donhangdaxacnhan", maHoaDon);
+        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "donhangdaxacnhan",
+                maHoaDon);
         return "redirect:/seller/orderDetail/" + id;
     }
 
@@ -166,14 +170,17 @@ public class DevexSellerController {
         User u = session.get("user");
         List<OrderDetails> listOrderDetails = session.get("listIdOrderDetails");
         for (OrderDetails orderDetails : listOrderDetails) {
-            if (orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername().equalsIgnoreCase(u.getUsername())) {
+            if (orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername()
+                    .equalsIgnoreCase(u.getUsername())) {
                 detailService.updateIdOrderDetailsStatus(1007, orderDetails.getId());
             }
         }
         String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
         String maHoaDon = listOrderDetails.get(0).getOrder().getId();
-        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "huydonhangcuashop", maHoaDon);
-        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "dahuycuanguoidung", maHoaDon);
+        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "huydonhangcuashop",
+                maHoaDon);
+        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "dahuycuanguoidung",
+                maHoaDon);
         return "redirect:/seller/orderDetail/" + id;
     }
 
@@ -182,14 +189,17 @@ public class DevexSellerController {
         User u = session.get("user");
         List<OrderDetails> listOrderDetails = session.get("listIdOrderDetails");
         for (OrderDetails orderDetails : listOrderDetails) {
-            if (orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername().equalsIgnoreCase(u.getUsername())) {
+            if (orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername()
+                    .equalsIgnoreCase(u.getUsername())) {
                 detailService.updateIdOrderDetailsStatus(1003, orderDetails.getId());
             }
         }
         String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
         String maHoaDon = listOrderDetails.get(0).getOrder().getId();
-        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "huydonhangcuashop", maHoaDon);
-        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "dahuycuanguoidung", maHoaDon);
+        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "huydonhangcuashop",
+                maHoaDon);
+        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "dahuycuanguoidung",
+                maHoaDon);
         return "redirect:/seller/orderDetail/" + id;
     }
 
@@ -198,14 +208,17 @@ public class DevexSellerController {
         User u = session.get("user");
         List<OrderDetails> listOrderDetails = session.get("listIdOrderDetails");
         for (OrderDetails orderDetails : listOrderDetails) {
-            if (orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername().equalsIgnoreCase(u.getUsername())) {
+            if (orderDetails.getProductVariant().getProduct().getSellerProduct().getUsername()
+                    .equalsIgnoreCase(u.getUsername())) {
                 detailService.updateIdOrderDetailsStatus(1006, orderDetails.getId());
             }
         }
         String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
         String maHoaDon = listOrderDetails.get(0).getOrder().getId();
-        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "huydonhangcuashop", maHoaDon);
-        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "dahuycuanguoidung", maHoaDon);
+        notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "huydonhangcuashop",
+                maHoaDon);
+        notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "dahuycuanguoidung",
+                maHoaDon);
         return "redirect:/seller/orderDetail/" + id;
     }
 
@@ -217,14 +230,14 @@ public class DevexSellerController {
         return "seller/sellerProfile";
     }
 
-
     @GetMapping("/orderDetail/{id}")
     public String getOrderDetail(@PathVariable("id") String id, Model model) {
         User u = session.get("user");
         String check = "";
         double totalPrice = 0;
         List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id, u.getUsername());
-        List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, u.getUsername());
+        List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id,
+                u.getUsername());
         for (OrderDetails orderDetails : listcheckbutton) {
             if (orderDetails.getStatus().getId() == 1009) {
                 check = "Đã xác nhận";
@@ -262,7 +275,8 @@ public class DevexSellerController {
         String check = "";
         double totalPrice = 0;
         List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id, u.getUsername());
-        List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id, u.getUsername());
+        List<OrderDetails> listcheckbutton = detailService.findOrderDetailsByOrderIDAndSellerUsername(id,
+                u.getUsername());
         for (OrderDetails orderDetails : listcheckbutton) {
             if (orderDetails.getStatus().getId() == 1009) {
                 check = "Đã xác nhận";
@@ -307,7 +321,8 @@ public class DevexSellerController {
     public String create() {
         User u = session.get("user");
         List<Product> listProducts = productService.findProductBySellerUsernameAndIsdeleteProduct(u.getUsername());
-        productService.insertProduct(String.valueOf(listProducts.size() + 1), "Nhập tên sản phẩm tại đây", 101, null, new Date(), false, false, u.getUsername(), 101);
+        productService.insertProduct(String.valueOf(listProducts.size() + 1), "Nhập tên sản phẩm tại đây", 101, null,
+                new Date(), false, false, u.getUsername(), 101);
         Product product = productService.findLatestProductBySellerUsername(u.getUsername());
         productVariantService.addProductVariant(1, 0.0, 0.0, "", "Đen", product.getId());
         fileManagerService.changeImage(u.getUsername(), product.getId());
