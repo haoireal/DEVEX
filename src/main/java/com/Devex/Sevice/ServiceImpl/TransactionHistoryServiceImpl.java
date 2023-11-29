@@ -16,7 +16,7 @@ import com.Devex.Sevice.TransactionHistoryService;
 
 @SessionScope
 @Service("transactionHistoryService")
-public class TransactionHistoryServiceImpl implements TransactionHistoryService{
+public class TransactionHistoryServiceImpl implements TransactionHistoryService {
 
 	@Autowired
 	private TransactionHistoryRespository transactionHistoryRespository;
@@ -65,5 +65,9 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService{
 	public void deleteAll() {
 		transactionHistoryRespository.deleteAll();
 	}
-	
+
+	public List<TransactionHistory> getTransactionByIdWallet(String idWallet) {
+		return transactionHistoryRespository.getTransactionByIdWallet(idWallet);
+	}
+
 }

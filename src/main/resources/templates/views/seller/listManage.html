@@ -14,7 +14,7 @@
         }
  </style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app">
 	<div class="wrapper">
 		<!-- Preloader -->
 		<div
@@ -252,8 +252,12 @@
 			th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
 		<div
 			th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
-	</div>
+	</div>     
+	 <script>
+        const app = angular.module("app", []);
+      </script>
 
+	<script src="/js/seller/Dwallet.js"></script>
 </body>
 <script src="/admin/dist/js/handMade.js"></script>
 </html>

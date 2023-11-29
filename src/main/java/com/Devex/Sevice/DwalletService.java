@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.Devex.Entity.Dwallet;
+import com.Devex.Entity.TransactionHistory;
 
 public interface DwalletService {
 
@@ -29,6 +30,10 @@ public interface DwalletService {
 
 	Dwallet save(Dwallet entity);
 
+	Dwallet getDwalletByUsername(String username);
+
+	Dwallet getDwalletAdminByUsername(String username);
+  
 	String findDwalletIDbyUsername(String username);
 
 }
