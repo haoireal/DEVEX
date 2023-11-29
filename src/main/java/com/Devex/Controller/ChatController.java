@@ -25,10 +25,11 @@ public class ChatController {
 	@SendTo("/topic/message")
 	public MessageDTO sendMessage(@RequestBody MessageDTO message, Principal principal) {
 	    // Lưu tin nhắn vào cơ sở dữ liệu
-		System.out.println(0);
-		System.out.println(1);
-		
-		System.out.println(11);
-		return chatService.sendMessage(message, principal.getName());
+		if(message.getId() == 2) {	//kiểm tra có phải tin nhắn tự động hay hong
+			return chatService.sendMessageAuto(message, principal.getName());
+		}else {
+			return chatService.sendMessage(message, principal.getName());
+		}
 	}
+	
 }

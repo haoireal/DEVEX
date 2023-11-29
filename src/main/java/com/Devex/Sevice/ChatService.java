@@ -25,4 +25,6 @@ public interface ChatService {
 
 	MessageDTO sendMessage(MessageDTO message, String userID);
 
+	MessageDTO sendMessageAuto(MessageDTO message, String userID);
+
 }

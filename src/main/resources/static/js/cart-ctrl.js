@@ -110,6 +110,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       console.log(this.itemDetail);
       $("#showDetail").modal("show");
     },
+    
 
     groupVoucherApplied() {
       this.itemsApplied = this.items.filter((voucher) =>
@@ -332,7 +333,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     //check voucher đã được sử dụng hay chưa
     isItemInMyVoucherApplied(item) {
       return this.myVoucher.some(
-        (voucher) => voucher.voucher.id === item.id && !voucher.applied === true
+        (voucher) => voucher.voucher.id === item.id && !voucher.applied
       );
     },
 

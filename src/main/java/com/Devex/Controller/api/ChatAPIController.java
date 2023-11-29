@@ -4,17 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Devex.DTO.MessageDTO;
+import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.ChatService;
+import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.UserService;
 
@@ -32,6 +31,9 @@ public class ChatAPIController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private SellerService sellerService;
+	
 	
 	@GetMapping("/list")
 	public ResponseEntity<List<MessageDTO>> getAllMessage() {
@@ -44,6 +46,18 @@ public class ChatAPIController {
 		}
 		
 	}
+	
+	@GetMapping("/list-shop")
+	public ResponseEntity<List<Seller>> getAllShop() {
+		List<Seller> list = sellerService.findAll();
+		if(list != null) {
+			return ResponseEntity.ok(list);
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+		
+	}
+	
 	
 //	@PostMapping("/send")
 //	@MessageMapping("/message")
