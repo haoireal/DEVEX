@@ -195,6 +195,7 @@ public class DevexSellerController {
             }
         }
         String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
+        String maHoaDon = listOrderDetails.get(0).getOrder().getId();
         notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "danggiaocuashop", maHoaDon);
         notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "danggiaocuanguoidung", maHoaDon);
         return "redirect:/seller/orderDetail/" + id;
@@ -211,6 +212,7 @@ public class DevexSellerController {
             }
         }
         String userId = listOrderDetails.get(0).getOrder().getCustomerOrder().getUsername();
+        String maHoaDon = listOrderDetails.get(0).getOrder().getId();
         notiService.sendHistory(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "hoanthanhcuanshop", maHoaDon);
         notiService.sendNotification(u.getUsername(), userId, "/seller/orderDetail/" + maHoaDon, "hoanthanhcuanguoidung", maHoaDon);
         return "redirect:/seller/orderDetail/" + id;
