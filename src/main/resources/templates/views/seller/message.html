@@ -137,31 +137,26 @@
                                 <h6
                                   class="mb-0"
                                   ng-if="message.groupMessageChat[idReceiver][0].receiverID !== message.groupMessageChat[idReceiver][0].userID"
-                                >
-                                  {{
-                                  message.groupMessageChat[idReceiver][0].receiverName
-                                  }}
+                                  ng-bind="message.checkShopName(message.groupMessageChat[idReceiver][0].receiverID, message.groupMessageChat[idReceiver][0].receiverName)"
+                                  >
+                                  
                                 </h6>
                                 <h6
                                   class="mb-0"
                                   ng-if="message.groupMessageChat[idReceiver][0].receiverID === message.groupMessageChat[idReceiver][0].userID"
-                                >
-                                  {{
-                                  message.groupMessageChat[idReceiver][0].senderName
-                                  }}
+                                  ng-bind="message.checkShopName(message.groupMessageChat[idReceiver][0].senderID, message.groupMessageChat[idReceiver][0].senderName)"
+                                  >
+                                  
                                 </h6>
                                 <small class="small font-weight-bold"
-                                  >{{
-                                  formatDateToDDMMYYYY(message.groupMessageChat[idReceiver][0].createdAt)
-                                  }}</small
+                                  ng-bind="formatDateToDDMMYYYY(message.groupMessageChat[idReceiver][0].createdAt)"
+                                  ></small
                                 >
                               </div>
                               <p
-                                class="message-top font-italic mb-0 text-small"
+                                class="message-top font-italic mb-0 text-small" ng-bind="message.groupMessageChat[idReceiver][0].content"
                               >
-                                {{
-                                message.groupMessageChat[idReceiver][0].content
-                                }}
+                               
                               </p>
                             </div>
                           </div>
@@ -198,12 +193,13 @@
                           <p
                             class="content-message text-small mb-0 "
                             ng-class="{'text-muted': item.senderID === message.selectedIdReceiver ,'text-white': item.senderID !== message.selectedIdReceiver}"
-                          >
-                            {{ item.content }}
+                            ng-bind="item.content"
+                            >
+                            
                           </p>
                         </div>
-                        <p class="small text-muted">
-                          {{ formatDateToCustomString(item.createdAt) }}
+                        <p class="small text-muted" ng-bind="formatDateToCustomString(item.createdAt)">
+                          
                         </p>
                       </div>
                     </div>

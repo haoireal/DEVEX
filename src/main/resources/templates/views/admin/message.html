@@ -113,46 +113,50 @@
                           ng-repeat="(idReceiver, items) in message.groupMessageChat"
                           class="list-group-item list-group-item-action rounded-0"
                           ng-click="message.showMessageChatOne(idReceiver)"
-                          
-                ng-class="{ 'active': message.selectedIdReceiver === idReceiver, 'text-white': message.selectedIdReceiver === idReceiver }"
+                          ng-class="{ 'active': message.selectedIdReceiver === idReceiver, 'text-white': message.selectedIdReceiver === idReceiver }"
                         >
                           <div class="media">
                             <img
                               ng-if="message.groupMessageChat[idReceiver][0].receiverID !== message.groupMessageChat[idReceiver][0].userID"
                               src="/img/account/{{ message.groupMessageChat[idReceiver][0].receiverAvatar }}"
                               alt="user"
-                              style="width: 50px; height: 50px;"
+                              style="width: 50px; height: 50px"
                               class="rounded-circle"
                             />
                             <img
                               ng-if="message.groupMessageChat[idReceiver][0].receiverID === message.groupMessageChat[idReceiver][0].userID"
                               src="/img/account/{{ message.groupMessageChat[idReceiver][0].senderAvatar }}"
                               alt="user"
-                              style="width: 50px; height: 50px;"
+                              style="width: 50px; height: 50px"
                               class="rounded-circle"
                             />
                             <div class="media-body ml-4">
                               <div
                                 class="d-flex align-items-center justify-content-between mb-1"
                               >
-                                <h6 class="mb-0" ng-if="message.groupMessageChat[idReceiver][0].receiverID !== message.groupMessageChat[idReceiver][0].userID">
-                                  {{
-                                  message.groupMessageChat[idReceiver][0].receiverName
-                                  }}
+                                <h6
+                                  class="mb-0"
+                                  ng-if="message.groupMessageChat[idReceiver][0].receiverID !== message.groupMessageChat[idReceiver][0].userID"
+                                  ng-bind="message.checkShopName(message.groupMessageChat[idReceiver][0].receiverID, message.groupMessageChat[idReceiver][0].receiverName)"
+                                  >
+                                  
                                 </h6>
-                                <h6 class="mb-0" ng-if="message.groupMessageChat[idReceiver][0].receiverID === message.groupMessageChat[idReceiver][0].userID">
-                                  {{
-                                  message.groupMessageChat[idReceiver][0].senderName
-                                  }}
+                                <h6
+                                  class="mb-0"
+                                  ng-if="message.groupMessageChat[idReceiver][0].receiverID === message.groupMessageChat[idReceiver][0].userID"
+                                  ng-bind="message.checkShopName(message.groupMessageChat[idReceiver][0].senderID, message.groupMessageChat[idReceiver][0].senderName)"
+                                  >
+                                  
                                 </h6>
                                 <small class="small font-weight-bold"
-                                  >{{
-                                  formatDateToDDMMYYYY(message.groupMessageChat[idReceiver][0].createdAt)
-                                  }}</small
+                                  ng-bind="formatDateToDDMMYYYY(message.groupMessageChat[idReceiver][0].createdAt)"
+                                  ></small
                                 >
                               </div>
-                              <p class="message-top font-italic mb-0 text-small">
-                                {{ message.groupMessageChat[idReceiver][0].content }}
+                              <p
+                                class="message-top font-italic mb-0 text-small" ng-bind="message.groupMessageChat[idReceiver][0].content"
+                              >
+                               
                               </p>
                             </div>
                           </div>
@@ -189,12 +193,13 @@
                           <p
                             class="content-message text-small mb-0 "
                             ng-class="{'text-muted': item.senderID === message.selectedIdReceiver ,'text-white': item.senderID !== message.selectedIdReceiver}"
-                          >
-                            {{ item.content }}
+                            ng-bind="item.content"
+                            >
+                            
                           </p>
                         </div>
-                        <p class="small text-muted">
-                          {{ formatDateToCustomString(item.createdAt) }}
+                        <p class="small text-muted" ng-bind="formatDateToCustomString(item.createdAt)">
+                          
                         </p>
                       </div>
                     </div>
@@ -214,14 +219,19 @@
                   <form class="bg-light">
                     <div class="input-group">
                       <input
-                         ng-model="message.newMessage"
+                        ng-model="message.newMessage"
                         type="text"
                         placeholder="Type a message"
                         aria-describedby="button-addon2"
                         class="form-control rounded-0 border-0 py-4 bg-light"
                       />
                       <div class="input-group-append">
-                        <button id="button-addon2" type="submit" ng-click="message.sendMessage(message.selectedIdReceiver)" class="btn btn-link">
+                        <button
+                          id="button-addon2"
+                          type="submit"
+                          ng-click="message.sendMessage(message.selectedIdReceiver)"
+                          class="btn btn-link"
+                        >
                           <i class="fa fa-paper-plane"></i>
                         </button>
                       </div>

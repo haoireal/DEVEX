@@ -49,6 +49,25 @@ public class ChatServiceImpl implements ChatService{
 //        );
         return chatMessageRespository.findNewest(userID);
     }
+    
+    @Override
+	public MessageDTO sendMessageAuto(MessageDTO message, String userID) {
+    	
+    	//Xử lí dữ liệu tin nhắn
+    	ChatMessage messToSave = new ChatMessage();
+    	messToSave.setCreatedAt(new Date());
+    	User userFrom = userRepository.findById(message.getSenderID()).get();
+    	messToSave.setSender(userFrom);
+    	User userTo = userRepository.findById(userID).get();
+    	messToSave.setReceiver(userTo);
+    	String content = "Xin chào " + userTo.getFullname() + ", chúng tôi có thể giúp gì cho bạn?";
+    	messToSave.setContent(content);
+    	
+        // Lưu tin nhắn vào cơ sở dữ liệu
+    	chatMessageRespository.save(messToSave);
+
+        return chatMessageRespository.findNewest(userID);
+    }
 
 	
 	@Override

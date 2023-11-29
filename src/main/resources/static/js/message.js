@@ -4,7 +4,7 @@ const socket = new SockJS('http://localhost:8888/ws');
 const stompClient = Stomp.over(socket);
 
 
-app.controller("message-ctrl", function ($scope, $http) {
+app.controller("message-ctrl", function ($scope, $http, $window) {
   $scope.formatDateToDDMMYYYY = function (dateString) {
     const date = new Date(dateString); // Chuyển chuỗi thời gian thành đối tượng Date
     const options = { day: "numeric", month: "numeric", year: "numeric" };
@@ -60,6 +60,7 @@ app.controller("message-ctrl", function ($scope, $http) {
   //Quản lí tin nhắn
   var $message = ($scope.message = {
     list: [],
+    listShop: [],
     showMessageChecked: [],
     groupMessageChat: {},
     selectedIdReceiver: "",
@@ -76,6 +77,25 @@ app.controller("message-ctrl", function ($scope, $http) {
       });
     },
 
+    // load shop
+    loadShopName() {
+      var url = `${host_mess}/list-shop`;
+      $http.get(url).then((response) => {
+        this.listShop = response.data;
+        console.log(this.listShop);
+      });
+    },
+
+    //hiện thị tên shop nếu đó là shop
+    checkShopName(id, fullName) {
+      var user = this.listShop.find((item) => item.username === id);
+      if(user == null) {
+        return fullName;
+      }else {
+        return user.shopName;
+      }
+      
+    },
 
 
     //hiện thị đoạn chat mình chọn
@@ -152,7 +172,7 @@ app.controller("message-ctrl", function ($scope, $http) {
     sendMessage(receiver) {
       if(this.newMessage.trim() !== '') {
         const message = {
-            id: 123,
+            id: 1,
             content: $message.newMessage,
             createdAt: new Date(),
             senderID: null,
@@ -173,6 +193,32 @@ app.controller("message-ctrl", function ($scope, $http) {
         
     },
 
+    // Function to send a message
+    sendMessageAuto() {
+      let userID = document.getElementById('username').value;
+        const message = {
+            id: 2,
+            content: '',
+            createdAt: new Date(),
+            senderID: userID,
+            senderAvatar: null,
+            senderName: null,
+            receiverID: null,
+            receiverAvatar: null,
+            receiverName: null,
+            userID: null,
+        };
+
+        // Send the message to the server via WebSocket
+        stompClient.send('/app/message', {}, JSON.stringify(message));
+
+        // Clear the input field
+        this.newMessage = '';
+        // Sử dụng $location để chuyển hướng đến URL '/detail-order'
+         $window.location.href = "/message";
+        
+    },
+
     // scrollBoxChat() {
     //   boxChat.scrollTop = boxChat.scrollHeight;
     //   alert(boxChat.scrollHeight);
@@ -182,6 +228,7 @@ app.controller("message-ctrl", function ($scope, $http) {
   });
 
   $message.loadMessage();
+  $message.loadShopName();
   $message.connectSocket();
 });
 
@@ -205,4 +252,7 @@ function handleMutation(mutationsList, observer) {
 const observer = new MutationObserver(handleMutation);
 
 // Theo dõi sự thay đổi trong childList và attributes của boxChat
-observer.observe(boxChat, { childList: true, attributes: true });
+if(boxChat != null) {
+  observer.observe(boxChat, { childList: true, attributes: true });
+}
+
