@@ -54,7 +54,31 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-12">
-							<form action="/ad/voucher/create" method="post">
+							<!-- The Modal -->
+							<div class="modal fade" id="modalValidate" role="dialog">
+								<div class="modal-dialog">
+								  <div class="modal-content" style="margin-top: 20%">
+									<!-- Modal body -->
+									<div class="modal-body">
+									  <div
+										class="text-left mt-2"
+										style="margin-bottom: 60px"
+									  >
+										<h5 id="message-validation"></h5>
+									  </div>
+									  <div class="text-center mb-2">
+										<button
+										  class="btn btn-danger w-100"
+										  data-dismiss="modal"
+										>
+										  OK
+										</button>
+									  </div>
+									</div>
+								  </div>
+								</div>
+							  </div>
+							<form action="/ad/voucher/create" method="post" id="new-voucher">
 								<!-- /.card -->
 								<div class="card card-default">
 									<div class="card-header">
@@ -82,11 +106,11 @@
 															</div>
 															<input type="hidden" id="inputCode" name="code">
 															<input type="text" class="form-control"
-																style="text-transform: uppercase;" maxlength="15"
+																style="text-transform: uppercase;" maxlength="10"
 																oninput="blockVietnameseInput(this)">
 															<div class="input-group-append">
 																<span class="input-group-text"><span
-																		id="charCount">0</span>/15</span>
+																		id="charCount">0</span>/10</span>
 															</div>
 														</div>
 													</div>
@@ -97,7 +121,7 @@
 													<label for="inputQuantity" class="col-3 col-sm-1 col-form-label">Số
 														lượng</label>
 													<input type="number" style="display: inline-block;"
-														class="form-control col-4 col-sm-2" max="20" min="1"
+														class="form-control col-4 col-sm-2" max="50" min="1"
 														id="inputQuantity" name="quantity">
 												</div>
 												<div class="form-group row">
@@ -164,8 +188,8 @@
 									</div>
 									<!-- /.card-body -->
 									<div class="card-footer">
-										<button class="btn btn-success float-right" id="btn-create-voucher">Xác
-											nhận</button>
+										<span class="btn btn-success float-right" id="btn-create-voucher">Xác
+											nhận</span>
 									</div>
 								</div>
 							</form>
@@ -187,7 +211,53 @@
 
 </body>
 <script src="/admin/dist/js/handMade.js"></script>
+<script>
+	function submitFormVoucher() {
+		let nameVoucher = document.getElementById("inputName");
+		let code = document.getElementById("inputCode");
+		let quantity = document.getElementById("inputQuantity");
+		let rateSale = document.getElementById("rate-sale");
+		let minPrice = document.getElementById("inputMinPrice");
+		let description = document.getElementById("inputDescription");
+		let form = document.getElementById("new-voucher");
+		let message = document.getElementById("message-validation");
 
+
+
+		if(nameVoucher.value === "") {
+			message.innerText = "Vui lòng cung cấp tên mã khuyến mãi!";
+			  $("#modalValidate").modal("show");
+		   return false;
+		} else if(code.value === "" || code.value.length < 15) {
+			message.innerText = "Vui lòng cung cấp đầy đủ code khuyến mãi!";
+			  $("#modalValidate").modal("show");
+			  return false;
+		} else if(quantity.value === "") {
+			message.innerText = "Vui lòng cung cấp số lượng!";
+			  $("#modalValidate").modal("show");
+			  return false;
+		} else if(rateSale.value === "") {
+			message.innerText = "Vui lòng cung cấp giá giảm!";
+			  $("#modalValidate").modal("show");
+			  return false;
+		} else if(minPrice.value === "" || minPrice.value < 1000) {
+			message.innerText = "Vui lòng cung cấp giá tối thiểu khuyến mãi!";
+			  $("#modalValidate").modal("show");
+			  return false;
+		} else if(description.value === "") {
+			message.innerText = "Vui lòng cung cấp mô tả!";
+			  $("#modalValidate").modal("show");
+			  return false;
+		}  else {
+			form.submit();
+		}
+
+		
+	}
+  
+
+  
+</script>
 <script>
 	function blockVietnameseInput(input) {
 		// Lấy giá trị của trường input

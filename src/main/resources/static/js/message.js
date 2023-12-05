@@ -149,16 +149,13 @@ app.controller("message-ctrl", function ($scope, $http, $window) {
     connectSocket() {
       stompClient.connect({}, function () {
           // Subscribe to incoming messages
-
+          console.log("connect thanh cong");
           stompClient.subscribe('/topic/message', function (response) {
               const message  = JSON.parse(response.body);
                   // Add the received message to the chat history
                   $message.showMessageChecked.push(message);
-                  // $message.showGroupChat();
-
               console.log($message.showMessageChecked);
               $message.loadMessage();
-              // $message.showMessageChatOne($message.selectedIdReceiver);
           });
 
           
@@ -231,6 +228,7 @@ app.controller("message-ctrl", function ($scope, $http, $window) {
   $message.loadShopName();
   $message.connectSocket();
 });
+
 
 let boxChat = document.getElementById("box-chat-detail");
 // Hàm để cuộn xuống

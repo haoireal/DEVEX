@@ -1,14 +1,20 @@
 package com.Devex;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+import com.Devex.Config.TwilioConfig;
+import com.twilio.Twilio;
+
+import jakarta.annotation.PostConstruct;
+
 
 @SpringBootApplication
 @EnableConfigurationProperties
-public class DEVEXApplication {
-	/*
+public class DEVEXApplication1 {
+	
 	@Autowired
 	private TwilioConfig twilioConfig;
 	
@@ -16,9 +22,9 @@ public class DEVEXApplication {
 	public void setup() {
 		Twilio.init(twilioConfig.getAccountSid(), twilioConfig.getAuthToken());
 	}
-	*/
+	
 	public static void main(String[] args) {
-		SpringApplication.run(DEVEXApplication.class, args);
+		SpringApplication.run(DEVEXApplication1.class, args);
 	}
 
 }

@@ -32,7 +32,11 @@ public class CustomUserDetails implements UserDetails {
     	List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
         for (UserRole roleUser : user.getRoles()) {
+        	System.out.println(roleUser.getRole().getId());
             grantedAuthorities.add(new SimpleGrantedAuthority(roleUser.getRole().getId()));
+            for(int i=0; i<grantedAuthorities.size(); i++) {
+            	System.out.println(grantedAuthorities.get(i));
+            }
         }
         return grantedAuthorities;
     }

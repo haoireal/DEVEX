@@ -281,15 +281,15 @@ public class ProfileController {
 		userRole.setUser(user);
 		userRoleService.save(userRole);
 		//Thông báo cho admin
-		Notification noti = new Notification();
-		noti.setName("Nâng cấp lên nhà bán hàng");
-		noti.setCreatedDay(new Date());
-		noti.setContent("Tài khoản người dùng " + user.getUsername() + " vừa trở thành nhà bán.\n"
-				  + "Thông tin tên shop: " + shopName + "\n"
-				  + "Mô tả: " + description);
-		User admin = userService.findById("haopg").get();
-		noti.setUser(admin);
-		notificationService.save(noti);
+//		Notification noti = new Notification();
+//		noti.setName("Nâng cấp lên nhà bán hàng");
+//		noti.setCreatedDay(new Date());
+//		noti.setContent("Tài khoản người dùng " + user.getUsername() + " vừa trở thành nhà bán.\n"
+//				  + "Thông tin tên shop: " + shopName + "\n"
+//				  + "Mô tả: " + description);
+//		User admin = userService.findById("haopg").get();
+//		noti.setUser(admin);
+//		notificationService.save(noti);
 		
 		String message = "Nâng cấp nhà bán thành công";
 		model.addAttribute("message", message);
