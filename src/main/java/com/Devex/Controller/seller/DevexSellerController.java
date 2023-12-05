@@ -87,6 +87,7 @@ public class DevexSellerController {
     public String getHomePage() {
         return "seller/index";
     }
+    
 
     @GetMapping("/list/{listName}")
     public String getAnyList(@PathVariable("listName") String listName, Model model) {

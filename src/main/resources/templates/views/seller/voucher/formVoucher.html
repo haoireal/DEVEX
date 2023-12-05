@@ -16,7 +16,6 @@
         }
       </style>
     </head>
-
     <body class="hold-transition skin-blue sidebar-mini" ng-app="app">
       <div class="wrapper">
         <!-- Preloader -->
@@ -68,7 +67,31 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-12">
-                  <form action="/seller/voucher/create" method="post">
+                  <!-- The Modal -->
+                  <div class="modal fade" id="modalValidate" role="dialog">
+                    <div class="modal-dialog">
+                      <div class="modal-content" style="margin-top: 20%">
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                          <div
+                            class="text-left mt-2"
+                            style="margin-bottom: 60px"
+                          >
+                            <h5 id="message-validation"></h5>
+                          </div>
+                          <div class="text-center mb-2">
+                            <button
+                              class="btn btn-danger w-100"
+                              data-dismiss="modal"
+                            >
+                              OK
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <form action="/seller/voucher/create" method="post" id="new-voucher">
                     <!-- /.card -->
                     <div class="card card-default">
                       <div class="card-header">
@@ -113,12 +136,13 @@
                                     type="text"
                                     class="form-control"
                                     style="text-transform: uppercase"
-                                    maxlength="16"
+                                    maxlength="10"
+
                                     oninput="blockVietnameseInput(this)"
                                   />
                                   <div class="input-group-append">
                                     <span class="input-group-text"
-                                      ><span id="charCount">0</span>/16</span
+                                      ><span id="charCount">0</span>/10</span
                                     >
                                   </div>
                                 </div>
@@ -134,7 +158,7 @@
                                 type="number"
                                 style="display: inline-block"
                                 class="form-control col-4 col-sm-2"
-                                max="20"
+                                max="50"
                                 min="1"
                                 id="inputQuantity"
                                 name="quantity"
@@ -231,6 +255,7 @@
                                 class="duallistbox"
                                 multiple="multiple"
                                 name="products"
+								id="inputProds"
                               >
                                 <option
                                   th:each="option : ${listProd}"
@@ -248,12 +273,13 @@
                       </div>
                       <!-- /.card-body -->
                       <div class="card-footer">
-                        <button
+                        <span
                           class="btn btn-success float-right"
                           id="btn-create-voucher"
+						  onclick="submitFormVoucher()"
                         >
                           Xác nhận
-                        </button>
+                        </span>
                       </div>
                     </div>
                   </form>
@@ -279,6 +305,56 @@
     </body>
     <script src="/admin/dist/js/handMade.js"></script>
     <script>
+		function submitFormVoucher() {
+			let nameVoucher = document.getElementById("inputName");
+			let code = document.getElementById("inputCode");
+			let quantity = document.getElementById("inputQuantity");
+			let rateSale = document.getElementById("rate-sale");
+			let minPrice = document.getElementById("inputMinPrice");
+			let description = document.getElementById("inputDescription");
+			let prods = document.getElementById("inputProds");
+			let form = document.getElementById("new-voucher");
+			let message = document.getElementById("message-validation");
+
+
+
+			if(nameVoucher.value === "") {
+				message.innerText = "Vui lòng cung cấp tên mã khuyến mãi!";
+   			   $("#modalValidate").modal("show");
+			   return false;
+			} else if(code.value === "" || code.value.length < 15) {
+				message.innerText = "Vui lòng cung cấp đầy đủ code khuyến mãi!";
+   			   $("#modalValidate").modal("show");
+				  return false;
+			} else if(quantity.value === "") {
+				message.innerText = "Vui lòng cung cấp số lượng!";
+   			   $("#modalValidate").modal("show");
+				  return false;
+			} else if(rateSale.value === "") {
+				message.innerText = "Vui lòng cung cấp giá giảm!";
+   			   $("#modalValidate").modal("show");
+				  return false;
+			} else if(minPrice.value === "" || minPrice.value < 1000) {
+				message.innerText = "Vui lòng cung cấp giá tối thiểu khuyến mãi!";
+   			   $("#modalValidate").modal("show");
+				  return false;
+			} else if(description.value === "") {
+				message.innerText = "Vui lòng cung cấp mô tả!";
+   			   $("#modalValidate").modal("show");
+				  return false;
+			} else if(prods.value.length === 0) {
+				message.innerText = "Vui lòng chọn sản phẩm muốn áp dụng!";
+   			   $("#modalValidate").modal("show");
+				  return false;
+			} else {
+				form.submit();
+			}
+
+			
+		}
+      
+
+
       const app = angular.module("app", []);
     </script>
 
@@ -366,11 +442,12 @@
         if (isNaN(value) || value < 1000) {
           input.classList.remove("is-valid");
           input.classList.add("is-invalid");
-          confirmButton.disabled = true;
+        //   confirmButton.disabled = true;
         } else {
           input.classList.remove("is-invalid");
           input.classList.add("is-valid");
-          confirmButton.disabled = false;
+        //   confirmButton.disabled = false;
+
         }
       }
     </script>

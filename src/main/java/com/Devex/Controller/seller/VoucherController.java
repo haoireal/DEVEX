@@ -64,7 +64,7 @@ public class VoucherController {
 		User user = sessionService.get("user");
 		List<Product> listProd = productService.findProductBySellerUsernameAndIsdeleteProduct(user.getUsername());
 //		Seller shop = sellerService.findById(user.getUsername()).get();
-		String code = user.getUsername().substring(0, 4).toUpperCase();
+		String code = user.getUsername().substring(0, 5).toUpperCase();
 		System.out.println(code);
 		System.out.println(listProd.get(0).getName());
 
