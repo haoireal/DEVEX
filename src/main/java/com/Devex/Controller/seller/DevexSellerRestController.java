@@ -36,8 +36,10 @@ import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.DTO.infoProductDTO;
 import com.Devex.Entity.Category;
 import com.Devex.Entity.CategoryDetails;
+import com.Devex.Entity.Dwallet;
 import com.Devex.Entity.FlashSale;
 import com.Devex.Entity.FlashSaleTime;
+import com.Devex.Entity.History;
 import com.Devex.Entity.Notifications;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.Product;
@@ -45,9 +47,11 @@ import com.Devex.Entity.ProductBrand;
 import com.Devex.Entity.ProductRequest;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.Seller;
+import com.Devex.Entity.TransactionHistory;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
+import com.Devex.Sevice.DwalletService;
 import com.Devex.Sevice.FlashSalesService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
@@ -62,6 +66,7 @@ import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.TransactionHistoryService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,9 +77,8 @@ import jakarta.websocket.server.PathParam;
 @RestController
 public class DevexSellerRestController {
 
-
-    @Autowired
-    private CustomerServiceImpl.FileManagerService fileManagerService;
+	@Autowired
+	private CustomerServiceImpl.FileManagerService fileManagerService;
 
 	@Autowired
 	private SessionService session;
@@ -117,12 +121,18 @@ public class DevexSellerRestController {
 
 	@Autowired
 	private NotificationsService notificationsService;
-	
+
 	@Autowired
 	private NotiService notiService;
-	
+
 	@Autowired
 	private ProductRequestService productRequestService;
+
+	@Autowired
+	private DwalletService dwalletService;
+
+	@Autowired
+	private TransactionHistoryService transactionHistoryService;
 
 	@Value("${myapp.file-storage-path}")
 	private String fileStoragePath;
@@ -137,7 +147,7 @@ public class DevexSellerRestController {
 		User u = session.get("user");
 		String id = session.get("idproduct");
 		List<String> imageUrls = fileManagerService.list(id, u.getUsername());
-		
+
 		return imageUrls;
 	}
 
@@ -171,7 +181,7 @@ public class DevexSellerRestController {
 		Product product = productService.findByIdProduct(id);
 		ProductRequest productRequest = productRequestService.findProductRequestByProductId(id);
 		mapInfoProduct.put("product", product);
-		if(productRequest != null) {
+		if (productRequest != null) {
 			checkRequest = true;
 		}
 		mapInfoProduct.put("checkRequest", checkRequest);
@@ -249,9 +259,10 @@ public class DevexSellerRestController {
 		CategoryDetails categoryDetails = categoryDetailService.findCategoryDetailsById(idCategoryDetails);
 		Seller seller = sellerService.findFirstByUsername(u.getUsername());
 		Product p = productService.findByIdProduct(id);
-		if(p.getActive() == false && p.getDescription() == null && p.getIsdelete() == false && p.getName() == "Nhập tên sản phẩm tại đây") {
+		if (p.getActive() == false && p.getDescription() == null && p.getIsdelete() == false
+				&& p.getName() == "Nhập tên sản phẩm tại đây") {
 			notiService.sendHistory(u.getUsername(), "", "/seller/product/edit/" + id, "newproduct", id);
-		}else {
+		} else {
 			notiService.sendHistory(u.getUsername(), "", "/seller/product/edit/" + id, "updateproduct", id);
 		}
 		// Update product
@@ -271,7 +282,7 @@ public class DevexSellerRestController {
 						productVariant.getPriceSale(), productVariant.getSize(), productVariant.getColor(), id);
 			}
 		}
-		
+
 	}
 
 	@DeleteMapping("/delete/product/{idproduct}")
@@ -553,9 +564,9 @@ public class DevexSellerRestController {
 
 		list.forEach(fl -> {
 			int idProduct = 0;
-//			Optional<ProductVariant> optionalProductVariant = productVariantService
-//					.findById( fl.getProductVariantId());
-			
+			// Optional<ProductVariant> optionalProductVariant = productVariantService
+			// .findById( fl.getProductVariantId());
+
 			try {
 				FlashSale flashSale = flashSalesService.findByProductVariantId(fl.getProductVariantId());
 				idProduct = flashSale.getProductVariant().getId();
@@ -573,8 +584,7 @@ public class DevexSellerRestController {
 				flashSalesService.updatetFlashSale(fl.getDiscount(), fl.getAmountSell(), fl.getAmountOrder(),
 						fl.getStatus(), fl.getFashSaleTimeId(), fl.getProductVariantId());
 			}
-			
-			
+
 		});
 
 	}
@@ -613,22 +623,23 @@ public class DevexSellerRestController {
 		Seller selleru = sellerService.findFirstByUsername(user.getUsername());
 		sellerService.updateSeller(ShopDTO.getShopName(), ShopDTO.getAddress(), ShopDTO.getPhoneAddress(),
 				ShopDTO.getMall(), true, ShopDTO.getDescription(), user.getUsername());
-		if(!selleru.getShopName().equalsIgnoreCase(ShopDTO.getShopName())) {
+		if (!selleru.getShopName().equalsIgnoreCase(ShopDTO.getShopName())) {
 			listChange.add(ShopDTO.getShopName());
 		}
-		if(!selleru.getAddress().equalsIgnoreCase(ShopDTO.getAddress())) {
+		if (!selleru.getAddress().equalsIgnoreCase(ShopDTO.getAddress())) {
 			listChange.add(ShopDTO.getAddress());
 		}
-		if(!selleru.getPhoneAddress().equalsIgnoreCase(ShopDTO.getPhoneAddress())) {
+		if (!selleru.getPhoneAddress().equalsIgnoreCase(ShopDTO.getPhoneAddress())) {
 			listChange.add(ShopDTO.getPhoneAddress());
 		}
-		if(!selleru.getDescription().equalsIgnoreCase(ShopDTO.getDescription())) {
+		if (!selleru.getDescription().equalsIgnoreCase(ShopDTO.getDescription())) {
 			listChange.add(ShopDTO.getDescription());
 		}
 		notiService.sendHistory(user.getUsername(), "", "", "updateprofile", listChange.toString());
 		List<String> listf = followService.getAllUserFollowShop(user.getUsername());
 		for (String username : listf) {
-			notiService.sendNotification(user.getUsername(), username, "/pageseller/" + user.getUsername(), "changeprofileshop", user.getUsername());
+			notiService.sendNotification(user.getUsername(), username, "/pageseller/" + user.getUsername(),
+					"changeprofileshop", user.getUsername());
 		}
 	}
 
@@ -713,16 +724,37 @@ public class DevexSellerRestController {
 		User u = session.get("user");
 		return notificationsService.getAllNotificationsByUserto(u.getUsername());
 	}
-	
+
 	@PostMapping("/seller/sendRequest")
 	public void sendRequest(@RequestParam("id") String id) {
 		productRequestService.insertProductRequest(new Date(), id);
 	}
-	
+
 	@DeleteMapping("/seller/cancelRequest")
 	public void cancelRequest(@RequestParam("id") String id) {
 		ProductRequest pr = productRequestService.findProductRequestByProductId(id);
 		productRequestService.deleteById(pr.getId());
 	}
 
+	/* get balance wallet */
+	@GetMapping("api/wallet")
+	public Dwallet getBalanceWallet() {
+		User u = session.get("user");
+		String username = u.getUsername();
+		// System.out.println("ssssssss" + username);
+		return dwalletService.getDwalletByUsername(username);
+	}
+
+	@GetMapping("/api/history")
+	public List<TransactionHistory> getHistoryTransaction() {
+		User u = session.get("user");
+		String username = u.getUsername();
+		// System.out.println("ssssssss" + username);
+		Dwallet dwallet = dwalletService.getDwalletByUsername(username);
+		// System.out.println("ssss" + dwallet.getId());
+		List<TransactionHistory> listHistoryTransactions = transactionHistoryService
+				.getTransactionByIdWallet(dwallet.getId());
+		return listHistoryTransactions;
+
+	}
 }

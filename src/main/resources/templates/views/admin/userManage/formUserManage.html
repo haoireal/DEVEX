@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<div th:replace="~{flagment/seller/sellerHead :: sellerHeadFragment}"></div>
+	<div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
 	<!-- daterange picker -->
 	<link rel="stylesheet" href="/admin/plugins/daterangepicker/daterangepicker.css">
 	<!-- iCheck for checkboxes and radio inputs -->
@@ -238,9 +238,12 @@
 			<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
 		</div>
 	</div>
-	<div th:replace="~{flagment/seller/sellerFooter :: sellerFooterFragment}"></div>
-	<div th:replace="~{flagment/seller/sellerFootLink :: sellerFootLinkFragment}"></div>
-	<!-- Select2 -->
+	<div
+	th:replace="~{flagment/admin/adminFooter :: adminFooterFragment}"
+  ></div>
+  <div
+	th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"
+  ></div>
 	<script src="/admin/plugins/select2/js/select2.full.min.js"></script>
 	<!-- Bootstrap4 Duallistbox -->
 	<script src="/admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
@@ -533,6 +536,7 @@
 		});
 	</script>
 	<!-- END Script thêm sự kiện model -->
+	<script th:src="@{/js/admin/DWalletAdmin.js}"></script>
 </body>
 
 </html>

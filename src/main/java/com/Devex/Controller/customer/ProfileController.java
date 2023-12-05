@@ -56,7 +56,7 @@ public class ProfileController {
 
 	@Autowired
 	CustomerService customerService;
-	
+
 	@Autowired
 	NotificationService notificationService;
 
@@ -82,8 +82,8 @@ public class ProfileController {
 		System.out.println(id);
 		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
 		boolean flag = false;
-		for(UserRole u : role) {
-			if(u.getRole().getId().equals("SELLER")) {
+		for (UserRole u : role) {
+			if (u.getRole().getId().equals("SELLER")) {
 				flag = true;
 			}
 		}
@@ -109,7 +109,7 @@ public class ProfileController {
 	public String doEdiAddress() {
 		User user = session.get("user");
 		Customer customer = customerService.findById(user.getUsername()).get();
-//		Customer customer = session.get("user");
+		// Customer customer = session.get("user");
 		String address = param.getString("address", null);
 		String phone = param.getString("phone", null);
 		customer.setAddress(address);
@@ -291,6 +291,7 @@ public class ProfileController {
 //		noti.setUser(admin);
 //		notificationService.save(noti);
 		
+
 		String message = "Nâng cấp nhà bán thành công";
 		model.addAttribute("message", message);
 		return "user/profile";

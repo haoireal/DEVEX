@@ -29,4 +29,5 @@ public interface TransactionHistoryService {
 
 	TransactionHistory save(TransactionHistory entity);
 
+	List<TransactionHistory> getTransactionByIdWallet(String idWallet);
 }

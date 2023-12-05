@@ -16,8 +16,7 @@
         }
       </style>
     </head>
-
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini" ng-app="app">
       <div class="wrapper">
         <!-- Preloader -->
         <div
@@ -138,6 +137,7 @@
                                     class="form-control"
                                     style="text-transform: uppercase"
                                     maxlength="10"
+
                                     oninput="blockVietnameseInput(this)"
                                   />
                                   <div class="input-group-append">
@@ -354,8 +354,11 @@
 		}
       
 
-	  
+
+      const app = angular.module("app", []);
     </script>
+
+    <script src="/js/seller/Dwallet.js"></script>
     <script>
       function blockVietnameseInput(input) {
         // Lấy giá trị của trường input
@@ -444,6 +447,7 @@
           input.classList.remove("is-invalid");
           input.classList.add("is-valid");
         //   confirmButton.disabled = false;
+
         }
       }
     </script>
