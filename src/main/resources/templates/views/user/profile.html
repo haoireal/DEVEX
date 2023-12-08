@@ -284,14 +284,14 @@
 												<div class="mb-3 bg-white rounded px-2">
 													<textarea class="form-control" rows="5"
 														placeholder="Địa chỉ giao hàng ..." name="address"
-														th:text="${session.user.address == null ? 'Địa chỉ giao hàng...' : session.user.address}"></textarea>
+														th:text="${session.user.address == null ? '' : session.user.address}"></textarea>
 												</div>
 
 												<div class="mb-3 bg-white rounded px-2">
-													<input type="text" id="inputPhone" placeholder="Số điện thoại"
+													<input type="text" id="inputPhone" placeholder="Số điện thoại..."
 														pattern="[0-9()+-]*" maxlength="15" minlength="10" required
 														class="form-control border-1 p-0 pl-2" name="phone"
-														th:value="${session.user.phoneAddress == null ? 'Số điện thoại liên hệ...' : session.user.phoneAddress}" />
+														th:value="${session.user.phoneAddress == null ? '' : session.user.phoneAddress}" />
 												</div>
 
 												<button type="submit" class="btn btn-success mt-3"

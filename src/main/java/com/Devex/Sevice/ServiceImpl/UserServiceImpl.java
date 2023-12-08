@@ -3,6 +3,7 @@ package com.Devex.Sevice.ServiceImpl;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -15,10 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.Devex.Entity.Customer;
+import com.Devex.Entity.Dwallet;
 import com.Devex.Entity.Role;
 import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
 import com.Devex.Repository.CustomerRepository;
+import com.Devex.Repository.DwalletRepository;
 import com.Devex.Repository.RoleRepository;
 import com.Devex.Repository.UserRepository;
 import com.Devex.Repository.UserRoleRespository;
@@ -127,6 +130,9 @@ public class UserServiceImpl implements  UserService{
 	CustomerRepository customerRepository;
 	
 	@Autowired
+	DwalletRepository dwalletRepository;
+	
+	@Autowired
 	RoleRepository roleRepository;
 	
 	@Autowired
@@ -150,6 +156,15 @@ public class UserServiceImpl implements  UserService{
 			user.setActive(true);
 			user.setAvatar(null);
 			userRepository.save(user);
+			//tạo ví dwallet
+			Dwallet dwallet = new Dwallet();
+			String id = generateRandomNumber();
+			dwallet.setId(id);
+			dwallet.setUser(user);
+			dwallet.setBalance(10000000.0);
+			dwallet.setActive(true);
+			dwalletRepository.save(dwallet);
+			//tạo customer
 			Customer customer = new Customer();
 			customer.setUsername(username);
 			customer.setFullname(fullname);
@@ -189,6 +204,20 @@ public class UserServiceImpl implements  UserService{
 	}
 
 	
-	
+	 public static String generateRandomNumber() {
+	        // Khởi tạo đối tượng StringBuilder để xây dựng chuỗi
+	        StringBuilder randomStringBuilder = new StringBuilder();
+
+	        // Sử dụng lớp Random để sinh số ngẫu nhiên từ 0 đến 9 và ghép chúng lại thành một chuỗi
+	        Random random = new Random();
+	        for (int i = 0; i < 100; i++) {
+	            int digit = random.nextInt(10); // Sinh số ngẫu nhiên từ 0 đến 9
+	            randomStringBuilder.append(digit);
+	        }
+
+	        // Chuyển đối tượng StringBuilder thành chuỗi và trả về
+	        return randomStringBuilder.toString();
+	    }
+	    
 
 }

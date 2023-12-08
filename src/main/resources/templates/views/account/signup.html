@@ -17,7 +17,7 @@
 		<section class="login-box">
 			<h2 class="text-dark font-weight-bold">Sign Up</h2>
 			<form class="mt-4" method="post"
-				oninput='cfpassword.setCustomValidity(cfpassword.value != password.value ? "Xác nhận mật khẩu không trùng khớp" : "")'>
+				>
 				<div class="mb-3 bg-white rounded px-2">
 					<input type="text" id="inputUsername" placeholder="Tên tài khoản"
 						maxlength="50" minlength="3" required
@@ -45,7 +45,7 @@
 					<option value="Nữ">Nữ</option>
 					<option value="Other">Khác</option>
 				</select>
-				
+				<mark id="message-error" th:text="${message}"></mark>
 				<button type="submit" class="btn btn-danger mt-5" style="width: 100%;">Confirm
 					</button>
 
