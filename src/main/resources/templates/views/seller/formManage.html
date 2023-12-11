@@ -177,6 +177,11 @@
 											<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
 												ng-model="form.description"></textarea>
 										</div>
+										<div class="form-check form-switch">
+											<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+											 ng-model="form.active" ng-checked="form.active" ng-disabled="form.active === false">
+											<label class="form-check-label" for="flexSwitchCheckDefault">Trạng thái bán</label>
+										</div>
 										<table class="table table-bordered text-center" id="data-table">
 											<thead>
 												<tr>
@@ -188,18 +193,18 @@
 											</thead>
 											<tbody id="table-body" ng-repeat="item in variant" ng-form="itemForm">
 												<tr>
-													<td><input type="text" ng-model="item.size"></td>
+													<td><input type="text" ng-model="item.size" placeholder="Kích thước sản phẩm"></td>
 													<td>
-														<input type="text" ng-model="item.color" name="color" ng-required="true">
+														<input type="text" ng-model="item.color" name="color" ng-required="true" placeholder="Màu sản phẩm">
 														<div class="text-danger" ng-show="itemForm.color.$dirty && itemForm.color.$error.required">Vui lòng nhập màu sắc</div>
 													</td>
 													<td>
-														<input type="number" ng-model="item.price" name="productPrice" min="1000" ng-min="1000" ng-required="true">
+														<input type="number" ng-model="item.price" name="productPrice" min="1000" ng-min="1000" ng-required="true" placeholder="Giá sản phẩm">
 														<div class="text-danger" ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.min">Giá tiền không được thấp hơn 1000</div>
 														<div class="text-danger" ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.required">Vui lòng nhập giá tiền</div>
 													</td>
 													<td>
-														<input type="number" ng-model="item.quantity" name="productQuantity" min="1" ng-min="1" ng-required="true">
+														<input type="number" ng-model="item.quantity" name="productQuantity" min="1" ng-min="1" ng-required="true" placeholder="Số lượng sản phẩm">
 														<div class="text-danger" ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.min">Số lượng không được thấp hơn 1</div>
 														<div class="text-danger" ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.required">Vui lòng nhập số lượng</div>
 													</td>
@@ -219,11 +224,11 @@
 							</div>
 							<!-- END Thông tin sản phẩm -->
 							
-							<div class="text-center">
+							<div class="text-center mb-3">
 								<button class="btn btn-primary" ng-click="save()" ng-disabled="myForm.$invalid">Lưu</button>
 								<button class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
-								<button class="btn btn-danger" ng-if="checkRequest === true" ng-click="cancelRequest()">Cancel Request</button>
-								<button class="btn btn-success" ng-if="checkRequest === false" ng-click="sendRequest()">Send Request</button>
+								<button class="btn btn-danger" ng-if="checkRequest === true" ng-click="cancelRequest()">Hủy yêu cầu</button>
+								<button class="btn btn-success" ng-if="checkRequest === false" ng-click="sendRequest()">Gửi yêu cầu</button>
 							</div>
 
 							<div class="text-center">

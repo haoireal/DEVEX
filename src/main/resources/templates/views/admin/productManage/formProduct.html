@@ -183,18 +183,18 @@
 											</thead>
 											<tbody id="table-body" ng-repeat="item in variant" ng-form="itemForm">
 												<tr>
-													<td><input type="text" ng-model="item.size"></td>
+													<td><input type="text" ng-model="item.size" placeholder="Kích thước sản phẩm"></td>
 													<td>
-														<input type="text" ng-model="item.color" name="color" ng-required="true">
+														<input type="text" ng-model="item.color" name="color" ng-required="true" placeholder="Màu sản phẩm">
 														<div class="text-danger" ng-show="itemForm.color.$dirty && itemForm.color.$error.required">Vui lòng nhập màu sắc</div>
 													</td>
 													<td>
-														<input type="number" ng-model="item.price" name="productPrice" min="1000" ng-min="1000" ng-required="true">
+														<input type="number" ng-model="item.price" name="productPrice" min="1000" ng-min="1000" ng-required="true" placeholder="Giá sản phẩm">
 														<div class="text-danger" ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.min">Giá tiền không được thấp hơn 1000</div>
 														<div class="text-danger" ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.required">Vui lòng nhập giá tiền</div>
 													</td>
 													<td>
-														<input type="number" ng-model="item.quantity" name="productQuantity" min="1" ng-min="1" ng-required="true">
+														<input type="number" ng-model="item.quantity" name="productQuantity" min="1" ng-min="1" ng-required="true" placeholder="Số lượng sản phẩm">
 														<div class="text-danger" ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.min">Số lượng không được thấp hơn 1</div>
 														<div class="text-danger" ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.required">Vui lòng nhập số lượng</div>
 													</td>

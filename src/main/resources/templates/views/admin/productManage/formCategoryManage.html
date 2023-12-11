@@ -70,7 +70,7 @@
                     <div class="col-6">
                       <div class="card">
                         <div class="card-header">
-                          <h5 class="text-center">Category</h5>
+                          <h5 class="text-center">Loại sản phẩm</h5>
                         </div>
                         <div class="input-group mt-2 mb-1 mr-2">
                           <input ng-model="namecategory" type="text" class="form-control"
@@ -99,7 +99,7 @@
                               </button>
                             </div>
                             <!-- Edit -->
-                            <form action="" name="formCategory">
+                            <form name="formCategory">
                               <div ng-show="editca[category.id]" class="btn-group w-100" role="group" aria-label="Basic example">
                                 <input ng-model="categoryNames[category.id]" type="text" class="form-control"
                                   placeholder="Nhập loại sản phẩm" name="categoryName_{{category.id}}" ng-required="true"/>  
@@ -123,7 +123,7 @@
                     <div class="col-6">
                       <div class="card">
                         <div class="card-header">
-                          <h5 class="text-center">Category Details</h5>
+                          <h5 class="text-center">Loại sản phẩm chi tiết</h5>
                         </div>
                         <div class="input-group mt-2 mb-1 mr-2">
                           <input ng-model="namecategorydetails" type="text" class="form-control"
@@ -154,7 +154,7 @@
                               </button>
                             </div>
                             <!-- Edit -->
-                            <form action="" name="formCategoryDetails">
+                            <form name="formCategoryDetails">
                               <div ng-show="editcad[categorydetails.id]" class="btn-group w-100" role="group"
                                 aria-label="Basic example">
                                 <input ng-model="categoryDetailsNames[categorydetails.id]" type="text"
@@ -164,7 +164,7 @@
                                   Cancel
                                 </button>
                                 <button ng-click="saveCategoryDetails(categorydetails.id)"
-                                  class="btn btn-danger text-right" ng-disabled="formCategoryDetails['categoryDetailsName_' + categorydetails.id].$invalid">
+                                  class="btn btn-success text-right" ng-disabled="formCategoryDetails['categoryDetailsName_' + categorydetails.id].$invalid">
                                   Save
                                 </button>
                               </div>
@@ -217,7 +217,7 @@
                       </button>
                     </div>
                     <!-- Edit -->
-                    <form action="" name="formBrand">
+                    <form name="formBrand">
                       <div ng-show="editpb[ProductBrand.id]" class="btn-group w-100" role="group"
                         aria-label="Basic example">
                         <input ng-model="productBrandNames[ProductBrand.id]" type="text" class="form-control"
@@ -225,7 +225,7 @@
                         <button ng-click="cancelProductBrand(ProductBrand.id)" class="btn btn-secondary text-right">
                           Cancel
                         </button>
-                        <button ng-click="saveProductBrand(ProductBrand.id)" class="btn btn-danger text-right"
+                        <button ng-click="saveProductBrand(ProductBrand.id)" class="btn btn-success text-right"
                           ng-disabled="formBrand['brandName_' + ProductBrand.id].$invalid">
                           Save
                         </button>
@@ -353,7 +353,212 @@
             </div>
           </div>
         </div>
-        <!-- /.container-fluid -->
+        <!-- / End model delete product brand -->
+
+        <!-- Model success thêm -->
+        <button id="si" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successInsert" hidden>
+          Thêm thành công
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="successInsert" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">
+                            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+                            Thông báo
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+                        <h3 class="text-center text-success">
+                            Thêm thành công!
+                        </h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            Chấp nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End model success thêm -->
+
+        <!-- Model false thêm -->
+        <button id="fi" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseInsert" hidden>
+          Thêm thất bại
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="falseInsert" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">
+                            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+                            Thông báo
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+                        <h3 class="text-center text-success">
+                            Thêm thất bại!
+                        </h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            Chấp nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End model false thêm -->
+
+        <!-- Model success cập nhật -->
+        <button id="su" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successUpdate" hidden>
+          Cập nhật thành công
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="successUpdate" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">
+                            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+                            Thông báo
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+                        <h3 class="text-center text-success">
+                            Cập nhật thành công!
+                        </h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            Chấp nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End model success cập nhật -->
+
+        <!-- Model false cập nhật -->
+        <button id="fu" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseUpdate" hidden>
+          Cập nhật thất bại
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="falseUpdate" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">
+                            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+                            Thông báo
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+                        <h3 class="text-center text-success">
+                            Cập nhật thất bại!
+                        </h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            Chấp nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End model false cập nhật -->
+
+        <!-- Model success xóa -->
+        <button id="sd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successDelete" hidden>
+          Xóa thành công
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="successDelete" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">
+                            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+                            Thông báo
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+                        <h3 class="text-center text-success">
+                            Xóa thành công!
+                        </h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            Chấp nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End model success xóa -->
+
+        <!-- Model false xóa -->
+        <button id="fd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseDelete" hidden>
+          Xóa thất bại
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="falseDelete" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">
+                            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+                            Thông báo
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+                        <h3 class="text-center text-success">
+                            Xóa thất bại!
+                        </h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            Chấp nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End model false xóa -->
+        
       </section>
       <!-- /.content -->
     </div>
