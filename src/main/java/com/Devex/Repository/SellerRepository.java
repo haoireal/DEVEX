@@ -19,6 +19,8 @@ import jakarta.transaction.Transactional;
 public interface SellerRepository extends JpaRepository<Seller, String>{
 
 	Seller findFirstByUsername(String username);
+//	@Query("SELECT s FROM Seller s WHERE s.username = :username")
+//	Seller findFirstByUsername(@Param("username") String username);
 
 	@Modifying
 	@Transactional

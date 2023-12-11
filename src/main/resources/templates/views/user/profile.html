@@ -223,8 +223,8 @@
 														</div>
 														<div class="mb-3 bg-white rounded px-2">
 															<input type="text" id="inputPhone"
-																th:value="${session.user.phone == null ? 'Vui lòng đăng kí số điện thoại!' : session.user.phone}"
-																placeholder="Phone Number" pattern="[0-9()+-]*"
+																th:value="${session.user.phone == null ? '' : session.user.phone}"
+																placeholder="Vui lòng đăng kí số điện thoại!" pattern="[0-9()+-]*"
 																maxlength="15" minlength="5" required
 																class="form-control border-1 p-0 pl-2" name="phone"
 																disabled />
@@ -232,8 +232,8 @@
 														</div>
 														<div class="mb-3 bg-white rounded px-2">
 															<input type="email" id="inputEmail"
-																th:value="${session.user.email == null ? 'Vui lòng đăng kí Email' : session.user.email}"
-																placeholder="Email address"
+																th:value="${session.user.email == null ? '' : session.user.email}"
+																placeholder="Vui lòng đăng kí Email"
 																pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
 																maxlength="50" minlength="5" required
 																class="form-control border-1 p-0 pl-2" name="email"
@@ -284,14 +284,14 @@
 												<div class="mb-3 bg-white rounded px-2">
 													<textarea class="form-control" rows="5"
 														placeholder="Địa chỉ giao hàng ..." name="address"
-														th:text="${session.user.address == null ? '' : session.user.address}"></textarea>
+														th:text="${address == null ? '' : address}"></textarea>
 												</div>
 
 												<div class="mb-3 bg-white rounded px-2">
 													<input type="text" id="inputPhone" placeholder="Số điện thoại..."
 														pattern="[0-9()+-]*" maxlength="15" minlength="10" required
 														class="form-control border-1 p-0 pl-2" name="phone"
-														th:value="${session.user.phoneAddress == null ? '' : session.user.phoneAddress}" />
+														th:value="${phone == null ? '' : phone}" />
 												</div>
 
 												<button type="submit" class="btn btn-success mt-3"
@@ -472,8 +472,8 @@
 
 												<div class="input-group mb-3 bg-white rounded px-2">
 													<input type="email" id="inputEmail"
-														th:value="${session.user.email == null ? 'Email chưa được đăng ký...' : session.user.email}"
-														placeholder="Email address"
+														th:value="${session.user.email == null ? '' : session.user.email}"
+														placeholder="Email chưa được đăng ký..."
 														pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="50"
 														minlength="5" required class="form-control border-1 p-0 pl-2"
 														name="email" disabled /> <span class="input-group-append">
@@ -517,8 +517,8 @@
 
 												<div class="input-group mb-3 bg-white rounded px-2">
 													<input type="text" id="inputPhone"
-														th:value="${session.user.phone == null ? 'Số điện thoại chưa được đăng ký...' : session.user.phone}"
-														placeholder="Phone Number" pattern="[0-9()+-]*" maxlength="15"
+														th:value="${session.user.phone == null ? '' : session.user.phone}"
+														placeholder="Số điện thoại chưa được đăng ký..." pattern="[0-9()+-]*" maxlength="15"
 														minlength="5" required class="form-control border-1 p-0 pl-2"
 														name="phone" disabled /> <span class="input-group-append">
 														<button type="button" class="btn btn-info" data-toggle="modal"

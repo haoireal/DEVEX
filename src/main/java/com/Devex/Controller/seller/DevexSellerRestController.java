@@ -257,7 +257,7 @@ public class DevexSellerRestController {
 		String id = jsonNode.get("id").asText();
 		String name = jsonNode.get("name").asText();
 		CategoryDetails categoryDetails = categoryDetailService.findCategoryDetailsById(idCategoryDetails);
-		Seller seller = sellerService.findFirstByUsername(u.getUsername());
+		Seller seller = sellerService.findById(u.getUsername()).get();
 		Product p = productService.findByIdProduct(id);
 		if (p.getActive() == false && p.getDescription() == null && p.getIsdelete() == false
 				&& p.getName() == "Nhập tên sản phẩm tại đây") {
@@ -606,7 +606,7 @@ public class DevexSellerRestController {
 		int amountProduct = productService.getCountProductBySellerUsername(u.getUsername());
 		int amountProductSell = productService.getCountProductSellBySellerUsername(u.getUsername(), 1005, 1009);
 		Map<String, Object> sellerDetails = new HashMap<>();
-		sellerDetails.put("seller", sellerService.findFirstByUsername(u.getUsername()));
+		sellerDetails.put("seller", sellerService.findById(u.getUsername()).get());
 		sellerDetails.put("amountOrder", amountOrder);
 		sellerDetails.put("amountFollow", amountFollow);
 		sellerDetails.put("amountProduct", amountProduct);
@@ -620,7 +620,7 @@ public class DevexSellerRestController {
 		// Lấy thông tin người dùng từ session hoặc nguồn dữ liệu khác
 		User user = session.get("user");
 		List<String> listChange = new ArrayList<>();
-		Seller selleru = sellerService.findFirstByUsername(user.getUsername());
+		Seller selleru = sellerService.findById(user.getUsername()).get();
 		sellerService.updateSeller(ShopDTO.getShopName(), ShopDTO.getAddress(), ShopDTO.getPhoneAddress(),
 				ShopDTO.getMall(), true, ShopDTO.getDescription(), user.getUsername());
 		if (!selleru.getShopName().equalsIgnoreCase(ShopDTO.getShopName())) {

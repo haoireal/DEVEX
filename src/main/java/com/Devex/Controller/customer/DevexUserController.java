@@ -164,20 +164,24 @@ public class DevexUserController {
 		model.addAttribute("products", uniqueProductList);
 		
 		//check quyền admin?
-		String id = principal.getName();
-		User userAdmin = userService.findById(id).orElse(null);	
+		User userAdmin = null;
+		if(principal != null) {
+			String id = principal.getName();
+			if(id != null) {
+				userAdmin = userService.findById(id).orElse(null);	
+			}
+		}
 		boolean adminFlag = false;
 		if(userAdmin != null) {
 			List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
 			for (UserRole u : roles) {
 				if (u.getRole().getId().equals("ADMIN")) {
+					System.out.println("tôi là admin");
 					adminFlag = true;
 				}
 			}
 		}
-		if(adminFlag) {
-			model.addAttribute("admin", adminFlag);
-		}
+		model.addAttribute("admin", adminFlag);
 		return "user/index";
 	}
 
