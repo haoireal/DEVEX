@@ -103,9 +103,6 @@
 							<!-- Hình ảnh -->
 							<div class="card form-group px-3">
 								<label class="p-0">Hình ảnh</label>
-								<!-- Hình ảnh -->
-							<div class="card form-group px-3">
-								<label class="p-0">Hình ảnh</label>
 								<!-- Hiển thị hình ảnh -->
 								<div class="row">
 									<label class="col-1" title="Click vào hình ảnh 2 lần để xóa"
@@ -127,13 +124,13 @@
 							<!-- END Hình ảnh -->
 							<!-- Thông tin sản phẩm -->
 							<div>
-								<form action="" method="post">
+								<form action="" method="post" name="myForm">
 									<div class="card p-3">
 										<!-- Tên sản phẩm -->
 										<div class="form-group">
 											<label>Tên sản phẩm</label>
-											<input class="form-control" ng-model="form.name"
-												placeholder="Nhập tên sản phẩm">
+											<input class="form-control" ng-model="form.name" placeholder="Nhập tên sản phẩm" name="productName" ng-required="true">
+											<div class="text-danger" ng-show="myForm.productName.$dirty && myForm.productName.$error.required">Vui lòng nhập tên sản phẩm</div>
 										</div>
 										<!-- END Tên sản phẩm -->
 
@@ -175,50 +172,50 @@
 											<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" ng-model="form.active" ng-checked="form.active">
 											<label class="form-check-label" for="flexSwitchCheckDefault">Trạng thái bán</label>
 										</div>
+										<table class="table table-bordered text-center" id="data-table">
+											<thead>
+												<tr>
+													<th style="width: 10px">Kích cỡ</th>
+													<th>Màu sắc</th>
+													<th>Giá tiền</th>
+													<th style="width: 40px">Số lượng hàng</th>
+												</tr>
+											</thead>
+											<tbody id="table-body" ng-repeat="item in variant" ng-form="itemForm">
+												<tr>
+													<td><input type="text" ng-model="item.size" placeholder="Kích thước sản phẩm"></td>
+													<td>
+														<input type="text" ng-model="item.color" name="color" ng-required="true" placeholder="Màu sản phẩm">
+														<div class="text-danger" ng-show="itemForm.color.$dirty && itemForm.color.$error.required">Vui lòng nhập màu sắc</div>
+													</td>
+													<td>
+														<input type="number" ng-model="item.price" name="productPrice" min="1000" ng-min="1000" ng-required="true" placeholder="Giá sản phẩm">
+														<div class="text-danger" ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.min">Giá tiền không được thấp hơn 1000</div>
+														<div class="text-danger" ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.required">Vui lòng nhập giá tiền</div>
+													</td>
+													<td>
+														<input type="number" ng-model="item.quantity" name="productQuantity" min="1" ng-min="1" ng-required="true" placeholder="Số lượng sản phẩm">
+														<div class="text-danger" ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.min">Số lượng không được thấp hơn 1</div>
+														<div class="text-danger" ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.required">Vui lòng nhập số lượng</div>
+													</td>
+													<td>
+														<button class="btn btn-danger"
+															ng-click="deleteproductvariant(item.id)">
+															<i class="fa-regular fa-trash-can"></i>
+														</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()">Thêm chi
+											tiết sản phẩm</button>
 									</div>
 								</form>
 							</div>
 							<!-- END Thông tin sản phẩm -->
-							<!--Table size -->
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title font-weight-bold">Chi tiết sản phẩm</h3>
-								</div>
-								<!-- /.card-header -->
-								<div class="card-body">
-									<table class="table table-bordered text-center" id="data-table">
-										<thead>
-											<tr>
-												<th style="width: 10px">Kích cỡ</th>
-												<th>Màu sắc</th>
-												<th>Giá tiền</th>
-												<th style="width: 40px">Số lượng hàng</th>
-											</tr>
-										</thead>
-										<tbody id="table-body" ng-repeat="item in variant">
-											<tr>
-												<td><input type="text" ng-model="item.size"></td>
-												<td><input type="text" ng-model="item.color"></td>
-												<td><input type="text" ng-model="item.price"></td>
-												<td><input type="text" ng-model="item.quantity"></td>
-												<td>
-													<button class="btn btn-danger"
-														ng-click="deleteproductvariant(item.id)">
-														<i class="fa-regular fa-trash-can"></i>
-													</button>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()">Thêm chi
-										tiết sản phẩm</button>
-								</div>
-
-							</div>
-							<!-- /.card -->
-							<!-- END TABLE SIZe -->
+							
 							<div class="text-center">
-								<button ng-if="checkbutton == false" class="btn btn-primary" ng-click="save()">Lưu</button>
+								<button ng-if="checkbutton == false" class="btn btn-primary" ng-click="save()" ng-disabled="myForm.$invalid">Lưu</button>
 								<button ng-if="checkbutton == false" class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
 								<button ng-if="checkbutton == true" ng-click="cancelRequest(idrq)" class="btn btn-danger">
 									<i class="fa-solid fa-xmark"></i> Hủy yêu cầu

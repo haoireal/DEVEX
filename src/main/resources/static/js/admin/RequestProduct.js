@@ -16,48 +16,41 @@ app.controller("requestproduct", function ($scope, $http, $location, $window) {
 
   // delete ProductRequest
   $scope.cancelRequest = function (id) {
-    $http
-      .delete("/api/delete/productrequest?id=" + id)
+    $http.delete("/api/delete/productrequest?id=" + id)
       .then(function (response) {
         $scope.listProductRequest = response.data;
-      });
+        document.getElementById('sr').click();
+      }, function(error) {
+        console.error('Error:', error);
+        document.getElementById('fr').click();
+    });
   };
 
   // confirm ProductRequest
   $scope.confirmRequest = function (id) {
-    $http.put("/api/update/productrequest?id=" + id).then(function (response) {
+    $http.put("/api/update/productrequest?id=" + id)
+    .then(function (response) {
       $scope.listProductRequest = response.data;
+      document.getElementById('sa').click();
+    }, function(error) {
+      console.error('Error:', error);
+      document.getElementById('fa').click();
     });
   };
 
   // focus URL
   $scope.focusURL = function (id) {
-    $http
-      .get("/api/idproductrequest")
+    $http.get('/api/idproductrequest')
       .then(function (response) {
-        console.log(response.data);
         if (response.data == 0) {
-          $window.location.href = "/ad/showproduct/" + id;
+          $window.location.href = '/ad/showproduct/' + id;
         }
-      })
-      .catch(function (error) {
-        console.error("Error making API request:", error);
+      }).catch(function (error) {
+        console.error('Error making API request:', error);
         // Xử lý lỗi nếu cần thiết
       });
   };
-        // focus URL
-        $scope.focusURL = function(id) {
-            $http.get('/api/idproductrequest')
-            .then(function(response) {
-                if(response.data == 0){
-                    $window.location.href = '/ad/showproduct/'+id;
-                }
-            }).catch(function(error) {
-                console.error('Error making API request:', error);
-                // Xử lý lỗi nếu cần thiết
-            });
-        };
 
-        $scope.getAllProductRequest();
+  $scope.getAllProductRequest();
 
-    });
+});

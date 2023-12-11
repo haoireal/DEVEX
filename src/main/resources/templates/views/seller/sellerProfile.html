@@ -214,62 +214,111 @@
                                     </div>
 
                                     <div class="tab-pane" id="infomation">
-                                        <div class="mb-3">
-                                            <label for="shopName" class="form-label">Shop Name</label>
-                                            <input ng-model="data.seller.shopName" placeholder="Shop name"
-                                                   type="text" class="form-control" id="shopName" name="shopName"
-                                                   required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="address" class="form-label">Address</label>
-                                            <input ng-model="data.seller.address" placeholder="Address"
-                                                   type="text" class="form-control" id="address" name="address"
-                                                   required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="phoneAddress" class="form-label">Phone Address</label>
-                                            <input ng-model="data.seller.phoneAddress"
-                                                   placeholder="Phone Address" type="tel" class="form-control"
-                                                   id="phoneAddress" name="phoneAddress" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="description" class="form-label">Description</label>
-                                            <textarea ng-model="data.seller.description"
-                                                      placeholder="Description" class="form-control" rows="3"
-                                                      id="description" name="description" required></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="mall" class="form-check-label me-4">In a Mall</label>
-                                            <input ng-model="data.seller.mall" type="checkbox"
-                                                   class="form-check-input" id="mall" name="mall" disabled>
-                                        </div>
+                                        <form name="myForm">
+                                            <div class="mb-3">
+                                                <label for="shopName" class="form-label">Tên cửa hàng</label>
+                                                <input ng-model="data.seller.shopName" placeholder="Nhập tên cửa hàng"
+                                                       type="text" class="form-control" id="shopName" name="shopName"
+                                                       ng-required="true">
+                                                <div class="text-danger" ng-show="myForm.shopName.$dirty && myForm.shopName.$error.required">Vui lòng nhập tên cửa hàng</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="address" class="form-label">Địa chỉ</label>
+                                                <input ng-model="data.seller.address" placeholder="Vui lòng nhập địa chỉ cửa hàng!"
+                                                       type="text" class="form-control" id="address" name="address">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="phoneAddress" class="form-label">Số điện thoại cửa hàng</label>
+                                                <input ng-model="data.seller.phoneAddress"
+                                                       placeholder="Nhập số diện thoại cửa hàng" type="tel" class="form-control"
+                                                       id="phoneAddress" name="phoneAddress" ng-pattern="/^0\d{9}$/">
+                                                <div class="text-danger" ng-show="myForm.phoneAddress.$dirty && myForm.phoneAddress.$error.pattern">Số điện thoại không hợp lệ</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="description" class="form-label">Mô tả</label>
+                                                <textarea ng-model="data.seller.description"
+                                                          placeholder="Vui lòng nhập mô tả!" class="form-control" rows="3"
+                                                          id="description" name="description"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="mall" class="form-check-label me-4">Shop mall</label>
+                                                <input ng-model="data.seller.mall" type="checkbox"
+                                                       class="form-check-input" id="mall" name="mall" disabled>
+                                            </div>
+    
+                                            <button ng-click="updateShop()"
+                                                    class="btn btn-primary" ng-disabled="myForm.$invalid">Lưu
+                                            </button>
+    
+                                        </form>
 
-                                        <button id="submitButton" type="submit" ng-click="updateShop()"
-                                                class="btn btn-primary">Lưu
+                                        <!-- Model success save -->
+                                        <button id="success" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successSave" hidden>
+                                            save
                                         </button>
 
-                                        <div class="text-center">
-                                            <button id="successbtn" hidden>Lưu</button>
-                                            <button id="failsebtn" hidden>Xóa</button>
-                                        </div>
-
-                                        <div id="successModal" class="modal">
-                                            <div class="modal-content">
-                                                <span class="close">&times;</span>
-                                                <iframe
-                                                        src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
-                                                <span id="content" class="text-success fs-3">Thêm thành công</span>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="successSave" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="">
+                                                            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+                                                            Thông báo
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        <iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+                                                        <h3 class="text-center text-success">
+                                                            Lưu thành công!
+                                                        </h3>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                            Chấp nhận
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- End model success save -->
+                                        
+                                        <!-- Model false save -->
+                                        <button id="false" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseSave" hidden>
+                                            save
+                                        </button>
 
-                                        <div id="failseModal" class="modal">
-                                            <div class="modal-content">
-                                                <span class="close">&times;</span>
-                                                <iframe
-                                                        src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
-                                                <span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="falseSave" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="">
+                                                            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+                                                            Thông báo
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+                                                        <h3 class="text-center text-success">
+                                                            Lưu Thất bại!
+                                                        </h3>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                            Chấp nhận
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- End model false save -->
                                     </div>
                                     <!-- /.tab-pane -->
                                 </div>
