@@ -18,7 +18,7 @@
                   <a
                     class="nav-link"
                     href="/ad/home"
-                    th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}"
+                    th:if="${admin}"
                     >Admin Page</a
                   >
                 </li>
@@ -30,7 +30,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/seller/home">Bán hàng</a>
+                  <a class="nav-link" href="/seller/home">Kênh người bán</a>
                 </li>
 
                 <li class="nav-item">
@@ -339,7 +339,7 @@
                   <a
                     class="nav-link text-white"
                     href="/ad/home"
-                    th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}"
+                    th:if="${adminFlag}"
                     >Admin Page</a
                   >
                 </li>
@@ -350,7 +350,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-white" href="/seller/home"
-                    >Bán hàng</a
+                    >Kênh người bán</a
                   >
                 </li>
 

@@ -24,7 +24,7 @@ public class Seller extends User implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	 
 	
 	@Column(name = "Shopname")

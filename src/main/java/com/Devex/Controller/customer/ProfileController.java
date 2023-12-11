@@ -78,8 +78,10 @@ public class ProfileController {
 	@GetMapping("/profile")
 	public String showProfile(Model model, Principal principal) {
 		User user = session.get("user");
+		
 		String id = principal.getName();
 		System.out.println(id);
+		Customer customer = customerService.findById(id).get();
 		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
 		boolean flag = false;
 		for (UserRole u : role) {
@@ -88,6 +90,8 @@ public class ProfileController {
 			}
 		}
 		model.addAttribute("role", flag);
+		model.addAttribute("address", customer.getAddress());
+		model.addAttribute("phone", customer.getPhoneAddress());
 		return "user/profile";
 	}
 
