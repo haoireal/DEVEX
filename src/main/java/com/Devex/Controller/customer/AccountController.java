@@ -157,7 +157,7 @@ public class AccountController {
 		user.setCreateDay(createdDate);
 		user.setGender(gender);
 		user.setActive(active);
-		user.setAvatar(null);
+		user.setAvatar("avt.webp");
 		userService.save(user);
 		//tạo ví cho user
 		Dwallet dwallet = new Dwallet();

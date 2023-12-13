@@ -82,12 +82,12 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     itemDetail: {},
     prodVoucher: [],
 
-    loadMyVoucher() {
+    async loadMyVoucher() {
       var url = `${host}/voucher/my-saved`;
-      $http.get(url).then((response) => {
+      $http.get(url).then(async (response) => {
         this.items = response.data;
         console.log(this.items);
-        this.groupVoucherApplied();
+        await this.groupVoucherApplied();
         this.groupVoucherAvailability();
         console.log(this.itemsApplied);
         console.log(this.itemsAvailability);
@@ -112,7 +112,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     },
     
 
-    groupVoucherApplied() {
+     groupVoucherApplied() {
       this.itemsApplied = this.items.filter((voucher) =>
         $cart.isItemInMyVoucherApplied(voucher)
       );
