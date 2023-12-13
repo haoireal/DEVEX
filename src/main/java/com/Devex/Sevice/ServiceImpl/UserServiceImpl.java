@@ -42,6 +42,11 @@ public class UserServiceImpl implements  UserService{
 	public User save(User entity) {
 		return userRepository.save(entity);
 	}
+		
+	@Override
+	public User findByIdActive(String username) {
+		return userRepository.findByIdActive(username);
+	}
 
 	@Override
 	public List<User> saveAll(List<User> entities) {
@@ -154,7 +159,7 @@ public class UserServiceImpl implements  UserService{
 			user.setCreateDay(new Date());
 			user.setGender("Other");
 			user.setActive(true);
-			user.setAvatar(null);
+			user.setAvatar("avt.webp");
 			userRepository.save(user);
 			//tạo ví dwallet
 			Dwallet dwallet = new Dwallet();

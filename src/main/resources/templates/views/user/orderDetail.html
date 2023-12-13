@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
 <div th:replace="~{flagment/account/head :: headFragment}"></div>
+<title>Chi tiết hoá đơn</title>
   <!-- Theme style -->
   <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">
 <!-- Theme style -->
@@ -177,7 +178,7 @@ header a.nav-link:hover {
 								<!-- info row -->
 								<div class="row invoice-info">
 									<div class="col-sm-4 invoice-col">
-										From
+										Từ
 										<address>
 											<strong th:text="${order.orderDetails[0].productVariant.product.sellerProduct.shopName}"></strong><br>
 											<label style="font-weight: 400;"  th:text="'Địa chỉ: ' + ${order.address}"></label><br>
@@ -186,7 +187,7 @@ header a.nav-link:hover {
 									</div>
 									<!-- /.col -->
 									<div class="col-sm-4 invoice-col">
-										To
+										Đến
 										<address>
 											<strong th:text="${user.fullname}"></strong><br>
 											<label style="font-weight: 400;"  th:text="'Địa chỉ: ' + ${user.address}"></label><br>

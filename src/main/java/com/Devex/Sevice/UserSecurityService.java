@@ -23,7 +23,7 @@ public class UserSecurityService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-			User user = userService.findById(username).get();
+			User user = userService.findByIdActive(username);
 			
 			if(user != null) {
 
