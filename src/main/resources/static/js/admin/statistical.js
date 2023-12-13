@@ -7,84 +7,41 @@
 		// code lấy đường dẫn icon month line
 		var iconrevenuemonthline = document.querySelector('.description-block .iconrevenuemonthline i');
 		var iconrevenueyearline = document.querySelector('.description-block .iconrevenueyearline i');
-		// code lấy đường dẫn html vào progress thẻ span biểu đồ month line
-		var addcartprogressmonthline = document.querySelector('.addcartprogressmonthline span');
-		var ordersuccessprogressmonthline = document.querySelector('.ordersuccessprogressmonthline span');
-		var orderwaitingprogressmonthline = document.querySelector('.orderwaitingprogressmonthline span');
-		var orderfalseprogressmonthline = document.querySelector('.orderfalseprogressmonthline span');
-		// code lấy đường dẫn html vào progress thẻ span biểu đồ year line
-		var addcartprogressyearline = document.querySelector('.addcartprogressmonthyearline span');
-		var ordersuccessprogressyearline = document.querySelector('.ordersuccessprogressmonthyearline span');
-		var orderwaitingprogressyearline = document.querySelector('.orderwaitingprogressmonthyearline span');
-		var orderfalseprogressyearline = document.querySelector('.orderfalseprogressmonthyearline span');
-		// code lấy đường dẫn html vào progress bar biểu đồ month line
-		var pbaddcartprogressmonthline = document.querySelector('.addcartprogressmonthline .progress .progress-bar');
-		var pbordersuccessprogressmonthline = document.querySelector(
-			'.ordersuccessprogressmonthline .progress .progress-bar');
-		var pborderwaitingprogressmonthline = document.querySelector(
-			'.orderwaitingprogressmonthline .progress .progress-bar');
-		var pborderfalseprogressmonthline = document.querySelector('.orderfalseprogressmonthline .progress .progress-bar');
-		// code lấy đường dẫn html vào progress bar biểu đồ year line
-		var pbaddcartprogressmonthyearline = document.querySelector('.addcartprogressmonthyearline .progress .progress-bar');
-		var pbordersuccessprogressmonthyearline = document.querySelector(
-			'.ordersuccessprogressmonthyearline .progress .progress-bar');
-		var pborderwaitingprogressmonthyearline = document.querySelector(
-			'.orderwaitingprogressmonthyearline .progress .progress-bar');
-		var pborderfalseprogressmonthyearline = document.querySelector(
-			'.orderfalseprogressmonthyearline .progress .progress-bar');
-		// code tìm thẻ input month line
-		var monthlyGoalByMonthLine = document.getElementById('monthlyGoalByMonthLine');
-		// cookie value input month line
-		var cookieValueMonthlyGoalByMonthLine;
-		// code tìm thẻ input year line
-		var monthlyGoalByYearLine = document.getElementById('monthlyGoalByYearLine');
-		// cookie value input year line
-		var cookieValueMonthlyGoalByYearLine;
-		// giá trị cho thẻ b progress month line
-		var amountCart;
-		var amountOrderSuccess;
-		var amountOrderWaiting;
-		var amountOrderFalse;
-		// giá trị cho thẻ b progress month line
-		var amountCart1;
-		var amountOrderSuccess1;
-		var amountOrderWaiting1;
-		var amountOrderFalse1;
 
 		//cookie
-		function setCookie(cname, cvalue, exdays) {
-			const d = new Date();
-			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-			let expires = "expires=" + d.toUTCString();
-			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-		}
+		// function setCookie(cname, cvalue, exdays) {
+		// 	const d = new Date();
+		// 	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+		// 	let expires = "expires=" + d.toUTCString();
+		// 	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		// }
 
-		function getCookie(cname) {
-			let name = cname + "=";
-			let ca = document.cookie.split(';');
-			for (let i = 0; i < ca.length; i++) {
-				let c = ca[i];
-				while (c.charAt(0) == ' ') {
-					c = c.substring(1);
-				}
-				if (c.indexOf(name) == 0) {
-					return c.substring(name.length, c.length);
-				}
-			}
-			return "";
-		}
+		// function getCookie(cname) {
+		// 	let name = cname + "=";
+		// 	let ca = document.cookie.split(';');
+		// 	for (let i = 0; i < ca.length; i++) {
+		// 		let c = ca[i];
+		// 		while (c.charAt(0) == ' ') {
+		// 			c = c.substring(1);
+		// 		}
+		// 		if (c.indexOf(name) == 0) {
+		// 			return c.substring(name.length, c.length);
+		// 		}
+		// 	}
+		// 	return "";
+		// }
 
-		function checkCookie() {
-			let user = getCookie("username");
-			if (user != "") {
-				alert("Welcome again " + user);
-			} else {
-				user = prompt("Please enter your name:", "");
-				if (user != "" && user != null) {
-					setCookie("username", user, 365);
-				}
-			}
-		}
+		// function checkCookie() {
+		// 	let user = getCookie("username");
+		// 	if (user != "") {
+		// 		alert("Welcome again " + user);
+		// 	} else {
+		// 		user = prompt("Please enter your name:", "");
+		// 		if (user != "" && user != null) {
+		// 			setCookie("username", user, 365);
+		// 		}
+		// 	}
+		// }
 
 		// Hàm cập nhật biểu đồ month line 
 		function updateChartrevenuemonthline(year, month) {
@@ -93,10 +50,6 @@
 				.then(data => {
 					// Lấy giá trị 
 					const liststatis = data.liststatis;
-					amountCart = data.amountCart;
-					amountOrderSuccess = data.amountOrderSuccess;
-					amountOrderWaiting = data.amountOrderWaiting;
-					amountOrderFalse = data.amountOrderFalse;
 					// Cập nhật dữ liệu cho biểu đồ
 					myChart.data.labels = data.liststatis.map(item => item.day);
 					myChart.data.datasets[0].data = data.liststatis.map(item => item.price);
@@ -143,7 +96,6 @@
 						percentageElement.textContent = percentage.toFixed(0) + '%';
 						headerElement.textContent = formattedPrice;
 					}
-					getCookiemonthlyGoalByMonthLineAndSetInputIdmonthlyGoalByMonthLine();
 				});
 		}
 
@@ -154,10 +106,6 @@
 				.then(data => {
 					// Lấy giá trị 
 					const liststatis = data.liststatis;
-					amountCart1 = data.amountCart;
-					amountOrderSuccess1 = data.amountOrderSuccess;
-					amountOrderWaiting1 = data.amountOrderWaiting;
-					amountOrderFalse1 = data.amountOrderFalse;
 					// Cập nhật dữ liệu cho biểu đồ
 					myChart1.data.labels = data.liststatis.map(item => item.day);
 					myChart1.data.datasets[0].data = data.liststatis.map(item => item.price);
@@ -204,7 +152,6 @@
 						percentageElement.textContent = percentage.toFixed(0) + '%';
 						headerElement.textContent = formattedPrice;
 					}
-					getCookiemonthlyGoalByYearLineAndSetInputIdmonthlyGoalByYearLine();
 				});
 		}
 
@@ -219,7 +166,6 @@
 					var id = data.map(item => item.id);
 					var labels = data.map(item => item.name);
 					var values = data.map(item => item.countProductSell);
-					console.log(check);
 					// Cập nhật dữ liệu cho biểu đồ
 					myChart2.data.labels = labels;
 					myChart2.data.datasets[0].data = values;
@@ -237,46 +183,6 @@
                     categorySelect.innerHTML = categorySelectHTML;
 					updateListProductByStatus(yearSelectcategoryyearpie.value, categorySelectedValue.value);
 				});
-		}
-
-		// Hàm lấy giá trị cookie và đưa lên input monthlyGoalByMonthLine
-		function getCookiemonthlyGoalByMonthLineAndSetInputIdmonthlyGoalByMonthLine() {
-			// đưa giá trị vào form
-			cookieValueMonthlyGoalByMonthLine = getCookie('monthlyGoalByMonthLine');
-			// tinh phần trăm progress bar
-			var percentaddcartprogressmonthline = (amountCart / cookieValueMonthlyGoalByMonthLine) * 100;
-			var percentordersuccessprogressmonthline = (amountOrderSuccess / cookieValueMonthlyGoalByMonthLine) * 100;
-			var percentorderwaitingprogressmonthline = (amountOrderWaiting / cookieValueMonthlyGoalByMonthLine) * 100;
-			var percentorderfalseprogressmonthline = (amountOrderFalse / cookieValueMonthlyGoalByMonthLine) * 100;
-			monthlyGoalByMonthLine.value = cookieValueMonthlyGoalByMonthLine;
-			addcartprogressmonthline.innerHTML = `<b>${amountCart}</b>/${cookieValueMonthlyGoalByMonthLine}`;
-			ordersuccessprogressmonthline.innerHTML = `<b>${amountOrderSuccess}</b>/${cookieValueMonthlyGoalByMonthLine}`;
-			orderwaitingprogressmonthline.innerHTML = `<b>${amountOrderWaiting}</b>/${cookieValueMonthlyGoalByMonthLine}`;
-			orderfalseprogressmonthline.innerHTML = `<b>${amountOrderFalse}</b>/${cookieValueMonthlyGoalByMonthLine}`;
-			pbaddcartprogressmonthline.style.width = percentaddcartprogressmonthline + '%';
-			pbordersuccessprogressmonthline.style.width = percentordersuccessprogressmonthline + '%';
-			pborderwaitingprogressmonthline.style.width = percentorderwaitingprogressmonthline + '%';
-			pborderfalseprogressmonthline.style.width = percentorderfalseprogressmonthline + '%';
-		}
-
-		// Hàm lấy giá trị cookie và đưa lên input monthlyGoalByYearLine
-		function getCookiemonthlyGoalByYearLineAndSetInputIdmonthlyGoalByYearLine() {
-			// đưa giá trị vào form
-			cookieValueMonthlyGoalByYearLine = getCookie('monthlyGoalByYearLine');
-			// tinh phần trăm progress bar
-			var percentaddcartprogressmonthline1 = (amountCart1 / cookieValueMonthlyGoalByYearLine) * 100;
-			var percentordersuccessprogressmonthline1 = (amountOrderSuccess1 / cookieValueMonthlyGoalByYearLine) * 100;
-			var percentorderwaitingprogressmonthline1 = (amountOrderWaiting1 / cookieValueMonthlyGoalByYearLine) * 100;
-			var percentorderfalseprogressmonthline1 = (amountOrderFalse1 / cookieValueMonthlyGoalByYearLine) * 100;
-			monthlyGoalByYearLine.value = cookieValueMonthlyGoalByYearLine;
-			addcartprogressyearline.innerHTML = `<b>${amountCart1}</b>/${cookieValueMonthlyGoalByYearLine}`;
-			ordersuccessprogressyearline.innerHTML = `<b>${amountOrderSuccess1}</b>/${cookieValueMonthlyGoalByYearLine}`;
-			orderwaitingprogressyearline.innerHTML = `<b>${amountOrderWaiting1}</b>/${cookieValueMonthlyGoalByYearLine}`;
-			orderfalseprogressyearline.innerHTML = `<b>${amountOrderFalse1}</b>/${cookieValueMonthlyGoalByYearLine}`;
-			pbaddcartprogressmonthyearline.style.width = percentaddcartprogressmonthline1 + '%';
-			pbordersuccessprogressmonthyearline.style.width = percentordersuccessprogressmonthline1 + '%';
-			pborderwaitingprogressmonthyearline.style.width = percentorderwaitingprogressmonthline1 + '%';
-			pborderfalseprogressmonthyearline.style.width = percentorderfalseprogressmonthline1 + '%';
 		}
 
 		function updateListProductByStatus(year, id) {
@@ -364,25 +270,6 @@
 		yearSelectcategoryyearpie.addEventListener('change', function () {
 			updateChartordermonthpie(yearSelectcategoryyearpie.value);
 		});
-		// sự kiện nhập chỉ tiêu theo tháng biểu đồ line
-		monthlyGoalByMonthLine.addEventListener("change", function () {
-			// Lấy giá trị mới từ input
-			cookieValueMonthlyGoalByMonthLine = monthlyGoalByMonthLine.value;
-			// Lưu giá trị mới vào cookie
-			setCookie("monthlyGoalByMonthLine", cookieValueMonthlyGoalByMonthLine,
-				365); // 365 là số ngày tồn tại của cookie
-			getCookiemonthlyGoalByMonthLineAndSetInputIdmonthlyGoalByMonthLine();
-		});
-		// sự kiện nhập chỉ tiêu theo năm biểu đồ line
-		monthlyGoalByYearLine.addEventListener("change", function () {
-			// Lấy giá trị mới từ input
-			cookieValueMonthlyGoalByYearLine = monthlyGoalByYearLine.value;
-			// Lưu giá trị mới vào cookie
-			setCookie("monthlyGoalByYearLine", cookieValueMonthlyGoalByYearLine,
-				365); // 365 là số ngày tồn tại của cookie
-			getCookiemonthlyGoalByYearLineAndSetInputIdmonthlyGoalByYearLine();
-		});
-
 		// sự kiện chọn category
 		categorySelectedValue.addEventListener('change', function () {
 			updateListProductByStatus(yearSelectcategoryyearpie.value, categorySelectedValue.value);

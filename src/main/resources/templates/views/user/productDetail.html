@@ -1176,6 +1176,25 @@
 			// var size =document.querySelector("input[name='flexRadio']:checked").value;
 
 			var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
+			
+			// // up view
+			// function upView() {
+			// 	fetch("/upview?id="+id, {
+			// 		method: 'PUT',
+			// 		headers: {
+			// 		'Content-Type': 'application/json',
+			// 		// Các headers khác nếu cần
+			// 		},
+			// 	})
+			// 	.then(response => response.json())
+			// 	.then(data => {
+			// 		console.log('ok');
+			// 	});
+			// }
+			// if(id != null){
+			// 	upView();
+			// }
+
 			// hoặc tạo một chuỗi query chứa color và size
 			var data = "id=" + id + "&color=" + color + "&size=" + size;
 			var totalquantity = document.getElementById("totalquantity");
