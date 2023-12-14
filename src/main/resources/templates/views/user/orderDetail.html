@@ -261,11 +261,7 @@ header a.nav-link:hover {
 												</tr>
 												<tr>
 													<th>Vận chuyển:</th>
-													<td>00.00</td>
-												</tr>
-												<tr>
-													<th>Giảm giá</th>
-													<td th:text="${#numbers.formatDecimal(order.priceDiscount, 0, 'COMMA', 0, 'POINT')}"></td>
+													<td th:text="${#numbers.formatDecimal(order.totalShip, 0, 'COMMA', 0, 'POINT')}"></td>
 												</tr>
 												<tr>
 													<th>Tổng giá:</th>

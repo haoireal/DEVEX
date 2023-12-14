@@ -2,15 +2,12 @@ package com.Devex.Controller.customer;
 
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.Devex.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.Devex.Entity.Category;
-import com.Devex.Entity.FlashSaleTime;
-import com.Devex.Entity.Product;
-import com.Devex.Entity.User;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
