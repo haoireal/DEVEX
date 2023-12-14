@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Devex.DTO.MessageDTO;
+import com.Devex.DTO.ShopDTO;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.ChatService;
@@ -48,8 +49,8 @@ public class ChatAPIController {
 	}
 	
 	@GetMapping("/list-shop")
-	public ResponseEntity<List<Seller>> getAllShop() {
-		List<Seller> list = sellerService.findAll();
+	public ResponseEntity<List<ShopDTO>> getAllShop() {
+		List<ShopDTO> list = sellerService.findAllId();
 		if(list != null) {
 			return ResponseEntity.ok(list);
 		}else {

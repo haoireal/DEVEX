@@ -129,7 +129,7 @@
 			<!-- Lặp qua các shop và sản phẩm -->
 			<div>
 				<div class="d-flex justify-content-between gap-3 align-items-center px-3 pt-1">
-					<button class="d-flex justify-content-start gap-3 align-items-center border-0 bg-transparent"
+					<a href="/pageseller/{{idShop}}" class="d-flex justify-content-start gap-3 align-items-center border-0 bg-transparent btn"
 						type="button">
 						<div class="">
 							<img alt="Avatar Shop" src="/img/account/{{cart.shopGroups[idShop][0].avatarShop}}"
@@ -139,7 +139,7 @@
 						<p class="d-flex align-items-center m-0 ng-binding">
 							{{cart.shopGroups[idShop][0].nameShop}}
 						</p>
-					</button>
+					</a>
 					<div class="text-center d-flex align-items-center">
 						<input class="form-check-input m-0" type="checkbox" value="" id="checkAllProdOfShop"
 							ng-checked="cart.selectedShopIds.indexOf(idShop) != -1" ng-click="cart.toggleShopSelect(idShop)" />
@@ -412,7 +412,7 @@
   }
 </script> -->
 	<script th:src="@{/js/cart-ctrl.js}"></script>
-
+	<script th:src="@{/js/user/autocomplete.js}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
 		crossorigin="anonymous"></script>

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.Devex.DTO.ShopDTO;
 import com.Devex.Entity.Seller;
 import com.Devex.Repository.SellerRepository;
 import com.Devex.Sevice.SellerService;
@@ -26,6 +27,11 @@ public class SellerServiceImpl implements SellerService{
 	@Override
 	public Seller save(Seller entity) {
 		return sellerRepository.save(entity);
+	}
+
+	@Override
+	public List<ShopDTO> findAllId() {
+		return sellerRepository.findAllId();
 	}
 
 	@Override

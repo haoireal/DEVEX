@@ -88,7 +88,7 @@ app.controller("message-ctrl", function ($scope, $http, $window) {
 
     //hiện thị tên shop nếu đó là shop
     checkShopName(id, fullName) {
-      var user = this.listShop.find((item) => item.username === id);
+      var user = this.listShop.find((item) => item.userID === id);
       if(user == null) {
         return fullName;
       }else {

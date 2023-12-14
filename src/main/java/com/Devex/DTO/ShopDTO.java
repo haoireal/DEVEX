@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShopDTO {
-
+	String userID;
 	String shopName;
+	String fullname;
 	String address;
 	String phoneAddress;
 	Boolean mall;
