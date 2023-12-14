@@ -43,7 +43,7 @@
                 <li class="breadcrumb-item">
                   <a href="/devex/home">Trang chủ</a>
                 </li>
-                <li class="breadcrumb-item active">Tổng quan</li>
+                <li class="breadcrumb-item active">Quản lý danh mục</li>
               </ol>
             </div>
             <!-- /.col -->
@@ -72,16 +72,22 @@
                         <div class="card-header">
                           <h5 class="text-center">Loại sản phẩm</h5>
                         </div>
-                        <div class="input-group mt-2 mb-1 mr-2">
-                          <input ng-model="namecategory" type="text" class="form-control"
-                            placeholder="Nhập loại sản phẩm" aria-label="Nhập loại sản phẩm"
-                            aria-describedby="basic-addon2" />
-                          <div class="input-group-append">
-                            <button ng-click="addCategory()" class="input-group-text btn btn-success" id="basic-addon2">
-                              <i class="fa-solid fa-plus"></i>
-                            </button>
+                        <form name="addCategoryForm">
+                          <div class="input-group mt-2 mb-1 mr-2">
+                            <input ng-model="namecategory" type="text" class="form-control"
+                              placeholder="Nhập tên loại sản phẩm" aria-label="Nhập tên loại sản phẩm"
+                              aria-describedby="basic-addon2" name="namecategory" ng-required="true"/>
+                            <div class="input-group-append">
+                              <button ng-click="addCategory()" class="input-group-text btn btn-success" id="basic-addon2"
+                                ng-disabled="addCategoryForm.namecategory.$invalid">
+                                <i class="fa-solid fa-plus"></i>
+                              </button>
+                            </div>
                           </div>
-                        </div>
+                          <div class="text-danger" ng-show="addCategoryForm.namecategory.$dirty && addCategoryForm.namecategory.$error.required">
+                            Vui lòng tên nhập loại sản phẩm.
+                          </div>
+                        </form>
                         <hr style="margin-top: 5px; margin-bottom: 5px" />
                         <div class="card-body" style="overflow-y: scroll; height: 400px">
                           <div ng-repeat="category in listCategory">
@@ -125,17 +131,22 @@
                         <div class="card-header">
                           <h5 class="text-center">Loại sản phẩm chi tiết</h5>
                         </div>
-                        <div class="input-group mt-2 mb-1 mr-2">
-                          <input ng-model="namecategorydetails" type="text" class="form-control"
-                            placeholder="Nhập loại chi tiết sản phẩm" aria-label="Nhập loại chi tiết sản phẩm"
-                            aria-describedby="basic-addon2" />
-                          <div class="input-group-append">
-                            <button ng-click="addCategoryDetails()" class="input-group-text btn btn-success"
-                              id="basic-addon2">
-                              <i class="fa-solid fa-plus"></i>
-                            </button>
+                        <form name="addCategoryDetailsForm">
+                          <div class="input-group mt-2 mb-1 mr-2">
+                            <input ng-model="namecategorydetails" type="text" class="form-control"
+                              placeholder="Nhập tên loại chi tiết sản phẩm" aria-label="Nhập tên loại chi tiết sản phẩm"
+                              aria-describedby="basic-addon2" name="namecategorydetails" ng-required="true"/>
+                            <div class="input-group-append">
+                              <button ng-click="addCategoryDetails()" class="input-group-text btn btn-success"
+                                id="basic-addon2" ng-disabled="addCategoryDetailsForm.namecategorydetails.$invalid">
+                                <i class="fa-solid fa-plus"></i>
+                              </button>
+                            </div>
                           </div>
-                        </div>
+                          <div class="text-danger" ng-show="addCategoryDetailsForm.namecategorydetails.$dirty && addCategoryDetailsForm.namecategorydetails.$error.required">
+                            Vui lòng tên nhập loại sản phẩm chi tiết.
+                          </div>
+                        </form>
                         <hr style="margin-top: 5px; margin-bottom: 5px" />
                         <div class="card-body" style="overflow-y: scroll; height: 400px">
                           <div ng-repeat="categorydetails in listCategoryDetails">
@@ -191,16 +202,22 @@
                 <div class="card-header">
                   <h4 class="card-title">Quản lý thương hiệu sản phẩm</h4>
                 </div>
-                <div class="input-group mt-2 mb-1 mr-2">
-                  <input ng-model="nameProductBrand" type="text" class="form-control"
-                    placeholder="Nhập thương hiệu sản phẩm" aria-label="Nhập thương hiệu sản phẩm"
-                    aria-describedby="basic-addon2" />
-                  <div class="input-group-append">
-                    <button ng-click="addProductBrand()" class="input-group-text btn btn-success" id="basic-addon2">
-                      <i class="fa-solid fa-plus"></i>
-                    </button>
+                <form name="addBrandForm">
+                  <div class="input-group mt-2 mb-1 mr-2">
+                    <input ng-model="nameProductBrand" type="text" class="form-control"
+                      placeholder="Nhập thương hiệu sản phẩm" aria-label="Nhập thương hiệu sản phẩm"
+                      aria-describedby="basic-addon2" name="namebrand" ng-required="true"/>
+                    <div class="input-group-append">
+                      <button ng-click="addProductBrand()" class="input-group-text btn btn-success" id="basic-addon2"
+                        ng-disabled="addBrandForm.namebrand.$invalid">
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
+                  <div class="text-danger" ng-show="addBrandForm.namebrand.$dirty && addBrandForm.namebrand.$error.required">
+                    Vui lòng tên nhập thương hiệu sản phẩm.
+                  </div>
+                </form>
                 <hr style="margin-top: 5px; margin-bottom: 5px" />
                 <div class="card-body" style="overflow-y: scroll; height: 400px">
                   <div ng-repeat="ProductBrand in listProductBrand">

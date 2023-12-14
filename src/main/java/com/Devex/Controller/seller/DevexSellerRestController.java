@@ -52,6 +52,7 @@ import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.DwalletService;
+import com.Devex.Sevice.FileManagerService;
 import com.Devex.Sevice.FlashSalesService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
@@ -78,7 +79,7 @@ import jakarta.websocket.server.PathParam;
 public class DevexSellerRestController {
 
 	@Autowired
-	private CustomerServiceImpl.FileManagerService fileManagerService;
+	private FileManagerService fileManagerService;
 
 	@Autowired
 	private SessionService session;
@@ -240,7 +241,7 @@ public class DevexSellerRestController {
 
 	@SuppressWarnings("unused")
 	@PutMapping("/info/product")
-	public void updateProduct(@RequestBody Object object) throws ParseException {
+	public Map<String, Object> updateProduct(@RequestBody Object object) throws ParseException {
 		User u = session.get("user");
 		boolean checkInsert = false;
 		// Chuyển object sang json sau đó đọc ra
@@ -282,7 +283,17 @@ public class DevexSellerRestController {
 						productVariant.getPriceSale(), productVariant.getSize(), productVariant.getColor(), id);
 			}
 		}
-
+		Map<String, Object> mapInfoProduct = new HashMap<>();
+		String idp = session.get("idproduct");
+		boolean checkRequest = false;
+		Product product = productService.findByIdProduct(idp);
+		ProductRequest productRequest = productRequestService.findProductRequestByProductId(idp);
+		mapInfoProduct.put("product", product);
+		if (productRequest != null) {
+			checkRequest = true;
+		}
+		mapInfoProduct.put("checkRequest", checkRequest);
+		return mapInfoProduct;
 	}
 
 	@DeleteMapping("/delete/product/{idproduct}")

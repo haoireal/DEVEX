@@ -21,6 +21,7 @@ import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
+import com.Devex.Sevice.FileManagerService;
 import com.Devex.Sevice.ImageProductService;
 import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.OrderDetailService;
@@ -64,7 +65,7 @@ public class DevexSellerController {
     private CategoryDetailService categoryDetailService;
 
     @Autowired
-    private CustomerServiceImpl.FileManagerService fileManagerService;
+    private FileManagerService fileManagerService;
 
     @Autowired
     private ImageProductService imageProductService;

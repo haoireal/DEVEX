@@ -179,7 +179,7 @@
 										</div>
 										<div class="form-check form-switch">
 											<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
-											 ng-model="form.active" ng-checked="form.active" ng-disabled="form.active === false">
+											 ng-model="form.active" ng-checked="form.active" ng-disabled="checkSell === false">
 											<label class="form-check-label" for="flexSwitchCheckDefault">Trạng thái bán</label>
 										</div>
 										<table class="table table-bordered text-center" id="data-table">
@@ -228,7 +228,7 @@
 								<button class="btn btn-primary" ng-click="save()" ng-disabled="myForm.$invalid">Lưu</button>
 								<button class="btn btn-primary" ng-click="deleteProduc()">Xóa</button>
 								<button class="btn btn-danger" ng-if="checkRequest === true" ng-click="cancelRequest()">Hủy yêu cầu</button>
-								<button class="btn btn-success" ng-if="checkRequest === false" ng-click="sendRequest()">Gửi yêu cầu</button>
+								<button class="btn btn-success" ng-if="checkRequest === false && checkSell === false" ng-click="sendRequest()">Gửi yêu cầu</button>
 							</div>
 
 							<div class="text-center">
@@ -514,22 +514,19 @@
 			$scope.id = '';
 			$scope.selectedCategoryId = '';
 			$scope.checkRequest = false;
+			$scope.checkSell = false;
 
 			$scope.infoproduct = function () {
 				$http.get(url).then(resp => {
 					$scope.form = resp.data.product;
 					$scope.checkRequest = resp.data.checkRequest;
+					$scope.checkSell = resp.data.product.active;
 					if ($scope.form.name == 'Nhập tên sản phẩm tại đây') {
 						$scope.form.name = '';
 						active = $scope.form.active;
 						description = $scope.form.description;
 						isdelete = $scope.form.isdelete;
 						name = $scope.form.name;
-						console.log(active);
-						console.log(description);
-						console.log(isdelete);
-						console.log(name);
-						console.log("info");
 					}else {
 						$scope.checkvalue = 1;
 					}
@@ -614,7 +611,6 @@
 				$scope.form.idCategoryDetails = $scope.selectedCategoryDetail;
 				$scope.form.listvariant = $scope.variant;
 				$scope.form.brand = $scope.selectedbrand;
-				console.log($scope.form);
 				$http.put("/info/product", $scope.form).then(resp => {
 				content.textContent = "Lưu thành công";
 				successbtn.click();
@@ -623,11 +619,8 @@
 				description = $scope.form.description;
 				isdelete = $scope.form.isdelete;
 				name = $scope.form.name;
-				console.log(active);
-				console.log(description);
-				console.log(isdelete);
-				console.log(name);
-				console.log("save");
+				$scope.checkRequest = resp.data.checkRequest;
+				$scope.checkSell = $scope.form.active;
 				}).catch(error => {
 					console.log("errors", error);
 					contentfalse.textContent = "Lưu thất bại";
