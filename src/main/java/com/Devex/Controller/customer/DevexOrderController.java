@@ -168,7 +168,7 @@ public class DevexOrderController {
         for (OrderDetails odL: listOrderDetails) {
             detailService.updateIdOrderDetailsStatus(1007, odL.getId());
         }
-
+        transactionService.transactionBackToUser(listOrderDetails.get(0));
         return "redirect:/order#/cancel";
     }
     private HashMap<KeyBillDTO,List<OrderDetails>> setHashMapBillDetail(HashMap<KeyBillDTO,List<OrderDetails>> allOrderByShop,List<OrderDetails> allOrder){
