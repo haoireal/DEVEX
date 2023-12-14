@@ -50,7 +50,7 @@ public class Customer extends User implements Serializable{
 	@OneToMany(mappedBy = "customerOrder")
 	private List<Order> orders;
 	
-	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-    private Cart cart;
+//	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+//    private Cart cart;
 
 }

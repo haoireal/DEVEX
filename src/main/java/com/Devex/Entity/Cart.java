@@ -31,9 +31,11 @@ public class Cart implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", updatable = false)
 	private int id;
+
 	@OneToOne
 	@JoinColumn(name = "Username")
 	private Customer person;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "cart")
 	private List<CartDetail> cartDetails;

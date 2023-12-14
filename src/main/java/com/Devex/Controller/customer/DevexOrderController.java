@@ -82,7 +82,8 @@ public class DevexOrderController {
     public String getOrderPage(Model model) {
         User u = sessionService.get("user");
         //Tìm toàn bộ hó đơn
-        List<OrderDetails> allOrder = orderDetailService.findOrdersByCustomerID(u.getUsername());
+        String username = u.getUsername();
+        List<OrderDetails> allOrder = orderDetailService.findOrdersByCustomerID(username);
         HashMap<KeyBillDTO, List<OrderDetails>> allOrderByShop = new HashMap<>();
         allOrderByShop = setHashMapBillDetail(allOrderByShop,allOrder);
         model.addAttribute("allOrder", allOrderByShop);
