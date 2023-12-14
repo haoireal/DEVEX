@@ -52,6 +52,7 @@ import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.DwalletService;
+import com.Devex.Sevice.FileManagerService;
 import com.Devex.Sevice.FlashSalesService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
@@ -78,7 +79,7 @@ import jakarta.websocket.server.PathParam;
 public class DevexSellerRestController {
 
 	@Autowired
-	private CustomerServiceImpl.FileManagerService fileManagerService;
+	private FileManagerService fileManagerService;
 
 	@Autowired
 	private SessionService session;
@@ -240,7 +241,7 @@ public class DevexSellerRestController {
 
 	@SuppressWarnings("unused")
 	@PutMapping("/info/product")
-	public void updateProduct(@RequestBody Object object) throws ParseException {
+	public Map<String, Object> updateProduct(@RequestBody Object object) throws ParseException {
 		User u = session.get("user");
 		boolean checkInsert = false;
 		// Chuyển object sang json sau đó đọc ra
@@ -257,7 +258,7 @@ public class DevexSellerRestController {
 		String id = jsonNode.get("id").asText();
 		String name = jsonNode.get("name").asText();
 		CategoryDetails categoryDetails = categoryDetailService.findCategoryDetailsById(idCategoryDetails);
-		Seller seller = sellerService.findFirstByUsername(u.getUsername());
+		Seller seller = sellerService.findById(u.getUsername()).get();
 		Product p = productService.findByIdProduct(id);
 		if (p.getActive() == false && p.getDescription() == null && p.getIsdelete() == false
 				&& p.getName() == "Nhập tên sản phẩm tại đây") {
@@ -282,7 +283,17 @@ public class DevexSellerRestController {
 						productVariant.getPriceSale(), productVariant.getSize(), productVariant.getColor(), id);
 			}
 		}
-
+		Map<String, Object> mapInfoProduct = new HashMap<>();
+		String idp = session.get("idproduct");
+		boolean checkRequest = false;
+		Product product = productService.findByIdProduct(idp);
+		ProductRequest productRequest = productRequestService.findProductRequestByProductId(idp);
+		mapInfoProduct.put("product", product);
+		if (productRequest != null) {
+			checkRequest = true;
+		}
+		mapInfoProduct.put("checkRequest", checkRequest);
+		return mapInfoProduct;
 	}
 
 	@DeleteMapping("/delete/product/{idproduct}")
@@ -606,7 +617,7 @@ public class DevexSellerRestController {
 		int amountProduct = productService.getCountProductBySellerUsername(u.getUsername());
 		int amountProductSell = productService.getCountProductSellBySellerUsername(u.getUsername(), 1005, 1009);
 		Map<String, Object> sellerDetails = new HashMap<>();
-		sellerDetails.put("seller", sellerService.findFirstByUsername(u.getUsername()));
+		sellerDetails.put("seller", sellerService.findById(u.getUsername()).get());
 		sellerDetails.put("amountOrder", amountOrder);
 		sellerDetails.put("amountFollow", amountFollow);
 		sellerDetails.put("amountProduct", amountProduct);
@@ -620,7 +631,7 @@ public class DevexSellerRestController {
 		// Lấy thông tin người dùng từ session hoặc nguồn dữ liệu khác
 		User user = session.get("user");
 		List<String> listChange = new ArrayList<>();
-		Seller selleru = sellerService.findFirstByUsername(user.getUsername());
+		Seller selleru = sellerService.findById(user.getUsername()).get();
 		sellerService.updateSeller(ShopDTO.getShopName(), ShopDTO.getAddress(), ShopDTO.getPhoneAddress(),
 				ShopDTO.getMall(), true, ShopDTO.getDescription(), user.getUsername());
 		if (!selleru.getShopName().equalsIgnoreCase(ShopDTO.getShopName())) {

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,7 +71,7 @@ public class ProductDetailController {
 		//end.
 		Product seller = productService.findProductById(id);
 		Product product = productService.findById(id).orElse(new Product());
-		
+		System.out.println(product.getActive());
 //		System.out.println("SSSS" + product.getProductVariants().get(0).getPriceSale());
 		List<String> listSize = new ArrayList<>();
 		product.getProductVariants().forEach(sv -> {
@@ -96,7 +97,7 @@ public class ProductDetailController {
 		listPrS.remove(product);
 		// Tìm tên từ theo từ khóa
 		for(int i = 0; i < 3 ; i++) {
-			list.addAll(productService.findByKeywordName(name[i]));
+			list.addAll(productService.findByKeywordName(name[i]));			
 			list.forEach(pr ->{
 				uniqueProducts.add(pr);
 			});
@@ -144,5 +145,13 @@ public class ProductDetailController {
 			int quantity =  p.getQuantity();
 			return quantity;
 	}
+	
+//	@PutMapping("/upview")
+//	public void upView(@RequestParam("id") String id) {
+//		System.out.println(id);
+//		Product p = productService.findByIdProduct(id);
+//		System.out.println(p.getViewcount()+"aaaa");
+////		productService.updateViewProduct(id, p.getViewcount()+1);
+//	}
 
 }

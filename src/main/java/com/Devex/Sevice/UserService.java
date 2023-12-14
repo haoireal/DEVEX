@@ -54,4 +54,6 @@ public interface UserService {
 
 	int getAmountUserOfAdmin();
 
+	User findByIdActive(String username);
+
 }

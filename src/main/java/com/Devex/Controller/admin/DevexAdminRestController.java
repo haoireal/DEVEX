@@ -247,12 +247,6 @@ public class DevexAdminRestController {
 		}
 		List<Object[]> listt = orderService.getTotalPriceOrderByMonthAndYear(year, month);
 		List<Object[]> listtc = orderService.getTotalPriceOrderByMonthAndYear(yearCompare, monthCompare);
-		long amountCart = cartService.count();
-		int amountOrderSuccess = orderService.getCountOrderByStatusIdAndYearAndMonth(1006, year, month);
-		int huydon = orderService.getCountOrderFalseByStatusIdAndYearAndMonth(1007, year, month);
-		int trahang = orderService.getCountOrderFalseByStatusIdAndYearAndMonth(1008, year, month);
-		int amountOrderFalse = huydon + trahang;
-		int amountOrderWaiting = orderService.getCountOrderWaitingByStatusIdAndYearAndMonth(year, month);
 		List<StatisticalRevenueMonthDTO> liststatis = new ArrayList<>();
 		LocalDate date = LocalDate.of(year, month, 1);
 		LocalDate dateCompare = LocalDate.of(yearCompare, monthCompare, 1);
@@ -308,10 +302,6 @@ public class DevexAdminRestController {
 			}
 		}
 		RevenueByMonth.put("liststatis", liststatis);
-		RevenueByMonth.put("amountCart", amountCart);
-		RevenueByMonth.put("amountOrderSuccess", amountOrderSuccess);
-		RevenueByMonth.put("amountOrderWaiting", amountOrderWaiting);
-		RevenueByMonth.put("amountOrderFalse", amountOrderFalse);
 		return RevenueByMonth;
 	}
 
@@ -345,17 +335,7 @@ public class DevexAdminRestController {
 			statistical.setPriceCompare(priceCompare);
 			liststatis.add(statistical);
 		}
-		long amountCart = cartService.count();
-		int amountOrderSuccess = orderService.getCountOrderByStatusIdAndYear(1006, year);
-		int huydon = orderService.getCountOrderFalseByStatusIdAndYear(1007, year);
-		int trahang = orderService.getCountOrderFalseByStatusIdAndYear(1008, year);
-		int amountOrderFalse = huydon + trahang;
-		int amountOrderWaiting = orderService.getCountOrderWaitingByStatusIdAndYear(year);
 		RevenueByMonth.put("liststatis", liststatis);
-		RevenueByMonth.put("amountCart", amountCart);
-		RevenueByMonth.put("amountOrderSuccess", amountOrderSuccess);
-		RevenueByMonth.put("amountOrderWaiting", amountOrderWaiting);
-		RevenueByMonth.put("amountOrderFalse", amountOrderFalse);
 		return RevenueByMonth;
 	}
 

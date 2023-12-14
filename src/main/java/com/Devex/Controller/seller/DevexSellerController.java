@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.Product;
+import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
+import com.Devex.Sevice.FileManagerService;
 import com.Devex.Sevice.ImageProductService;
 import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.OrderDetailService;
@@ -63,7 +65,7 @@ public class DevexSellerController {
     private CategoryDetailService categoryDetailService;
 
     @Autowired
-    private CustomerServiceImpl.FileManagerService fileManagerService;
+    private FileManagerService fileManagerService;
 
     @Autowired
     private ImageProductService imageProductService;
@@ -74,17 +76,26 @@ public class DevexSellerController {
     @Autowired
     private NotiService notiService;
 
-    @ModelAttribute("isMall")
-    public Boolean getUserAndIsMall() {
-        User u = session.get("user");
-        if (u != null) {
-            return sellerService.findFirstByUsername(u.getUsername()).getMall();
-        }
-        return false; // hoặc giá trị mặc định của bạn nếu không có user
-    }
+//    @ModelAttribute("isMall")
+//    public Boolean getUserAndIsMall() {
+//        User u = session.get("user");
+//        if (u != null) {
+//            return sellerService.findFirstByUsername(u.getUsername()).getMall();
+//        }
+//        return false; // hoặc giá trị mặc định của bạn nếu không có user
+//    }
 
-    @GetMapping("/home")
-    public String getHomePage() {
+    @GetMapping({ "/home", "/*" })
+    public String getHomePage(Model model) {
+    	User u = session.get("user");
+    	System.out.println(1);
+    	Boolean isMall = false;
+        if (u != null) {
+        	Seller shop = sellerService.findById(u.getUsername()).get();
+        	isMall = shop.getMall();
+        }
+        model.addAttribute("isMall", isMall);
+        System.out.println(isMall);
         return "seller/index";
     }
     

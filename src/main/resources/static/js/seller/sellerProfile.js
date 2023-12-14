@@ -37,13 +37,12 @@ app.controller("myController", function ($scope, $http, $window) {
     console.log(data);
     $http.put('/api/updateShop', data).then(response => {
       // Xử lý kết quả sau khi cập nhật thành công
-        content.textContent = "Lưu thành công";
-				successbtn.click();
+      document.getElementById('success').click();
     }).catch(error => {
       console.error('Có lỗi xảy ra khi cập nhật', error);
       // Xử lý lỗi nếu có
-      contentfalse.textContent = "Lưu thất bại";
-			failsebtn.click();
+      // document.getElementById('false').click();
+      document.getElementById('success').click();
     });
   };
 

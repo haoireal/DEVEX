@@ -1,6 +1,7 @@
 package com.Devex.Controller.customer;
 
 import java.util.Date;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,11 +16,13 @@ import com.Devex.DTO.MailOtpDTO;
 import com.Devex.DTO.OtpRequestDTO;
 import com.Devex.DTO.OtpValidationRequest;
 import com.Devex.Entity.Customer;
+import com.Devex.Entity.Dwallet;
 import com.Devex.Entity.Role;
 import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.CustomerService;
+import com.Devex.Sevice.DwalletService;
 import com.Devex.Sevice.MailerService;
 import com.Devex.Sevice.OTPService;
 import com.Devex.Sevice.ParamService;
@@ -39,6 +42,9 @@ public class AccountController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	DwalletService dwalletService;
 	
 	@Autowired
 	UserRoleService userRoleService;
@@ -119,11 +125,16 @@ public class AccountController {
 	
 	//điền thông tin tài khoản
 	@PostMapping("/signup-information")
-	public String doInfSignup() {
+	public String doInfSignup(Model model) {
 		User user = new Customer();
 		String username = param.getString("username", "");
+		User userExit = userService.findById(username.trim()).orElse(null);
+		if(userExit != null) {
+			model.addAttribute("message", "Username đã tồn tại!");
+			return "account/signup";
+		}
 		String fullname = param.getString("fullname", "");
-		String password = param.getString("password", "");
+		String password = param.getString("password", "123");
 		String gender = param.getString("gender", "Other");
 		boolean active = true;
 		Date createdDate = new Date();
@@ -138,16 +149,25 @@ public class AccountController {
 
             phone = info;
         }
-		user.setUsername(username);
-		user.setFullname(fullname);
+		user.setUsername(username.trim());
+		user.setFullname(fullname.trim());
 		user.setPhone(phone);
 		user.setEmail(email);
 		user.setPassword(passwordEncoder.encode(password));
 		user.setCreateDay(createdDate);
 		user.setGender(gender);
 		user.setActive(active);
-		user.setAvatar(null);
+		user.setAvatar("avt.webp");
 		userService.save(user);
+		//tạo ví cho user
+		Dwallet dwallet = new Dwallet();
+		String id = generateRandomNumber();
+		dwallet.setId(id);
+		dwallet.setUser(user);
+		dwallet.setBalance(10000000.0);
+		dwallet.setActive(true);
+		dwalletService.save(dwallet);
+		//tạo customer
 		Customer customer = new Customer();
 		customer.setUsername(username);
 		customer.setFullname(fullname);
@@ -217,8 +237,9 @@ public class AccountController {
 	@PostMapping("/verify-password")
 	public String doVerifyPassword(Model model) {
 		User user = session.get("user");
-		String pass = param.getString("password", "");
-		if(!user.getPassword().equals(pass)) {
+		String pass = param.getString("password", "123");
+		String passEncoder = passwordEncoder.encode(pass);	// mã hoá pass
+		if(!user.getPassword().equals(passEncoder)) {
 			model.addAttribute("message", "Mật khẩu không trùng khớp!");
 			return "account/current-password";
 		}
@@ -241,7 +262,7 @@ public class AccountController {
 			model.addAttribute("message", "Xác thực mật khẩu không trùng khớp!");
 			return "account/new-password";
 		}
-		user.setPassword(confirmPass);
+		user.setPassword(passwordEncoder.encode(confirmPass));
 		userService.save(user);
 		return "redirect:/profile";
 	}
@@ -348,7 +369,7 @@ public class AccountController {
 			model.addAttribute("message", "Xác thực mật khẩu không trùng khớp!");
 			return "account/new-password";
 		}
-		user.setPassword(confirmPass);
+		user.setPassword(passwordEncoder.encode(confirmPass));
 		userService.save(user);
 		return "redirect:/signin";
 	}
@@ -373,6 +394,21 @@ public class AccountController {
             phoneNumber = PHONE_NUMBER_PREFIX + phoneNumber.substring(1);
         }
         return phoneNumber;
+    }
+    
+    public static String generateRandomNumber() {
+        // Khởi tạo đối tượng StringBuilder để xây dựng chuỗi
+        StringBuilder randomStringBuilder = new StringBuilder();
+
+        // Sử dụng lớp Random để sinh số ngẫu nhiên từ 0 đến 9 và ghép chúng lại thành một chuỗi
+        Random random = new Random();
+        for (int i = 0; i < 100; i++) {
+            int digit = random.nextInt(10); // Sinh số ngẫu nhiên từ 0 đến 9
+            randomStringBuilder.append(digit);
+        }
+
+        // Chuyển đối tượng StringBuilder thành chuỗi và trả về
+        return randomStringBuilder.toString();
     }
     
 

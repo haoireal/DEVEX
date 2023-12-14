@@ -54,8 +54,10 @@ const app = angular.module("app", []);
                 $scope.listCategory = response.data.listCategory;
                 $scope.showCategoryDetails(id);
                 $scope.namecategory = '';
+                document.getElementById('si').click();
             }, function(error) {
                 console.error('Error:', error);
+                document.getElementById('fi').click();
             });
         }; 
 
@@ -66,8 +68,10 @@ const app = angular.module("app", []);
                 $scope.namecategorydetails = '';
                 $scope.listCategoryDetails = response.data;
                 $scope.cadfalse();
+                document.getElementById('si').click();
             }, function(error) {
                 console.error('Error:', error);
+                document.getElementById('fi').click();
             });
         }; 
 
@@ -77,6 +81,10 @@ const app = angular.module("app", []);
             .then(function(putResponse) {
                 $scope.listCategoryDetails = putResponse.data;
                 $scope.cadfalse();
+                document.getElementById('sd').click();
+            }, function(error) {
+                console.error('Error:', error);
+                document.getElementById('fd').click();
             });
         };
 
@@ -94,6 +102,10 @@ const app = angular.module("app", []);
                     .then(function(response) {
                         $scope.listCategoryDetails = response.data;
                         $scope.cadfalse();
+                        document.getElementById('sd').click();
+                    }, function(error) {
+                        console.error('Error:', error);
+                        document.getElementById('fd').click();
                     });
                 }
             });
@@ -109,6 +121,10 @@ const app = angular.module("app", []);
                     $scope.firstCategory = $scope.listCategory[0];
                     $scope.showCategoryDetails($scope.firstCategory.id);
                 }
+                document.getElementById('sd').click();
+            }, function(error) {
+                console.error('Error:', error);
+                document.getElementById('fd').click();
             });
         };
 
@@ -129,6 +145,10 @@ const app = angular.module("app", []);
                             $scope.firstCategory = $scope.listCategory[0];
                             $scope.showCategoryDetails($scope.firstCategory.id);
                         }
+                        document.getElementById('sd').click();
+                    }, function(error) {
+                        console.error('Error:', error);
+                        document.getElementById('fd').click();
                     });
                 }
             });
@@ -152,6 +172,10 @@ const app = angular.module("app", []);
                 $scope.listProductBrand = putResponse.data;
                 $scope.pbfalse();
                 idpb = '';
+                document.getElementById('sd').click();
+            }, function(error) {
+                console.error('Error:', error);
+                document.getElementById('fd').click();
             });
         };
 
@@ -170,6 +194,10 @@ const app = angular.module("app", []);
                         $scope.listProductBrand = response.data;
                         $scope.pbfalse();
                         idpb = '';
+                        document.getElementById('sd').click();
+                    }, function(error) {
+                        console.error('Error:', error);
+                        document.getElementById('fd').click();
                     });
                 }
             });
@@ -182,8 +210,10 @@ const app = angular.module("app", []);
                 $scope.nameProductBrand = '';
                 $scope.listProductBrand = response.data;
                 $scope.pbfalse();
+                document.getElementById('si').click();
             }, function(error) {
                 console.error('Error:', error);
+                document.getElementById('fi').click();
             });
         }; 
 
@@ -213,6 +243,10 @@ const app = angular.module("app", []);
                 $scope.listCategory = putResponse.data.listca;
                 $scope.id = putResponse.data.id;
                 $scope.showCategoryDetails($scope.id);
+                document.getElementById('su').click();
+            }, function(error) {
+                console.error('Error:', error);
+                document.getElementById('fu').click();
             });
             $scope.editca[id] = false;
         };
@@ -241,6 +275,10 @@ const app = angular.module("app", []);
             .then(function(putResponse) {
                 $scope.id = putResponse.data;
                 $scope.showCategoryDetails($scope.id);
+                document.getElementById('su').click();
+            }, function(error) {
+                console.error('Error:', error);
+                document.getElementById('fu').click();
             });
             $scope.editca[id] = false;
         };
@@ -269,6 +307,10 @@ const app = angular.module("app", []);
             .then(function(putResponse) {
                 $scope.listProductBrand = putResponse.data;
                 $scope.pbfalse();
+                document.getElementById('su').click();
+            }, function(error) {
+                console.error('Error:', error);
+                document.getElementById('fu').click();
             });
             $scope.editpb[id] = false;
         };

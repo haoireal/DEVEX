@@ -105,4 +105,6 @@ public interface ProductService {
 	String findByidProductproductVariants(int id);
 
 	List<Product> findAllProductByUsernameContainingKeyword(String keyword, String username);
+
+//	void updateViewProduct(String id, long view);
 }

@@ -82,12 +82,12 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     itemDetail: {},
     prodVoucher: [],
 
-    loadMyVoucher() {
+    async loadMyVoucher() {
       var url = `${host}/voucher/my-saved`;
-      $http.get(url).then((response) => {
+      $http.get(url).then(async (response) => {
         this.items = response.data;
         console.log(this.items);
-        this.groupVoucherApplied();
+        await this.groupVoucherApplied();
         this.groupVoucherAvailability();
         console.log(this.itemsApplied);
         console.log(this.itemsAvailability);
@@ -112,7 +112,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     },
     
 
-    groupVoucherApplied() {
+     groupVoucherApplied() {
       this.itemsApplied = this.items.filter((voucher) =>
         $cart.isItemInMyVoucherApplied(voucher)
       );
@@ -625,6 +625,11 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       }
     },
 
+    //check số lượng đặt có lố sl tồn kho không
+    checkQtyToBuy() {
+      return this.itemsOrder.some((item) => item.quantity > item.quantityInventory);
+    },
+
     get count() {
       // tính tổng số lượng các mặt hàng trong giỏ
       return this.items
@@ -679,6 +684,8 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       // tính tổng số lượng các mặt hàng trong shop
       return this.shopGroupsOrder[idShop].length;
     },
+
+    
 
     amountItemShop(idShop) {
       // tính tiền shop
@@ -901,9 +908,9 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
     if ($cart.itemsOrder.length === 0) {
       this.message = "Vui lòng chọn sản phẩm muốn mua!";
       $("#ModalOrderMessage").modal("show");
-    // } else if ($cart.checkQtyToBuy()) {
-    //   this.message = "Số lượng tồn kho không đủ để đặt hàng!";
-    //   $("#ModalOrderMessage").modal("show");
+    } else if ($cart.checkQtyToBuy()) {
+      this.message = "Số lượng tồn kho không đủ để đặt hàng!";
+      $("#ModalOrderMessage").modal("show");
     } else if (userAddress === "" || userPhoneAddress === "") {
       this.message = "Vui lòng cung cấp thông tin địa chỉ của bạn!";
       $("#ModalOrderMessage").modal("show");

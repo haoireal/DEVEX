@@ -301,7 +301,7 @@ public class OrderController {
 		}
 
 		//Xử lí dòng tiền
-		transactionService.transactionDwallet(user.getUsername(),"",order.getTotal(),payment);
+		transactionService.transactionDwallet(user.getUsername(),"",order.getTotal()+order.getTotalShip(),payment);
 
 		return "user/paymentSuccess";
 	}

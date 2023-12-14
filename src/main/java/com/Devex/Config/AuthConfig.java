@@ -52,7 +52,7 @@ public class AuthConfig {
             .requestMatchers("/ad/**").hasAuthority("ADMIN")
             .requestMatchers("/manager/**").hasAnyAuthority("MANAGER", "ADMIN")
             .requestMatchers("/seller/**").hasAnyAuthority("SELLER")
-            .requestMatchers("/profile", "/profile/**", "/message/**", "/cart/**","/order/**").hasAnyAuthority("CUSTOMER")
+            .requestMatchers("/profile", "/profile/**", "/message/**", "/cart/**","/order/**").hasAnyAuthority("CUSTOMER", "ADMIN")
             .anyRequest().permitAll()
             .and()
             .formLogin(
@@ -61,8 +61,12 @@ public class AuthConfig {
                             .loginProcessingUrl("/login")  	//[/login]
                             .successHandler(authenticationSuccessHandler())
                             .failureUrl("/signin?error=Login fail")
-//            ).rememberMe(remember -> remember
-//                    .rememberMeParameter("remember")	//// [remember-me]
+//         ).rememberMe(remember -> remember
+//                            .rememberMeParameter("remember") // Tham số trong form để bật Remember Me
+//                            .tokenValiditySeconds(86400) // Số giây hợp lệ của token (ví dụ: 86400 giây = 1 ngày)
+//                            .key("yourSecretKey") // Khóa bí mật để tạo token (thay thế bằng khóa thực tế)
+//                            .userDetailsService(new UserSecurityService()) // Cung cấp UserDetailsService
+//                    
             ).oauth2Login(oauth2 -> oauth2
                     .loginPage("/signin")
                     .userInfoEndpoint()

@@ -211,6 +211,7 @@
 												class="float-right">{{info.amountFollow}}</a></li>
 										<li class="list-group-item">
 											<!-- The Modal Wallet-->
+
 											<div ng-controller="Dwallet_Controller" class="user-panel row mb-2">
 												<div class="row mb-2">
 													<div class="col-4"><strong>Số Dư:</strong></div>
@@ -218,6 +219,7 @@
 														<span class="fw-semibold fs-6"><strong>{{wallet.loadDWallet.balance
 																| currency: '':0}}</strong>
 															VNĐ</span>
+
 													</div>
 												</div>
 												<div class="row mb-2">
@@ -226,6 +228,7 @@
 														<button class="btn_view border-0 badge rounded-pill"
 															style="background-color: rgba(7, 25, 212, 1)"
 															data-bs-toggle="modal" data-bs-target="#exampleModal">
+
 															<span class="fs-6">Chi tiết</span>
 															<i class="fa-solid fa-eye"></i>
 														</button>
@@ -285,6 +288,7 @@
 																						</option>
 																						<option value="3">Biến động giảm
 																						</option>
+
 																					</select>
 																				</div>
 																			</div>
@@ -372,8 +376,8 @@
 														</div>
 														<div class="mb-3 bg-white rounded px-2">
 															<input type="text" id="inputPhone"
-																th:value="${session.user.phone == null ? 'Vui lòng đăng kí số điện thoại!' : session.user.phone}"
-																placeholder="Phone Number" pattern="[0-9()+-]*"
+																th:value="${session.user.phone == null ? '' : session.user.phone}"
+																placeholder="Vui lòng đăng kí số điện thoại!" pattern="[0-9()+-]*"
 																maxlength="15" minlength="5" required
 																class="form-control border-1 p-0 pl-2" name="phone"
 																disabled />
@@ -381,8 +385,8 @@
 														</div>
 														<div class="mb-3 bg-white rounded px-2">
 															<input type="email" id="inputEmail"
-																th:value="${session.user.email == null ? 'Vui lòng đăng kí Email' : session.user.email}"
-																placeholder="Email address"
+																th:value="${session.user.email == null ? '' : session.user.email}"
+																placeholder="Vui lòng đăng kí Email"
 																pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
 																maxlength="50" minlength="5" required
 																class="form-control border-1 p-0 pl-2" name="email"
@@ -429,21 +433,21 @@
 								<div class="card-body">
 									<div class="tab-content">
 										<div class="tab-pane" id="address">
-											<form class="mt-4 form-horizontal" method="post" action="/profile/address">
+											<form class="mt-4 form-horizontal" method="post" action="/profile/address" name="profile-address">
 												<div class="mb-3 bg-white rounded px-2">
 													<textarea class="form-control" rows="5"
-														placeholder="Địa chỉ giao hàng ..." name="address"
-														th:text="${session.user.address == null ? 'Địa chỉ giao hàng...' : session.user.address}"></textarea>
+														placeholder="Địa chỉ giao hàng..." name="address"
+														th:text="${address == null ? '' : address}"></textarea>
 												</div>
 
 												<div class="mb-3 bg-white rounded px-2">
-													<input type="text" id="inputPhone" placeholder="Số điện thoại"
-														pattern="[0-9()+-]*" maxlength="15" minlength="10" required
+													<input type="text" id="inputPhone" placeholder="Số điện thoại..."
+														pattern="^[0-9\+\-()]{10,13}$" maxlength="13" minlength="10" required
 														class="form-control border-1 p-0 pl-2" name="phone"
-														th:value="${session.user.phoneAddress == null ? 'Số điện thoại liên hệ...' : session.user.phoneAddress}" />
+														th:value="${phone == null ? '' : phone}" oninput="validateInputPhone()" />
 												</div>
 
-												<button type="submit" class="btn btn-success mt-3"
+												<button type="submit" class="btn btn-success mt-3" name="btn-submit"
 													style="width: 100%">Lưu</button>
 											</form>
 										</div>
@@ -621,7 +625,7 @@
 
 										<div class="tab-pane active" id="info-account">
 											<form class="mt-4 form-horizontal" method="post"
-												enctype="multipart/form-data">
+												enctype="multipart/form-data" action="/profile">
 												<div class="mb-3 bg-white rounded px-2">
 													<input type="text" id="inputFullname" placeholder="Fullname"
 														pattern="[a-zA-ZÀ-ỹ ]+" title="Name does not contain number"
@@ -631,8 +635,8 @@
 
 												<div class="input-group mb-3 bg-white rounded px-2">
 													<input type="email" id="inputEmail"
-														th:value="${session.user.email == null ? 'Email chưa được đăng ký...' : session.user.email}"
-														placeholder="Email address"
+														th:value="${session.user.email == null ? '' : session.user.email}"
+														placeholder="Email chưa được đăng ký..."
 														pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="50"
 														minlength="5" required class="form-control border-1 p-0 pl-2"
 														name="email" disabled /> <span class="input-group-append">
@@ -648,7 +652,7 @@
 														<div class="modal-content">
 															<!-- Modal Header -->
 															<div class="modal-header">
-																<h4 class="modal-title">Verify</h4>
+																<h4 class="modal-title">Xác thực</h4>
 																<button type="button" class="close"
 																	data-dismiss="modal">
 																	&times;</button>
@@ -676,8 +680,8 @@
 
 												<div class="input-group mb-3 bg-white rounded px-2">
 													<input type="text" id="inputPhone"
-														th:value="${session.user.phone == null ? 'Số điện thoại chưa được đăng ký...' : session.user.phone}"
-														placeholder="Phone Number" pattern="[0-9()+-]*" maxlength="15"
+														th:value="${session.user.phone == null ? '' : session.user.phone}"
+														placeholder="Số điện thoại chưa được đăng ký..." pattern="[0-9()+-]*" maxlength="15"
 														minlength="5" required class="form-control border-1 p-0 pl-2"
 														name="phone" disabled /> <span class="input-group-append">
 														<button type="button" class="btn btn-info" data-toggle="modal"
@@ -693,7 +697,7 @@
 														<div class="modal-content">
 															<!-- Modal Header -->
 															<div class="modal-header">
-																<h4 class="modal-title">Verify</h4>
+																<h4 class="modal-title">Xác thực</h4>
 																<button type="button" class="close"
 																	data-dismiss="modal">
 																	&times;</button>
@@ -785,6 +789,21 @@
 		<!-- place footer here -->
 		<div th:replace="~{flagment/user/userFooter :: userFooterFragment}"></div>
 	</footer>
+
+	<script>
+		function validateInputPhone() {
+			var phoneShip = document.forms["profile-address"]["phone"].value;
+			var btnSubmit = document.forms["profile-address"]["btn-submit"];
+			var isValid = /^[0-9\+\-()]{10,13}$/.test(phoneShip);
+	
+			if (!isValid) {
+				btnSubmit.disabled = true;
+			} else {
+				btnSubmit.disabled = false;
+			}
+		}
+			
+	</script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {

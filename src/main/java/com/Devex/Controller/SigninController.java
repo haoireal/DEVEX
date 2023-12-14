@@ -1,5 +1,6 @@
 package com.Devex.Controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.UserRoleService;
 import com.Devex.Sevice.UserService;
 import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
@@ -22,6 +24,9 @@ import com.Devex.Entity.UserRole;
 public class SigninController {
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserRoleService userRoleService;
 	
 	@Autowired
 	SessionService session;
@@ -34,9 +39,21 @@ public class SigninController {
 	
 
 	@GetMapping("/signin")
-	public String showSignin(Model model) {
-		model.addAttribute("username", cookie.getValue("username", ""));
-		model.addAttribute("password", cookie.getValue("password", ""));
+	public String showSignin(Model model, Principal principal) {
+		if(principal != null) {
+//			User user = userService.findById(principal.getName()).get();
+			List<UserRole> role = userRoleService.findAllByUserName(principal.getName());
+			for (UserRole u : role) {
+				if (u.getRole().getId().equals("ADMIN")) {
+					return "redirect:/ad/home";
+				} else if(u.getRole().getId().equals("SELLER")) {
+					return "redirect:/seller/home";
+				}
+			}
+			return "redirect:/home";
+		}
+//		model.addAttribute("username", cookie.getValue("username", ""));
+//		model.addAttribute("password", cookie.getValue("password", ""));
 		return "account/signin";
 	}
 	

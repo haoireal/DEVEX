@@ -18,16 +18,18 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img
-          src="/img/banner/LogoDUAn.png"
-          class="img-circle elevation-2"
-          alt="User Image"
-        />
+        <a href="/ad/userProfile">
+          <img
+            th:src="@{/img/account/__${session.user.avatar}__}"
+            class="img-circle elevation-2 img-fluid h-100"
+            alt="User Image"
+          />
+        </a>
       </div>
       <div class="info">
         <a
-          href="#"
-          class="d-block"
+          href="/ad/userProfile"
+          class="d-block col-9 pe-0 text-decoration-none font-weight-bold"
           th:text="${session.user == null ? 'Sign In' : session.user.fullname}"
         ></a>
       </div>
