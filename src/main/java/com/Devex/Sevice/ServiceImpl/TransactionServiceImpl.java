@@ -26,7 +26,7 @@ public class TransactionServiceImpl implements TransactionService {
         String fromUser = "haopg";
         String toUser = orderDetails.getOrder().getCustomerOrder().getUsername();
         double value = orderDetails.getOrder().getTotal();
-        this.transactionDwallet(fromUser,toUser,value,"Wallet");
+        this.transactionDwallet(fromUser,toUser,value+orderDetails.getOrder().getTotalShip(),"Wallet");
     }
 
     //Hàm này chạy khi mà người dùng bấm vào đã hoàn thành đơn hàng-- tiền từ ví tổng sẽ chuyển về cho seller

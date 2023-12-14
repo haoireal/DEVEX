@@ -168,6 +168,119 @@
 												hoá đơn đã đặt</b> <a class="float-right">{{ info.amountOrder }}</a></li>
 										<li class="list-group-item"><b class="text-secondary">Đang theo dõi</b> <a
 												class="float-right">{{info.amountFollow}}</a></li>
+										<li class="list-group-item">
+											<div ng-controller="Dwallet_Controller" class="user-panel row mb-2">
+												<div class="row mb-2">
+													<div class="col-4"><strong>Số Dư:</strong></div>
+													<div class="col-8 text-end p-0 text-danger">
+<!--          <span class="fw-semibold fs-6"-->
+<!--		  ><strong>{{wallet.loadDWallet.balance | currency: '':0}}</strong>-->
+<!--            VNĐ</span-->
+<!--		  >-->
+													</div>
+												</div>
+												<div class="row mb-2">
+													<div class="col-6"><strong>Ví:</strong></div>
+													<div class="col-6 text-end p-0">
+														<button
+																class="btn_view border-0 badge rounded-pill"
+																style="background-color: rgba(7, 25, 212, 1)"
+																data-bs-toggle="modal"
+																data-bs-target="#exampleModal"
+														>
+															<span class="fs-6">Chi tiết</span>
+															<i class="fa-solid fa-eye"></i>
+														</button>
+														<!-- ghi đè .modal-backdrop ở seller Head-->
+														<div
+																class="modal fade"
+																id="exampleModal"
+																tabindex="-1"
+																aria-labelledby="exampleModalLabel"
+																aria-hidden="true"
+														>
+															<div class="modal-dialog modal-lg">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h1
+																				class="modal-title fs-5"
+																				id="exampleModalLabel"
+																				style="
+                      background: -webkit-linear-gradient(
+                        #ce0909,
+                        rgb(8, 49, 138)
+                      );
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                    "
+																		>
+																			DEVEX Mark
+																		</h1>
+																		<button
+																				type="button"
+																				class="btn-close"
+																				data-bs-dismiss="modal"
+																				aria-label="Close"
+																		></button>
+																	</div>
+																	<div class="modal-body">
+																		<div class="row">
+																			<div
+																					class="text-start col-sm-12 col-lg-6"
+																					style="overflow: hidden; text-overflow: ellipsis"
+																			>
+																				<strong class="me-2">Địa chỉ ví:</strong>
+<!--																				<span id="idWallet">{{wallet.loadDWallet.id}}</span>-->
+																			</div>
+
+																			<div class="text-start">
+																				<span class="text-start"> <strong>Số Dư: </strong> </span>
+																				<strong
+																						class="fs-6 ms-2"
+																						style="color: #ff0821bb; font-weight: 600"
+																				>
+<!--																					{{wallet.loadDWallet.balance | currency: '':0}} VND-->
+																				</strong>
+																			</div>
+																			<div class="text-start mt-3 d-flex align-items-center">
+																				<div class="col-6"><h3>Lịch sử giao dịch</h3></div>
+																				<div class="col-6">
+																					<select
+																							class="form-select form-select-sm"
+																							aria-label="Small select example"
+																							id="filterColumn2"
+																					>
+																						<option selected value="1">Tất Cả</option>
+																						<option value="2">Biến động tăng</option>
+																						<option value="3">Biến động giảm</option>
+																					</select>
+																				</div>
+																			</div>
+																			<div>
+																				<table id="wallet" class="table">
+																					<thead>
+																					<tr class="text-center">
+																						<th scope="col">ID</th>
+																						<th scope="col">Người Gửi</th>
+																						<th scope="col">Người Nhận</th>
+																						<th scope="col">Thời Gian</th>
+																						<th scope="col">Biến Động</th>
+																					</tr>
+																					</thead>
+																					<tbody></tbody>
+																				</table>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<!-- end modal -->
+													</div>
+												</div>
+											</div>
+										</li>
 									</ul>
 									<div class="w-100 text-center">
 										<button class="btn btn-danger" th:disabled="${role}" style="font-size: 15px"
