@@ -19,6 +19,7 @@ import com.Devex.DTO.MailOtpDTO;
 import com.Devex.DTO.OtpRequestDTO;
 import com.Devex.DTO.OtpValidationRequest;
 import com.Devex.Entity.Customer;
+import com.Devex.Entity.Dwallet;
 import com.Devex.Entity.Notification;
 import com.Devex.Entity.Role;
 import com.Devex.Entity.Seller;
@@ -26,6 +27,7 @@ import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.CustomerService;
+import com.Devex.Sevice.DwalletService;
 import com.Devex.Sevice.MailerService;
 import com.Devex.Sevice.NotificationService;
 import com.Devex.Sevice.OTPService;
@@ -74,6 +76,9 @@ public class ProfileController {
 
 	@Autowired
 	ParamService param;
+
+	@Autowired
+	DwalletService dwalletService;
 
 	@GetMapping("/profile")
 	public String showProfile(Model model, Principal principal) {
@@ -284,17 +289,17 @@ public class ProfileController {
 		userRole.setRole(role);
 		userRole.setUser(user);
 		userRoleService.save(userRole);
-		//Thông báo cho admin
-//		Notification noti = new Notification();
-//		noti.setName("Nâng cấp lên nhà bán hàng");
-//		noti.setCreatedDay(new Date());
-//		noti.setContent("Tài khoản người dùng " + user.getUsername() + " vừa trở thành nhà bán.\n"
-//				  + "Thông tin tên shop: " + shopName + "\n"
-//				  + "Mô tả: " + description);
-//		User admin = userService.findById("haopg").get();
-//		noti.setUser(admin);
-//		notificationService.save(noti);
-		
+		// Thông báo cho admin
+		// Notification noti = new Notification();
+		// noti.setName("Nâng cấp lên nhà bán hàng");
+		// noti.setCreatedDay(new Date());
+		// noti.setContent("Tài khoản người dùng " + user.getUsername() + " vừa trở
+		// thành nhà bán.\n"
+		// + "Thông tin tên shop: " + shopName + "\n"
+		// + "Mô tả: " + description);
+		// User admin = userService.findById("haopg").get();
+		// noti.setUser(admin);
+		// notificationService.save(noti);
 
 		String message = "Nâng cấp nhà bán thành công";
 		model.addAttribute("message", message);

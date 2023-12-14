@@ -37,6 +37,9 @@ app.controller("Dwallet_Controller", function ($scope, $http) {
         processing: true,
         data: data,
         select: true,
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.10.22/i18n/Vietnamese.json"
+        },
         columns: [
           { data: "id" },
           { data: "from" },

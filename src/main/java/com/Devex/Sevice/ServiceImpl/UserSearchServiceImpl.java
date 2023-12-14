@@ -18,7 +18,7 @@ import com.Devex.Sevice.UserSearchService;
 
 @SessionScope
 @Service("userSearchService")
-public class UserSearchServiceImpl implements UserSearchService{
+public class UserSearchServiceImpl implements UserSearchService {
 
 	@Autowired
 	private UserSearchRespository userSearchRespository;
@@ -87,5 +87,9 @@ public class UserSearchServiceImpl implements UserSearchService{
 	public void deleteAll() {
 		userSearchRespository.deleteAll();
 	}
-	
+
+	public void insertKeyWorks(String key) {
+		userSearchRespository.insertKeyWorks(key);
+	}
+
 }

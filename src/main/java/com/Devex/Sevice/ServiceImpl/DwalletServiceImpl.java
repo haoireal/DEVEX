@@ -80,4 +80,8 @@ public class DwalletServiceImpl implements DwalletService {
 		return dwalletRepository.getDwalletAdminByUsername(username);
 	}
 
+	public Dwallet getDwalletCustomerByUsername(String username) {
+		return dwalletRepository.getDwalletCustomerByUsername(username);
+	}
+
 }

@@ -33,7 +33,9 @@ public interface DwalletService {
 	Dwallet getDwalletByUsername(String username);
 
 	Dwallet getDwalletAdminByUsername(String username);
-  
+
+	Dwallet getDwalletCustomerByUsername(String username);
+
 	String findDwalletIDbyUsername(String username);
 
 }
