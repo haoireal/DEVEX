@@ -6,6 +6,46 @@
 	<div th:replace="~{flagment/account/head :: headFragment}"></div>
 </head>
 <style>
+	#fluctuations {
+		width: 12.5rem;
+		text-align: center;
+	}
+
+	.green-text {
+		color: green;
+	}
+
+	.red-text {
+		color: red;
+	}
+
+	.ellipsis {
+		width: 10.3rem;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	.custom-select {
+		width: 6.25rem !important;
+	}
+
+	#wallet_length {
+		text-align: left;
+	}
+
+	#wallet_filter>label {
+		display: inline-flex;
+	}
+
+	#wallet_info {
+		text-align: left;
+	}
+
+	.pagination {
+		float: right;
+	}
+
 	.fixed-picture {
 		position: relative;
 		width: 100px;
@@ -123,7 +163,7 @@
 	<header>
 		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
 	</header>
-	<div class="container" >
+	<div class="container">
 		<div class="wall-header-offset p-1"></div>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper m-0">
@@ -165,9 +205,118 @@
 
 									<ul class="list-group list-group-unbordered mb-3">
 										<li class="list-group-item"><b class="text-secondary">Tổng
-												hoá đơn đã đặt</b> <a class="float-right">{{ info.amountOrder }}</a></li>
+												hoá đơn đã đặt</b> <a class="float-right">{{ info.amountOrder }}</a>
+										</li>
 										<li class="list-group-item"><b class="text-secondary">Đang theo dõi</b> <a
 												class="float-right">{{info.amountFollow}}</a></li>
+										<li class="list-group-item">
+											<!-- The Modal Wallet-->
+											<div ng-controller="Dwallet_Controller" class="user-panel row mb-2">
+												<div class="row mb-2">
+													<div class="col-4"><strong>Số Dư:</strong></div>
+													<div class="col-8 text-end p-0 text-danger">
+														<span class="fw-semibold fs-6"><strong>{{wallet.loadDWallet.balance
+																| currency: '':0}}</strong>
+															VNĐ</span>
+													</div>
+												</div>
+												<div class="row mb-2">
+													<div class="col-6"><strong>Ví:</strong></div>
+													<div class="col-6 text-end p-0">
+														<button class="btn_view border-0 badge rounded-pill"
+															style="background-color: rgba(7, 25, 212, 1)"
+															data-bs-toggle="modal" data-bs-target="#exampleModal">
+															<span class="fs-6">Chi tiết</span>
+															<i class="fa-solid fa-eye"></i>
+														</button>
+														<!-- ghi đè .modal-backdrop ở seller Head-->
+														<div class="modal fade" id="exampleModal" tabindex="-1"
+															aria-labelledby="exampleModalLabel" aria-hidden="true">
+															<div class="modal-dialog modal-lg">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h1 class="modal-title fs-5"
+																			id="exampleModalLabel" style="
+																background: -webkit-linear-gradient(
+																  #ce0909,
+																  rgb(8, 49, 138)
+																);
+																-webkit-background-clip: text;
+																-webkit-text-fill-color: transparent;
+															  ">
+																			DEVEX Mark
+																		</h1>
+																		<button type="button" class="btn-close"
+																			data-bs-dismiss="modal"
+																			aria-label="Close"></button>
+																	</div>
+																	<div class="modal-body">
+																		<div class="row">
+																			<div class="text-start col-sm-12 col-lg-6"
+																				style="overflow: hidden; text-overflow: ellipsis">
+																				<strong class="me-2">Địa chỉ
+																					ví:</strong>
+																				<span
+																					id="idWallet">{{wallet.loadDWallet.id}}</span>
+																			</div>
+
+																			<div class="text-start">
+																				<span class="text-start"> <strong>Số Dư:
+																					</strong> </span>
+																				<strong class="fs-6 ms-2"
+																					style="color: #ff0821bb; font-weight: 600">
+																					{{wallet.loadDWallet.balance |
+																					currency: '':0}} VND
+																				</strong>
+																			</div>
+																			<div
+																				class="text-start mt-3 d-flex align-items-center">
+																				<div class="col-6">
+																					<h3>Lịch sử giao dịch</h3>
+																				</div>
+																				<div class="col-6">
+																					<select
+																						class="form-select form-select-sm"
+																						aria-label="Small select example"
+																						id="filterColumn2">
+																						<option selected value="1">Tất
+																							Cả</option>
+																						<option value="2">Biến động tăng
+																						</option>
+																						<option value="3">Biến động giảm
+																						</option>
+																					</select>
+																				</div>
+																			</div>
+																			<div>
+																				<table id="wallet" class="table">
+																					<thead>
+																						<tr class="text-center">
+																							<th scope="col">ID</th>
+																							<th scope="col">Người Gửi
+																							</th>
+																							<th scope="col">Người Nhận
+																							</th>
+																							<th scope="col">Thời Gian
+																							</th>
+																							<th scope="col">Biến Động
+																							</th>
+																						</tr>
+																					</thead>
+																					<tbody></tbody>
+																				</table>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<!-- end modal -->
+													</div>
+												</div>
+											</div>
+										</li>
 									</ul>
 									<div class="w-100 text-center">
 										<button class="btn btn-danger" th:disabled="${role}" style="font-size: 15px"
@@ -252,8 +401,6 @@
 
 									</div>
 
-									<!-- <a href="#" class="btn btn-primary btn-block"
-                    ><b>Follow</b></a -->
 								</div>
 								<!-- /.card-body -->
 							</div>
@@ -267,13 +414,15 @@
 												data-toggle="tab">Hồ sơ</a></li>
 										<li class="nav-item"><a class="nav-link" href="#address" data-toggle="tab">Địa
 												chỉ</a></li>
-										<li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Nhật 
+										<li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Nhật
 												ký</a></li>
-										<li class="nav-item"><a class="nav-link" href="#noti" data-toggle="tab">Thông báo</a></li>
+										<li class="nav-item"><a class="nav-link" href="#noti" data-toggle="tab">Thông
+												báo</a></li>
 										<li class="nav-item"><a class="nav-link" href="#voucher" data-toggle="tab">Kho
-											voucher</a></li>	
-										<li class="nav-item"><a class="nav-link" href="#voucherApplied" data-toggle="tab">Kho
-											voucher đã dùng</a></li>	
+												voucher</a></li>
+										<li class="nav-item"><a class="nav-link" href="#voucherApplied"
+												data-toggle="tab">Kho
+												voucher đã dùng</a></li>
 									</ul>
 								</div>
 								<!-- /.card-header -->
@@ -306,7 +455,7 @@
 													<span class="bg-danger"> Đây sẽ là dòng thời gian nk</span>
 												</div>
 												<!-- /.timeline-label -->
-												
+
 											</div>
 										</div>
 
@@ -317,14 +466,15 @@
 													<span class="bg-danger"> Đây sẽ là dòng thời gian tb</span>
 												</div>
 												<!-- /.timeline-label -->
-												
+
 											</div>
 										</div>
 
 										<div class="tab-pane" id="voucher">
 											<div class="row">
 												<!-- ./col -->
-												<div class="col-lg-4 col-6" ng-repeat="item in voucher.itemsAvailability">
+												<div class="col-lg-4 col-6"
+													ng-repeat="item in voucher.itemsAvailability">
 													<!-- small card -->
 													<div class="small-box bg-warning">
 														<div class="inner">
@@ -335,9 +485,10 @@
 																<span ng-if="item.discount >= 1">{{
 																	formatMoney(item.discount) }}<sup
 																		style="font-size: 10px;">đ</sup></span></span><br>
-																	
+
 															<span style="font-size: 12px; font-weight: 500;">HSD:
-																<span>{{ formatDateToDDMMYYYY(item.endDate) }}</span></span>
+																<span>{{ formatDateToDDMMYYYY(item.endDate)
+																	}}</span></span>
 														</div>
 														<div class="icon">
 															<i class="fas fa-gift"></i>
@@ -367,9 +518,10 @@
 																<span ng-if="item.discount >= 1">{{
 																	formatMoney(item.discount) }}<sup
 																		style="font-size: 10px;">đ</sup></span></span><br>
-																	
+
 															<span style="font-size: 12px; font-weight: 500;">HSD:
-																<span>{{ formatDateToDDMMYYYY(item.endDate) }}</span></span>
+																<span>{{ formatDateToDDMMYYYY(item.endDate)
+																	}}</span></span>
 														</div>
 														<div class="icon">
 															<i class="fas fa-gift"></i>
@@ -387,75 +539,82 @@
 										</div>
 										<!-- The Modal -->
 										<div class="modal fade" id="showDetail" style="max-height: 90vh;">
-										<div class="modal-dialog">
-											<div class="modal-content">
-												<!-- Modal Header -->
-												<div class="modal-header" style="background: bisque;">
-													<h4 class="modal-title" style="margin: 0 auto;">Thông tin
-														Voucher</h4>
-												</div>	
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<!-- Modal Header -->
+													<div class="modal-header" style="background: bisque;">
+														<h4 class="modal-title" style="margin: 0 auto;">Thông tin
+															Voucher</h4>
+													</div>
 
-												<!-- Modal body -->
-												<div class="modal-body" style="max-height: 400px; overflow-y: scroll;">
-													<div class="info-voucher">
-														<div class="form-group">
-															<label for="name">Tên
-																Voucher</label>
-															<p>{{ voucher.itemDetail.name }}</p>
+													<!-- Modal body -->
+													<div class="modal-body"
+														style="max-height: 400px; overflow-y: scroll;">
+														<div class="info-voucher">
+															<div class="form-group">
+																<label for="name">Tên
+																	Voucher</label>
+																<p>{{ voucher.itemDetail.name }}</p>
+															</div>
+															<div class="form-group">
+																<label for="code">Code:</label>
+																<span> {{ voucher.itemDetail.code }}</span>
+															</div>
+															<div class="form-group">
+																<label for="time">Thời gian sử dụng
+																	mã</label>
+																<p>{{
+																	formatDateTimeToDDMMYYYYHHMM(voucher.itemDetail.startDate)
+																	}} - {{
+																	formatDateTimeToDDMMYYYYHHMM(voucher.itemDetail.endDate)
+																	}}
+																</p>
+															</div>
+															<div class="form-group">
+																<label for="discount">Ưu đãi:</label>
+																<span> Giảm
+																	<span ng-if="voucher.itemDetail.discount < 1"> {{
+																		voucher.itemDetail.discount * 100 }}%</span>
+																	<span ng-if="voucher.itemDetail.discount >= 1"> {{
+																		formatMoney(voucher.itemDetail.discount) }}<sup
+																			style="font-size: 10px;">đ</sup></span></span>
+															</div>
+															<div class="form-group">
+																<label for="quantity">Số lượng Voucher:</label><span> {{
+																	voucher.itemDetail.quantity }}</span>
+															</div>
+															<div class="form-group">
+																<label for="description">Mô tả chi
+																	tiết</label>
+																<p>{{ voucher.itemDetail.description }}</p>
+															</div>
+															<div class="form-group"
+																ng-if="voucher.itemDetail.categoryVoucher.id !== 100004">
+																<label for="description">Phân loại: </label>
+																<span>{{ voucher.itemDetail.categoryVoucher.name
+																	}}</span>
+															</div>
+
+															<div class="form-group"
+																ng-if="voucher.itemDetail.categoryVoucher.id === 100004">
+																<label>Các sản phẩm áp dụng</label>
+																<select multiple class="custom-select">
+																	<option ng-repeat="prod in voucher.prodVoucher">{{
+																		prod.product.name }}</option>
+																</select>
+															</div>
+
 														</div>
-														<div class="form-group">
-															<label for="code">Code:</label>
-															<span> {{ voucher.itemDetail.code }}</span>
-														</div>
-														<div class="form-group">
-															<label for="time">Thời gian sử dụng
-																mã</label>
-															<p>{{ formatDateTimeToDDMMYYYYHHMM(voucher.itemDetail.startDate) }} - {{
-																formatDateTimeToDDMMYYYYHHMM(voucher.itemDetail.endDate) }}
-															</p>
-														</div>
-														<div class="form-group">
-															<label for="discount">Ưu đãi:</label>
-															<span> Giảm
-																<span ng-if="voucher.itemDetail.discount < 1"> {{
-																	voucher.itemDetail.discount * 100 }}%</span>
-																<span ng-if="voucher.itemDetail.discount >= 1"> {{
-																	formatMoney(voucher.itemDetail.discount) }}<sup
-																		style="font-size: 10px;">đ</sup></span></span>
-														</div>
-														<div class="form-group">
-															<label for="quantity">Số lượng Voucher:</label><span> {{
-																voucher.itemDetail.quantity }}</span>
-														</div>
-														<div class="form-group">
-															<label for="description">Mô tả chi
-																tiết</label>
-															<p>{{ voucher.itemDetail.description }}</p>
-														</div>
-														<div class="form-group" ng-if="voucher.itemDetail.categoryVoucher.id !== 100004">
-															<label for="description">Phân loại: </label>
-															<span>{{ voucher.itemDetail.categoryVoucher.name }}</span>
-														</div>
-											
-														<div class="form-group" ng-if="voucher.itemDetail.categoryVoucher.id === 100004">
-															<label>Các sản phẩm áp dụng</label>
-															<select multiple class="custom-select">
-																<option ng-repeat="prod in voucher.prodVoucher">{{
-																	prod.product.name }}</option>
-															</select>
-														</div>
+														<hr>
 
 													</div>
-													<hr>
-													
+													<div class="text-center modal-footer">
+														<button class="btn btn-success pl-5 pr-5" data-dismiss="modal">
+															OK
+														</button>
+													</div>
 												</div>
-												<div class="text-center modal-footer">
-													<button class="btn btn-success pl-5 pr-5" data-dismiss="modal">
-														OK
-													</button>
 											</div>
-											</div>
-										</div>
 										</div>
 										<!-- /.tab-pane -->
 
@@ -667,25 +826,25 @@
 
 		// History
 		function fillHistory() {
-		fetch('/api/seller/history')
-			.then(response => response.json())
-			.then(data => {
-			var listHistory = data;
-			var historiesHTML = '';
-			listHistory.forEach(history => {
-				var nowHistory = new Date();
-				var createdDate = new Date(history.createdDay);
-				var minutesHistory = Math.floor(((nowHistory.getTime() - new Date(history.createdDay).getTime()) / 1000) / 60);
-				var hoursHistory = Math.floor(minutesHistory / 60);
-				var daysHistory = Math.floor(hoursHistory / 24);
-				var day = createdDate.getDate();
-				var month = createdDate.getMonth() + 1;
-				var year = createdDate.getFullYear();
-				var hours = createdDate.getHours();
-				var minutes = createdDate.getMinutes();
-				var historyHTML = '';
-				if (minutesHistory <= 60) {
-				historyHTML = `
+			fetch('/api/seller/history')
+				.then(response => response.json())
+				.then(data => {
+					var listHistory = data;
+					var historiesHTML = '';
+					listHistory.forEach(history => {
+						var nowHistory = new Date();
+						var createdDate = new Date(history.createdDay);
+						var minutesHistory = Math.floor(((nowHistory.getTime() - new Date(history.createdDay).getTime()) / 1000) / 60);
+						var hoursHistory = Math.floor(minutesHistory / 60);
+						var daysHistory = Math.floor(hoursHistory / 24);
+						var day = createdDate.getDate();
+						var month = createdDate.getMonth() + 1;
+						var year = createdDate.getFullYear();
+						var hours = createdDate.getHours();
+						var minutes = createdDate.getMinutes();
+						var historyHTML = '';
+						if (minutesHistory <= 60) {
+							historyHTML = `
 					<div class="time-label">
 					<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 					</div>
@@ -696,8 +855,8 @@
 					</div>
 					</div>
 				`;
-				} else if (hoursHistory <= 24) {
-				historyHTML = `
+						} else if (hoursHistory <= 24) {
+							historyHTML = `
 					<div class="time-label">
 					<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 					</div>
@@ -708,8 +867,8 @@
 					</div>
 					</div>
 				`;
-				} else {
-				historyHTML = `
+						} else {
+							historyHTML = `
 					<div class="time-label">
 					<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 					</div>
@@ -720,39 +879,39 @@
 					</div>
 					</div>
 				`;
-				}
-				historiesHTML += historyHTML;
-			});
-			historiesHTML += '<div><i class="far fa-clock bg-gray"></i></div>';
-			document.getElementById('history').innerHTML = historiesHTML;
-			});
+						}
+						historiesHTML += historyHTML;
+					});
+					historiesHTML += '<div><i class="far fa-clock bg-gray"></i></div>';
+					document.getElementById('history').innerHTML = historiesHTML;
+				});
 		}
 
 		fillHistory();
 
 		// fillAllNotifications
 		function fillAllNotifications() {
-		fetch('/api/user/allnotifications')
-			.then(response => response.json())
-			.then(data => {
-			var listNotifications = data;
-			var notificationsHTML = '';
-			listNotifications.forEach(notification => {
-				var nowNotification = new Date();
-				var createdDate = new Date(notification.createdDay);
-				var minutesNotification = Math.floor(((nowNotification.getTime() - new Date(notification.createdDay).getTime()) / 1000) / 60);
-				var hoursNotification = Math.floor(minutesNotification / 60);
-				var daysNotification = Math.floor(hoursNotification / 24);
-				var day = createdDate.getDate();
-				var month = createdDate.getMonth() + 1;
-				var year = createdDate.getFullYear();
-				var hours = createdDate.getHours();
-				var minutes = createdDate.getMinutes();
-				var notificationHTML = '';
-				if(notification.link == null) {
-					if (notification.status == false) {
-						if (minutesNotification <= 60) {
-							notificationHTML = `
+			fetch('/api/user/allnotifications')
+				.then(response => response.json())
+				.then(data => {
+					var listNotifications = data;
+					var notificationsHTML = '';
+					listNotifications.forEach(notification => {
+						var nowNotification = new Date();
+						var createdDate = new Date(notification.createdDay);
+						var minutesNotification = Math.floor(((nowNotification.getTime() - new Date(notification.createdDay).getTime()) / 1000) / 60);
+						var hoursNotification = Math.floor(minutesNotification / 60);
+						var daysNotification = Math.floor(hoursNotification / 24);
+						var day = createdDate.getDate();
+						var month = createdDate.getMonth() + 1;
+						var year = createdDate.getFullYear();
+						var hours = createdDate.getHours();
+						var minutes = createdDate.getMinutes();
+						var notificationHTML = '';
+						if (notification.link == null) {
+							if (notification.status == false) {
+								if (minutesNotification <= 60) {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -763,8 +922,8 @@
 									</div>
 								</div>
 							`;
-						} else if (hoursNotification <= 24) {
-							notificationHTML = `
+								} else if (hoursNotification <= 24) {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -775,8 +934,8 @@
 									</div>
 								</div>
 							`;
-						} else {
-							notificationHTML = `
+								} else {
+									notificationHTML = `
 								<div class="time-label">
 								<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -787,10 +946,10 @@
 									</div>	
 								</div>
 							`;
-						}
-					} else {
-						if (minutesNotification <= 60) {
-							notificationHTML = `
+								}
+							} else {
+								if (minutesNotification <= 60) {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -801,8 +960,8 @@
 									</div>
 								</div>
 							`;
-						} else if (hoursNotification <= 24) {
-							notificationHTML = `
+								} else if (hoursNotification <= 24) {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -813,8 +972,8 @@
 									</div>
 								</div>
 							`;
-						} else {
-							notificationHTML = `
+								} else {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -825,12 +984,12 @@
 									</div>
 								</div>
 							`;
-						}
-					}
-				}else {
-					if (notification.status == false) {
-						if (minutesNotification <= 60) {
-							notificationHTML = `
+								}
+							}
+						} else {
+							if (notification.status == false) {
+								if (minutesNotification <= 60) {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -842,8 +1001,8 @@
 									</div>
 								</div>
 							`;
-						} else if (hoursNotification <= 24) {
-							notificationHTML = `
+								} else if (hoursNotification <= 24) {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -855,8 +1014,8 @@
 									</div>
 								</div>
 							`;
-						} else {
-							notificationHTML = `
+								} else {
+									notificationHTML = `
 								<div class="time-label">
 								<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -868,10 +1027,10 @@
 									</div>
 								</div>
 							`;
-						}
-					} else {
-						if (minutesNotification <= 60) {
-							notificationHTML = `
+								}
+							} else {
+								if (minutesNotification <= 60) {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -883,8 +1042,8 @@
 									</div>
 								</div>
 							`;
-						} else if (hoursNotification <= 24) {
-							notificationHTML = `
+								} else if (hoursNotification <= 24) {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -896,8 +1055,8 @@
 									</div>
 								</div>
 							`;
-						} else {
-							notificationHTML = `
+								} else {
+									notificationHTML = `
 								<div class="time-label">
 									<span class="bg-success"><i class="far fa-clock bg-success"></i> ${day}/${month}/${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}</span>
 								</div>
@@ -909,15 +1068,15 @@
 									</div>
 								</div>
 							`;
+								}
+							}
 						}
-					}
-				}
-				
-				notificationsHTML += notificationHTML;
-			});
-			notificationsHTML += '<div><i class="far fa-clock bg-gray"></i></div>';
-			document.getElementById('allnotifications').innerHTML = notificationsHTML;
-			});
+
+						notificationsHTML += notificationHTML;
+					});
+					notificationsHTML += '<div><i class="far fa-clock bg-gray"></i></div>';
+					document.getElementById('allnotifications').innerHTML = notificationsHTML;
+				});
 		}
 
 		fillAllNotifications();
@@ -927,14 +1086,16 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-		crossorigin="anonymous"></script>
-		<div th:replace="~{flagment/user/userFootLink :: sellerFootLinkFragment}"></div>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+		crossorigin="anonymous"></script> -->
+	<div th:replace="~{flagment/user/userFootLink :: sellerFootLinkFragment}"></div>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> -->
 
 	<!-- 	<div th:replace="~{flagment/account/footLink :: footLinkFragment}"></div> -->
 	<script th:src="@{/js/cart-ctrl.js}"></script>
+	<script th:src="@{/js/user/DwalletCustomer.js}"></script>
+
 </body>
 
 </html>

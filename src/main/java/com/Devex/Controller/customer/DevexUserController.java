@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
+import com.Devex.Entity.UserSearch;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
@@ -46,6 +49,7 @@ import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.ShoppingCartService;
+import com.Devex.Sevice.UserSearchService;
 
 @Controller
 public class DevexUserController {
@@ -80,6 +84,9 @@ public class DevexUserController {
 	@Autowired
 	ProductVariantService productVariantService;
 
+	@Autowired
+	UserSearchService userSearchService;
+
 	private List<Product> uniqueProductList = new ArrayList<>();
 	private List<String> listCategory = new ArrayList<>();
 	private List<String> listBrand = new ArrayList<>();
@@ -87,7 +94,7 @@ public class DevexUserController {
 
 	@GetMapping({ "/home", "/*" })
 	public String getHomePage(Model model) throws Exception {
-//		uniqueProductList.clear();
+		// uniqueProductList.clear();
 		User user = new User();
 		List<Product> listProducts = new ArrayList<>();
 		Set<Product> uniqueProducts = new HashSet<>();
@@ -101,7 +108,7 @@ public class DevexUserController {
 		List<Integer> idFlashSaleTimePast = new ArrayList<>();
 		try {
 			FlashSaleTime flashSaleTime = flashSalesTimeService.findFlashSaleTimesByTimeNow();
-			List<FlashSaleTime> flashSaleTimePast= flashSalesTimeService.findFlashSaleTimesByTimePast();
+			List<FlashSaleTime> flashSaleTimePast = flashSalesTimeService.findFlashSaleTimesByTimePast();
 			if (flashSaleTime != null) {
 				idFlashSaleTimeNow = flashSaleTime.getId();
 
@@ -124,7 +131,7 @@ public class DevexUserController {
 		List<Product> listProductFlashSalePast = new ArrayList<>();
 		idFlashSaleTimePast.forEach(pr -> {
 			listProductFlashSalePast.addAll(productService
-			.findProductsByFlashSaleTimeAndStatus(pr, true));
+					.findProductsByFlashSaleTimeAndStatus(pr, true));
 		});
 
 		if (idFlashSaleTimeNow != 0) {
@@ -133,8 +140,8 @@ public class DevexUserController {
 						pLN.getProductVariants().get(0).getListFlashSale().get(0).getDiscount(),
 						pLN.getProductVariants().get(0).getId());
 			});
-		} 
-		if(idFlashSaleTimePast != null) {
+		}
+		if (idFlashSaleTimePast != null) {
 			listProductFlashSalePast.forEach(pLP -> {
 				productVariantService.updatePriceSale(pLP.getProductVariants().get(0).getPrice(),
 						pLP.getProductVariants().get(0).getId());
@@ -162,7 +169,7 @@ public class DevexUserController {
 		});
 		// Chuyển đổi lại thành danh sách (List)
 		uniqueProductList = new ArrayList<>(uniqueProducts);
-//		Collections.shuffle(uniqueProductList);
+		// Collections.shuffle(uniqueProductList);
 		List<Category> listCategoryProducts = categoryService.findAll();
 
 		model.addAttribute("listProductFlashSale", listProductFlashSaleNow);
@@ -179,16 +186,26 @@ public class DevexUserController {
 
 	@GetMapping("/product/search")
 	public String searchProduct(Model model, @RequestParam("search") Optional<String> kw) {
-		List<String> historySearch = new ArrayList<>();// thu thập từ khoá tìm kiếm của người dùng cần tạo bảng trong data
+		List<UserSearch> historySearch = userSearchService.findAll();
+		Set<String> listHistorySearch = new LinkedHashSet<>();
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
-		sessionService.set("keywordsSearch", kwords);
-		historySearch.add(kwords);
-		
+		String cleanKeywords = removeSpecialCharacters(kwords); // loại bỏ kí tự đặc biệt
+		sessionService.set("keywordsSearch", cleanKeywords);
+		if (listHistorySearch.size() <= 0) {
+			userSearchService.insertKeyWorks(cleanKeywords);
+		}
+		// tách các keyWord
+		historySearch.forEach(key -> {
+			listHistorySearch.add(cleanKeywords);
+		});
+		listHistorySearch.forEach(keyW -> {
+			if (!listHistorySearch.contains(cleanKeywords)) {
+				userSearchService.insertKeyWorks(cleanKeywords);
+			}
+		});
+
 		return "user/findproduct";
 	}
-
-	
-	
 
 	@RequestMapping("/category/{id}")
 	public String filterCategory(@PathVariable("id") int id, ModelMap model) {
@@ -198,18 +215,23 @@ public class DevexUserController {
 		return "user/findproduct";
 	}
 
-	
 	@GetMapping("/pageseller/{username}")
 	public String showPageSeller(@PathVariable("username") String username, ModelMap model) {
 		sessionService.set("userSeller", username);
 		model.addAttribute("username", username);
 		return "user/sellerPage";
 	}
-	
-	@GetMapping("/sol")
-	public String getTestSOL() {
 
-		return "user/tetsSol";
+	// @GetMapping("/sol")
+	// public String getTestSOL() {
+
+	// return "user/tetsSol";
+	// }
+	public String removeSpecialCharacters(String input) {
+		// Biểu thức chính quy để giữ lại chỉ các ký tự chữ cái, khoảng trắng, số và _
+		String regex = "[^\\p{L}\\p{N}\\s]+";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(input);
+		return matcher.replaceAll("");
 	}
-	
 }// end class

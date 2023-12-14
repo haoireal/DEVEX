@@ -7,9 +7,13 @@ app.controller("myController", function ($scope, $http) {
   // JavaScript để mở và đóng modal
   var modal = document.getElementById("myModal");
   var modal1 = document.getElementById("myModal1");
+  let message = document.getElementById("message-validation");
   // Khai báo biến để lưu giá trị radio cuối cùng được chọn
   var lastSelectedValue = null;
   var selectedCheckBoxValues = [];
+  let validatePrice = false;
+  let validateAmountSell = false;
+  let validateAmountOrder = false;
   $scope.getDay = 0;
   $scope.month = month + 1;
   $scope.year = year;
@@ -151,7 +155,7 @@ app.controller("myController", function ($scope, $http) {
       // In ra giá trị radio cuối cùng được chọn
       console.log(
         "Giá trị radio cuối cùng được chọn là: " +
-          JSON.stringify($scope.selectedItem)
+        JSON.stringify($scope.selectedItem)
       );
     } else {
       console.log("Không có radio nào được chọn.");
@@ -215,6 +219,10 @@ app.controller("myController", function ($scope, $http) {
     console.log($scope.dataProductFlashSales);
     $scope.closeModel1();
   };
+  $scope.delete = function (index) {
+    $scope.dataProductFlashSales.splice(index, 1);
+    return true;
+  }
 
   $scope.handlePriceChange = function (element, price, index) {
     var inputValue = document.querySelectorAll("#priceSale");
@@ -223,11 +231,44 @@ app.controller("myController", function ($scope, $http) {
     var priceSale = inputValue[index].value;
 
     console.log(inputValue[index].value);
+    if (priceSale > originalPrice) {
+      inputValue[index].style.border = '1px solid red';
+      discountText[index].innerHTML = "Giảm: 0%";
+      validatePrice = false;
+      return false;
+    } else {
+      inputValue[index].style.border = '';
+      validatePrice = true;
+    }
 
     var discount = ((originalPrice - priceSale) / originalPrice) * 100; // tính giảm giá
     discountText[index].innerHTML = "Giảm: " + discount.toFixed(2) + "%";
   };
-
+  $scope.handleQuantityChange = function (element, quantity, index) {
+    var amountSell = document.querySelectorAll("#amountSell"); // sl khuyến mãi
+    var inputAmountSellValue = amountSell[index].value;
+    if (inputAmountSellValue > quantity) {
+      amountSell[index].style.border = '1px solid red';
+      validateAmountSell = false;
+      return false;
+    } else {
+      validateAmountSell = true;
+      amountSell[index].style.border = '';
+    }
+  }
+  $scope.handleAmountOrderChange = function (element, quantity, index) {
+    var amountOrder = document.querySelectorAll("#amountOrder"); // sl bán
+    var inputAmountOrderValue = amountOrder[index].value;
+    // console.log('ngu' + inputAmountOrderValue)
+    if (inputAmountOrderValue > quantity) {
+      amountOrder[index].style.border = '1px solid red';
+      validateAmountOrder = false;
+      return false;
+    } else {
+      validateAmountOrder = true;
+      amountOrder[index].style.border = '';
+    }
+  }
   $scope.getDataTable = function () {
     // Khai báo mảng để chứa các đối tượng dataFlashSale
     var dataFlashSales = [];
@@ -251,16 +292,29 @@ app.controller("myController", function ($scope, $http) {
     }
 
     console.log(dataFlashSales);
+    console.log($scope.selectedItem.length);
     // console.log(dataFlashSale);
-    $http
-      .post("/api/setFlashSale", dataFlashSales)
-      .then(() => {
-        alert("success");
-        var dataFlashSales = [];
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("Có lỗi xảy ra khi cập nhật roles");
-      });
+    if ($scope.selectedItem.length <= 0) {
+      message.innerText = "Hãy chọn khung thời gian!";
+      $("#modalValidate").modal("show");
+      return false;
+    }
+    if (validatePrice && validateAmountOrder && validateAmountSell) {
+      $http
+        .post("/api/setFlashSale", dataFlashSales)
+        .then(() => {
+          message.innerText = "Tham gia chương trình thành công!";
+          $("#modalValidate").modal("show");
+          $scope.dataProductFlashSales.splice(0, $scope.dataProductFlashSales.length);
+        })
+        .catch((error) => {
+          console.error(error);
+
+        });
+    } else {
+      message.innerText = "Tham gia chương trình thất bại!";
+      $("#modalValidate").modal("show");
+    }
+
   };
 }); // end controller

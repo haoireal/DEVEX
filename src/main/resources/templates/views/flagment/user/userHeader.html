@@ -5,27 +5,17 @@
     <div class="container">
       <div class="row">
         <div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
-          <nav
-            class="navbar float-end navbar-expand-lg navbar-light"
-            style="height: 35px"
-          >
-            <div
-              class="collapse navbar-collapse text-end"
-              id="navbarNavDropdown"
-            >
+          <nav class="navbar float-end navbar-expand-lg navbar-light" style="height: 35px">
+            <div class="collapse navbar-collapse text-end" id="navbarNavDropdown">
               <ul class="text-end navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    href="/ad/home"
-                    th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}"
-                    >Admin Page</a
-                  >
+                  <a class="nav-link" href="/ad/home"
+                    th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}">Admin Page</a>
                 </li>
 
-                <li class="nav-item" >
+                <li class="nav-item">
                   <a class="nav-link" href="/message">Tin nhắn
-                    
+
 
                   </a>
                 </li>
@@ -40,39 +30,17 @@
                   <a class="nav-link" href="/order">Tra cứu đơn hàng</a>
                 </li>
                 <li class="nav-item dropdown">
-                  <a
-                    class="nav-link"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
+                  <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="far fa-bell fs-5"></i>
-                    <span
-                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                      id="amountNotifications"
-                    ></span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                      id="amountNotifications"></span>
                   </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
-                    style="overflow-y: scroll; height: 400px"
-                    id="Notifications"
-                  ></div>
+                  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
+                    style="overflow-y: scroll; height: 400px" id="Notifications"></div>
                 </li>
                 <li class="nav-item">
-                  <a
-                    style="color: #fff"
-                    th:if="${session.user == null}"
-                    class="nav-link"
-                    href="/signin"
-                    >Đăng nhập</a
-                  >
-                  <a
-                    th:if="${session.user != null}"
-                    class="nav-link text-danger fw-bold"
-                    href="/logout"
-                    >Đăng xuất</a
-                  >
+                  <a style="color: #fff" th:if="${session.user == null}" class="nav-link" href="/signin">Đăng nhập</a>
+                  <a th:if="${session.user != null}" class="nav-link text-danger fw-bold" href="/logout">Đăng xuất</a>
                 </li>
               </ul>
             </div>
@@ -87,59 +55,40 @@
     <div class="row mt-2 mb-2 col-12">
       <div class="col-md-2 col-3 text-center">
         <a href="/home">
-          <img
-            class="img-fluid img_logo m-0 mt-1"
-            src=" /img/banner/logoDUAN.png"
-            alt
-          />
+          <img class="img-fluid img_logo m-0 mt-1" src=" /img/banner/logoDUAN.png" alt />
         </a>
       </div>
 
-      <div class="col-md-9 col-7 mt-2" style="position: relative">
+      <div class="col-md-9 col-7 mt-2" style="position: relative" ng-controller="autoComplete">
         <div class="search-box order-4 order-xl-3">
           <form action="/product/search">
             <div class="input-group no-shadow">
-              <input
-                type="text"
-                class="form-control"
-                th:name="search"
-                th:value="${session.keywordsSearch}"
-                placeholder="Bạn cần tìm gì hôm nay ?"
-                name="keyword"
-                [(ngModel)]="keyword"
-                ng-keyup=""
-                id="search"
-                onkeyup="getanswer()"
-                onkeydown="getanswer()"
-                list="output"
-                style="
+              <input type="text" class="form-control" th:name="search" tabindex="1" autocomplete="off"
+                onPropertyChange="TextChange(this)"
+                th:placeholder="${session.keywordsSearch != null ? session.keywordsSearch : 'Bạn cần tìm gì hôm nay ?' }  "
+                name="keyword" [(ngModel)]="keyword" ng-keyup="" id="search" style="
                   height: 40px;
                   border-radius: 15px;
                   font-weight: bold;
                   font-size: 13px;
                   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
                   border: 2px gray;
-                "
-              />
+                " />
 
-              <span
-                class="position-relative"
-                style="
+              <span class="position-relative" style="
                   right: 2.5rem;
                   z-index: 100;
                   margin-top: -2px;
                   width: 0px;
-                "
-              >
+                ">
                 <a href="#" style="color: #fff; font-size: 12px" class="mt-1">
-                  <i
-                    class="fa-solid fa-magnifying-glass fs-4 mt-2 pt-1 text-dark"
-                  ></i>
+                  <i class="fa-solid fa-magnifying-glass fs-4 mt-2 pt-1 text-dark"></i>
                 </a>
               </span>
             </div>
-            <datalist id="output"></datalist>
+
           </form>
+          <div class="custom-dropdown" id="custom-dropdown"></div>
         </div>
       </div>
       <div class="col-md-1 col-2 mt-2">
@@ -147,9 +96,7 @@
           <div class="col-6 pt-1">
             <a href="/cart" style="position: relative">
               <i class="bi bi-cart3 fs-4 text-dark fw-bold"></i>
-              <i
-                class="d-flex rounded-circle px-1"
-                style="
+              <i class="d-flex rounded-circle px-1" style="
                   font-size: 0.8rem;
                   background-color: #2550b9ab;
                   color: white;
@@ -157,29 +104,20 @@
                   top: -1rem;
                   right: -0.15rem;
                   text-decoration: none;
-                "
-                ng-bind="cart.countItem"
-              ></i>
+                " ng-bind="cart.countItem"></i>
             </a>
           </div>
           <div class="col-6 pt-1 col">
-            <a
-              href="/profile"
-              style="position: relative; display: flex; justify-content: center"
-            >
+            <a href="/profile" style="position: relative; display: flex; justify-content: center">
               <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
-              <i
-                th:if="${session.user != null}"
-                style="
+              <i th:if="${session.user != null}" style="
                   font-size: 1rem;
                   background-color: #2550b9ab;
                   color: white;
                   position: absolute;
                   top: 2rem;
                   text-decoration: none;
-                "
-                th:text="${session.user.username}"
-              ></i>
+                " th:text="${session.user.username}"></i>
             </a>
           </div>
         </div>
@@ -187,20 +125,10 @@
     </div>
     <div class="row" style="height: 360px">
       <div
-        class="col-md-2 d-md-none d-lg-flex list_type mt-4 text-center overflow-auto d-flex justify-content-center navbar navbar-expand-lg"
-      >
-        <ul
-          class="list-group list-group-flush text-center collapse navbar-collapse"
-        >
-          <li
-            class="list-group-item text-center"
-            th:each="category : ${category}"
-          >
-            <a
-              class="list_type_product rounded"
-              th:href="@{|/category/${category.id}}"
-              th:text="${category.name}"
-            ></a>
+        class="col-md-2 d-md-none d-lg-flex list_type mt-4 text-center overflow-auto d-flex justify-content-center navbar navbar-expand-lg">
+        <ul class="list-group list-group-flush text-center collapse navbar-collapse">
+          <li class="list-group-item text-center" th:each="category : ${category}">
+            <a class="list_type_product rounded" th:href="@{|/category/${category.id}}" th:text="${category.name}"></a>
           </li>
         </ul>
       </div>
@@ -209,47 +137,31 @@
         <div class="image-slider">
           <div class="image-item">
             <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/25/1200x382-zfoldzflip5-250723.jpg"
-                alt
-              />
+              <img class="img-fluid"
+                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/25/1200x382-zfoldzflip5-250723.jpg" alt />
             </div>
           </div>
           <div class="image-item">
             <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/02/sua1reno-10-1200x375-26072023.jpg"
-                alt
-              />
+              <img class="img-fluid"
+                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/02/sua1reno-10-1200x375-26072023.jpg" alt />
             </div>
           </div>
           <div class="image-item">
             <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/01/web-1200x382.jpg"
-                alt
-              />
+              <img class="img-fluid" src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/01/web-1200x382.jpg"
+                alt />
             </div>
           </div>
           <div class="image-item">
             <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/04/realme-11-1200-png.png"
-                alt
-              />
+              <img class="img-fluid"
+                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/04/realme-11-1200-png.png" alt />
             </div>
           </div>
           <div class="image-item">
             <div class="image">
-              <img
-                class="img-fluid"
-                src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/03/1200x382.jpg"
-                alt
-              />
+              <img class="img-fluid" src="https://cdn.hoanghamobile.com/i/home/Uploads/2023/08/03/1200x382.jpg" alt />
             </div>
           </div>
         </div>
@@ -298,6 +210,7 @@
       0% {
         transform: scale(0);
       }
+
       100% {
         transform: scale(1);
       }
@@ -307,6 +220,7 @@
       0% {
         transform: scale(1);
       }
+
       100% {
         transform: scale(0);
       }
@@ -316,6 +230,7 @@
       0% {
         transform: translate(0, 0);
       }
+
       100% {
         transform: translate(24px, 0);
       }
@@ -330,61 +245,36 @@
       <div class="row-12">
         <div class="menu-bar" style="color: #fff; margin: 0; padding: 0">
           <nav class="navbar float-end navbar-expand-lg" style="height: 35px">
-            <div
-              class="collapse navbar-collapse text-end text-white"
-              id="navbarNavDropdown"
-            >
+            <div class="collapse navbar-collapse text-end text-white" id="navbarNavDropdown">
               <ul class="text-end navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a
-                    class="nav-link text-white"
-                    href="/ad/home"
-                    th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}"
-                    >Admin Page</a
-                  >
+                  <a class="nav-link text-white" href="/ad/home"
+                    th:if="${session.user != null && session.user.roles[0].role.id == 'ADMIN'}">Admin Page</a>
                 </li>
-                <li class="nav-item" >
+                <li class="nav-item">
                   <a class="nav-link text-white" href="/message">Tin nhắn
-                    
+
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-white" href="/seller/home"
-                    >Bán hàng</a
-                  >
+                  <a class="nav-link text-white" href="/seller/home">Bán hàng</a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link text-white" href="/history"
-                    >Sản phẩm đã xem</a
-                  >
+                  <a class="nav-link text-white" href="/history">Sản phẩm đã xem</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-white" href="/order"
-                    >Tra cứu đơn hàng</a
-                  >
+                  <a class="nav-link text-white" href="/order">Tra cứu đơn hàng</a>
                 </li>
                 <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    data-toggle="dropdown"
-                    href="#"
-                    data-target="#Notifications1"
-                  >
+                  <a class="nav-link" data-toggle="dropdown" href="#" data-target="#Notifications1">
                     <i class="far fa-bell fs-4"></i>
-                    <span
-                      class="badge badge-warning position-absolute top-0 translate-middle rounded-pill mt-2 ms-1"
-                      id="amountNotifications1"
-                    ></span>
+                    <span class="badge badge-warning position-absolute top-0 translate-middle rounded-pill mt-2 ms-1"
+                      id="amountNotifications1"></span>
                   </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
-                    style="overflow-y: scroll; height: 400px"
-                    id="Notifications1"
-                  >
-                    <span class="dropdown-item dropdown-header"
-                      >15 Notifications</span
-                    >
+                  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
+                    style="overflow-y: scroll; height: 400px" id="Notifications1">
+                    <span class="dropdown-item dropdown-header">15 Notifications</span>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                       <i class="fas fa-envelope mr-2"></i> 4 new messages
@@ -393,9 +283,7 @@
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                       <i class="fas fa-users mr-2"></i> 8 friend requests
-                      <span class="float-right text-muted text-sm"
-                        >12 hours</span
-                      >
+                      <span class="float-right text-muted text-sm">12 hours</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
@@ -403,25 +291,13 @@
                       <span class="float-right text-muted text-sm">2 days</span>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item dropdown-footer"
-                      >See All Notifications</a
-                    >
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a
-                    style="color: #fff"
-                    th:if="${session.user == null}"
-                    class="nav-link"
-                    href="/signin"
-                    >Đăng nhập</a
-                  >
-                  <a
-                    th:if="${session.user != null}"
-                    class="nav-link text-danger fw-bold font-weight-bold"
-                    href="/logout"
-                    >Đăng xuất</a
-                  >
+                  <a style="color: #fff" th:if="${session.user == null}" class="nav-link" href="/signin">Đăng nhập</a>
+                  <a th:if="${session.user != null}" class="nav-link text-danger fw-bold font-weight-bold"
+                    href="/logout">Đăng xuất</a>
                 </li>
               </ul>
             </div>
@@ -431,59 +307,43 @@
       </div>
     </div>
   </div>
-  <div
-    class="container container_mid mt-3 text-center bg-white pb-3"
-    style="background-color: white"
-  >
+  <div class="container container_mid mt-3 bg-white pb-3" style="background-color: white">
     <div class="row mt-2 mb-2 col-12">
       <div class="col-md-2 col-3 text-center">
         <a href="/home">
-          <img
-            class="img-fluid img_logo m-0 mt-1"
-            src=" /img/banner/logoDUAN.png"
-            alt
-          />
+          <img class="img-fluid img_logo m-0 mt-1" src=" /img/banner/logoDUAN.png" alt />
         </a>
       </div>
 
-      <div class="col-md-9 col-7 mt-2">
+      <div class="col-md-9 col-7 mt-2" ng-controller="autoComplete">
         <div class="search-box order-4 order-xl-3">
           <form action="/product/search">
             <div class="input-group no-shadow">
-              <input
-                type="text"
-                class="form-control"
-                th:name="search"
-                th:value="${session.keywordsSearch}"
-                placeholder="Bạn cần tìm gì hôm nay ?"
-                name="keyword"
-                style="
+              <input type="text" class="form-control" id="search" th:name="search" onPropertyChange="TextChange(this)"
+                autocomplete="off"
+                th:placeholder="${session.keywordsSearch != null ? session.keywordsSearch : 'Bạn cần tìm gì hôm nay ?' }  "
+                name="keyword" style="
                   height: 40px;
                   border-radius: 15px;
                   font-weight: bold;
                   font-size: 13px;
                   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
                   border: 2px gray;
-                "
-              />
+                " />
 
-              <span
-                class="position-relative"
-                style="
+              <span class="position-relative" style="
                   right: 2.5rem;
                   z-index: 100;
                   margin-top: -2px;
                   width: 0px;
-                "
-              >
+                ">
                 <a href="#" style="color: #fff; font-size: 12px" class="mt-1">
-                  <i
-                    class="fa-solid fa-magnifying-glass fs-4 mt-2 pt-1 text-dark"
-                  ></i>
+                  <i class="fa-solid fa-magnifying-glass fs-4 mt-2 pt-1 text-dark"></i>
                 </a>
               </span>
             </div>
           </form>
+          <div class="custom-dropdown mt-2" id="custom-dropdown"></div>
         </div>
       </div>
       <div class="col-md-1 col-2 mt-2">
@@ -491,9 +351,7 @@
           <div class="col-6 pt-1">
             <a href="/cart" style="position: relative">
               <i class="bi bi-cart3 fs-4 text-dark fw-bold"></i>
-              <i
-                class="d-flex rounded-circle px-1"
-                style="
+              <i class="d-flex rounded-circle px-1" style="
                   font-size: 0.8rem;
                   background-color: #2550b9ab;
                   color: white;
@@ -501,29 +359,20 @@
                   top: -1rem;
                   right: -0.15rem;
                   text-decoration: none;
-                "
-                ng-bind="cart.countItem"
-              ></i>
+                " ng-bind="cart.countItem"></i>
             </a>
           </div>
           <div class="col-6 pt-1 col">
-            <a
-              href="/profile"
-              style="position: relative; display: flex; justify-content: center"
-            >
+            <a href="/profile" style="position: relative; display: flex; justify-content: center">
               <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
-              <i
-                th:if="${session.user != null}"
-                style="
+              <i th:if="${session.user != null}" style="
                   font-size: 1rem;
                   background-color: #2550b9ab;
                   color: white;
                   position: absolute;
                   top: 2rem;
                   text-decoration: none;
-                "
-                th:text="${session.user.username}"
-              ></i>
+                " th:text="${session.user.username}"></i>
             </a>
           </div>
         </div>
@@ -572,6 +421,7 @@
       0% {
         transform: scale(0);
       }
+
       100% {
         transform: scale(1);
       }
@@ -581,6 +431,7 @@
       0% {
         transform: scale(1);
       }
+
       100% {
         transform: scale(0);
       }
@@ -590,6 +441,7 @@
       0% {
         transform: translate(0, 0);
       }
+
       100% {
         transform: translate(24px, 0);
       }

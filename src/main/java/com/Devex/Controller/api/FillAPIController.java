@@ -36,6 +36,7 @@ import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
+import com.Devex.Entity.UserSearch;
 import com.Devex.Entity.Voucher;
 import com.Devex.Entity.VoucherProduct;
 import com.Devex.Repository.ProductRepository;
@@ -53,6 +54,7 @@ import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SellerService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.UserSearchService;
 import com.Devex.Sevice.VoucherProductService;
 import com.Devex.Sevice.VoucherService;
 
@@ -74,78 +76,80 @@ public class FillAPIController {
 
 	@Autowired
 	private RecommendationSystem recomendationService;
-	
+
 	@Autowired
 	private NotificationsService notificationsService;
-	
+
 	@Autowired
 	private FollowService followService;
-	
+
 	@Autowired
 	private OrderService orderService;
 
-	
 	@Autowired
-    private VoucherService voucherService;
-	
+	private VoucherService voucherService;
+
 	@Autowired
-    private VoucherProductService voucherProductService;
-	
+	private VoucherProductService voucherProductService;
+
 	@Autowired
 	private CategoryDetailService categoryDetailService;
-	
+
 	@Autowired
 	private SellerService sellerService;
-	
+
 	@Autowired
 	private CommentService commentService;
-	
+
 	@Autowired
 	private ProductVariantService productVariantService;
-	
+
 	@Autowired
 	private ImageProductService imageProductService;
-	
+
 	@Autowired
 	private NotiService notiService;
-	
-//	@GetMapping("/filter")
-//	public List<ProductDTO> getProductDTO(){
-//		List<Product> products = productService.findAll();
-//		List<ProductDTO> productsList = products.stream()
-//		    .map(pr -> {
-//		        // Thực hiện chuyển đổi từ Product thành ProductDTO ở đây
-//		        // Ví dụ:
-//		        ProductDTO dto = new ProductDTO();
-//		        dto.setId(pr.getId());
-//		        dto.setName(pr.getName());
-//		        dto.setDescription(pr.getDescription());
-//		        dto.setCategoryDetails(pr.getCategoryDetails());
-//		        dto.setActive(pr.getActive());
-//		        dto.setIsdelete(pr.getIsdelete());
-//		        dto.setSoldCount(pr.getSoldCount());
-//		        dto.setSellerProduct(pr.getSellerProduct());
-//		        dto.setCategoryDetails(pr.getCategoryDetails());
-//		        dto.setProductbrand(pr.getProductbrand());
-//		        dto.setImageProducts(pr.getImageProducts());
-//		        dto.setProductVariants(pr.getProductVariants());
-//		        dto.setComments(pr.getComments());
-//		        // Điền các thuộc tính khác của ProductDTO ở đây
-//		        return dto;
-//		    })
-//		    .collect(Collectors.toList());
-//
-//		return productsList;
-//	}
 
+	@Autowired
+	private UserSearchService userSearchService;
+
+	// @GetMapping("/filter")
+	// public List<ProductDTO> getProductDTO(){
+	// List<Product> products = productService.findAll();
+	// List<ProductDTO> productsList = products.stream()
+	// .map(pr -> {
+	// // Thực hiện chuyển đổi từ Product thành ProductDTO ở đây
+	// // Ví dụ:
+	// ProductDTO dto = new ProductDTO();
+	// dto.setId(pr.getId());
+	// dto.setName(pr.getName());
+	// dto.setDescription(pr.getDescription());
+	// dto.setCategoryDetails(pr.getCategoryDetails());
+	// dto.setActive(pr.getActive());
+	// dto.setIsdelete(pr.getIsdelete());
+	// dto.setSoldCount(pr.getSoldCount());
+	// dto.setSellerProduct(pr.getSellerProduct());
+	// dto.setCategoryDetails(pr.getCategoryDetails());
+	// dto.setProductbrand(pr.getProductbrand());
+	// dto.setImageProducts(pr.getImageProducts());
+	// dto.setProductVariants(pr.getProductVariants());
+	// dto.setComments(pr.getComments());
+	// // Điền các thuộc tính khác của ProductDTO ở đây
+	// return dto;
+	// })
+	// .collect(Collectors.toList());
+	//
+	// return productsList;
+	// }
 
 	private List<Product> uniqueProductList = new ArrayList<>();
 	private List<String> listCategory = new ArrayList<>();
 	private List<String> listBrand = new ArrayList<>();
-	// tạo list chứa đối tượng DTO 
+	// tạo list chứa đối tượng DTO
 	private List<ProductDTO> listProductDTO = new ArrayList<>();
 	private List<ProductDTO> temPoraryList = new ArrayList<>();
 	private List<String> historySearch = new ArrayList<>();
+
 	@GetMapping("/filter")
 	public List<ProductDTO> getProductDTO() {
 		List<Product> products = productService.findAll();
@@ -176,11 +180,11 @@ public class FillAPIController {
 	@GetMapping("/search")
 	public List<ProductDTO> getProductSearch() {
 		String kwords = sessionService.get("keywordsSearch");
-//		String kwords = "laptop";
-		System.out.println("............................................................................."+kwords);
+		// String kwords = "laptop";
+		System.out.println("............................................................................." + kwords);
 		List<Product> list = new ArrayList<>();
 		Set<Product> uniqueProducts = new LinkedHashSet<>();
-		
+
 		// Tìm tên từ theo từ khóa
 		list.addAll(productService.findByKeywordName(kwords));
 		// Tìm theo shop bán
@@ -198,16 +202,28 @@ public class FillAPIController {
 		// Chuyển đổi lại thành danh sách (List)
 		uniqueProductList = new ArrayList<>(uniqueProducts);
 		listProductDTO = changeProductToProductDTO(uniqueProductList);
-//		listProductDTO.sort(Comparator.comparing(ProductDTO::getName)
-//		        .thenComparing(product -> product.getName().contains(kwords))); // sort theo keyword
-//		Collections.reverse(listProductDTO);
+		// listProductDTO.sort(Comparator.comparing(ProductDTO::getName)
+		// .thenComparing(product -> product.getName().contains(kwords))); // sort theo
+		// keyword
+		// Collections.reverse(listProductDTO);
 		temPoraryList = listProductDTO; // lưu list vào 1 list tam thời
 
 		return listProductDTO;
 	}
 
+	@GetMapping("historySearch")
+	public Set<String> getMethodName() {
+		List<UserSearch> listUserSearchs = userSearchService.findAll();
+		Set<String> listHistorySearch = new LinkedHashSet<>();
+		listUserSearchs.forEach(key -> {
+			listHistorySearch.add(key.getKeySearch());
+		});
+
+		return listHistorySearch;
+	}
+
 	List<ProductDTO> changeProductToProductDTO(List<Product> list) {
-		
+
 		List<ProductDTO> productsList = list.stream().map(pr -> {
 			// Thực hiện chuyển đổi từ Product thành ProductDTO ở đây
 			// Ví dụ:
@@ -232,52 +248,51 @@ public class FillAPIController {
 		return productsList;
 	}// end change Product
 
-	
 	@GetMapping("/user/notifications")
-    public Map<String, Object> getTop10Notifications() {
-        User u = sessionService.get("user");
-        Map<String, Object> mapNotifications = new HashMap<>();
-        List<Notifications> listNotifications = notificationsService.getTop10NotificationsByUserto(u.getUsername());
-        long amountNotifications = notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
-        long acountNotifications = notificationsService.getCountNotificationsByUserto(u.getUsername());
-        mapNotifications.put("listNotifications", listNotifications);
-        mapNotifications.put("amountNotifications", amountNotifications);
-        mapNotifications.put("acountNotifications", acountNotifications);
-        return mapNotifications;
-    }
-	
-	@PutMapping("/user/updatenotification/{id}")
-    public long handlePostRequest(@PathVariable("id") int id) {
-        User u = sessionService.get("user");
-        notificationsService.updateNotificationsById(id);
-        return notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
-    }
+	public Map<String, Object> getTop10Notifications() {
+		User u = sessionService.get("user");
+		Map<String, Object> mapNotifications = new HashMap<>();
+		List<Notifications> listNotifications = notificationsService.getTop10NotificationsByUserto(u.getUsername());
+		long amountNotifications = notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
+		long acountNotifications = notificationsService.getCountNotificationsByUserto(u.getUsername());
+		mapNotifications.put("listNotifications", listNotifications);
+		mapNotifications.put("amountNotifications", amountNotifications);
+		mapNotifications.put("acountNotifications", acountNotifications);
+		return mapNotifications;
+	}
 
-    @GetMapping("/user/allnotifications")
-    public List<Notifications> getAllNotifications() {
-        User u = sessionService.get("user");
-        return notificationsService.getAllNotificationsByUserto(u.getUsername());
-    }
-    
-    @GetMapping("/user/history")
-    public List<Notifications> getAllHistory() {
-        User u = sessionService.get("user");
-        List<Notifications> listNotifications = notificationsService.getAllNotificationsByUserfrom(u.getUsername());
-        return listNotifications;
-    }
-    
-    @GetMapping("/user/info")
-    public Map<String, Object> getInfoUserProfile() {
-        User u = sessionService.get("user");
-        Map<String, Object> mapInfoUser = new HashMap<>();
-        int amountOrder = orderService.getCountOrderByCustomerUsername(u.getUsername());
-        int amountFollow = followService.getCountFollowByCustomerUsername(u.getUsername());
-        mapInfoUser.put("amountOrder", amountOrder);
-        mapInfoUser.put("amountFollow", amountFollow);
-        return mapInfoUser;
-    }
-    
-    @GetMapping("/shoppage/voucher/list")
+	@PutMapping("/user/updatenotification/{id}")
+	public long handlePostRequest(@PathVariable("id") int id) {
+		User u = sessionService.get("user");
+		notificationsService.updateNotificationsById(id);
+		return notificationsService.getCountNotificationsStatusfalseAndUserto(u.getUsername());
+	}
+
+	@GetMapping("/user/allnotifications")
+	public List<Notifications> getAllNotifications() {
+		User u = sessionService.get("user");
+		return notificationsService.getAllNotificationsByUserto(u.getUsername());
+	}
+
+	@GetMapping("/user/history")
+	public List<Notifications> getAllHistory() {
+		User u = sessionService.get("user");
+		List<Notifications> listNotifications = notificationsService.getAllNotificationsByUserfrom(u.getUsername());
+		return listNotifications;
+	}
+
+	@GetMapping("/user/info")
+	public Map<String, Object> getInfoUserProfile() {
+		User u = sessionService.get("user");
+		Map<String, Object> mapInfoUser = new HashMap<>();
+		int amountOrder = orderService.getCountOrderByCustomerUsername(u.getUsername());
+		int amountFollow = followService.getCountFollowByCustomerUsername(u.getUsername());
+		mapInfoUser.put("amountOrder", amountOrder);
+		mapInfoUser.put("amountFollow", amountFollow);
+		return mapInfoUser;
+	}
+
+	@GetMapping("/shoppage/voucher/list")
 	public ResponseEntity<List<Voucher>> getAllVoucher(@RequestParam("username") String username) {
 		User user = sessionService.get("user");
 		List<Voucher> list = voucherService.findAllByShop(username);
@@ -288,10 +303,10 @@ public class FillAPIController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@GetMapping("/shoppage/voucher/prod-voucher/{id}")
 	public ResponseEntity<List<VoucherProduct>> getProdVoucher(@PathVariable("id") Integer id) {
-		
+
 		List<VoucherProduct> list = voucherProductService.findAllByVoucher(id);
 
 		if (list != null) {
@@ -300,7 +315,7 @@ public class FillAPIController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@PutMapping("/shoppage/voucher/disabled/{id}")
 	public ResponseEntity<Void> disabledCartDetail(@PathVariable("id") Integer id) {
 		Voucher voucher = voucherService.getById(id);
@@ -312,9 +327,9 @@ public class FillAPIController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@GetMapping("/user/shoppage")
-	public Map<String, Object> getInfoShopPage(@RequestParam("username") String username){
+	public Map<String, Object> getInfoShopPage(@RequestParam("username") String username) {
 		User u = sessionService.get("user");
 		Map<String, Object> mapInfoShopPage = new HashMap<>();
 		Seller seller = sellerService.findFirstByUsername(username);
@@ -325,35 +340,37 @@ public class FillAPIController {
 		double rating = 0;
 		int amountComment = 0;
 		boolean checkFollow = false;
-		List<CategoryDetails> listCategoryDetails = categoryDetailService.findAllCategoryDetailsBySellerUsername(username);
+		List<CategoryDetails> listCategoryDetails = categoryDetailService
+				.findAllCategoryDetailsBySellerUsername(username);
 		List<Comment> listComment = commentService.getAllCommentBySellerUsername(username);
 		for (Comment comment : listComment) {
 			rating += comment.getRating();
 		}
-		if(rating != 0) {
+		if (rating != 0) {
 			totalRating = rating / listComment.size();
 		}
 		amountComment = listComment.size();
 		List<infoProductDTO> listInfoProduct = new ArrayList<>();
-        List<Product> listProduct = productService.findProductBySellerUsernameAndIsdeleteProduct(username);
-        for (Product product : listProduct) {
-            infoProductDTO dto = new infoProductDTO();
-            ProductVariant pv = productVariantService.findProductVariantByProductId(product.getId());
-            dto.setId(product.getId());
-            dto.setName(product.getName());
-            dto.setActive(product.getActive());
-            dto.setSoldCount(product.getSoldCount());
-            dto.setPrice(pv.getPrice());
-            dto.setPriceSale(pv.getPriceSale());
-            dto.setQuantity(pv.getQuantity());
-            dto.setNameImageProduct("/img/product/" + username + "/" + product.getId() + "/" + imageProductService.findFirstImageProduct(product.getId()));
-            dto.setCateId(product.getCategoryDetails().getId());
-            listInfoProduct.add(dto);
-        }
-        Follow f = followService.getFollowByUsernameCustomerAndSeller(u.getUsername(), username);
-        if(f != null) {
-        	checkFollow = true;
-        }
+		List<Product> listProduct = productService.findProductBySellerUsernameAndIsdeleteProduct(username);
+		for (Product product : listProduct) {
+			infoProductDTO dto = new infoProductDTO();
+			ProductVariant pv = productVariantService.findProductVariantByProductId(product.getId());
+			dto.setId(product.getId());
+			dto.setName(product.getName());
+			dto.setActive(product.getActive());
+			dto.setSoldCount(product.getSoldCount());
+			dto.setPrice(pv.getPrice());
+			dto.setPriceSale(pv.getPriceSale());
+			dto.setQuantity(pv.getQuantity());
+			dto.setNameImageProduct("/img/product/" + username + "/" + product.getId() + "/"
+					+ imageProductService.findFirstImageProduct(product.getId()));
+			dto.setCateId(product.getCategoryDetails().getId());
+			listInfoProduct.add(dto);
+		}
+		Follow f = followService.getFollowByUsernameCustomerAndSeller(u.getUsername(), username);
+		if (f != null) {
+			checkFollow = true;
+		}
 		mapInfoShopPage.put("seller", seller);
 		mapInfoShopPage.put("amountProduct", amountProduct);
 		mapInfoShopPage.put("amountSellerFollow", amountSellerFollow);
@@ -366,7 +383,7 @@ public class FillAPIController {
 		mapInfoShopPage.put("checkFollow", checkFollow);
 		return mapInfoShopPage;
 	}
-	
+
 	@PostMapping("/user/follow")
 	public void insertFollow(@RequestParam("username") String username) {
 		User u = sessionService.get("user");
@@ -374,7 +391,7 @@ public class FillAPIController {
 		notiService.sendNotification(u.getUsername(), username, "", "follow", "");
 		notiService.sendHistory(u.getUsername(), username, "", "follow", "");
 	}
-	
+
 	@DeleteMapping("/user/unfollow")
 	public void deleteFollow(@RequestParam("username") String username) {
 		User u = sessionService.get("user");

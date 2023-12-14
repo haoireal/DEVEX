@@ -109,44 +109,57 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">User Manage</h3>
+							<h3 class="card-title">Quản lý người dùng</h3>
 						</div>
 						<!-- /.card-header -->
 						<div ng-if="data.userRoles[0].user" class="card-body">
-							<form method="post">
+							<form method="post" name="from">
 								<div class="mb-3">
-									<label for="UserName" class="form-label">Username</label>
+									<label for="UserName" class="form-label">Tên tài khoản</label>
 									<input ng-model="data.userRoles[0].user.username" name="username" type="text"
 										class="form-control" id="UserName" aria-describedby="UserName" disabled>
 
 								</div>
 								<div class="mb-3">
-									<label for="FullName" class="form-label">FullName</label>
+									<label for="FullName" class="form-label">Họ và tên</label>
 									<input ng-model="data.userRoles[0].user.fullname" name="fullName" type="text"
-										class="form-control" id="FullName" aria-describedby="FullName">
-
+										class="form-control" id="FullName" aria-describedby="FullName" required>
+									<div class="text-danger"
+										ng-show="from.FullName.$dirty && from.FullName.$error.required">
+										Vui lòng điền họ và tên!
+									</div>
 
 								</div>
 								<div class="mb-3">
 									<label for="Email" class="form-label">Email</label>
-									<input ng-model="data.userRoles[0].user.email" name="email" type="Email"
-										class="form-control" id="Email" aria-describedby="Email">
-
+									<input ng-model="data.userRoles[0].user.email" name="email" type="email"
+										class="form-control" id="Email" aria-describedby="Email" required>
+									<div class="text-danger" ng-show="from.Email.$dirty && from.Email.$error.required ">
+										Vui lòng điền Email !
+									</div>
+									<div class="text-danger" ng-show="from.Email.$dirty &&  from.Email.$error.email">
+										Email không hợp lệ !
+									</div>
 								</div>
 								<div class="mb-3">
-									<label for="Password" class="form-label">Password</label>
+									<label for="Password" class="form-label">Mật khẩu</label>
 									<input ng-model="data.userRoles[0].user.password" name="password" type="password"
-										class="form-control" id="Password" aria-describedby="Password">
-
+										class="form-control" id="Password" aria-describedby="Password" required>
+									<div class="text-danger"
+										ng-show="from.Password.$dirty && from.Password.$error.required ">
+										Vui lòng điền mật khẩu !
+									</div>
 								</div>
 								<div class="mb-3">
-									<label for="Phone" class="form-label">Phone</label>
+									<label for="Phone" class="form-label">Điện thoại</label>
 									<input ng-model="data.userRoles[0].user.phone" name="phone" type="text"
-										class="form-control" id="Phone" aria-describedby="Phone">
-
+										class="form-control" id="Phone" aria-describedby="Phone" required>
+									<div class="text-danger" ng-show="from.Phone.$dirty && from.Phone.$error.required ">
+										Vui lòng điền số điện thoại!
+									</div>
 								</div>
 								<div class="mb-3 d-flex">
-									<label for="Role" class="form-label me-4">Gender</label> <br>
+									<label for="Role" class="form-label me-4">Giới tính</label> <br>
 									<div class="form-check pe-3">
 										<input class="form-check-input" type="radio" name="gender" id="Nam"
 											ng-model="data.userRoles[0].user.gender" ng-value="'Nam'"> <label
@@ -165,24 +178,26 @@
 
 								</div>
 								<div class="mb-3 d-flex">
-									<label for="Role" class="form-label me-4">Active</label>
+									<label for="Role" class="form-label me-4">Trạng thái</label>
 									<div class="form-check pe-3">
 										<input class="form-check-input" type="radio" name="active" id="true"
 											ng-model="data.userRoles[0].user.active" ng-value="true"> <label
-											class="form-check-label" for="true"> Avtice </label>
+											class="form-check-label" for="true"> Hoạt Động </label>
 									</div>
 									<div class="form-check" style="margin: 0px 20px;">
 										<input class="form-check-input" type="radio" name="active" id="false"
 											ng-model="data.userRoles[0].user.active" ng-value="false"> <label
-											class="form-check-label" for="false"> Inactive </label>
+											class="form-check-label" for="false"> Không hoạt động </label>
 									</div>
 
 								</div>
 								<div class="mb-3 d-flex">
-									<label for="Role" class="form-label me-4">Roles</label>
+									<label for="Role" class="form-label me-4">Vai trò</label>
 									<div class="form-check pe-3" ng-repeat="role in data.roles">
-										<input ng-checked="isRoleSelected(role.id)" ng-click="toggleRole(role.id)"
-											class="form-check-input" type="checkbox" name="role" id="{{role.id}}">
+										<input ng-checked="isRoleSelected(role.id)"
+											ng-disabled="isRoleSelected(role.id) && role.id ==='SELLER' && isSellerSelected"
+											ng-click="toggleRole(role.id)" class="form-check-input" type="checkbox"
+											name="role" id="{{role.id}}">
 										<label class="form-check-label" for="{{role.id}}">{{ role.name }}</label>
 									</div>
 								</div>
@@ -191,7 +206,7 @@
 
 								<button type="submit" class="btn btn-primary" ng-click="updateRoles()">Update</button>
 
-								
+
 
 							</form>
 						</div>
@@ -224,8 +239,7 @@
 	<div id="successModal" class="modal">
 		<div class="modal-content">
 			<span class="close">&times;</span>
-			<iframe
-				src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+			<iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
 			<span id="content" class="text-success fs-3">Thêm thành công</span>
 		</div>
 	</div>
@@ -233,17 +247,12 @@
 	<div id="failseModal" class="modal">
 		<div class="modal-content">
 			<span class="close">&times;</span>
-			<iframe
-				src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+			<iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
 			<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
 		</div>
 	</div>
-	<div
-	th:replace="~{flagment/admin/adminFooter :: adminFooterFragment}"
-  ></div>
-  <div
-	th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"
-  ></div>
+	<div th:replace="~{flagment/admin/adminFooter :: adminFooterFragment}"></div>
+	<div th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
 	<script src="/admin/plugins/select2/js/select2.full.min.js"></script>
 	<!-- Bootstrap4 Duallistbox -->
 	<script src="/admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
@@ -301,18 +310,18 @@
 			})
 			//Date range as a button
 			$('#daterange-btn').daterangepicker({
-					ranges: {
-						'Today': [moment(), moment()],
-						'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-						'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-						'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-						'This Month': [moment().startOf('month'), moment().endOf('month')],
-						'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
-							'month').endOf('month')]
-					},
-					startDate: moment().subtract(29, 'days'),
-					endDate: moment()
+				ranges: {
+					'Today': [moment(), moment()],
+					'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+					'This Month': [moment().startOf('month'), moment().endOf('month')],
+					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
+						'month').endOf('month')]
 				},
+				startDate: moment().subtract(29, 'days'),
+				endDate: moment()
+			},
 				function (start, end) {
 					$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
 				}
@@ -411,9 +420,10 @@
 
 		app.controller('myController', function ($scope, $http, $window) {
 			const content = document.getElementById('content');
-			var contentfalse = document.getElementById('contentfalse');
+			let contentfalse = document.getElementById('contentfalse');
+			let checkExist = true;
 
-			$scope.hasSellerRole = true; // khởi tạo biến chứa roles true ? false
+			$scope.isSellerSelected = false; // khởi tạo biến chứa roles true ? false
 			$scope.data = []; // khởi tạo biến $scope.fill với một mảng rỗng
 			$scope.fillAll = function () {
 				$http.get('/api/userDetail').then(resp => {
@@ -421,8 +431,10 @@
 					// alert('oc cho');
 					// $scope.selectedRoles = [$scope.data.userRoles.role.id];
 					$scope.selectedRoles = $scope.data.userRoles.map(userRole => userRole.role.id);
-
-					console.log($scope.data)
+					$scope.isSellerSelected = $scope.selectedRoles.includes('SELLER');
+					console.log($scope.isSellerSelected);
+					// console.log($scope.selectedRoles)
+					// console.log($scope.data)
 
 				}).catch(function (err) {
 					console.error(err); // xử lý lỗi khi gọi API
@@ -463,42 +475,37 @@
 					roles: $scope.selectedRoles // Danh sách roles đã chọn
 				};
 				console.log(updatedRoles);
+				if ($scope.selectedRoles.length <= 0) {
+					checkExist = false;
+				}
 				// Gửi yêu cầu cập nhật lên server
-				$http.post('/api/updateUserRoles', updatedRoles).then(response => {
-					if (response.data.message) {
-						console.log(response.data.message);
-						content.textContent = "Cập nhật thành công";
-						successbtn.click();
-					} else if (response.data.error) {
+				if (checkExist == true) {
+					$http.post('/api/updateUserRoles', updatedRoles).then(response => {
+						if (response.data.message) {
+							console.log(response.data.message);
+							content.textContent = "Cập nhật thành công";
+							successbtn.click();
+						} else if (response.data.error) {
+							contentfalse.textContent = "Cập nhật thất bại";
+							failsebtn.click();
+						}
+					}).catch(error => {
+						console.error(error);
 						contentfalse.textContent = "Cập nhật thất bại";
 						failsebtn.click();
-					}
-				}).catch(error => {
-					console.error(error);
+
+					});
+				} else {
 					contentfalse.textContent = "Cập nhật thất bại";
-						failsebtn.click();
-					alert('Có lỗi xảy ra khi cập nhật roles');
-				});
-
-			};
-
-			// disable input roles 
-			$scope.isSellerRole = function (userRoles) {
-				// Duyệt qua mảng userRoles và kiểm tra xem có roleId là 'SELLER' hay không
-
-				for (var i = 0; i < userRoles.length; i++) {
-					// console.log(userRoles[i].role.id);
-					if (userRoles[i].role.id === 'SELLER') {
-						return true; // Trả về true nếu có roleId 'SELLER'
-
-					}
-
+					failsebtn.click();
 				}
 
-				return false; // Không có roleId 'SELLER'
-
 
 			};
+
+
+
+
 
 		});
 	</script>
@@ -513,7 +520,7 @@
 			var closeButtons = document.getElementsByClassName('close');
 
 			successbtn.addEventListener('click', function () {
-				successModal.style.display = 'block';
+				successModal.display = 'block';
 			});
 
 			failsebtn.addEventListener('click', function () {
@@ -528,7 +535,7 @@
 			}
 
 			window.addEventListener('click', function (event) {
-				if (event.target === greenModal || event.target === failseModal) {
+				if (event.target === failseModal) {
 					successModal.style.display = 'none';
 					failseModal.style.display = 'none';
 				}
