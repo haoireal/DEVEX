@@ -25,6 +25,12 @@ public class CartServiceImpl implements CartService{
 		return cart.save(entity);
 	}
 
+
+	@Override
+	public Cart getCartById(String username) {
+		return cart.getCartById(username);
+	}
+
 	@Override
 	public List<Cart> findAll(Sort sort) {
 		return cart.findAll(sort);

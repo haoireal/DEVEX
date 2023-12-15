@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.Devex.DTO.ShopDTO;
 import com.Devex.Entity.Seller;
 
 public interface SellerService {
@@ -49,5 +50,7 @@ public interface SellerService {
 	List<Seller> findByShopNameAndUsernameContainingKeyword(String keyword);
 
 	void updateActiveSellerByUsername(boolean active, String username);
+
+	List<ShopDTO> findAllId();
 
 }

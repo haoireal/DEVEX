@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="/css/user/userIndex.css" />
 </script>
 <script th:src="@{/js/cart-ctrl.js}"></script>
+<script th:src="@{/js/user/autocomplete.js}"></script>
 </head>
 <style>
 .fixed-picture {
@@ -261,15 +262,11 @@ header a.nav-link:hover {
 												</tr>
 												<tr>
 													<th>Vận chuyển:</th>
-													<td>00.00</td>
-												</tr>
-												<tr>
-													<th>Giảm giá</th>
-													<td th:text="${#numbers.formatDecimal(order.priceDiscount, 0, 'COMMA', 0, 'POINT')}"></td>
+													<td th:text="${#numbers.formatDecimal(order.totalShip, 0, 'COMMA', 0, 'POINT')}"></td>
 												</tr>
 												<tr>
 													<th>Tổng giá:</th>
-													<td th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')}"></td>
+													<td th:text="${#numbers.formatDecimal(order.total + order.totalShip, 0, 'COMMA', 0, 'POINT')}"></td>
 												</tr>
 											</table>
 										</div>

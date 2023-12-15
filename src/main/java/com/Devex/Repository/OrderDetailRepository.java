@@ -28,7 +28,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 	           "JOIN FETCH o.order od " +
 	           "JOIN FETCH o.productVariant pv " +
 	           "JOIN FETCH pv.product p " +
-	           "JOIN FETCH p.sellerProduct s " +
 	           "WHERE od.id like ?1")
 	List<OrderDetails> findOrderDetailsByOrderID(String id);
 	
@@ -101,7 +100,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 			"JOIN FETCH od.order o " +
 			"JOIN FETCH od.productVariant pv " +
 			"JOIN FETCH pv.product p " +
-			"JOIN FETCH p.sellerProduct s " +
 			"WHERE o.customerOrder.username = ?1 " +
 			"Order BY o.createdDay DESC")
 	List<OrderDetails> findOrdersByCustomerID(String customerID);

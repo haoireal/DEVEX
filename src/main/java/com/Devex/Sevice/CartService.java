@@ -31,7 +31,9 @@ public interface CartService {
 
 	Page<Cart> findAll(Pageable pageable);
 
-	List<Cart> findAll(Sort sort);
+    Cart getCartById(String username);
+
+    List<Cart> findAll(Sort sort);
 
 	Cart save(Cart entity);
 

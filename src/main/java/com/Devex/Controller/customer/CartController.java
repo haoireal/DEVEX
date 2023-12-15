@@ -87,7 +87,7 @@ public class CartController {
 		ProductVariant pv2 = pvService.findById(id).get();
 		User user = session.get("user");
 		Customer customer = customerService.findById(user.getUsername()).get();
-		Cart cart = customer.getCart();
+		Cart cart = cartService.getCartById(customer.getUsername());
 		if(cart == null) {
 			cart = new Cart();
 			cart.setPerson(customer);

@@ -138,10 +138,10 @@ public class DevexAdminRestController {
 	}
 
 	@GetMapping("/userDetail")
-	public Map<String, Object> updateUser() {
+	public Map<Object, Object> updateUser() {
 
 		String username = sessionService.get("username");
-		Map<String, Object> userDetails = new HashMap<>();
+		Map<Object, Object> userDetails = new HashMap<>();
 		userDetails.put("userRoles", userRoleService.findAllByUserName(username));
 		userDetails.put("roles", roleService.findAll());
 		return userDetails;

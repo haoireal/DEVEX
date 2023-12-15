@@ -44,6 +44,7 @@ public class SigninController {
 //			User user = userService.findById(principal.getName()).get();
 			List<UserRole> role = userRoleService.findAllByUserName(principal.getName());
 			for (UserRole u : role) {
+				System.out.println(u.getRole().getId());
 				if (u.getRole().getId().equals("ADMIN")) {
 					return "redirect:/ad/home";
 				} else if(u.getRole().getId().equals("SELLER")) {

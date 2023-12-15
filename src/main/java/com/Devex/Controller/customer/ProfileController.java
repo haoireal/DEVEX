@@ -1,12 +1,17 @@
 package com.Devex.Controller.customer;
 
 import java.security.Principal;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +24,6 @@ import com.Devex.DTO.MailOtpDTO;
 import com.Devex.DTO.OtpRequestDTO;
 import com.Devex.DTO.OtpValidationRequest;
 import com.Devex.Entity.Customer;
-import com.Devex.Entity.Dwallet;
-import com.Devex.Entity.Notification;
 import com.Devex.Entity.Role;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
@@ -257,7 +260,7 @@ public class ProfileController {
 	}
 
 	@PostMapping("/upgrade-seller")
-	public String upgradeSeller(Model model) {
+	public String upgradeSeller(Model model, Principal principal) {
 		String shopName = param.getString("shopName", "");
 		String description = param.getString("description", "");
 		User user = session.get("user");
@@ -289,6 +292,22 @@ public class ProfileController {
 		userRole.setRole(role);
 		userRole.setUser(user);
 		userRoleService.save(userRole);
+		//Cập nhập quyền ngay lập tức cho tài khoản hiện tại
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (authentication != null && authentication.isAuthenticated()) {
+		    String username = authentication.getName();
+		    
+		    List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
+		    updatedAuthorities.add(new SimpleGrantedAuthority("SELLER"));
+
+		    Authentication updatedAuthentication = new UsernamePasswordAuthenticationToken(
+		            authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
+
+		    SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
+		}
+
+		
 		// Thông báo cho admin
 		// Notification noti = new Notification();
 		// noti.setName("Nâng cấp lên nhà bán hàng");

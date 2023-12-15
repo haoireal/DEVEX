@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.Devex.DTO.ShopDTO;
 import com.Devex.Entity.Seller;
 
 import jakarta.transaction.Transactional;
@@ -21,6 +22,10 @@ public interface SellerRepository extends JpaRepository<Seller, String>{
 	Seller findFirstByUsername(String username);
 //	@Query("SELECT s FROM Seller s WHERE s.username = :username")
 //	Seller findFirstByUsername(@Param("username") String username);
+
+	
+	@Query("SELECT new com.Devex.DTO.ShopDTO(s.username, s.shopName, s.fullname, s.address, s.phoneAddress, s.mall, s.description) FROM Seller s")
+	List<ShopDTO> findAllId();
 
 	@Modifying
 	@Transactional

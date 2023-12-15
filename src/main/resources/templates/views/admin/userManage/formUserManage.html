@@ -381,7 +381,6 @@
 			$scope.fillAll = function () {
 				$http.get('/api/userDetail').then(resp => {
 					$scope.data = resp.data;
-					// alert('oc cho');
 					// $scope.selectedRoles = [$scope.data.userRoles.role.id];
 					$scope.selectedRoles = $scope.data.userRoles.map(userRole => userRole.role.id);
 					$scope.isSellerSelected = $scope.selectedRoles.includes('SELLER');
@@ -390,6 +389,7 @@
 					// console.log($scope.data)
 
 				}).catch(function (err) {
+					console.log('Lỗi này:' + err);
 					console.error(err); // xử lý lỗi khi gọi API
 					alert('Có lỗi xảy ra khi gọi API'); // hiển thị thông báo lỗi cho người dùng
 				});
