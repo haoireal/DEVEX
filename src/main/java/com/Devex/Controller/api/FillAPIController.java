@@ -367,7 +367,11 @@ public class FillAPIController {
 			dto.setCateId(product.getCategoryDetails().getId());
 			listInfoProduct.add(dto);
 		}
-		Follow f = followService.getFollowByUsernameCustomerAndSeller(u.getUsername(), username);
+		Follow f = null;
+		if(u != null) {
+			f = followService.getFollowByUsernameCustomerAndSeller(u.getUsername(), username);
+		}
+
 		if (f != null) {
 			checkFollow = true;
 		}

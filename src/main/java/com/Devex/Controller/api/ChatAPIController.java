@@ -39,13 +39,17 @@ public class ChatAPIController {
 	@GetMapping("/list")
 	public ResponseEntity<List<MessageDTO>> getAllMessage() {
 		User user = sessionService.get("user", null);
-		List<MessageDTO> list = chatService.findAllByUser(user.getUsername());
-		if(list != null) {
-			return ResponseEntity.ok(list);
-		}else {
-			return ResponseEntity.notFound().build();
+		if(user != null) {
+			List<MessageDTO> list = chatService.findAllByUser(user.getUsername());
+			if(list != null) {
+				return ResponseEntity.ok(list);
+			}else {
+				return ResponseEntity.notFound().build();
+			}
 		}
-		
+		return ResponseEntity.notFound().build();
+
+
 	}
 	
 	@GetMapping("/list-shop")

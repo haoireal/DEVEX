@@ -93,7 +93,7 @@ public class ProductDetailController {
 		List<Product> listPrS = productService.findProductBySellerUsername("%" + seller.getSellerProduct().getUsername() + "%");
 		listPrS.remove(product);
 		// Tìm tên từ theo từ khóa
-		for(int i = 0; i < 3 ; i++) {
+		for(int i = 0; i < 2 ; i++) {
 			list.addAll(productService.findByKeywordName(name[i]));			
 			list.forEach(pr ->{
 				uniqueProducts.add(pr);

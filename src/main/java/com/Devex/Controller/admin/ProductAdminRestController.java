@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.Devex.DTO.SellerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -345,8 +346,8 @@ public class ProductAdminRestController {
 	}
 	
 	@GetMapping("/getlistseller")
-	public List<Seller> getListSeller(){
-		return sellerService.findAll();
+	public List<SellerDTO> getListSeller(){
+		return sellerService.findAllSeller();
 	}
 	
 	@GetMapping("/search/seller")
