@@ -88,4 +88,10 @@ public interface OrderService {
 	int getCountOrderByCustomerUsername(String username);
 
 	List<Order> findAllOrderByIdAndUsernameContainingKeyword(String username, String keyword);
+
+	List<Order> findOrderByOrderStatusId(int statusid);
+
+	List<Order> findOrderByIdOrCustomer(String keyword);
+
+	List<Order> findOrderByOrderStatusIdAndIdOrCustomer(int statusid, String keyword);
 }

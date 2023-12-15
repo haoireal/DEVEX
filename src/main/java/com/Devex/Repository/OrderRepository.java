@@ -231,4 +231,13 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 		       "JOIN  p.sellerProduct s " +
 			   "WHERE s.username = :username AND LOWER(o.id) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Order> findAllOrderByIdAndUsernameContainingKeyword(@Param("username") String username, @Param("keyword") String keyword);
+	
+	@Query("SELECT o FROM Order o WHERE o.orderStatus.id = :statusid ")
+	List<Order> findOrderByOrderStatusId(@Param("statusid") int statusid);
+	
+	@Query("SELECT o FROM Order o WHERE o.id LIKE %:keyword% OR o.customerOrder.fullname LIKE %:keyword%")
+    List<Order> findOrderByIdOrCustomer(@Param("keyword") String keyword);
+	
+	@Query("SELECT o FROM Order o WHERE o.orderStatus.id = :statusid AND o.id LIKE %:keyword% OR o.orderStatus.id = :statusid AND o.customerOrder.fullname LIKE %:keyword%")
+	List<Order> findOrderByOrderStatusIdAndIdOrCustomer(@Param("statusid") int statusid, @Param("keyword") String keyword);
 }

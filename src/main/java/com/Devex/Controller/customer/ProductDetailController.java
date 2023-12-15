@@ -146,12 +146,12 @@ public class ProductDetailController {
 			return quantity;
 	}
 	
-//	@PutMapping("/upview")
-//	public void upView(@RequestParam("id") String id) {
-//		System.out.println(id);
-//		Product p = productService.findByIdProduct(id);
-//		System.out.println(p.getViewcount()+"aaaa");
-////		productService.updateViewProduct(id, p.getViewcount()+1);
-//	}
+	@PutMapping("/upview")
+	public void upView(@RequestParam("id") String id) {
+		System.out.println(id);
+		Product p = productService.findByIdProduct(id);
+		System.out.println(p.getViewcount()+"aaaa");
+//		productService.updateViewProduct(id, p.getViewcount()+1);
+	}
 
 }
