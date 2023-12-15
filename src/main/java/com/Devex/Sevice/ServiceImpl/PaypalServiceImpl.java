@@ -127,18 +127,18 @@ public class PaypalServiceImpl implements PaypalService {
 		DecimalFormat decimalFormat = new DecimalFormat("#.##");
 		double vndAmount = 0;
 //         
-		for (CartDetailDTo itemOrder : listItemOrder) {
-			Item item = new Item();
-			item.setCurrency("USD");
-			item.setName(itemOrder.getNameProduct());
-			item.setPrice(convertUSD(itemOrder.getPrice()));
-			System.out.println(item.getPrice());
-			vndAmount += Double.parseDouble(item.getPrice()) * itemOrder.getQuantity();
-			// item.setTax(orderDetail.getTax());
-			item.setQuantity(String.valueOf(itemOrder.getQuantity()));
-
-			items.add(item);
-		}
+//		for (CartDetailDTo itemOrder : listItemOrder) {
+//			Item item = new Item();
+//			item.setCurrency("USD");
+//			item.setName(itemOrder.getNameProduct());
+//			item.setPrice(convertUSD(itemOrder.getPrice()));
+//			System.out.println(item.getPrice());
+//			vndAmount += Double.parseDouble(item.getPrice()) * itemOrder.getQuantity();
+//			// item.setTax(orderDetail.getTax());
+//			item.setQuantity(String.valueOf(itemOrder.getQuantity()));
+//
+//			items.add(item);
+//		}
 
 //        Details details = new Details();
 //      details.setShipping(orderDetail.getShipping());
@@ -162,8 +162,8 @@ public class PaypalServiceImpl implements PaypalService {
 				.collect(Collectors.joining(", ")));
 //         
 
-		itemList.setItems(items);
-		transaction.setItemList(itemList);
+//		itemList.setItems(items);
+//		transaction.setItemList(itemList);
 //     
 		List<Transaction> listTransaction = new ArrayList<>();
 		listTransaction.add(transaction);
