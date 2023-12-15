@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.Devex.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,10 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.Devex.Entity.History;
-import com.Devex.Entity.Product;
-import com.Devex.Entity.ProductVariant;
-import com.Devex.Entity.User;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Repository.UserRepository;
 import com.Devex.Sevice.HistoryService;
@@ -110,12 +107,21 @@ public class ProductDetailController {
 //		Collections.shuffle(uniqueProductList);
 
 		boolean shop= true;
+		int flag = 0;
 		if(user!=null) {
-			if(user.getUsername().equals(seller.getSellerProduct().getUsername())) {
-	        	shop=false;
-	        }
+			//kiểm tra xem người đó co phan quyen customer không
+			for (UserRole role : user.getRoles()) {
+				if(role.getRole().getId().equalsIgnoreCase("CUSTOMER")){
+
+					flag++;
+				}
+				System.out.println(role.getRole().getId());
+			}
+			//Kieem tra xem có phải chính shop đó đăn bán không
+			if(user.getUsername().equals(seller.getSellerProduct().getUsername()) || flag == 0) {
+				shop=false;
+			}
 		}
-        
 		model.addAttribute("shopProduct", listPrS); // sản phẩm khác của shop
 		model.addAttribute("products", uniqueProductList);// gợi ý sản phẩm theo keyword
 		model.addAttribute("listColor", listColor);
