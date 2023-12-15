@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -24,6 +25,8 @@ import com.Devex.Entity.Category;
 import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.User;
+import com.Devex.Entity.UserRole;
+import com.Devex.Entity.UserSearch;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
@@ -52,13 +55,13 @@ public class DevexUserController {
 
 	@Autowired
 	ProductService productService;
-	
+
 	@Autowired
 	UserService userService;
 
 	@Autowired
 	UserRoleService userRoleService;
-	
+
 	@Autowired
 	RecommendationSystem recomendationService;
 
@@ -87,7 +90,7 @@ public class DevexUserController {
 
 	@GetMapping({ "/home", "/*" })
 	public String getHomePage(Model model, Principal principal) throws Exception {
-//		uniqueProductList.clear();
+		// uniqueProductList.clear();
 		User user = new User();
 		List<Product> listProducts = new ArrayList<>();
 		Set<Product> uniqueProducts = new HashSet<>();
@@ -168,17 +171,17 @@ public class DevexUserController {
 		model.addAttribute("listProductFlashSale", listProductFlashSaleNow);
 		model.addAttribute("category", listCategoryProducts);
 		model.addAttribute("products", uniqueProductList);
-		
-		//check quyền admin?
+
+		// check quyền admin?
 		User userAdmin = null;
-		if(principal != null) {
+		if (principal != null) {
 			String id = principal.getName();
-			if(id != null) {
-				userAdmin = userService.findById(id).orElse(null);	
+			if (id != null) {
+				userAdmin = userService.findById(id).orElse(null);
 			}
 		}
 		boolean adminFlag = false;
-		if(userAdmin != null) {
+		if (userAdmin != null) {
 			List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
 			for (UserRole u : roles) {
 				if (u.getRole().getId().equals("ADMIN")) {
@@ -235,11 +238,12 @@ public class DevexUserController {
 		return "user/sellerPage";
 	}
 
-	// @GetMapping("/sol")
-	// public String getTestSOL() {
+	@GetMapping("/sol")
+	public String getTestSOL() {
 
-	// return "user/tetsSol";
-	// }
+		return "user/tetsSol";
+	}
+
 	public String removeSpecialCharacters(String input) {
 		// Biểu thức chính quy để giữ lại chỉ các ký tự chữ cái, khoảng trắng, số và _
 		String regex = "[^\\p{L}\\p{N}\\s]+";

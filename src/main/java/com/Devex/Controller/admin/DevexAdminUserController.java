@@ -1,6 +1,5 @@
 package com.Devex.Controller.admin;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,36 +16,32 @@ import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.UserRoleService;
 import com.Devex.Sevice.UserService;
 
-
-
 @Controller
 @RequestMapping("/ad")
 public class DevexAdminUserController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	UserRoleService userRoleService;
-	
+
 	@Autowired
 	SessionService sessionService;
-	
+
 	@GetMapping("/userManage")
 	public String getUserManage(ModelMap model) {
 		List<User> user = userService.findAll();
-		
+
 		model.addAttribute("user", user);
-		
+
 		return "admin/userManage/userManage";
 	}
-	
 
 	@GetMapping("/edit/{username}")
-	public String editUser(@PathVariable("username") String username) {	
+	public String editUser(@PathVariable("username") String username) {
 		sessionService.set("username", username);
-	return "admin/userManage/formUserManage";
+		return "admin/userManage/formUserManage";
 	}
 
-	
 }

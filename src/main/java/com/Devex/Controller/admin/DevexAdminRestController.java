@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -115,6 +116,9 @@ public class DevexAdminRestController {
 	@Autowired
 	private TransactionHistoryService transactionHistoryService;
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	@GetMapping("walletAdmin")
 	public Dwallet getBalanceWallet() {
 		User u = session.get("user");
@@ -171,6 +175,7 @@ public class DevexAdminRestController {
 
 	@PostMapping("/updateUserRoles")
 	public ResponseEntity<Map<String, String>> updateUserRoles(@RequestBody UpdatedRolesDTO updatedRoles) {
+		System.out.println("passs" + passwordEncoder.encode(updatedRoles.getPhone()));
 		Map<String, String> response = new HashMap<>();
 		User user = userService.findById(updatedRoles.getUserId()).orElse(null);
 		Seller seller = sellerService.findFirstByUsername(user.getUsername());// try catch
@@ -178,7 +183,8 @@ public class DevexAdminRestController {
 		if (user != null) {
 			// update user trước khi tạo roles
 			// System.out.println("sssss" + updatedRoles.getPassword());
-			userService.updateUser(updatedRoles.getFullname(), updatedRoles.getEmail(), updatedRoles.getPassword(),
+			userService.updateUser(updatedRoles.getFullname(), updatedRoles.getEmail(),
+					passwordEncoder.encode(updatedRoles.getPassword()),
 					updatedRoles.getPhone(), updatedRoles.getGender(), updatedRoles.isActive(),
 					updatedRoles.getUserId());
 
