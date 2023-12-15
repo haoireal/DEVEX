@@ -21,54 +21,7 @@
 	<!-- Bootstrap5 Duallistbox -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-	<style>
-		/* CSS cho modal container */
-		.modal {
-			display: none;
-			/* Ẩn modal ban đầu */
-			position: fixed;
-			top: 40%;
-			left: 59%;
-			transform: translate(-50%, -50%);
-			width: 25%;
-			/* Điều chỉnh kích thước modal theo nhu cầu */
-			height: 190px;
-			/* Điều chỉnh kích thước modal theo nhu cầu */
-			background-color: white;
-			border: 1px solid #ccc;
-			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-			text-align: center;
-			overflow: hidden;
-			animation: slideUp 0.5s ease-in-out;
-			/* Animation xuất hiện từ dưới lên */
-		}
 
-		/* CSS cho nút đóng modal */
-		.close {
-			position: absolute;
-			top: 10px;
-			right: 10px;
-			cursor: pointer;
-		}
-
-		/* CSS cho iframe bên trong modal */
-		.modal iframe {
-			width: 100%;
-			height: 100%;
-			border: none;
-		}
-
-		/* Định nghĩa animation slideUp */
-		@keyframes slideUp {
-			0% {
-				transform: translate(-50%, 100%);
-			}
-
-			100% {
-				transform: translate(-50%, -50%);
-			}
-		}
-	</style>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="myController">
@@ -104,6 +57,25 @@
 				<!-- /.container-fluid -->
 			</div>
 			<!-- /.container-fluid -->
+			<!--modal validate-->
+			<div class="modal fade" id="modalValidate" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content" style="margin-top: 20%">
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="text-left mt-2" style="margin-bottom: 60px">
+								<h5 id="message-validation"></h5>
+							</div>
+							<div class="text-center mb-2">
+								<button class="btn btn-danger w-100" data-dismiss="modal">
+									OK
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--modal validate-->
 
 			<div class="row">
 				<div class="col-12">
@@ -231,26 +203,7 @@
 	<!-- /.content -->
 	</div>
 	<!-- /.content-wrapper -->
-	<div class="text-center">
-		<button id="successbtn" hidden>Lưu</button>
-		<button id="failsebtn" hidden>Xóa</button>
-	</div>
 
-	<div id="successModal" class="modal">
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
-			<span id="content" class="text-success fs-3">Thêm thành công</span>
-		</div>
-	</div>
-
-	<div id="failseModal" class="modal">
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
-			<span id="contentfalse" class="text-danger fs-3">Thêm thất bại</span>
-		</div>
-	</div>
 	<div th:replace="~{flagment/admin/adminFooter :: adminFooterFragment}"></div>
 	<div th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
 	<script src="/admin/plugins/select2/js/select2.full.min.js"></script>
@@ -420,7 +373,7 @@
 
 		app.controller('myController', function ($scope, $http, $window) {
 			const content = document.getElementById('content');
-			let contentfalse = document.getElementById('contentfalse');
+			let message = document.getElementById("message-validation");
 			let checkExist = true;
 
 			$scope.isSellerSelected = false; // khởi tạo biến chứa roles true ? false
@@ -481,23 +434,19 @@
 				// Gửi yêu cầu cập nhật lên server
 				if (checkExist == true) {
 					$http.post('/api/updateUserRoles', updatedRoles).then(response => {
-						if (response.data.message) {
-							console.log(response.data.message);
-							content.textContent = "Cập nhật thành công";
-							successbtn.click();
-						} else if (response.data.error) {
-							contentfalse.textContent = "Cập nhật thất bại";
-							failsebtn.click();
-						}
+
+						message.innerText = "Cập nhập thành công!";
+						$("#modalValidate").modal("show");
+
 					}).catch(error => {
 						console.error(error);
-						contentfalse.textContent = "Cập nhật thất bại";
-						failsebtn.click();
+						message.innerText = "Cập nhập thất bại!";
+						$("#modalValidate").modal("show");
 
 					});
 				} else {
-					contentfalse.textContent = "Cập nhật thất bại";
-					failsebtn.click();
+					message.innerText = "Cập nhập thất bại!";
+					$("#modalValidate").modal("show");
 				}
 
 
