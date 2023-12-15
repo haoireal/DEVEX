@@ -737,8 +737,8 @@ public class DevexSellerRestController {
 	}
 
 	@PostMapping("/seller/sendRequest")
-	public void sendRequest(@RequestParam("id") String id) {
-		productRequestService.insertProductRequest(new Date(), id);
+	public void sendRequest(@RequestParam("id") String id, @RequestParam("content") String content) {
+		productRequestService.insertProductRequest(new Date(), id, 0, content);
 	}
 
 	@DeleteMapping("/seller/cancelRequest")
@@ -767,5 +767,10 @@ public class DevexSellerRestController {
 				.getTransactionByIdWallet(dwallet.getId());
 		return listHistoryTransactions;
 
+	}
+	
+	@PostMapping("/seller/sendrequestactive")
+	public void sendRequestActive(@RequestParam("id") String id, @RequestParam("content") String content) {
+		productRequestService.insertProductRequest(new Date(), id, 1, content);
 	}
 }

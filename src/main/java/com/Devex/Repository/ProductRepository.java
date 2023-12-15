@@ -143,8 +143,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	@Query("SELECT p FROM Product p WHERE p.sellerProduct.username = :username AND (LOWER(p.id) LIKE LOWER(CONCAT('%', :keyword, '%')) or LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')))")
 	List<Product> findAllProductByUsernameContainingKeyword(@Param("keyword") String keyword, @Param("username") String username);
 	
-//	@Modifying
-//	@Query("UPDATE Product p SET p.viewcount = :view WHERE id = :id")
-//	void updateViewProduct(@Param("id") String id, @Param("view") long view);
+	@Modifying
+	@Query("UPDATE Product p SET p.viewcount = :view WHERE id = :id")
+	void updateViewProduct(@Param("id") String id, @Param("view") long view);
 
 }

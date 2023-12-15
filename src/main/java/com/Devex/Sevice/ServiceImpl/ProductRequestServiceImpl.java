@@ -104,8 +104,18 @@ public class ProductRequestServiceImpl implements ProductRequestService{
 
 	@Transactional
 	@Override
-	public void insertProductRequest(Date createdDay, String productId) {
-		productRequestRespository.insertProductRequest(createdDay, productId);
+	public void insertProductRequest(Date createdDay, String productId, int status, String content) {
+		productRequestRespository.insertProductRequest(createdDay, productId, status, content);
+	}
+
+	@Override
+	public List<ProductRequest> getAllProductRequestFalseDecreaseByCreatedDay() {
+		return productRequestRespository.getAllProductRequestFalseDecreaseByCreatedDay();
+	}
+
+	@Override
+	public List<ProductRequest> getAllProductRequestTrueDecreaseByCreatedDay() {
+		return productRequestRespository.getAllProductRequestTrueDecreaseByCreatedDay();
 	}
 
 }

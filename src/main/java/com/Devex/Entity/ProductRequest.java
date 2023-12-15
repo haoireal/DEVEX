@@ -33,9 +33,12 @@ public class ProductRequest implements Serializable{/**
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", updatable = false)
 	private int id;
-	
 	@Column(name = "Createdday")
 	private Date createdDay;
+	@Column(name = "Statusrequest")
+	private int statusRequest;
+	@Column(name = "Content")
+	private String content;
 	
 	@OneToOne
     @JoinColumn(name = "Product_ID")

@@ -222,5 +222,20 @@ public class OrderServiceImpl implements OrderService{
 		return orderRepository.findAllOrderByIdAndUsernameContainingKeyword(username, keyword);
 	}
 
+	@Override
+	public List<Order> findOrderByOrderStatusId(int statusid) {
+		return orderRepository.findOrderByOrderStatusId(statusid);
+	}
+
+	@Override
+	public List<Order> findOrderByIdOrCustomer(String keyword) {
+		return orderRepository.findOrderByIdOrCustomer(keyword);
+	}
+
+	@Override
+	public List<Order> findOrderByOrderStatusIdAndIdOrCustomer(int statusid, String keyword) {
+		return orderRepository.findOrderByOrderStatusIdAndIdOrCustomer(statusid, keyword);
+	}
+
 
 }

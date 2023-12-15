@@ -54,6 +54,7 @@ app.controller("product", function ($scope, $http, $window) {
             if(resp.data.check == true){
                 $scope.checkbutton = resp.data.check;
                 $scope.idrq = resp.data.idproductrequest;
+                $scope.content = resp.data.content;
             }
             console.log($scope.idrq);   
         }).catch(error => {
@@ -127,26 +128,25 @@ app.controller("product", function ($scope, $http, $window) {
         $scope.form.brand = $scope.selectedbrand;
         console.log($scope.form);
         $http.put("/api/ad/info/product", $scope.form).then(resp => {
-            content.textContent = "Lưu thành công";
-            successbtn.click();
+            document.getElementById('ss').click();
         }).catch(error => {
             console.log("errors", error);
-            contentfalse.textContent = "Lưu thất bại";
-            failsebtn.click();
+            document.getElementById('fs').click();
         })
     };
 
     $scope.deleteProduc = function () {
         $http.delete('/api/ad/delete/product/' + $scope.form.id)
         .then(function (response) {
-            content.textContent = "Xóa thành công";
-            successbtn.click();
-            $window.location.href = '/ad/productmanage';
+            document.getElementById('sd').click();
         }).catch(error => {
             console.log("errors", error);
-            contentfalse.textContent = "Xóa thất bại";
-            failsebtn.click();
+            document.getElementById('fd').click();
         });
+    };
+
+    $scope.chuyentrang = function() {
+        $window.location.href = '/ad/productmanage';
     };
 
     var id = 0;
@@ -165,7 +165,10 @@ app.controller("product", function ($scope, $http, $window) {
     $scope.cancelRequest = function(id) {
         $http.delete('/api/delete/productrequest?id=' + id)
         .then(function(response) {
-            $window.location.href = '/ad/requestproduct';
+            document.getElementById('sr').click();
+        }, function(error) {
+            console.error('Error:', error);
+            document.getElementById('fr').click();
         });
     };
 
@@ -173,8 +176,21 @@ app.controller("product", function ($scope, $http, $window) {
     $scope.confirmRequest = function(id) {
         $http.put('/api/update/productrequest?id=' + id)
         .then(function(response) {
-            $window.location.href = '/ad/requestproduct';
+            document.getElementById('sa').click();
+        }, function(error) {
+            console.error('Error:', error);
+            document.getElementById('fa').click();
         });
+    };
+
+    // confirm ProductRequest
+    $scope.chuyentrangrequestthanhcong = function(id) {
+        $window.location.href = '/ad/requestproduct';
+    };
+
+    // cancel ProductRequest
+    $scope.chuyentrangrequesthuythanhcong = function(id) {
+        $window.location.href = '/ad/requestproduct';
     };
 
     // set false request product
@@ -199,33 +215,33 @@ app.controller("product", function ($scope, $http, $window) {
 
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    var successbtn = document.getElementById('successbtn');
-    var failsebtn = document.getElementById('failsebtn');
-    var successModal = document.getElementById('successModal');
-    var failseModal = document.getElementById('failseModal');
-    var closeButtons = document.getElementsByClassName('close');
+// document.addEventListener('DOMContentLoaded', function () {
+//     var successbtn = document.getElementById('successbtn');
+//     var failsebtn = document.getElementById('failsebtn');
+//     var successModal = document.getElementById('successModal');
+//     var failseModal = document.getElementById('failseModal');
+//     var closeButtons = document.getElementsByClassName('close');
 
-    successbtn.addEventListener('click', function () {
-        successModal.style.display = 'block';
-    });
+//     successbtn.addEventListener('click', function () {
+//         successModal.style.display = 'block';
+//     });
 
-    failsebtn.addEventListener('click', function () {
-        failseModal.style.display = 'block';
-    });
+//     failsebtn.addEventListener('click', function () {
+//         failseModal.style.display = 'block';
+//     });
 
-    for (var i = 0; i < closeButtons.length; i++) {
-        closeButtons[i].addEventListener('click', function () {
-            successModal.style.display = 'none';
-            failseModal.style.display = 'none';
-        });
-    }
+//     for (var i = 0; i < closeButtons.length; i++) {
+//         closeButtons[i].addEventListener('click', function () {
+//             successModal.style.display = 'none';
+//             failseModal.style.display = 'none';
+//         });
+//     }
 
-    window.addEventListener('click', function (event) {
-        if (event.target === greenModal || event.target === failseModal) {
-            successModal.style.display = 'none';
-            failseModal.style.display = 'none';
-        }
-    });
+//     window.addEventListener('click', function (event) {
+//         if (event.target === greenModal || event.target === failseModal) {
+//             successModal.style.display = 'none';
+//             failseModal.style.display = 'none';
+//         }
+//     });
 
-});
+// });

@@ -53,7 +53,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Danh sách sản phẩm cần duyệt</h3>
+                  <h3 class="card-title">Danh sách sản phẩm cần duyệt bán sản phẩm</h3>
                 </div>
                 <div class="card-body">
                   <table class="table table-hover">
@@ -64,7 +64,7 @@
                         <th>Giá</th>
                         <th>Loại</th>
                         <th>Thương hiệu</th>
-                        <th>Shop</th>
+                        <th>Cửa hàng</th>
                         <th>Thời gian yêu cầu</th>
                         <th></th>
                       </tr>
@@ -100,6 +100,58 @@
                   </table>
                 </div>
               </div>
+              <!-- End duyệt bán -->
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Danh sách sản phẩm cần duyệt tắt trạng thái bán</h3>
+                </div>
+                <div class="card-body">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Loại</th>
+                        <th>Thương hiệu</th>
+                        <th>Cửa hàng</th>
+                        <th>Thời gian yêu cầu</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="ProductRequestTrue in listProductRequestTrue.listProductRequestTrue">
+                        <td>{{listProductRequestTrue.listInfoProductTrue[$index].id}}</td>
+                        <td class="product-name">{{listProductRequestTrue.listInfoProductTrue[$index].name}}</td>
+                        <td>{{listProductRequestTrue.listInfoProductTrue[$index].price}}</td>
+                        <td>{{listProductRequestTrue.listNameCategoryTrue[$index]}}</td>
+                        <td>{{listProductRequestTrue.listNameProductBrandTrue[$index]}}</td>
+                        <td>{{listProductRequestTrue.listShopNameTrue[$index]}}</td>
+                        <td>{{listProductRequestTrue.listProductRequestTrue[$index].createdDay | date:'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+                        <td>
+                          <div class="btn-group w-100" role="group" aria-label="Basic example">
+                            <button ng-click="cancelRequestTrue(listProductRequestTrue.listProductRequestTrue[$index].id)"
+                              class="btn btn-danger text-center" title="Từ chối yêu cầu">
+                              <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            <button ng-click="confirmRequestTrue(listProductRequestTrue.listProductRequestTrue[$index].id)"
+                              class="btn btn-success text-center" title="Chấp nhận yêu cầu">
+                              <i class="fa-solid fa-check"></i>
+                            </button>
+                            <button ng-click="focusURL(listProductRequestTrue.listInfoProductTrue[$index].id)"
+                              class="btn btn-primary text-center">
+                              <i class="fa-regular fa-eye"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- End tắt bán -->
             </div>
           </div>
           

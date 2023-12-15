@@ -242,10 +242,10 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findAllProductByUsernameContainingKeyword(keyword, username);
 	}
 
-//	@Transactional
-//	@Override
-//	public void updateViewProduct(String id, long view) {
-//		productRepository.updateViewProduct(id, view);
-//	}
+	@Transactional
+	@Override
+	public void updateViewProduct(String id, long view) {
+		productRepository.updateViewProduct(id, view);
+	}
 
 }

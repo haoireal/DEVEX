@@ -85,6 +85,11 @@ public class OrderStatusServiceImpl implements OrderStatusService{
 	public void deleteAll() {
 		orderStatusRepository.deleteAll();
 	}
+
+	@Override
+	public List<OrderStatus> getListOrderStatusAdmin() {
+		return orderStatusRepository.getListOrderStatusAdmin();
+	}
 	
 	
 }

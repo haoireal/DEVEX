@@ -38,4 +38,6 @@ public interface OrderStatusService {
 
 	OrderStatus save(OrderStatus entity);
 
+	List<OrderStatus> getListOrderStatusAdmin();
+
 }
