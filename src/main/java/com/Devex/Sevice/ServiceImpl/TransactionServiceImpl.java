@@ -41,7 +41,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     //Hàm này chạy khi thanh toán
     @Override
-    public void transactionDwallet(String fromUser, String toUser, double value,String payment) {
+    public Boolean transactionDwallet(String fromUser, String toUser, double value,String payment) {
         //Tìm id ví dựa trên username truyền vào
         String from = dwalletService.findDwalletIDbyUsername(fromUser);
         String to = dwalletService.findDwalletIDbyUsername(toUser);
@@ -71,10 +71,16 @@ public class TransactionServiceImpl implements TransactionService {
                 from ="vnpay-"+fromUser;
                 break;
             default:
-                //Trừ số dư tương ứng từ ví người giử khi thanh toán bằng Dwallet
-                double newBalance = 0;
+            	//Kiem tra so du sau khi thanh toan co lon hon 0 khong?
+            	double newBalance = 0;
                 newBalance = fromWallet.getBalance() - value;
-                fromWallet.setBalance(newBalance);
+                if(newBalance >= 0) {
+                	//Trừ số dư tương ứng từ ví người giử khi thanh toán bằng Dwallet
+                    fromWallet.setBalance(newBalance);
+                }else {
+                	//neu nho hon 0 se return false
+                	return false;
+                }
                 break;
         }
 
@@ -88,6 +94,8 @@ public class TransactionServiceImpl implements TransactionService {
         newHistory.setTo(toWallet.getId());
         newHistory.setValue(value);
         transactionHistoryService.save(newHistory);
+        
+        return true;
 
     }
 }

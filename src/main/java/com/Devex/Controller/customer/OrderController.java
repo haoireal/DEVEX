@@ -258,6 +258,8 @@ public class OrderController {
 				od.setVoucher(item);
 				System.out.println(3);
 				orderDiscountService.save(od);
+				
+
 				System.out.println(new Date());
 				// Giảm voucher đã sử dụng đi 1
 				Voucher v = voucherService.findById(item.getId()).get();
@@ -267,8 +269,18 @@ public class OrderController {
 				System.out.println(5);
 				voucherDetailService.appliedVoucher(customer.getUsername(), item.getId()); // chuyển trạng thái voucher
 																							// thành đã áp dụng
+				if(!transactionService.transactionDwallet(user.getUsername(),"",order.getTotal()+order.getTotalShip(),payment)) {
+					orderDiscountService.delete(od); // chua xu li triet de
+					v.setQuantity(v.getQuantity()+1);
+					voucherService.save(v);
+				}
 			}
 
+		}
+		//Xử lí dòng tiền
+		if(!transactionService.transactionDwallet(user.getUsername(),"",order.getTotal()+order.getTotalShip(),payment)) {
+			orderService.delete(orderService.findLatestOrder());
+			return "user/paymentFail";
 		}
 		System.out.println(6);
 		// Xử lí các mặt hàng
@@ -300,9 +312,7 @@ public class OrderController {
 			cartDetailService.deleteById(item.getId());
 		}
 
-		//Xử lí dòng tiền
-		transactionService.transactionDwallet(user.getUsername(),"",order.getTotal()+order.getTotalShip(),payment);
-
+		
 		return "user/paymentSuccess";
 	}
 
