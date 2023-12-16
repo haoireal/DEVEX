@@ -1,17 +1,13 @@
 package com.Devex.Controller.admin;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.bytecode.internal.bytebuddy.PrivateAccessorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
@@ -30,9 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Devex.DTO.FlashSaleTimeDTO;
 import com.Devex.DTO.ProductDTO;
-import com.Devex.DTO.ShopDTO;
+import com.Devex.DTO.SellerDTO;
 import com.Devex.DTO.StatisticalCategoryDetailsPieDTO;
-import com.Devex.DTO.StatisticalOrderMonthPieDTO;
 import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.DTO.UpdatedRolesDTO;
 import com.Devex.Entity.Dwallet;
@@ -40,14 +35,12 @@ import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Notifications;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.Role;
-import com.Devex.Entity.Seller;
 import com.Devex.Entity.TransactionHistory;
 import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
 import com.Devex.Sevice.CartService;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.DwalletService;
-import com.Devex.Sevice.FlashSalesService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.NotificationsService;
@@ -60,8 +53,6 @@ import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.TransactionHistoryService;
 import com.Devex.Sevice.UserRoleService;
 import com.Devex.Sevice.UserService;
-
-import jakarta.servlet.http.Cookie;
 
 @CrossOrigin("*")
 @RestController
@@ -178,8 +169,7 @@ public class DevexAdminRestController {
 		System.out.println("passs" + passwordEncoder.encode(updatedRoles.getPhone()));
 		Map<String, String> response = new HashMap<>();
 		User user = userService.findById(updatedRoles.getUserId()).orElse(null);
-		Seller seller = sellerService.findFirstByUsername(user.getUsername());// try catch
-
+		SellerDTO seller = sellerService.findSeller(user.getUsername());// try catch
 		if (user != null) {
 			// update user trước khi tạo roles
 			// System.out.println("sssss" + updatedRoles.getPassword());

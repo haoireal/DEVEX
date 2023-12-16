@@ -46,24 +46,15 @@ public class PaypalServiceImpl implements PaypalService {
 	public String authorizePayment(List<CartDetailDTo> cartDetailDTo) throws PayPalRESTException {
 
 		Payer payer = getPayerInformation();
-		System.out.println(1);
 		RedirectUrls redirectUrls = getRedirectURLs();
 		List<Transaction> listTransaction = getTransactionInformation(cartDetailDTo);
-		System.out.println(2);
-
 		Payment requestPayment = new Payment();
 		requestPayment.setTransactions(listTransaction);
-		System.out.println(3);
 		requestPayment.setRedirectUrls(redirectUrls);
-		System.out.println(4);
 		requestPayment.setPayer(payer);
-		System.out.println(5);
 		requestPayment.setIntent("authorize");
-		System.out.println(6);
 		APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
-		System.out.println(7);
 		Payment approvedPayment = requestPayment.create(apiContext);
-		System.out.println(8);
 		return getApprovalLink(approvedPayment);
 
 	}
@@ -126,24 +117,24 @@ public class PaypalServiceImpl implements PaypalService {
 		List<Item> items = new ArrayList<>();
 		DecimalFormat decimalFormat = new DecimalFormat("#.##");
 		double vndAmount = 0;
-//         
-//		for (CartDetailDTo itemOrder : listItemOrder) {
-//			Item item = new Item();
-//			item.setCurrency("USD");
-//			item.setName(itemOrder.getNameProduct());
-//			item.setPrice(convertUSD(itemOrder.getPrice()));
-//			System.out.println(item.getPrice());
-//			vndAmount += Double.parseDouble(item.getPrice()) * itemOrder.getQuantity();
-//			// item.setTax(orderDetail.getTax());
-//			item.setQuantity(String.valueOf(itemOrder.getQuantity()));
-//
-//			items.add(item);
-//		}
+         
+		for (CartDetailDTo itemOrder : listItemOrder) {
+			Item item = new Item();
+			item.setCurrency("USD");
+			item.setName(itemOrder.getNameProduct());
+			item.setPrice(convertUSD(itemOrder.getPrice()));
+			System.out.println(item.getPrice());
+			vndAmount += Double.parseDouble(item.getPrice()) * itemOrder.getQuantity();
+			// item.setTax(orderDetail.getTax());
+			item.setQuantity(String.valueOf(itemOrder.getQuantity()));
+
+			items.add(item);
+		}
 
 //        Details details = new Details();
-//      details.setShipping(orderDetail.getShipping());
-//        details.setSubtotal(String.valueOf(vndAmount));
-//      details.setTax(orderDetail.getTax());
+//        details.setShipping(decimalFormat.format(vndAmount));
+//        details.setSubtotal(decimalFormat.format(vndAmount));
+//        details.setTax(decimalFormat.format(vndAmount));
 
 		Amount amount = new Amount();
 //        double formattedTotalAmount = listItemOrder.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum();
@@ -151,20 +142,21 @@ public class PaypalServiceImpl implements PaypalService {
 		System.out.println(vndAmount);
 //        double normalNumber = Double.parseDouble(formattedTotalAmount);
 		amount.setCurrency("USD");
+//		amount.setDetails(details);
 //		String formattedAmount = decimalFormat.format(vndAmount);
 		amount.setTotal(decimalFormat.format(vndAmount));
 		System.out.println(amount.getTotal());
-//        amount.setDetails(details);
+        
 
 		Transaction transaction = new Transaction();
 		transaction.setAmount(amount);
 		transaction.setDescription(listItemOrder.stream().map(item -> item.getNameProduct()) // Lấy tên của từng mục
 				.collect(Collectors.joining(", ")));
-//         
+         
 
-//		itemList.setItems(items);
-//		transaction.setItemList(itemList);
-//     
+		itemList.setItems(items);
+		transaction.setItemList(itemList);
+     
 		List<Transaction> listTransaction = new ArrayList<>();
 		listTransaction.add(transaction);
 

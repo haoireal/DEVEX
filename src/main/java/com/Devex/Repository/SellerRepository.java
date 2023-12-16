@@ -23,6 +23,9 @@ public interface SellerRepository extends JpaRepository<Seller, String>{
 	Seller findFirstByUsername(String username);
 //	@Query("SELECT s FROM Seller s WHERE s.username = :username")
 //	Seller findFirstByUsername(@Param("username") String username);
+	
+	@Query("SELECT new com.Devex.DTO.SellerDTO(s.username, s.fullname, s.shopName, s.avatar, s.createDay, s.activeShop) FROM Seller s where s.username = :username")
+	SellerDTO findSeller(@Param("username") String username);
 
 	@Query("SELECT new com.Devex.DTO.SellerDTO(s.username, s.fullname, s.shopName, s.avatar, s.createDay, s.activeShop) FROM Seller s")
 	List<SellerDTO> findAllSeller();

@@ -57,4 +57,6 @@ public interface SellerService {
 
 	List<SellerDTO> findAllSeller();
 
+	SellerDTO findSeller(String username);
+
 }
