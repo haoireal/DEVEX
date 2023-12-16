@@ -89,7 +89,7 @@ public class ProfileController {
 		
 		String id = principal.getName();
 		System.out.println(id);
-		Customer customer = customerService.findById(id).get();
+		Customer customer = customerService.findById(id).orElse(null);
 		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
 		boolean flag = false;
 		for (UserRole u : role) {

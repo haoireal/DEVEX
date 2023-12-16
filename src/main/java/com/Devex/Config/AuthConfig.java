@@ -1,29 +1,25 @@
 package com.Devex.Config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.Devex.Entity.UserRole;
 import com.Devex.Sevice.OAuthUserService;
+import com.Devex.Sevice.UserRoleService;
 import com.Devex.Sevice.UserSecurityService;
-
-import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -112,4 +108,14 @@ public class AuthConfig {
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new CustomLogoutSuccessHandler();
     }
+    
+  
+    @Bean
+    public FilterRegistrationBean<CustomAuthorizationFilter> customAuthorizationFilterBean(UserRoleService userRoleService) {
+        FilterRegistrationBean<CustomAuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new CustomAuthorizationFilter(userRoleService));
+        registrationBean.addUrlPatterns("/*"); // Áp dụng filter cho tất cả các URL
+        return registrationBean;
+    }
+    
 }

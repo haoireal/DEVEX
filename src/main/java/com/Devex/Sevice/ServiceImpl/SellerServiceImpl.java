@@ -36,6 +36,12 @@ public class SellerServiceImpl implements SellerService{
 	}
 
 
+	
+	@Override
+	public SellerDTO findSeller(String username) {
+		return sellerRepository.findSeller(username);
+	}
+
 	@Override
 	public List<SellerDTO> findAllSeller() {
 		return sellerRepository.findAllSeller();
