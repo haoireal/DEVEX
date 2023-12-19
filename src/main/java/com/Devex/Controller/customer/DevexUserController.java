@@ -167,7 +167,7 @@ public class DevexUserController {
 		// Chuyển đổi lại thành danh sách (List)
 		uniqueProductList = new ArrayList<>(uniqueProducts);
 		// Collections.shuffle(uniqueProductList);
-		List<Category> listCategoryProducts = categoryService.findAll();
+		List<Category> listCategoryProducts = categoryService.findAllCategoryNotNameLikeUnknown();
 
 		model.addAttribute("listProductFlashSale", listProductFlashSaleNow);
 		model.addAttribute("category", listCategoryProducts);
@@ -203,23 +203,9 @@ public class DevexUserController {
 
 	@GetMapping("/product/search")
 	public String searchProduct(Model model, @RequestParam("search") Optional<String> kw) {
-		List<UserSearch> historySearch = userSearchService.findAll();
-		Set<String> listHistorySearch = new LinkedHashSet<>();
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
 		String cleanKeywords = removeSpecialCharacters(kwords); // loại bỏ kí tự đặc biệt
 		sessionService.set("keywordsSearch", cleanKeywords);
-		if (listHistorySearch.size() <= 0) {
-			userSearchService.insertKeyWorks(cleanKeywords);
-		}
-		// tách các keyWord
-		historySearch.forEach(key -> {
-			listHistorySearch.add(cleanKeywords);
-		});
-		listHistorySearch.forEach(keyW -> {
-			if (!listHistorySearch.contains(cleanKeywords)) {
-				userSearchService.insertKeyWorks(cleanKeywords);
-			}
-		});
 
 		return "user/findproduct";
 	}

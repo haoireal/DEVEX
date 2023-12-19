@@ -14,7 +14,7 @@
   },
   "author": "@Dan2910",
   "license": "ISC",
-  "type": "module",
+  "type": "commonjs",
   "description": "",
   "target": "es6",
   "lib": [

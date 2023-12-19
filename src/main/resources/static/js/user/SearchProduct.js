@@ -1,5 +1,9 @@
-app.controller("search-ctrl", function ($scope, $http, $window) {
+app.controller("search-ctrl", function ($scope, $http, $window, $timeout) {
   let main = document.getElementById('container_main');
+  let spinner = document.getElementById('spinner');
+  var selectedMall = document.getElementById("Mall");
+  var selectedSoldCount = document.getElementById("ASC_soldCount");
+  // let first = document.getElementById('firstPage');
   var $search = ($scope.search = {
     loadData: [],
     temLoadData: [],
@@ -21,10 +25,11 @@ app.controller("search-ctrl", function ($scope, $http, $window) {
           this.loadData = this.initialData.slice();
           this.temLoadData = this.initialData.slice();
           console.log(this.temLoadData.length);
+          this.checkSearchNull();
           this.getBrandAndCategory();
           this.updatePagedItems();
           this.loadProvinces();
-          this.checkSearchNull();
+          this.loadSpinner();
           console.log(this.loadData);
         })
         .catch(function (err) {
@@ -75,6 +80,7 @@ app.controller("search-ctrl", function ($scope, $http, $window) {
     },
 
     updatePagedItems: function () {
+
       this.totalPages = Math.ceil(this.loadData.length / this.itemsPerPage);
       var begin = (this.currentPage - 1) * this.itemsPerPage;
       var end = Math.min(begin + this.itemsPerPage, this.loadData.length);
@@ -91,12 +97,14 @@ app.controller("search-ctrl", function ($scope, $http, $window) {
     },
 
     SortProductBySoldCount: function () {
-      var selectedSoldCount = document.getElementById("ASC_soldCount").value;
-      // this.loadData = this.temLoadData.slice(); // Tạo bản sao của mảng gốc
-      this.loadData.sort(function (a, b) {
-        return b.soldCount - a.soldCount;
-      });
-      this.updatePagedItems(); // Cập nhật phân trang sau khi sắp xếp
+      if (selectedSoldCount.checked = true) {
+        this.loadData.sort(function (a, b) {
+          return b.soldCount - a.soldCount;
+        });
+        this.currentPage = 1;
+        this.updatePagedItems();
+      }
+      // Cập nhật phân trang sau khi sắp xếp
       // console.log(selectedSoldCount);
     },
     SortProductByPrice: function () {
@@ -126,13 +134,18 @@ app.controller("search-ctrl", function ($scope, $http, $window) {
       // console.log(selectedPrice);
     },
     filterProductByMall: function () {
-      var selectedMall = document.getElementById("Mall").value;
+
       // this.temLoadData = this.initialData.slice(); // initialData is the original  data
-      if (selectedMall == "DEVEX_MALL") {
+      if (selectedMall.checked == true) {
         this.loadData = this.temLoadData.filter(
           (item) => item.sellerProduct.mall === true
         );
+        this.currentPage = 1;
         this.updatePagedItems(); // Cập nhật phân trang sau khi sắp xếp
+
+        // first.addEventListener('click', function () {
+        //   this.firstPage();
+        // });
       }
     },
 
@@ -211,7 +224,7 @@ app.controller("search-ctrl", function ($scope, $http, $window) {
         // Nếu không có điều gì cản trở, giữ lại mục này trong kết quả lọc
         return true;
       });
-
+      $window.scrollTo(0, 0);
       this.updatePagedItems();
     },
     removeFilter: function () {
@@ -244,7 +257,14 @@ app.controller("search-ctrl", function ($scope, $http, $window) {
         main.innerHTML += "<h4>Hãy thử sử dụng các từ khóa chung chung hơn</h4>";
       }
     },
+    loadSpinner: function () {
+      if (this.temLoadData.length > 0) {
+        spinner.style.display = "none";
+      }
+    }
+
   }); // end function search
 
   $search.loadProductSearch();
+
 });
