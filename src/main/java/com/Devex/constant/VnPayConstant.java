@@ -6,9 +6,9 @@ public class VnPayConstant {
 
 	public static final String vnp_Returnurl = "/vnpay-payment";
 
-	public static final String vnp_TmnCode = "FPGOYIS9";
+	public static final String vnp_TmnCode = "7ES8MTWP";
 
-	public static final String vnp_HashSecret = "UAGBAAOEKYXXDWPAGUWHPESFDOICELYB";
+	public static final String vnp_HashSecret = "EVJFCIEWCYQQLZKHKBIMRPAVYZTEAVVH";
 
 	public static final String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 

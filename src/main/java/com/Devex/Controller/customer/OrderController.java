@@ -77,8 +77,7 @@ public class OrderController {
 	private ShoppingCartService shoppingCartService;
 	@Autowired
 	private TransactionService transactionService;
-	@Autowired
-	private DwalletService dwalletService;
+	
 	
 	
 	@PostMapping("/cash-payment")
@@ -92,15 +91,7 @@ public class OrderController {
 		return "user/cartproductFake";
 	}
 	
-	@GetMapping("/rechargeSuccess")
-	public String rechargeSuccess(Model mdoel,HttpServletRequest request)
-	{
-		
-		int orderTotal = Integer.parseInt(request.getParameter("totalPrice"))/100;
-		User user = session.get("user");
-		dwalletService.updateDwalletbyUsername(orderTotal, user.getUsername());
-		return "user/paymentSuccess"; 
-	}
+	
 	@GetMapping("/order/success")
 	public String showSuccess(Model model) {
 		List<CartDetailDTo> listOrder = session.get("listItemOrder", null);
