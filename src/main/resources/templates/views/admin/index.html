@@ -194,6 +194,56 @@
 						<!-- /.col -->
 					</div>
 					<!-- /.row -->
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">Thống kê hóa đơn</h5>
+
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<h5 class="text-center">Thống kê hóa đơn theo tháng</h5>
+											<p class="text-center">
+												<strong class="fw-1">Tháng </strong>
+												<select id="monthSelectordermonthpie" class="form-control"
+													style="display: inline-block; width: auto;"></select>
+												<strong>Năm</strong>
+												<select id="yearSelectordermonthpie" class="form-control"
+													style="display: inline-block; width: auto;"></select>
+											</p>
+											<div class="chart">
+												<!-- Sales Chart Canvas -->
+												<canvas id="statisticalordermonthpie" class="w-75 h-50" style="margin-left: 150px;"></canvas>
+											</div>
+										</div>
+										<!-- /.col -->
+										<div class="col-md-6">
+											<h5 class="text-center">Thống kê hóa đơn theo năm</h5>
+											<p class="text-center">
+												<strong class="fw-1">Năm </strong>
+												<select id="yearSelectorderyearpie" class="form-control"
+													style="display: inline-block; width: auto;"></select>
+											</p>
+											<div class="chart">
+												<!-- Sales Chart Canvas -->
+												<canvas id="statisticalorderyearpie" height="150" class="w-75 h-50" style="margin-left: 150px;"></canvas>
+											</div>
+										</div>
+										<!-- /.col -->
+									</div>
+									<!-- /.row -->
+								</div>
+								<!-- ./card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
 					
 					<!-- /.row -->
 					<div class="row">
@@ -208,13 +258,13 @@
 									<div class="row">
 										<div class="col-md-7">
 											<p class="text-center">
-												<strong class="fw-1">Doanh thu năm </strong>
+												<strong class="fw-1">Loại sản phẩm bán chạy năm </strong>
 												<select id="yearSelectcategoryyearpie" class="form-control"
 													style="display: inline-block; width: auto;"></select>
 											</p>
-											<div class="chart" style="margin-left: 100px;">
+											<div class="chart" style="margin-left: 150px;">
 												<!-- Sales Chart Canvas -->
-												<canvas id="statisticalcategoryyearpie"
+												<canvas id="statisticalcategoryyearpie" class="w-75 h-75"
 												style="width: 100%;"></canvas>
 											</div>
 											<!-- /.chart-responsive -->

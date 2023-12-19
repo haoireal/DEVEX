@@ -403,4 +403,14 @@ public class FillAPIController {
 		notiService.sendNotification(u.getUsername(), username, "", "unfollow", "");
 		notiService.sendHistory(u.getUsername(), username, "", "unfollow", "");
 	}
+	
+	@PutMapping("/upview")
+	public void upView(@RequestParam("id") String id) {
+		Product p = productService.findByIdProduct(id);
+		if(p.getViewcount() == null) {
+			productService.updateViewProduct(id, 1);
+		}else {
+			productService.updateViewProduct(id, p.getViewcount()+1);
+		}
+	}
 }
