@@ -39,4 +39,6 @@ public interface UserSearchService {
 	UserSearch save(UserSearch entity);
 
 	void insertKeyWorks(String key);
+
+	List<String> selectTop10();
 }

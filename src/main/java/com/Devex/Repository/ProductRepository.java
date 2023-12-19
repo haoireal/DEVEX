@@ -3,6 +3,7 @@ package com.Devex.Repository;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -155,4 +156,10 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 	@Query("SELECT SUM(p.viewcount) FROM Product p WHERE p.sellerProduct.username = :username")
     Double getCountViewCountProductShop(@Param("username") String username);
+
+	@Query("SELECT COUNT(*) FROM Comment cmt WHERE cmt.productComment.id = :pdID AND cmt.isSellerReply = false")
+	int getCommentCount(@Param("pdID")  String pdID);
+
+	@Query("SELECT AVG(cmt.rating) FROM Comment cmt WHERE cmt.productComment.id = :pdID AND cmt.isSellerReply = false")
+	Double getStarAverage(@Param("pdID") String pdID);
 }
