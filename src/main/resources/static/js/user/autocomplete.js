@@ -95,17 +95,20 @@ app.controller("autoComplete", function ($scope, $http, $window) {
 
     // Populate the custom dropdown with new options
     rs.forEach((el) => {
+      var anchor = document.createElement('a');
       var div = document.createElement('div');
       div.innerHTML = el;
-
-      // Add click event listener to each option
-      div.addEventListener('click', () => {
+      anchor.addEventListener('click', () => {
         // Populate the input field with the selected option
         input.value = el;
         dropdown.style.display = 'none';
       });
 
-      dropdown.appendChild(div);
+      anchor.appendChild(div);
+
+      dropdown.appendChild(anchor);
+      anchor.style = "text-decoration: none; color: black";
+      anchor.setAttribute('href', '/product/search?search=' + el);
     });
 
     // Show the custom dropdown

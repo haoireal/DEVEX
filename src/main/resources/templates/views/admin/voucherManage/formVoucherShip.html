@@ -16,7 +16,7 @@
 	</style>
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app">
 	<div class="wrapper">
 		<!-- Preloader -->
 		<div class="preloader flex-column justify-content-center align-items-center">
@@ -57,27 +57,21 @@
 							<!-- The Modal -->
 							<div class="modal fade" id="modalValidate" role="dialog">
 								<div class="modal-dialog">
-								  <div class="modal-content" style="margin-top: 20%">
-									<!-- Modal body -->
-									<div class="modal-body">
-									  <div
-										class="text-left mt-2"
-										style="margin-bottom: 60px"
-									  >
-										<h5 id="message-validation"></h5>
-									  </div>
-									  <div class="text-center mb-2">
-										<button
-										  class="btn btn-danger w-100"
-										  data-dismiss="modal"
-										>
-										  OK
-										</button>
-									  </div>
+									<div class="modal-content" style="margin-top: 20%">
+										<!-- Modal body -->
+										<div class="modal-body">
+											<div class="text-left mt-2" style="margin-bottom: 60px">
+												<h5 id="message-validation"></h5>
+											</div>
+											<div class="text-center mb-2">
+												<button class="btn btn-danger w-100" data-dismiss="modal">
+													OK
+												</button>
+											</div>
+										</div>
 									</div>
-								  </div>
 								</div>
-							  </div>
+							</div>
 							<form action="/ad/voucher/create" method="post" id="new-voucher">
 								<!-- /.card -->
 								<div class="card card-default">
@@ -101,8 +95,7 @@
 														<label for="inputCode" class="col-form-label">Mã</label>
 														<div class="input-group">
 															<div class="input-group-prepend">
-																<span class="input-group-text" id="shop-id"
-																	>DEVEX</span>
+																<span class="input-group-text" id="shop-id">DEVEX</span>
 															</div>
 															<input type="hidden" id="inputCode" name="code">
 															<input type="text" class="form-control"
@@ -212,6 +205,11 @@
 </body>
 <script src="/admin/dist/js/handMade.js"></script>
 <script>
+	const app = angular.module("app", []);
+</script>
+<script th:src="@{/js/admin/DWalletAdmin.js}"></script>
+
+<script>
 	function submitFormVoucher() {
 		let nameVoucher = document.getElementById("inputName");
 		let code = document.getElementById("inputCode");
@@ -224,39 +222,39 @@
 
 
 
-		if(nameVoucher.value === "") {
+		if (nameVoucher.value === "") {
 			message.innerText = "Vui lòng cung cấp tên mã khuyến mãi!";
-			  $("#modalValidate").modal("show");
-		   return false;
-		} else if(code.value === "" || code.value.length < 15) {
+			$("#modalValidate").modal("show");
+			return false;
+		} else if (code.value === "" || code.value.length < 15) {
 			message.innerText = "Vui lòng cung cấp đầy đủ code khuyến mãi!";
-			  $("#modalValidate").modal("show");
-			  return false;
-		} else if(quantity.value === "") {
+			$("#modalValidate").modal("show");
+			return false;
+		} else if (quantity.value === "") {
 			message.innerText = "Vui lòng cung cấp số lượng!";
-			  $("#modalValidate").modal("show");
-			  return false;
-		} else if(rateSale.value === "") {
+			$("#modalValidate").modal("show");
+			return false;
+		} else if (rateSale.value === "") {
 			message.innerText = "Vui lòng cung cấp giá giảm!";
-			  $("#modalValidate").modal("show");
-			  return false;
-		} else if(minPrice.value === "" || minPrice.value < 1000) {
+			$("#modalValidate").modal("show");
+			return false;
+		} else if (minPrice.value === "" || minPrice.value < 1000) {
 			message.innerText = "Vui lòng cung cấp giá tối thiểu khuyến mãi!";
-			  $("#modalValidate").modal("show");
-			  return false;
-		} else if(description.value === "") {
+			$("#modalValidate").modal("show");
+			return false;
+		} else if (description.value === "") {
 			message.innerText = "Vui lòng cung cấp mô tả!";
-			  $("#modalValidate").modal("show");
-			  return false;
-		}  else {
+			$("#modalValidate").modal("show");
+			return false;
+		} else {
 			form.submit();
 		}
 
-		
-	}
-  
 
-  
+	}
+
+
+
 </script>
 <script>
 	function blockVietnameseInput(input) {
