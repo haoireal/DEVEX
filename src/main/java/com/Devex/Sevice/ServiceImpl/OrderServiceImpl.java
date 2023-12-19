@@ -253,5 +253,10 @@ public class OrderServiceImpl implements OrderService{
 		return orderRepository.getCountOrderByYearAndMonthAndProductShop(year, month, username); 
 	}
 
+	@Override
+	public List<Order> findAllOrderSortDown() {
+		return orderRepository.findAllOrderSortDown();
+	}
+
 
 }

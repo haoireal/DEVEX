@@ -52,4 +52,10 @@ public interface SellerRepository extends JpaRepository<Seller, String>{
 	@Modifying
 	@Query(value = "UPDATE Sellers SET Activeshop = :active WHERE Username = :username", nativeQuery = true)
 	void updateActiveSellerByUsername(@RequestParam("active") boolean active, @RequestParam("username") String username);
+	
+	@Query("SELECT s FROM Seller s ORDER BY s.createDay DESC")
+	List<Seller> findAllSellerSortUp();
+	
+	@Query("SELECT new com.Devex.DTO.SellerDTO(s.username, s.fullname, s.shopName, s.avatar, s.createDay, s.activeShop) FROM Seller s ORDER BY s.createDay DESC")
+	List<SellerDTO> findAllSellerDTOSortUp();
 }

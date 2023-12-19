@@ -28,7 +28,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	List<Product> findProductBySellerUsername(String sellerUsername);
 	
 	@Query("SELECT DISTINCT p FROM Product p " +
-			"WHERE p.sellerProduct.username like ?1 AND p.isdelete = false")
+			"WHERE p.sellerProduct.username like ?1 AND p.isdelete = false ORDER BY p.createdDay DESC")
 	List<Product> findProductBySellerUsernameAndIsdeleteProduct(String sellerUsername);
 
 	@Query(value = "EXEC FindProductsByKeyword :keywords", nativeQuery = true)

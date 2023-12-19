@@ -101,4 +101,6 @@ public interface OrderService {
 	List<Object[]> getStatisticalorderYearPie(int year);
 
 	Double getCountOrderByYearAndMonthAndProductShop(int year, int month, String username);
+
+	List<Order> findAllOrderSortDown();
 }
