@@ -237,21 +237,27 @@
 						<div class="row d-none d-lg-flex" style="height: 20px;">
 							<div class="col-3 evaluate d-flex  ">
 								<div class>
-									<span class="evaluate-text">4.7</span>
+									<span class="evaluate-text" th:text="${starAverage}">4.7 </span>
 								</div>
-
 								<div class="evaluate-star">
 									<a class="icon-star text-center" style="text-decoration: none;">
-
-										<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-										<i class="bi bi-star"></i> <i class="bi bi-star"></i>
+										<i th:if="${starAverage >= 1}" class="fa-solid fa-star text-danger"></i>
+										<i th:if="${starAverage >= 2}" class="fa-solid fa-star text-danger"></i>
+										<i th:if="${starAverage >= 3}" class="fa-solid fa-star text-danger"></i>
+										<i th:if="${starAverage >= 4}" class="fa-solid fa-star text-danger"></i>
+										<i th:if="${starAverage >= 5}" class="fa-solid fa-star text-danger"></i>
+										<i th:unless="${starAverage >= 1}" class="far fa-star text-danger"></i>
+										<i th:unless="${starAverage >= 2}" class="far fa-star text-danger"></i>
+										<i th:unless="${starAverage >= 3}" class="far fa-star text-danger"></i>
+										<i th:unless="${starAverage >= 4}" class="far fa-star text-danger"></i>
+										<i th:unless="${starAverage >= 5}" class="far fa-star text-danger"></i>
 									</a>
 								</div>
 
 							</div>
 							<div class="col-3 evaluate d-flex  ">
 								<div>
-									<span class="evaluate-value text-dark "><a href="#">29,2K</a></span>
+									<span class="evaluate-value text-dark " th:text="${commentCount}"><a href="#">29,2K</a></span>
 								</div>
 
 								<div class="evaluate-content">
@@ -263,7 +269,7 @@
 							<div class="col-3 d-flex">
 
 								<div class="evaluate-sold ">
-									<span class="evaluate-sold-value text-dark ">264,2K</span>
+									<span class="evaluate-sold-value text-dark" th:text="*{soldCount}">99</span>
 								</div>
 
 								<div class="evaluate-sold-content ">
@@ -353,7 +359,7 @@
 
 										<label id="btn_quantity" class="button  btn_Sub border-0 fs-3 "
 											onclick="subtract(this)"> <i class="fa-solid fa-minus icon_Sub"></i>
-										</label> <input oninput="updateTotalPrice(this)" readonly
+										</label> <input oninput="updateTotalPrice(this)"
 											class="text-center product_quantity " type="number" name="soluong"
 											id="inputField" min="1" value="1" max="100" readonly="true"><br>
 										<label id="btn_quantity" class="button btn_Add border-0 fs-4"
@@ -460,7 +466,7 @@
 				<div class="row">
 					<div class="col-6 col-lg-4 d-flex justify-content-between">
 						<label class="dis-shop">Đánh Giá:</label> <span
-							class=" parameter-content text-danger">29,9k</span>
+							class=" parameter-content text-danger"th:text="${starAverage}">29,9k</span>
 					</div>
 					<div class="col-6 col-lg-4 d-flex justify-content-between">
 						<label class="dis-shop">Phản Hồi Chat:</label> <span

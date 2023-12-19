@@ -77,6 +77,9 @@ public class ProductDetailController {
 			}
 		});
 
+		//Đếm số lượng đánh giá và Tổng sao
+		model.addAttribute("commentCount", productService.getCommentCount(id));
+		model.addAttribute("starAverage", productService.getStarAverage(id));
 		// ListColor
 		List<String> listColor = new ArrayList<>();
 

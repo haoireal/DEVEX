@@ -149,14 +149,14 @@ public class DevexUserController {
 		if (sessionService.get("user") != null) {
 
 			listProducts.addAll(recomendationService.recomendProduct(user.getUsername()));
-			// fix tạm
+			// nếu chưa mua đơn hàng nào
 			if (listProducts.size() <= 0) {
-				listProducts.addAll(recomendationService.recomendProduct("baolh"));
+				listProducts.addAll(recomendationService.recomnedProductIfUserIsNull());
 			}
 			// end fix tạm
 		} else {
-			// fix tạm
-			listProducts.addAll(recomendationService.recomendProduct("baolh"));
+			// nếu chưa
+			listProducts.addAll(recomendationService.recomnedProductIfUserIsNull());
 			// end fix tạm
 			sessionService.set("cartCount", 0);
 		}

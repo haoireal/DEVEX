@@ -92,4 +92,9 @@ public class UserSearchServiceImpl implements UserSearchService {
 		userSearchRespository.insertKeyWorks(key);
 	}
 
+	@Override
+	public List<String> selectTop10() {
+		return userSearchRespository.selectTop10();
+	}
+
 }

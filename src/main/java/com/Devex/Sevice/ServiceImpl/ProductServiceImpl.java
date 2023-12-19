@@ -261,6 +261,22 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Double getCountViewCountProductShop(String username) {
 		return productRepository.getCountViewCountProductShop(username);
-	} 
+	}
+
+	@Override
+	public int getCommentCount(String pdID) {
+
+		return productRepository.getCommentCount(pdID);
+	}
+
+	@Override
+	public Double getStarAverage(String pdID) {
+		if(productRepository.getStarAverage(pdID) != null){
+			return productRepository.getStarAverage(pdID);
+		}
+		double v = 0.0;
+		return v;
+	}
+
 
 } 
