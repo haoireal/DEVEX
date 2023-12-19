@@ -2,7 +2,6 @@ package com.Devex.Config;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +28,9 @@ import jakarta.servlet.http.HttpServletResponse;
 @Configuration
 @Transactional
 public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler {
-
+	@Autowired
+    private UserDetailsService userDetailsService;
+	
 	@Autowired
 	UserService userService;
 
@@ -46,7 +46,10 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 //            response.sendRedirect("/signin?error=Tài khoản bạn đã bị khoá");
 //            return;
 //        }
+		
+		
 		System.out.println("Authentication name: " + authentication.getName());
+		String name = authentication.getName();
 		CustomOAuth2User oauth2User = (CustomOAuth2User) authentication.getPrincipal();
 //		OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
 //		System.out.println(oauthUser);
@@ -77,22 +80,34 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 			// Tạo lại đối tượng Authentication với vai trò mới
 			updatedAuthorities.clear();
 			updatedAuthorities.add(new SimpleGrantedAuthority("CUSTOMER"));
+			
+			// Lấy UserDetails từ UserDetailsService
+            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+            
 			// Tạo lại đối tượng Authentication với vai trò mới
-			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
+			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userDetails,
 					authentication.getCredentials(), updatedAuthorities);
 			// Set lại Authentication trong SecurityContextHolder
+			System.out.println(1);
 			SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+			System.out.println(2);
 		} else {
 			// Tạo lại đối tượng Authentication với vai trò mới
 			updatedAuthorities.clear();
 			for(UserRole role : user.getRoles()) {
 				updatedAuthorities.add(new SimpleGrantedAuthority(role.getRole().getId()));
 			}
+			
+			// Lấy UserDetails từ UserDetailsService
+            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+            
 			// Tạo lại đối tượng Authentication với vai trò mới
-			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
+			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userDetails,
 					authentication.getCredentials(), updatedAuthorities);
 			// Set lại Authentication trong SecurityContextHolder
+			System.out.println(3);
 			SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+			System.out.println(4);
 		}
 
 		// Tiến hành phân quyền

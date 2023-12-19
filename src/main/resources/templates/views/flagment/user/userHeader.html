@@ -13,7 +13,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="/message">Tin nhắn
+                  <a class="nav-link" th:href="${admin == true} ? @{/ad/message} : @{/message}">Tin nhắn
 
 
                   </a>
@@ -107,7 +107,7 @@
             </a>
           </div>
           <div class="col-6 pt-1 col">
-            <a href="/profile" style="position: relative; display: flex; justify-content: center">
+            <a th:href="${admin == true} ? @{/profile} : @{/profile}"  style="position: relative; display: flex; justify-content: center">
               <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
               <i th:if="${session.user != null}" style="
                   font-size: 1rem;
@@ -247,10 +247,10 @@
             <div class="collapse navbar-collapse text-end text-white" id="navbarNavDropdown">
               <ul class="text-end navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a class="nav-link text-white" href="/ad/home" th:if="${adminFlag}">Admin Page</a>
+                  <a class="nav-link text-white" href="/ad/home" th:if="${admin}">Admin Page</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-white" href="/message">Tin nhắn
+                  <a class="nav-link text-white" th:href="${admin == true} ? @{/ad/message} : @{/message}">Tin nhắn
 
                   </a>
                 </li>
@@ -361,7 +361,7 @@
             </a>
           </div>
           <div class="col-6 pt-1 col">
-            <a href="/profile" style="position: relative; display: flex; justify-content: center">
+            <a th:href="${admin == true} ? @{/profile} : @{/profile}" style="position: relative; display: flex; justify-content: center">
               <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
               <i th:if="${session.user != null}" style="
                   font-size: 1rem;

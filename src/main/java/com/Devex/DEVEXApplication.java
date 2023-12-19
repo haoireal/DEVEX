@@ -12,7 +12,7 @@ import jakarta.annotation.PostConstruct;
 
 
 @SpringBootApplication
-@EnableConfigurationProperties
+@EnableConfigurationProperties(TwilioConfig.class) // Kích hoạt cấu hình cho TwilioConfig
 public class DEVEXApplication {
 	
 	@Autowired

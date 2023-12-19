@@ -8,13 +8,15 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-import com.Devex.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.Devex.Entity.Category;
 import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Product;
@@ -38,8 +41,8 @@ import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.ShoppingCartService;
-import com.Devex.Sevice.UserSearchService;
 import com.Devex.Sevice.UserRoleService;
+import com.Devex.Sevice.UserSearchService;
 import com.Devex.Sevice.UserService;
 
 @Controller
@@ -175,8 +178,30 @@ public class DevexUserController {
 
 		// check quyền admin?
 		User userAdmin = null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (authentication instanceof OAuth2AuthenticationToken) {
+		    // Đăng nhập bằng OAuth
+		    OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+		    
+		    // Lấy thông tin người dùng từ đối tượng Principal
+		    OAuth2User oauthUser = oauthToken.getPrincipal();
+		    
+		    // In ra tên người dùng
+		    System.out.println("OAuth2 User Name: " + oauthUser.getName());
+		} else if (authentication instanceof UsernamePasswordAuthenticationToken) {
+		    // Đăng nhập thông thường
+		    String username = authentication.getName();
+		    
+		    // In ra tên người dùng
+		    System.out.println("Username: " + username);
+		} else {
+		    // Trường hợp khác
+		    System.out.println("Unknown authentication type");
+		}
 		if (principal != null) {
 			String id = principal.getName();
+			System.out.println(id);
 			if (id != null) {
 				userAdmin = userService.findById(id).orElse(null);
 			}

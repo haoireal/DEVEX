@@ -1,6 +1,7 @@
 package com.Devex.Controller.customer;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -164,7 +165,7 @@ public class AccountController {
 		String id = generateRandomNumber();
 		dwallet.setId(id);
 		dwallet.setUser(user);
-		dwallet.setBalance(10000000.0);
+		dwallet.setBalance(0.0);
 		dwallet.setActive(true);
 		dwalletService.save(dwallet);
 		//tạo customer
@@ -187,7 +188,7 @@ public class AccountController {
 		userRole.setRole(role);
 		userRoleService.save(userRole);
 		
-		return "redirect:/signin";
+		return "redirect:/signin?success=Success signup";
 	}
 	
 	@GetMapping("/verify")
@@ -238,8 +239,9 @@ public class AccountController {
 	public String doVerifyPassword(Model model) {
 		User user = session.get("user");
 		String pass = param.getString("password", "123");
-		String passEncoder = passwordEncoder.encode(pass);	// mã hoá pass
-		if(!user.getPassword().equals(passEncoder)) {
+		String passEncoder = user.getPassword();	// mã hoá pass hiện tại
+
+		if(!passwordEncoder.matches(pass, passEncoder)) {
 			model.addAttribute("message", "Mật khẩu không trùng khớp!");
 			return "account/current-password";
 		}
@@ -264,6 +266,14 @@ public class AccountController {
 		}
 		user.setPassword(passwordEncoder.encode(confirmPass));
 		userService.save(user);
+		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
+		for (UserRole u : role) {
+			if (u.getRole().getId().equals("ADMIN")) {
+				return "redirect:/ad/profile";
+			} else if(u.getRole().getId().equals("SELLER")) {
+				return "redirect:/seller/profile";
+			}
+		}
 		return "redirect:/profile";
 	}
 	
