@@ -71,10 +71,6 @@ public class Product implements Serializable{
 	@OneToMany(mappedBy = "productComment")
 	private List<Comment> comments;
 
-	@JsonIgnore
-	@OneToOne(mappedBy = "product")
-	private ProductRequest productRequest;
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
