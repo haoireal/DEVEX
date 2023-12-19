@@ -230,6 +230,9 @@ app.controller("sellerpage", function($scope, $http, $location, $window) {
     $scope.filterByCategory = function() {
         $scope.listProducts = $scope.infoShopPage.listInfoProduct.filter(product => $scope.selectedCategories.includes(product.cateId));
         console.log($scope.listProducts);
+		if ($scope.listProducts.length === 0) {
+			$scope.fillInfoShopPage();
+		}
     };  
 
 	$voucher.loadVoucher();

@@ -69,8 +69,8 @@
 								<div class="row">
 									<label class="col-1" title="Click vào hình ảnh 2 lần để xóa"
 										ng-repeat="filename in filenames">
-										<img alt="" class="img-fluid" ng-src="{{filename}}"
-											ng-dblclick="deleteimg(filename)">
+										<img alt="" class="img-fluid" ng-src="{{filename}}" ng-dblclick="deleteimg(filename)" ng-show="checkSell === false">
+										<img alt="x" class="img-fluid" ng-src="{{filename}}" ng-show="checkSell === true">
 									</label>
 									<div class="col-2">
 										<!-- Chọn file -->

@@ -146,5 +146,13 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	@Modifying
 	@Query("UPDATE Product p SET p.viewcount = :view WHERE id = :id")
 	void updateViewProduct(@Param("id") String id, @Param("view") long view);
+	
+	@Query("SELECT COUNT(p.id) FROM Product p JOIN p.productVariants pv WHERE p.sellerProduct.username LIKE ?1 AND pv.quantity = 0")
+	int getCountProductQuantityZero(String sellerUsername);
 
+	@Query("SELECT COUNT(p.id) FROM Product p WHERE p.sellerProduct.username = :username AND p.active = :active")
+    int getCountProductActive(@Param("username") String username, @Param("active") boolean active);
+	
+	@Query("SELECT SUM(p.viewcount) FROM Product p WHERE p.sellerProduct.username = :username")
+    Double getCountViewCountProductShop(@Param("username") String username);
 }

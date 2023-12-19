@@ -37,4 +37,6 @@ public interface CartService {
 
 	Cart save(Cart entity);
 
+	Double getCountCartByProductShopAndCreatedDay(String username, int year, int month);
+
 }

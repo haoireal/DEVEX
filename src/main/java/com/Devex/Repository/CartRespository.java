@@ -14,4 +14,14 @@ import com.Devex.Entity.Cart;
 public interface CartRespository extends JpaRepository<Cart, Integer>{
     @Query("SELECT c FROM Cart c where c.person.username = :username")
     Cart getCartById(@Param("username") String username);
+    
+    @Query("SELECT COUNT(c.id) FROM Cart c " +
+    		"JOIN c.cartDetails cd " +
+    		"JOIN cd.productCart pc " +
+    		"JOIN pc.product p " +
+    		"JOIN p.sellerProduct s " +
+    		"WHERE s.username = :username " +
+		    "AND FUNCTION('YEAR', cd.createdDay) = :year " +
+		    "AND FUNCTION('MONTH', cd.createdDay) = :month ")
+    Double getCountCartByProductShopAndCreatedDay(@Param("username") String username, @Param("year") int year, @Param("month") int month);
 }

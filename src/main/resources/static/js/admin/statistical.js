@@ -1,9 +1,13 @@
         var ctx = document.getElementById('statisticalrevenuemonthline').getContext('2d');
 		var ctx1 = document.getElementById('statisticalrevenueyearline').getContext('2d');
 		var ctx2 = document.getElementById('statisticalcategoryyearpie').getContext('2d');
+		var ctx3 = document.getElementById('statisticalordermonthpie').getContext('2d');
+		var ctx4 = document.getElementById('statisticalorderyearpie').getContext('2d');
 		var myChart = null;
 		var myChart1 = null;
 		var myChart2 = null;
+		var myChart3 = null;
+		var myChart4 = null;
 		// code lấy đường dẫn icon month line
 		var iconrevenuemonthline = document.querySelector('.description-block .iconrevenuemonthline i');
 		var iconrevenueyearline = document.querySelector('.description-block .iconrevenueyearline i');
@@ -155,8 +159,8 @@
 				});
 		}
 
-		// Hàm lấy giá trị cookie và đưa lên input statisticalcategoryyearpie
-		function updateChartordermonthpie(year) {
+		// hàm update giá trị biểu đồ order cate year pie
+		function updateChartordercatemonthpie(year) {
 			fetch('/api/ad/statistical/pie/year?year=' + year)
 				.then(response => response.json())
 				.then(data => {
@@ -182,6 +186,40 @@
                     
                     categorySelect.innerHTML = categorySelectHTML;
 					updateListProductByStatus(yearSelectcategoryyearpie.value, categorySelectedValue.value);
+				});
+		}
+
+		// hàm update giá trị biểu đồ order month pie
+		function updateChartordermonthpie(year, month) {
+			fetch('/api/ad/order/pie/month?year=' + year + '&month=' + month)
+				.then(response => response.json())
+				.then(data => {
+					console.log(data);
+					// Sử dụng map để chuyển đổi danh sách thành mảng
+					var id = data.map(item => item.id);
+					var labels = data.map(item => item.name);
+					var values = data.map(item => item.countProductSell);
+					// Cập nhật dữ liệu cho biểu đồ
+					myChart3.data.labels = labels;
+					myChart3.data.datasets[0].data = values;
+					myChart3.update();
+				});
+		}
+
+		// hàm update giá trị biểu đồ order year pie
+		function updateChartorderyearpie(year) {
+			fetch('/api/ad/order/pie/year?year=' + year)
+				.then(response => response.json())
+				.then(data => {
+					console.log(data);
+					// Sử dụng map để chuyển đổi danh sách thành mảng
+					var id = data.map(item => item.id);
+					var labels = data.map(item => item.name);
+					var values = data.map(item => item.countProductSell);
+					// Cập nhật dữ liệu cho biểu đồ
+					myChart4.data.labels = labels;
+					myChart4.data.datasets[0].data = values;
+					myChart4.update();
 				});
 		}
 
@@ -217,6 +255,9 @@
 		var yearSelectrevenueyearline = document.getElementById('yearSelectrevenueyearline');
 		var yearSelectcategoryyearpie = document.getElementById('yearSelectcategoryyearpie');
 		var categorySelectedValue = document.getElementById('categorySelect');
+		var monthSelectordermonthpie = document.getElementById('monthSelectordermonthpie');
+		var yearSelectordermonthpie = document.getElementById('yearSelectordermonthpie');
+		var yearSelectorderyearpie = document.getElementById('yearSelectorderyearpie');
 
 		// Tạo các phần tử option cho tháng và năm
 		for (var i = 1; i <= 12; i++) {
@@ -253,6 +294,31 @@
 			yearSelectcategoryyearpie.appendChild(option);
 		}
 
+		for (var i = 1; i <= 12; i++) {
+			var option = document.createElement('option');
+			option.value = i;
+			option.textContent = i;
+			monthSelectordermonthpie.appendChild(option);
+		}
+
+		var currentYearOrderMonthPie = new Date().getFullYear();
+		for (var i = 0; i < 5; i++) {
+			var year = currentYearOrderMonthPie - i;
+			var option = document.createElement('option');
+			option.value = year;
+			option.textContent = year;
+			yearSelectordermonthpie.appendChild(option);
+		}
+
+		var currentYearOrderYearPie = new Date().getFullYear();
+		for (var i = 0; i < 5; i++) {
+			var year = currentYearOrderYearPie - i;
+			var option = document.createElement('option');
+			option.value = year;
+			option.textContent = year;
+			yearSelectorderyearpie.appendChild(option);
+		}
+
 		// Gắn sự kiện change cho các thẻ select
 		// sự kiện tháng của biểu đồ line
 		monthSelectrevenuemonthline.addEventListener('change', function () {
@@ -268,11 +334,23 @@
 		});
 		//sự kiện năm của biểu đồ pie
 		yearSelectcategoryyearpie.addEventListener('change', function () {
-			updateChartordermonthpie(yearSelectcategoryyearpie.value);
+			updateChartordercatemonthpie(yearSelectcategoryyearpie.value);
 		});
 		// sự kiện chọn category
 		categorySelectedValue.addEventListener('change', function () {
 			updateListProductByStatus(yearSelectcategoryyearpie.value, categorySelectedValue.value);
+		});
+		// sự kiện tháng của biểu đồ order month pie
+		monthSelectordermonthpie.addEventListener('change', function () {
+			updateChartordermonthpie(yearSelectordermonthpie.value, monthSelectordermonthpie.value);
+		});
+		//sự kiện năm của biểu đồ order month pie
+		yearSelectordermonthpie.addEventListener('change', function () {
+			updateChartordermonthpie(yearSelectordermonthpie.value, monthSelectordermonthpie.value);
+		});
+		//sự kiện năm của biểu đồ order year pie
+		yearSelectorderyearpie.addEventListener('change', function () {
+			updateChartorderyearpie(yearSelectorderyearpie.value);
 		});
 
 		// Khởi tạo biểu đồ ban đầu
@@ -401,7 +479,61 @@
 				plugins: {
 					title: {
 						display: false,
+						text: 'Biểu đồ thống kê loại sản phẩm bán chạy theo tháng',
+					},
+				},
+			},
+		});
+
+		// biểu đồ 4
+		myChart3 = new Chart(ctx3, {
+			type: 'doughnut',
+			data: {
+				labels: [],
+				datasets: [{
+					data: [],
+					backgroundColor: [
+						'#F39C12', // Màu cam nhạt
+						'#F1C40F', // Màu vàng đậm
+						'#32CD32', // Màu xanh lá
+						'#CD5C5C', // Màu đỏ nhạt
+						'#DC143C', // Màu đỏ đậm
+					],
+				}],
+			},
+			options: {
+				responsive: true,
+				plugins: {
+					title: {
+						display: false,
 						text: 'Biểu đồ thống kê hóa đơn theo tháng',
+					},
+				},
+			},
+		});
+
+		// biểu đồ 5
+		myChart4 = new Chart(ctx4, {
+			type: 'doughnut',
+			data: {
+				labels: [],
+				datasets: [{
+					data: [],
+					backgroundColor: [
+						'#F39C12', // Màu cam nhạt
+						'#F1C40F', // Màu vàng đậm
+						'#32CD32', // Màu xanh lá
+						'#CD5C5C', // Màu đỏ nhạt
+						'#DC143C', // Màu đỏ đậm
+					],
+				}],
+			},
+			options: {
+				responsive: true,
+				plugins: {
+					title: {
+						display: false,
+						text: 'Biểu đồ thống kê hóa đơn theo năm',
 					},
 				},
 			},
@@ -413,9 +545,14 @@
 		yearSelectrevenueyearline.value = currentYearYearline;
 		yearSelectcategoryyearpie.value = currentYearYearpie;
 		categorySelectedValue.value = document.getElementById('categorySelect').value;
+		monthSelectordermonthpie.value = new Date().getMonth() + 1;
+		yearSelectordermonthpie.value = currentYearOrderMonthPie;
+		yearSelectorderyearpie.value = currentYearOrderYearPie;
 
 		// Gọi hàm cập nhật ban đầu để hiển thị dữ liệu
 		updateChartrevenuemonthline(yearSelectrevenuemonthline.value, monthSelectrevenuemonthline.value);
 		updateChartrevenueyearline(yearSelectrevenueyearline.value);
-		updateChartordermonthpie(yearSelectcategoryyearpie.value);
+		updateChartordercatemonthpie(yearSelectcategoryyearpie.value);
+		updateChartordermonthpie(yearSelectordermonthpie.value, monthSelectordermonthpie.value);
+		updateChartorderyearpie(yearSelectorderyearpie.value);
 	

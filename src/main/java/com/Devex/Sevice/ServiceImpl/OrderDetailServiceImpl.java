@@ -170,4 +170,14 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		return orderDetailRepository.getCountProductSellByProductId(id);
 	}
 
+	@Override
+	public Object[] getStatisticalOrderoMonthPie(int year, int month, int idstatus) {
+		return orderDetailRepository.getStatisticalOrderoMonthPie(year, month, idstatus);
+	}
+
+	@Override
+	public int getCountOrderDetailsStatusShopByStatusId(String username, int statusid) {
+		return orderDetailRepository.getCountOrderDetailsStatusShopByStatusId(username, statusid);
+	}
+
 }

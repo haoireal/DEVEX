@@ -248,4 +248,19 @@ public class ProductServiceImpl implements ProductService {
 		productRepository.updateViewProduct(id, view);
 	}
 
-}
+	@Override
+	public int getCountProductQuantityZero(String sellerUsername) {
+		return productRepository.getCountProductQuantityZero(sellerUsername);
+	}
+
+	@Override
+	public int getCountProductActive(String username, boolean active) {
+		return productRepository.getCountProductActive(username, active);
+	}
+ 
+	@Override
+	public Double getCountViewCountProductShop(String username) {
+		return productRepository.getCountViewCountProductShop(username);
+	} 
+
+} 

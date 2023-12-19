@@ -107,4 +107,10 @@ public interface ProductService {
 	List<Product> findAllProductByUsernameContainingKeyword(String keyword, String username);
 
 	void updateViewProduct(String id, long view);
+
+	int getCountProductQuantityZero(String sellerUsername);
+
+	int getCountProductActive(String username, boolean active);
+
+	Double getCountViewCountProductShop(String username);
 }
