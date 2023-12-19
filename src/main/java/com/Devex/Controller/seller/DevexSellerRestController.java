@@ -49,6 +49,7 @@ import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.TransactionHistory;
 import com.Devex.Entity.User;
+import com.Devex.Sevice.CartService;
 import com.Devex.Sevice.CategoryDetailService;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.DwalletService;
@@ -134,6 +135,9 @@ public class DevexSellerRestController {
 
 	@Autowired
 	private TransactionHistoryService transactionHistoryService;
+	
+	@Autowired
+	private CartService cartService;
 
 	@Value("${myapp.file-storage-path}")
 	private String fileStoragePath;
@@ -737,8 +741,8 @@ public class DevexSellerRestController {
 	}
 
 	@PostMapping("/seller/sendRequest")
-	public void sendRequest(@RequestParam("id") String id) {
-		productRequestService.insertProductRequest(new Date(), id);
+	public void sendRequest(@RequestParam("id") String id, @RequestParam("content") String content) {
+		productRequestService.insertProductRequest(new Date(), id, 0, content);
 	}
 
 	@DeleteMapping("/seller/cancelRequest")
@@ -767,5 +771,52 @@ public class DevexSellerRestController {
 				.getTransactionByIdWallet(dwallet.getId());
 		return listHistoryTransactions;
 
+	}
+	
+	@PostMapping("/seller/sendrequestactive")
+	public void sendRequestActive(@RequestParam("id") String id, @RequestParam("content") String content) {
+		productRequestService.insertProductRequest(new Date(), id, 1, content);
+	}
+	
+	@GetMapping("/rest/list/work")
+	public Map<String, Object> getListWork(){
+		User u = session.get("user");
+		Map<String, Object> mapWork = new HashMap<>();
+		int choxacnhan = detailService.getCountOrderDetailsStatusShopByStatusId(u.getUsername(), 1001);
+		int cholayhang = detailService.getCountOrderDetailsStatusShopByStatusId(u.getUsername(), 1003);
+		int chothanhtoan = detailService.getCountOrderDetailsStatusShopByStatusId(u.getUsername(), 1002);
+		int danggiao = detailService.getCountOrderDetailsStatusShopByStatusId(u.getUsername(), 1004);
+		int nhanhang = detailService.getCountOrderDetailsStatusShopByStatusId(u.getUsername(), 1005);
+		int choxuly = chothanhtoan + danggiao + nhanhang;
+		int dahuy = detailService.getCountOrderDetailsStatusShopByStatusId(u.getUsername(), 1007);
+		int trahang = detailService.getCountOrderDetailsStatusShopByStatusId(u.getUsername(), 1007);
+		int hethang = productService.getCountProductQuantityZero(u.getUsername());
+		int chuaban = productService.getCountProductActive(u.getUsername(), false);
+		int dangban = productService.getCountProductActive(u.getUsername(), true);
+		mapWork.put("choxacnhan", choxacnhan);
+		mapWork.put("cholayhang", cholayhang);
+		mapWork.put("choxuly", choxuly);
+		mapWork.put("dahuy", dahuy);
+		mapWork.put("trahang", trahang);
+		mapWork.put("hethang", hethang);
+		mapWork.put("chuaban", chuaban); 
+		mapWork.put("dangban", dangban);
+		return mapWork;
+	}
+	
+	@GetMapping("/rest/ratiotrade")
+	public Map<String, Object> getRatioTrade(@RequestParam("year") int year, @RequestParam("month") int month){
+		User u = session.get("user");
+		Map<String, Object> mapTrade = new HashMap<>();
+		Double viewCount = productService.getCountViewCountProductShop(u.getUsername());
+		Double addCart = cartService.getCountCartByProductShopAndCreatedDay(u.getUsername(), year, month);
+		Double addOrder = orderService.getCountOrderByYearAndMonthAndProductShop(year, month, u.getUsername());
+		Double addCarts = addCart + addOrder;
+		Double RatioTrade = (Double.valueOf(addCarts) / Double.valueOf(viewCount)) * 100;
+		mapTrade.put("viewCount", viewCount); 
+		mapTrade.put("addCarts", addCarts);
+		mapTrade.put("addOrder", addOrder); 
+		mapTrade.put("RatioTrade", RatioTrade);
+		return mapTrade;
 	}
 }

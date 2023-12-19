@@ -2,6 +2,7 @@ package com.Devex.Repository;
 
 import java.util.List;
 
+import com.Devex.DTO.SellerDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,7 +23,12 @@ public interface SellerRepository extends JpaRepository<Seller, String>{
 	Seller findFirstByUsername(String username);
 //	@Query("SELECT s FROM Seller s WHERE s.username = :username")
 //	Seller findFirstByUsername(@Param("username") String username);
+	
+	@Query("SELECT new com.Devex.DTO.SellerDTO(s.username, s.fullname, s.shopName, s.avatar, s.createDay, s.activeShop) FROM Seller s where s.username = :username")
+	SellerDTO findSeller(@Param("username") String username);
 
+	@Query("SELECT new com.Devex.DTO.SellerDTO(s.username, s.fullname, s.shopName, s.avatar, s.createDay, s.activeShop) FROM Seller s")
+	List<SellerDTO> findAllSeller();
 	
 	@Query("SELECT new com.Devex.DTO.ShopDTO(s.username, s.shopName, s.fullname, s.address, s.phoneAddress, s.mall, s.description) FROM Seller s")
 	List<ShopDTO> findAllId();

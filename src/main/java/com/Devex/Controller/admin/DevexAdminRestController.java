@@ -1,17 +1,15 @@
 package com.Devex.Controller.admin;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.hibernate.bytecode.internal.bytebuddy.PrivateAccessorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
@@ -30,9 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Devex.DTO.FlashSaleTimeDTO;
 import com.Devex.DTO.ProductDTO;
-import com.Devex.DTO.ShopDTO;
+import com.Devex.DTO.SellerDTO;
 import com.Devex.DTO.StatisticalCategoryDetailsPieDTO;
-import com.Devex.DTO.StatisticalOrderMonthPieDTO;
 import com.Devex.DTO.StatisticalRevenueMonthDTO;
 import com.Devex.DTO.UpdatedRolesDTO;
 import com.Devex.Entity.Dwallet;
@@ -40,14 +37,12 @@ import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Notifications;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.Role;
-import com.Devex.Entity.Seller;
 import com.Devex.Entity.TransactionHistory;
 import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
 import com.Devex.Sevice.CartService;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.DwalletService;
-import com.Devex.Sevice.FlashSalesService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
 import com.Devex.Sevice.NotificationsService;
@@ -60,8 +55,6 @@ import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.TransactionHistoryService;
 import com.Devex.Sevice.UserRoleService;
 import com.Devex.Sevice.UserService;
-
-import jakarta.servlet.http.Cookie;
 
 @CrossOrigin("*")
 @RestController
@@ -178,8 +171,7 @@ public class DevexAdminRestController {
 		System.out.println("passs" + passwordEncoder.encode(updatedRoles.getPhone()));
 		Map<String, String> response = new HashMap<>();
 		User user = userService.findById(updatedRoles.getUserId()).orElse(null);
-		Seller seller = sellerService.findFirstByUsername(user.getUsername());// try catch
-
+		SellerDTO seller = sellerService.findSeller(user.getUsername());// try catch
 		if (user != null) {
 			// update user trước khi tạo roles
 			// System.out.println("sssss" + updatedRoles.getPassword());
@@ -228,12 +220,14 @@ public class DevexAdminRestController {
 		Map<String, Object> mapStatistical = new HashMap<>();
 		long amountorder = orderService.count();
 		Double amountRevenue = orderService.getTotalPriceOrder() * 0.05;
+		Double test = orderService.getTotalPriceOrder();
 		int amountUser = userService.getAmountUserOfAdmin();
 		long amountProduct = productService.count();
 		mapStatistical.put("amountorder", amountorder);
 		mapStatistical.put("amountRevenue", amountRevenue);
 		mapStatistical.put("amountUser", amountUser);
 		mapStatistical.put("amountProduct", amountProduct);
+		mapStatistical.put("test", test);
 		return mapStatistical;
 	}
 
@@ -410,5 +404,39 @@ public class DevexAdminRestController {
 		}
 		return listProductDTO;
 	}
-
+	
+	@GetMapping("/ad/order/pie/month")
+	public List<StatisticalCategoryDetailsPieDTO> getStatisticalorderMonthPie(@RequestParam("year") int year, @RequestParam("month") int month) {
+	    List<Object[]> liststatisOrderOb = orderService.getStatisticalorderMonthPie(year, month);
+	    List<StatisticalCategoryDetailsPieDTO> liststatisOrderMonthPie = new ArrayList<>();
+		for (Object[] result : liststatisOrderOb) {
+			int id = (int) result[0];
+			String statusName = (String) result[1];
+			int orderCount = (int) result[2];
+			StatisticalCategoryDetailsPieDTO entity = new StatisticalCategoryDetailsPieDTO();
+			entity.setId(id);
+			entity.setName(statusName);
+			entity.setCountProductSell(Long.valueOf(orderCount).longValue());
+			liststatisOrderMonthPie.add(entity);
+		}
+	    return liststatisOrderMonthPie;
+	}
+	
+	@GetMapping("/ad/order/pie/year")
+	public List<StatisticalCategoryDetailsPieDTO> getStatisticalorderMonthPie(@RequestParam("year") int year) {
+	    List<Object[]> liststatisOrderOb = orderService.getStatisticalorderYearPie(year);
+	    List<StatisticalCategoryDetailsPieDTO> liststatisOrderYearPie = new ArrayList<>();
+		for (Object[] result : liststatisOrderOb) {
+			int id = (int) result[0];
+			String statusName = (String) result[1];
+			int orderCount = (int) result[2];
+			StatisticalCategoryDetailsPieDTO entity = new StatisticalCategoryDetailsPieDTO();
+			entity.setId(id);
+			entity.setName(statusName);
+			entity.setCountProductSell(Long.valueOf(orderCount).longValue());
+			liststatisOrderYearPie.add(entity);
+		}
+	    return liststatisOrderYearPie;
+	}
+	
 }

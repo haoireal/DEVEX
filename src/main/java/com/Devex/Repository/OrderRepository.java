@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.Devex.DTO.StatisticalCategoryDetailsPieDTO;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.Seller;
 
@@ -112,9 +113,7 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 			@Param("year") int year, @Param("month") int month);
     
     @Query("SELECT SUM(o.total) FROM Order o " +
-		       "JOIN  o.orderDetails od " +
-		       "WHERE o.orderStatus.id = 1006 " +
-		       "AND od.status.id = 1009 ")
+		       "WHERE o.orderStatus.id = 1006 ")
 	Double getTotalPriceOrder();
     
     @Query("SELECT FUNCTION('DAY', o.createdDay), SUM(od.price) AS totalPrice " +
@@ -125,7 +124,7 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 		       "JOIN  p.sellerProduct s " +
 		       "WHERE FUNCTION('YEAR', o.createdDay) = :year " +
 		       "AND FUNCTION('MONTH', o.createdDay) = :month " +
-		       "AND od.status.id = 1009 AND o.orderStatus.id = 1006 " +
+		       "AND o.orderStatus.id = 1006 " +
 		       "GROUP BY FUNCTION('DAY', o.createdDay)")
 	List<Object[]> getTotalPriceOrderByMonthAndYear(@Param("year") int year, @Param("month") int month);
 	
@@ -231,4 +230,57 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 		       "JOIN  p.sellerProduct s " +
 			   "WHERE s.username = :username AND LOWER(o.id) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Order> findAllOrderByIdAndUsernameContainingKeyword(@Param("username") String username, @Param("keyword") String keyword);
+	
+	@Query("SELECT o FROM Order o WHERE o.orderStatus.id = :statusid ")
+	List<Order> findOrderByOrderStatusId(@Param("statusid") int statusid);
+	
+	@Query("SELECT o FROM Order o WHERE o.id LIKE %:keyword% OR o.customerOrder.fullname LIKE %:keyword%")
+    List<Order> findOrderByIdOrCustomer(@Param("keyword") String keyword);
+	
+	@Query("SELECT o FROM Order o WHERE o.orderStatus.id = :statusid AND o.id LIKE %:keyword% OR o.orderStatus.id = :statusid AND o.customerOrder.fullname LIKE %:keyword%")
+	List<Order> findOrderByOrderStatusIdAndIdOrCustomer(@Param("statusid") int statusid, @Param("keyword") String keyword);
+
+	@Query("SELECT COUNT(o) " +
+		       "FROM OrderDetails od " +
+		       "JOIN od.order o " +
+		       "JOIN od.productVariant pv " +
+		       "JOIN pv.product p " +
+		       "JOIN p.categoryDetails cd " +
+		       "JOIN o.orderStatus os " +
+		       "WHERE FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month " +
+		       "AND o.orderStatus.id = :idstatus ")
+	int getCountOrderByYearAndMonthAndIdStatusMonthPie(@Param("year") int year, @Param("month") int month, @Param("idstatus") int idstatus);
+
+	@Query(value = "DECLARE @Status_IDs TABLE (ID INT); "
+			+ "INSERT INTO @Status_IDs VALUES (1002), (1004), (1006), (1007), (1008); "
+			+ "SELECT ot.ID, ot.[Name], ISNULL(COUNT(o.id), 0) "
+			+ "FROM @Status_IDs s "
+			+ "LEFT JOIN Order_Status ot ON ot.ID = s.ID "
+			+ "LEFT JOIN Orders o ON ot.ID = o.Status_ID AND MONTH(o.Createdday) = :month AND YEAR(o.Createdday) = :year "
+			+ "GROUP BY ot.ID, ot.[Name] ", nativeQuery = true)
+	List<Object[]> getStatisticalorderMonthPie(@Param("year") int year, @Param("month") int month);
+	
+	@Query(value = "DECLARE @Status_IDs TABLE (ID INT); "
+			+ "INSERT INTO @Status_IDs VALUES (1002), (1004), (1006), (1007), (1008); "
+			+ "SELECT ot.ID, ot.[Name], ISNULL(COUNT(o.id), 0) "
+			+ "FROM @Status_IDs s "
+			+ "LEFT JOIN Order_Status ot ON ot.ID = s.ID "
+			+ "LEFT JOIN Orders o ON ot.ID = o.Status_ID AND YEAR(o.Createdday) = :year "
+			+ "GROUP BY ot.ID, ot.[Name] ", nativeQuery = true)
+	List<Object[]> getStatisticalorderYearPie(@Param("year") int year);
+	
+	@Query("SELECT COUNT(o) " +
+		       "FROM OrderDetails od " +
+		       "JOIN od.order o " +
+		       "JOIN od.productVariant pv " +
+		       "JOIN pv.product p " +
+		       "JOIN p.sellerProduct s " +
+		       "JOIN p.categoryDetails cd " +
+		       "JOIN o.orderStatus os " +
+		       "WHERE FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month " +
+		       "AND s.username = :username ")
+	Double getCountOrderByYearAndMonthAndProductShop(@Param("year") int year, @Param("month") int month, @Param("username") String username);
+
 }

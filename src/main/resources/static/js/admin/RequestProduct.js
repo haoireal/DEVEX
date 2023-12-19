@@ -1,6 +1,7 @@
 const app = angular.module("app", []);
 app.controller("requestproduct", function ($scope, $http, $location, $window) {
   $scope.listProductRequest = [];
+  $scope.listProductRequestTrue = [];
 
   // get all ProductRequest
   $scope.getAllProductRequest = function () {
@@ -51,6 +52,42 @@ app.controller("requestproduct", function ($scope, $http, $location, $window) {
       });
   };
 
-  $scope.getAllProductRequest();
+  // get all ProductRequestTrue
+  $scope.getAllProductRequestTrue = function () {
+    $http.get("/api/getallproductrequesttrue").then(
+      function (response) {
+        $scope.listProductRequestTrue = response.data;
+      },
+      function (error) {
+        console.error("Error:", error);
+      }
+    );
+  };
 
+  // delete ProductRequest
+  $scope.cancelRequestTrue = function (id) {
+    $http.delete("/api/delete/productrequesttrue?id=" + id)
+      .then(function (response) {
+        $scope.listProductRequestTrue = response.data;
+        document.getElementById('sr').click();
+      }, function(error) {
+        console.error('Error:', error);
+        document.getElementById('fr').click();
+    });
+  };
+
+  // confirm ProductRequest
+  $scope.confirmRequestTrue = function (id) {
+    $http.put("/api/update/productrequesttrue?id=" + id)
+    .then(function (response) {
+      $scope.listProductRequestTrue = response.data;
+      document.getElementById('sa').click();
+    }, function(error) {
+      console.error('Error:', error);
+      document.getElementById('fa').click();
+    });
+  };
+
+  $scope.getAllProductRequest();
+  $scope.getAllProductRequestTrue();
 });

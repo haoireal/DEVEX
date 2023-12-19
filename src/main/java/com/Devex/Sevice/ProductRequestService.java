@@ -44,6 +44,10 @@ public interface ProductRequestService {
 
 	ProductRequest findProductRequestByProductId(String id);
 
-	void insertProductRequest(Date createdDay, String productId);
+	void insertProductRequest(Date createdDay, String productId, int status, String content);
+
+	List<ProductRequest> getAllProductRequestTrueDecreaseByCreatedDay();
+
+	List<ProductRequest> getAllProductRequestFalseDecreaseByCreatedDay();
 
 }

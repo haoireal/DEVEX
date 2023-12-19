@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.Devex.DTO.ShopDTO;
+import com.Devex.DTO.SellerDTO;
 import com.Devex.Entity.Seller;
 import com.Devex.Repository.SellerRepository;
 import com.Devex.Sevice.SellerService;
@@ -34,6 +35,17 @@ public class SellerServiceImpl implements SellerService{
 		return sellerRepository.findAllId();
 	}
 
+
+	
+	@Override
+	public SellerDTO findSeller(String username) {
+		return sellerRepository.findSeller(username);
+	}
+
+	@Override
+	public List<SellerDTO> findAllSeller() {
+		return sellerRepository.findAllSeller();
+	}
 	@Override
 	public List<Seller> saveAll(List<Seller> entities) {
 		return sellerRepository.saveAll(entities);

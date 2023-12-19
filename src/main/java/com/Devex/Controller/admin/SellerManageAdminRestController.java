@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.Devex.DTO.SellerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -116,12 +117,12 @@ public class SellerManageAdminRestController {
 	@GetMapping("/getlistdistributor")
 	public Map<String, Object> getAllDistributor() {
 	    Map<String, Object> mapDistributor = new HashMap<>();
-	    List<Seller> listSeller = sellerService.findAll();
+	    List<SellerDTO> listSeller = sellerService.findAllSeller();
 	    List<Double> listRating = new ArrayList<>();
 	    List<String> listTime = new ArrayList<>();
 	    List<Integer> listAmountOrder = new ArrayList<>();
 	    List<Double> listRevenue = new ArrayList<>();
-	    for (Seller s : listSeller) {
+	    for (SellerDTO s : listSeller) {
 	    	String time = "";
 	    	Double averageRating = 0.0;
 	    	Integer amountOrder = 0;

@@ -15,14 +15,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Devex.DTO.FlashSaleTimeDTO;
 import com.Devex.Entity.FlashSaleTime;
+import com.Devex.Entity.Order;
+import com.Devex.Entity.OrderDetails;
+import com.Devex.Entity.OrderStatus;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.User;
 import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.FlashSalesTimeService;
+import com.Devex.Sevice.OrderDetailService;
+import com.Devex.Sevice.OrderService;
+import com.Devex.Sevice.OrderStatusService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.SessionService;
@@ -51,6 +58,15 @@ public class DevexAdminController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private OrderDetailService detailService;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private OrderStatusService orderStatusService;
 
 	@GetMapping("/home")
 	public String getHomePage() {
@@ -122,6 +138,28 @@ public class DevexAdminController {
 	@GetMapping("/list/distributor")
 	public String showDistributor() {
 		return "admin/sellerManage/sellerManage";
+	}
+	
+	@GetMapping("/order")
+	public String showListOrder() {
+		return "admin/OrderManage/orderManage";
+	}
+	
+	@GetMapping("/order/details/{id}")
+	public String showOrderDetails(@PathVariable("id") String id, Model model) {
+		Order order = orderService.findById(id).get();
+		List<OrderDetails> listOrderDetails = detailService.findOrderDetailsByOrderID(id);
+		List<OrderStatus> listStatus = orderStatusService.getListOrderStatusAdmin();
+		model.addAttribute("order", order);
+		model.addAttribute("orderDetails", listOrderDetails);
+		model.addAttribute("listStatus", listStatus);
+		return "admin/OrderManage/orderDetail";
+	}
+	
+	@PostMapping("/update/orderstatus/{id}")
+	public String yourControllerMethod(@RequestParam("statusId") int statusId, @PathVariable("id") String id) {
+		orderService.updateIdOrderStatus(statusId, id);
+		return "redirect:/ad/order/details/" + id;
 	}
 
 }

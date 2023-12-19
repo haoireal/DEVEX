@@ -129,4 +129,25 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 	
 	@Query("SELECT COUNT(od.price) FROM OrderDetails od WHERE od.productVariant.product.id = ?1 AND od.order.orderStatus.id = 1006")
 	int getCountProductSellByProductId(String id);
+	
+	@Query("SELECT o.orderStatus.id, o.orderStatus.name, COUNT(o.id) AS orderCount " +
+		       "FROM OrderDetails od " +
+		       "JOIN od.order o " +
+		       "JOIN od.productVariant pv " +
+		       "JOIN pv.product p " +
+		       "JOIN p.categoryDetails cd " +
+		       "JOIN o.orderStatus os " +
+		       "WHERE FUNCTION('YEAR', o.createdDay) = :year " +
+		       "AND FUNCTION('MONTH', o.createdDay) = :month " +
+		       "AND o.orderStatus.id = :idstatus " +
+		       "GROUP BY o.orderStatus.id, o.orderStatus.name ")
+	Object[] getStatisticalOrderoMonthPie(@Param("year") int year, @Param("month") int month, @Param("idstatus") int idstatus);
+	
+	@Query("SELECT COUNT(o.id) FROM OrderDetails o " +
+	           "JOIN o.order od " +
+	           "JOIN o.productVariant pv " +
+	           "JOIN pv.product p " +
+	           "JOIN p.sellerProduct s " +
+	           "WHERE s.username = ?1 AND o.status.id = ?2")
+	int getCountOrderDetailsStatusShopByStatusId(String username, int statusid);
 }

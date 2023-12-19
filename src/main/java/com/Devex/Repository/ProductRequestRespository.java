@@ -26,7 +26,12 @@ public interface ProductRequestRespository extends JpaRepository<ProductRequest,
 	ProductRequest findProductRequestByProductId(String id);
 	
 	@Modifying
-	@Query(value = "INSERT INTO Product_Request (Createdday, Product_ID) VALUES (:createdDay, :productId)", nativeQuery = true)
-	void insertProductRequest(@Param("createdDay") Date createdDay, @Param("productId") String productId);
+	@Query(value = "INSERT INTO Product_Request (Createdday, Product_ID, Statusrequest, Content) VALUES (:createdDay, :productId, :status, :content)", nativeQuery = true)
+	void insertProductRequest(@Param("createdDay") Date createdDay, @Param("productId") String productId, @Param("status") int status, @Param("content") String content);
 
+	@Query("SELECT pr FROM ProductRequest pr WHERE pr.statusRequest = 0 ORDER BY pr.createdDay DESC")
+	List<ProductRequest> getAllProductRequestFalseDecreaseByCreatedDay();
+	
+	@Query("SELECT pr FROM ProductRequest pr WHERE pr.statusRequest = 1 ORDER BY pr.createdDay DESC")
+	List<ProductRequest> getAllProductRequestTrueDecreaseByCreatedDay();
 }

@@ -35,7 +35,8 @@ public class VnPayServiceImpl implements vnPayService {
         vnp_Params.put("vnp_Version", VnPayConstant.vnp_Version);
         vnp_Params.put("vnp_Command", VnPayConstant.vnp_Command);
         vnp_Params.put("vnp_TmnCode", VnPayConstant.vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(total*100));
+        long result = total * 100L;
+        vnp_Params.put("vnp_Amount", String.valueOf(result));
         vnp_Params.put("vnp_CurrCode", "VND");
         
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);

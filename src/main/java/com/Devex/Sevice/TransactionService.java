@@ -6,5 +6,5 @@ public interface TransactionService {
 
     public void transactionBackToUser(OrderDetails orderDetails);
     public void transactionBackToSeller(OrderDetails orderDetails);
-    public void transactionDwallet(String from, String to, double value, String payment);
+    public Boolean transactionDwallet(String from, String to, double value, String payment);
 }

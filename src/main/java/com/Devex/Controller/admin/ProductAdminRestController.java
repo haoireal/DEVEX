@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.Devex.DTO.SellerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -245,7 +246,7 @@ public class ProductAdminRestController {
 		List<String> listNameCategory = new ArrayList<>();
 		List<String> listNameProductBrand = new ArrayList<>();
 		List<String> listShopName = new ArrayList<>();
-		List<ProductRequest> listProductRequest = productRequestService.getAllProductRequestDecreaseByCreatedDay();
+		List<ProductRequest> listProductRequest = productRequestService.getAllProductRequestFalseDecreaseByCreatedDay();
 		for (ProductRequest pr : listProductRequest) {
 			Product p = productService.findByIdProduct(pr.getProduct().getId());
 			infoProductDTO pd = new infoProductDTO();
@@ -280,7 +281,7 @@ public class ProductAdminRestController {
 		List<String> listNameCategory = new ArrayList<>();
 		List<String> listNameProductBrand = new ArrayList<>();
 		List<String> listShopName = new ArrayList<>();
-		List<ProductRequest> listProductRequest = productRequestService.getAllProductRequestDecreaseByCreatedDay();
+		List<ProductRequest> listProductRequest = productRequestService.getAllProductRequestFalseDecreaseByCreatedDay();
 		for (ProductRequest pr : listProductRequest) {
 			Product p = productService.findByIdProduct(pr.getProduct().getId());
 			infoProductDTO pd = new infoProductDTO();
@@ -317,7 +318,7 @@ public class ProductAdminRestController {
 		List<String> listNameCategory = new ArrayList<>();
 		List<String> listNameProductBrand = new ArrayList<>();
 		List<String> listShopName = new ArrayList<>();
-		List<ProductRequest> listProductRequest = productRequestService.getAllProductRequestDecreaseByCreatedDay();
+		List<ProductRequest> listProductRequest = productRequestService.getAllProductRequestFalseDecreaseByCreatedDay();
 		for (ProductRequest pr : listProductRequest) {
 			Product p = productService.findByIdProduct(pr.getProduct().getId());
 			infoProductDTO pd = new infoProductDTO();
@@ -345,8 +346,8 @@ public class ProductAdminRestController {
 	}
 	
 	@GetMapping("/getlistseller")
-	public List<Seller> getListSeller(){
-		return sellerService.findAll();
+	public List<SellerDTO> getListSeller(){
+		return sellerService.findAllSeller();
 	}
 	
 	@GetMapping("/search/seller")
@@ -395,14 +396,17 @@ public class ProductAdminRestController {
 		String id = sessionService.get("idproduct");
 		Map<String, Object> mapProduct = new HashMap<>();
 		Product product = productService.findByIdProduct(id);
+		ProductRequest productrequest = productRequestService.findProductRequestByProductId(id);
 		boolean check = false;
-		check = sessionService.get("request");
+		if(productrequest != null) {
+			check = true;
+		}
 		mapProduct.put("product", product);
 		mapProduct.put("check", check);
-		System.out.println(check);
+		System.out.println(check+"aaaaaaaaaaa");
 		if(check == true) {
-			ProductRequest productrequest = productRequestService.findProductRequestByProductId(id);
 			mapProduct.put("idproductrequest", productrequest.getId());
+			mapProduct.put("content", productrequest.getContent());
 		}
 		return mapProduct;
 	}
@@ -516,6 +520,111 @@ public class ProductAdminRestController {
 	@PutMapping("/falserequest")
 	public void updateFalseRequest() {
 		sessionService.set("request", false);
-		System.out.println("check false");
+	}
+	
+	@GetMapping("/getallproductrequesttrue")
+	public Map<String, Object> getAllProductRequestTrue(){
+		Map<String, Object> mapProductRequestTrue = new HashMap<>();
+		List<infoProductDTO> listInfoProductTrue = new ArrayList<>();
+		List<String> listNameCategoryTrue = new ArrayList<>();
+		List<String> listNameProductBrandTrue = new ArrayList<>();
+		List<String> listShopNameTrue = new ArrayList<>();
+		List<ProductRequest> listProductRequestTrue = productRequestService.getAllProductRequestTrueDecreaseByCreatedDay();
+		for (ProductRequest pr : listProductRequestTrue) {
+			Product p = productService.findByIdProduct(pr.getProduct().getId());
+			infoProductDTO pd = new infoProductDTO();
+			pd.setId(p.getId());
+			pd.setName(p.getName());
+			pd.setActive(p.getActive());
+			pd.setSoldCount(p.getSoldCount());
+			pd.setQuantity(p.getProductVariants().get(0).getQuantity());
+			pd.setPrice(p.getProductVariants().get(0).getPrice());
+			pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
+			pd.setNameImageProduct(p.getImageProducts().get(0).getName());
+			pd.setCateId(p.getCategoryDetails().getId());
+			listInfoProductTrue.add(pd);
+			CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
+			listNameCategoryTrue.add(cad.getName());
+			listNameProductBrandTrue.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
+			listShopNameTrue.add(p.getSellerProduct().getShopName());
+		}
+		mapProductRequestTrue.put("listProductRequestTrue", listProductRequestTrue);
+		mapProductRequestTrue.put("listInfoProductTrue", listInfoProductTrue);
+		mapProductRequestTrue.put("listNameCategoryTrue", listNameCategoryTrue);
+		mapProductRequestTrue.put("listNameProductBrandTrue", listNameProductBrandTrue);
+		mapProductRequestTrue.put("listShopNameTrue", listShopNameTrue);
+		return mapProductRequestTrue;
+	}
+	
+	@PutMapping("/update/productrequesttrue")
+	public Map<String, Object> updateProductRequestTrue(@RequestParam("id") int id){
+		ProductRequest e = productRequestService.findProductRequestById(id);
+		productService.updateProductActiveById(false, e.getProduct().getId());
+		productRequestService.deleteById(id);
+		Map<String, Object> mapProductRequestTrue = new HashMap<>();
+		List<infoProductDTO> listInfoProductTrue = new ArrayList<>();
+		List<String> listNameCategoryTrue = new ArrayList<>();
+		List<String> listNameProductBrandTrue = new ArrayList<>();
+		List<String> listShopNameTrue = new ArrayList<>();
+		List<ProductRequest> listProductRequestTrue = productRequestService.getAllProductRequestTrueDecreaseByCreatedDay();
+		for (ProductRequest pr : listProductRequestTrue) {
+			Product p = productService.findByIdProduct(pr.getProduct().getId());
+			infoProductDTO pd = new infoProductDTO();
+			pd.setId(p.getId());
+			pd.setName(p.getName());
+			pd.setActive(p.getActive());
+			pd.setSoldCount(p.getSoldCount());
+			pd.setQuantity(p.getProductVariants().get(0).getQuantity());
+			pd.setPrice(p.getProductVariants().get(0).getPrice());
+			pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
+			pd.setNameImageProduct(p.getImageProducts().get(0).getName());
+			pd.setCateId(p.getCategoryDetails().getId());
+			listInfoProductTrue.add(pd);
+			CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
+			listNameCategoryTrue.add(cad.getName());
+			listNameProductBrandTrue.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
+			listShopNameTrue.add(p.getSellerProduct().getShopName());
+		}
+		mapProductRequestTrue.put("listProductRequestTrue", listProductRequestTrue);
+		mapProductRequestTrue.put("listInfoProductTrue", listInfoProductTrue);
+		mapProductRequestTrue.put("listNameCategoryTrue", listNameCategoryTrue);
+		mapProductRequestTrue.put("listNameProductBrandTrue", listNameProductBrandTrue);
+		mapProductRequestTrue.put("listShopNameTrue", listShopNameTrue);
+		return mapProductRequestTrue;
+	}
+	
+	@DeleteMapping("/delete/productrequesttrue")
+	public Map<String, Object> deleteProductRequestTrue(@RequestParam("id") int id){
+		productRequestService.deleteById(id);
+		Map<String, Object> mapProductRequestTrue = new HashMap<>();
+		List<infoProductDTO> listInfoProductTrue = new ArrayList<>();
+		List<String> listNameCategoryTrue = new ArrayList<>();
+		List<String> listNameProductBrandTrue = new ArrayList<>();
+		List<String> listShopNameTrue = new ArrayList<>();
+		List<ProductRequest> listProductRequestTrue = productRequestService.getAllProductRequestTrueDecreaseByCreatedDay();
+		for (ProductRequest pr : listProductRequestTrue) {
+			Product p = productService.findByIdProduct(pr.getProduct().getId());
+			infoProductDTO pd = new infoProductDTO();
+			pd.setId(p.getId());
+			pd.setName(p.getName());
+			pd.setActive(p.getActive());
+			pd.setSoldCount(p.getSoldCount());
+			pd.setQuantity(p.getProductVariants().get(0).getQuantity());
+			pd.setPrice(p.getProductVariants().get(0).getPrice());
+			pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
+			pd.setNameImageProduct(p.getImageProducts().get(0).getName());
+			pd.setCateId(p.getCategoryDetails().getId());
+			listInfoProductTrue.add(pd);
+			CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
+			listNameCategoryTrue.add(cad.getName());
+			listNameProductBrandTrue.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
+			listShopNameTrue.add(p.getSellerProduct().getShopName());
+		}
+		mapProductRequestTrue.put("listProductRequestTrue", listProductRequestTrue);
+		mapProductRequestTrue.put("listInfoProductTrue", listInfoProductTrue);
+		mapProductRequestTrue.put("listNameCategoryTrue", listNameCategoryTrue);
+		mapProductRequestTrue.put("listNameProductBrandTrue", listNameProductBrandTrue);
+		mapProductRequestTrue.put("listShopNameTrue", listShopNameTrue);
+		return mapProductRequestTrue;
 	}
 }

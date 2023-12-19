@@ -65,4 +65,8 @@ public interface OrderDetailService {
 	Double getTotalPriceByProductId(String id);
 
 	int getCountProductSellByProductId(String id);
+
+	Object[] getStatisticalOrderoMonthPie(int year, int month, int idstatus);
+
+	int getCountOrderDetailsStatusShopByStatusId(String username, int statusid);
 }

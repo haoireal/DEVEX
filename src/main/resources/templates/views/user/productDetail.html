@@ -169,6 +169,10 @@
 				</div>
 			</div>
 		</div>
+
+	</header>
+	<main th:object="${product}">
+		<input type="text" th:value="${product.id}" id="idup" hidden>
 		<!-- duyện qua product trả về -->
 		<div class="container container_main mt-4 ">
 			<form th:action="@{'/cart/add/' + *{id}}" method="post">
@@ -349,7 +353,7 @@
 
 										<label id="btn_quantity" class="button  btn_Sub border-0 fs-3 "
 											onclick="subtract(this)"> <i class="fa-solid fa-minus icon_Sub"></i>
-										</label> <input oninput="updateTotalPrice(this)"
+										</label> <input oninput="updateTotalPrice(this)" readonly
 											class="text-center product_quantity " type="number" name="soluong"
 											id="inputField" min="1" value="1" max="100" readonly="true"><br>
 										<label id="btn_quantity" class="button btn_Add border-0 fs-4"
@@ -1014,6 +1018,22 @@
 		</script>
 	<!--slick slide-->
 	<script>
+		var idup = document.getElementById('idup').value;
+		// up view
+		function upView() {
+			fetch("/api/upview?id="+idup, {
+				method: 'PUT',
+				headers: {
+				'Content-Type': 'application/json',
+				// Các headers khác nếu cần
+				},
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log(idup);
+			});
+		}
+		upView();
 		// Khai báo một biến toàn cục để lưu giá bán đầu
 		var quantityproductvariant;
 		var originalPrice;
@@ -1153,24 +1173,6 @@
 			// var size =document.querySelector("input[name='flexRadio']:checked").value;
 
 			var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
-
-			// // up view
-			// function upView() {
-			// 	fetch("/upview?id="+id, {
-			// 		method: 'PUT',
-			// 		headers: {
-			// 		'Content-Type': 'application/json',
-			// 		// Các headers khác nếu cần
-			// 		},
-			// 	})
-			// 	.then(response => response.json())
-			// 	.then(data => {
-			// 		console.log('ok');
-			// 	});
-			// }
-			// if(id != null){
-			// 	upView();
-			// }
 
 			// hoặc tạo một chuỗi query chứa color và size
 			var data = "id=" + id + "&color=" + color + "&size=" + size;

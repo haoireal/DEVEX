@@ -340,7 +340,11 @@ public class FillAPIController {
 			dto.setCateId(product.getCategoryDetails().getId());
 			listInfoProduct.add(dto);
 		}
-		Follow f = followService.getFollowByUsernameCustomerAndSeller(u.getUsername(), username);
+		Follow f = null;
+		if(u != null) {
+			f = followService.getFollowByUsernameCustomerAndSeller(u.getUsername(), username);
+		}
+
 		if (f != null) {
 			checkFollow = true;
 		}
@@ -371,5 +375,15 @@ public class FillAPIController {
 		followService.deleteByCustomerAndSeller(u.getUsername(), username);
 		notiService.sendNotification(u.getUsername(), username, "", "unfollow", "");
 		notiService.sendHistory(u.getUsername(), username, "", "unfollow", "");
+	}
+	
+	@PutMapping("/upview")
+	public void upView(@RequestParam("id") String id) {
+		Product p = productService.findByIdProduct(id);
+		if(p.getViewcount() == null) {
+			productService.updateViewProduct(id, 1);
+		}else {
+			productService.updateViewProduct(id, p.getViewcount()+1);
+		}
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.Devex.DTO.StatisticalCategoryDetailsPieDTO;
 import com.Devex.Entity.Order;
 import com.Devex.Repository.OrderRepository;
 import com.Devex.Sevice.OrderService;
@@ -220,6 +221,36 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public List<Order> findAllOrderByIdAndUsernameContainingKeyword(String username, String keyword) {
 		return orderRepository.findAllOrderByIdAndUsernameContainingKeyword(username, keyword);
+	}
+
+	@Override
+	public List<Order> findOrderByOrderStatusId(int statusid) {
+		return orderRepository.findOrderByOrderStatusId(statusid);
+	}
+
+	@Override
+	public List<Order> findOrderByIdOrCustomer(String keyword) {
+		return orderRepository.findOrderByIdOrCustomer(keyword);
+	}
+
+	@Override
+	public List<Order> findOrderByOrderStatusIdAndIdOrCustomer(int statusid, String keyword) {
+		return orderRepository.findOrderByOrderStatusIdAndIdOrCustomer(statusid, keyword);
+	}
+
+	@Override
+	public List<Object[]> getStatisticalorderMonthPie(int year, int month) {
+		return orderRepository.getStatisticalorderMonthPie(year, month);
+	}
+
+	@Override
+	public List<Object[]> getStatisticalorderYearPie(int year) {
+		return orderRepository.getStatisticalorderYearPie(year);
+	}
+
+	@Override
+	public Double getCountOrderByYearAndMonthAndProductShop(int year, int month, String username) {
+		return orderRepository.getCountOrderByYearAndMonthAndProductShop(year, month, username); 
 	}
 
 

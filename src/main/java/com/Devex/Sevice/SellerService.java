@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.Devex.DTO.ShopDTO;
+import com.Devex.DTO.SellerDTO;
 import com.Devex.Entity.Seller;
 
 public interface SellerService {
@@ -35,7 +36,8 @@ public interface SellerService {
 
 	Optional<Seller> findOne(Example<Seller> example);
 
-	List<Seller> saveAll(List<Seller> entities);
+
+    List<Seller> saveAll(List<Seller> entities);
 
 	Seller save(Seller entity);
 
@@ -52,5 +54,9 @@ public interface SellerService {
 	void updateActiveSellerByUsername(boolean active, String username);
 
 	List<ShopDTO> findAllId();
+
+	List<SellerDTO> findAllSeller();
+
+	SellerDTO findSeller(String username);
 
 }
