@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Product_Request")
-public class ProductRequest implements Serializable{/**
+@Table(name = "Request")
+public class Request implements Serializable{/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -33,6 +33,8 @@ public class ProductRequest implements Serializable{/**
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", updatable = false)
 	private int id;
+	@Column(name = "Entityid")
+	private String entityId;
 	@Column(name = "Createdday")
 	private Date createdDay;
 	@Column(name = "Statusrequest")
@@ -40,16 +42,4 @@ public class ProductRequest implements Serializable{/**
 	@Column(name = "Content")
 	private String content;
 	
-	@OneToOne
-    @JoinColumn(name = "Product_ID")
-    private Product product;
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
-	}
-
 }

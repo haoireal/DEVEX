@@ -62,7 +62,7 @@ public class OrderAdminRestController {
 		Map<String, Object> mapOrders = new HashMap<>();
 		List<Order> listOrder = new ArrayList<>();
 		if(status == 1 && search.equals("undefined") || status == 1 && search.equals("")) {
-			listOrder = orderService.findAll();
+			listOrder = orderService.findAllOrderSortDown();
 			System.out.println("Tìm tất cả");
 		}else if(status == 1 && !search.equals("undefined")) {
 			listOrder = orderService.findOrderByIdOrCustomer(search);
