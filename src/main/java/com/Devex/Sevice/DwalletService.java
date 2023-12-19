@@ -37,5 +37,6 @@ public interface DwalletService {
 	Dwallet getDwalletCustomerByUsername(String username);
 
 	String findDwalletIDbyUsername(String username);
+	void updateDwalletbyUsername(int total, String username);
 
 }
