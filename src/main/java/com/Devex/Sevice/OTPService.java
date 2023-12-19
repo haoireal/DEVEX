@@ -37,7 +37,7 @@ public class OTPService {
 			PhoneNumber from = new PhoneNumber(twilioConfig.getPhoneNumber());
 			String otp = generateOtp();
 			String otpMessage = "DEVEX: Ma xac thuc tai khoan cua ban la " + otp
-					+ " Ma co hieu luc trong 3 phut. Khong chia se ma nay voi nguoi khac.";
+					+ " Khong chia se ma nay voi nguoi khac.";
 			Message message = Message.creator(to, from, otpMessage).create();
 			otpMap.put(otpRequest.getUsername(), otp);
 			otpResponse = new OtpResponseDTO(OtpStatus.DELIVERED, otpMessage);

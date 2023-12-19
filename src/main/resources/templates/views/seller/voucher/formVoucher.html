@@ -305,6 +305,27 @@
     </body>
     <script src="/admin/dist/js/handMade.js"></script>
     <script>
+      var allVoucher = [];
+		// Gửi yêu cầu sử dụng fetch
+		fetch("http://localhost:8888/rest/seller/voucher/list")
+		.then(response => {
+			// Kiểm tra xem yêu cầu có thành công không
+			if (!response.ok) {
+			throw new Error("Yêu cầu không thành công. Mã lỗi: " + response.status);
+			}
+			// Chuyển đổi dữ liệu nhận được sang JSON
+			return response.json();
+		})
+		.then(data => {
+			// Xử lý dữ liệu ở đây
+			allVoucher = data;
+			console.log(allVoucher);
+		})
+		.catch(error => {
+			// Xử lý lỗi ở đây
+			console.error(error);
+		});
+
 		function submitFormVoucher() {
 			let nameVoucher = document.getElementById("inputName");
 			let code = document.getElementById("inputCode");
@@ -326,7 +347,11 @@
 				message.innerText = "Vui lòng cung cấp đầy đủ code khuyến mãi!";
    			   $("#modalValidate").modal("show");
 				  return false;
-			} else if(quantity.value === "") {
+			} else if(checkCodeVoucher(code.value)) {
+			  message.innerText = "Code khuyến mãi đã tồn tại!";
+			  $("#modalValidate").modal("show");
+			  return false;
+		  }  else if(quantity.value === "") {
 				message.innerText = "Vui lòng cung cấp số lượng!";
    			   $("#modalValidate").modal("show");
 				  return false;
@@ -352,7 +377,9 @@
 
 			
 		}
-      
+    function checkCodeVoucher(code) {
+		return allVoucher.some((voucher) => voucher.code === code);
+	}
 
 
       const app = angular.module("app", []);
