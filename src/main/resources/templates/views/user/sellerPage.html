@@ -145,8 +145,8 @@
                             <img src="{{infoShopPage.imageuser}}" style="height: 85px;" alt="logoshop" class="img-fluid rounded-circle">
                         </div>
                         <div class="col-8">
-                            <h2 class="mt-2 text-white" style="display: block; margin: 0;" >{{infoShopPage.seller.shopName}}</h2>
-                            <span class="mb-2 text-secondary">Đang hoạt động</span>
+                            <h2 class=" text-white" style="display: block; margin: 0;" >{{infoShopPage.seller.shopName}}</h2>
+                            <span class="mb-2 text-success">Đang hoạt động</span>
                         </div>
                     </div>
                     <div class="row mt-2 mx-2">
@@ -196,7 +196,7 @@
                 </div>
             </div>
             <!-- Voucher -->
-            <div class="card mt-3">
+            <div class="card mt-3" ng-if="voucher.items.length > 0">
                 <div class="row mt-3 mx-2" id="listvoucher">
                     <div class="col-lg-4 col-6" ng-repeat="item in voucher.items">
                         <!-- small card -->

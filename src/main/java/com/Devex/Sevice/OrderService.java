@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.Devex.DTO.StatisticalCategoryDetailsPieDTO;
 import com.Devex.Entity.Order;
 
 public interface OrderService {
@@ -94,4 +95,10 @@ public interface OrderService {
 	List<Order> findOrderByIdOrCustomer(String keyword);
 
 	List<Order> findOrderByOrderStatusIdAndIdOrCustomer(int statusid, String keyword);
+
+	List<Object[]> getStatisticalorderMonthPie(int year, int month);
+
+	List<Object[]> getStatisticalorderYearPie(int year);
+
+	Double getCountOrderByYearAndMonthAndProductShop(int year, int month, String username);
 }

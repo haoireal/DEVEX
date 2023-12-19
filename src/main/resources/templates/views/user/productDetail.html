@@ -123,12 +123,41 @@
 			background-color: #f50202;
 			border-color: #f50202
 		}
+
+		.custom-dropdown {
+			position: absolute;
+			display: none;
+			border: 1px solid #ccc;
+			max-height: 200px;
+			margin-top: 5px;
+			overflow-y: auto;
+			width: 95%;
+			max-width: 760px;
+			background-color: #fff;
+			z-index: 100;
+			border-radius: 12px;
+		}
+
+		/* Style for the custom dropdown options */
+		.custom-dropdown div {
+			padding: 4px 12px;
+			/* border-bottom: 1px solid #b4b4b4; */
+			cursor: pointer;
+		}
+
+		.custom-dropdown div:hover {
+			background-color: #f2f2f2;
+		}
 	</style>
+	<!-- <div th:replace="~{flagment/user/userHead :: userHeadFragment}"></div> -->
 </head>
 
 <body lang="en" th:object="${product}" ng-app="app" ng-controller="comment-ctrl">
-	<header>
-		<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
+	<!-- <header> -->
+	<div th:replace="~{flagment/user/userHeader :: userHeaderFragment}"></div>
+
+	<!-- </header> -->
+	<main th:object="${product}">
 		<div class="container  mt-3">
 			<div class="row">
 				<div class="col-12">
@@ -140,9 +169,10 @@
 				</div>
 			</div>
 		</div>
+
 	</header>
 	<main th:object="${product}">
-
+		<input type="text" th:value="${product.id}" id="idup" hidden>
 		<!-- duyện qua product trả về -->
 		<div class="container container_main mt-4 ">
 			<form th:action="@{'/cart/add/' + *{id}}" method="post">
@@ -325,7 +355,7 @@
 											onclick="subtract(this)"> <i class="fa-solid fa-minus icon_Sub"></i>
 										</label> <input oninput="updateTotalPrice(this)" readonly
 											class="text-center product_quantity " type="number" name="soluong"
-											id="inputField" min="1" value="1" max="100"><br>
+											id="inputField" min="1" value="1" max="100" readonly="true"><br>
 										<label id="btn_quantity" class="button btn_Add border-0 fs-4"
 											onclick="add(this)"> <i class="fa-solid fa-plus icon_Add"></i>
 										</label>
@@ -339,7 +369,6 @@
 						<!--total money-->
 
 
-						<!--Purchase(mua)-->
 						<!--Purchase(mua)-->
 						<div id="addCart" class="row mt-3 d-none d-lg-flex pe-none" th:if="${shop}">
 							<div class="col-7 col-lg-5">
@@ -361,55 +390,9 @@
 			</form>
 
 		</div>
-		<!--
-            <form th:action="@{/hihi}" method="get" style="position: absolute; margin-left: 300px;">
-                <input type="text" class="form-control" id="orderInfo" name="orderInfo" required
-                    value="Thanh toan don hang 2923" style="display: none;">
-                <input type="text" th:value="*{productVariants[0].priceSale}" id="amount" name="amount"
-                    style="display: none;" />
 
+		<!-- </div> -->
 
-
-                </div>
-            </form>-->
-		<div class="col-3"></div>
-		<hr>
-		<!-- hết thẻ đặt hàng -->
-		<!--List-favourite-->
-		<div class="row mt-4">
-			<div>
-				<a href="#" class="btn border-0  list-favourite " aria-disabled="true" role="button">Thêm vào danh sách
-					yêu tích</a>
-			</div>
-
-		</div>
-		<!--share-->
-		<div class="row mt-3 d-flex align-items-center" style="height: 40px;">
-			<div class="col-12 col-lg-2">Chia sẻ:</div>
-			<div class="col-12 col-lg-10 d-flex ">
-				<div class="jssocials-share jssocials-share-email text-center   "
-					style="width: 35px; height: 35px; background: #6594db;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo  fa-regular fa-envelope"></i></a>
-				</div>
-				<div class="jssocials-share jssocials-share-twitter text-center  "
-					style="width: 35px; height: 35px; background-color: #1DA1F2;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-twitter"></i></a>
-				</div>
-				<div class="jssocials-share jssocials-share-facebook text-center  "
-					style="width: 35px; height: 35px; background-color: #3B5998;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-facebook-f "></i></a>
-				</div>
-				<div class="jssocials-share jssocials-share-instagram text-center  "
-					style="width: 35px; height: 35px; background-color: #a0ade2;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-instagram"></i></a>
-				</div>
-				<div class="jssocials-share jssocials-share-whatsapp text-center  "
-					style="width: 35px; height: 35px; background-color: #25D366;">
-					<a class="link_share" href="#"><i class="jssocials-share-logo fa-brands fa-whatsapp"></i></a>
-				</div>
-
-			</div>
-		</div>
 
 	</main>
 	<div class="text-center">
@@ -1035,6 +1018,22 @@
 		</script>
 	<!--slick slide-->
 	<script>
+		var idup = document.getElementById('idup').value;
+		// up view
+		function upView() {
+			fetch("/api/upview?id="+idup, {
+				method: 'PUT',
+				headers: {
+				'Content-Type': 'application/json',
+				// Các headers khác nếu cần
+				},
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log(idup);
+			});
+		}
+		upView();
 		// Khai báo một biến toàn cục để lưu giá bán đầu
 		var quantityproductvariant;
 		var originalPrice;
@@ -1174,24 +1173,6 @@
 			// var size =document.querySelector("input[name='flexRadio']:checked").value;
 
 			var id = document.querySelector("input[name='flexRadioDefault']:checked").dataset.id;
-			
-			// // up view
-			// function upView() {
-			// 	fetch("/upview?id="+id, {
-			// 		method: 'PUT',
-			// 		headers: {
-			// 		'Content-Type': 'application/json',
-			// 		// Các headers khác nếu cần
-			// 		},
-			// 	})
-			// 	.then(response => response.json())
-			// 	.then(data => {
-			// 		console.log('ok');
-			// 	});
-			// }
-			// if(id != null){
-			// 	upView();
-			// }
 
 			// hoặc tạo một chuỗi query chứa color và size
 			var data = "id=" + id + "&color=" + color + "&size=" + size;

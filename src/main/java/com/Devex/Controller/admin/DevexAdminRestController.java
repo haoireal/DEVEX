@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -218,12 +220,14 @@ public class DevexAdminRestController {
 		Map<String, Object> mapStatistical = new HashMap<>();
 		long amountorder = orderService.count();
 		Double amountRevenue = orderService.getTotalPriceOrder() * 0.05;
+		Double test = orderService.getTotalPriceOrder();
 		int amountUser = userService.getAmountUserOfAdmin();
 		long amountProduct = productService.count();
 		mapStatistical.put("amountorder", amountorder);
 		mapStatistical.put("amountRevenue", amountRevenue);
 		mapStatistical.put("amountUser", amountUser);
 		mapStatistical.put("amountProduct", amountProduct);
+		mapStatistical.put("test", test);
 		return mapStatistical;
 	}
 
@@ -400,5 +404,39 @@ public class DevexAdminRestController {
 		}
 		return listProductDTO;
 	}
-
+	
+	@GetMapping("/ad/order/pie/month")
+	public List<StatisticalCategoryDetailsPieDTO> getStatisticalorderMonthPie(@RequestParam("year") int year, @RequestParam("month") int month) {
+	    List<Object[]> liststatisOrderOb = orderService.getStatisticalorderMonthPie(year, month);
+	    List<StatisticalCategoryDetailsPieDTO> liststatisOrderMonthPie = new ArrayList<>();
+		for (Object[] result : liststatisOrderOb) {
+			int id = (int) result[0];
+			String statusName = (String) result[1];
+			int orderCount = (int) result[2];
+			StatisticalCategoryDetailsPieDTO entity = new StatisticalCategoryDetailsPieDTO();
+			entity.setId(id);
+			entity.setName(statusName);
+			entity.setCountProductSell(Long.valueOf(orderCount).longValue());
+			liststatisOrderMonthPie.add(entity);
+		}
+	    return liststatisOrderMonthPie;
+	}
+	
+	@GetMapping("/ad/order/pie/year")
+	public List<StatisticalCategoryDetailsPieDTO> getStatisticalorderMonthPie(@RequestParam("year") int year) {
+	    List<Object[]> liststatisOrderOb = orderService.getStatisticalorderYearPie(year);
+	    List<StatisticalCategoryDetailsPieDTO> liststatisOrderYearPie = new ArrayList<>();
+		for (Object[] result : liststatisOrderOb) {
+			int id = (int) result[0];
+			String statusName = (String) result[1];
+			int orderCount = (int) result[2];
+			StatisticalCategoryDetailsPieDTO entity = new StatisticalCategoryDetailsPieDTO();
+			entity.setId(id);
+			entity.setName(statusName);
+			entity.setCountProductSell(Long.valueOf(orderCount).longValue());
+			liststatisOrderYearPie.add(entity);
+		}
+	    return liststatisOrderYearPie;
+	}
+	
 }

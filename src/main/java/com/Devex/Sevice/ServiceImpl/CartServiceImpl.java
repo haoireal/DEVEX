@@ -85,6 +85,10 @@ public class CartServiceImpl implements CartService{
 	public void deleteAll() {
 		cart.deleteAll();
 	}
-	
+
+	@Override
+	public Double getCountCartByProductShopAndCreatedDay(String username, int year, int month) {
+		return cart.getCountCartByProductShopAndCreatedDay(username, year, month); 
+	}
 	
 }
