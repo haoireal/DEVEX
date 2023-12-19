@@ -139,6 +139,16 @@ public class SellerServiceImpl implements SellerService{
 	public void updateActiveSellerByUsername(boolean active, String username) {
 		sellerRepository.updateActiveSellerByUsername(active, username);
 	}
+
+	@Override
+	public List<Seller> findAllSellerSortUp() {
+		return sellerRepository.findAllSellerSortUp();
+	}
+
+	@Override
+	public List<SellerDTO> findAllSellerDTOSortUp() {
+		return sellerRepository.findAllSellerDTOSortUp();
+	}
 	
 	
 	

@@ -41,7 +41,7 @@ import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ProductBrandService;
-import com.Devex.Sevice.ProductRequestService;
+import com.Devex.Sevice.RequestService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
@@ -87,7 +87,7 @@ public class SellerManageAdminRestController {
 	private ProductBrandService brandService;
 	
 	@Autowired
-	private ProductRequestService productRequestService;
+	private RequestService productRequestService;
 	
 	@Autowired
     private FileManagerService fileManagerService;
@@ -117,7 +117,7 @@ public class SellerManageAdminRestController {
 	@GetMapping("/getlistdistributor")
 	public Map<String, Object> getAllDistributor() {
 	    Map<String, Object> mapDistributor = new HashMap<>();
-	    List<SellerDTO> listSeller = sellerService.findAllSeller();
+	    List<SellerDTO> listSeller = sellerService.findAllSellerDTOSortUp();
 	    List<Double> listRating = new ArrayList<>();
 	    List<String> listTime = new ArrayList<>();
 	    List<Integer> listAmountOrder = new ArrayList<>();
