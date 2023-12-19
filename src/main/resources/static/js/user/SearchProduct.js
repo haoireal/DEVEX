@@ -1,8 +1,9 @@
 app.controller("search-ctrl", function ($scope, $http, $window) {
+  let main = document.getElementById('container_main');
   var $search = ($scope.search = {
     loadData: [],
     temLoadData: [],
-    itemsPerPage: 25,
+    itemsPerPage: 28,
     currentPage: 1,
     totalPages: 1, // Khởi tạo totalPages ban đầu
     initialData: [], // Sao lưu dữ liệu ban đầu
@@ -19,17 +20,18 @@ app.controller("search-ctrl", function ($scope, $http, $window) {
           this.initialData = resp.data;
           this.loadData = this.initialData.slice();
           this.temLoadData = this.initialData.slice();
+          console.log(this.temLoadData.length);
           this.getBrandAndCategory();
-          // console.log("brand: " + this.loadBrand);
-          // console.log("Category: " + this.loadCategory);
           this.updatePagedItems();
           this.loadProvinces();
+          this.checkSearchNull();
           console.log(this.loadData);
         })
         .catch(function (err) {
           console.error(err); // xử lý lỗi khi gọi API
         });
     }, // loading data
+
     loadProvinces: function () {
       $http
         .get("https://provinces.open-api.vn/api/?depth=1")
@@ -234,7 +236,14 @@ app.controller("search-ctrl", function ($scope, $http, $window) {
       this.updatePagedItems();
     },
 
-    autoComplete: function (keyWord) {},
+    checkSearchNull: function () {
+      if (this.temLoadData.length <= 0) {
+        main.style = "flex-direction: column;justify-content: center; align-items: center;";
+        main.innerHTML = "<i class= 'fs-1 mt-3 fa-solid fa-xmark '></i>";
+        main.innerHTML += "<h4 class='mt-2'>Không tìm thấy kết quả nào ...</h4>";
+        main.innerHTML += "<h4>Hãy thử sử dụng các từ khóa chung chung hơn</h4>";
+      }
+    },
   }); // end function search
 
   $search.loadProductSearch();

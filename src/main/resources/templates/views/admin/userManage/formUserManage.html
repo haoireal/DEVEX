@@ -167,7 +167,7 @@
 									<label for="Role" class="form-label me-4">Vai trò</label>
 									<div class="form-check pe-3" ng-repeat="role in data.roles">
 										<input ng-checked="isRoleSelected(role.id)"
-											ng-disabled="isRoleSelected(role.id) && role.id ==='SELLER' && isSellerSelected"
+											ng-disabled="isRoleSelected(role.id) && role.id ==='SELLER' && isSellerSelected ||role.id ==='ADMIN'"
 											ng-click="toggleRole(role.id)" class="form-check-input" type="checkbox"
 											name="role" id="{{role.id}}">
 										<label class="form-check-label" for="{{role.id}}">{{ role.name }}</label>

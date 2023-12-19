@@ -113,35 +113,6 @@ public class FillAPIController {
 	@Autowired
 	private UserSearchService userSearchService;
 
-	// @GetMapping("/filter")
-	// public List<ProductDTO> getProductDTO(){
-	// List<Product> products = productService.findAll();
-	// List<ProductDTO> productsList = products.stream()
-	// .map(pr -> {
-	// // Thực hiện chuyển đổi từ Product thành ProductDTO ở đây
-	// // Ví dụ:
-	// ProductDTO dto = new ProductDTO();
-	// dto.setId(pr.getId());
-	// dto.setName(pr.getName());
-	// dto.setDescription(pr.getDescription());
-	// dto.setCategoryDetails(pr.getCategoryDetails());
-	// dto.setActive(pr.getActive());
-	// dto.setIsdelete(pr.getIsdelete());
-	// dto.setSoldCount(pr.getSoldCount());
-	// dto.setSellerProduct(pr.getSellerProduct());
-	// dto.setCategoryDetails(pr.getCategoryDetails());
-	// dto.setProductbrand(pr.getProductbrand());
-	// dto.setImageProducts(pr.getImageProducts());
-	// dto.setProductVariants(pr.getProductVariants());
-	// dto.setComments(pr.getComments());
-	// // Điền các thuộc tính khác của ProductDTO ở đây
-	// return dto;
-	// })
-	// .collect(Collectors.toList());
-	//
-	// return productsList;
-	// }
-
 	private List<Product> uniqueProductList = new ArrayList<>();
 	private List<String> listCategory = new ArrayList<>();
 	private List<String> listBrand = new ArrayList<>();
@@ -181,7 +152,8 @@ public class FillAPIController {
 	public List<ProductDTO> getProductSearch() {
 		String kwords = sessionService.get("keywordsSearch");
 		// String kwords = "laptop";
-		System.out.println("............................................................................." + kwords);
+		// System.out.println("............................................................................."
+		// + kwords);
 		List<Product> list = new ArrayList<>();
 		Set<Product> uniqueProducts = new LinkedHashSet<>();
 
@@ -202,9 +174,10 @@ public class FillAPIController {
 		// Chuyển đổi lại thành danh sách (List)
 		uniqueProductList = new ArrayList<>(uniqueProducts);
 		listProductDTO = changeProductToProductDTO(uniqueProductList);
-		// listProductDTO.sort(Comparator.comparing(ProductDTO::getName)
-		// .thenComparing(product -> product.getName().contains(kwords))); // sort theo
-		// keyword
+		listProductDTO.sort(
+				Comparator.comparing(product -> ((ProductDTO) product).getCategoryDetails().getName())
+						.thenComparing(product -> ((ProductDTO) product).getName()));
+
 		// Collections.reverse(listProductDTO);
 		temPoraryList = listProductDTO; // lưu list vào 1 list tam thời
 
