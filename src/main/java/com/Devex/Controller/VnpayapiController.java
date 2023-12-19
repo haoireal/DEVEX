@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.coyote.http11.upgrade.UpgradeServletOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -214,19 +215,32 @@ public class VnpayapiController {
 	        int paymentStatus =vnPayService.orderReturn(request);
 	        System.out.println("status: "+paymentStatus);
 	        String orderInfo = request.getParameter("vnp_OrderInfo");
+	        System.out.println("status: "+orderInfo);
 	        String paymentTime = request.getParameter("vnp_PayDate");
 	        String transactionId = request.getParameter("vnp_TransactionNo");
 	        String totalPrice = request.getParameter("vnp_Amount");
-
 	        model.addAttribute("orderId", orderInfo);
 	        model.addAttribute("totalPrice", totalPrice);
 	        model.addAttribute("paymentTime", paymentTime);
 	        model.addAttribute("transactionId", transactionId);
-
-	        return paymentStatus == 1 ? "redirect:order/success" : "orderfail";
+	        	
+	        if(orderInfo.equals("naptien")) {
+	        	return paymentStatus == 1 ? "redirect:/rechargeSuccess?totalPrice="+totalPrice: "orderfail";
+	        }else {
+	        	 return paymentStatus == 1 ? "redirect:order/success" : "orderfail";
+	        }
+	       
 	    }
 	 
-	 
+	 @PostMapping("/sumbitRecharge")
+	 public String Recharge(@RequestParam("amount") int total, String noteOder,HttpServletRequest request) {
+			noteOder="naptien";
+		 	String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+	        String vnpayUrl = vnPayService.createOrder(total, noteOder, baseUrl);
+	        System.out.println(vnpayUrl);
+		 return "redirect:" + vnpayUrl;
+		 
+	 }
 	 
 	 
 	
