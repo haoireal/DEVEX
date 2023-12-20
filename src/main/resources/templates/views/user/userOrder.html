@@ -419,11 +419,11 @@
                                                                                 <div class="comment-box text-center">
                                                                                     <h4>Đánh giá sản phẩm</h4>
                                                                                     <div class="rating">
-                                                                                        <input type="radio" name="rating" value="5"  th:id="'5-' + ${orderDetail.id}" checked><label  th:for="'5-' + ${orderDetail.id}" >☆</label>
-                                                                                        <input type="radio" name="rating" value="4"  th:id="'4-' + ${orderDetail.id}"><label  th:for="'4-' + ${orderDetail.id}">☆</label>
-                                                                                        <input type="radio" name="rating" value="3"  th:id="'3-' + ${orderDetail.id}"><label  th:for="'3-' + ${orderDetail.id}">☆</label>
-                                                                                        <input type="radio" name="rating" value="2"  th:id="'2-' + ${orderDetail.id}"><label  th:for="'2-' + ${orderDetail.id}">☆</label>
-                                                                                        <input type="radio" name="rating" value="1"  th:id="'1-' + ${orderDetail.id}"><label  th:for="'1-' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="5"  th:id="'5-x' + ${orderDetail.id}" checked><label  th:for="'5-x' + ${orderDetail.id}" >☆</label>
+                                                                                        <input type="radio" name="rating" value="4"  th:id="'4-x' + ${orderDetail.id}"><label  th:for="'4-x' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="3"  th:id="'3-x' + ${orderDetail.id}"><label  th:for="'3-x' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="2"  th:id="'2-x' + ${orderDetail.id}"><label  th:for="'2-x' + ${orderDetail.id}">☆</label>
+                                                                                        <input type="radio" name="rating" value="1"  th:id="'1-x' + ${orderDetail.id}"><label  th:for="'1-x' + ${orderDetail.id}">☆</label>
                                                                                     </div>
                                                                                     <div class="comment-area">
                                                                                         <textarea class="form-control" name="content" placeholder="what is your view?" rows="4"></textarea>
@@ -438,7 +438,7 @@
                                                                     </div>
                                                                 </form>
                                                                 <!-- /.Nuts trả hàng hoản tiền -->
-                                                                <button th:if="${orderDetail.status.id == 1006 && orderDetail.isComment}" class="btn btn-danger start" data-toggle="modal" th:data-target="'#refund-' + ${orderDetail.id}" type="button">
+                                                                <button th:if="${orderDetail.status.id == 1004 || orderDetail.status.id == 1003}" class="btn btn-danger start" data-toggle="modal" th:data-target="'#refund-' + ${orderDetail.id}" type="button">
                                                                     <span>Trả hàng/Hoàn tiền</span>
                                                                 </button>
                                                                 <form method="post" th:action="@{/order/refund/__${orderDetail.id}__}" class="modal fade" th:id="'refund-' + ${orderDetail.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -770,7 +770,31 @@
                                                                 <a th:href="@{/order/thanhcong(id=${orderDetail.id})}" class="btn btn-success start" >
                                                                    Xác nhận đã nhận hàng
                                                                 </a>
+                                                                <button th:if="${orderDetail.status.id == 1004 || orderDetail.status.id == 1003}" class="btn btn-danger start" data-toggle="modal" th:data-target="'#refund1-' + ${orderDetail.id}" type="button">
+                                                                    <span>Trả hàng/Hoàn tiền</span>
+                                                                </button>
+                                                                <form method="post" th:action="@{/order/refund/__${orderDetail.id}__}" class="modal fade" th:id="'refund1-' + ${orderDetail.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="card-body text-center">
+                                                                                <div class="comment-box text-center">
+                                                                                    <h4>Lý do trả hàng hoàn tiền</h4>
+                                                                                    <div class="comment-area">
+                                                                                        <textarea class="form-control" name="contentRefund" placeholder="Lý do gì khiến bạn huỷ hàng?" rows="4"></textarea>
+                                                                                    </div>
+
+                                                                                    <div class="text-center mt-4">
+                                                                                        <button class="btn btn-success send px-5">Giử xét duyệt<i class="fa fa-long-arrow-right ml-1"></i></button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
                                                             </div>
+                                                            <!-- /.Nuts trả hàng hoản tiền -->
+
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -945,28 +969,6 @@
 
                                                                                     <div class="text-center mt-4">
                                                                                         <button class="btn btn-success send px-5">Đánh giá<i class="fa fa-long-arrow-right ml-1"></i></button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                                <!-- /.Nuts trả hàng hoản tiền -->
-                                                                <button th:if="${orderDetail.status.id == 1006 && orderDetail.isComment}" class="btn btn-danger start" data-toggle="modal" th:data-target="'#refund1-' + ${orderDetail.id}" type="button">
-                                                                    <span>Trả hàng/Hoàn tiền</span>
-                                                                </button>
-                                                                <form method="post" th:action="@{/order/refund/__${orderDetail.id}__}" class="modal fade" th:id="'refund1-' + ${orderDetail.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="card-body text-center">
-                                                                                <div class="comment-box text-center">
-                                                                                    <h4>Lý do trả hàng hoàn tiền</h4>
-                                                                                    <div class="comment-area">
-                                                                                        <textarea class="form-control" name="contentRefund" placeholder="Lý do gì khiến bạn huỷ hàng?" rows="4"></textarea>
-                                                                                    </div>
-
-                                                                                    <div class="text-center mt-4">
-                                                                                        <button class="btn btn-success send px-5">Giử xét duyệt<i class="fa fa-long-arrow-right ml-1"></i></button>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1277,15 +1279,7 @@
                                                                 </p>
                                                             </div>
                                                             <div class="btn-group col-6">
-                                                                <button class="btn btn-primary start">
-                                                                    <span>Đã nhận hàng</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-warning cancel">
-                                                                    <span>Đặt lại</span>
-                                                                </button>
-                                                                <button data-dz-remove class="btn btn-danger delete">
-                                                                    <span>Hủy đơn</span>
-                                                                </button>
+
                                                             </div>
                                                         </div>
                                                     </div>

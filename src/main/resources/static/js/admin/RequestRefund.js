@@ -17,9 +17,9 @@ app.controller("requestrefund", function ($scope, $http, $location, $window) {
 
   // delete ProductRequest
   $scope.cancelRequest = function (id) {
-    $http.delete("/api/delete/productrequest?id=" + id)
+    $http.delete("/api/delete/refund?id=" + id)
       .then(function (response) {
-        $scope.listProductRequest = response.data;
+        $scope.getAllOrderRequest();
         document.getElementById('sr').click();
       }, function(error) {
         console.error('Error:', error);
@@ -29,9 +29,9 @@ app.controller("requestrefund", function ($scope, $http, $location, $window) {
 
   // confirm ProductRequest
   $scope.confirmRequest = function (id) {
-    $http.put("/api/update/productrequest?id=" + id)
+    $http.put("/api/update/refund?id=" + id)
     .then(function (response) {
-      $scope.listProductRequest = response.data;
+      $scope.getAllOrderRequest();
       document.getElementById('sa').click();
     }, function(error) {
       console.error('Error:', error);

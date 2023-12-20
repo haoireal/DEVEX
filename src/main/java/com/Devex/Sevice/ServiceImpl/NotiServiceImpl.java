@@ -327,10 +327,28 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "updateProfile": {
-                    content = "Người dùng " + object + " vừa chỉnh sử hồ s!";
+                    content = "Người dùng " + object + " vừa chỉnh sử hồ sơ!";
                     noti.setContent(content);
                     noti.setUserTo(userIDAdmin);
                     noti.setUserFrom(null);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
+                case "refundSuccess": {
+                    content = "Đơn hàng của bạn đã được chấp thuận. Tiền được hoàn vào ví!! Dwallet +" + object +" VND";
+                    noti.setContent(content);
+                    noti.setUserTo(userTo);
+                    noti.setUserFrom(userIDAdmin);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
+                case "refundFail": {
+                    content = "Đơn hàng của bạn bị từ chối trả hàng/hoàn tiền!";
+                    noti.setContent(content);
+                    noti.setUserTo(userTo);
+                    noti.setUserFrom(userIDAdmin);
                     noti.setLink(link);
                     notificationsService.save(noti);
                     break;

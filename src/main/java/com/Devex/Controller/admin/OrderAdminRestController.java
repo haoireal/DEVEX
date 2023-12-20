@@ -9,11 +9,7 @@ import com.Devex.DTO.infoProductDTO;
 import com.Devex.Entity.*;
 import com.Devex.Sevice.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
@@ -49,6 +45,15 @@ public class OrderAdminRestController {
 
 	@Autowired
 	private RequestService requestService;
+
+	@Autowired
+	private NotiService notiService;
+
+	@Autowired
+	private OrderDetailService orderDetailService;
+
+	@Autowired
+	private TransactionService transactionService;
 
 	@GetMapping("/list/order")
 	public Map<String, Object> getListOrder(@RequestParam("status") int status, @RequestParam("search") String search){
@@ -114,5 +119,23 @@ public class OrderAdminRestController {
 		return mapOrderRequest;
 	}
 
+	@DeleteMapping("/delete/refund")
+	public void deleteRefundRequest(@RequestParam("id") int id){
+		User user = sessionService.get("user");
+		OrderDetails od = orderDetailService.findById(requestService.findRequestById(id).getEntityId()).get();
+		notiService.sendNotification(user.getUsername(),od.getOrder().getCustomerOrder().getUsername(), null,"refundFail",null);
+		orderDetailService.updateIdOrderDetailsStatus(1006,od.getId());
+		transactionService.transactionBackToSeller(od);
+		requestService.deleteById(id);
+	}
 
+	@PutMapping("/update/refund")
+	public void updateRefundRequest(@RequestParam("id") int id){
+		User user = sessionService.get("user");
+		OrderDetails od = orderDetailService.findById(requestService.findRequestById(id).getEntityId()).get();
+		notiService.sendNotification(user.getUsername(),od.getOrder().getCustomerOrder().getUsername(), "/profile","refundSuccess",String.valueOf(od.getQuantity()*od.getPrice()));
+		orderDetailService.updateIdOrderDetailsStatus(1008,od.getId());
+		transactionService.transactionRefundToUser(od);
+		requestService.deleteById(id);
+	}
 }
