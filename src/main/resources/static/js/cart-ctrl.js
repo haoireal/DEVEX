@@ -264,7 +264,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       if (!this.isItemInMyVoucher(item)) {
         return true;
       }
-      if(this.moneyShip < item.minPrice) {
+      if($cart.amountDetail < item.minPrice) {
         return true  
       }
 	    if (this.isShipVoucherApplied()) {
@@ -692,7 +692,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       let totalShop = this.shopGroupsOrder[idShop].map((item) => this.amt_of(item)).reduce((total, amt) => (total += amt), 0);
       if(this.isShopVoucherApplied(idShop)) {
         var voucherProd = this.voucherApply.find((item) => item.categoryVoucher.id == 100004);
-        if(voucherProd != nulll) {
+        if(voucherProd != null) {
           let price = 0;
           this.prodVoucher[idShop].forEach(function (i) {
             $cart.shopGroupsOrder[idShop].forEach(function (prod) {
@@ -1054,7 +1054,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 		// Thực hiện đặt hàng
 		const requestDataDTO = {
 			itemsOrderSession: $cart.itemsOrderSession,
-			items: $cart.voucherApply,
+          voucherApply: $cart.voucherApply,
       total: $cart.amountPay,
 		};
 		var url = `${host}/cart/order`;

@@ -218,7 +218,7 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	@Transactional
 	@Modifying
 	@Query("UPDATE Order o SET o.total = :total, o.totalShip = :totalShip WHERE o.id like :id")
-	void updatePriceOrder(@Param("total") double total, @Param("total") double totalShip, @Param("id")  String id);
+	void updatePriceOrder(@Param("total") double total, @Param("totalShip") double totalShip, @Param("id")  String id);
 
 	@Query("SELECT count(o) FROM Order o WHERE o.customerOrder.username = :username")
     int getCountOrderByCustomerUsername(@Param("username") String username);

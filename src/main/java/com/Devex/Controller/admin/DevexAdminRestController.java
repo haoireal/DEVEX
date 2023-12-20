@@ -182,7 +182,7 @@ public class DevexAdminRestController {
 		SellerDTO seller = sellerService.findSeller(user.getUsername());
 		String passUpdate = "";
 		System.out.println("cho ngu" + u.getPassword().equals(updatedRoles.getPassword()));
-		if (u.getPassword().equals(updatedRoles.getPassword())) {
+		if (user.getPassword().equals(updatedRoles.getPassword())) {
 			passUpdate = u.getPassword();
 		} else {
 			passUpdate = passwordEncoder.encode(updatedRoles.getPassword());
