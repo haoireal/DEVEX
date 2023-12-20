@@ -224,7 +224,7 @@
 												</div>
 												<div class="row mb-2">
 													<div class="col-6"><strong>Ví:</strong></div>
-													
+
 													<div class="col-6 text-end p-0">
 														<button class="btn_view border-0 badge rounded-pill"
 															style="background-color: rgba(7, 25, 212, 1)"
@@ -320,21 +320,23 @@
 														<!-- end modal -->
 													</div>
 												</div>
-													<div class="row mb-2">
-				<div class="col-6"><strong>Nạp Tiền:</strong></div>
-				<div class="col-6 text-end p-0">
-					<button class="btn_view border-0 badge rounded-pill" style="background-color: rgba(7, 25, 212, 1)"
-						data-bs-toggle="modal" data-bs-target="#exampleModal1">
-						<span class="fs-6">VnPay</span>
+												<div class="row mb-2">
+													<div class="col-6"><strong>Nạp Tiền:</strong></div>
+													<div class="col-6 text-end p-0">
+														<button class="btn_view border-0 badge rounded-pill"
+															style="background-color: rgba(7, 25, 212, 1)"
+															data-bs-toggle="modal" data-bs-target="#exampleModal1">
+															<span class="fs-6">VnPay</span>
 
-					</button>
-					<!-- ghi đè .modal-backdrop ở seller Head-->
-					<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog modal-lg">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="exampleModalLabel" style="
+														</button>
+														<!-- ghi đè .modal-backdrop ở seller Head-->
+														<div class="modal fade" id="exampleModal1" tabindex="-1"
+															aria-labelledby="exampleModalLabel" aria-hidden="true">
+															<div class="modal-dialog modal-lg">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h1 class="modal-title fs-5"
+																			id="exampleModalLabel" style="
                       background: -webkit-linear-gradient(
                         #ce0909,
                         rgb(8, 49, 138)
@@ -342,43 +344,57 @@
                       -webkit-background-clip: text;
                       -webkit-text-fill-color: transparent;
                     ">
-										DEVEX Mark
-									</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									<form action="/sumbitRecharge" method="post">
-									<div class="row">
-										<div class="col-md-5 mb-3">
-											<label for="amount" class="form-label">Số Tiền:</label>
-											<div class="input-group">
-												<input type="number" class="form-control" id="amount" name="amount"
-													placeholder="Nhập số tiền" oninput="formatCurrency(this)" onkeypress="return isNumeric(event)">
-												<div class="input-group-append">
-													<span class="input-group-text">VND</span>
+																			DEVEX Mark
+																		</h1>
+																		<button type="button" class="btn-close"
+																			data-bs-dismiss="modal"
+																			aria-label="Close"></button>
+																	</div>
+																	<div class="modal-body">
+																		<form action="/sumbitRecharge" method="post">
+																			<div class="row">
+																				<div class="col-md-5 mb-3">
+
+																					<div
+																						class="input-group align-items-center">
+																						<label for="amount"
+																							class="form-label">Số
+																							Tiền:</label>
+																						<input type="number"
+																							class="ms-2 form-control"
+																							id="amount" name="amount"
+																							placeholder="Nhập số tiền"
+																							oninput="formatCurrency(this)"
+																							onkeypress="return isNumeric(event)">
+																						<div class="input-group-append">
+																							<span
+																								class="input-group-text">VND</span>
+																						</div>
+																					</div>
+																					<span id="formattedAmount"
+																						class="text-muted"
+																						style="color: red"></span>
+																				</div>
+
+																				<!-- Add more input fields if needed -->
+
+																				<div class="col-md-6 mb-3">
+																					<label for="submitBtn"
+																						class="form-label">&nbsp;</label>
+																					<button type="submit"
+																						class="btn btn-primary form-control"
+																						id="submitBtn">Nạp Tiền</button>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<!-- end modal -->
+													</div>
 												</div>
-											</div>
-											 <span id="formattedAmount" class="text-muted" style="color: red"></span>
-										</div>
-
-										<!-- Add more input fields if needed -->
-
-										<div class="col-md-6 mb-3">
-											<label for="submitBtn" class="form-label">&nbsp;</label>
-											<button type="submit" class="btn btn-primary form-control"
-												id="submitBtn">Nạp Tiền</button>
-										</div>
-									</div>
-								</form>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- end modal -->
-				</div>
-			</div>
 											</div>
 										</li>
 									</ul>
@@ -437,10 +453,10 @@
 														<div class="mb-3 bg-white rounded px-2">
 															<input type="text" id="inputPhone"
 																th:value="${session.user.phone == null ? '' : session.user.phone}"
-																placeholder="Vui lòng đăng kí số điện thoại!" pattern="[0-9()+-]*"
-																maxlength="15" minlength="5" required
-																class="form-control border-1 p-0 pl-2" name="phone"
-																disabled />
+																placeholder="Vui lòng đăng kí số điện thoại!"
+																pattern="[0-9()+-]*" maxlength="15" minlength="5"
+																required class="form-control border-1 p-0 pl-2"
+																name="phone" disabled />
 
 														</div>
 														<div class="mb-3 bg-white rounded px-2">
@@ -493,7 +509,8 @@
 								<div class="card-body">
 									<div class="tab-content">
 										<div class="tab-pane" id="address">
-											<form class="mt-4 form-horizontal" method="post" action="/profile/address" name="profile-address">
+											<form class="mt-4 form-horizontal" method="post" action="/profile/address"
+												name="profile-address">
 												<div class="mb-3 bg-white rounded px-2">
 													<textarea class="form-control" rows="5"
 														placeholder="Địa chỉ giao hàng..." name="address"
@@ -502,9 +519,10 @@
 
 												<div class="mb-3 bg-white rounded px-2">
 													<input type="text" id="inputPhone" placeholder="Số điện thoại..."
-														pattern="^[0-9\+\-()]{10,13}$" maxlength="13" minlength="10" required
-														class="form-control border-1 p-0 pl-2" name="phone"
-														th:value="${phone == null ? '' : phone}" oninput="validateInputPhone()" />
+														pattern="^[0-9\+\-()]{10,13}$" maxlength="13" minlength="10"
+														required class="form-control border-1 p-0 pl-2" name="phone"
+														th:value="${phone == null ? '' : phone}"
+														oninput="validateInputPhone()" />
 												</div>
 
 												<button type="submit" class="btn btn-success mt-3" name="btn-submit"
@@ -741,9 +759,10 @@
 												<div class="input-group mb-3 bg-white rounded px-2">
 													<input type="text" id="inputPhone"
 														th:value="${session.user.phone == null ? '' : session.user.phone}"
-														placeholder="Số điện thoại chưa được đăng ký..." pattern="[0-9()+-]*" maxlength="15"
-														minlength="5" required class="form-control border-1 p-0 pl-2"
-														name="phone" disabled /> <span class="input-group-append">
+														placeholder="Số điện thoại chưa được đăng ký..."
+														pattern="[0-9()+-]*" maxlength="15" minlength="5" required
+														class="form-control border-1 p-0 pl-2" name="phone" disabled />
+													<span class="input-group-append">
 														<button type="button" class="btn btn-info" data-toggle="modal"
 															data-target="#ModalVerifyPhone">
 															<i class="fas fa-edit"></i>
@@ -855,14 +874,14 @@
 			var phoneShip = document.forms["profile-address"]["phone"].value;
 			var btnSubmit = document.forms["profile-address"]["btn-submit"];
 			var isValid = /^[0-9\+\-()]{10,13}$/.test(phoneShip);
-	
+
 			if (!isValid) {
 				btnSubmit.disabled = true;
 			} else {
 				btnSubmit.disabled = false;
 			}
 		}
-			
+
 	</script>
 
 	<script>
@@ -1176,40 +1195,40 @@
 	<script th:src="@{/js/user/DwalletCustomer.js}"></script>
 	<script th:src="@{/js/user/autocomplete.js}"></script>
 	<script>
-	function formatCurrency(input) {
-        // Remove non-numeric characters
-        let numericValue = input.value.replace(/[^0-9]/g, '');
+		function formatCurrency(input) {
+			// Remove non-numeric characters
+			let numericValue = input.value.replace(/[^0-9]/g, '');
 
-        // Format the numeric value as currency (e.g., 1000000 => 1,000,000)
-        let formattedValue = addCommas(numericValue);
+			// Format the numeric value as currency (e.g., 1000000 => 1,000,000)
+			let formattedValue = addCommas(numericValue);
 
-        // Display the formatted value outside the input
-        document.getElementById('formattedAmount').innerText = formattedValue + ' VND';;
-    }
+			// Display the formatted value outside the input
+			document.getElementById('formattedAmount').innerText = formattedValue + ' VND';;
+		}
 
-    function addCommas(value) {
-        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-     function formatCurrency(input) {
-        // Remove non-numeric characters
-        let numericValue = input.value.replace(/[^0-9]/g, '');
+		function addCommas(value) {
+			return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		function formatCurrency(input) {
+			// Remove non-numeric characters
+			let numericValue = input.value.replace(/[^0-9]/g, '');
 
-        // Format the numeric value as currency (e.g., 1000000 => 1,000,000)
-        let formattedValue = addCommas(numericValue);
+			// Format the numeric value as currency (e.g., 1000000 => 1,000,000)
+			let formattedValue = addCommas(numericValue);
 
-        // Display the formatted value with "VND" outside the input
-        document.getElementById('formattedAmount').innerText = formattedValue + ' VND';
-    }
+			// Display the formatted value with "VND" outside the input
+			document.getElementById('formattedAmount').innerText = formattedValue + ' VND';
+		}
 
-    function addCommas(value) {
-        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+		function addCommas(value) {
+			return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
 
-    function isNumeric(event) {
-        // Allow only numeric input (0-9)
-        const charCode = (event.which) ? event.which : event.keyCode;
-        return (charCode >= 48 && charCode <= 57) || charCode === 8 || charCode === 46;
-    }
+		function isNumeric(event) {
+			// Allow only numeric input (0-9)
+			const charCode = (event.which) ? event.which : event.keyCode;
+			return (charCode >= 48 && charCode <= 57) || charCode === 8 || charCode === 46;
+		}
 	</script>
 </body>
 
