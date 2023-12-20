@@ -89,7 +89,7 @@ public class ProfileController {
 		
 		String id = principal.getName();
 		System.out.println(id);
-		Customer customer = customerService.findById(id).orElse(null);
+		Customer customer = customerService.findById(user.getUsername()).orElse(null);
 		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
 		boolean flag = false;
 		for (UserRole u : role) {
@@ -97,13 +97,19 @@ public class ProfileController {
 				flag = true;
 			}
 		}
+		String address = null;
+		String phone = null;
+		if(customer != null) {
+			address = customer.getAddress();
+			phone = customer.getPhoneAddress();
+		}
 		model.addAttribute("role", flag);
-		model.addAttribute("address", customer.getAddress());
-		model.addAttribute("phone", customer.getPhoneAddress());
+		model.addAttribute("address", address);
+		model.addAttribute("phone", phone);
 		return "user/profile";
 	}
 
-	@PostMapping("/profile")
+	@PostMapping("/profile/update")
 	public String doEditProfile(@RequestParam("avatarInput") MultipartFile file) {
 		User user = session.get("user");
 		String fullname = param.getString("fullname", "");
@@ -114,6 +120,14 @@ public class ProfileController {
 		user.setFullname(fullname);
 		user.setAvatar(avatar);
 		userService.save(user);
+		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
+		for (UserRole u : role) {
+			if (u.getRole().getId().equals("ADMIN")) {
+				return "redirect:/ad/profile";
+			} else if(u.getRole().getId().equals("SELLER")) {
+				return "redirect:/seller/profile";
+			}
+		}
 		return "redirect:/profile";
 	}
 

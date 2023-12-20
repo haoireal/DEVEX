@@ -166,7 +166,7 @@ public class UserServiceImpl implements  UserService{
 			String id = generateRandomNumber();
 			dwallet.setId(id);
 			dwallet.setUser(user);
-			dwallet.setBalance(10000000.0);
+			dwallet.setBalance(0.0);
 			dwallet.setActive(true);
 			dwalletRepository.save(dwallet);
 			//tạo customer

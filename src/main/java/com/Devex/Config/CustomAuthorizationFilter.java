@@ -1,6 +1,7 @@
 package com.Devex.Config;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 			if(list != null) {
 				
 				for (UserRole roleUser : list) {
+					
 					List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
 					updatedAuthorities.add(new SimpleGrantedAuthority(roleUser.getRole().getId()));
 
@@ -52,6 +54,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 							authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
 
 					SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
+
 				}
 			}
 			
