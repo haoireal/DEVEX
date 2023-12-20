@@ -28,7 +28,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
 		integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular-route.js"></script>	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular-route.js"></script>
 	<style>
 		/* tắt phím tăng giảm của input number */
 		input[type="number"]::-webkit-inner-spin-button,
@@ -100,6 +100,32 @@
 		label:last-child span {
 			border-radius: 0 .375em .375em 0;
 		}
+
+		.custom-dropdown {
+			position: absolute;
+			display: none;
+			border: 1px solid #ccc;
+			max-height: 200px;
+			margin-top: 5px;
+			overflow-y: auto;
+			width: 95%;
+			max-width: 760px;
+			background-color: #fff;
+			z-index: 999;
+			border-radius: 12px;
+		}
+
+		/*Css auto complete*/
+		/* Style for the custom dropdown options */
+		.custom-dropdown div {
+			padding: 4px 12px;
+			/* border-bottom: 1px solid #b4b4b4; */
+			cursor: pointer;
+		}
+
+		.custom-dropdown div:hover {
+			background-color: #f2f2f2;
+		}
 	</style>
 </head>
 
@@ -129,7 +155,8 @@
 			<!-- Lặp qua các shop và sản phẩm -->
 			<div>
 				<div class="d-flex justify-content-between gap-3 align-items-center px-3 pt-1">
-					<a href="/pageseller/{{idShop}}" class="d-flex justify-content-start gap-3 align-items-center border-0 bg-transparent btn"
+					<a href="/pageseller/{{idShop}}"
+						class="d-flex justify-content-start gap-3 align-items-center border-0 bg-transparent btn"
 						type="button">
 						<div class="">
 							<img alt="Avatar Shop" src="/img/account/{{cart.shopGroups[idShop][0].avatarShop}}"
@@ -142,7 +169,8 @@
 					</a>
 					<div class="text-center d-flex align-items-center">
 						<input class="form-check-input m-0" type="checkbox" value="" id="checkAllProdOfShop"
-							ng-checked="cart.selectedShopIds.indexOf(idShop) != -1" ng-click="cart.toggleShopSelect(idShop)" />
+							ng-checked="cart.selectedShopIds.indexOf(idShop) != -1"
+							ng-click="cart.toggleShopSelect(idShop)" />
 						<button class="btn btn-transparents">Chọn tất cả</button> |
 						<button ng-click="cart.removeAllOfShop(idShop)" class="btn btn-transparents text-danger">
 							Xóa
@@ -307,11 +335,11 @@
 			<div class="row">
 				<div class="col-4 chose-all" style="margin: auto 0">
 					<label>
-						<input class="form-check-input" type="checkbox"  id="checkAllCart"
-							ng-checked="cart.selectAll" ng-click="cart.toggleSelectAll()" />
+						<input class="form-check-input" type="checkbox" id="checkAllCart" ng-checked="cart.selectAll"
+							ng-click="cart.toggleSelectAll()" />
 					</label>
 					<button class="btn btn-transparents ng-binding" id="btn-chose-all-product">
-						Chọn Tất Cả (<span id="cart-count-product" >{{cart.countItem}}</span>)
+						Chọn Tất Cả (<span id="cart-count-product">{{cart.countItem}}</span>)
 					</button>
 					<button class="btn btn-transparents text-danger" id="btn-delete-all-product"
 						ng-click="cart.clear()">

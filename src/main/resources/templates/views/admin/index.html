@@ -6,14 +6,16 @@
 	<div th:replace="~{flagment/admin/adminHead :: adminHeadFragment}"></div>
 	<style>
 		.product-name {
-            max-width: 100px; /* Đặt giới hạn chiều rộng, ví dụ 200px */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-		#productTableBody{
+			max-width: 100px;
+			/* Đặt giới hạn chiều rộng, ví dụ 200px */
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		#productTableBody {
 			height: 200px;
-			
+
 		}
 	</style>
 </head>
@@ -39,7 +41,7 @@
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="/devex/home">Trang chủ</a></li>
+								<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 								<li class="breadcrumb-item active">Tổng quan</li>
 							</ol>
 						</div>
@@ -152,7 +154,8 @@
 													style="height: 180px;"></canvas>
 											</div>
 											<!-- /.chart-responsive -->
-											<div class="description-block border-right" style="background-color: #f4f2f2;">
+											<div class="description-block border-right"
+												style="background-color: #f4f2f2;">
 												<span class="iconrevenuemonthline text-success">
 													<i class="fas fa-caret-up"></i>
 													<span class="numberrevenuemonthline">17%</span>
@@ -174,7 +177,8 @@
 												<canvas id="statisticalrevenueyearline" height="150"
 													style="height: 180px;"></canvas>
 											</div>
-											<div class="description-block border-right" style="background-color: #f4f2f2;">
+											<div class="description-block border-right"
+												style="background-color: #f4f2f2;">
 												<span class="iconrevenueyearline text-success">
 													<i class="fas fa-caret-up"></i>
 													<span class="numberrevenueyearline">17%</span>
@@ -217,7 +221,8 @@
 											</p>
 											<div class="chart">
 												<!-- Sales Chart Canvas -->
-												<canvas id="statisticalordermonthpie" class="w-75 h-50" style="margin-left: 150px;"></canvas>
+												<canvas id="statisticalordermonthpie" class="w-75 h-50"
+													style="margin-left: 150px;"></canvas>
 											</div>
 										</div>
 										<!-- /.col -->
@@ -230,7 +235,8 @@
 											</p>
 											<div class="chart">
 												<!-- Sales Chart Canvas -->
-												<canvas id="statisticalorderyearpie" height="150" class="w-75 h-50" style="margin-left: 150px;"></canvas>
+												<canvas id="statisticalorderyearpie" height="150" class="w-75 h-50"
+													style="margin-left: 150px;"></canvas>
 											</div>
 										</div>
 										<!-- /.col -->
@@ -244,7 +250,7 @@
 						<!-- /.col -->
 					</div>
 					<!-- /.row -->
-					
+
 					<!-- /.row -->
 					<div class="row">
 						<div class="col-md-12">
@@ -265,13 +271,13 @@
 											<div class="chart" style="margin-left: 150px;">
 												<!-- Sales Chart Canvas -->
 												<canvas id="statisticalcategoryyearpie" class="w-75 h-75"
-												style="width: 100%;"></canvas>
+													style="width: 100%;"></canvas>
 											</div>
 											<!-- /.chart-responsive -->
 										</div>
 										<div class="col-md-5">
 											<p class="text-center">
-												<h3 class="text-center">Danh sách sản phẩm theo loại</h3>
+											<h3 class="text-center">Danh sách sản phẩm theo loại</h3>
 											</p>
 											<select id="categorySelect" class="form-control"
 												aria-label="Default select example">
@@ -329,7 +335,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="/js/admin/statistical.js"></script>
-	<script src="/js/admin/boxIndex.js"></script> 
+	<script src="/js/admin/boxIndex.js"></script>
 	<script th:src="@{/js/admin/DWalletAdmin.js}"></script>
 </body>
 

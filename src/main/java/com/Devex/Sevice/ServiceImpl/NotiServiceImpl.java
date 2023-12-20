@@ -29,10 +29,9 @@ public class NotiServiceImpl implements NotiService {
     @Autowired
     NotificationsService notificationsService;
 
-
     @Override
     public void sendNotification(String userFrom, String userTo, String link, String type, String object) {
-    	String userIDAdmin = "haopg";
+        String userIDAdmin = "haopg";
         try {
             Notifications noti = new Notifications();
             String content = "";
@@ -254,7 +253,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "updateUser": {
-                    content = "Tài khoản của bạn đã được cập nhập!";
+                    content = "Tài khoản của bạn đã được cập nhật!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -263,7 +262,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "repplyupdatesellerpass": {
-                	  content = "Chào mừng người dùng " + object + " đã trở thành người bán hàng của DEVEX! Để biết thêm thông tin về người bán bạn vui lòng ấn xem chi tiết!";
+                    content = "Chào mừng người dùng " + object
+                            + " đã trở thành người bán hàng của DEVEX! Để biết thêm thông tin về người bán bạn vui lòng ấn xem chi tiết!";
                     noti.setContent(content);
                     noti.setUserTo(userIDAdmin);
                     noti.setUserFrom(null);
@@ -336,7 +336,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "refundSuccess": {
-                    content = "Đơn hàng của bạn đã được chấp thuận. Tiền được hoàn vào ví!! Dwallet +" + object +" VND";
+                    content = "Đơn hàng của bạn đã được chấp thuận. Tiền được hoàn vào ví!! Dwallet +" + object
+                            + " VND";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(userIDAdmin);
@@ -593,7 +594,7 @@ public class NotiServiceImpl implements NotiService {
                     notificationsService.save(noti);
                     break;
                 }
-                
+
                 default:
             }
 

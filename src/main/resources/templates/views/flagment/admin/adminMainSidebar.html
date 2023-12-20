@@ -11,13 +11,13 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <a href="/ad/userProfile">
+        <a href="/ad/profile">
           <img th:src="@{/img/account/__${session.user.avatar}__}" class="img-circle elevation-2 img-fluid h-100"
             alt="User Image" />
         </a>
       </div>
       <div class="info">
-        <a href="/ad/userProfile" class="d-block col-9 pe-0 text-decoration-none font-weight-bold"
+        <a href="/ad/profile" class="d-block col-9 pe-0 text-decoration-none font-weight-bold"
           th:text="${session.user == null ? 'Sign In' : session.user.fullname}"></a>
       </div>
     </div>
@@ -208,8 +208,8 @@
                 </a>
               </li>
               <li class="nav-item border-bottom">
-                <a href="/devex/admin/userProfile" class="nav-link">
-                  <p>Hiệu chỉnh nhân viên</p>
+                <a href="#" class="nav-link">
+                  <p>Đang phát triển...</p>
                 </a>
               </li>
             </ul>
@@ -228,8 +228,8 @@
 
                   <p>Danh sách nhà phân phối</p>
                 </a></li>
-              <li class="nav-item border-bottom"><a href="/devex/userProfile" class="nav-link">
-                  <p>Hiệu chỉnh nhân viên</p>
+              <li class="nav-item border-bottom"><a href="#" class="nav-link">
+                  <p>Đang phát triển...</p>
                 </a></li>
 
             </ul>
@@ -349,17 +349,17 @@
             <ul class="nav nav-treeview bg-light" style="background-color: rgba(57, 151, 184, 0.2) !important">
               <li class="nav-item border-bottom">
                 <a href="./index.html" class="nav-link">
-                  <p>Đang phát triển</p>
+                  <p>Đang phát triển ...</p>
                 </a>
               </li>
               <li class="nav-item border-bottom">
                 <a href="./index2.html" class="nav-link">
-                  <p>Đang phát triển</p>
+                  <p>Đang phát triển ...</p>
                 </a>
               </li>
               <li class="nav-item border-bottom">
                 <a href="./index3.html" class="nav-link">
-                  <p>Đang phát triển</p>
+                  <p>Đang phát triển ...</p>
                 </a>
               </li>
             </ul>
