@@ -35,7 +35,7 @@
                       id="amountNotifications"></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
-                    style="overflow-y: scroll; height: 400px" id="Notifications"></div>
+                    style="overflow-y: scroll; height: 400px; left: inherit; right: 0;" id="Notifications"></div>
                 </li>
                 <li class="nav-item">
                   <a style="color: #fff" th:if="${session.user == null}" class="nav-link" href="/signin">Đăng nhập</a>
@@ -107,7 +107,8 @@
             </a>
           </div>
           <div class="col-6 pt-1 col">
-            <a th:href="${admin == true} ? @{/profile} : @{/profile}"  style="position: relative; display: flex; justify-content: center">
+            <a th:href="${admin == true} ? @{/profile} : @{/profile}"
+              style="position: relative; display: flex; justify-content: center">
               <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
               <i th:if="${session.user != null}" style="
                   font-size: 1rem;
@@ -271,7 +272,7 @@
                       id="amountNotifications1"></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
-                    style="overflow-y: scroll; height: 400px" id="Notifications1">
+                    style="overflow-y: scroll; height: 400px; left: inherit; right: 0;" id="Notifications1">
                     <span class="dropdown-item dropdown-header">15 Notifications</span>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
@@ -361,7 +362,8 @@
             </a>
           </div>
           <div class="col-6 pt-1 col">
-            <a th:href="${admin == true} ? @{/profile} : @{/profile}" style="position: relative; display: flex; justify-content: center">
+            <a th:href="${admin == true} ? @{/profile} : @{/profile}"
+              style="position: relative; display: flex; justify-content: center">
               <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
               <i th:if="${session.user != null}" style="
                   font-size: 1rem;

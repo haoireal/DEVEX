@@ -37,14 +37,30 @@
                             <a th:href="@{|/details/${product.id}|}" class="text-decoration-none">
                                 <div class="card pb-2">
                                     <div class="icon-sale text-center pl-5 pr-5 p-1">
-                                        HOT SALE
+                                        <span class="text-light">HOT SALE</span>
                                     </div>
-                                    <div class="hot-sale text-center p-1"
+                                    <!-- <div class="hot-sale text-center p-1"
                                         th:if="${#numbers.formatDecimal(100 - ((product.productVariants[0].priceSale / product.productVariants[0].price) * 100),0,'POINT', 0, 'COMMA')} > 0">
-                                        Giảm
+
                                         <span
                                             th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].price / product.productVariants[0].listFlashSale[0].discount) * 100),0,'POINT', 0, 'COMMA')}"></span>
                                         %
+                                    </div> -->
+                                    <div class="hot-sale">
+                                        <svg width="34" height="36" viewBox="0 0 34 36" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M0 0H34V36L16.9991 32.2105L0 36V0Z" fill="#FCD511"></path>
+                                        </svg>
+                                        <div class="hot-sale text-center">
+
+                                            <span class="text-danger font-weight-bold">
+                                                <span class="text-danger font-weight-bold"
+                                                    th:text="${#numbers.formatDecimal(100 - ((product.productVariants[0].price / product.productVariants[0].listFlashSale[0].discount) * 100),0,'POINT', 0, 'COMMA')}"></span>%
+
+                                            </span>
+                                            Giảm
+                                        </div>
                                     </div>
                                     <img th:src="@{|/img/product/${product.sellerProduct.username}/${product.id}/${product.imageProducts[0].name}|}"
                                         class="img-fluid w-100 p-0" th:alt="${product.name}" />

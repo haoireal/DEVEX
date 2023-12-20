@@ -34,7 +34,7 @@ public class NotiServiceImpl implements NotiService {
 
             switch (type) {
                 case "repplycommentcustomer": {
-                    content = "Shop " + userFrom  + " đã trả lời bình luận của bạn của sản phẩm " + object + ".";
+                    content = "Shop " + userFrom + " đã trả lời bình luận của bạn của sản phẩm " + object + ".";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -43,7 +43,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "comment": {
-                    content = "Người dùng " + userFrom  + " đã bình luận cho sản phẩm " + object + ".";
+                    content = "Người dùng " + userFrom + " đã bình luận cho sản phẩm " + object + ".";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -52,7 +52,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "newproduct": {
-                	content = "Shop " + userFrom  + " đã thêm sản phẩm " + object + ".";
+                    content = "Shop " + userFrom + " đã thêm sản phẩm " + object + ".";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -61,7 +61,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "dathang": {
-                	content = "Bạn đã đặt một đơn hàng mới có mã đơn hàng là " + object + ".";
+                    content = "Bạn đã đặt một đơn hàng mới có mã đơn hàng là " + object + ".";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -70,7 +70,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "choxacnhan": {
-                	content = "Bạn có 1 đơn hàng mới cần xác nhận, mã đơn hàng là " + object + ".";
+                    content = "Bạn có 1 đơn hàng mới cần xác nhận, mã đơn hàng là " + object + ".";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -79,7 +79,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "dahuycuanguoidungchung": {
-                	content = "Đơn hàng có mã " + object + " đã bị hủy do shop từ chối!";
+                    content = "Đơn hàng có mã " + object + " đã bị hủy do shop từ chối!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -88,7 +88,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "dahuycuanguoidung": {
-                	content = "Đơn hàng có mã " + object + " đã bị hủy do shop " + userFrom + " từ chối!";
+                    content = "Đơn hàng có mã " + object + " đã bị hủy do shop " + userFrom + " từ chối!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -97,7 +97,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "dahuycuashop": {
-                	content = "Người dùng " + userFrom + " đã hủy hóa đơn có mã " + object + "!";
+                    content = "Người dùng " + userFrom + " đã hủy hóa đơn có mã " + object + "!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -106,7 +106,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "donhangdaxacnhan": {
-                	content = "Đơn hàng có mã " + object + " đã được shop xác nhận, trạng thái đơn hàng hiện tại là 'Đang vận chuyển'. ";
+                    content = "Đơn hàng có mã " + object
+                            + " đã được shop xác nhận, trạng thái đơn hàng hiện tại là 'Đang vận chuyển'. ";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -115,7 +116,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "danggiaocuanguoidung": {
-                	content = "Đơn hàng có mã " + object + " đang được giao đến bạn, trạng thái đơn hàng hiện tại là 'Đang giao'.";
+                    content = "Đơn hàng có mã " + object
+                            + " đang được giao đến bạn, trạng thái đơn hàng hiện tại là 'Đang giao'.";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -124,7 +126,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "danggiaocuashop": {
-                	content = "Đơn hàng có mã " + object + " đang được giao đến người dùng " + userTo + " trạng thái đơn hàng hiện tại là 'Đang giao'.";
+                    content = "Đơn hàng có mã " + object + " đang được giao đến người dùng " + userTo
+                            + " trạng thái đơn hàng hiện tại là 'Đang giao'.";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -133,7 +136,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "nhanhangcuanguoidung": {
-                	content = "Đơn hàng có mã " + object + " đã được giao đến bạn, vui lòng thanh toán đơn hàng của bạn!";
+                    content = "Đơn hàng có mã " + object
+                            + " đã được giao đến bạn, vui lòng thanh toán đơn hàng của bạn!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -142,7 +146,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "nhanhangcuashop": {
-                	content = "Đơn hàng có mã " + object + " đã được giao đến người dùng " + userTo + "!";
+                    content = "Đơn hàng có mã " + object + " đã được giao đến người dùng " + userTo + "!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -151,7 +155,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "hoanthanhcuanguoidung": {
-                	content = "Đơn hàng có mã " + object + " đã được hoàn thành!";
+                    content = "Đơn hàng có mã " + object + " đã được hoàn thành!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -160,7 +164,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "hoanthanhcuanshop": {
-                	content = "Đơn hàng có mã " + object + " đã được hoàn thành, tiền sẽ được cộng vào tài khoản của bạn trong giây lát!";
+                    content = "Đơn hàng có mã " + object
+                            + " đã được hoàn thành, tiền sẽ được cộng vào tài khoản của bạn trong giây lát!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -169,7 +174,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "trahang": {
-                	content = "Người dùng " + userFrom + " đã yêu cầu trả hàng/hoàn tiền, để biết thêm thông tin vui lòng ấn vào xem chi tiết!";
+                    content = "Người dùng " + userFrom
+                            + " đã yêu cầu trả hàng/hoàn tiền, để biết thêm thông tin vui lòng ấn vào xem chi tiết!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -178,7 +184,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "welcome": {
-                	content = "Chào mừng người dùng " + object + " đã đến với sàn thương mại điện tử DEVEX do team Thiếu Nữ thành lập!";
+                    content = "Chào mừng người dùng " + object
+                            + " đã đến với sàn thương mại điện tử DEVEX do team Thiếu Nữ thành lập!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -187,7 +194,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "canhbao": {
-                	content = "Bạn đã có hành động vi phạm quy định của DEVEX! Vui lòng không " + object;
+                    content = "Bạn đã có hành động vi phạm quy định của DEVEX! Vui lòng không " + object;
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -196,7 +203,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "changeprofileshop": {
-                	content = "Shop " + object + " đã thay đổi thông tin của shop!";
+                    content = "Shop " + object + " đã thay đổi thông tin của shop!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -205,7 +212,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "follow": {
-                	content = "Người dùng " + userFrom + " đã follow bạn!";
+                    content = "Người dùng " + userFrom + " đã follow bạn!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -214,7 +221,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "unfollow": {
-                	content = "Người dùng " + userFrom + " đã hủy follow bạn!";
+                    content = "Người dùng " + userFrom + " đã hủy follow bạn!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -223,7 +230,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "tangvoucher": {
-                	content = "Chúng tôi xin chân thành cảm ơn bạn đã đến với sản thương mại điện tử DEVEX! đây là món quà của chúng tôi gửi đến bạn " + object;
+                    content = "Chúng tôi xin chân thành cảm ơn bạn đã đến với sản thương mại điện tử DEVEX! đây là món quà của chúng tôi gửi đến bạn "
+                            + object;
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -232,7 +240,16 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "updateseller": {
-                	content = "Người dùng " + userFrom + " đã yêu cầu nâng cấp tài khoản thành người bán!";
+                    content = "Người dùng " + userFrom + " đã yêu cầu nâng cấp tài khoản thành người bán!";
+                    noti.setContent(content);
+                    noti.setUserTo(userTo);
+                    noti.setUserFrom(null);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
+                case "updateUser": {
+                    content = "Tài khoản của bạn đã được cập nhập!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -241,7 +258,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "repplyupdatesellerpass": {
-                	content = "Chào mừng người dùng " + userFrom + " đã trở thành người bán hàng của DEVEX! Để biết thêm thông tin về người bán bạn vui lòng ấn xem chi tiết!";
+                    content = "Chào mừng người dùng " + userFrom
+                            + " đã trở thành người bán hàng của DEVEX! Để biết thêm thông tin về người bán bạn vui lòng ấn xem chi tiết!";
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -250,7 +268,8 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "repplyupdatesellerfalse": {
-                	content = "Người dùng " + userFrom + " đã bị từ chối yêu cầu nâng cấp tài khoản thành người bán! Lý do " + object;
+                    content = "Người dùng " + userFrom
+                            + " đã bị từ chối yêu cầu nâng cấp tài khoản thành người bán! Lý do " + object;
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -259,7 +278,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "feedback": {
-                	content = object;
+                    content = object;
                     noti.setContent(content);
                     noti.setUserTo(userTo);
                     noti.setUserFrom(null);
@@ -300,7 +319,7 @@ public class NotiServiceImpl implements NotiService {
         } catch (Exception e) {
         }
     }
-    
+
     @Override
     public void sendHistory(String userFrom, String userTo, String link, String type, String object) {
         try {
@@ -318,7 +337,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "follow": {
-                	content = "Bạn đã follow shop " + userTo + "!";
+                    content = "Bạn đã follow shop " + userTo + "!";
                     noti.setContent(content);
                     noti.setUserTo(null);
                     noti.setUserFrom(userFrom);
@@ -327,7 +346,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "unfollow": {
-                	content = "Bạn đã hủy follow shop " + userTo + "!";
+                    content = "Bạn đã hủy follow shop " + userTo + "!";
                     noti.setContent(content);
                     noti.setUserTo(null);
                     noti.setUserFrom(userFrom);
@@ -425,6 +444,15 @@ public class NotiServiceImpl implements NotiService {
                     notificationsService.save(noti);
                     break;
                 }
+                case "newFlashSale": {
+                    content = "Bạn đã thêm khung giờ flashsale!";
+                    noti.setContent(content);
+                    noti.setUserTo(null);
+                    noti.setUserFrom(userFrom);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
                 case "applyflashsale": {
                     content = "Bạn đã thêm sản phẩm có id là " + object + " vào khung giờ flashsale!";
                     noti.setContent(content);
@@ -452,8 +480,18 @@ public class NotiServiceImpl implements NotiService {
                     notificationsService.save(noti);
                     break;
                 }
+                case "updateUser": {
+                    content = "Tài khoản " + object + " đã được thay đổi!";
+                    noti.setContent(content);
+                    noti.setUserTo(null);
+                    noti.setUserFrom(userFrom);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
                 case "dathang": {
-                    content = "Bạn đã đặt một đơn hàng mới có mã hóa đơn là " + object + ", Xin vui lòng chờ shop xác nhận!";
+                    content = "Bạn đã đặt một đơn hàng mới có mã hóa đơn là " + object
+                            + ", Xin vui lòng chờ shop xác nhận!";
                     noti.setContent(content);
                     noti.setUserTo(null);
                     noti.setUserFrom(userFrom);
