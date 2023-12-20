@@ -29,23 +29,23 @@ import com.Devex.Sevice.VoucherService;
 @RequestMapping("/rest/voucher")
 public class VoucherAPIController {
 	@Autowired
-    private SessionService session;
-	
+	private SessionService session;
+
 	@Autowired
-    private VoucherService voucherService;
-	
+	private VoucherService voucherService;
+
 	@Autowired
-    private CustomerService customerService;
-	
+	private CustomerService customerService;
+
 	@Autowired
-    private VoucherProductService voucherProductService;
-	
+	private VoucherProductService voucherProductService;
+
 	@Autowired
-    private VoucherDetailService voucherDetailService;
-	 
+	private VoucherDetailService voucherDetailService;
+
 	@GetMapping("/list")
 	public ResponseEntity<List<Voucher>> getAllVoucher() {
-//		User user = session.get("user");
+		// User user = session.get("user");
 		List<Voucher> list = voucherService.findAll();
 
 		if (list != null) {
@@ -54,10 +54,10 @@ public class VoucherAPIController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
-	@GetMapping("/prod-voucher/{id}")
+
+	@GetMapping("/prod-voucher/{id}") // sản phẩm áp dụng voucher
 	public ResponseEntity<List<VoucherProduct>> getProdVoucher(@PathVariable("id") Integer id) {
-		
+
 		List<VoucherProduct> list = voucherProductService.findAllByVoucher(id);
 
 		if (list != null) {
@@ -66,10 +66,10 @@ public class VoucherAPIController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@GetMapping("/prod-voucher/all")
 	public ResponseEntity<List<VoucherProduct>> getProdVoucherAll() {
-		
+
 		List<VoucherProduct> list = voucherProductService.findAll();
 
 		if (list != null) {
@@ -78,11 +78,11 @@ public class VoucherAPIController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@GetMapping("/saved/list")
 	public ResponseEntity<List<VoucherDetails>> getAllVoucherOfUser() {
 		User user = session.get("user");
-		if(user != null) {
+		if (user != null) {
 			List<VoucherDetails> list = voucherDetailService.findAllByUsername(user.getUsername());
 			if (list != null) {
 				return ResponseEntity.ok(list);
@@ -92,11 +92,11 @@ public class VoucherAPIController {
 		}
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@GetMapping("/my-saved")
 	public ResponseEntity<List<Voucher>> getMyVoucher() {
 		User user = session.get("user");
-		if(user != null) {
+		if (user != null) {
 			List<Voucher> list = voucherService.findVoucherOfUser(user.getUsername());
 			if (list != null) {
 				return ResponseEntity.ok(list);
@@ -107,8 +107,7 @@ public class VoucherAPIController {
 		return ResponseEntity.notFound().build();
 
 	}
-	
-	
+
 	@PostMapping("/save")
 	public ResponseEntity<Void> saveVoucher(@RequestBody Voucher voucher) {
 		User user = session.get("user");
@@ -117,7 +116,7 @@ public class VoucherAPIController {
 		voucherSaved.setVoucher(voucher);
 		voucherSaved.setCustomerVoucherDetails(customer);
 		voucherSaved.setApplied(true);
-		
+
 		try {
 			voucherDetailService.save(voucherSaved);
 			return ResponseEntity.ok().build();
@@ -126,9 +125,7 @@ public class VoucherAPIController {
 		}
 
 	}
-	
-	
-	
+
 	@PutMapping("/disabled/{id}")
 	public ResponseEntity<Void> disabledCartDetail(@PathVariable("id") Integer id) {
 		Voucher voucher = voucherService.getById(id);
