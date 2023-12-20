@@ -51,13 +51,24 @@ public class FileManagerService {
     public List<String> save(String shopname, String id, MultipartFile[] files) {
         List<String> filenames = new ArrayList<String>();
         for (MultipartFile file : files) {
+        	System.out.println("1");
             String name = System.currentTimeMillis() + file.getOriginalFilename();
+            System.out.println("2");
             String filename = Integer.toHexString(name.hashCode()) + name.substring(name.lastIndexOf("."));
+            System.out.println("3");
+            System.out.println(shopname);
+            System.out.println(id);
+            System.out.println(filename);
             Path path = this.getPath(shopname, id, filename);
+            System.out.println("4");
             try {
+            	System.out.println("5");
                 file.transferTo(path);
+                System.out.println("6");
                 filenames.add(filename);
+                System.out.println("7");
                 imageProductService.insertImageProduct(id, filename, id);
+                System.out.println("7");
             } catch (Exception e) {
                 e.printStackTrace();
             }
