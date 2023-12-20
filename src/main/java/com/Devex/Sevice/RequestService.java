@@ -50,4 +50,6 @@ public interface RequestService {
 
 	Request findRequestByEntityId(String id);
 
+	List<Request> getAllRequestOrderDecreaseByCreatedDay();
+
 }

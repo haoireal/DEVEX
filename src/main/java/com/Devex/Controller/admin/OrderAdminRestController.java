@@ -93,21 +93,25 @@ public class OrderAdminRestController {
 
 	@GetMapping("/getallrequestrefund")
 	public Map<String, Object> getAllRequestRefund(){
-		Map<String, Object> mapProductRequest = new HashMap<>();
-		List<infoProductDTO> listInfoProduct = new ArrayList<>();
-		List<String> listNameCategory = new ArrayList<>();
-		List<String> listNameProductBrand = new ArrayList<>();
-		List<String> listShopName = new ArrayList<>();
-		List<Request> listProductRequest = requestService.getAllRequestFalseDecreaseByCreatedDay();
-		for (Request pr : listProductRequest) {
-
+		Map<String, Object> mapOrderRequest = new HashMap<>();
+		List<Request> listRequest = requestService.getAllRequestOrderDecreaseByCreatedDay();
+		List<String> listNameProduct = new ArrayList<>();
+		List<String> listCustomer = new ArrayList<>();
+		List<String> listSeller = new ArrayList<>();
+		List<Double> listTotalPrice = new ArrayList<>();
+		for (Request r : listRequest) {
+			OrderDetails d = detailService.getById(r.getEntityId());
+			listNameProduct.add(d.getProductVariant().getProduct().getName());
+			listCustomer.add(d.getOrder().getCustomerOrder().getUsername());
+			listSeller.add(d.getProductVariant().getProduct().getSellerProduct().getUsername());
+			listTotalPrice.add(d.getPrice());
 		}
-		mapProductRequest.put("listProductRequest", listProductRequest);
-		mapProductRequest.put("listInfoProduct", listInfoProduct);
-		mapProductRequest.put("listNameCategory", listNameCategory);
-		mapProductRequest.put("listNameProductBrand", listNameProductBrand);
-		mapProductRequest.put("listShopName", listShopName);
-		return mapProductRequest;
+		mapOrderRequest.put("listRequest", listRequest);
+		mapOrderRequest.put("listNameProduct", listNameProduct);
+		mapOrderRequest.put("listCustomer", listCustomer);
+		mapOrderRequest.put("listSeller", listSeller);
+		mapOrderRequest.put("listTotalPrice", listTotalPrice);
+		return mapOrderRequest;
 	}
 
 
