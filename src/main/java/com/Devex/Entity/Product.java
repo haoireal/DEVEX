@@ -4,19 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.Formula;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,10 +21,10 @@ import lombok.NoArgsConstructor;
 public class Product implements Serializable{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(name = "ID", updatable = false)
 	private String id;
@@ -48,41 +40,37 @@ public class Product implements Serializable{
 	private Boolean isdelete;
 	@Column(name = "Viewcount")
 	private Long viewcount;
-	
+
 	@Formula("(SELECT COUNT(od.ID) FROM Order_Details od INNER JOIN Product_Variant pv ON od.Product_ID = pv.ID INNER JOIN Orders o ON o.ID = od.Order_ID WHERE pv.Product_ID = ID AND o.Status_ID = 1006)")
     private Integer soldCount;
-	
+
 	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "Shop_ID")
 	private Seller sellerProduct;
-	
+
 	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "Category_ID")
 	private CategoryDetails categoryDetails;
-	
+
 	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "Brand_ID")
 	private ProductBrand productbrand;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ImageProduct> imageProducts;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ProductVariant> productVariants;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "productComment")
 	private List<Comment> comments;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "product")
-	private ProductRequest productRequest;
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

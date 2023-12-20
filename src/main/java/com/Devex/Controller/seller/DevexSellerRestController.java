@@ -44,7 +44,7 @@ import com.Devex.Entity.Notifications;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductBrand;
-import com.Devex.Entity.ProductRequest;
+import com.Devex.Entity.Request;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.TransactionHistory;
@@ -63,7 +63,7 @@ import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
 import com.Devex.Sevice.ProductBrandService;
-import com.Devex.Sevice.ProductRequestService;
+import com.Devex.Sevice.RequestService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
@@ -128,7 +128,7 @@ public class DevexSellerRestController {
 	private NotiService notiService;
 
 	@Autowired
-	private ProductRequestService productRequestService;
+	private RequestService requestService;
 
 	@Autowired
 	private DwalletService dwalletService;
@@ -184,10 +184,10 @@ public class DevexSellerRestController {
 		String id = session.get("idproduct");
 		boolean checkRequest = false;
 		Product product = productService.findByIdProduct(id);
-		ProductRequest productRequest = productRequestService.findProductRequestByProductId(id);
+		Request productRequest = requestService.findRequestByEntityId(id);
 		mapInfoProduct.put("product", product);
 		if (productRequest != null) {
-			checkRequest = true;
+			checkRequest = true; 
 		}
 		mapInfoProduct.put("checkRequest", checkRequest);
 		return mapInfoProduct;
@@ -291,7 +291,7 @@ public class DevexSellerRestController {
 		String idp = session.get("idproduct");
 		boolean checkRequest = false;
 		Product product = productService.findByIdProduct(idp);
-		ProductRequest productRequest = productRequestService.findProductRequestByProductId(idp);
+		Request productRequest = requestService.findRequestByEntityId(idp);
 		mapInfoProduct.put("product", product);
 		if (productRequest != null) {
 			checkRequest = true;
@@ -742,13 +742,13 @@ public class DevexSellerRestController {
 
 	@PostMapping("/seller/sendRequest")
 	public void sendRequest(@RequestParam("id") String id, @RequestParam("content") String content) {
-		productRequestService.insertProductRequest(new Date(), id, 0, content);
+		requestService.insertRequest(id, new Date(), 0, content);
 	}
 
 	@DeleteMapping("/seller/cancelRequest")
 	public void cancelRequest(@RequestParam("id") String id) {
-		ProductRequest pr = productRequestService.findProductRequestByProductId(id);
-		productRequestService.deleteById(pr.getId());
+		Request pr = requestService.findRequestByEntityId(id);
+		requestService.deleteById(pr.getId());
 	}
 
 	/* get balance wallet */
@@ -775,7 +775,7 @@ public class DevexSellerRestController {
 	
 	@PostMapping("/seller/sendrequestactive")
 	public void sendRequestActive(@RequestParam("id") String id, @RequestParam("content") String content) {
-		productRequestService.insertProductRequest(new Date(), id, 1, content);
+		requestService.insertRequest(id, new Date(), 1, content);
 	}
 	
 	@GetMapping("/rest/list/work")

@@ -231,13 +231,13 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 			   "WHERE s.username = :username AND LOWER(o.id) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Order> findAllOrderByIdAndUsernameContainingKeyword(@Param("username") String username, @Param("keyword") String keyword);
 	
-	@Query("SELECT o FROM Order o WHERE o.orderStatus.id = :statusid ")
+	@Query("SELECT o FROM Order o WHERE o.orderStatus.id = :statusid ORDER BY o.createdDay DESC")
 	List<Order> findOrderByOrderStatusId(@Param("statusid") int statusid);
 	
-	@Query("SELECT o FROM Order o WHERE o.id LIKE %:keyword% OR o.customerOrder.fullname LIKE %:keyword%")
+	@Query("SELECT o FROM Order o WHERE o.id LIKE %:keyword% OR o.customerOrder.fullname LIKE %:keyword% ORDER BY o.createdDay DESC")
     List<Order> findOrderByIdOrCustomer(@Param("keyword") String keyword);
 	
-	@Query("SELECT o FROM Order o WHERE o.orderStatus.id = :statusid AND o.id LIKE %:keyword% OR o.orderStatus.id = :statusid AND o.customerOrder.fullname LIKE %:keyword%")
+	@Query("SELECT o FROM Order o WHERE o.orderStatus.id = :statusid AND o.id LIKE %:keyword% OR o.orderStatus.id = :statusid AND o.customerOrder.fullname LIKE %:keyword% ORDER BY o.createdDay DESC")
 	List<Order> findOrderByOrderStatusIdAndIdOrCustomer(@Param("statusid") int statusid, @Param("keyword") String keyword);
 
 	@Query("SELECT COUNT(o) " +
@@ -283,4 +283,6 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 		       "AND s.username = :username ")
 	Double getCountOrderByYearAndMonthAndProductShop(@Param("year") int year, @Param("month") int month, @Param("username") String username);
 
+	@Query("SELECT o FROM Order o ORDER BY o.createdDay DESC")
+	List<Order> findAllOrderSortDown();
 }

@@ -28,7 +28,7 @@ import com.Devex.Entity.Category;
 import com.Devex.Entity.CategoryDetails;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductBrand;
-import com.Devex.Entity.ProductRequest;
+import com.Devex.Entity.Request;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.Seller;
 import com.Devex.Entity.User;
@@ -40,7 +40,7 @@ import com.Devex.Sevice.ImageProductService;
 import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.ProductBrandService;
-import com.Devex.Sevice.ProductRequestService;
+import com.Devex.Sevice.RequestService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SellerService;
@@ -89,7 +89,7 @@ public class ProductAdminRestController {
 	private ProductBrandService brandService;
 	
 	@Autowired
-	private ProductRequestService productRequestService;
+	private RequestService requestService;
 	
 	@Autowired
     private FileManagerService fileManagerService;
@@ -246,24 +246,26 @@ public class ProductAdminRestController {
 		List<String> listNameCategory = new ArrayList<>();
 		List<String> listNameProductBrand = new ArrayList<>();
 		List<String> listShopName = new ArrayList<>();
-		List<ProductRequest> listProductRequest = productRequestService.getAllProductRequestFalseDecreaseByCreatedDay();
-		for (ProductRequest pr : listProductRequest) {
-			Product p = productService.findByIdProduct(pr.getProduct().getId());
-			infoProductDTO pd = new infoProductDTO();
-			pd.setId(p.getId());
-			pd.setName(p.getName());
-			pd.setActive(p.getActive());
-			pd.setSoldCount(p.getSoldCount());
-			pd.setQuantity(p.getProductVariants().get(0).getQuantity());
-			pd.setPrice(p.getProductVariants().get(0).getPrice());
-			pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
-			pd.setNameImageProduct(p.getImageProducts().get(0).getName());
-			pd.setCateId(p.getCategoryDetails().getId());
-			listInfoProduct.add(pd);
-			CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
-			listNameCategory.add(cad.getName());
-			listNameProductBrand.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
-			listShopName.add(p.getSellerProduct().getShopName());
+		List<Request> listProductRequest = requestService.getAllRequestFalseDecreaseByCreatedDay();
+		for (Request pr : listProductRequest) {
+			Product p = productService.findByIdProduct(pr.getEntityId());
+			if(p != null) {
+				infoProductDTO pd = new infoProductDTO();
+				pd.setId(p.getId());
+				pd.setName(p.getName());
+				pd.setActive(p.getActive());
+				pd.setSoldCount(p.getSoldCount());
+				pd.setQuantity(p.getProductVariants().get(0).getQuantity());
+				pd.setPrice(p.getProductVariants().get(0).getPrice());
+				pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
+				pd.setNameImageProduct(p.getImageProducts().get(0).getName());
+				pd.setCateId(p.getCategoryDetails().getId());
+				listInfoProduct.add(pd);
+				CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
+				listNameCategory.add(cad.getName());
+				listNameProductBrand.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
+				listShopName.add(p.getSellerProduct().getShopName());
+			}
 		}
 		mapProductRequest.put("listProductRequest", listProductRequest);
 		mapProductRequest.put("listInfoProduct", listInfoProduct);
@@ -275,30 +277,32 @@ public class ProductAdminRestController {
 	
 	@DeleteMapping("/delete/productrequest")
 	public Map<String, Object> deleteProductRequest(@RequestParam("id") int id){
-		productRequestService.deleteById(id);
+		requestService.deleteById(id);
 		Map<String, Object> mapProductRequest = new HashMap<>();
 		List<infoProductDTO> listInfoProduct = new ArrayList<>();
 		List<String> listNameCategory = new ArrayList<>();
 		List<String> listNameProductBrand = new ArrayList<>();
 		List<String> listShopName = new ArrayList<>();
-		List<ProductRequest> listProductRequest = productRequestService.getAllProductRequestFalseDecreaseByCreatedDay();
-		for (ProductRequest pr : listProductRequest) {
-			Product p = productService.findByIdProduct(pr.getProduct().getId());
-			infoProductDTO pd = new infoProductDTO();
-			pd.setId(p.getId());
-			pd.setName(p.getName());
-			pd.setActive(p.getActive());
-			pd.setSoldCount(p.getSoldCount());
-			pd.setQuantity(p.getProductVariants().get(0).getQuantity());
-			pd.setPrice(p.getProductVariants().get(0).getPrice());
-			pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
-			pd.setNameImageProduct(p.getImageProducts().get(0).getName());
-			pd.setCateId(p.getCategoryDetails().getId());
-			listInfoProduct.add(pd);
-			CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
-			listNameCategory.add(cad.getName());
-			listNameProductBrand.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
-			listShopName.add(p.getSellerProduct().getShopName());
+		List<Request> listProductRequest = requestService.getAllRequestFalseDecreaseByCreatedDay();
+		for (Request pr : listProductRequest) {
+			Product p = productService.findByIdProduct(pr.getEntityId());
+			if(p != null) {
+				infoProductDTO pd = new infoProductDTO();
+				pd.setId(p.getId());
+				pd.setName(p.getName());
+				pd.setActive(p.getActive());
+				pd.setSoldCount(p.getSoldCount());
+				pd.setQuantity(p.getProductVariants().get(0).getQuantity());
+				pd.setPrice(p.getProductVariants().get(0).getPrice());
+				pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
+				pd.setNameImageProduct(p.getImageProducts().get(0).getName());
+				pd.setCateId(p.getCategoryDetails().getId());
+				listInfoProduct.add(pd);
+				CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
+				listNameCategory.add(cad.getName());
+				listNameProductBrand.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
+				listShopName.add(p.getSellerProduct().getShopName());
+			}
 		}
 		mapProductRequest.put("listProductRequest", listProductRequest);
 		mapProductRequest.put("listInfoProduct", listInfoProduct);
@@ -310,32 +314,35 @@ public class ProductAdminRestController {
 	
 	@PutMapping("/update/productrequest")
 	public Map<String, Object> updateProductRequest(@RequestParam("id") int id){
-		ProductRequest e = productRequestService.findProductRequestById(id);
-		productService.updateProductActiveById(true, e.getProduct().getId());
-		productRequestService.deleteById(id);
+		Request e = requestService.findRequestById(id);
+		Product pro = productService.findByIdProduct(e.getEntityId());
+		productService.updateProductActiveById(true, pro.getId());
+		requestService.deleteById(id);
 		Map<String, Object> mapProductRequest = new HashMap<>();
 		List<infoProductDTO> listInfoProduct = new ArrayList<>();
 		List<String> listNameCategory = new ArrayList<>();
 		List<String> listNameProductBrand = new ArrayList<>();
 		List<String> listShopName = new ArrayList<>();
-		List<ProductRequest> listProductRequest = productRequestService.getAllProductRequestFalseDecreaseByCreatedDay();
-		for (ProductRequest pr : listProductRequest) {
-			Product p = productService.findByIdProduct(pr.getProduct().getId());
-			infoProductDTO pd = new infoProductDTO();
-			pd.setId(p.getId());
-			pd.setName(p.getName());
-			pd.setActive(p.getActive());
-			pd.setSoldCount(p.getSoldCount());
-			pd.setQuantity(p.getProductVariants().get(0).getQuantity());
-			pd.setPrice(p.getProductVariants().get(0).getPrice());
-			pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
-			pd.setNameImageProduct(p.getImageProducts().get(0).getName());
-			pd.setCateId(p.getCategoryDetails().getId());
-			listInfoProduct.add(pd);
-			CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
-			listNameCategory.add(cad.getName());
-			listNameProductBrand.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
-			listShopName.add(p.getSellerProduct().getShopName());
+		List<Request> listProductRequest = requestService.getAllRequestFalseDecreaseByCreatedDay();
+		for (Request pr : listProductRequest) {
+			Product p = productService.findByIdProduct(pr.getEntityId());
+			if(p != null) {
+				infoProductDTO pd = new infoProductDTO();
+				pd.setId(p.getId());
+				pd.setName(p.getName());
+				pd.setActive(p.getActive());
+				pd.setSoldCount(p.getSoldCount());
+				pd.setQuantity(p.getProductVariants().get(0).getQuantity());
+				pd.setPrice(p.getProductVariants().get(0).getPrice());
+				pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
+				pd.setNameImageProduct(p.getImageProducts().get(0).getName());
+				pd.setCateId(p.getCategoryDetails().getId());
+				listInfoProduct.add(pd);
+				CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
+				listNameCategory.add(cad.getName());
+				listNameProductBrand.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
+				listShopName.add(p.getSellerProduct().getShopName());
+			}
 		}
 		mapProductRequest.put("listProductRequest", listProductRequest);
 		mapProductRequest.put("listInfoProduct", listInfoProduct);
@@ -396,7 +403,7 @@ public class ProductAdminRestController {
 		String id = sessionService.get("idproduct");
 		Map<String, Object> mapProduct = new HashMap<>();
 		Product product = productService.findByIdProduct(id);
-		ProductRequest productrequest = productRequestService.findProductRequestByProductId(id);
+		Request productrequest = requestService.findRequestByEntityId(id);
 		boolean check = false;
 		if(productrequest != null) {
 			check = true;
@@ -529,24 +536,26 @@ public class ProductAdminRestController {
 		List<String> listNameCategoryTrue = new ArrayList<>();
 		List<String> listNameProductBrandTrue = new ArrayList<>();
 		List<String> listShopNameTrue = new ArrayList<>();
-		List<ProductRequest> listProductRequestTrue = productRequestService.getAllProductRequestTrueDecreaseByCreatedDay();
-		for (ProductRequest pr : listProductRequestTrue) {
-			Product p = productService.findByIdProduct(pr.getProduct().getId());
-			infoProductDTO pd = new infoProductDTO();
-			pd.setId(p.getId());
-			pd.setName(p.getName());
-			pd.setActive(p.getActive());
-			pd.setSoldCount(p.getSoldCount());
-			pd.setQuantity(p.getProductVariants().get(0).getQuantity());
-			pd.setPrice(p.getProductVariants().get(0).getPrice());
-			pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
-			pd.setNameImageProduct(p.getImageProducts().get(0).getName());
-			pd.setCateId(p.getCategoryDetails().getId());
-			listInfoProductTrue.add(pd);
-			CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
-			listNameCategoryTrue.add(cad.getName());
-			listNameProductBrandTrue.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
-			listShopNameTrue.add(p.getSellerProduct().getShopName());
+		List<Request> listProductRequestTrue = requestService.getAllRequestTrueDecreaseByCreatedDay();
+		for (Request pr : listProductRequestTrue) {
+			Product p = productService.findByIdProduct(pr.getEntityId());
+			if(p != null) {
+				infoProductDTO pd = new infoProductDTO();
+				pd.setId(p.getId());
+				pd.setName(p.getName());
+				pd.setActive(p.getActive());
+				pd.setSoldCount(p.getSoldCount());
+				pd.setQuantity(p.getProductVariants().get(0).getQuantity());
+				pd.setPrice(p.getProductVariants().get(0).getPrice());
+				pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
+				pd.setNameImageProduct(p.getImageProducts().get(0).getName());
+				pd.setCateId(p.getCategoryDetails().getId());
+				listInfoProductTrue.add(pd);
+				CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
+				listNameCategoryTrue.add(cad.getName());
+				listNameProductBrandTrue.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
+				listShopNameTrue.add(p.getSellerProduct().getShopName());
+			}
 		}
 		mapProductRequestTrue.put("listProductRequestTrue", listProductRequestTrue);
 		mapProductRequestTrue.put("listInfoProductTrue", listInfoProductTrue);
@@ -558,32 +567,34 @@ public class ProductAdminRestController {
 	
 	@PutMapping("/update/productrequesttrue")
 	public Map<String, Object> updateProductRequestTrue(@RequestParam("id") int id){
-		ProductRequest e = productRequestService.findProductRequestById(id);
-		productService.updateProductActiveById(false, e.getProduct().getId());
-		productRequestService.deleteById(id);
+		Request e = requestService.findRequestById(id);
+		productService.updateProductActiveById(false, e.getEntityId());
+		requestService.deleteById(id);
 		Map<String, Object> mapProductRequestTrue = new HashMap<>();
 		List<infoProductDTO> listInfoProductTrue = new ArrayList<>();
 		List<String> listNameCategoryTrue = new ArrayList<>();
 		List<String> listNameProductBrandTrue = new ArrayList<>();
 		List<String> listShopNameTrue = new ArrayList<>();
-		List<ProductRequest> listProductRequestTrue = productRequestService.getAllProductRequestTrueDecreaseByCreatedDay();
-		for (ProductRequest pr : listProductRequestTrue) {
-			Product p = productService.findByIdProduct(pr.getProduct().getId());
-			infoProductDTO pd = new infoProductDTO();
-			pd.setId(p.getId());
-			pd.setName(p.getName());
-			pd.setActive(p.getActive());
-			pd.setSoldCount(p.getSoldCount());
-			pd.setQuantity(p.getProductVariants().get(0).getQuantity());
-			pd.setPrice(p.getProductVariants().get(0).getPrice());
-			pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
-			pd.setNameImageProduct(p.getImageProducts().get(0).getName());
-			pd.setCateId(p.getCategoryDetails().getId());
-			listInfoProductTrue.add(pd);
-			CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
-			listNameCategoryTrue.add(cad.getName());
-			listNameProductBrandTrue.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
-			listShopNameTrue.add(p.getSellerProduct().getShopName());
+		List<Request> listProductRequestTrue = requestService.getAllRequestTrueDecreaseByCreatedDay();
+		for (Request pr : listProductRequestTrue) {
+			Product p = productService.findByIdProduct(pr.getEntityId());
+			if(p != null) {
+				infoProductDTO pd = new infoProductDTO();
+				pd.setId(p.getId());
+				pd.setName(p.getName());
+				pd.setActive(p.getActive());
+				pd.setSoldCount(p.getSoldCount());
+				pd.setQuantity(p.getProductVariants().get(0).getQuantity());
+				pd.setPrice(p.getProductVariants().get(0).getPrice());
+				pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
+				pd.setNameImageProduct(p.getImageProducts().get(0).getName());
+				pd.setCateId(p.getCategoryDetails().getId());
+				listInfoProductTrue.add(pd);
+				CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
+				listNameCategoryTrue.add(cad.getName());
+				listNameProductBrandTrue.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
+				listShopNameTrue.add(p.getSellerProduct().getShopName());
+			}
 		}
 		mapProductRequestTrue.put("listProductRequestTrue", listProductRequestTrue);
 		mapProductRequestTrue.put("listInfoProductTrue", listInfoProductTrue);
@@ -595,30 +606,32 @@ public class ProductAdminRestController {
 	
 	@DeleteMapping("/delete/productrequesttrue")
 	public Map<String, Object> deleteProductRequestTrue(@RequestParam("id") int id){
-		productRequestService.deleteById(id);
+		requestService.deleteById(id);
 		Map<String, Object> mapProductRequestTrue = new HashMap<>();
 		List<infoProductDTO> listInfoProductTrue = new ArrayList<>();
 		List<String> listNameCategoryTrue = new ArrayList<>();
 		List<String> listNameProductBrandTrue = new ArrayList<>();
 		List<String> listShopNameTrue = new ArrayList<>();
-		List<ProductRequest> listProductRequestTrue = productRequestService.getAllProductRequestTrueDecreaseByCreatedDay();
-		for (ProductRequest pr : listProductRequestTrue) {
-			Product p = productService.findByIdProduct(pr.getProduct().getId());
-			infoProductDTO pd = new infoProductDTO();
-			pd.setId(p.getId());
-			pd.setName(p.getName());
-			pd.setActive(p.getActive());
-			pd.setSoldCount(p.getSoldCount());
-			pd.setQuantity(p.getProductVariants().get(0).getQuantity());
-			pd.setPrice(p.getProductVariants().get(0).getPrice());
-			pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
-			pd.setNameImageProduct(p.getImageProducts().get(0).getName());
-			pd.setCateId(p.getCategoryDetails().getId());
-			listInfoProductTrue.add(pd);
-			CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
-			listNameCategoryTrue.add(cad.getName());
-			listNameProductBrandTrue.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
-			listShopNameTrue.add(p.getSellerProduct().getShopName());
+		List<Request> listProductRequestTrue = requestService.getAllRequestTrueDecreaseByCreatedDay();
+		for (Request pr : listProductRequestTrue) {
+			Product p = productService.findByIdProduct(pr.getEntityId());
+			if(p != null) {
+				infoProductDTO pd = new infoProductDTO();
+				pd.setId(p.getId());
+				pd.setName(p.getName());
+				pd.setActive(p.getActive());
+				pd.setSoldCount(p.getSoldCount());
+				pd.setQuantity(p.getProductVariants().get(0).getQuantity());
+				pd.setPrice(p.getProductVariants().get(0).getPrice());
+				pd.setPriceSale(p.getProductVariants().get(0).getPriceSale());
+				pd.setNameImageProduct(p.getImageProducts().get(0).getName());
+				pd.setCateId(p.getCategoryDetails().getId());
+				listInfoProductTrue.add(pd);
+				CategoryDetails cad = categoryDetailService.findCategoryDetailsById(p.getCategoryDetails().getId());
+				listNameCategoryTrue.add(cad.getName());
+				listNameProductBrandTrue.add(brandService.findNameProductBrandById(p.getProductbrand().getId()));
+				listShopNameTrue.add(p.getSellerProduct().getShopName());
+			}
 		}
 		mapProductRequestTrue.put("listProductRequestTrue", listProductRequestTrue);
 		mapProductRequestTrue.put("listInfoProductTrue", listInfoProductTrue);
