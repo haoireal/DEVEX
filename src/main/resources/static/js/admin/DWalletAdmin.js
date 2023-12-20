@@ -52,7 +52,7 @@ app.controller("DWalletAdmin_Controller", function ($scope, $http) {
             },
           },
           { data: "value" },
-        ],
+        ], "order": [[3, "desc"]],
         columnDefs: [
           {
             targets: [1, 2], // Các cột cần áp dụng kiểu CSS
@@ -102,7 +102,7 @@ app.controller("DWalletAdmin_Controller", function ($scope, $http) {
         }
       });
     }, // end fillToTable
-    sortTransactionByFluctuations: function () {},
+    sortTransactionByFluctuations: function () { },
   });
   $wallet.getDWallet();
   $wallet.loadHistoryTransaction();

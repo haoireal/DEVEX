@@ -31,7 +31,7 @@ app.controller("myController", function ($scope, $http) {
       language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.22/i18n/Vietnamese.json"
       },
-      columns: [{ data: "id" }, { data: "firstTime" }, { data: "lastTime" }],
+      columns: [{ data: "id" }, { data: "firstTime" }, { data: "lastTime" }], "order": [[1, "desc"]],
     });
   }
 

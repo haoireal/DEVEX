@@ -117,7 +117,7 @@
 				</div>
 			</div>
 			<div class="row mb-2">
-					<div class="col-6"><strong>Nạp Tiền:</strong></div>
+				<div class="col-6"><strong>Nạp Tiền:</strong></div>
 				<div class="col-6 text-end p-0">
 					<button class="btn_view border-0 badge rounded-pill" style="background-color: rgba(7, 25, 212, 1)"
 						data-bs-toggle="modal" data-bs-target="#exampleModal1">
@@ -145,28 +145,29 @@
 								</div>
 								<div class="modal-body">
 									<form action="/sumbitRecharge" method="post">
-									<div class="row">
-										<div class="col-md-5 mb-3">
-											<label for="amount" class="form-label">Số Tiền:</label>
-											<div class="input-group">
-												<input type="number" class="form-control" id="amount" name="amount"
-													placeholder="Nhập số tiền" oninput="formatCurrency(this)">
-												<div class="input-group-append">
-													<span class="input-group-text">VND</span>
+										<div class="row">
+											<div class="col-md-5 mb-3">
+												<div class="input-group align-items-center">
+													<label for="amount" class="form-label">Số Tiền:</label>
+													<input type="number" class="ms-2 form-control" id="amount"
+														name="amount" placeholder="Nhập số tiền"
+														oninput="formatCurrency(this)">
+													<div class="input-group-append">
+														<span class="input-group-text">VND</span>
+													</div>
 												</div>
+												<span id="formattedAmount" class="text-muted" style="color: red"></span>
 											</div>
-											 <span id="formattedAmount" class="text-muted" style="color: red"></span>
-										</div>
 
-										<!-- Add more input fields if needed -->
+											<!-- Add more input fields if needed -->
 
-										<div class="col-md-6 mb-3">
-											<label for="submitBtn" class="form-label">&nbsp;</label>
-											<button type="submit" class="btn btn-primary form-control"
-												id="submitBtn">Nạp Tiền</button>
+											<div class="col-md-6 mb-3">
+												<label for="submitBtn" class="form-label">&nbsp;</label>
+												<button type="submit" class="btn btn-primary form-control"
+													id="submitBtn">Nạp Tiền</button>
+											</div>
 										</div>
-									</div>
-								</form>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -174,71 +175,33 @@
 
 					<!-- end modal -->
 				</div>
-		</div>
-		<!-- SidebarSearch Form -->
-		<div class="form-inline">
-			<div class="input-group" data-widget="sidebar-search">
-				<input class="form-control form-control-sidebar" type="search" placeholder="Tìm kiếm"
-					aria-label="Search" />
-				<div class="input-group-append">
-					<button class="btn btn-sidebar">
-						<i class="fas fa-search fa-fw"></i>
-					</button>
+			</div>
+			<!-- SidebarSearch Form -->
+			<div class="form-inline">
+				<div class="input-group" data-widget="sidebar-search">
+					<input class="form-control form-control-sidebar" type="search" placeholder="Tìm kiếm"
+						aria-label="Search" />
+					<div class="input-group-append">
+						<button class="btn btn-sidebar">
+							<i class="fas fa-search fa-fw"></i>
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
-		<!-- Sidebar Menu -->
-		<nav class="mt-2">
-			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-				<!-- Add icons to the links using the .nav-icon class
+			<!-- Sidebar Menu -->
+			<nav class="mt-2">
+				<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+					data-accordion="false">
+					<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-				<!--TIÊU ĐỀ MANAGER-->
-				<li class="nav-header">
-					<h5 class="brand-text">Quản lí</h5>
-				</li>
-				<!--END TIÊU ĐỀ MANAGER -->
-				<!-- Menu-4 -->
-				<li class="nav-item">
-					<a href="#" class="nav-link text-white" style="
-              background: linear-gradient(
-                90deg,
-                rgba(25, 38, 186, 1) 0%,
-                rgba(57, 151, 184, 1) 54%,
-                rgba(0, 212, 255, 1) 100%
-              );
-            "
-          >
-            <i class="nav-icon fas fa-tachometer-alt mt-1"></i>
-            <p>Sản phẩm <i class="right fas fa-angle-left"></i></p>
-          </a>
-          <ul
-            class="nav nav-treeview bg-light"
-            style="background-color: rgba(57, 151, 184, 0.2) !important"
-          >
-            <li class="nav-item border-bottom">
-              <a href="/seller/list/products" class="nav-link">
-                <p>Danh sách sản phẩm</p>
-              </a>
-            </li>
-            <li class="nav-item border-bottom">
-              <a href="/seller/add/product" class="nav-link">
-                <p>Thêm sản phẩm</p>
-              </a>
-            </li>
-            <li class="nav-item border-bottom">
-              <a href="/seller/list/restore" class="nav-link">
-                <p>Khôi phục sản phẩm đã xóa</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!--END Menu-4 -->
-        <!-- Menu-5 -->
-        <li class="nav-item">
-          <a
-            href="#"
-            class="nav-link text-white"
-            style="
+					<!--TIÊU ĐỀ MANAGER-->
+					<li class="nav-header">
+						<h5 class="brand-text">Quản lí</h5>
+					</li>
+					<!--END TIÊU ĐỀ MANAGER -->
+					<!-- Menu-4 -->
+					<li class="nav-item">
+						<a href="#" class="nav-link text-white" style="
               background: linear-gradient(
                 90deg,
                 rgba(25, 38, 186, 1) 0%,
@@ -246,26 +209,32 @@
                 rgba(0, 212, 255, 1) 100%
               );
             ">
-						<i class="nav-icon fa-solid fa-cart-flatbed"></i>
-						<p>Đơn hàng <i class="right fas fa-angle-left"></i></p>
-					</a>
-					<ul class="nav nav-treeview bg-light" style="background-color: rgba(57, 151, 184, 0.2) !important">
-						<li class="nav-item border-bottom">
-							<a href="/seller/list/orders" class="nav-link">
-								<p>Danh sách đơn hàng</p>
-							</a>
-						</li>
-						<li class="nav-item border-bottom">
-							<a href="/seller/orderReport" class="nav-link">
-								<p>Thống kê chi tiết</p>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<!--END Menu-5 -->
-				<!-- Menu-6 -->
-				<li class="nav-item">
-					<a href="#" class="nav-link text-white" style="
+							<i class="nav-icon fas fa-tachometer-alt mt-1"></i>
+							<p>Sản phẩm <i class="right fas fa-angle-left"></i></p>
+						</a>
+						<ul class="nav nav-treeview bg-light"
+							style="background-color: rgba(57, 151, 184, 0.2) !important">
+							<li class="nav-item border-bottom">
+								<a href="/seller/list/products" class="nav-link">
+									<p>Danh sách sản phẩm</p>
+								</a>
+							</li>
+							<li class="nav-item border-bottom">
+								<a href="/seller/add/product" class="nav-link">
+									<p>Thêm sản phẩm</p>
+								</a>
+							</li>
+							<li class="nav-item border-bottom">
+								<a href="/seller/list/restore" class="nav-link">
+									<p>Khôi phục sản phẩm đã xóa</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<!--END Menu-4 -->
+					<!-- Menu-5 -->
+					<li class="nav-item">
+						<a href="#" class="nav-link text-white" style="
               background: linear-gradient(
                 90deg,
                 rgba(25, 38, 186, 1) 0%,
@@ -273,26 +242,27 @@
                 rgba(0, 212, 255, 1) 100%
               );
             ">
-						<i class="nav-icon fa-solid fa-star-half-stroke"></i>
-						<p>Đánh giá <i class="right fas fa-angle-left"></i></p>
-					</a>
-					<ul class="nav nav-treeview bg-light" style="background-color: rgba(57, 151, 184, 0.2) !important">
-						<li class="nav-item border-bottom">
-							<a href="./index.html" class="nav-link">
-								<p>Đánh giá mới</p>
-							</a>
-						</li>
-						<li class="nav-item border-bottom">
-							<a href="./index2.html" class="nav-link">
-								<p>Thống kê đánh giá</p>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<!--END Menu-6 -->
-				<!-- Menu-8 -->
-				<li class="nav-item">
-					<a href="#" class="nav-link text-white" style="
+							<i class="nav-icon fa-solid fa-cart-flatbed"></i>
+							<p>Đơn hàng <i class="right fas fa-angle-left"></i></p>
+						</a>
+						<ul class="nav nav-treeview bg-light"
+							style="background-color: rgba(57, 151, 184, 0.2) !important">
+							<li class="nav-item border-bottom">
+								<a href="/seller/list/orders" class="nav-link">
+									<p>Danh sách đơn hàng</p>
+								</a>
+							</li>
+							<li class="nav-item border-bottom">
+								<a href="/seller/orderReport" class="nav-link">
+									<p>Thống kê chi tiết</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<!--END Menu-5 -->
+					<!-- Menu-6 -->
+					<li class="nav-item">
+						<a href="#" class="nav-link text-white" style="
               background: linear-gradient(
                 90deg,
                 rgba(25, 38, 186, 1) 0%,
@@ -300,31 +270,27 @@
                 rgba(0, 212, 255, 1) 100%
               );
             ">
-						<i class="nav-icon fa-sharp fa-solid fa-tags mt-1"></i>
-						<p>Chương trình <i class="right fas fa-angle-left"></i></p>
-					</a>
-					<ul class="nav nav-treeview bg-light" style="background-color: rgba(57, 151, 184, 0.2) !important">
-						<li class="nav-item border-bottom">
-							<a href="/seller/voucher/form" class="nav-link">
-								<p>Khuyến mãi</p>
-							</a>
-						</li>
-						<li class="nav-item border-bottom">
-							<a href="/seller/voucher/manage" class="nav-link">
-								<p>Kho mã khuyến mãi</p>
-							</a>
-						</li>
-						<li class="nav-item border-bottom">
-							<a href="/seller/flashSale" class="nav-link">
-								<p>Flash Sales</p>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<!--END Menu-8 -->
-				<!-- Menu-9 -->
-				<li class="nav-item">
-					<a href="#" class="nav-link text-white" style="
+							<i class="nav-icon fa-solid fa-star-half-stroke"></i>
+							<p>Đánh giá <i class="right fas fa-angle-left"></i></p>
+						</a>
+						<ul class="nav nav-treeview bg-light"
+							style="background-color: rgba(57, 151, 184, 0.2) !important">
+							<li class="nav-item border-bottom">
+								<a href="./index.html" class="nav-link">
+									<p>Đánh giá mới</p>
+								</a>
+							</li>
+							<li class="nav-item border-bottom">
+								<a href="./index2.html" class="nav-link">
+									<p>Thống kê đánh giá</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<!--END Menu-6 -->
+					<!-- Menu-8 -->
+					<li class="nav-item">
+						<a href="#" class="nav-link text-white" style="
               background: linear-gradient(
                 90deg,
                 rgba(25, 38, 186, 1) 0%,
@@ -332,31 +298,65 @@
                 rgba(0, 212, 255, 1) 100%
               );
             ">
-						<i class="nav-icon fa-solid fa-hashtag"></i>
-						<p>Khác <i class="right fas fa-angle-left"></i></p>
-					</a>
-					<ul class="nav nav-treeview bg-light" style="background-color: rgba(57, 151, 184, 0.2) !important">
-						<li class="nav-item border-bottom">
-							<a href="./index.html" class="nav-link">
-								<p>Dashboard v1</p>
-							</a>
-						</li>
-						<li class="nav-item border-bottom">
-							<a href="./index2.html" class="nav-link">
-								<p>Dashboard v2</p>
-							</a>
-						</li>
-						<li class="nav-item border-bottom">
-							<a href="./index3.html" class="nav-link">
-								<p>Dashboard v3</p>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<!--END Menu-9 -->
-			</ul>
-		</nav>
-		<!-- /.sidebar-menu -->
-	</div>
-	<!-- /.sidebar -->
+							<i class="nav-icon fa-sharp fa-solid fa-tags mt-1"></i>
+							<p>Chương trình <i class="right fas fa-angle-left"></i></p>
+						</a>
+						<ul class="nav nav-treeview bg-light"
+							style="background-color: rgba(57, 151, 184, 0.2) !important">
+							<li class="nav-item border-bottom">
+								<a href="/seller/voucher/form" class="nav-link">
+									<p>Khuyến mãi</p>
+								</a>
+							</li>
+							<li class="nav-item border-bottom">
+								<a href="/seller/voucher/manage" class="nav-link">
+									<p>Kho mã khuyến mãi</p>
+								</a>
+							</li>
+							<li class="nav-item border-bottom">
+								<a href="/seller/flashSale" class="nav-link">
+									<p>Flash Sales</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<!--END Menu-8 -->
+					<!-- Menu-9 -->
+					<li class="nav-item">
+						<a href="#" class="nav-link text-white" style="
+              background: linear-gradient(
+                90deg,
+                rgba(25, 38, 186, 1) 0%,
+                rgba(57, 151, 184, 1) 54%,
+                rgba(0, 212, 255, 1) 100%
+              );
+            ">
+							<i class="nav-icon fa-solid fa-hashtag"></i>
+							<p>Khác <i class="right fas fa-angle-left"></i></p>
+						</a>
+						<ul class="nav nav-treeview bg-light"
+							style="background-color: rgba(57, 151, 184, 0.2) !important">
+							<li class="nav-item border-bottom">
+								<a href="./index.html" class="nav-link">
+									<p>Dashboard v1</p>
+								</a>
+							</li>
+							<li class="nav-item border-bottom">
+								<a href="./index2.html" class="nav-link">
+									<p>Dashboard v2</p>
+								</a>
+							</li>
+							<li class="nav-item border-bottom">
+								<a href="./index3.html" class="nav-link">
+									<p>Dashboard v3</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<!--END Menu-9 -->
+				</ul>
+			</nav>
+			<!-- /.sidebar-menu -->
+		</div>
+		<!-- /.sidebar -->
 </aside>
