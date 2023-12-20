@@ -34,4 +34,7 @@ public interface RequestRespository extends JpaRepository<Request, Integer>{
 	
 	@Query("SELECT pr FROM Request pr WHERE pr.statusRequest = 1 ORDER BY pr.createdDay DESC")
 	List<Request> getAllRequestTrueDecreaseByCreatedDay();
+	
+	@Query("SELECT pr FROM Request pr WHERE pr.statusRequest = 3 ORDER BY pr.createdDay DESC")
+	List<Request> getAllRequestOrderDecreaseByCreatedDay();
 }

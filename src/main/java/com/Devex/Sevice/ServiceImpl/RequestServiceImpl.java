@@ -118,4 +118,9 @@ public class RequestServiceImpl implements RequestService{
 		return productRequestRespository.findRequestByEntityId(id);
 	}
 
+	@Override
+	public List<Request> getAllRequestOrderDecreaseByCreatedDay() {
+		return productRequestRespository.getAllRequestOrderDecreaseByCreatedDay();
+	}
+
 }

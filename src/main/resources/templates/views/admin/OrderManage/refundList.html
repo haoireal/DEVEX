@@ -70,26 +70,26 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="ProductRequest in listProductRequest.listProductRequest">
-                        <td>{{listProductRequest.listInfoProduct[$index].id}}</td>
-                        <td class="product-name">{{listProductRequest.listInfoProduct[$index].name}}</td>
-                        <td>{{listProductRequest.listInfoProduct[$index].price}}</td>
-                        <td>{{listProductRequest.listNameCategory[$index]}}</td>
-                        <td>{{listProductRequest.listNameProductBrand[$index]}}</td>
-                        <td>{{listProductRequest.listShopName[$index]}}</td>
-                        <td>{{listProductRequest.listProductRequest[$index].createdDay | date:'dd/MM/yyyy HH:mm:ss'}}
+                      <tr ng-repeat="Request in listOrderRequest.listRequest">
+                        <td>{{Request.id}}</td>
+                        <td class="product-name">{{listOrderRequest.listNameProduct[$index]}}</td>
+                        <td>{{Request.entityId}}</td>
+                        <td>{{listOrderRequest.listCustomer[$index]}}</td>
+                        <td>{{listOrderRequest.listSeller[$index]}}</td>
+                        <td>{{listOrderRequest.listTotalPrice[$index]}}</td>
+                        <td>{{Request.createdDay | date:'dd/MM/yyyy HH:mm:ss'}}
                         </td>
                         <td>
                           <div class="btn-group w-100" role="group" aria-label="Basic example">
-                            <button ng-click="cancelRequest(listProductRequest.listProductRequest[$index].id)"
+                            <button ng-click="cancelRequest(Request.id)"
                               class="btn btn-danger text-center" title="Từ chối yêu cầu">
                               <i class="fa-solid fa-xmark"></i>
                             </button>
-                            <button ng-click="confirmRequest(listProductRequest.listProductRequest[$index].id)"
+                            <button ng-click="confirmRequest(Request.id)"
                               class="btn btn-success text-center" title="Chấp nhận yêu cầu">
                               <i class="fa-solid fa-check"></i>
                             </button>
-                            <button ng-click="focusURL(listProductRequest.listInfoProduct[$index].id)"
+                            <button ng-click="showContent(Request.content)"
                               class="btn btn-primary text-center">
                               <i class="fa-regular fa-eye"></i>
                             </button>
@@ -102,56 +102,38 @@
               </div>
               <!-- End duyệt bán -->
 
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Danh sách sản phẩm cần duyệt tắt trạng thái bán</h3>
-                </div>
-                <div class="card-body">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                          <th>ID</th>
-                          <th>Tên sản phẩm</th>
-                          <th>Mã đơn hàng</th>
-                          <th>Người mua</th>
-                          <th>Người bán</th>
-                          <th>Tổng tiền</th>
-                          <th>Thời gian yêu cầu</th>
-                          <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="ProductRequestTrue in listProductRequestTrue.listProductRequestTrue">
-                        <td>{{listProductRequestTrue.listInfoProductTrue[$index].id}}</td>
-                        <td class="product-name">{{listProductRequestTrue.listInfoProductTrue[$index].name}}</td>
-                        <td>{{listProductRequestTrue.listInfoProductTrue[$index].price}}</td>
-                        <td>{{listProductRequestTrue.listNameCategoryTrue[$index]}}</td>
-                        <td>{{listProductRequestTrue.listNameProductBrandTrue[$index]}}</td>
-                        <td>{{listProductRequestTrue.listShopNameTrue[$index]}}</td>
-                        <td>{{listProductRequestTrue.listProductRequestTrue[$index].createdDay | date:'dd/MM/yyyy HH:mm:ss'}}
-                        </td>
-                        <td>
-                          <div class="btn-group w-100" role="group" aria-label="Basic example">
-                            <button ng-click="cancelRequestTrue(listProductRequestTrue.listProductRequestTrue[$index].id)"
-                              class="btn btn-danger text-center" title="Từ chối yêu cầu">
-                              <i class="fa-solid fa-xmark"></i>
-                            </button>
-                            <button ng-click="confirmRequestTrue(listProductRequestTrue.listProductRequestTrue[$index].id)"
-                              class="btn btn-success text-center" title="Chấp nhận yêu cầu">
-                              <i class="fa-solid fa-check"></i>
-                            </button>
-                            <button ng-click="focusURL(listProductRequestTrue.listInfoProductTrue[$index].id)"
-                              class="btn btn-primary text-center">
-                              <i class="fa-regular fa-eye"></i>
-                            </button>
+              
+              <!-- Model content -->
+              <button id="ct" type="button" class="btn btn-primary" data-toggle="modal" data-target="#content" hidden>
+                accept
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="content" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="">
+                                  <i class="fa-solid fa-circle-exclamation text-primary"></i>
+                                  Lý do yêu cầu trả hàng
+                              </h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
                           </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                          <div class="modal-body text-start">
+                              <p>{{content}}</p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                  Đóng
+                              </button>
+                          </div>
+                      </div>
+                  </div>
               </div>
-              <!-- End tắt bán -->
+              <!-- End model content -->
+              
             </div>
           </div>
           
@@ -305,10 +287,12 @@
 </div>
 <!-- End model false accept -->
 
+
+
 </body>
 <!-- <script src="/admin/dist/js/handMade.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> -->
-<script src="/js/admin/RequestProduct.js"></script>
+<script src="/js/admin/requestrefund.js"></script>
 <script th:src="@{/js/admin/DWalletAdmin.js}"></script>
 
 </html>
