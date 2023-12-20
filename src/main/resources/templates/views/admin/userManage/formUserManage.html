@@ -85,7 +85,7 @@
 						</div>
 						<!-- /.card-header -->
 						<div ng-if="data.userRoles[0].user" class="card-body">
-							<form method="post" name="from">
+							<form method="post">
 								<div class="mb-3">
 									<label for="UserName" class="form-label">Tên tài khoản</label>
 									<input ng-model="data.userRoles[0].user.username" name="username" type="text"
@@ -95,40 +95,22 @@
 								<div class="mb-3">
 									<label for="FullName" class="form-label">Họ và tên</label>
 									<input ng-model="data.userRoles[0].user.fullname" name="fullName" type="text"
-										class="form-control" id="FullName" aria-describedby="FullName" required>
-									<div class="text-danger"
-										ng-show="from.FullName.$dirty && from.FullName.$error.required">
-										Vui lòng điền họ và tên!
-									</div>
-
+										class="form-control" id="FullName" aria-describedby="FullName">
 								</div>
 								<div class="mb-3">
 									<label for="Email" class="form-label">Email</label>
 									<input ng-model="data.userRoles[0].user.email" name="email" type="email"
-										class="form-control" id="Email" aria-describedby="Email" required>
-									<div class="text-danger" ng-show="from.Email.$dirty && from.Email.$error.required ">
-										Vui lòng điền Email !
-									</div>
-									<div class="text-danger" ng-show="from.Email.$dirty &&  from.Email.$error.email">
-										Email không hợp lệ !
-									</div>
+										class="form-control" id="Email" aria-describedby="Email">
 								</div>
 								<div class="mb-3">
 									<label for="Password" class="form-label">Mật khẩu</label>
 									<input ng-model="data.userRoles[0].user.password" name="password" type="password"
-										class="form-control" id="Password" aria-describedby="Password" required>
-									<div class="text-danger"
-										ng-show="from.Password.$dirty && from.Password.$error.required ">
-										Vui lòng điền mật khẩu !
-									</div>
+										class="form-control" id="Password" aria-describedby="Password">
 								</div>
 								<div class="mb-3">
 									<label for="Phone" class="form-label">Điện thoại</label>
 									<input ng-model="data.userRoles[0].user.phone" name="phone" type="text"
-										class="form-control" id="Phone" aria-describedby="Phone" required>
-									<div class="text-danger" ng-show="from.Phone.$dirty && from.Phone.$error.required ">
-										Vui lòng điền số điện thoại!
-									</div>
+										class="form-control" id="Phone" aria-describedby="Phone">
 								</div>
 								<div class="mb-3 d-flex">
 									<label for="Role" class="form-label me-4">Giới tính</label> <br>

@@ -55,13 +55,13 @@ public class VoucherAdminController {
 
 		return "admin/voucherManage/formVoucher";
 	}
-	
+
 	@GetMapping("/voucher/formShip")
 	public String showFormVoucherShip(Model model) {
 
 		return "admin/voucherManage/formVoucherShip";
 	}
-	
+
 	@GetMapping("/voucher/manage")
 	public String showManageVoucher(Model model) {
 
@@ -96,7 +96,7 @@ public class VoucherAdminController {
 		if (type.equals("devex")) {
 			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100001).get();
 			voucher.setCategoryVoucher(categoryVoucher);
-		} else if (type.equals("ship")){
+		} else if (type.equals("ship")) {
 			CategoryVoucher categoryVoucher = categoryVoucherService.findById(100002).get();
 			voucher.setCategoryVoucher(categoryVoucher);
 		}
@@ -133,7 +133,7 @@ public class VoucherAdminController {
 		}
 
 		voucherService.save(voucher);
-//		model.addAttribute("listProd", listProd);
+		// model.addAttribute("listProd", listProd);
 
 		return "redirect:/ad/voucher/manage";
 	}
