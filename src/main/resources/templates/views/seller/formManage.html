@@ -83,7 +83,7 @@
 											onchange="angular.element(this).scope().uploadimg(this.files)"
 											ng-disabled="checkSell === true">
 										<button class="btn btn-primary mb-2" onclick="openFilePicker()"
-											ng-disabled="checkSell === true">Thêm</button>
+											ng-disabled="checkSell === true || form.isdelete == true">Thêm</button>
 										<div class="text-danger" ng-show="files.length === 0">Vui lòng chọn ít nhất 1
 											hình ảnh</div>
 										<!-- END chọn file -->
@@ -199,7 +199,7 @@
 													</td>
 													<td>
 
-														<button class="btn btn-danger" ng-click="deleteproductvariant(item.id)" ng-disabled="checkSell === true || checkDeleteVariant === true">
+														<button class="btn btn-danger" ng-click="deleteproductvariant(item.id)" ng-disabled="checkSell === true || checkDeleteVariant === true || form.isdelete == true">
 
 															<i class="fa-regular fa-trash-can"></i>
 														</button>
@@ -208,7 +208,7 @@
 											</tbody>
 										</table>
 										<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()"
-											ng-disabled="checkSell === true">
+											ng-disabled="checkSell === true || form.isdelete === true">
 											Thêm chi tiết sản phẩm</button>
 									</div>
 								</form>
@@ -217,15 +217,16 @@
 
 							<div class="text-center mb-3">
 								<button class="btn btn-primary" ng-click="save()"
-									ng-disabled="myForm.$invalid || files.length === 0" ng-hide="checkSell === true">Cập
+									ng-disabled="myForm.$invalid || files.length === 0" ng-hide="checkSell === true || form.isdelete == true">Cập
 									nhật</button>
-								<button class="btn btn-danger" ng-click="deleteProduc()">Đưa vào thùng rác</button>
+								<button class="btn btn-danger" ng-click="deleteProduc()" ng-hide="form.isdelete == true">Đưa vào thùng rác</button>
 								<button class="btn btn-danger" ng-if="checkRequest === true"
-									ng-click="cancelRequest()">Hủy yêu cầu</button>
+									ng-click="cancelRequest()" ng-hide="form.isdelete == true">Hủy yêu cầu</button>
 								<button class="btn btn-success" ng-if="checkRequest === false && checkSell === false"
-									ng-click="sendRequest()">Gửi yêu cầu bán sản phẩm</button>
+									ng-click="sendRequest()" ng-hide="form.isdelete == true">Gửi yêu cầu bán sản phẩm</button>
 								<button class="btn btn-success" ng-if="checkRequest === false && checkSell === true"
-									ng-click="sendRequestActiveFalse()">Gửi yêu cầu hủy bán sản phẩm</button>
+									ng-click="sendRequestActiveFalse()" ng-hide="form.isdelete == true">Gửi yêu cầu hủy bán sản phẩm</button>
+								<button class="btn btn-success" ng-click="retoreProduct()" ng-show="form.isdelete == true">Khôi phục sản phẩm</button>
 							</div>
 
 							<!-- <div class="text-center">
@@ -432,7 +433,7 @@
 											<iframe
 												src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
 											<h3 class="text-center text-success">
-												Xóa sản phẩm thành công!
+												Chuyển sản phẩm vào thùng rác thành công!
 											</h3>
 										</div>
 										<div class="modal-footer">
@@ -470,7 +471,7 @@
 											<iframe
 												src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
 											<h3 class="text-center text-danger">
-												Xóa sản phẩm thất bại!
+												Chuyển sản phẩm vào thùng rác thất bại!
 											</h3>
 										</div>
 										<div class="modal-footer">
@@ -881,6 +882,7 @@
 					$scope.form = resp.data.product;
 					$scope.checkRequest = resp.data.checkRequest;
 					$scope.checkSell = resp.data.product.active;
+					console.log(resp.data.product.active);
 				}).catch(error => {
 					console.log("errors", error);
 				})
@@ -1078,6 +1080,14 @@
 						'Content-Type': undefined
 					}
 				}).then(resp => {
+				}).catch(error => {
+					console.log("errors", error);
+				})
+			};
+
+			$scope.retoreProduct = function(product) {
+				$http.put('/seller/product/restore/' + $scope.form.id ).then(resp => {
+					$window.location.href = '/seller/list/restore';
 				}).catch(error => {
 					console.log("errors", error);
 				})

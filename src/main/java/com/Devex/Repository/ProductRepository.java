@@ -60,7 +60,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	void updateProductIsDeleteById(@Param("isdelete") boolean isdelete, @Param("id") String id);
 	
 	@Query("SELECT DISTINCT p FROM Product p " + "JOIN FETCH p.sellerProduct s "
-			+ "WHERE s.username like ?1 AND p.isdelete = true AND p.active = true")
+			+ "WHERE s.username like ?1 AND p.isdelete = true")
 	List<Product> findProductBySellerUsernameAndIsdeleteTrueAndActiveTrueProduct(String sellerUsername);
 
 	@Modifying
