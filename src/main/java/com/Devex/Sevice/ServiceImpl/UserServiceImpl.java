@@ -26,6 +26,7 @@ import com.Devex.Repository.RoleRepository;
 import com.Devex.Repository.UserRepository;
 import com.Devex.Repository.UserRoleRespository;
 import com.Devex.Sevice.CustomerService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.RoleService;
 import com.Devex.Sevice.UserRoleService;
 import com.Devex.Sevice.UserService;
@@ -37,6 +38,9 @@ import com.Devex.Sevice.UserService;
 public class UserServiceImpl implements  UserService{
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	NotiService notiService;
 
 	@Override
 	public User save(User entity) {
@@ -179,7 +183,7 @@ public class UserServiceImpl implements  UserService{
 			customer.setCreateDay(new Date());
 			customer.setGender("Other");
 			customer.setActive(true);
-			customer.setAvatar(null);
+			customer.setAvatar("avt.webp");
 			customer.setAddress(null);
 			customer.setPhoneAddress(null);
 			customerRepository.save(customer);
@@ -188,6 +192,13 @@ public class UserServiceImpl implements  UserService{
 			userRole.setUser(user);
 			userRole.setRole(role);
 			userRoleRepository.save(userRole);
+			//Gửi thông báo
+	        notiService.sendNotification(null, user.getUsername(), null, "welcome",
+	                user.getFullname());
+	        notiService.sendNotification(null, null, "/ad/edit/" + user.getUsername(), "khachhangmoi",
+	        		user.getFullname());
+			//Lịch sử
+	        notiService.sendHistory(user.getUsername(), null, null, "welcome", null);
 			
 			System.out.println("Created new user: " + username);
 			return "new";

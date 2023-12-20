@@ -87,8 +87,11 @@ public class CartAPIController {
 		Customer customer = null;
 		List<CartDetailDTo> cartDetails = new ArrayList<>();
 		if (user != null) {
-			customer = customerService.findById(user.getUsername()).get();
-			cartDetails = cart.findAllCartDTO(customer.getUsername());
+			customer = customerService.findById(user.getUsername()).orElse(null);
+			if(customer != null) {
+				cartDetails = cart.findAllCartDTO(customer.getUsername());
+			}
+			
 		}
 		List<FlashSale> fs = flashSalesService.findAll();
 		LocalDateTime currentTime = LocalDateTime.now();

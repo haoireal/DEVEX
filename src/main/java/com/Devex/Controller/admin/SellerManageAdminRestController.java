@@ -178,12 +178,12 @@ public class SellerManageAdminRestController {
 	@GetMapping("/search/distributor")
 	public Map<String, Object> searchDistributor(@RequestParam("keyword") String keyword) {
 	    Map<String, Object> mapDistributor = new HashMap<>();
-	    List<Seller> listSeller = sellerService.findByShopNameAndUsernameContainingKeyword(keyword);
+	    List<SellerDTO> listSeller = sellerService.findByShopNameAndUsernameContainingKeyword(keyword);
 	    List<Double> listRating = new ArrayList<>();
 	    List<String> listTime = new ArrayList<>();
 	    List<Integer> listAmountOrder = new ArrayList<>();
 	    List<Double> listRevenue = new ArrayList<>();
-	    for (Seller s : listSeller) {
+	    for (SellerDTO s : listSeller) {
 	    	String time = "";
 	    	Double averageRating = 0.0;
 	    	Integer amountOrder = 0;

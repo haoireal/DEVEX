@@ -3,10 +3,13 @@ package com.Devex.Sevice.ServiceImpl;
 import com.Devex.DTO.MailInfo;
 import com.Devex.Entity.Comment;
 import com.Devex.Entity.Notifications;
+import com.Devex.Entity.User;
 import com.Devex.Sevice.MailerService;
 import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.UserService;
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +29,10 @@ public class NotiServiceImpl implements NotiService {
     @Autowired
     NotificationsService notificationsService;
 
+
     @Override
     public void sendNotification(String userFrom, String userTo, String link, String type, String object) {
+    	String userIDAdmin = "haopg";
         try {
             Notifications noti = new Notifications();
             String content = "";
@@ -241,9 +246,9 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "repplyupdatesellerpass": {
-                	content = "Chào mừng người dùng " + userFrom + " đã trở thành người bán hàng của DEVEX! Để biết thêm thông tin về người bán bạn vui lòng ấn xem chi tiết!";
+                	content = "Chào mừng người dùng " + object + " đã trở thành người bán hàng của DEVEX! Để biết thêm thông tin về người bán bạn vui lòng ấn xem chi tiết!";
                     noti.setContent(content);
-                    noti.setUserTo(userTo);
+                    noti.setUserTo(userIDAdmin);
                     noti.setUserFrom(null);
                     noti.setLink(link);
                     notificationsService.save(noti);
@@ -289,6 +294,24 @@ public class NotiServiceImpl implements NotiService {
                     content = "Sản phẩm có id là " + object + " bị từ chới cho phép bán hàng! Vì lí do " + object;
                     noti.setContent(content);
                     noti.setUserTo(userTo);
+                    noti.setUserFrom(null);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
+                case "khachhangmoi": {
+                    content = "Người dùng mới " + object + " vừa đăng ký thành công!";
+                    noti.setContent(content);
+                    noti.setUserTo(userIDAdmin);
+                    noti.setUserFrom(null);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
+                case "updateProfile": {
+                    content = "Người dùng " + object + " vừa chỉnh sử hồ s!";
+                    noti.setContent(content);
+                    noti.setUserTo(userIDAdmin);
                     noti.setUserFrom(null);
                     noti.setLink(link);
                     notificationsService.save(noti);
@@ -444,7 +467,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "updateseller": {
-                    content = "Bạn đã yêu cầu nâng cấp tài khoản trở thành người bán!";
+                    content = "Bạn đã nâng cấp tài khoản trở thành người bán thành công!";
                     noti.setContent(content);
                     noti.setUserTo(null);
                     noti.setUserFrom(userFrom);
@@ -471,7 +494,7 @@ public class NotiServiceImpl implements NotiService {
                     break;
                 }
                 case "changepassword": {
-                    content = "Bạn đã đã thay đổi mật khẩu vào ngày " + object;
+                    content = "Bạn đã đã thay đổi mật khẩu";
                     noti.setContent(content);
                     noti.setUserTo(null);
                     noti.setUserFrom(userFrom);
@@ -506,6 +529,16 @@ public class NotiServiceImpl implements NotiService {
                     notificationsService.save(noti);
                     break;
                 }
+                case "welcome": {
+                    content = "Chào mừng bạn đến với sàn thương mại điện tử DEVEX do team Thiếu Nữ thành lập!";
+                    noti.setContent(content);
+                    noti.setUserTo(null);
+                    noti.setUserFrom(userFrom);
+                    noti.setLink(link);
+                    notificationsService.save(noti);
+                    break;
+                }
+                
                 default:
             }
 
