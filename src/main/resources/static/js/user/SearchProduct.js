@@ -255,6 +255,7 @@ app.controller("search-ctrl", function ($scope, $http, $window, $timeout) {
         main.innerHTML = "<i class= 'fs-1 mt-3 fa-solid fa-xmark '></i>";
         main.innerHTML += "<h4 class='mt-2'>Không tìm thấy kết quả nào ...</h4>";
         main.innerHTML += "<h4>Hãy thử sử dụng các từ khóa chung chung hơn</h4>";
+        spinner.style.display = "none";
       }
     },
     loadSpinner: function () {
