@@ -95,7 +95,7 @@
         <span class="fw-bold" th:text="${session.user.phoneAddress}"></span>
       </div>
       <span class="col-9 col-xl-8" th:text="${session.user.address}"></span>
-      <div class="col-3 col-xl-1"><a href="">Thay đổi</a></div>
+      <!-- <div class="col-3 col-xl-1"><a href="">Thay đổi</a></div> -->
     </div>
   </div>
   <div ng-repeat="(idShop, shopData) in cart.shopGroupsOrder"
@@ -114,9 +114,9 @@
             {{cart.shopGroupsOrder[idShop][0].nameShop}}
           </p>
         </button>
-        <div class="text-center d-flex align-items-center">
+        <!-- <div class="text-center d-flex align-items-center">
           <div>Xem Shop</div>
-        </div>
+        </div> -->
       </div>
       <!-- Lặp qua các sản phẩm trong cùng một shop -->
       <div class="row px-3 pb-3 pt-2">
@@ -566,7 +566,9 @@
               <label class="btn btn-outline-success" for="paypal">Paypal</label>
             </div>
           </div>
-
+          <p class="pe-2 mt-2" ng-if="payment == 'cash'" ng-controller="Dwallet_Controller">Số dư: <span class="fw-semibold fs-6"><strong class="text-danger">{{wallet.loadDWallet.balance
+            | currency: '':0}}</strong>
+          VNĐ</span></p>
         </div>
       </div>
       <div class="col-4 total-all-product">
@@ -751,6 +753,7 @@
 </script> -->
 
 <script th:src="@{/js/cart-ctrl.js}"></script>
+<script th:src="@{/js/user/DwalletCustomer.js}"></script>
 <script th:src="@{/js/user/autocomplete.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
