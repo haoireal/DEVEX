@@ -18,7 +18,7 @@
 	<link rel="stylesheet" href="/admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
 	<!-- BS Stepper -->
 	<link rel="stylesheet" href="/admin/plugins/bs-stepper/css/bs-stepper.min.css">
-	
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini" ng-app="app" ng-controller="sellerproduct">
@@ -41,7 +41,7 @@
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="/devex/home">Trang
+								<li class="breadcrumb-item"><a href="/seller/home">Trang
 										chủ</a></li>
 								<li class="breadcrumb-item active" th:text="${titleType}"></li>
 							</ol>
@@ -70,16 +70,22 @@
 									<div id="imgProduct">
 										<label class="col-1" title="Click vào hình ảnh 2 lần để xóa"
 											ng-repeat="fileObj in files">
-											<img alt="" class="img-fluid" style="height: 100px;" src="{{fileObj.dataURL}}" ng-dblclick="deleteimg(fileObj)" ng-show="checkSell === false">
-											<img alt="x" class="img-fluid" style="height: 100px;" src="{{fileObj.dataURL}}" ng-show="checkSell === true">
+											<img alt="" class="img-fluid" style="height: 100px;"
+												src="{{fileObj.dataURL}}" ng-dblclick="deleteimg(fileObj)"
+												ng-show="checkSell === false">
+											<img alt="x" class="img-fluid" style="height: 100px;"
+												src="{{fileObj.dataURL}}" ng-show="checkSell === true">
 										</label>
 									</div>
 									<div class="">
 										<!-- Chọn file -->
 										<input id="fileInput" style="display: none;" type="file" multiple="multiple"
-											onchange="angular.element(this).scope().uploadimg(this.files)" ng-disabled="checkSell === true">
-										<button class="btn btn-primary mb-2" onclick="openFilePicker()" ng-disabled="checkSell === true">Thêm</button>
-										<div class="text-danger" ng-show="files.length === 0">Vui lòng chọn ít nhất 1 hình ảnh</div>
+											onchange="angular.element(this).scope().uploadimg(this.files)"
+											ng-disabled="checkSell === true">
+										<button class="btn btn-primary mb-2" onclick="openFilePicker()"
+											ng-disabled="checkSell === true">Thêm</button>
+										<div class="text-danger" ng-show="files.length === 0">Vui lòng chọn ít nhất 1
+											hình ảnh</div>
 										<!-- END chọn file -->
 									</div>
 									<!-- END Hiển thị hình ảnh -->
@@ -94,8 +100,12 @@
 										<!-- Tên sản phẩm -->
 										<div class="form-group">
 											<label>Tên sản phẩm</label>
-											<input class="form-control" ng-model="form.name" placeholder="Nhập tên sản phẩm" name="productName" ng-required="true" ng-disabled="checkSell === true">
-											<div class="text-danger" ng-show="myForm.productName.$dirty && myForm.productName.$error.required">Vui lòng nhập tên sản phẩm</div>
+											<input class="form-control" ng-model="form.name"
+												placeholder="Nhập tên sản phẩm" name="productName" ng-required="true"
+												ng-disabled="checkSell === true">
+											<div class="text-danger"
+												ng-show="myForm.productName.$dirty && myForm.productName.$error.required">
+												Vui lòng nhập tên sản phẩm</div>
 										</div>
 										<!-- END Tên sản phẩm -->
 
@@ -103,8 +113,10 @@
 										<div class="row">
 											<div class="form-group col-6">
 												<label>Thương hiệu sản phẩm</label>
-												<select id="brands" class="form-control select2" style="width: 100%;" ng-change="getbrand()" ng-model="selectedbrand"
-													ng-options="brand.id as brand.name for brand in brands" ng-disabled="checkSell === true">
+												<select id="brands" class="form-control select2" style="width: 100%;"
+													ng-change="getbrand()" ng-model="selectedbrand"
+													ng-options="brand.id as brand.name for brand in brands"
+													ng-disabled="checkSell === true">
 												</select>
 											</div>
 										</div>
@@ -113,14 +125,18 @@
 										<div class="row">
 											<div class="form-group col-6">
 												<label>Loại sản phẩm</label>
-												<select id="categorys" class="form-control select2" style="width: 100%;" ng-change="getCategoryDetails()" ng-model="selectedCategory"
-													ng-options="category.id as category.name for category in categorys" ng-disabled="checkSell === true">
+												<select id="categorys" class="form-control select2" style="width: 100%;"
+													ng-change="getCategoryDetails()" ng-model="selectedCategory"
+													ng-options="category.id as category.name for category in categorys"
+													ng-disabled="checkSell === true">
 												</select>
 											</div>
 											<div class="form-group col-6">
 												<label>Loại chi tiết</label>
-												<select id="categorydt" class="form-control select2" style="width: 100%;" ng-model="selectedCategoryDetail"
-													ng-options="catedt.id as catedt.name for catedt in categorydetail" ng-disabled="checkSell === true">
+												<select id="categorydt" class="form-control select2"
+													style="width: 100%;" ng-model="selectedCategoryDetail"
+													ng-options="catedt.id as catedt.name for catedt in categorydetail"
+													ng-disabled="checkSell === true">
 												</select>
 											</div>
 										</div>
@@ -132,8 +148,9 @@
 										</div>
 										<div class="form-check form-switch mb-3">
 											<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
-											 ng-model="form.active" ng-checked="form.active" disabled>
-											<label class="form-check-label" for="flexSwitchCheckDefault">Trạng thái bán</label>
+												ng-model="form.active" ng-checked="form.active" disabled>
+											<label class="form-check-label" for="flexSwitchCheckDefault">Trạng thái
+												bán</label>
 										</div>
 										<table class="table table-bordered text-center" id="data-table">
 											<thead>
@@ -146,42 +163,69 @@
 											</thead>
 											<tbody id="table-body" ng-repeat="item in variant" ng-form="itemForm">
 												<tr>
-													<td><input type="text" ng-model="item.size" placeholder="Kích thước sản phẩm" ng-disabled="checkSell === true"></td>
+													<td><input type="text" ng-model="item.size"
+															placeholder="Kích thước sản phẩm"
+															ng-disabled="checkSell === true"></td>
 													<td>
-														<input type="text" ng-model="item.color" name="color" ng-required="true" placeholder="Màu sản phẩm" ng-disabled="checkSell === true">
-														<div class="text-danger" ng-show="itemForm.color.$dirty && itemForm.color.$error.required">Vui lòng nhập màu sắc</div>
+														<input type="text" ng-model="item.color" name="color"
+															ng-required="true" placeholder="Màu sản phẩm"
+															ng-disabled="checkSell === true">
+														<div class="text-danger"
+															ng-show="itemForm.color.$dirty && itemForm.color.$error.required">
+															Vui lòng nhập màu sắc</div>
 													</td>
 													<td>
-														<input type="number" ng-model="item.price" name="productPrice" min="1000" ng-min="1000" ng-required="true" placeholder="Giá sản phẩm" ng-disabled="checkSell === true">
-														<div class="text-danger" ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.min">Giá tiền không được thấp hơn 1000</div>
-														<div class="text-danger" ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.required">Vui lòng nhập giá tiền</div>
+														<input type="number" ng-model="item.price" name="productPrice"
+															min="1000" ng-min="1000" ng-required="true"
+															placeholder="Giá sản phẩm" ng-disabled="checkSell === true">
+														<div class="text-danger"
+															ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.min">
+															Giá tiền không được thấp hơn 1000</div>
+														<div class="text-danger"
+															ng-show="itemForm.productPrice.$dirty && itemForm.productPrice.$error.required">
+															Vui lòng nhập giá tiền</div>
 													</td>
 													<td>
-														<input type="number" ng-model="item.quantity" name="productQuantity" min="1" ng-min="1" ng-required="true" placeholder="Số lượng sản phẩm" ng-disabled="checkSell === true">
-														<div class="text-danger" ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.min">Số lượng không được thấp hơn 1</div>
-														<div class="text-danger" ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.required">Vui lòng nhập số lượng</div>
+														<input type="number" ng-model="item.quantity"
+															name="productQuantity" min="1" ng-min="1" ng-required="true"
+															placeholder="Số lượng sản phẩm"
+															ng-disabled="checkSell === true">
+														<div class="text-danger"
+															ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.min">
+															Số lượng không được thấp hơn 1</div>
+														<div class="text-danger"
+															ng-show="itemForm.productQuantity.$dirty && itemForm.productQuantity.$error.required">
+															Vui lòng nhập số lượng</div>
 													</td>
 													<td>
-														<button class="btn btn-danger" ng-click="deleteproductvariant(item.id)" ng-disabled="checkSell === true">
+														<button class="btn btn-danger"
+															ng-click="deleteproductvariant(item.id)"
+															ng-disabled="checkSell === true">
 															<i class="fa-regular fa-trash-can"></i>
 														</button>
 													</td>
 												</tr>
 											</tbody>
 										</table>
-										<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()" ng-disabled="checkSell === true">
+										<button id="add-row-btn" class="btn btn-primary mt-2" ng-click="addRow()"
+											ng-disabled="checkSell === true">
 											Thêm chi tiết sản phẩm</button>
 									</div>
 								</form>
 							</div>
 							<!-- END Thông tin sản phẩm -->
-							
+
 							<div class="text-center mb-3">
-								<button class="btn btn-primary" ng-click="save()" ng-disabled="myForm.$invalid || files.length === 0" ng-hide="checkSell === true">Cập nhật</button>
+								<button class="btn btn-primary" ng-click="save()"
+									ng-disabled="myForm.$invalid || files.length === 0" ng-hide="checkSell === true">Cập
+									nhật</button>
 								<button class="btn btn-danger" ng-click="deleteProduc()">Đưa vào thùng rác</button>
-								<button class="btn btn-danger" ng-if="checkRequest === true" ng-click="cancelRequest()">Hủy yêu cầu</button>
-								<button class="btn btn-success" ng-if="checkRequest === false && checkSell === false" ng-click="sendRequest()">Gửi yêu cầu bán sản phẩm</button>
-								<button class="btn btn-success" ng-if="checkRequest === false && checkSell === true" ng-click="sendRequestActiveFalse()">Gửi yêu cầu hủy bán sản phẩm</button>
+								<button class="btn btn-danger" ng-if="checkRequest === true"
+									ng-click="cancelRequest()">Hủy yêu cầu</button>
+								<button class="btn btn-success" ng-if="checkRequest === false && checkSell === false"
+									ng-click="sendRequest()">Gửi yêu cầu bán sản phẩm</button>
+								<button class="btn btn-success" ng-if="checkRequest === false && checkSell === true"
+									ng-click="sendRequestActiveFalse()">Gửi yêu cầu hủy bán sản phẩm</button>
 							</div>
 
 							<!-- <div class="text-center">
@@ -208,12 +252,14 @@
 							</div> -->
 
 							<!-- Model sent content true -->
-							<button id="sendcontenttrue" type="button" class="btn btn-primary" data-toggle="modal" data-target="#sendContentt" hidden>
+							<button id="sendcontenttrue" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#sendContentt" hidden>
 								send
 							</button>
 
 							<!-- Modal -->
-							<div class="modal fade" id="sendContentt" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+							<div class="modal fade" id="sendContentt" tabindex="-1" role="dialog" aria-labelledby=""
+								aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -227,13 +273,17 @@
 										</div>
 										<div class="modal-body text-center">
 											<div class="form-group">
-												<label for="exampleFormControlTextarea1">Bạn có thể điền nội dung để tăng tỉ lệ được chấp nhận yêu cầu!</label>
-												<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" ng-model="contenttrue" placeholder="Bạn có thể không nhập thông tin này"></textarea>
+												<label for="exampleFormControlTextarea1">Bạn có thể điền nội dung để
+													tăng tỉ lệ được chấp nhận yêu cầu!</label>
+												<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+													ng-model="contenttrue"
+													placeholder="Bạn có thể không nhập thông tin này"></textarea>
 											</div>
 										</div>
 										<div class="modal-footer">
 											<button class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-											<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="acceptModel()">
+											<button type="button" class="btn btn-primary" data-dismiss="modal"
+												ng-click="acceptModel()">
 												Chấp nhận
 											</button>
 										</div>
@@ -243,12 +293,14 @@
 							<!-- End sent content true -->
 
 							<!-- Model sent content false -->
-							<button id="sendcontentfalse" type="button" class="btn btn-primary" data-toggle="modal" data-target="#sendContentf" hidden>
+							<button id="sendcontentfalse" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#sendContentf" hidden>
 								send
 							</button>
 
 							<!-- Modal -->
-							<div class="modal fade" id="sendContentf" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+							<div class="modal fade" id="sendContentf" tabindex="-1" role="dialog" aria-labelledby=""
+								aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -262,13 +314,17 @@
 										</div>
 										<div class="modal-body text-center">
 											<div class="form-group">
-												<label for="exampleFormControlTextarea1">Bạn có thể điền nội dung để tăng tỉ lệ được chấp nhận yêu cầu!</label>
-												<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" ng-model="contentfalse" placeholder="Bạn có thể không nhập thông tin này"></textarea>
+												<label for="exampleFormControlTextarea1">Bạn có thể điền nội dung để
+													tăng tỉ lệ được chấp nhận yêu cầu!</label>
+												<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+													ng-model="contentfalse"
+													placeholder="Bạn có thể không nhập thông tin này"></textarea>
 											</div>
 										</div>
 										<div class="modal-footer">
 											<button class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-											<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="acceptModelFalse()">
+											<button type="button" class="btn btn-primary" data-dismiss="modal"
+												ng-click="acceptModelFalse()">
 												Chấp nhận
 											</button>
 										</div>
@@ -278,12 +334,14 @@
 							<!-- End sent content true -->
 
 							<!-- Model success save -->
-							<button id="ss" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successSave" hidden>
+							<button id="ss" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#successSave" hidden>
 								save
 							</button>
-							
+
 							<!-- Modal -->
-							<div class="modal fade" id="successSave" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+							<div class="modal fade" id="successSave" tabindex="-1" role="dialog" aria-labelledby=""
+								aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -296,7 +354,8 @@
 											</button>
 										</div>
 										<div class="modal-body text-center">
-											<iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+											<iframe
+												src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
 											<h3 class="text-center text-success">
 												Cập nhật thông tin sản phẩm thành công!
 											</h3>
@@ -310,14 +369,16 @@
 								</div>
 							</div>
 							<!-- End model success save -->
-							
+
 							<!-- Model false save -->
-							<button id="fs" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseSave" hidden>
+							<button id="fs" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#falseSave" hidden>
 								save
 							</button>
-							
+
 							<!-- Modal -->
-							<div class="modal fade" id="falseSave" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+							<div class="modal fade" id="falseSave" tabindex="-1" role="dialog" aria-labelledby=""
+								aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -330,9 +391,11 @@
 											</button>
 										</div>
 										<div class="modal-body text-center">
-											<iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+											<iframe
+												src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
 											<h3 class="text-center text-danger">
-												Cập nhật thông tin sản phẩm thất bại, Vui lòng kiểm tra lại dữ liệu của bạn!
+												Cập nhật thông tin sản phẩm thất bại, Vui lòng kiểm tra lại dữ liệu của
+												bạn!
 											</h3>
 										</div>
 										<div class="modal-footer">
@@ -346,12 +409,14 @@
 							<!-- End model false save -->
 
 							<!-- Model success delete -->
-							<button id="sd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successDelete" hidden>
+							<button id="sd" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#successDelete" hidden>
 								delete
 							</button>
-							
+
 							<!-- Modal -->
-							<div class="modal fade" id="successDelete" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+							<div class="modal fade" id="successDelete" tabindex="-1" role="dialog" aria-labelledby=""
+								aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -364,13 +429,15 @@
 											</button>
 										</div>
 										<div class="modal-body text-center">
-											<iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+											<iframe
+												src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
 											<h3 class="text-center text-success">
 												Xóa sản phẩm thành công!
 											</h3>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="chuyentrang()">
+											<button type="button" class="btn btn-primary" data-dismiss="modal"
+												ng-click="chuyentrang()">
 												Chấp nhận
 											</button>
 										</div>
@@ -378,14 +445,16 @@
 								</div>
 							</div>
 							<!-- End model success delete -->
-							
+
 							<!-- Model false delete -->
-							<button id="fd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseDelete" hidden>
+							<button id="fd" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#falseDelete" hidden>
 								delete
 							</button>
-							
+
 							<!-- Modal -->
-							<div class="modal fade" id="falseDelete" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+							<div class="modal fade" id="falseDelete" tabindex="-1" role="dialog" aria-labelledby=""
+								aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -398,7 +467,8 @@
 											</button>
 										</div>
 										<div class="modal-body text-center">
-											<iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+											<iframe
+												src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
 											<h3 class="text-center text-danger">
 												Xóa sản phẩm thất bại!
 											</h3>
@@ -414,12 +484,14 @@
 							<!-- End model false delete -->
 
 							<!-- Model success send request -->
-							<button id="ssr" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successsendrequest" hidden>
+							<button id="ssr" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#successsendrequest" hidden>
 								send rq
 							</button>
-							
+
 							<!-- Modal -->
-							<div class="modal fade" id="successsendrequest" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+							<div class="modal fade" id="successsendrequest" tabindex="-1" role="dialog"
+								aria-labelledby="" aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -432,7 +504,8 @@
 											</button>
 										</div>
 										<div class="modal-body text-center">
-											<iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+											<iframe
+												src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
 											<h3 class="text-center text-success">
 												Gửi yêu cầu thành công!
 											</h3>
@@ -446,14 +519,16 @@
 								</div>
 							</div>
 							<!-- End model success send request -->
-							
+
 							<!-- Model false send request -->
-							<button id="fsr" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falsesendrequest" hidden>
+							<button id="fsr" type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#falsesendrequest" hidden>
 								send request
 							</button>
-							
+
 							<!-- Modal -->
-							<div class="modal fade" id="falsesendrequest" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+							<div class="modal fade" id="falsesendrequest" tabindex="-1" role="dialog" aria-labelledby=""
+								aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -466,7 +541,8 @@
 											</button>
 										</div>
 										<div class="modal-body text-center">
-											<iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+											<iframe
+												src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
 											<h3 class="text-center text-danger">
 												Gửi yêu cầu thất bại!
 											</h3>
@@ -552,18 +628,18 @@
 			})
 			//Date range as a button
 			$('#daterange-btn').daterangepicker({
-					ranges: {
-						'Today': [moment(), moment()],
-						'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-						'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-						'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-						'This Month': [moment().startOf('month'), moment().endOf('month')],
-						'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
-							'month').endOf('month')]
-					},
-					startDate: moment().subtract(29, 'days'),
-					endDate: moment()
+				ranges: {
+					'Today': [moment(), moment()],
+					'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+					'This Month': [moment().startOf('month'), moment().endOf('month')],
+					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
+						'month').endOf('month')]
 				},
+				startDate: moment().subtract(29, 'days'),
+				endDate: moment()
+			},
 				function (start, end) {
 					$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
 				}
@@ -712,14 +788,14 @@
 									var fileObj = {
 										id: idCounter++,
 										file: file,
-										dataURL: filename 
+										dataURL: filename
 									};
 									// Thêm đối tượng File vào $scope.files
 									$scope.$apply(function () {
 										$scope.files.push(fileObj);
 									});
 									console.log($scope.files);
-									
+
 								});
 						});
 					})
@@ -880,17 +956,17 @@
 					console.log("errors", error);
 				})
 			};
-			
+
 			$scope.save = function () {
 
 				$scope.form.idCategoryDetails = $scope.selectedCategoryDetail;
 				$scope.form.listvariant = $scope.variant;
 				$scope.form.brand = $scope.selectedbrand;
 				$http.put("/info/product", $scope.form).then(resp => {
-				$scope.checkRequest = resp.data.checkRequest;
-				$scope.checkSell = $scope.form.active;
-				$scope.updateImg();
-				document.getElementById('ss').click();
+					$scope.checkRequest = resp.data.checkRequest;
+					$scope.checkSell = $scope.form.active;
+					$scope.updateImg();
+					document.getElementById('ss').click();
 				}).catch(error => {
 					console.log("errors", error);
 					document.getElementById('fs').click();
@@ -910,17 +986,17 @@
 
 				// Chuyển hướng đến URL mới
 				// console.log('/delete/product/'+$scope.form.id);
-				
+
 			};
 
-			$scope.chuyentrang = function() {
+			$scope.chuyentrang = function () {
 				$window.location.href = '/seller/list/products';
 			};
 
 			$scope.lista();
 
 			// window.onbeforeunload = function (event) {
-				
+
 			// 	var data = $scope.form.id;
 			// 	if ($scope.filenames.length === 0) {
 			// 		navigator.sendBeacon('/addimageproduct/' + $scope.form.id, JSON.stringify(data));
@@ -990,7 +1066,7 @@
 					console.log("errors", error);
 				})
 			};
-			
+
 		});
 	</script>
 	<!-- END script xử lý hình ảnh -->

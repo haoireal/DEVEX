@@ -44,68 +44,66 @@ public class ProductDetailController {
 
 	@Autowired
 	ProductVariantService productVariantService;
-	
+
 	@Autowired
 	ProductRepository productRepository;
-	
+
 	@Autowired
-    SessionService session;
-	
+	SessionService session;
+
 	@Autowired
 	UserRoleService userRoleService;
-	
-	
-	  @ModelAttribute("admin")
-	  public Boolean getAdmin(Principal principal) {
-		  User user = session.get("user");
-			if (user != null) {
-				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
-				for (UserRole u : roles) {
-					if (u.getRole().getId().equals("ADMIN")) {
-						System.out.println("tôi là admin kk");
-						return true;
-					}
+
+	@ModelAttribute("admin")
+	public Boolean getAdmin(Principal principal) {
+		User user = session.get("user");
+		if (user != null) {
+			List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+			for (UserRole u : roles) {
+				if (u.getRole().getId().equals("ADMIN")) {
+					System.out.println("tôi là admin kk");
+					return true;
 				}
 			}
-	      return false;
-	  }
-	  
-	  @ModelAttribute("seller")
-	  public Boolean getSeller(Principal principal) {
-		  User user = session.get("user");
-			if (user != null) {
-				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
-				for (UserRole u : roles) {
-					if (u.getRole().getId().equals("SELLER")) {
-						System.out.println("tôi là seller kk");
-						return true;
-					}
+		}
+		return false;
+	}
+
+	@ModelAttribute("seller")
+	public Boolean getSeller(Principal principal) {
+		User user = session.get("user");
+		if (user != null) {
+			List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+			for (UserRole u : roles) {
+				if (u.getRole().getId().equals("SELLER")) {
+					System.out.println("tôi là seller kk");
+					return true;
 				}
 			}
-	      return false;
-	  }
+		}
+		return false;
+	}
 
 	@RequestMapping("/details/{id}")
-	public String details(ModelMap model, @PathVariable("id") String id , HttpServletRequest request) {
-		System.out.println("SSS"+ id);
+	public String details(ModelMap model, @PathVariable("id") String id, HttpServletRequest request) {
+		System.out.println("SSS" + id);
 		session.set("url", "/details/" + id);
-		//Lưu Lịch Sử Sản phẩm
+		// Lưu Lịch Sử Sản phẩm
 		User user = session.get("user");
-		if(user!=null) {
+		if (user != null) {
 			History history = new History();
-				history.setProductId(id);
-				history.setUser(user);
-				historyService.save(history);
-			
+			history.setProductId(id);
+			history.setUser(user);
+			historyService.save(history);
+
 		}
-		
-		
-		
-		//end.
+
+		// end.
 		Product seller = productService.findProductById(id);
 		Product product = productService.findById(id).orElse(new Product());
 		System.out.println(product.getActive());
-//		System.out.println("SSSS" + product.getProductVariants().get(0).getPriceSale());
+		// System.out.println("SSSS" +
+		// product.getProductVariants().get(0).getPriceSale());
 		List<String> listSize = new ArrayList<>();
 		product.getProductVariants().forEach(sv -> {
 			if (!listSize.contains(sv.getSize())) {
@@ -113,7 +111,7 @@ public class ProductDetailController {
 			}
 		});
 
-		//Đếm số lượng đánh giá và Tổng sao
+		// Đếm số lượng đánh giá và Tổng sao
 		model.addAttribute("commentCount", productService.getCommentCount(id));
 		model.addAttribute("starAverage", productService.getStarAverage(id));
 		// ListColor
@@ -129,36 +127,38 @@ public class ProductDetailController {
 		List<Product> list = new ArrayList<>();
 		Set<Product> uniqueProducts = new HashSet<>(); // check trùng
 		// sản phẩm của shop
-		List<Product> listPrS = productService.findProductBySellerUsername("%" + seller.getSellerProduct().getUsername() + "%");
+		List<Product> listPrS = productService
+				.findProductBySellerUsername("%" + seller.getSellerProduct().getUsername() + "%");
 		listPrS.remove(product);
 		// Tìm tên từ theo từ khóa
-		for(int i = 0; i < 2 ; i++) {
-			list.addAll(productService.findByKeywordName(name[i]));			
-			list.forEach(pr ->{
+		for (int i = 0; i < 2; i++) {
+			list.addAll(productService.findByKeywordName(name[i]));
+			list.forEach(pr -> {
 				uniqueProducts.add(pr);
 			});
-			
-		}
-		 // Chuyển đổi lại thành danh sách (List)
-        List<Product> uniqueProductList = new ArrayList<>(uniqueProducts);
-		// Tìm theo shop bán
-        uniqueProductList.removeAll(productService.findProductBySellerUsername("%" + seller.getSellerProduct().getUsername() + "%"));
-//		Collections.shuffle(uniqueProductList);
 
-		boolean shop= true;
+		}
+		// Chuyển đổi lại thành danh sách (List)
+		List<Product> uniqueProductList = new ArrayList<>(uniqueProducts);
+		// Tìm theo shop bán
+		uniqueProductList.removeAll(
+				productService.findProductBySellerUsername("%" + seller.getSellerProduct().getUsername() + "%"));
+		// Collections.shuffle(uniqueProductList);
+
+		boolean shop = true;
 		int flag = 0;
-		if(user!=null) {
-			//kiểm tra xem người đó co phan quyen customer không
+		if (user != null) {
+			// kiểm tra xem người đó co phan quyen customer không
 			for (UserRole role : user.getRoles()) {
-				if(role.getRole().getId().equalsIgnoreCase("CUSTOMER")){
+				if (role.getRole().getId().equalsIgnoreCase("CUSTOMER")) {
 
 					flag++;
 				}
 				System.out.println(role.getRole().getId());
 			}
-			//Kieem tra xem có phải chính shop đó đăn bán không
-			if(user.getUsername().equals(seller.getSellerProduct().getUsername()) || flag == 0) {
-				shop=false;
+			// Kieem tra xem có phải chính shop đó đăn bán không
+			if (user.getUsername().equals(seller.getSellerProduct().getUsername()) || flag == 0) {
+				shop = false;
 			}
 		}
 		model.addAttribute("shopProduct", listPrS); // sản phẩm khác của shop
@@ -166,8 +166,8 @@ public class ProductDetailController {
 		model.addAttribute("listColor", listColor);
 		model.addAttribute("listSize", listSize);
 		model.addAttribute("product", product);
-		model.addAttribute("seller", seller);
-		model.addAttribute("id",product.getId());
+		model.addAttribute("sellerObj", seller);
+		model.addAttribute("id", product.getId());
 		model.addAttribute("shop", shop);
 		return "user/productDetail";
 
@@ -178,19 +178,17 @@ public class ProductDetailController {
 	@ResponseBody
 	public Double Data(@RequestParam("id") String id, @RequestParam("color") String color,
 			@RequestParam("size") String size) {
-			Double price =  productVariantService.findPriceByColorAndSize(id, color, size);
-			return price;
+		Double price = productVariantService.findPriceByColorAndSize(id, color, size);
+		return price;
 	}
-	
+
 	@RequestMapping(value = ("/quantityproductvariant"), method = RequestMethod.POST)
 	@ResponseBody
 	public int quantityProductVariant(@RequestParam("id") String id, @RequestParam("color") String color,
 			@RequestParam("size") String size) {
-			ProductVariant p = productVariantService.findProductVariantByColorAndSizeAndIdProduct(id, color, size);
-			int quantity =  p.getQuantity();
-			return quantity;
+		ProductVariant p = productVariantService.findProductVariantByColorAndSizeAndIdProduct(id, color, size);
+		int quantity = p.getQuantity();
+		return quantity;
 	}
-	
-	
 
 }

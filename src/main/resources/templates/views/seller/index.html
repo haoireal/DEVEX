@@ -37,7 +37,7 @@
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item">
-                  <a href="/devex/home">Trang chủ</a>
+                  <a href="#">Trang chủ</a>
                 </li>
                 <li class="breadcrumb-item active">Tổng quan</li>
               </ol>
@@ -407,7 +407,7 @@
             }
           } else if (priceChartrevenuemonthline < pricecompareChartrevenuemonthline) {
             if (priceChartrevenuemonthline !== 0) {
-              percentage =(pricecompareChartrevenuemonthline / priceChartrevenuemonthline) * 100;
+              percentage = (pricecompareChartrevenuemonthline / priceChartrevenuemonthline) * 100;
             } else {
               percentage = 100;
             }
@@ -422,9 +422,9 @@
           );
           let formattedPrice = priceChartrevenuemonthline.toLocaleString(
             "vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }
+            style: "currency",
+            currency: "VND",
+          }
           );
           if (priceChartrevenuemonthline > pricecompareChartrevenuemonthline) {
             iconrevenuemonthline.className = "fa-solid fa-caret-up";
@@ -473,9 +473,9 @@
           let headerElement = document.querySelector(".description-block .totalrevenueyearline");
           let formattedPrice = priceChartrevenueyearline.toLocaleString(
             "vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }
+            style: "currency",
+            currency: "VND",
+          }
           );
           if (priceChartrevenueyearline > pricecompareChartrevenueyearline) {
             iconrevenuemonthline.className = "fa-solid fa-caret-up";
@@ -663,20 +663,20 @@
       data: {
         labels: [],
         datasets: [{
-            label: "Doanh thu tháng này",
-            data: [],
-            borderColor: "red",
-            fill: false,
-            cubicInterpolationMode: "monotone",
-            tension: 0.4,
-          },
-          {
-            label: "Doanh thu tháng trước",
-            data: [],
-            borderColor: "blue",
-            fill: false,
-            tension: 0.4,
-          },
+          label: "Doanh thu tháng này",
+          data: [],
+          borderColor: "red",
+          fill: false,
+          cubicInterpolationMode: "monotone",
+          tension: 0.4,
+        },
+        {
+          label: "Doanh thu tháng trước",
+          data: [],
+          borderColor: "blue",
+          fill: false,
+          tension: 0.4,
+        },
         ],
       },
       options: {
@@ -716,20 +716,20 @@
       data: {
         labels: [],
         datasets: [{
-            label: "Doanh thu năm nay",
-            data: [],
-            borderColor: "red",
-            fill: false,
-            cubicInterpolationMode: "monotone",
-            tension: 0.4,
-          },
-          {
-            label: "Doanh thu năm trước",
-            data: [],
-            borderColor: "blue",
-            fill: false,
-            tension: 0.4,
-          },
+          label: "Doanh thu năm nay",
+          data: [],
+          borderColor: "red",
+          fill: false,
+          cubicInterpolationMode: "monotone",
+          tension: 0.4,
+        },
+        {
+          label: "Doanh thu năm trước",
+          data: [],
+          borderColor: "blue",
+          fill: false,
+          tension: 0.4,
+        },
         ],
       },
       options: {
@@ -782,7 +782,7 @@
             "#E74C3C", // Màu đỏ đậm
             "#FF5733", // Màu cam đậm
           ],
-        }, ],
+        },],
       },
       options: {
         responsive: true,

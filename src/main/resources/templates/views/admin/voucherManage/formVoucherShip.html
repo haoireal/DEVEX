@@ -36,7 +36,7 @@
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="/devex/home">Trang
+								<li class="breadcrumb-item"><a href="/ad/home">Trang
 										chủ</a></li>
 								<li class="breadcrumb-item active">Mã khuyến mãi Ship</li>
 							</ol>
@@ -207,12 +207,12 @@
 <script src="/admin/dist/js/handMade.js"></script>
 <script>
 	var allVoucher = [];
-		// Gửi yêu cầu sử dụng fetch
-		fetch("http://localhost:8888/rest/admin/voucher/list")
+	// Gửi yêu cầu sử dụng fetch
+	fetch("http://localhost:8888/rest/admin/voucher/list")
 		.then(response => {
 			// Kiểm tra xem yêu cầu có thành công không
 			if (!response.ok) {
-			throw new Error("Yêu cầu không thành công. Mã lỗi: " + response.status);
+				throw new Error("Yêu cầu không thành công. Mã lỗi: " + response.status);
 			}
 			// Chuyển đổi dữ liệu nhận được sang JSON
 			return response.json();
@@ -248,13 +248,13 @@
 			return false;
 		} else if (code.value === "" || code.value.length < 15) {
 			message.innerText = "Vui lòng cung cấp đầy đủ code khuyến mãi!";
-			  $("#modalValidate").modal("show");
-			  return false;
-		} else if(checkCodeVoucher(code.value)) {
+			$("#modalValidate").modal("show");
+			return false;
+		} else if (checkCodeVoucher(code.value)) {
 			message.innerText = "Code khuyến mãi đã tồn tại!";
-			  $("#modalValidate").modal("show");
-			  return false;
-		} else if(quantity.value === "") {
+			$("#modalValidate").modal("show");
+			return false;
+		} else if (quantity.value === "") {
 			message.innerText = "Vui lòng cung cấp số lượng!";
 			$("#modalValidate").modal("show");
 			return false;
@@ -275,7 +275,7 @@
 		}
 
 
-	}  
+	}
 	function checkCodeVoucher(code) {
 		return allVoucher.some((voucher) => voucher.code === code);
 	} 

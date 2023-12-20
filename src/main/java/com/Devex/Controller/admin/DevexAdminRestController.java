@@ -180,10 +180,17 @@ public class DevexAdminRestController {
 		Map<String, String> response = new HashMap<>();
 		User user = userService.findById(updatedRoles.getUserId()).orElse(null);
 		SellerDTO seller = sellerService.findSeller(user.getUsername());
+		String passUpdate = "";
+		System.out.println("cho ngu" + u.getPassword().equals(updatedRoles.getPassword()));
+		if (u.getPassword().equals(updatedRoles.getPassword())) {
+			passUpdate = u.getPassword();
+		} else {
+			passUpdate = passwordEncoder.encode(updatedRoles.getPassword());
+		}
 		if (user != null) {
 			// update user trước khi tạo roles
 			userService.updateUser(updatedRoles.getFullname(), updatedRoles.getEmail(),
-					passwordEncoder.encode(updatedRoles.getPassword()),
+					passUpdate,
 					updatedRoles.getPhone(), updatedRoles.getGender(), updatedRoles.isActive(),
 					updatedRoles.getUserId());
 
@@ -204,7 +211,8 @@ public class DevexAdminRestController {
 					// tạo mới seller
 					if ("SELLER".equals(roleId)) {
 						if (seller == null) {
-							sellerService.insertSeller(user.getUsername(), "Default", "Default", "Default", false, true,
+							sellerService.insertSeller(user.getUsername(), "Default", "Default",
+									"Default", false, true,
 									null);
 						}
 					}
@@ -212,8 +220,10 @@ public class DevexAdminRestController {
 				} // END IF ROLE
 
 			} // end for
-			notiService.sendNotification(usernameAdmin, user.getUsername(), null, "updateUser", null);
-			notiService.sendHistory(usernameAdmin, null, "", "updateUser", user.getUsername());
+			notiService.sendNotification(usernameAdmin, user.getUsername(), null,
+					"updateUser", null);
+			notiService.sendHistory(usernameAdmin, null, "", "updateUser",
+					user.getUsername());
 			response.put("message", "Cập Nhật Roles Thành Công");
 			return ResponseEntity.ok(response);
 		} else {

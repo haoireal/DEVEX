@@ -34,7 +34,7 @@
             <!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="/devex/home">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="/ad/home">Trang chủ</a></li>
                 <li class="breadcrumb-item active">Tổng quan</li>
               </ol>
             </div>
@@ -128,15 +128,18 @@
                         <td>{{listProductRequestTrue.listNameCategoryTrue[$index]}}</td>
                         <td>{{listProductRequestTrue.listNameProductBrandTrue[$index]}}</td>
                         <td>{{listProductRequestTrue.listShopNameTrue[$index]}}</td>
-                        <td>{{listProductRequestTrue.listProductRequestTrue[$index].createdDay | date:'dd/MM/yyyy HH:mm:ss'}}
+                        <td>{{listProductRequestTrue.listProductRequestTrue[$index].createdDay | date:'dd/MM/yyyy
+                          HH:mm:ss'}}
                         </td>
                         <td>
                           <div class="btn-group w-100" role="group" aria-label="Basic example">
-                            <button ng-click="cancelRequestTrue(listProductRequestTrue.listProductRequestTrue[$index].id)"
+                            <button
+                              ng-click="cancelRequestTrue(listProductRequestTrue.listProductRequestTrue[$index].id)"
                               class="btn btn-danger text-center" title="Từ chối yêu cầu">
                               <i class="fa-solid fa-xmark"></i>
                             </button>
-                            <button ng-click="confirmRequestTrue(listProductRequestTrue.listProductRequestTrue[$index].id)"
+                            <button
+                              ng-click="confirmRequestTrue(listProductRequestTrue.listProductRequestTrue[$index].id)"
                               class="btn btn-success text-center" title="Chấp nhận yêu cầu">
                               <i class="fa-solid fa-check"></i>
                             </button>
@@ -154,7 +157,7 @@
               <!-- End tắt bán -->
             </div>
           </div>
-          
+
         </div>
     </div>
   </div>
@@ -169,141 +172,141 @@
   <div th:replace="~{flagment/admin/adminFootLink :: adminFootLinkFragment}"></div>
   </div>
 
-<!-- Model success accept -->
-<button id="sa" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successAccept" hidden>
-  accept
-</button>
+  <!-- Model success accept -->
+  <button id="sa" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successAccept" hidden>
+    accept
+  </button>
 
-<!-- Modal -->
-<div class="modal fade" id="successAccept" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <!-- Modal -->
+  <div class="modal fade" id="successAccept" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="">
-                    <i class="fa-solid fa-circle-exclamation text-primary"></i>
-                    Thông báo
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
-                <h3 class="text-center text-success">
-                    Chấp nhận yêu cầu thành công!
-                </h3>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
-                    Chấp nhận
-                </button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">
+            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+            Thông báo
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body text-center">
+          <iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+          <h3 class="text-center text-success">
+            Chấp nhận yêu cầu thành công!
+          </h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Chấp nhận
+          </button>
+        </div>
+      </div>
     </div>
-</div>
-<!-- End model success accept -->
+  </div>
+  <!-- End model success accept -->
 
-<!-- Model false accept -->
-<button id="fa" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseAccept" hidden>
-  accept
-</button>
+  <!-- Model false accept -->
+  <button id="fa" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseAccept" hidden>
+    accept
+  </button>
 
-<!-- Modal -->
-<div class="modal fade" id="falseAccept" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <!-- Modal -->
+  <div class="modal fade" id="falseAccept" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="">
-                    <i class="fa-solid fa-circle-exclamation text-primary"></i>
-                    Thông báo
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
-                <h3 class="text-center text-success">
-                    Chấp nhận yêu cầu thất bại!
-                </h3>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
-                    Chấp nhận
-                </button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">
+            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+            Thông báo
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body text-center">
+          <iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+          <h3 class="text-center text-success">
+            Chấp nhận yêu cầu thất bại!
+          </h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Chấp nhận
+          </button>
+        </div>
+      </div>
     </div>
-</div>
-<!-- End model false accept -->
+  </div>
+  <!-- End model false accept -->
 
-<!-- Model success refuse -->
-<button id="sr" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successRefuse" hidden>
-  refuse
-</button>
+  <!-- Model success refuse -->
+  <button id="sr" type="button" class="btn btn-primary" data-toggle="modal" data-target="#successRefuse" hidden>
+    refuse
+  </button>
 
-<!-- Modal -->
-<div class="modal fade" id="successRefuse" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <!-- Modal -->
+  <div class="modal fade" id="successRefuse" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="">
-                    <i class="fa-solid fa-circle-exclamation text-primary"></i>
-                    Thông báo
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
-                <h3 class="text-center text-success">
-                    từ chối yêu cầu thành công!
-                </h3>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
-                    Chấp nhận
-                </button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">
+            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+            Thông báo
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body text-center">
+          <iframe src="https://lottie.host/?file=b88a887a-bdb0-4353-9bf1-6fe27e3eb9f1/FboQjv554S.json"></iframe>
+          <h3 class="text-center text-success">
+            từ chối yêu cầu thành công!
+          </h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Chấp nhận
+          </button>
+        </div>
+      </div>
     </div>
-</div>
-<!-- End model success accept -->
+  </div>
+  <!-- End model success accept -->
 
-<!-- Model false refuse -->
-<button id="fr" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseRefuse" hidden>
-  accept
-</button>
+  <!-- Model false refuse -->
+  <button id="fr" type="button" class="btn btn-primary" data-toggle="modal" data-target="#falseRefuse" hidden>
+    accept
+  </button>
 
-<!-- Modal -->
-<div class="modal fade" id="falseRefuse" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <!-- Modal -->
+  <div class="modal fade" id="falseRefuse" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="">
-                    <i class="fa-solid fa-circle-exclamation text-primary"></i>
-                    Thông báo
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
-                <h3 class="text-center text-success">
-                    Từ chối yêu cầu thất bại!
-                </h3>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
-                    Chấp nhận
-                </button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">
+            <i class="fa-solid fa-circle-exclamation text-primary"></i>
+            Thông báo
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body text-center">
+          <iframe src="https://lottie.host/?file=51cd8b56-3c50-45f1-a51f-9e1ae1a50534/RwZN1jyiA0.json"></iframe>
+          <h3 class="text-center text-success">
+            Từ chối yêu cầu thất bại!
+          </h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Chấp nhận
+          </button>
+        </div>
+      </div>
     </div>
-</div>
-<!-- End model false accept -->
+  </div>
+  <!-- End model false accept -->
 
 </body>
 <!-- <script src="/admin/dist/js/handMade.js"></script>
