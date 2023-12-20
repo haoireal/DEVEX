@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.Devex.Sevice.*;
 import org.apache.coyote.http11.upgrade.UpgradeServletOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.Devex.DTO.CartDetailDTo;
 import com.Devex.Entity.TransactionHistory;
 import com.Devex.Entity.User;
-import com.Devex.Sevice.DwalletService;
-import com.Devex.Sevice.SessionService;
-import com.Devex.Sevice.TransactionHistoryService;
-import com.Devex.Sevice.vnPayService;
 import com.Devex.Sevice.ServiceImpl.MailerServiceImpl;
 import com.nimbusds.oauth2.sdk.util.CollectionUtils;
 
@@ -39,6 +36,9 @@ public class VnpayapiController {
 	MailerServiceImpl mailer;
 	@Autowired
     SessionService session;
+
+	@Autowired
+	TransactionService transactionService;
 	
 	
 	@GetMapping("/thanhtoanhoadon")
@@ -255,16 +255,12 @@ public class VnpayapiController {
 		public String rechargeSuccess(Model mdoel,HttpServletRequest request)
 		{
 			
-		 	long orderTotal = Long.parseLong(request.getParameter("totalPrice")) / 100;
-		 	int intValue = (int) orderTotal;
-			double doubleValue = (double) orderTotal;
+		 	long balanceIn = Long.parseLong(request.getParameter("totalPrice")) / 100;
+		 	int intValue = (int) balanceIn;
+			double doubleValue = (double) balanceIn;
 			User user = session.get("user");
-			dwalletService.updateDwalletbyUsername(intValue, user.getUsername());
-			TransactionHistory transactional = new TransactionHistory();
-			transactional.setFrom("6393354612293475394132454613191791413327669698937398338115217662142713457395040659847955435853662737");
-			transactional.setTo( user.getDwallet().getId());
-			transactional.setValue(doubleValue);
-			transactionHistoryService.save(transactional);
+			transactionService.transactionDwallet(user.getUsername(), user.getUsername(),doubleValue,"vnpayInToWallet");
+
 			return "user/paymentSuccess"; 
 		}
 	 

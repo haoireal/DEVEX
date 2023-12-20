@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.Devex.Entity.*;
 import com.Devex.Sevice.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -115,6 +116,9 @@ public class DevexOrderController {
 			}
 	      return false;
 	  }
+
+    @Autowired
+    RequestService requestService;
 
     @GetMapping("/order")
     public String getOrderPage(Model model) {
@@ -277,5 +281,19 @@ public class DevexOrderController {
         //Chuyển tiền về cho người bán khi đơn hàng thành công
         transactionService.transactionBackToSeller(listOrderDetails);
         return "redirect:/order#/success";
+    }
+
+    @PostMapping("/order/refund/{orderDetailID}")
+    public String refund(@PathVariable("orderDetailID") String orderDetailID,
+                             @RequestParam("contentRefund") String contentRefund){
+        User u = sessionService.get("user");
+        //Tạo yêu cầu trả hàng hoàn tiền
+        Request request = new Request();
+        request.setContent(contentRefund);
+        request.setStatusRequest(3);
+        request.setEntityId(orderDetailID);
+        requestService.save(request);
+
+        return "redirect:/home";
     }
 }

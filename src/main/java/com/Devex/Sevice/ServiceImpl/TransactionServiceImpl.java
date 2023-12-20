@@ -58,8 +58,11 @@ public class TransactionServiceImpl implements TransactionService {
             //nếu ví nhận có tham số thì sẽ truyền vào
             toWallet = dwalletService.findById(to).get();
         }
-        //đây là ví người giử
-        Dwallet fromWallet = dwalletService.findById(from).get();
+        Dwallet fromWallet = new Dwallet();
+        if(!payment.equalsIgnoreCase("vnpayInToWallet")){
+            //đây là ví người giử
+            fromWallet = dwalletService.findById(from).get();
+        }
 
 
         //Các trường hợp thanh toán
@@ -68,6 +71,9 @@ public class TransactionServiceImpl implements TransactionService {
                 from = "paypal-"+fromUser;
                 break;
             case "vnpay":
+                from ="vnpay-"+fromUser;
+                break;
+            case "vnpayInToWallet":
                 from ="vnpay-"+fromUser;
                 break;
             default:
@@ -98,4 +104,6 @@ public class TransactionServiceImpl implements TransactionService {
         return true;
 
     }
+
+
 }

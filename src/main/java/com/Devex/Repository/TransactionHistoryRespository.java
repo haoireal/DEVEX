@@ -17,6 +17,6 @@ import jakarta.transaction.Transactional;
 public interface TransactionHistoryRespository extends JpaRepository<TransactionHistory, Integer> {
 
     @Transactional
-    @Query(value = " select th.* from Transaction_History th join Dwallet d on th.[From] = d.ID   where th.[From] like :idWallet or th.[To] like :idWallet", nativeQuery = true)
+    @Query(value = " select th.* from Transaction_History th where th.[From] like :idWallet or th.[To] like :idWallet", nativeQuery = true)
     List<TransactionHistory> getTransactionByIdWallet(@Param("idWallet") String idWallet);
 }
