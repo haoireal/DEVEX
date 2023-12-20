@@ -1,6 +1,7 @@
 package com.Devex.Controller.customer;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,6 +25,7 @@ import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.DwalletService;
 import com.Devex.Sevice.MailerService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.OTPService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.RoleService;
@@ -42,6 +44,9 @@ public class AccountController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	NotiService notiService;
 	
 	@Autowired
 	DwalletService dwalletService;
@@ -164,7 +169,7 @@ public class AccountController {
 		String id = generateRandomNumber();
 		dwallet.setId(id);
 		dwallet.setUser(user);
-		dwallet.setBalance(10000000.0);
+		dwallet.setBalance(0.0);
 		dwallet.setActive(true);
 		dwalletService.save(dwallet);
 		//tạo customer
@@ -177,7 +182,7 @@ public class AccountController {
 		customer.setCreateDay(createdDate);
 		customer.setGender(gender);
 		customer.setActive(active);
-		customer.setAvatar(null);
+		customer.setAvatar("avt.webp");
 		customer.setAddress(null);
 		customer.setPhoneAddress(null);
 		customerService.save(customer);
@@ -187,7 +192,15 @@ public class AccountController {
 		userRole.setRole(role);
 		userRoleService.save(userRole);
 		
-		return "redirect:/signin";
+		//Gửi thông báo
+        notiService.sendNotification(null, user.getUsername(), null, "welcome",
+                user.getFullname());
+        notiService.sendNotification(null, null, "/ad/edit/" + user.getUsername(), "khachhangmoi",
+        		user.getFullname());
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "welcome", null);
+        
+		return "redirect:/signin?success=Success signup";
 	}
 	
 	@GetMapping("/verify")
@@ -238,8 +251,9 @@ public class AccountController {
 	public String doVerifyPassword(Model model) {
 		User user = session.get("user");
 		String pass = param.getString("password", "123");
-		String passEncoder = passwordEncoder.encode(pass);	// mã hoá pass
-		if(!user.getPassword().equals(passEncoder)) {
+		String passEncoder = user.getPassword();	// mã hoá pass hiện tại
+
+		if(!passwordEncoder.matches(pass, passEncoder)) {
 			model.addAttribute("message", "Mật khẩu không trùng khớp!");
 			return "account/current-password";
 		}
@@ -264,6 +278,18 @@ public class AccountController {
 		}
 		user.setPassword(passwordEncoder.encode(confirmPass));
 		userService.save(user);
+		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
+		for (UserRole u : role) {
+			if (u.getRole().getId().equals("ADMIN")) {
+				return "redirect:/ad/profile";
+			} else if(u.getRole().getId().equals("SELLER")) {
+				return "redirect:/seller/profile";
+			}
+		}
+		//Gửi thông báo
+
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "changepassword", null);
 		return "redirect:/profile";
 	}
 	
@@ -371,6 +397,9 @@ public class AccountController {
 		}
 		user.setPassword(passwordEncoder.encode(confirmPass));
 		userService.save(user);
+		
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "changepassword", null);
 		return "redirect:/signin";
 	}
 	

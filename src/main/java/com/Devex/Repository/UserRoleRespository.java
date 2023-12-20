@@ -13,10 +13,10 @@ import com.Devex.Entity.UserRole;
 @Repository("userRoleRepository")
 public interface UserRoleRespository extends JpaRepository<UserRole, Integer>{
 	
-	@Query("SELECT ur FROM UserRole ur WHERE ur.user.username LIKE %?1%")
+	@Query("SELECT ur FROM UserRole ur WHERE ur.user.username LIKE ?1")
 	List<UserRole> findAllByUserName(String username);
 	
 	
-	@Query("SELECT ur.role.id FROM UserRole ur WHERE ur.user.username LIKE %?1%")
+	@Query("SELECT ur.role.id FROM UserRole ur WHERE ur.user.username LIKE ?1")
 	List<String> findAllroleByUserName(String username);
 }

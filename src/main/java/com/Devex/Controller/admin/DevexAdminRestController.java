@@ -45,6 +45,7 @@ import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.DwalletService;
 import com.Devex.Sevice.FlashSalesTimeService;
 import com.Devex.Sevice.FollowService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.NotificationsService;
 import com.Devex.Sevice.OrderDetailService;
 import com.Devex.Sevice.OrderService;
@@ -112,6 +113,9 @@ public class DevexAdminRestController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
+	@Autowired
+	NotiService notiService;
+
 	@GetMapping("walletAdmin")
 	public Dwallet getBalanceWallet() {
 		User u = session.get("user");
@@ -152,14 +156,15 @@ public class DevexAdminRestController {
 
 	@PostMapping("/saveFlashSales")
 	public List<FlashSaleTime> saveFlashSaleTime(@RequestBody FlashSaleTimeDTO flashSaleTimeDTO, ModelMap model) {
-
+		User u = session.get("user");
+		String usernameAdmin = u.getUsername();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm aM/d/yyyy");
 
 		// Chuyển đổi chuỗi thành LocalDateTime
 		LocalDateTime firstTime = LocalDateTime.parse(flashSaleTimeDTO.getFirstTime(), formatter);
 		LocalDateTime lastTime = LocalDateTime.parse(flashSaleTimeDTO.getLastTime(), formatter);
 		flashSalesTimeService.insertFlashSaleTime(firstTime, lastTime);
-
+		notiService.sendHistory(usernameAdmin, null, null, "newFlashSale", null);
 		List<FlashSaleTime> listFlashSaleTime = flashSalesTimeService.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
 		return listFlashSaleTime;
@@ -168,13 +173,15 @@ public class DevexAdminRestController {
 
 	@PostMapping("/updateUserRoles")
 	public ResponseEntity<Map<String, String>> updateUserRoles(@RequestBody UpdatedRolesDTO updatedRoles) {
-		System.out.println("passs" + passwordEncoder.encode(updatedRoles.getPhone()));
+		// System.out.println("passs" +
+		// passwordEncoder.encode(updatedRoles.getPhone()));
+		User u = session.get("user");
+		String usernameAdmin = u.getUsername();
 		Map<String, String> response = new HashMap<>();
 		User user = userService.findById(updatedRoles.getUserId()).orElse(null);
-		SellerDTO seller = sellerService.findSeller(user.getUsername());// try catch
+		SellerDTO seller = sellerService.findSeller(user.getUsername());
 		if (user != null) {
 			// update user trước khi tạo roles
-			// System.out.println("sssss" + updatedRoles.getPassword());
 			userService.updateUser(updatedRoles.getFullname(), updatedRoles.getEmail(),
 					passwordEncoder.encode(updatedRoles.getPassword()),
 					updatedRoles.getPhone(), updatedRoles.getGender(), updatedRoles.isActive(),
@@ -194,7 +201,6 @@ public class DevexAdminRestController {
 					newUserRole.setUser(user);
 					newUserRole.setRole(role);
 					userRoleService.save(newUserRole); // Lưu userRole mới
-
 					// tạo mới seller
 					if ("SELLER".equals(roleId)) {
 						if (seller == null) {
@@ -206,7 +212,8 @@ public class DevexAdminRestController {
 				} // END IF ROLE
 
 			} // end for
-
+			notiService.sendNotification(usernameAdmin, user.getUsername(), null, "updateUser", null);
+			notiService.sendHistory(usernameAdmin, null, "", "updateUser", user.getUsername());
 			response.put("message", "Cập Nhật Roles Thành Công");
 			return ResponseEntity.ok(response);
 		} else {
@@ -404,11 +411,12 @@ public class DevexAdminRestController {
 		}
 		return listProductDTO;
 	}
-	
+
 	@GetMapping("/ad/order/pie/month")
-	public List<StatisticalCategoryDetailsPieDTO> getStatisticalorderMonthPie(@RequestParam("year") int year, @RequestParam("month") int month) {
-	    List<Object[]> liststatisOrderOb = orderService.getStatisticalorderMonthPie(year, month);
-	    List<StatisticalCategoryDetailsPieDTO> liststatisOrderMonthPie = new ArrayList<>();
+	public List<StatisticalCategoryDetailsPieDTO> getStatisticalorderMonthPie(@RequestParam("year") int year,
+			@RequestParam("month") int month) {
+		List<Object[]> liststatisOrderOb = orderService.getStatisticalorderMonthPie(year, month);
+		List<StatisticalCategoryDetailsPieDTO> liststatisOrderMonthPie = new ArrayList<>();
 		for (Object[] result : liststatisOrderOb) {
 			int id = (int) result[0];
 			String statusName = (String) result[1];
@@ -419,13 +427,13 @@ public class DevexAdminRestController {
 			entity.setCountProductSell(Long.valueOf(orderCount).longValue());
 			liststatisOrderMonthPie.add(entity);
 		}
-	    return liststatisOrderMonthPie;
+		return liststatisOrderMonthPie;
 	}
-	
+
 	@GetMapping("/ad/order/pie/year")
 	public List<StatisticalCategoryDetailsPieDTO> getStatisticalorderMonthPie(@RequestParam("year") int year) {
-	    List<Object[]> liststatisOrderOb = orderService.getStatisticalorderYearPie(year);
-	    List<StatisticalCategoryDetailsPieDTO> liststatisOrderYearPie = new ArrayList<>();
+		List<Object[]> liststatisOrderOb = orderService.getStatisticalorderYearPie(year);
+		List<StatisticalCategoryDetailsPieDTO> liststatisOrderYearPie = new ArrayList<>();
 		for (Object[] result : liststatisOrderOb) {
 			int id = (int) result[0];
 			String statusName = (String) result[1];
@@ -436,7 +444,7 @@ public class DevexAdminRestController {
 			entity.setCountProductSell(Long.valueOf(orderCount).longValue());
 			liststatisOrderYearPie.add(entity);
 		}
-	    return liststatisOrderYearPie;
+		return liststatisOrderYearPie;
 	}
-	
+
 }

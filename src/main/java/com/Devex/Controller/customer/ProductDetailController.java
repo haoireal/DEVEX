@@ -1,32 +1,35 @@
 package com.Devex.Controller.customer;
 
+import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.Devex.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.Devex.Entity.History;
+import com.Devex.Entity.Product;
+import com.Devex.Entity.ProductVariant;
+import com.Devex.Entity.User;
+import com.Devex.Entity.UserRole;
 import com.Devex.Repository.ProductRepository;
-import com.Devex.Repository.UserRepository;
 import com.Devex.Sevice.HistoryService;
 import com.Devex.Sevice.ProductService;
 import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.SessionService;
+import com.Devex.Sevice.UserRoleService;
 import com.Devex.Sevice.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 
@@ -48,6 +51,39 @@ public class ProductDetailController {
 	@Autowired
     SessionService session;
 	
+	@Autowired
+	UserRoleService userRoleService;
+	
+	
+	  @ModelAttribute("admin")
+	  public Boolean getAdmin(Principal principal) {
+		  User user = session.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("ADMIN")) {
+						System.out.println("tôi là admin kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
+	  
+	  @ModelAttribute("seller")
+	  public Boolean getSeller(Principal principal) {
+		  User user = session.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("SELLER")) {
+						System.out.println("tôi là seller kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
 
 	@RequestMapping("/details/{id}")
 	public String details(ModelMap model, @PathVariable("id") String id , HttpServletRequest request) {
