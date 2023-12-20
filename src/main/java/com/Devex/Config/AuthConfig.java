@@ -45,10 +45,11 @@ public class AuthConfig {
 		http.csrf().disable()
             .authorizeHttpRequests()
             .requestMatchers("/css/**", "/admin/**", "/img/**").permitAll()
+            .requestMatchers("/profile/update", "/message/**").authenticated()
             .requestMatchers("/ad/**").hasAuthority("ADMIN")
             .requestMatchers("/manager/**").hasAnyAuthority("MANAGER", "ADMIN")
             .requestMatchers("/seller/**").hasAnyAuthority("SELLER")
-            .requestMatchers("/profile", "/profile/**", "/message/**", "/cart/**","/order/**").hasAnyAuthority("CUSTOMER", "ADMIN")
+            .requestMatchers("/profile/**", "/message/**", "/cart/**","/order/**").hasAnyAuthority("CUSTOMER")
             .anyRequest().permitAll()
             .and()
             .formLogin(

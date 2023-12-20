@@ -224,6 +224,7 @@
 												</div>
 												<div class="row mb-2">
 													<div class="col-6"><strong>Ví:</strong></div>
+													
 													<div class="col-6 text-end p-0">
 														<button class="btn_view border-0 badge rounded-pill"
 															style="background-color: rgba(7, 25, 212, 1)"
@@ -319,6 +320,65 @@
 														<!-- end modal -->
 													</div>
 												</div>
+													<div class="row mb-2">
+				<div class="col-6"><strong>Nạp Tiền:</strong></div>
+				<div class="col-6 text-end p-0">
+					<button class="btn_view border-0 badge rounded-pill" style="background-color: rgba(7, 25, 212, 1)"
+						data-bs-toggle="modal" data-bs-target="#exampleModal1">
+						<span class="fs-6">VnPay</span>
+
+					</button>
+					<!-- ghi đè .modal-backdrop ở seller Head-->
+					<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalLabel" style="
+                      background: -webkit-linear-gradient(
+                        #ce0909,
+                        rgb(8, 49, 138)
+                      );
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                    ">
+										DEVEX Mark
+									</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<form action="/sumbitRecharge" method="post">
+									<div class="row">
+										<div class="col-md-5 mb-3">
+											<label for="amount" class="form-label">Số Tiền:</label>
+											<div class="input-group">
+												<input type="number" class="form-control" id="amount" name="amount"
+													placeholder="Nhập số tiền" oninput="formatCurrency(this)" onkeypress="return isNumeric(event)">
+												<div class="input-group-append">
+													<span class="input-group-text">VND</span>
+												</div>
+											</div>
+											 <span id="formattedAmount" class="text-muted" style="color: red"></span>
+										</div>
+
+										<!-- Add more input fields if needed -->
+
+										<div class="col-md-6 mb-3">
+											<label for="submitBtn" class="form-label">&nbsp;</label>
+											<button type="submit" class="btn btn-primary form-control"
+												id="submitBtn">Nạp Tiền</button>
+										</div>
+									</div>
+								</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- end modal -->
+				</div>
+			</div>
 											</div>
 										</li>
 									</ul>
@@ -625,7 +685,7 @@
 
 										<div class="tab-pane active" id="info-account">
 											<form class="mt-4 form-horizontal" method="post"
-												enctype="multipart/form-data" action="/profile">
+												enctype="multipart/form-data" action="/profile/update">
 												<div class="mb-3 bg-white rounded px-2">
 													<input type="text" id="inputFullname" placeholder="Fullname"
 														pattern="[a-zA-ZÀ-ỹ ]+" title="Name does not contain number"
@@ -1115,7 +1175,42 @@
 	<script th:src="@{/js/cart-ctrl.js}"></script>
 	<script th:src="@{/js/user/DwalletCustomer.js}"></script>
 	<script th:src="@{/js/user/autocomplete.js}"></script>
+	<script>
+	function formatCurrency(input) {
+        // Remove non-numeric characters
+        let numericValue = input.value.replace(/[^0-9]/g, '');
 
+        // Format the numeric value as currency (e.g., 1000000 => 1,000,000)
+        let formattedValue = addCommas(numericValue);
+
+        // Display the formatted value outside the input
+        document.getElementById('formattedAmount').innerText = formattedValue + ' VND';;
+    }
+
+    function addCommas(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+     function formatCurrency(input) {
+        // Remove non-numeric characters
+        let numericValue = input.value.replace(/[^0-9]/g, '');
+
+        // Format the numeric value as currency (e.g., 1000000 => 1,000,000)
+        let formattedValue = addCommas(numericValue);
+
+        // Display the formatted value with "VND" outside the input
+        document.getElementById('formattedAmount').innerText = formattedValue + ' VND';
+    }
+
+    function addCommas(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function isNumeric(event) {
+        // Allow only numeric input (0-9)
+        const charCode = (event.which) ? event.which : event.keyCode;
+        return (charCode >= 48 && charCode <= 57) || charCode === 8 || charCode === 46;
+    }
+	</script>
 </body>
 
 </html>

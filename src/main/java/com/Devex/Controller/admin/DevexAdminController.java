@@ -94,7 +94,7 @@ public class DevexAdminController {
 		return "admin/listManage";
 	}
 
-	@GetMapping("/userProfile")
+	@GetMapping("/profile")
 	public String getUserProfile() {
 
 		return "admin/userManage/userProfile";
@@ -123,6 +123,12 @@ public class DevexAdminController {
 	public String getRequestProduct() {
 		
 		return "admin/productManage/requestProduct";
+	}
+
+	@GetMapping("/refund")
+	public String getRefund() {
+
+		return "admin/OrderManage/refundList";
 	}
 	
 	@GetMapping("/showproduct/{id}")

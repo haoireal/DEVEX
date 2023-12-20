@@ -682,7 +682,7 @@ public class DevexSellerRestController {
 				if (oldFile.exists()) {
 					oldFile.delete();
 				}
-
+System.out.println("ok");
 				file.transferTo(path.toFile());
 			} catch (Exception e) {
 				e.printStackTrace();

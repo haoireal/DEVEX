@@ -113,4 +113,8 @@ public interface ProductService {
 	int getCountProductActive(String username, boolean active);
 
 	Double getCountViewCountProductShop(String username);
+
+	int getCommentCount(String pdID);
+
+	Double getStarAverage(String pdID);
 }

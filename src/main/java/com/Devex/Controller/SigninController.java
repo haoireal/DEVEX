@@ -69,6 +69,12 @@ public class SigninController {
 		return "admin/erorr404";
     }
 	
+	@GetMapping("/auth/login/error")
+    public String getEmailErrorLogin() {
+		return "admin/lockAccount";
+    }
+	
+	
 
 	@PostMapping("/signin")
 	public String doSignin(Model model) {

@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +33,7 @@ import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.DwalletService;
 import com.Devex.Sevice.MailerService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.NotificationService;
 import com.Devex.Sevice.OTPService;
 import com.Devex.Sevice.ParamService;
@@ -55,6 +57,9 @@ public class ProfileController {
 
 	@Autowired
 	UserRoleService userRoleService;
+	
+	@Autowired
+	NotiService notiService;
 
 	@Autowired
 	SellerService sellerService;
@@ -82,6 +87,36 @@ public class ProfileController {
 
 	@Autowired
 	DwalletService dwalletService;
+	
+	  @ModelAttribute("admin")
+	  public Boolean getAdmin(Principal principal) {
+		  User user = session.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("ADMIN")) {
+						System.out.println("tôi là admin kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
+	  
+	  @ModelAttribute("seller")
+	  public Boolean getSeller(Principal principal) {
+		  User user = session.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("SELLER")) {
+						System.out.println("tôi là seller kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
 
 	@GetMapping("/profile")
 	public String showProfile(Model model, Principal principal) {
@@ -89,7 +124,7 @@ public class ProfileController {
 		
 		String id = principal.getName();
 		System.out.println(id);
-		Customer customer = customerService.findById(id).orElse(null);
+		Customer customer = customerService.findById(user.getUsername()).orElse(null);
 		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
 		boolean flag = false;
 		for (UserRole u : role) {
@@ -97,13 +132,19 @@ public class ProfileController {
 				flag = true;
 			}
 		}
+		String address = null;
+		String phone = null;
+		if(customer != null) {
+			address = customer.getAddress();
+			phone = customer.getPhoneAddress();
+		}
 		model.addAttribute("role", flag);
-		model.addAttribute("address", customer.getAddress());
-		model.addAttribute("phone", customer.getPhoneAddress());
+		model.addAttribute("address", address);
+		model.addAttribute("phone", phone);
 		return "user/profile";
 	}
 
-	@PostMapping("/profile")
+	@PostMapping("/profile/update")
 	public String doEditProfile(@RequestParam("avatarInput") MultipartFile file) {
 		User user = session.get("user");
 		String fullname = param.getString("fullname", "");
@@ -114,6 +155,21 @@ public class ProfileController {
 		user.setFullname(fullname);
 		user.setAvatar(avatar);
 		userService.save(user);
+		List<UserRole> role = userRoleService.findAllByUserName(user.getUsername());
+		for (UserRole u : role) {
+			if (u.getRole().getId().equals("ADMIN")) {
+				return "redirect:/ad/profile";
+			} else if(u.getRole().getId().equals("SELLER")) {
+				return "redirect:/seller/profile";
+			}
+		}
+		
+		//Gửi thông báo
+        notiService.sendNotification(null, null, "/ad/edit/" + user.getUsername(), "updateProfile",
+        		user.getUsername());
+		
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "updateprofile", "hồ sơ");
 		return "redirect:/profile";
 	}
 
@@ -127,6 +183,8 @@ public class ProfileController {
 		customer.setAddress(address);
 		customer.setPhoneAddress(phone);
 		customerService.save(customer);
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "updateprofile", "địa chỉ giao hàng");
 		return "redirect:/profile";
 	}
 
@@ -199,6 +257,8 @@ public class ProfileController {
 		}
 		otpService.sendMailOtp(info);
 		session.set("info-user", info);
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "updateprofile", "email");
 		return "redirect:/profile/verify/new-email";
 	}
 
@@ -216,6 +276,8 @@ public class ProfileController {
 		OtpRequestDTO otpRequest = new OtpRequestDTO(info, info);
 		otpService.sendSMS(otpRequest);
 		session.set("info-user", info);
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "updateprofile", "số điện thoại");
 		return "redirect:/profile/verify/new-phone";
 	}
 
@@ -322,6 +384,13 @@ public class ProfileController {
 
 		String message = "Nâng cấp nhà bán thành công";
 		model.addAttribute("message", message);
+		
+		//Gửi thông báo
+        notiService.sendNotification(null, null, "/ad/edit/" + user.getUsername(), "repplyupdatesellerpass",
+        		user.getUsername());
+		
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "updateseller", null);
 		return "user/profile";
 	}
 

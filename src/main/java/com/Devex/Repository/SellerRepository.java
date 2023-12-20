@@ -46,8 +46,8 @@ public interface SellerRepository extends JpaRepository<Seller, String>{
 	@Query("SELECT s FROM Seller s WHERE LOWER(s.shopName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Seller> findByShopNameContainingKeyword(@Param("keyword") String keyword);
 	
-	@Query("SELECT s FROM Seller s WHERE LOWER(s.username) LIKE LOWER(CONCAT('%', :keyword, '%')) or LOWER(s.shopName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<Seller> findByShopNameAndUsernameContainingKeyword(@Param("keyword") String keyword);
+	@Query("SELECT new com.Devex.DTO.SellerDTO(s.username, s.fullname, s.shopName, s.avatar, s.createDay, s.activeShop) FROM Seller s WHERE LOWER(s.username) LIKE LOWER(CONCAT('%', :keyword, '%')) or LOWER(s.shopName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<SellerDTO> findByShopNameAndUsernameContainingKeyword(@Param("keyword") String keyword);
 	
 	@Modifying
 	@Query(value = "UPDATE Sellers SET Activeshop = :active WHERE Username = :username", nativeQuery = true)

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,6 +122,7 @@ public class FillAPIController {
 	private List<ProductDTO> listProductDTO = new ArrayList<>();
 	private List<ProductDTO> temPoraryList = new ArrayList<>();
 	private List<String> historySearch = new ArrayList<>();
+	private boolean checkHistory = false;
 
 	@GetMapping("/filter")
 	public List<ProductDTO> getProductDTO() {
@@ -151,12 +154,29 @@ public class FillAPIController {
 	@GetMapping("/search")
 	public List<ProductDTO> getProductSearch() {
 		String kwords = sessionService.get("keywordsSearch");
-		// String kwords = "laptop";
-		// System.out.println("............................................................................."
-		// + kwords);
+		List<UserSearch> historySearch = userSearchService.findAll();
+		String cleanKeywords = removeSpecialCharacters(kwords); // loại bỏ kí tự đặc biệt
+		Set<String> listHistorySearch = new LinkedHashSet<>();
+		checkHistory = false;
+		// System.out.println("aa" + historySearch.size());
+		if (historySearch.size() == 0) {
+			userSearchService.insertKeyWorks(cleanKeywords);
+			listHistorySearch.add(cleanKeywords);
+		}
+
+		historySearch.forEach(key -> {
+			listHistorySearch.add(key.getKeySearch().toLowerCase());
+		});
+		listHistorySearch.forEach(key -> {
+			System.out.println("check: " + !listHistorySearch.contains(cleanKeywords));
+			checkHistory = !listHistorySearch.contains(cleanKeywords);
+		});
+		if (checkHistory == true) {
+			userSearchService.insertKeyWorks(cleanKeywords.toLowerCase());
+		}
+
 		List<Product> list = new ArrayList<>();
 		Set<Product> uniqueProducts = new LinkedHashSet<>();
-
 		// Tìm tên từ theo từ khóa
 		list.addAll(productService.findByKeywordName(kwords));
 		// Tìm theo shop bán
@@ -174,11 +194,11 @@ public class FillAPIController {
 		// Chuyển đổi lại thành danh sách (List)
 		uniqueProductList = new ArrayList<>(uniqueProducts);
 		listProductDTO = changeProductToProductDTO(uniqueProductList);
-		listProductDTO.sort(
-				Comparator.comparing(product -> ((ProductDTO) product).getCategoryDetails().getName())
-						.thenComparing(product -> ((ProductDTO) product).getName()));
-
-		// Collections.reverse(listProductDTO);
+		Collections.sort(listProductDTO, Comparator.comparing(product -> {
+			String name = ((ProductDTO) product).getName().toLowerCase();
+			int index = name.indexOf(kwords.toLowerCase());
+			return index == -1 ? Integer.MAX_VALUE : index;
+		}));
 		temPoraryList = listProductDTO; // lưu list vào 1 list tam thời
 
 		return listProductDTO;
@@ -341,7 +361,7 @@ public class FillAPIController {
 			listInfoProduct.add(dto);
 		}
 		Follow f = null;
-		if(u != null) {
+		if (u != null) {
 			f = followService.getFollowByUsernameCustomerAndSeller(u.getUsername(), username);
 		}
 
@@ -376,14 +396,22 @@ public class FillAPIController {
 		notiService.sendNotification(u.getUsername(), username, "", "unfollow", "");
 		notiService.sendHistory(u.getUsername(), username, "", "unfollow", "");
 	}
-	
+
 	@PutMapping("/upview")
 	public void upView(@RequestParam("id") String id) {
 		Product p = productService.findByIdProduct(id);
-		if(p.getViewcount() == null) {
+		if (p.getViewcount() == null) {
 			productService.updateViewProduct(id, 1);
-		}else {
-			productService.updateViewProduct(id, p.getViewcount()+1);
+		} else {
+			productService.updateViewProduct(id, p.getViewcount() + 1);
 		}
+	}
+
+	public String removeSpecialCharacters(String input) {
+		// Biểu thức chính quy để giữ lại chỉ các ký tự chữ cái, khoảng trắng, số và _
+		String regex = "[^\\p{L}\\p{N}\\s]+";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(input);
+		return matcher.replaceAll("");
 	}
 }

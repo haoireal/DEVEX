@@ -1,5 +1,6 @@
 package com.Devex.Controller.customer;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,11 +10,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.Devex.Entity.*;
 import com.Devex.Sevice.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +26,7 @@ import com.Devex.Entity.Comment;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.OrderDetails;
 import com.Devex.Entity.User;
+import com.Devex.Entity.UserRole;
 
 @Controller
 public class DevexOrderController {
@@ -77,6 +81,44 @@ public class DevexOrderController {
 
     @Autowired
     TransactionService transactionService;
+    
+  
+	@Autowired
+	UserRoleService userRoleService;
+	
+	
+	  @ModelAttribute("admin")
+	  public Boolean getAdmin(Principal principal) {
+		  User user = sessionService.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("ADMIN")) {
+						System.out.println("tôi là admin kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
+	  
+	  @ModelAttribute("seller")
+	  public Boolean getSeller(Principal principal) {
+		  User user = sessionService.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("SELLER")) {
+						System.out.println("tôi là seller kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
+
+    @Autowired
+    RequestService requestService;
 
     @GetMapping("/order")
     public String getOrderPage(Model model) {
@@ -239,5 +281,19 @@ public class DevexOrderController {
         //Chuyển tiền về cho người bán khi đơn hàng thành công
         transactionService.transactionBackToSeller(listOrderDetails);
         return "redirect:/order#/success";
+    }
+
+    @PostMapping("/order/refund/{orderDetailID}")
+    public String refund(@PathVariable("orderDetailID") String orderDetailID,
+                             @RequestParam("contentRefund") String contentRefund){
+        User u = sessionService.get("user");
+        //Tạo yêu cầu trả hàng hoàn tiền
+        Request request = new Request();
+        request.setContent(contentRefund);
+        request.setStatusRequest(3);
+        request.setEntityId(orderDetailID);
+        requestService.save(request);
+
+        return "redirect:/home";
     }
 }

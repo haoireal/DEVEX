@@ -36,7 +36,7 @@ public class Request implements Serializable{/**
 	@Column(name = "Entityid")
 	private String entityId;
 	@Column(name = "Createdday")
-	private Date createdDay;
+	private Date createdDay = new Date();
 	@Column(name = "Statusrequest")
 	private int statusRequest;
 	@Column(name = "Content")

@@ -130,7 +130,7 @@ public class SellerServiceImpl implements SellerService{
 	}
 
 	@Override
-	public List<Seller> findByShopNameAndUsernameContainingKeyword(String keyword) {
+	public List<SellerDTO> findByShopNameAndUsernameContainingKeyword(String keyword) {
 		return sellerRepository.findByShopNameAndUsernameContainingKeyword(keyword);
 	}
 

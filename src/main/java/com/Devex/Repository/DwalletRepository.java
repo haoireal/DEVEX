@@ -3,6 +3,7 @@ package com.Devex.Repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
@@ -33,4 +34,11 @@ public interface DwalletRepository extends JpaRepository<Dwallet, String> {
 
     @Query("SELECT dw.id FROM Dwallet dw WHERE dw.user.username like ?1")
     String findDwalletIDbyUsername(String username);
+   
+    
+    @Transactional
+    @Modifying
+    @Query("UPDATE Dwallet SET balance = balance+ ?1 where user.username= ?2  ")
+    void updateDwalletbyUsername1(int balance , String username);
+    
 }

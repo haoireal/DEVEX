@@ -5,25 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.Devex.DTO.infoProductDTO;
+import com.Devex.Entity.*;
+import com.Devex.Sevice.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.Devex.Entity.Customer;
-import com.Devex.Entity.Order;
-import com.Devex.Entity.OrderStatus;
-import com.Devex.Sevice.CustomerService;
-import com.Devex.Sevice.NotificationsService;
-import com.Devex.Sevice.OrderDetailService;
-import com.Devex.Sevice.OrderService;
-import com.Devex.Sevice.OrderStatusService;
-import com.Devex.Sevice.ProductService;
-import com.Devex.Sevice.SellerService;
-import com.Devex.Sevice.SessionService;
-import com.Devex.Sevice.UserService;
 
 @CrossOrigin("*")
 @RestController
@@ -56,7 +46,10 @@ public class OrderAdminRestController {
 	
 	@Autowired
 	private CustomerService customerService;
-	
+
+	@Autowired
+	private RequestService requestService;
+
 	@GetMapping("/list/order")
 	public Map<String, Object> getListOrder(@RequestParam("status") int status, @RequestParam("search") String search){
 		Map<String, Object> mapOrders = new HashMap<>();
@@ -97,5 +90,25 @@ public class OrderAdminRestController {
 		}
 		return listStatus;
 	}
-	
+
+	@GetMapping("/getallrequestrefund")
+	public Map<String, Object> getAllRequestRefund(){
+		Map<String, Object> mapProductRequest = new HashMap<>();
+		List<infoProductDTO> listInfoProduct = new ArrayList<>();
+		List<String> listNameCategory = new ArrayList<>();
+		List<String> listNameProductBrand = new ArrayList<>();
+		List<String> listShopName = new ArrayList<>();
+		List<Request> listProductRequest = requestService.getAllRequestFalseDecreaseByCreatedDay();
+		for (Request pr : listProductRequest) {
+
+		}
+		mapProductRequest.put("listProductRequest", listProductRequest);
+		mapProductRequest.put("listInfoProduct", listInfoProduct);
+		mapProductRequest.put("listNameCategory", listNameCategory);
+		mapProductRequest.put("listNameProductBrand", listNameProductBrand);
+		mapProductRequest.put("listShopName", listShopName);
+		return mapProductRequest;
+	}
+
+
 }

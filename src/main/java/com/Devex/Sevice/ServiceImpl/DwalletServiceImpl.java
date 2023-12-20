@@ -84,4 +84,10 @@ public class DwalletServiceImpl implements DwalletService {
 		return dwalletRepository.getDwalletCustomerByUsername(username);
 	}
 
+	@Override
+	public void updateDwalletbyUsername(int total, String username) {
+		dwalletRepository.updateDwalletbyUsername1(total, username);
+		
+	}
+
 }

@@ -1,20 +1,13 @@
 package com.Devex.Controller.customer;
 
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.security.Principal;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,14 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.Devex.Entity.Cart;
 import com.Devex.Entity.CartDetail;
 import com.Devex.Entity.Customer;
-import com.Devex.Entity.Product;
 import com.Devex.Entity.ProductVariant;
 import com.Devex.Entity.User;
-import com.Devex.Repository.CartDetailRespository;
-import com.Devex.Repository.ProductRepository;
+import com.Devex.Entity.UserRole;
 import com.Devex.Repository.ProductVariantRepository;
 import com.Devex.Sevice.CartDetailService;
-
 import com.Devex.Sevice.CartService;
 import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.ProductService;
@@ -37,6 +27,7 @@ import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.ShoppingCartService;
+import com.Devex.Sevice.UserRoleService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -53,8 +44,8 @@ public class CartController {
 	@Autowired
 	CustomerService customerService;
 	@Autowired
-	
-	
+	UserRoleService userRoleService;
+	@Autowired
 	SessionService session;
 	@Autowired
 	ProductService daop;
@@ -75,6 +66,36 @@ public class CartController {
 	CartDetailService cartsv;
 	ObjectMapper objectMapper = new ObjectMapper();
 	Cookie cookie = null;
+	
+	  @ModelAttribute("admin")
+	  public Boolean getAdmin(Principal principal) {
+		  User user = session.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("ADMIN")) {
+						System.out.println("tôi là admin kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
+	  
+	  @ModelAttribute("seller")
+	  public Boolean getSeller(Principal principal) {
+		  User user = session.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("SELLER")) {
+						System.out.println("tôi là seller kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
 
 	@RequestMapping("/cart")
 	public String showcart(Model model) {

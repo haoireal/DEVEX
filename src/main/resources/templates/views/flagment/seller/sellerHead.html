@@ -301,4 +301,40 @@
 
     fillNotifications();
   </script>
+  <script>
+	function formatCurrency(input) {
+        // Remove non-numeric characters
+        let numericValue = input.value.replace(/[^0-9]/g, '');
+
+        // Format the numeric value as currency (e.g., 1000000 => 1,000,000)
+        let formattedValue = addCommas(numericValue);
+
+        // Display the formatted value outside the input
+        document.getElementById('formattedAmount').innerText = formattedValue + ' VND';;
+    }
+
+    function addCommas(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+     function formatCurrency(input) {
+        // Remove non-numeric characters
+        let numericValue = input.value.replace(/[^0-9]/g, '');
+
+        // Format the numeric value as currency (e.g., 1000000 => 1,000,000)
+        let formattedValue = addCommas(numericValue);
+
+        // Display the formatted value with "VND" outside the input
+        document.getElementById('formattedAmount').innerText = formattedValue + ' VND';
+    }
+
+    function addCommas(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function isNumeric(event) {
+        // Allow only numeric input (0-9)
+        const charCode = (event.which) ? event.which : event.keyCode;
+        return (charCode >= 48 && charCode <= 57) || charCode === 8 || charCode === 46;
+    }
+	</script>
 </head>

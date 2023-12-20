@@ -10,6 +10,8 @@ import com.Devex.Entity.UserSearch;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @EnableJpaRepositories
 @Repository("userSearchRepository")
 public interface UserSearchRespository extends JpaRepository<UserSearch, Integer> {
@@ -18,4 +20,7 @@ public interface UserSearchRespository extends JpaRepository<UserSearch, Integer
     @Transactional
     @Query(value = "INSERT INTO  User_Search (Key_Search) VALUES (?)", nativeQuery = true)
     void insertKeyWorks(String key);
+
+    @Query(value = "SELECT TOP 10 Key_Search FROM User_Search ORDER BY ID DESC", nativeQuery = true)
+    List<String> selectTop10();
 }

@@ -4,30 +4,27 @@ import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-import com.Devex.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.Devex.Entity.Category;
 import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
-import com.Devex.Entity.UserSearch;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
@@ -38,8 +35,8 @@ import com.Devex.Sevice.ProductVariantService;
 import com.Devex.Sevice.RecommendationSystem;
 import com.Devex.Sevice.SessionService;
 import com.Devex.Sevice.ShoppingCartService;
-import com.Devex.Sevice.UserSearchService;
 import com.Devex.Sevice.UserRoleService;
+import com.Devex.Sevice.UserSearchService;
 import com.Devex.Sevice.UserService;
 
 @Controller
@@ -88,8 +85,38 @@ public class DevexUserController {
 	private List<String> listCategory = new ArrayList<>();
 	private List<String> listBrand = new ArrayList<>();
 	private List<Product> temPoraryList = new ArrayList<>();
+	
+	  @ModelAttribute("admin")
+	  public Boolean getAdmin(Principal principal) {
+		  User user = sessionService.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("ADMIN")) {
+						System.out.println("tôi là admin kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
+	  
+	  @ModelAttribute("seller")
+	  public Boolean getSeller(Principal principal) {
+		  User user = sessionService.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("SELLER")) {
+						System.out.println("tôi là seller kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
 
-	@GetMapping({ "/home", "/*" })
+	@GetMapping({"/home", "/*"})
 	public String getHomePage(Model model, Principal principal) throws Exception {
 		// uniqueProductList.clear();
 		User user = new User();
@@ -149,14 +176,14 @@ public class DevexUserController {
 		if (sessionService.get("user") != null) {
 
 			listProducts.addAll(recomendationService.recomendProduct(user.getUsername()));
-			// fix tạm
+			// nếu chưa mua đơn hàng nào
 			if (listProducts.size() <= 0) {
-				listProducts.addAll(recomendationService.recomendProduct("baolh"));
+				listProducts.addAll(recomendationService.recomnedProductIfUserIsNull());
 			}
 			// end fix tạm
 		} else {
-			// fix tạm
-			listProducts.addAll(recomendationService.recomendProduct("baolh"));
+			// nếu chưa
+			listProducts.addAll(recomendationService.recomnedProductIfUserIsNull());
 			// end fix tạm
 			sessionService.set("cartCount", 0);
 		}
@@ -167,31 +194,38 @@ public class DevexUserController {
 		// Chuyển đổi lại thành danh sách (List)
 		uniqueProductList = new ArrayList<>(uniqueProducts);
 		// Collections.shuffle(uniqueProductList);
-		List<Category> listCategoryProducts = categoryService.findAll();
+		List<Category> listCategoryProducts = categoryService.findAllCategoryNotNameLikeUnknown();
 
 		model.addAttribute("listProductFlashSale", listProductFlashSaleNow);
 		model.addAttribute("category", listCategoryProducts);
 		model.addAttribute("products", uniqueProductList);
 
 		// check quyền admin?
-		User userAdmin = null;
-		if (principal != null) {
-			String id = principal.getName();
-			if (id != null) {
-				userAdmin = userService.findById(id).orElse(null);
-			}
-		}
-		boolean adminFlag = false;
-		if (userAdmin != null) {
-			List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
-			for (UserRole u : roles) {
-				if (u.getRole().getId().equals("ADMIN")) {
-					System.out.println("tôi là admin");
-					adminFlag = true;
-				}
-			}
-		}
-		model.addAttribute("admin", adminFlag);
+//		User userAdmin = null;
+//		if (principal != null) {
+//			String id = principal.getName();
+//			System.out.println(id);
+//			if (id != null) {
+//				userAdmin = userService.findById(id).orElse(null);
+//			}
+//		}
+//		boolean adminFlag = false;
+//		boolean sellerFlag = false;
+//		if (userAdmin != null) {
+//			List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+//			for (UserRole u : roles) {
+//				if (u.getRole().getId().equals("ADMIN")) {
+//					System.out.println("tôi là admin");
+//					adminFlag = true;
+//				}
+//				if (u.getRole().getId().equals("SELLER")) {
+//					System.out.println("tôi là seller");
+//					sellerFlag = true;
+//				}
+//			}
+//		}
+//		model.addAttribute("seller", sellerFlag);
+//		model.addAttribute("admin", adminFlag);
 		return "user/index";
 	}
 
@@ -203,23 +237,9 @@ public class DevexUserController {
 
 	@GetMapping("/product/search")
 	public String searchProduct(Model model, @RequestParam("search") Optional<String> kw) {
-		List<UserSearch> historySearch = userSearchService.findAll();
-		Set<String> listHistorySearch = new LinkedHashSet<>();
 		String kwords = kw.orElse(sessionService.get("keywordsSearch"));
 		String cleanKeywords = removeSpecialCharacters(kwords); // loại bỏ kí tự đặc biệt
 		sessionService.set("keywordsSearch", cleanKeywords);
-		if (listHistorySearch.size() <= 0) {
-			userSearchService.insertKeyWorks(cleanKeywords);
-		}
-		// tách các keyWord
-		historySearch.forEach(key -> {
-			listHistorySearch.add(cleanKeywords);
-		});
-		listHistorySearch.forEach(keyW -> {
-			if (!listHistorySearch.contains(cleanKeywords)) {
-				userSearchService.insertKeyWorks(cleanKeywords);
-			}
-		});
 
 		return "user/findproduct";
 	}

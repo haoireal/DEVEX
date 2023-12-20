@@ -77,7 +77,9 @@ public class OrderController {
 	private ShoppingCartService shoppingCartService;
 	@Autowired
 	private TransactionService transactionService;
-
+	
+	
+	
 	@PostMapping("/cash-payment")
 	public String paymentCash(Model model) {
 		session.set("payment", "cash");
@@ -88,7 +90,8 @@ public class OrderController {
 	public String showDetailOrder(Model model) {
 		return "user/cartproductFake";
 	}
-
+	
+	
 	@GetMapping("/order/success")
 	public String showSuccess(Model model) {
 		List<CartDetailDTo> listOrder = session.get("listItemOrder", null);
