@@ -124,6 +124,12 @@ public class DevexAdminController {
 		
 		return "admin/productManage/requestProduct";
 	}
+
+	@GetMapping("/refund")
+	public String getRefund() {
+
+		return "admin/OrderManage/refundList";
+	}
 	
 	@GetMapping("/showproduct/{id}")
 	public String showInfoProduct(@PathVariable("id") String id, Model model) {

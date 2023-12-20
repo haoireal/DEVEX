@@ -38,7 +38,7 @@ public interface DwalletRepository extends JpaRepository<Dwallet, String> {
     
     @Transactional
     @Modifying
-    @Query("UPDATE Dwallet SET balance =balance+ ?1 where user.username= ?2  ")
+    @Query("UPDATE Dwallet SET balance = balance+ ?1 where user.username= ?2  ")
     void updateDwalletbyUsername1(int balance , String username);
     
 }
