@@ -117,7 +117,6 @@ app.controller("sellerproduct", function ($scope, $http, $window, $compile) {
             $scope.id = resp.data.id;
             console.log($scope.id);
             $scope.saveimg($scope.id);
-            document.getElementById('ss').click();
         }).catch(error => {
             document.getElementById('fs').click();
         });
@@ -135,6 +134,7 @@ app.controller("sellerproduct", function ($scope, $http, $window, $compile) {
                 'Content-Type': undefined
             }
         }).then(resp => {
+            document.getElementById('ss').click();
         }).catch(error => {
             console.log("errors", error);
         })

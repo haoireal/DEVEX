@@ -21,4 +21,5 @@ import lombok.NoArgsConstructor;
 public class RequestDataDTO {
 	private List<CartDetailDTo> itemsOrderSession;
     private List<Voucher> voucherApply;
+    private Double total;
 }

@@ -198,9 +198,9 @@
 															Vui lòng nhập số lượng</div>
 													</td>
 													<td>
-														<button class="btn btn-danger"
-															ng-click="deleteproductvariant(item.id)"
-															ng-disabled="checkSell === true">
+
+														<button class="btn btn-danger" ng-click="deleteproductvariant(item.id)" ng-disabled="checkSell === true || checkDeleteVariant === true">
+
 															<i class="fa-regular fa-trash-can"></i>
 														</button>
 													</td>
@@ -937,6 +937,7 @@
 
 			var url = 'http://localhost:8888/api/productvariant';
 			var id = 0;
+			$scope.checkDeleteVariant = false;
 			$scope.addRow = function () {
 				id++;
 				$scope.variant.push({
@@ -947,11 +948,21 @@
 					quantity: ''
 				});
 				console.log(id);
+				if($scope.variant.length === 1){
+					$scope.checkDeleteVariant = true;
+				}else{
+					$scope.checkDeleteVariant = false;
+				}
 			}
 
 			$scope.lista = function () {
 				$http.get(url).then(resp => {
 					$scope.variant = resp.data;
+					if($scope.variant.length === 1){
+						$scope.checkDeleteVariant = true;
+					}else{
+						$scope.checkDeleteVariant = false;
+					}
 				}).catch(error => {
 					console.log("errors", error);
 				})
@@ -995,18 +1006,23 @@
 
 			$scope.lista();
 
-			// window.onbeforeunload = function (event) {
-
-			// 	var data = $scope.form.id;
-			// 	if ($scope.filenames.length === 0) {
-			// 		navigator.sendBeacon('/addimageproduct/' + $scope.form.id, JSON.stringify(data));
-			// 	}
-			// }
+			window.onbeforeunload = function (event) {
+				
+				var data = $scope.form.id;
+				if ($scope.files.length === 0) {
+					navigator.sendBeacon('/addimageproduct/' + $scope.form.id, JSON.stringify(data));
+				}
+			}
 
 			$scope.deleteproductvariant = function (id) {
 				$http.delete('/productvariant/delete/' + id).then(resp => {
 					let i = $scope.variant.findIndex(item => item == id);
 					$scope.variant.splice(i, 1);
+					if($scope.variant.length === 1){
+						$scope.checkDeleteVariant = true;
+					}else{
+						$scope.checkDeleteVariant = false;
+					}
 				}).catch(error => {
 					console.log("errors", error);
 				});
