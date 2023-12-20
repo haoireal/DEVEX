@@ -883,9 +883,8 @@ System.out.println("ok");
 	
 	@PostMapping("/insert/image/productnew")
 	public void uploadImageInsert(@RequestParam("id") String id, @PathParam("files") MultipartFile[] files) {
-		System.out.println(id);
-		String username = session.get("usernameseller");
-		List<String> listimg = fileManagerService.save(username, id, files);
+		User u = session.get("user");
+		List<String> listimg = fileManagerService.save(u.getUsername(), id, files);
 	}
 	
 	@GetMapping("/img/product")
