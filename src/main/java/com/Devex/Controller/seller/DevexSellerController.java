@@ -352,4 +352,9 @@ public class DevexSellerController {
 
         return "seller/FlashSale";
     }
+    
+    @GetMapping("/add/product")
+    public String test() {
+    	return "seller/insertProduct";
+    }
 }

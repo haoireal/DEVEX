@@ -1,6 +1,8 @@
 package com.Devex.Controller.seller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -15,7 +17,10 @@ import java.util.Map;
 import com.Devex.Sevice.ServiceImpl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +45,7 @@ import com.Devex.Entity.Dwallet;
 import com.Devex.Entity.FlashSale;
 import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.History;
+import com.Devex.Entity.ImageProduct;
 import com.Devex.Entity.Notifications;
 import com.Devex.Entity.Order;
 import com.Devex.Entity.Product;
@@ -146,15 +152,15 @@ public class DevexSellerRestController {
 
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-	@GetMapping("/img/product")
-	public List<String> listImage() {
-		// Kích hoạt FileManagerService
-		User u = session.get("user");
-		String id = session.get("idproduct");
-		List<String> imageUrls = fileManagerService.list(id, u.getUsername());
-
-		return imageUrls;
-	}
+//	@GetMapping("/img/product")
+//	public List<String> listImage() {
+//		// Kích hoạt FileManagerService
+//		User u = session.get("user");
+//		String id = session.get("idproduct");
+//		List<String> imageUrls = fileManagerService.list(id, u.getUsername());
+//
+//		return imageUrls;
+//	}
 
 	@GetMapping("/img/product/{filename}")
 	public byte[] download(@PathVariable("filename") String filename) {
@@ -812,11 +818,104 @@ System.out.println("ok");
 		Double addCart = cartService.getCountCartByProductShopAndCreatedDay(u.getUsername(), year, month);
 		Double addOrder = orderService.getCountOrderByYearAndMonthAndProductShop(year, month, u.getUsername());
 		Double addCarts = addCart + addOrder;
+		if(viewCount == null) {
+			viewCount = 0.0;
+		}
 		Double RatioTrade = (Double.valueOf(addCarts) / Double.valueOf(viewCount)) * 100;
+		if(RatioTrade.isNaN()) {
+			RatioTrade = 0.0;
+		}
 		mapTrade.put("viewCount", viewCount); 
 		mapTrade.put("addCarts", addCarts);
 		mapTrade.put("addOrder", addOrder); 
 		mapTrade.put("RatioTrade", RatioTrade);
 		return mapTrade;
 	}
+	
+	@GetMapping("/categorynew")
+	public List<Category> getListCategoryNewProduct(){
+		List<Category> listCategory = categoryService.findAll();
+		return listCategory;
+	}
+	
+	@GetMapping("/categorydetailsnew/{id}")
+	public List<CategoryDetails> getListCategoryDetailsNewProduct(@PathVariable("id") int id){
+		List<CategoryDetails> listCategoryDetails = categoryDetailService.findAllCategoryDetailsById(id);
+		return listCategoryDetails;
+	}
+	
+	@GetMapping("/brandnew")
+	public List<ProductBrand> getListProductBrandNewProduct(){
+		return brandService.findAll();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("/insert/product")
+	public Product insertProduct(@RequestBody Object object) throws ParseException {
+		User u = session.get("user");
+		List<Product> listProducts = productService.findProductBySellerUsernameAndIsdeleteProduct(u.getUsername());
+		JsonNode jsonNode = objectMapper.valueToTree(object);
+		JsonNode listNode = jsonNode.get("listvariant");
+		List<ProductVariant> myList = objectMapper.convertValue(listNode, new TypeReference<List<ProductVariant>>() {});
+		int idCategoryDetails = jsonNode.get("idCategoryDetails").asInt();
+		int brand = jsonNode.get("brand").asInt();
+		String description = jsonNode.get("description").asText();
+		String name = jsonNode.get("name").asText();
+		// insert sản phẩm
+		productService.insertProduct(String.valueOf(listProducts.size() + 1), name, brand, description, new Date(), false, false, u.getUsername(), idCategoryDetails);
+		Product product = productService.findLatestProductBySellerUsername(u.getUsername());
+		// Duyệt list productVariant để thực hiện insert hoặc update
+		for (ProductVariant productVariant : myList) {
+			Integer idProductVariant = productVariant.getId();
+			if (idProductVariant >= 100000) {
+				productVariant.setPriceSale(productVariant.getPrice());
+				productVariantService.updateProductVariant(idProductVariant, productVariant.getQuantity(),
+						productVariant.getPrice(), productVariant.getPriceSale(), productVariant.getSize(),
+						productVariant.getColor());
+			} else if (idProductVariant < 100000) {
+				productVariant.setPriceSale(productVariant.getPrice());
+				productVariantService.addProductVariant(productVariant.getQuantity(), productVariant.getPrice(),
+						productVariant.getPriceSale(), productVariant.getSize(), productVariant.getColor(), product.getId());
+			}
+		}
+		return product;
+	}
+	
+	@PostMapping("/insert/image/productnew")
+	public void uploadImageInsert(@RequestParam("id") String id, @PathParam("files") MultipartFile[] files) {
+		System.out.println(id);
+		String username = session.get("usernameseller");
+		List<String> listimg = fileManagerService.save(username, id, files);
+	}
+	
+	@GetMapping("/img/product")
+	public List<String> listImage(){
+		User u = session.get("user");
+		String id = session.get("idproduct");
+		return fileManagerService.list(id, u.getUsername());
+	}
+	
+	@PutMapping("/update/image/product")
+	public void updateImageInsert(@PathParam("files") MultipartFile[] files) {
+		String username = session.get("usernameseller");
+		String id = session.get("idproduct");
+		File dir = Paths.get(fileStoragePath + "/product", username, id).toFile();
+		if(!dir.exists()){
+            dir.mkdirs();
+        }
+		File[] filess = dir.listFiles();
+        for (File file : filess) {
+            fileManagerService.delete(username, id, file.getName());
+        }
+        imageProductService.deleteImageProductByProductId(id);
+        List<String> listsave = fileManagerService.save(username, id, files);
+	}
+	
+	@GetMapping("{filename}")
+    public ResponseEntity<InputStreamResource> getImage(@PathVariable String filename) throws IOException {
+        FileInputStream fis = new FileInputStream(filename);
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(new InputStreamResource(fis));
+    }
 }
