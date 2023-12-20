@@ -25,6 +25,7 @@ import com.Devex.Sevice.CookieService;
 import com.Devex.Sevice.CustomerService;
 import com.Devex.Sevice.DwalletService;
 import com.Devex.Sevice.MailerService;
+import com.Devex.Sevice.NotiService;
 import com.Devex.Sevice.OTPService;
 import com.Devex.Sevice.ParamService;
 import com.Devex.Sevice.RoleService;
@@ -43,6 +44,9 @@ public class AccountController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	NotiService notiService;
 	
 	@Autowired
 	DwalletService dwalletService;
@@ -178,7 +182,7 @@ public class AccountController {
 		customer.setCreateDay(createdDate);
 		customer.setGender(gender);
 		customer.setActive(active);
-		customer.setAvatar(null);
+		customer.setAvatar("avt.webp");
 		customer.setAddress(null);
 		customer.setPhoneAddress(null);
 		customerService.save(customer);
@@ -188,6 +192,14 @@ public class AccountController {
 		userRole.setRole(role);
 		userRoleService.save(userRole);
 		
+		//Gửi thông báo
+        notiService.sendNotification(null, user.getUsername(), null, "welcome",
+                user.getFullname());
+        notiService.sendNotification(null, null, "/ad/edit/" + user.getUsername(), "khachhangmoi",
+        		user.getFullname());
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "welcome", null);
+        
 		return "redirect:/signin?success=Success signup";
 	}
 	
@@ -274,6 +286,10 @@ public class AccountController {
 				return "redirect:/seller/profile";
 			}
 		}
+		//Gửi thông báo
+
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "changepassword", null);
 		return "redirect:/profile";
 	}
 	
@@ -381,6 +397,9 @@ public class AccountController {
 		}
 		user.setPassword(passwordEncoder.encode(confirmPass));
 		userService.save(user);
+		
+		//Lịch sử
+        notiService.sendHistory(user.getUsername(), null, null, "changepassword", null);
 		return "redirect:/signin";
 	}
 	

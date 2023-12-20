@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -12,15 +11,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +25,6 @@ import com.Devex.Entity.FlashSaleTime;
 import com.Devex.Entity.Product;
 import com.Devex.Entity.User;
 import com.Devex.Entity.UserRole;
-import com.Devex.Entity.UserSearch;
 import com.Devex.Repository.ProductRepository;
 import com.Devex.Sevice.CategoryService;
 import com.Devex.Sevice.CookieService;
@@ -91,8 +85,38 @@ public class DevexUserController {
 	private List<String> listCategory = new ArrayList<>();
 	private List<String> listBrand = new ArrayList<>();
 	private List<Product> temPoraryList = new ArrayList<>();
+	
+	  @ModelAttribute("admin")
+	  public Boolean getAdmin(Principal principal) {
+		  User user = sessionService.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("ADMIN")) {
+						System.out.println("tôi là admin kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
+	  
+	  @ModelAttribute("seller")
+	  public Boolean getSeller(Principal principal) {
+		  User user = sessionService.get("user");
+			if (user != null) {
+				List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+				for (UserRole u : roles) {
+					if (u.getRole().getId().equals("SELLER")) {
+						System.out.println("tôi là seller kk");
+						return true;
+					}
+				}
+			}
+	      return false;
+	  }
 
-	@GetMapping({ "/home", "/*" })
+	@GetMapping({"/home", "/*"})
 	public String getHomePage(Model model, Principal principal) throws Exception {
 		// uniqueProductList.clear();
 		User user = new User();
@@ -177,46 +201,31 @@ public class DevexUserController {
 		model.addAttribute("products", uniqueProductList);
 
 		// check quyền admin?
-		User userAdmin = null;
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		if (authentication instanceof OAuth2AuthenticationToken) {
-		    // Đăng nhập bằng OAuth
-		    OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-		    
-		    // Lấy thông tin người dùng từ đối tượng Principal
-		    OAuth2User oauthUser = oauthToken.getPrincipal();
-		    
-		    // In ra tên người dùng
-		    System.out.println("OAuth2 User Name: " + oauthUser.getName());
-		} else if (authentication instanceof UsernamePasswordAuthenticationToken) {
-		    // Đăng nhập thông thường
-		    String username = authentication.getName();
-		    
-		    // In ra tên người dùng
-		    System.out.println("Username: " + username);
-		} else {
-		    // Trường hợp khác
-		    System.out.println("Unknown authentication type");
-		}
-		if (principal != null) {
-			String id = principal.getName();
-			System.out.println(id);
-			if (id != null) {
-				userAdmin = userService.findById(id).orElse(null);
-			}
-		}
-		boolean adminFlag = false;
-		if (userAdmin != null) {
-			List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
-			for (UserRole u : roles) {
-				if (u.getRole().getId().equals("ADMIN")) {
-					System.out.println("tôi là admin");
-					adminFlag = true;
-				}
-			}
-		}
-		model.addAttribute("admin", adminFlag);
+//		User userAdmin = null;
+//		if (principal != null) {
+//			String id = principal.getName();
+//			System.out.println(id);
+//			if (id != null) {
+//				userAdmin = userService.findById(id).orElse(null);
+//			}
+//		}
+//		boolean adminFlag = false;
+//		boolean sellerFlag = false;
+//		if (userAdmin != null) {
+//			List<UserRole> roles = userRoleService.findAllByUserName(user.getUsername());
+//			for (UserRole u : roles) {
+//				if (u.getRole().getId().equals("ADMIN")) {
+//					System.out.println("tôi là admin");
+//					adminFlag = true;
+//				}
+//				if (u.getRole().getId().equals("SELLER")) {
+//					System.out.println("tôi là seller");
+//					sellerFlag = true;
+//				}
+//			}
+//		}
+//		model.addAttribute("seller", sellerFlag);
+//		model.addAttribute("admin", adminFlag);
 		return "user/index";
 	}
 

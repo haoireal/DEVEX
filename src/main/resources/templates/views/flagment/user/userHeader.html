@@ -13,10 +13,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" th:href="${admin == true} ? @{/ad/message} : @{/message}">Tin nhắn
-
-
-                  </a>
+                      <a class="nav-link" href="/message">Tin nhắn</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/seller/home">Kênh người bán</a>
@@ -107,18 +104,19 @@
             </a>
           </div>
           <div class="col-6 pt-1 col">
-            <a th:href="${admin == true} ? @{/profile} : @{/profile}"
-              style="position: relative; display: flex; justify-content: center">
-              <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
-              <i th:if="${session.user != null}" style="
-                  font-size: 1rem;
-                  background-color: #2550b9ab;
-                  color: white;
-                  position: absolute;
-                  top: 2rem;
-                  text-decoration: none;
-                " th:text="${session.user.username}"></i>
-            </a>
+            <th:block th:with="urlPath=${(admin == true) ? '/ad/profile' : (seller == true) ? '/seller/profile' : '/profile'}">
+                <a style="position: relative; display: flex; justify-content: center" th:href="${urlPath}">
+                  <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
+                  <i th:if="${session.user != null}" style="
+                      font-size: 1rem;
+                      background-color: #2550b9ab;
+                      color: white;
+                      position: absolute;
+                      top: 2rem;
+                      text-decoration: none;
+                    " th:text="${session.user.username}"></i>
+                </a>
+            </th:block>
           </div>
         </div>
       </div>
@@ -251,7 +249,7 @@
                   <a class="nav-link text-white" href="/ad/home" th:if="${admin}">Admin Page</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-white" th:href="${admin == true} ? @{/ad/message} : @{/message}">Tin nhắn
+                      <a class="nav-link text-white" href="/message">Tin nhắn</a>
 
                   </a>
                 </li>
@@ -362,18 +360,19 @@
             </a>
           </div>
           <div class="col-6 pt-1 col">
-            <a th:href="${admin == true} ? @{/profile} : @{/profile}"
-              style="position: relative; display: flex; justify-content: center">
-              <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
-              <i th:if="${session.user != null}" style="
-                  font-size: 1rem;
-                  background-color: #2550b9ab;
-                  color: white;
-                  position: absolute;
-                  top: 2rem;
-                  text-decoration: none;
-                " th:text="${session.user.username}"></i>
-            </a>
+            <th:block th:with="urlPath=${(admin == true) ? '/ad/profile' : (seller == true) ? '/seller/profile' : '/profile'}">
+                <a style="position: relative; display: flex; justify-content: center" th:href="${urlPath}">
+                  <i class="bi bi-person-circle fs-4 text-dark fw-bold"></i>
+                  <i th:if="${session.user != null}" style="
+                      font-size: 1rem;
+                      background-color: #2550b9ab;
+                      color: white;
+                      position: absolute;
+                      top: 2rem;
+                      text-decoration: none;
+                    " th:text="${session.user.username}"></i>
+                </a>
+            </th:block>
           </div>
         </div>
       </div>
