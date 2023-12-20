@@ -193,8 +193,10 @@ public class CartAPIController {
 
 		List<CartDetailDTo> listOrder = requestData.getItemsOrderSession();
 		List<Voucher> listVoucher = requestData.getVoucherApply();
+		Double total = requestData.getTotal();
 		sessionService.set("listItemOrder", listOrder);
 		sessionService.set("listVoucherApply", listVoucher);
+		sessionService.set("total", total);
 		return ResponseEntity.ok().build();
 	}
 

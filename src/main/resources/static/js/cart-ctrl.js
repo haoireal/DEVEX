@@ -750,7 +750,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 
     get amountPay() {
       // tính tiền phải thanh toán
-      let total = this.amountShip + this.amountDetail;
+      let total = this.amountDetail;
       if(this.isDevexVoucherApplied()) {
         var voucher = this.voucherApply.find((item) => item.categoryVoucher.id == 100001);
         if(voucher.discount < 1) {
@@ -760,7 +760,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
         }
       }
       
-      return total;
+      return this.amountShip + total;
     },
 
     isItemChecked(id) {
@@ -940,6 +940,7 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
       itemsOrderSession: $cart.itemsOrderSession,
 
       voucherApply: $cart.voucherApply,
+      total: $cart.amountPay(),
     };
     var url = `${host}/cart/order`;
     $http
@@ -1053,7 +1054,8 @@ app.controller("cart-ctrl", function ($scope, $http, $location, $window) {
 		// Thực hiện đặt hàng
 		const requestDataDTO = {
 			itemsOrderSession: $cart.itemsOrderSession,
-			items: $cart.voucherApply
+			items: $cart.voucherApply,
+      total: $cart.amountPay,
 		};
 		var url = `${host}/cart/order`;
 		$http
