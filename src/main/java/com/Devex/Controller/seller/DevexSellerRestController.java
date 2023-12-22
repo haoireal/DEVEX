@@ -310,6 +310,7 @@ public class DevexSellerRestController {
 	public void deleteproduct(@PathVariable("idproduct") String idproduct) {
 		User u = session.get("user");
 		productService.updateProductIsDeleteById(true, idproduct);
+		productService.updateProductActiveById(false, idproduct);
 		notiService.sendHistory(u.getUsername(), "", "", "deleteproduct", idproduct);
 	}
 
@@ -917,4 +918,10 @@ System.out.println("ok");
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(new InputStreamResource(fis));
     }
+	
+	@PutMapping("/seller/product/restore/{id}")
+	public void updateIsdeleteProduct(@PathVariable("id") String id) {
+		User u = session.get("user");
+        productService.updateProductIsDeleteById(false, id);
+	}
 }
